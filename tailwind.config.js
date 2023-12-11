@@ -9,9 +9,17 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        primary:"#5371FF",
+        secondary:"#FB8500"
+
+      }
+    },
     // screens:{
-    //   '2xl': '1536px',
+    //   sm:"425px",
+    //   md:"786px",
+    //   lg:"1080px" 
     // }
   },
   plugins: [],

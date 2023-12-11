@@ -5,7 +5,7 @@ import TopBar from "./TopBar";
 const HomeHeader = () => {
     return (
         <div className="">
-            {/* <TopBar/> */}
+            <TopBar/>
             <NavbarPublic/>
         </div>
     );

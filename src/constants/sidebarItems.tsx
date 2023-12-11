@@ -37,28 +37,20 @@ export const sidebarItems = (role: string) => {
       key: `/Home`,
     },
     {
-      label: "Service",
-      key: `/service`,
+      key: "Learning",
+      label: <Link href="/Learning-us">Learning</Link>,
     },
     {
-      label: "Category",
-      key: `/category`,
+      key: "assetment",
+      label: <Link href="/">Assetment</Link>,
     },
     {
-      key: "about",
-      label: <Link href="/about-us">About</Link>,
-    },
-    {
-      key: "gallery",
-      label: <Link href="/gallery">Gallery</Link>,
-    },
-    {
-      key: "blogs",
-      label: <Link href="/blogs">Blogs</Link>,
+      key: "nanlysis",
+      label: <Link href="/">Analysis</Link>,
     },
     {
       key: "contact",
-      label: <Link href="/contact">Contact Us</Link>,
+      label: <Link href="/">Contact Us</Link>,
     },
   ];
 
@@ -74,11 +66,7 @@ export const sidebarItems = (role: string) => {
       label: <Link href="about-us">ABout</Link>,
       icon: <UserOutlined />,
     },
-    {
-      key: "blogs",
-      label: <Link href="blogs">Blogs</Link>,
-      icon: <SnippetsOutlined />,
-    },
+
     {
       key: "gallery",
       label: <Link href="/gallery">Gallery</Link>,

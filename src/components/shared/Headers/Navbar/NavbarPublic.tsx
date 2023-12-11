@@ -18,21 +18,26 @@ const NavbarPublic = () => {
   // }, []);
 
   return (
-    <div className=" bg-[white] text-black py-[1em] px-[2em]">
-      <nav className=" flex justify-between">
-        <Logo />
-     
-        <Menu
-          mode="horizontal"
-          className="hidden lg:flex"
-          disabledOverflow
-          items={sidebarItems("homeNav")}
-        />
-        <div className="flex lg:hidden">
-          <SideBarHome></SideBarHome>
-        </div>
-      </nav>
-    </div>
+    <nav className="bg-[white] text-black py-[1em] px-[2em] 
+    flex align-center gap-2 lg:gap-[5rem]">
+      <Logo />
+
+      <Menu
+        mode="horizontal"
+        className="hidden lg:flex"
+        style={{
+          // color:"#5371FF"
+          fontWeight: "700",
+          fontSize: "15px",
+          fontFamily: "fantasy",
+        }}
+        disabledOverflow
+        items={sidebarItems("homeNav")}
+      />
+      <div className="flex lg:hidden">
+        <SideBarHome></SideBarHome>
+      </div>
+    </nav>
   );
 };
 
