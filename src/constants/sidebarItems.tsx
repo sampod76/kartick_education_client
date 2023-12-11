@@ -11,21 +11,13 @@ import {
   AlipayCircleFilled,
   BorderOuterOutlined,
   HomeOutlined,
-  ShoppingCartOutlined,
-  ShopOutlined,
-  MessageOutlined,
-  DatabaseOutlined,
-  ControlOutlined,
-  UsergroupAddOutlined,
-  ContainerOutlined,
+
   TabletOutlined,
-  QuestionOutlined,
-  PlusSquareOutlined,
-  InsertRowLeftOutlined,
+
   UserOutlined,
-  SnippetsOutlined,
+
   ContactsFilled,
-  CommentOutlined,
+
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
