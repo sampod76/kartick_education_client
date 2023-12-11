@@ -9,11 +9,88 @@ import {
   FileTextOutlined,
   AccountBookFilled,
   AlipayCircleFilled,
-  BorderOuterOutlined
+  BorderOuterOutlined,
+  HomeOutlined,
+  ShoppingCartOutlined,
+  ShopOutlined,
+  MessageOutlined,
+  DatabaseOutlined,
+  ControlOutlined,
+  UsergroupAddOutlined,
+  ContainerOutlined,
+  TabletOutlined,
+  QuestionOutlined,
+  PlusSquareOutlined,
+  InsertRowLeftOutlined,
+  UserOutlined,
+  SnippetsOutlined,
+  ContactsFilled,
+  CommentOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 export const sidebarItems = (role: string) => {
+  const homeNavItems: MenuProps["items"] = [
+    {
+      label: <Link href={`/`}> Home</Link>,
+
+      key: `/Home`,
+    },
+    {
+      label: "Service",
+      key: `/service`,
+    },
+    {
+      label: "Category",
+      key: `/category`,
+    },
+    {
+      key: "about",
+      label: <Link href="/about-us">About</Link>,
+    },
+    {
+      key: "gallery",
+      label: <Link href="/gallery">Gallery</Link>,
+    },
+    {
+      key: "blogs",
+      label: <Link href="/blogs">Blogs</Link>,
+    },
+    {
+      key: "contact",
+      label: <Link href="/contact">Contact Us</Link>,
+    },
+  ];
+
+  const homeSIdeItems: MenuProps["items"] = [
+    {
+      label: <Link href={`/`}> Home</Link>,
+      icon: <HomeOutlined />,
+      key: `/Home`,
+    },
+
+    {
+      key: "about",
+      label: <Link href="about-us">ABout</Link>,
+      icon: <UserOutlined />,
+    },
+    {
+      key: "blogs",
+      label: <Link href="blogs">Blogs</Link>,
+      icon: <SnippetsOutlined />,
+    },
+    {
+      key: "gallery",
+      label: <Link href="/gallery">Gallery</Link>,
+      icon: <TabletOutlined />,
+    },
+    {
+      key: "contact",
+      label: <Link href="contact">Contact Us</Link>,
+      icon: <ContactsFilled />,
+    },
+  ];
+
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: <Link href={`/${role}/overview`}>Overview</Link>,
@@ -29,13 +106,11 @@ export const sidebarItems = (role: string) => {
           label: <Link href={`/profile`}>Account Profile</Link>,
           key: `/${role}/profile`,
         },
-       
       ],
     },
   ];
 
   const commonAdminSidebarItems: MenuProps["items"] = [
-   
     {
       label: <Link href={`/${role}/manage-user`}>Manage User</Link>,
       icon: <AppstoreOutlined />,
@@ -59,7 +134,6 @@ export const sidebarItems = (role: string) => {
           label: <Link href={`/${role}/service/create`}>Create Service </Link>,
           key: `/${role}/service/create`,
         },
-        
       ],
     },
     {
@@ -75,7 +149,6 @@ export const sidebarItems = (role: string) => {
           label: <Link href={`/${role}/category`}>Category List</Link>,
           key: `/${role}/category`,
         },
-        
       ],
     },
     {
@@ -87,7 +160,6 @@ export const sidebarItems = (role: string) => {
           label: <Link href={`/${role}/booking`}>Booking List</Link>,
           key: `/${role}/booking`,
         },
-        
       ],
     },
     {
@@ -103,13 +175,8 @@ export const sidebarItems = (role: string) => {
           label: <Link href={`/${role}/faq`}>Faq List</Link>,
           key: `/${role}/faq`,
         },
-        
       ],
     },
-  
-   
-   
-    
   ];
 
   const superAdminSidebarItems: MenuProps["items"] = [
@@ -119,8 +186,6 @@ export const sidebarItems = (role: string) => {
       icon: <AlipayCircleFilled />,
       key: `/${role}/admin`,
     },
-      
-    
   ];
 
   const generalUserSidebarItems: MenuProps["items"] = [
@@ -129,24 +194,23 @@ export const sidebarItems = (role: string) => {
       label: <Link href={`/${role}/booking`}>Booking History</Link>,
       icon: <ThunderboltOutlined />,
       key: `/${role}/Service`,
-    },   
+    },
     {
       label: <Link href={`/${role}/review`}>Review/Feedback History</Link>,
       icon: <AccountBookFilled />,
       key: `/${role}/review`,
-    },   
-     
+    },
+
     {
       label: <Link href={`/${role}/support`}>Support and Help</Link>,
       icon: <BorderOuterOutlined />,
       key: `/${role}/support`,
-    },   
+    },
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.GENERAL_USER) return generalUserSidebarItems;
-  else {
-    return defaultSidebarItems;
-  }
+  else if ((role = "homeNav")) return homeNavItems;
+  else if ((role = "homeSidBar")) return homeSIdeItems;
 };
