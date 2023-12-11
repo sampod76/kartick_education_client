@@ -4,24 +4,24 @@ import { createContext, useEffect, useState } from "react";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import StyledComponentsRegistry from "./AntdRegistry";
-import { getUserInfo } from "@/services/auth.service";
-// const AuthContext = createContext(undefined);
+
+import { ConfigProvider } from "antd";
+
 const Providers = ({ children }: { children: React.ReactNode }) => {
-  // const [userData, setUserData] = useState<any>({});
-  // const authData: any = {
-  //   userData,
-  // };
-  // useEffect(() => {
-  //   setUserData(getUserInfo() as any);
-  // }, []);
   return (
-    <StyleProvider hashPriority="high">
-      {/* <AuthContext.Provider value={authData}> */}
-        <Provider store={store}>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
-        </Provider>
-      {/* </AuthContext.Provider> */}
-    </StyleProvider>
+    <Provider store={store}>
+      <StyledComponentsRegistry>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#E3364E",
+            },
+          }}
+        >
+          {children}
+        </ConfigProvider>
+      </StyledComponentsRegistry>
+    </Provider>
   );
 };
 
