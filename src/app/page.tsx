@@ -6,7 +6,7 @@ const HomePage = () => {
   return (
     <>
       <HomeHeader />
-      <main className="container mx-auto min-h-[100vh] text-center">
+      <main className="min-h-[100vh] text-center">
         <BannerSection/>
      
       </main>
