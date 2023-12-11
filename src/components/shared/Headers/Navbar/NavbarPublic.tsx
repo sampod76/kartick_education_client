@@ -19,7 +19,7 @@ const NavbarPublic = () => {
 
   return (
     <nav className="bg-[white] text-black py-[1em] px-[2em] 
-    flex align-center gap-2 lg:gap-[5rem]">
+    flex align-center justify-between lg:justify-normal gap-2 lg:gap-[5rem]">
       <Logo />
 
       <Menu
