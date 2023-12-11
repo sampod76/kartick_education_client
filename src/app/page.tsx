@@ -1,4 +1,5 @@
 import Footer from "@/components/Home/Footer";
+import BannerSection from "@/components/Home/Heros/BannerSection";
 import HomeHeader from "@/components/shared/Headers/HomeHeader";
 
 const HomePage = () => {
@@ -6,7 +7,8 @@ const HomePage = () => {
     <>
       <HomeHeader />
       <main className="container mx-auto min-h-[100vh] text-center">
-        <h1>This is home page</h1>
+        <BannerSection/>
+     
       </main>
       <Footer />
     </>
