@@ -26,8 +26,10 @@ const TopBar = () => {
           <FacebookFilled />
           <TwitterCircleFilled />
           <LinkedinFilled/>
-          <LinkedinOutlined />
-          <YoutubeOutlined />
+          {/* <LinkedinOutlined /> */}
+          <YoutubeOutlined  style={{
+            color:"red"
+          }}/>
         </div>
         <div className="flex gap-2 font-[700]">
           <Link className="p-2 px-4 rounded rounded-tl-[20px] rounded-br-[20px] bg-secondary" href="/">
