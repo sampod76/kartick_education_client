@@ -16,7 +16,15 @@ const SIngleCourse = ({ course }: { course: any }) => {
       <Card
         className="w-full lg:w-[296px] bg-red-500"
         bodyStyle={{ borderRadius: "10px, 10px, 0px, 0px" }}
-        cover={<Image className="max-h-[173px]" height={173} width={292} alt="example" src={img} />}
+        cover={
+          <Image
+            className="max-h-[173px]"
+            height={173}
+            width={292}
+            alt="example"
+            src={img}
+          />
+        }
         hoverable
         headStyle={{
           // color:"red"
@@ -36,16 +44,18 @@ const SIngleCourse = ({ course }: { course: any }) => {
         ]}
       >
         <Grid
-          className="bg-primary height-[30px] text-[16px] width-[54px] rounded-2xl text-white font-semibold py-2"
+          className="bg-primary height-[30px] text-[16px] width-[36px] rounded-2xl text-white font-semibold py-2"
           style={{
             position: "absolute",
             right: 16,
             bottom: 164,
             padding: 0,
-            borderRadius:"10px"
+            borderRadius: "10px",
           }}
         >
-          <h2><Rate className="h-[12px]" count={1} value={1}/> 5.0</h2>
+          <h2>
+            <Rate className="h-[12px]" count={1} value={1} /> 5.0
+          </h2>
         </Grid>
 
         <Meta
@@ -57,11 +67,12 @@ const SIngleCourse = ({ course }: { course: any }) => {
             fontWeight: "500",
             textAlign: "start",
             margin: "24px 0",
-            padding:"0 10px"
-
+            padding: "0 10px",
           }}
           title={<h2 className="text-black">{name}</h2>}
-          description={<p className="text-[#282938] ">{description}</p>}
+          description={
+            <p className="text-[#282938] ">{description?.length<64 ?description:description?.slice(0, 64)+'.....'}</p>
+          }
         />
       </Card>
     </div>
