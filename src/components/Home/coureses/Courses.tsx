@@ -7,7 +7,7 @@ const Courses = ({data}:{data:any[]}) => {
 
     return (
         <div className='mt-[5rem] container mx-auto'>
-          <Row justify="space-around" align="middle" gutter={{ xs: 8, sm: 16, md: 24, lg: 24 }} >
+          <Row justify="space-around" align="middle">
           {
             data.map((item:any, index:number) => {
                 return (

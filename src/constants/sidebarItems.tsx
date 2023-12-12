@@ -11,38 +11,58 @@ import {
   AlipayCircleFilled,
   BorderOuterOutlined,
   HomeOutlined,
-
   TabletOutlined,
-
   UserOutlined,
-
   ContactsFilled,
-
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 export const sidebarItems = (role: string) => {
   const homeNavItems: MenuProps["items"] = [
     {
-      label: <Link href={`/`}> Home</Link>,
+      label: (
+        <Link className="text-xl hover:text-secondary font-bold " href={`/`}>
+          {" "}
+          Home
+        </Link>
+      ),
 
       key: `/Home`,
     },
     {
       key: "Learning",
-      label: <Link href="/Learning-us">Learning</Link>,
+      label: (
+        <Link
+          className="text-xl hover:text-secondary font-bold "
+          href="/Learning-us"
+        >
+          Learning
+        </Link>
+      ),
     },
     {
       key: "assetment",
-      label: <Link href="/">Assetment</Link>,
+      label: (
+        <Link className="text-xl hover:text-secondary font-bold " href="/">
+          Assetment
+        </Link>
+      ),
     },
     {
       key: "nanlysis",
-      label: <Link href="/">Analysis</Link>,
+      label: (
+        <Link className="text-xl hover:text-secondary font-bold " href="/">
+          Analysis
+        </Link>
+      ),
     },
     {
       key: "contact",
-      label: <Link href="/">Contact Us</Link>,
+      label: (
+        <Link className="text-xl hover:text-secondary font-bold " href="/">
+          Contact Us
+        </Link>
+      ),
     },
   ];
 
