@@ -29,10 +29,11 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
+import DropDown from "@/components/shared/Headers/Navbar/DropDown";
 export const sidebarItems = (role: string) => {
   const homeNavItems: MenuProps["items"] = [
     {
-      label: <Link href={`/`}> Home</Link>,
+      label: <Link href={`/`}> Homes</Link>,
 
       key: `/Home`,
     },
@@ -42,7 +43,8 @@ export const sidebarItems = (role: string) => {
     },
     {
       key: "assetment",
-      label: <Link href="/">Assetment</Link>,
+      // label: <Link href="/">Assetment</Link>,
+      label: <DropDown />,
     },
     {
       key: "nanlysis",
