@@ -37,13 +37,13 @@ const TopBar = () => {
         </div>
         <div className="flex gap-2 font-[700]">
           <Link
-            className="p-2 px-4 rounded rounded-tl-[20px] rounded-br-[20px] bg-secondary"
+            className="py-3 px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
             href="/"
           >
             Register
           </Link>
           <Link
-            className="p-2 px-4 rounded rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary"
+            className="py-3 px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary"
             href="/"
           >
             Login

@@ -31,7 +31,7 @@ const BannerSection = () => {
           <input
             type="text"
             placeholder="Search here"
-            className=" border-2 border-primary rounded-l-[8px] w-[512px] p-2 bg-[#ADADFA40] h-[3.8rem]"
+            className=" border-2 outline-none text-xl text-[#949494] px-3 border-primary rounded-l-[8px] w-[512px] p-2 bg-[#ADADFA40] h-[3.8rem]"
           />
           <h3 className="bg-primary p-[16px] rounded-r-[8px] w-[3.7rem] h-[3.8rem]">
             <SearchOutlined
@@ -46,10 +46,16 @@ const BannerSection = () => {
         </div>
 
         <div className="mt-[5rem] flex flex-col lg:flex-row xl:flex-row gap-3 text-[1.2rem] text-white font-[700] uppercase">
-          <Link className="w-full lg:w-[13rem] xl:w-[13rem] bg-primary h-[3.3rem] p-3 rounded-[8px]" href="/">
+          <Link
+            className="w-full lg:w-[13rem] xl:w-[13rem] bg-primary h-[3.3rem] p-3 rounded-[8px]"
+            href="/"
+          >
             Get started new
           </Link>
-          <Link className="w-full lg:w-[21rem] xl:w-[21rem] bg-secondary h-[3.3rem] p-3 rounded-[8px]" href="/">
+          <Link
+            className="w-full lg:w-[21rem] xl:w-[21rem] bg-secondary h-[3.3rem] p-3 rounded-[8px]"
+            href="/"
+          >
             FREE READING FOR ANY SEASON
           </Link>
         </div>

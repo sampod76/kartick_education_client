@@ -12,9 +12,9 @@ const { Meta, Grid } = Card;
 const SIngleCourse = ({ course }: { course: any }) => {
   const { name, description, img, video, jam, students } = course;
   return (
-    <div>
+    <div className="w-[23rem]  shadow-md">
       <Card
-        className="w-full lg:w-[296px] bg-red-500"
+        // className="w-96 bg-red-500"
         bodyStyle={{ borderRadius: "10px, 10px, 0px, 0px" }}
         cover={
           <Image
@@ -22,7 +22,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
             height={173}
             width={292}
             alt="example"
-            src={img}
+            src={img} 
           />
         }
         hoverable
@@ -71,7 +71,11 @@ const SIngleCourse = ({ course }: { course: any }) => {
           }}
           title={<h2 className="text-black">{name}</h2>}
           description={
-            <p className="text-[#282938] ">{description?.length<64 ?description:description?.slice(0, 64)+'.....'}</p>
+            <p className="text-[#282938] ">
+              {description?.length < 64
+                ? description
+                : description?.slice(0, 64) + "....."}
+            </p>
           }
         />
       </Card>

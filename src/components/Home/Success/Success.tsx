@@ -78,7 +78,7 @@ const Success = () => {
 
       <Link
         href="/"
-        className="text-primary uppercase p-2 w-[164px] h-[44px] font-bold border-primary border-2 rounded-[10px] text-[18px]"
+        className="text-primary uppercase p-2 w-[164px] h-[44px] font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white"
       >
         Join Now
       </Link>
