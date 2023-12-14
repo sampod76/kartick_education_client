@@ -1,7 +1,6 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { Button, Drawer, Menu, Space } from "antd";
-
 
 import { MenuUnfoldOutlined, CloseOutlined } from "@ant-design/icons";
 import Logo from "../../Logo";

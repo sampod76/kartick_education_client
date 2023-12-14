@@ -11,58 +11,48 @@ import {
   AlipayCircleFilled,
   BorderOuterOutlined,
   HomeOutlined,
+  ShoppingCartOutlined,
+  ShopOutlined,
+  MessageOutlined,
+  DatabaseOutlined,
+  ControlOutlined,
+  UsergroupAddOutlined,
+  ContainerOutlined,
   TabletOutlined,
+  QuestionOutlined,
+  PlusSquareOutlined,
+  InsertRowLeftOutlined,
   UserOutlined,
+  SnippetsOutlined,
   ContactsFilled,
+  CommentOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
+import DropDown from "@/components/shared/Headers/Navbar/DropDown";
 export const sidebarItems = (role: string) => {
   const homeNavItems: MenuProps["items"] = [
     {
-      label: (
-        <Link className="text-xl hover:text-secondary font-bold " href={`/`}>
-          {" "}
-          Home
-        </Link>
-      ),
+      label: <Link href={`/`}> Homes</Link>,
 
       key: `/Home`,
     },
     {
       key: "Learning",
-      label: (
-        <Link
-          className="text-xl hover:text-secondary font-bold "
-          href="/Learning-us"
-        >
-          Learning
-        </Link>
-      ),
+      label: <Link href="/Learning-us">Learning</Link>,
     },
     {
       key: "assetment",
-      label: (
-        <Link className="text-xl hover:text-secondary font-bold " href="/">
-          Assetment
-        </Link>
-      ),
+      // label: <Link href="/">Assetment</Link>,
+      label: <DropDown>Assessment</DropDown>,
     },
     {
-      key: "nanlysis",
-      label: (
-        <Link className="text-xl hover:text-secondary font-bold " href="/">
-          Analysis
-        </Link>
-      ),
+      key: "analysis",
+      label: <DropDown>Analysises</DropDown>,
     },
     {
       key: "contact",
-      label: (
-        <Link className="text-xl hover:text-secondary font-bold " href="/">
-          Contact Us
-        </Link>
-      ),
+      label: <Link href="/">Contact Us</Link>,
     },
   ];
 
@@ -208,9 +198,11 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
+  console.log(role, "role...");
+
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.GENERAL_USER) return generalUserSidebarItems;
-  else if ((role = "homeNav")) return homeNavItems;
+  // else if ((role = "homeNav")) return homeNavItems;
   else if ((role = "homeSidBar")) return homeSIdeItems;
 };
