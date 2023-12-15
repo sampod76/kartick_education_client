@@ -29,10 +29,11 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
+import DropDown from "@/components/shared/Headers/Navbar/DropDown";
 export const sidebarItems = (role: string) => {
   const homeNavItems: MenuProps["items"] = [
     {
-      label: <Link href={`/`}> Home</Link>,
+      label: <Link href={`/`}> Homes</Link>,
 
       key: `/Home`,
     },
@@ -42,11 +43,12 @@ export const sidebarItems = (role: string) => {
     },
     {
       key: "assetment",
-      label: <Link href="/">Assetment</Link>,
+      // label: <Link href="/">Assetment</Link>,
+      label: <DropDown>Assessment</DropDown>,
     },
     {
-      key: "nanlysis",
-      label: <Link href="/">Analysis</Link>,
+      key: "analysis",
+      label: <DropDown>Analysises</DropDown>,
     },
     {
       key: "contact",
@@ -196,9 +198,11 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
+  console.log(role, "role...");
+
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.GENERAL_USER) return generalUserSidebarItems;
-  else if ((role = "homeNav")) return homeNavItems;
+  // else if ((role = "homeNav")) return homeNavItems;
   else if ((role = "homeSidBar")) return homeSIdeItems;
 };

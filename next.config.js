@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-      domains: ["img.freepik.com", "i.ibb.co", "i.pinimg.com", "ibb.co","images.unsplash.com","localhost"],
+      domains: ["img.freepik.com", "i.ibb.co", "i.pinimg.com", "ibb.co","images.unsplash.com","localhost","gw.alipayobjects.com"],
     },
     // swcMinify:true
     // fastRefresh:true,
