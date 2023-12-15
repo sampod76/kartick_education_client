@@ -14,8 +14,8 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary:"#5371FF",
-              colorTextSecondary:"#FB8500"
+              colorPrimary:"#FB8500",
+              colorTextSecondary:"#5371FF"
             },
           }}
         >
