@@ -9,15 +9,10 @@ import {
   FileTextOutlined,
   AccountBookFilled,
   AlipayCircleFilled,
-  BorderOuterOutlined,
-  HomeOutlined,
-  TabletOutlined,
-  UserOutlined,
-  ContactsFilled,
+  BorderOuterOutlined
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
-import DropDown from "@/components/ui/NavUI/DropDownUI";
 export const sidebarItems = (role: string) => {
 
 

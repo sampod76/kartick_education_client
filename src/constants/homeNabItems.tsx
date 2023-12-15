@@ -9,6 +9,10 @@ export const homeNavItems: MenuProps["items"] = [
       key: `/Home`,
     },
     {
+        key: "mathmetical-academic",
+        label: <DropDownUI itemData={dropDownItemsData}>MathMetical Academic</DropDownUI>,
+      },
+    {
       key: "Learning",
       label: <DropDownUI itemData={dropDownItemsData}>Learning</DropDownUI>,
     },
@@ -21,8 +25,5 @@ export const homeNavItems: MenuProps["items"] = [
       key: "analysis",
       label: <DropDownUI itemData={dropDownItemsData}>Analyses</DropDownUI>,
     },
-    {
-      key: "contact",
-      label: <Link href="/">Contact Us</Link>,
-    },
+   
   ];

@@ -1,7 +1,7 @@
 export const dropDownItemsData = [
     {
-      label: "Services",
-      link: "/services",
+      label: "ELEMENTARY MATH",
+      link: "/ELEMENTARY MATH",
       children: [
         {
           label: "Web Development",

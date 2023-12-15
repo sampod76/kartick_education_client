@@ -43,10 +43,10 @@ const DropDownUI = ({children,itemData}:{children:React.ReactNode,itemData:any})
 
   return (
     <Dropdown overlay={menu}>
-      <Space>
+      <Link href={`/courses/${children}`}>
         {children}
         <DownOutlined />
-      </Space>
+      </Link>
     </Dropdown>
   );
 };
