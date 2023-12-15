@@ -4,51 +4,8 @@ import { Dropdown, Space,  Menu } from "antd";
 
 import Link from "next/link";
 
-const itemsData = [
-  {
-    label: "Services",
-    link: "/services",
-    children: [
-      {
-        label: "Web Development",
-        link: "/services/web-development",
-        children: [
-          {
-            label: "Frontend",
-            link: "/services/web-development/frontend",
-          },
-          {
-            label: "Backend",
-            link: "/services/web-development/backend",
-            children: [
-              {
-                label: "Node.js",
-                link: "/services/web-development/backend/node-js",
-              },
-              {
-                label: "Express.js",
-                link: "/services/web-development/backend/express-js",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: "Graphic Design",
-        link: "/services/graphic-design",
-      },
-      {
-        label: "Digital Marketing",
-        link: "/services/digital-marketing",
-      },
-    ],
-  },
-];
 
-
-
-const DropDown = ({children}:{children:React.ReactNode}) => {
-
+const DropDownUI = ({children,itemData}:{children:React.ReactNode,itemData:any}) => {
 
   const generateSubMenu = (data: any[]) => {
     return data.map((item) => (
@@ -82,10 +39,8 @@ const DropDown = ({children}:{children:React.ReactNode}) => {
     ));
   };
 
-  const menu = <Menu>{generateSubMenu(itemsData)}</Menu>;
+  const menu = <Menu>{generateSubMenu(itemData)}</Menu>;
 
-  // console.log(convertMenuItems);
-  // console.log("items data", items);
   return (
     <Dropdown overlay={menu}>
       <Space>
@@ -96,4 +51,4 @@ const DropDown = ({children}:{children:React.ReactNode}) => {
   );
 };
 
-export default DropDown;
+export default DropDownUI;

@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Drawer, Menu, Space } from "antd";
+import { Button, Drawer,  Space } from "antd";
 
 import { MenuUnfoldOutlined, CloseOutlined } from "@ant-design/icons";
 import Logo from "../../Logo";
-import { sidebarItems } from "@/constants/sidebarItems";
+import MenuUI from "@/components/ui/NavUI/MenuUI";
+import { homeSIdeItems } from "@/constants/homeSideBarItems";
 
 const SideBarHome = () => {
   const [open, setOpen] = useState(false);
@@ -43,12 +44,7 @@ const SideBarHome = () => {
           </Space>
         }
       >
-        <Menu
-          mode="inline"
-          selectedKeys={[selectedItem]}
-          style={{ borderRight: "none" }}
-          items={sidebarItems("homeSidBar")}
-        />
+        <MenuUI itemData={homeSIdeItems} />
       </Drawer>
     </>
   );

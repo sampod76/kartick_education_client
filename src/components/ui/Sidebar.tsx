@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 
-import { sidebarItems } from "@/constants/sidebarItems";
+import { sidebarItems } from "@/constants/dashBoardItems";
 import { USER_ROLE } from "@/constants/role";
 import { getUserInfo } from "@/services/auth.service";
 
