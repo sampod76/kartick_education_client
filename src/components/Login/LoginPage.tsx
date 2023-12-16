@@ -1,11 +1,11 @@
 "use client";
 import { Button, Col, Input, Row, message } from "antd";
-import loginImage from "../../assets/login-image.png";
+import loginImage from "@/assets/login-image.png";
 import Image from "next/image";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
-import { useUserLoginMutation } from "@/redux/api/authApi";
+// import { useUserLoginMutation } from "@/redux/api/authApi";
 import { storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,41 +13,40 @@ import { loginSchema } from "@/schemas/login";
 import { Error_model_hook } from "@/utils/modalHook";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 
-
 type FormValues = {
   email: string;
   password: string;
 };
 
-const LoginPage = () => {
-  const [userLogin, {error,isLoading}] = useUserLoginMutation();
-
+const Login = () => {
+  // const [userLogin, {error,isLoading}] = useUserLoginMutation();
 
   // console.log( data)
   const router = useRouter();
- 
+
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
-    try {
-      const res = await userLogin({ ...data }).unwrap();
-       console.log(res);
-      if (res?.accessToken) {
-        router.push("/profile");
-        message.success("User logged in successfully!");
-        storeUserInfo({ accessToken: res?.accessToken });
-      }else{
-        Error_model_hook(res?.message)
-      }
-    } catch (err: any) {
-      console.log(err);
-    }
+    console.log(data,"data");
+    // try {
+    //   const res = await userLogin({ ...data }).unwrap();
+    //    console.log(res);
+    //   if (res?.accessToken) {
+    //     router.push("/profile");
+    //     message.success("User logged in successfully!");
+    //     storeUserInfo({ accessToken: res?.accessToken });
+    //   }else{
+    //     Error_model_hook(res?.message)
+    //   }
+    // } catch (err: any) {
+    //   console.log(err);
+    // }
   };
-  if(isLoading){
-   return <LoadingForDataFetch/>
-  }
+  // if(isLoading){
+  //  return <LoadingForDataFetch/>
+  // }
   // redux error
-  if (error) {
-    console.log(error);
-  }
+  // if (error) {
+  //   console.log(error);
+  // }
   return (
     <Row
       justify="center"
@@ -91,7 +90,7 @@ const LoginPage = () => {
                 required
               />
             </div>
-            <Button type="primary" htmlType="submit">
+            <Button type="default" htmlType="submit">
               Login
             </Button>
           </Form>
@@ -101,4 +100,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

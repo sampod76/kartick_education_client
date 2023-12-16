@@ -5,7 +5,7 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import HomeHeader from "@/components/Home/HomeHeader";
+// import HomeHeader from "@/components/Home/HomeHeader";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
@@ -59,7 +59,7 @@ const Registration = () => {
 
   return (
     <div>
-      <HomeHeader />
+      {/* <HomeHeader /> */}
 
       {/* resolver={yupResolver(adminSchema)} */}
       <div className="container mx-auto p-5">

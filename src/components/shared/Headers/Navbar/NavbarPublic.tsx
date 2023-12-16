@@ -5,6 +5,7 @@ import Logo from "../../Logo";
 import React from "react";
 import SideBarHome from "./SideBarHome";
 import { homeNavItems } from "@/constants/homeNabItems";
+import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 
 const NavbarPublic = () => {
   const screens = useBreakpoint();
@@ -32,6 +33,7 @@ const NavbarPublic = () => {
       <div className="flex lg:hidden">
         <SideBarHome></SideBarHome>
       </div>
+      <UserAvatarUI />
     </nav>
   );
 };

@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
-export const sidebarItems = (role: string) => {
+export const dashboardItems = (role: string) => {
 
 
   const defaultSidebarItems: MenuProps["items"] = [
@@ -102,9 +102,25 @@ export const sidebarItems = (role: string) => {
         },
       ],
     },
+    {
+      label: <Link href={`/${role}/overview`}>Overview</Link>,
+      icon: <TableOutlined />,
+      key: `/${role}/overview`,
+    },
+    {
+      label: "Profile",
+      key: "profile",
+      icon: <ProfileOutlined />,
+      children: [
+        {
+          label: <Link href={`/profile`}>Account Profile</Link>,
+          key: `/${role}/profile`,
+        },
+      ],
+    },
   ];
 
-  const superAdminSidebarItems: MenuProps["items"] = [
+  const moderatorSidebarItems: MenuProps["items"] = [
     ...adminSidebarItems,
     {
       label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
@@ -113,7 +129,7 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
-  const generalUserSidebarItems: MenuProps["items"] = [
+  const studentSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
       label: <Link href={`/${role}/booking`}>Booking History</Link>,
@@ -135,7 +151,7 @@ export const sidebarItems = (role: string) => {
 
 
 
-  if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
-  else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
-  else if (role === USER_ROLE.GENERAL_USER) return generalUserSidebarItems;
+  if (role === USER_ROLE.ADMIN) return moderatorSidebarItems;
+  else if (role === USER_ROLE.MODERATOR) return adminSidebarItems;
+  else if (role === USER_ROLE.STUDENT) return studentSidebarItems;
 };

@@ -1,14 +1,11 @@
-import LoginPage from "@/components/Login/Login";
-import { Metadata } from "next";
+import Login from "@/components/Login/LoginPage";
 
-export const metadata: Metadata = {
-  title: "UMS | Login",
-};
 
-const Login = () => {
+
+const LoginPage = () => {
   return (
     <>
-      <LoginPage />
+      <Login/>
     </>
   );
 };
