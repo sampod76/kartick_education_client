@@ -47,7 +47,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <Layout hasSider>
+    <Layout hasSider style={{display:"flex",justifyContent:"space-between"}}>
       {!screens.sm ? (
         <Drawer
           title={`${userLoggedIn} Dash`}

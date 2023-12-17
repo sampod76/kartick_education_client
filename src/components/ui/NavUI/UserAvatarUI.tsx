@@ -15,7 +15,7 @@ const UserAvatarUI = () => {
 
   return (
     <section style={{ display: "flex", alignItems: "center", gap: "1.5em" }}>
-      <Link href={``}>
+      <Link href={`/profile`}>
         <Avatar size="large" icon={<UserOutlined />} />
       </Link>
     </section>

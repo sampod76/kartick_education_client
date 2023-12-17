@@ -30,9 +30,9 @@ const DashboardNavBar = ({
   collapsed: boolean;
   setCollapsed: any;
 }) => {
-//   const userInfo = getUserInfo() as any;
-const userLoggedIn = USER_ROLE.ADMIN
-console.log(userLoggedIn)
+  //   const userInfo = getUserInfo() as any;
+  const userLoggedIn = USER_ROLE.ADMIN;
+  console.log(userLoggedIn);
 
   return (
     <Header
@@ -44,6 +44,10 @@ console.log(userLoggedIn)
         boxShadow:
           "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
         paddingInline: "3px",
+        // position:"absolute",
+        // top:0,
+        // width:"100%",
+        // zIndex:100,
       }}
     >
       <section style={{ display: "flex", alignItems: "center" }}>
@@ -60,13 +64,14 @@ console.log(userLoggedIn)
 
         <Logo></Logo>
       </section>
-   
-      <section style={{
-        display:"flex",
-        alignItems:"center",
-        gap:"5px"
-      }}>
-        
+
+      <section
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "5px",
+        }}
+      >
         <UserAvatarUI />
       </section>
     </Header>

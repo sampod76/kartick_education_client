@@ -9,55 +9,78 @@ import {
   FileTextOutlined,
   AccountBookFilled,
   AlipayCircleFilled,
-  BorderOuterOutlined
+  BorderOuterOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
-export const dashboardItems = (role: string) => {
-
-
+export const dashboardItems = (role: USER_ROLE) => {
   const defaultSidebarItems: MenuProps["items"] = [
-    {
-      label: <Link href={`/${role}/overview`}>Overview</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/overview`,
-    },
     {
       label: "Profile",
       key: "profile",
       icon: <ProfileOutlined />,
       children: [
         {
-          label: <Link href={`/profile`}>Account Profile</Link>,
+          label: <Link href={`/profile`}>Your Profile</Link>,
           key: `/${role}/profile`,
         },
       ],
     },
   ];
 
-  const commonAdminSidebarItems: MenuProps["items"] = [
-    {
-      label: <Link href={`/${role}/manage-user`}>Manage User</Link>,
-      icon: <AppstoreOutlined />,
-      key: `/${role}/manage-user`,
-    },
-  ];
-
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    ...commonAdminSidebarItems,
+
     {
-      label: "Manage service",
-      key: "manage-service",
+      label: "Manage Users",
+      key: "manage-user",
       icon: <ScheduleOutlined />,
       children: [
         {
-          label: <Link href={`/${role}/service`}>Service List</Link>,
-          key: `/${role}/service`,
+          label: "All Users",
+          key: "All-users",
+          icon: <UserOutlined />,
+          children: [
+            {
+              label: (
+                <Link href={`/admin/manage-users/all-users`}>ALl Users </Link>
+              ),
+              key: `/admin/user/all-users-list`,
+            },
+            {
+              label: (
+                <Link href={`/admin/manage-users/all-users/create`}>
+                  Create user{" "}
+                </Link>
+              ),
+              key: `/admin/manage-users/create`,
+            },
+          ],
         },
         {
-          label: <Link href={`/${role}/service/create`}>Create Service </Link>,
-          key: `/${role}/service/create`,
+          label: (
+            <Link href={`/admin/manage-users/students`}>Students List </Link>
+          ),
+          key: `/admin/manage-users/students`,
+        },
+        {
+          label: (
+            <Link href={`/admin/manage-users/moderators`}>
+              Moderators List{" "}
+            </Link>
+          ),
+          key: `/admin/manage-users/moderators`,
+        },
+        {
+          label: (
+            <Link href={`/admin/manage-users/trainers`}>Trainers List </Link>
+          ),
+          key: `/admin/manage-users/trainers`,
+        },
+        {
+          label: <Link href={`/admin/manage-users/sellers`}>Sellers List </Link>,
+          key: `/admin/manage-users/sellers`,
         },
       ],
     },
@@ -67,54 +90,77 @@ export const dashboardItems = (role: string) => {
       icon: <CreditCardOutlined />,
       children: [
         {
-          label: <Link href={`/${role}/category/create`}>Create Category</Link>,
-          key: `/${role}/category/create`,
+          label: <Link href={`/admin/category`}>Category List</Link>,
+          key: `/admin/category`,
         },
         {
-          label: <Link href={`/${role}/category`}>Category List</Link>,
-          key: `/${role}/category`,
+          label: <Link href={`/admin/category/create`}>Create Category</Link>,
+          key: `/admin/category/create`,
         },
+       
       ],
     },
     {
-      label: "Manage booking",
-      key: "manage-booking",
+      label: "Manage Course",
+      key: "manage-Course",
       icon: <FileTextOutlined />,
       children: [
+        
         {
-          label: <Link href={`/${role}/booking`}>Booking List</Link>,
-          key: `/${role}/booking`,
+          label: <Link href={`/admin/course`}>Course List</Link>,
+          key: `/admin/Course`,
+        },
+        {
+          label: <Link href={`/admin/course/create`}>Create course</Link>,
+          key: `/admin/Course/create`,
         },
       ],
     },
     {
-      label: "Manage Content",
-      key: "manage-content",
+      label: "Manage Milestone",
+      key: "manage-Milestone",
       icon: <ThunderboltOutlined />,
       children: [
+        
         {
-          label: <Link href={`/${role}/blog`}>Blog List</Link>,
-          key: `/${role}/blog`,
+          label: <Link href={`/admin/milestone`}>Milestone List</Link>,
+          key: `/admin/milestone`,
         },
         {
-          label: <Link href={`/${role}/faq`}>Faq List</Link>,
-          key: `/${role}/faq`,
+          label: <Link href={`/admin/milestone/create`}>Create Milestone</Link>,
+          key: `/admin/milestone/create`,
         },
       ],
     },
     {
-      label: <Link href={`/${role}/overview`}>Overview</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/overview`,
+      label: "Manage lesson",
+      key: "manage-lesson",
+      icon: <ThunderboltOutlined />,
+      children: [
+        
+        {
+          label: <Link href={`/admin/module`}>Modules List</Link>,
+          key: `/admin/module`,
+        },
+        {
+          label: <Link href={`/admin/module/create`}>Create modules</Link>,
+          key: `/admin/module/create`,
+        },
+      ],
     },
     {
-      label: "Profile",
-      key: "profile",
-      icon: <ProfileOutlined />,
+      label: "Manage Lesson",
+      key: "manage-lesson",
+      icon: <ThunderboltOutlined />,
       children: [
+        
         {
-          label: <Link href={`/profile`}>Account Profile</Link>,
-          key: `/${role}/profile`,
+          label: <Link href={`/admin/lesson`}>lesson List</Link>,
+          key: `/admin/lesson`,
+        },
+        {
+          label: <Link href={`/admin/lesson/create`}>Create Lesson</Link>,
+          key: `/admin/lesson/create`,
         },
       ],
     },
@@ -148,8 +194,6 @@ export const dashboardItems = (role: string) => {
       key: `/${role}/support`,
     },
   ];
-
-
 
   if (role === USER_ROLE.ADMIN) return moderatorSidebarItems;
   else if (role === USER_ROLE.MODERATOR) return adminSidebarItems;
