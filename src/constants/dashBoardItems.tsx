@@ -44,7 +44,7 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/all-users`}>ALl Users </Link>
+                <Link href={`/admin/manage-users/all-users`}>Users List</Link>
               ),
               key: `/admin/user/all-users-list`,
             },
@@ -59,29 +59,69 @@ export const dashboardItems = (role: USER_ROLE) => {
           ],
         },
         {
-          label: (
-            <Link href={`/admin/manage-users/students`}>Students List </Link>
-          ),
-          key: `/admin/manage-users/students`,
+          label: "Students",
+          key: "students",
+          icon: <UserOutlined />,
+          children: [
+            {
+              label: (
+                <Link href={`/admin/manage-users/students`}>Students List</Link>
+              ),
+              key: `admin/manage-users/students`,
+            },
+            {
+              label: (
+                <Link href={`/admin/manage-users/students/create`}>
+                  Create Student
+                </Link>
+              ),
+              key: `/admin/manage-users/students/create`,
+            },
+          ],
         },
         {
-          label: (
-            <Link href={`/admin/manage-users/moderators`}>
-              Moderators List{" "}
-            </Link>
-          ),
-          key: `/admin/manage-users/moderators`,
+          label: "Trainers",
+          key: "trainers",
+          icon: <UserOutlined />,
+          children: [
+            {
+              label: (
+                <Link href={`/admin/manage-users/trainers`}>Trainers List</Link>
+              ),
+              key: `/admin/manage-users/trainers`,
+            },
+            {
+              label: (
+                <Link href={`/admin/manage-users/all-users/trainers/create`}>
+                  Create Trainer
+                </Link>
+              ),
+              key: `//admin/manage-users/all-users/trainers/create`,
+            },
+          ],
         },
         {
-          label: (
-            <Link href={`/admin/manage-users/trainers`}>Trainers List </Link>
-          ),
-          key: `/admin/manage-users/trainers`,
+          label: "Moderators",
+          key: "moderators",
+          icon: <UserOutlined />,
+          children: [
+            {
+              label: (
+                <Link href={`/admin/manage-users/moderators`}>Moderators List</Link>
+              ),
+              key: `/admin/manage-users/moderators`,
+            },
+            {
+              label: (
+                <Link href={`/admin/manage-users/all-users/moderators/create`}>
+                  Create Moderator
+                </Link>
+              ),
+              key: `//admin/manage-users/all-users/moderators/create`,
+            },
+          ],
         },
-        {
-          label: <Link href={`/admin/manage-users/sellers`}>Sellers List </Link>,
-          key: `/admin/manage-users/sellers`,
-        },
+      
       ],
     },
     {

@@ -29,7 +29,7 @@ const Form = ({
 
   const onSubmit = (data: any) => {
     submitHandler(data);
-    reset();
+    // reset();
   };
 
   useEffect(() => reset(defaultValues), [defaultValues, reset, methods]);

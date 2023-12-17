@@ -1,20 +1,20 @@
-import {  IMeta } from "@/types";
-import { baseApi } from "./baseApi";
-import { tagTypes } from "../tag-types";
+import { IMeta } from "@/types";
+import { baseApi } from "../baseApi";
+import { tagTypes } from "../../tag-types";
 
-const GENERAL_USER_URL = "/general-user";
+const GENERAL_USER_URL = "/user";
 
 export const generalUserApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addGeneralUserWithFormData: build.mutation({
       query: (data) => ({
-        url: "/users/create-general-user",
+        url: "/user/create-general-user",
         method: "POST",
         data,
         // contentType: "multipart/form-data",
         contentType: "application/json",
       }),
-      invalidatesTags: [tagTypes.general_user],
+      invalidatesTags: [tagTypes.user],
     }),
 
     getMultipleGeneralUsers: build.query({
@@ -25,20 +25,20 @@ export const generalUserApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any[], meta: IMeta) => {
+      transformResponse: (response:any) => {
         return {
           data: response,
-          meta,
+          // meta,
         };
       },
-      providesTags: [tagTypes.general_user],
+      providesTags: [tagTypes.user],
     }),
     getSingleGeneralUser: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `${GENERAL_USER_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.general_user],
+      providesTags: [tagTypes.user],
     }),
     updateGeneralUser: build.mutation({
       query: (data) => ({
@@ -46,14 +46,14 @@ export const generalUserApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data.body,
       }),
-      invalidatesTags: [tagTypes.general_user,tagTypes.user],
+      invalidatesTags: [tagTypes.user, tagTypes.user],
     }),
     deleteGeneralUser: build.mutation({
       query: (id) => ({
         url: `${GENERAL_USER_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.general_user],
+      invalidatesTags: [tagTypes.user],
     }),
   }),
 });

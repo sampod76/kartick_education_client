@@ -1,27 +1,25 @@
 export enum tagTypes {
+  student = "student",
   user = "user",
-  department = "department",
-  faculty = "faculty",
+  moderator = "moderator",
   admin = "admin",
-  general_user = "general_user",
-  service="service",
-  booking="booking",
-  rating="rating",
-  blog="blog",
-  faq="faq",
+  trainer = "trainer",
+  category = "category",
+  milestone = "milestone",
+  module = "module",
+  lesson = "lesson",
+  quiz = "quiz",
 }
 
 export const tagTypesList = [
-
+  tagTypes.category,
+  tagTypes.student,
   tagTypes.user,
-  tagTypes.service,
-  tagTypes.department,
-  tagTypes.faculty,
+  tagTypes.moderator,
   tagTypes.admin,
-  tagTypes.general_user,
-  tagTypes.booking,
-  tagTypes.rating,
-  tagTypes.blog,
-  tagTypes.faq,
- 
+  tagTypes.trainer,
+  tagTypes.milestone,
+  tagTypes.module,
+  tagTypes.lesson,
+  tagTypes.quiz,
 ];

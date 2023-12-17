@@ -8,35 +8,35 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/generalUserApi";
+import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
+import { adminSchema, userSchema } from "@/schemas/student";
 
-import { adminSchema, userSchema } from "@/schemas/admin";
- 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
 
 const CreateGeneralUserPage = () => {
-  const [addGeneralUserWithFormData,{isLoading}] = useAddGeneralUserWithFormDataMutation();
+  const [addGeneralUserWithFormData, { isLoading }] =
+    useAddGeneralUserWithFormDataMutation();
 
   const onSubmit = async (values: any) => {
     console.log(values);
     try {
-      const res = await addGeneralUserWithFormData({...values}).unwrap();
+      const res = await addGeneralUserWithFormData({ ...values }).unwrap();
       if (res?.success == false) {
-        Error_model_hook(res?.message)
+        Error_model_hook(res?.message);
       } else {
-        Success_model("Customar created successfully")
+        Success_model("Customar created successfully");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
     }
   };
-  if(isLoading){
-    return message.loading("Loading...")
+  if (isLoading) {
+    return message.loading("Loading...");
   }
 
   return (

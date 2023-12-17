@@ -21,17 +21,18 @@ import {
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import {
-  useDeleteGeneralUserMutation,
-  useGetMultipleGeneralUsersQuery,
-} from "@/redux/api/adminApi/userManageApi";
+
 import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import {
+  useDeleteStudentMutation,
+  useGetAllStudentsQuery,
+} from "@/redux/api/adminApi/studentApi";
 
-const AdminPage = () => {
+const StudentPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
-  const [deleteGeneralUser] = useDeleteGeneralUserMutation();
+  const [deleteStudent] = useDeleteStudentMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -54,12 +55,16 @@ const AdminPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetMultipleGeneralUsersQuery({
+  const { data = [], isLoading } = useGetAllStudentsQuery({
     ...query,
   });
 
+
   //@ts-ignore
-  const generalUserData = data?.data;
+  const StudentData = data?.data;
+
+  console.log(StudentData, "student data");
+
   //@ts-ignore
   const meta = data?.meta;
 
@@ -67,7 +72,8 @@ const AdminPage = () => {
     {
       title: "Name",
       render: function (data: any) {
-        const fullName = `${data?.name} `;
+        // console.log(data);
+        const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
         return <>{fullName}</>;
       },
     },
@@ -89,30 +95,42 @@ const AdminPage = () => {
       dataIndex: "phoneNumber",
     },
     {
+      title: "Date Of Birth",
+      dataIndex: "dateOfBirth",
+    },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+    },
+    {
       title: "Action",
       dataIndex: "_id",
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+            <Link href={`/admin/manage-users/students/details/${data}`}>
+              <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
+            <Link href={`/admin/manage-users/students/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
             <Button
-              onClick={() => deleteGeneralUserHandler(data)}
-              type="primary"
+              onClick={() => deleteStudentHandler(data)}
+              type="default"
               danger
             >
               <DeleteOutlined />
@@ -140,18 +158,18 @@ const AdminPage = () => {
     setSearchTerm("");
   };
 
-  const deleteGeneralUserHandler = async (id: string) => {
+  const deleteStudentHandler = async (id: string) => {
     console.log(id);
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          const res = await deleteGeneralUser(id).unwrap();
+          const res = await deleteStudent(id).unwrap();
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Customer Successfully Deleted");
+            Success_model("Student Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
@@ -164,7 +182,7 @@ const AdminPage = () => {
   }
   return (
     <div>
-      <ActionBar title="Customer List">
+      <ActionBar title="Student List">
         <Input
           size="large"
           placeholder="Search"
@@ -174,13 +192,14 @@ const AdminPage = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/general_user/create`}>
-            <Button type="primary">Create Customer</Button>
+         
+          <Link href={`/admin/manage-users/students/create`}>
+            <Button type="default">Create Student</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />
@@ -188,11 +207,11 @@ const AdminPage = () => {
           )}
         </div>
       </ActionBar>
-
+ 
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={generalUserData}
+        dataSource={StudentData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -205,7 +224,7 @@ const AdminPage = () => {
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteGeneralUserHandler(adminId)}
+        handleOk={() => deleteStudentHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
@@ -213,4 +232,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default StudentPage;

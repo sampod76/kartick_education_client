@@ -5,108 +5,70 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import HomeHeader from "@/components/Home/HomeHeader";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { USER_ROLE } from "@/constants/role";
-import { useUpdateAdminMutation } from "@/redux/api/adminApi";
-import {
-  useGetProfileQuery,
-  useUserLoginMutation,
-} from "@/redux/api/auth/authApi";
-import {
-  useAddGeneralUserWithFormDataMutation,
-  useUpdateGeneralUserMutation,
-} from "@/redux/api/adminApi/userManageApi";
+import uploadImgBB from "@/hooks/imgbbUploads";
+import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
+// import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
+import { IStudentCreate } from "@/schemas/studentSchema";
 
-import { adminSchema } from "@/schemas/student";
-import { getUserInfo, storeUserInfo } from "@/services/auth.service";
+import { adminSchema, createStudentSchema } from "@/schemas/student";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, Col, Image, Row, Space, Spin, message } from "antd";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
-import { NO_IMAGE } from "@/constants/filePatch";
-import { useUpdateSuperAdminMutation } from "@/redux/api/superAdminApi";
+import { Button, Col, Row, Upload, message } from "antd";
 
-const UpdateProfile = () => {
-  const [user, setUserData] = useState<any>({});
-  const [userLoading, setUserLoading] = useState<boolean>(true);
-  useEffect(() => {
-    setUserData(getUserInfo() as any);
-    setUserLoading(false);
-    return () => {};
-  }, []);
-  const { data = {}, isLoading: profileLoading } = useGetProfileQuery("");
-  console.log(data);
-  const userData = data?.generalUser || data?.admin || data?.superAdmin;
-  const [updateGeneralUser, { isLoading }] = useUpdateGeneralUserMutation();
-  const [updateAdmin, { isLoading: updateAdminLoader }] =
-    useUpdateAdminMutation();
-  const [updateSuperAdmin, { isLoading: updateSuperAdminLoader }] =
-    useUpdateSuperAdminMutation();
+const CreateGeneralUserPage = () => {
+  const [addStudentWithFormData, { isLoading }] =
+    useAddStudentWithFormDataMutation();
 
-  const onSubmit = async (values: any) => {
-    console.log(user);
+  const onSubmit = async (values: IStudentCreate) => {
+    // console.log(values.img, "values of student");
+    let { img, ...others } = values;
+
+    const imageUrl = await uploadImgBB(values.img);
+
+    // console.log(imageUrl, "image url");
+
+    img = imageUrl;
+
+    const studentData = {
+      password: "1234asdf",
+      student: { img: imageUrl, ...others },
+    };
+
+    console.log(studentData, "student");
+
+    // Success_model("Customer created successfully");
 
     try {
-      let res;
-      if (user?.role === USER_ROLE.GENERAL_USER) {
-        res = await updateGeneralUser({
-          id: userData?._id,
-          body: values,
-        }).unwrap();
-      } else if (user?.role === USER_ROLE.ADMIN) {
-        res = await updateAdmin({
-          id: userData?._id,
-          body: values,
-        }).unwrap();
-      } else if (user?.role === USER_ROLE.SUPER_ADMIN) {
-        console.log(user);
-        res = await updateSuperAdmin({
-          id: userData?._id,
-          body: values,
-        }).unwrap();
-      }
+      const res = await addStudentWithFormData({ ... studentData }).unwrap();
+      console.log(res, "response");
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Profile update  successfully");
+        Success_model("Customer created successfully");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
     }
   };
-  if (
-    isLoading ||
-    userLoading ||
-    updateAdminLoader ||
-    profileLoading ||
-    updateSuperAdminLoader
-  ) {
-    return <LoadingForDataFetch />;
+  if (isLoading) {
+    return message.loading("Loading...");
   }
-  const defaultValues = {
-    name: userData?.name || "",
-    email: userData?.email || "",
-    phoneNumber: userData?.phoneNumber || "",
-    profileImage: userData?.profileImage || "",
-    gender: userData?.gender || "",
-    dateOfBirth: userData?.dateOfBirth || "",
-    address: userData?.address || "",
-    description: userData?.description || "",
-  };
 
   return (
     <div>
+      <h1>Create Customer/normal user</h1>
       {/* resolver={yupResolver(adminSchema)} */}
-      <div className="container mx-auto p-5">
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+      <div>
+        <Form
+          submitHandler={onSubmit}
+          // resolver={yupResolver(createStudentSchema)}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -120,9 +82,8 @@ const UpdateProfile = () => {
                 fontSize: "18px",
                 marginBottom: "10px",
               }}
-              className="text-lg text-center"
             >
-              Account Registration
+              Student Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -136,9 +97,24 @@ const UpdateProfile = () => {
               >
                 <FormInput
                   type="text"
-                  name="name"
+                  name="name.firstName"
                   size="large"
-                  label="Full Name"
+                  label="First Name"
+                  required={true}
+                />
+                <FormInput
+                  type="text"
+                  name="name.middleName"
+                  size="large"
+                  label="Middle Name"
+                  // required={true}
+                />
+                <FormInput
+                  type="text"
+                  name="name.lastName"
+                  size="large"
+                  label="Last Name"
+                  required={true}
                 />
               </Col>
               <Col
@@ -155,8 +131,24 @@ const UpdateProfile = () => {
                   name="email"
                   size="large"
                   label="Email address"
-                  disabled={true}
-                  //   readOnly={true}
+                  required={true}
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="number"
+                  name="phoneNumber"
+                  size="large"
+                  label="Phone Number"
+                  required={true}
                 />
               </Col>
 
@@ -169,16 +161,25 @@ const UpdateProfile = () => {
                   marginBottom: "10px",
                 }}
               >
-                <div className="flex justify-start items-start gap-4">
-                  <UploadImage name="profileImage" />
-                  <Image
-                    src={defaultValues?.profileImage || NO_IMAGE}
-                    width={300}
-                    height={300}
-                    style={{ width: "80px", height: "80px" }}
-                    alt=""
-                  />
-                </div>
+                <FormSelectField
+                  size="large"
+                  name="bloodGroup"
+                  options={bloodGroupOptions}
+                  label="bloodGroup"
+                  placeholder="Select"
+                  required={true}
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <UploadImage name="img" />
               </Col>
             </Row>
           </div>
@@ -216,6 +217,7 @@ const UpdateProfile = () => {
                   options={genderOptions}
                   label="Gender"
                   placeholder="Select"
+                  required={true}
                 />
               </Col>
 
@@ -230,9 +232,27 @@ const UpdateProfile = () => {
               >
                 <FormInput
                   type="text"
+                  name="address"
+                  size="large"
+                  label="Address"
+                  required={true}
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
+                  required={true}
                 />
               </Col>
               <Col
@@ -248,38 +268,21 @@ const UpdateProfile = () => {
                   name="dateOfBirth"
                   label="Date of birth"
                   size="large"
-                  disablePrevious={false}
                 />
               </Col>
 
               <Col span={12} style={{ margin: "10px 0" }}>
                 <FormTextArea name="address" label="Address" rows={4} />
               </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea name="description" label="Description" rows={4} />
-              </Col>
             </Row>
           </div>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {isLoading ? (
-              <Spin></Spin>
-            ) : (
-              <Button size="large" htmlType="submit" type="primary">
-                Update
-              </Button>
-            )}
-          </div>
+          <Button htmlType="submit" type="default">
+            Create
+          </Button>
         </Form>
       </div>
     </div>
   );
 };
 
-export default UpdateProfile;
+export default CreateGeneralUserPage;

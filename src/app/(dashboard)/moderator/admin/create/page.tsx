@@ -10,32 +10,33 @@ import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 
-import { adminSchema } from "@/schemas/admin";
- 
+import { adminSchema } from "@/schemas/student";
+
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
 
 const CreateAdminPage = () => {
-  const [addAdminWithFormData,{isLoading}] = useAddAdminWithFormDataMutation();
+  const [addAdminWithFormData, { isLoading }] =
+    useAddAdminWithFormDataMutation();
 
   const onSubmit = async (values: any) => {
     console.log(values);
     try {
-      const res = await addAdminWithFormData({...values}).unwrap();
+      const res = await addAdminWithFormData({ ...values }).unwrap();
       if (res?.success == false) {
-        Error_model_hook(res?.message)
+        Error_model_hook(res?.message);
       } else {
-        Success_model("Admin created successfully")
+        Success_model("Admin created successfully");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
     }
   };
-  if(isLoading){
-    return message.loading("Loading...")
+  if (isLoading) {
+    return message.loading("Loading...");
   }
 
   return (

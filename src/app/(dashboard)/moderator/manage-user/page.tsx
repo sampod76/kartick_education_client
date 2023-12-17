@@ -14,13 +14,17 @@ import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 
- 
-
- 
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
-import { useDeleteGeneralUserMutation, useGetMultipleGeneralUsersQuery } from "@/redux/api/generalUserApi";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
+import {
+  useDeleteGeneralUserMutation,
+  useGetMultipleGeneralUsersQuery,
+} from "@/redux/api/adminApi/userManageApi";
 
 const AdminPage = () => {
   const query: Record<string, any> = {};
@@ -47,7 +51,9 @@ const AdminPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetMultipleGeneralUsersQuery({ ...query });
+  const { data = [], isLoading } = useGetMultipleGeneralUsersQuery({
+    ...query,
+  });
 
   //@ts-ignore
   const generalUserData = data?.data;
@@ -101,7 +107,11 @@ const AdminPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => deleteGeneralUserHandler(data)} type="primary" danger>
+            <Button
+              onClick={() => deleteGeneralUserHandler(data)}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </>
@@ -129,16 +139,16 @@ const AdminPage = () => {
 
   const deleteGeneralUserHandler = async (id: string) => {
     console.log(id);
-    confirm_modal(`Are you sure you want to delete`).then(async(res) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
           const res = await deleteGeneralUser(id).unwrap();
-          if (res.success ==false) {
+          if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
-            Error_model_hook(res?.message)
-          }else{
-            Success_model("Customer Successfully Deleted")
+            Error_model_hook(res?.message);
+          } else {
+            Success_model("Customer Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
@@ -146,13 +156,12 @@ const AdminPage = () => {
       }
     });
   };
-  if(isLoading){
-    return message.loading("Loading..")
+  if (isLoading) {
+    return message.loading("Loading..");
   }
-console.log(data);
+  console.log(data);
   return (
     <div>
-    
       <ActionBar title="Customer List">
         <Input
           size="large"

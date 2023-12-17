@@ -1,5 +1,6 @@
-import { tagTypes } from "../tag-types";
-import { baseApi } from "./baseApi";
+import { tagTypes } from "../../tag-types";
+import { baseApi } from "../baseApi";
+
 const AUTH_URL = "/auth";
 
 export const authApi = baseApi.injectEndpoints({
@@ -10,14 +11,14 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: loginData,
       }),
-      // invalidatesTags:[tagTypes.user]
+      invalidatesTags:[tagTypes.student]
     }),
     getProfile: build.query({
       query: () => ({
         url: `/users/profile`,
         method: "GET",
       }),
-      providesTags: [tagTypes.user],
+      providesTags: [tagTypes.student],
     }),
     updateRole: build.mutation({
       query: (data) => ({
@@ -25,9 +26,13 @@ export const authApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data.body,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: [tagTypes.student],
     }),
   }),
 });
 
-export const { useUserLoginMutation,useGetProfileQuery,useUpdateRoleMutation } = authApi;
+export const {
+  useUserLoginMutation,
+  useGetProfileQuery,
+  useUpdateRoleMutation,
+} = authApi;
