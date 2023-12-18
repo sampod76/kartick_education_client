@@ -5,16 +5,16 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import HomeHeader from "@/components/Home/HomeHeader";
+// import HomeHeader from "@/components/Home/HomeHeader";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useUserLoginMutation } from "@/redux/api/authApi";
-import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/generalUserApi";
+import { useUserLoginMutation } from "@/redux/api/auth/authApi";
+import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-import { adminSchema } from "@/schemas/admin";
+import { adminSchema } from "@/schemas/student";
 import { storeUserInfo } from "@/services/auth.service";
- 
+
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -59,7 +59,7 @@ const Registration = () => {
 
   return (
     <div>
-      <HomeHeader />
+      {/* <HomeHeader /> */}
 
       {/* resolver={yupResolver(adminSchema)} */}
       <div className="container mx-auto p-5">

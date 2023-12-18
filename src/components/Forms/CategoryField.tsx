@@ -1,4 +1,4 @@
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import FormSelectField, { SelectOptions } from "./FormSelectField";
 
 type CategoryFormField = {
@@ -19,7 +19,6 @@ const CategoryField = ({ name, label }: CategoryFormField) => {
       value: acDepartment?.id,
     };
   });
-
 
   return (
     <FormSelectField

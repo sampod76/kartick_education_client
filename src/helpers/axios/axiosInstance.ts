@@ -3,7 +3,7 @@ import { authKey } from "@/constants/storageKey";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
-import { message } from 'antd';
+// import { message } from 'antd';
 
 const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
@@ -18,6 +18,7 @@ instance.interceptors.request.use(
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }
+    
     return config;
   },
   function (error) {

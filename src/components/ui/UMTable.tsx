@@ -37,6 +37,9 @@ const UMTable = ({
 
   return (
     <Table
+      style={{
+        overflowX: "auto",
+      }}
       loading={loading}
       columns={columns}
       dataSource={dataSource}

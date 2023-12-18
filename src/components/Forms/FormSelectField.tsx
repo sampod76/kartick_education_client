@@ -43,6 +43,7 @@ const FormSelectField = ({
           <Select
             onChange={handleChange ? handleChange : onChange}
             size={size}
+            // defaultActiveFirstOption
            
             options={options}
             value={value}

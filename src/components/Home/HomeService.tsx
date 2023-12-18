@@ -19,7 +19,7 @@ import { useAddBookingMutation } from "@/redux/api/bookingApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import Link from "next/link";
 import { ENUM_BOOKING_STATUS } from "@/constants/global";
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useDebounced } from "@/redux/hooks";
 import Search, { SearchProps } from "antd/es/input/Search";
 
@@ -91,7 +91,8 @@ const UpComingService = ({
     setOpen(false);
   };
   //
-  const onSearch: SearchProps['onSearch'] = (value, _e, info) => setSearchTem(value);
+  const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
+    setSearchTem(value);
   if (isLoading || catagoryLoading) {
     return <LoadingForDataFetch />;
   }
@@ -103,8 +104,12 @@ const UpComingService = ({
         </h1>
         <div className="flex items-center gap-2">
           <div>
-          <h1>Search</h1>
-        <Search placeholder="input search text" onSearch={onSearch} enterButton />
+            <h1>Search</h1>
+            <Search
+              placeholder="input search text"
+              onSearch={onSearch}
+              enterButton
+            />
           </div>
           <div>
             <h1>Category</h1>
