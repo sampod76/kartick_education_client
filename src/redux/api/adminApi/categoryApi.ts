@@ -15,39 +15,50 @@ export const categoryApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: { data: ICategory[]; meta: IMeta }) => {
+      transformResponse: (response: any[], meta: IMeta) => {
+        console.log(response);
         return {
-          data: response.data,
-          meta: response.meta,
+          data: response,
+          meta,
         };
       },
-      // providesTags: [tagTypes.academicDepartment],
+      providesTags: [tagTypes.category],
     }),
     // get single academic department
     getSingleCategory: build.query({
-      query: (id: string | string[] | undefined) => ({
-        url: `${CATEGORY_URL}/${id}`,
-        method: "GET",
-      }),
-      // providesTags: [tagTypes.academicDepartment],
+      query: (id: string | string[] | undefined) => {
+        console.log(id);
+        return {
+          url: `${CATEGORY_URL}/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: [tagTypes.category],
     }),
     // create a new academic department
     addCategory: build.mutation({
-      query: (data) => ({
-        url: CATEGORY_URL,
-        method: "POST",
-        data,
-      }),
-      // invalidatesTags: [tagTypes.academicDepartment],
+      query: (data) => {
+        // console.log(data, "cacccc");
+
+        return {
+          url: CATEGORY_URL,
+          method: "POST",
+          data,
+        };
+      },
+      invalidatesTags: [tagTypes.category],
     }),
     // update ac department
     updateCategory: build.mutation({
-      query: (data) => ({
-        url: `${CATEGORY_URL}/${data.id}`,
-        method: "PATCH",
-        data: data.body,
-      }),
-      // invalidatesTags: [tagTypes.academicDepartment],
+      query: ({ data, id }) => {
+        console.log(data, "category data");
+        return {
+          url: `${CATEGORY_URL}/${id}`,
+          method: "PATCH",
+          data: data,
+        };
+      },
+      invalidatesTags: [tagTypes.category],
     }),
 
     // delete ac department
@@ -56,7 +67,7 @@ export const categoryApi = baseApi.injectEndpoints({
         url: `${CATEGORY_URL}/${id}`,
         method: "DELETE",
       }),
-      // invalidatesTags: [tagTypes.academicDepartment],
+      invalidatesTags: [tagTypes.category],
     }),
   }),
 });

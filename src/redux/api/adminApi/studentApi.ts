@@ -27,11 +27,11 @@ export const studentApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any) => {
-        // console.log(response, "from getAllStudents");
+      transformResponse: (response: any[], meta: IMeta) => {
+        // console.log(response);
         return {
-          data: response.data,
-          meta: response.meta,
+          data: response,
+          meta,
         };
       },
       providesTags: [tagTypes.student],

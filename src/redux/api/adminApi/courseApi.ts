@@ -15,10 +15,11 @@ export const courseApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: { data:any, meta: IMeta }) => {
+      transformResponse: (response:any[],meta:IMeta) => {
+        console.log(response);
         return {
-          data: response.data,
-          meta: response.meta,
+          data: response,
+          meta
         };
       },
       // providesTags: [tagTypes.academicDepartment],

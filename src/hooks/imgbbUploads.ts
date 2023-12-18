@@ -1,7 +1,7 @@
 const url = `https://api.imgbb.com/1/upload?key=a50f3571eea0f08e932e0a8e13295351`;
 
 
-const uploadImgBB = async (img: any) => {
+const uploadImgBB = async (img: any):Promise<string>=> {
   const formData = new FormData();
   formData.append("image", img);
 
@@ -13,7 +13,8 @@ const uploadImgBB = async (img: any) => {
 
     if (response.ok) {
       const data = await response.json();
-      return data.data.display_url;
+      const imgUrl = data.data.display_url
+      return imgUrl;
     } else {
       throw new Error("Failed to upload image");
     }

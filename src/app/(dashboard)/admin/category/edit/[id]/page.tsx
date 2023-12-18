@@ -11,11 +11,11 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import uploadImgBB from "@/hooks/imgbbUploads";
 import {
-  useGetSingleServiceQuery,
-  useUpdateServiceMutation,
-} from "@/redux/api/serviceApi";
+  useGetSingleCategoryQuery,
+  useUpdateCategoryMutation,
+} from "@/redux/api/adminApi/categoryApi";
 
 import { ICategory } from "@/types";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -23,23 +23,34 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
 
-const EditServicePage = ({ params }: any) => {
-  const { data: serviceData, isLoading } = useGetSingleServiceQuery(params?.id);
-  const { data: categoryData = [] } = useGetAllCategoryQuery({});
-  const [updateService, { isLoading: updateLoading, error }] =
-    useUpdateServiceMutation();
+const EditCategoryPage = ({ params }: any) => {
+  const { data: categoryData, isLoading } = useGetSingleCategoryQuery(
+    params?.id,
+    {
+      skip: !Boolean(params?.id),
+    }
+  );
+  console.log(categoryData);
+  // const { data: categoryData = [] } = useGetAllCategoryQuery({});
+  const [updateCategory, { isLoading: updateLoading, error }] =
+    useUpdateCategoryMutation();
 
   const onSubmit = async (values: any) => {
+    if (typeof values.img !== "string") {
+      console.log(values);
+      values.img = await uploadImgBB(values.img);
+    }
     const UpdateValues = {
       ...values,
-      availableTickets: Number(values?.availableTickets || 0),
-      price: Number(values?.price || 0),
     };
+
+    console.log(UpdateValues);
     try {
-      const res = await updateService({
+      const res = await updateCategory({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
+      
       console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
@@ -58,24 +69,21 @@ const EditServicePage = ({ params }: any) => {
   }
 
   const defaultValues = {
-    title: serviceData?.title || "",
-    price: serviceData?.price || "",
-    image: serviceData?.image || "",
-    description: serviceData?.description || "",
-    address: serviceData?.address || "",
-    contact: serviceData?.contact || "",
-    availableTickets: serviceData?.availableTickets || "",
-    serviceDate: serviceData?.serviceDate || "",
-    status: serviceData?.status || "",
+    title: categoryData?.title || "",
 
-    // managementDepartment: serviceData?.managementDepartment?.id || "",
+    img: categoryData?.img || "",
+
+    status: categoryData?.status || "",
+
+    // managementDepartment: CategoryData?.managementDepartment?.id || "",
   };
+  console.log(defaultValues);
 
   return (
     <div>
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
-        {/* resolver={yupResolver(IServiceSchema)} */}
+        {/* resolver={yupResolver(ICategorySchema)} */}
         <Form submitHandler={onSubmit} defaultValues={defaultValues}>
           <div
             style={{
@@ -91,7 +99,7 @@ const EditServicePage = ({ params }: any) => {
                 marginBottom: "10px",
               }}
             >
-              Service Information
+              Category Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -107,141 +115,9 @@ const EditServicePage = ({ params }: any) => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Service Name"
+                  label="Category Name"
                   required={true}
                 />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="number"
-                  name="price"
-                  size="large"
-                  label="Per Ticket Price"
-                  required={true}
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="contact"
-                  size="large"
-                  label="Bus Driver Number"
-                  required={true}
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <Row gutter={[16, 16]}>
-                  <Col
-                    className="gutter-row"
-                    span={12}
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <FormDatePicker name="serviceDate" label="Date" />
-                  </Col>
-                  <Col
-                    className="gutter-row"
-                    span={12}
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <FormInput
-                      type="number"
-                      name="availableTickets"
-                      size="large"
-                      label="Available Tickets"
-                      required={true}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <Row gutter={[16, 16]}>
-                  <Col
-                    className="gutter-row"
-                    xs={24}
-                    md={12}
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <FormSelectField
-                      name="category"
-                      label="Select Category"
-                      required={true}
-                      options={
-                        //@ts-ignore
-                        categoryData?.data?.map((e) => ({
-                          value: e._id,
-                          label: e.title,
-                        }))
-                      }
-                    />
-                  </Col>
-                  <Col
-                    className="gutter-row"
-                    xs={24}
-                    md={12}
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <FormSelectField
-                      name="status"
-                      label="Select status"
-                      required={true}
-                      options={[
-                        {
-                          value: "available",
-                          label: "Available",
-                        },
-                        {
-                          value: "upcoming",
-                          label: "Upcoming",
-                        },
-                        {
-                          value: "unavailable",
-                          label: "Unavailable",
-                        },
-                      ]}
-                    />
-                  </Col>
-                </Row>
               </Col>
 
               <Col
@@ -254,22 +130,8 @@ const EditServicePage = ({ params }: any) => {
                 }}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2">
-                  <UploadImage name="image" />
-                  <Image
-                    src={defaultValues?.image}
-                    width={100}
-                    height={100}
-                    className="w-36"
-                    alt="d"
-                  />
+                  <UploadImage name="img" defaultImage={categoryData.img} />
                 </div>
-              </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea
-                  name="description"
-                  label="Service description"
-                  rows={4}
-                />
               </Col>
 
               {/* <Col span={12} style={{ margin: "10px 0" }}>
@@ -284,7 +146,7 @@ const EditServicePage = ({ params }: any) => {
               alignItems: "center",
             }}
           >
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit" type="default">
               Update
             </Button>
           </div>
@@ -294,4 +156,4 @@ const EditServicePage = ({ params }: any) => {
   );
 };
 
-export default EditServicePage;
+export default EditCategoryPage;
