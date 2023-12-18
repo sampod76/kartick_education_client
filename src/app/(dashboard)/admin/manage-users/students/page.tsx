@@ -46,19 +46,19 @@ const StudentPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["status"] = "active";
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
   });
-
+  console.log(query, "query");
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllStudentsQuery({
     ...query,
   });
-
 
   //@ts-ignore
   const StudentData = data?.data;
@@ -192,7 +192,6 @@ const StudentPage = () => {
           }}
         />
         <div>
-         
           <Link href={`/admin/manage-users/students/create`}>
             <Button type="default">Create Student</Button>
           </Link>
@@ -207,7 +206,7 @@ const StudentPage = () => {
           )}
         </div>
       </ActionBar>
- 
+
       <UMTable
         loading={isLoading}
         columns={columns}

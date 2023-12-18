@@ -2,7 +2,7 @@ import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "../../tag-types";
 
-const GENERAL_USER_URL = "/student";
+const STUDENT_URL = "/student";
 
 export const studentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -19,7 +19,7 @@ export const studentApi = baseApi.injectEndpoints({
     getAllStudents: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: GENERAL_USER_URL,
+          url: STUDENT_URL,
           method: "GET",
           params: arg,
         };
@@ -35,14 +35,14 @@ export const studentApi = baseApi.injectEndpoints({
     }),
     getSingleStudent: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `${GENERAL_USER_URL}/${id}`,
+        url: `${STUDENT_URL}/${id}`,
         method: "GET",
       }),
       providesTags: [tagTypes.student],
     }),
     updateStudent: build.mutation({
       query: (data) => ({
-        url: `${GENERAL_USER_URL}/${data.id}`,
+        url: `${STUDENT_URL}/${data.id}?stat`,
         method: "PATCH",
         data: data.body,
       }),
@@ -50,7 +50,7 @@ export const studentApi = baseApi.injectEndpoints({
     }),
     deleteStudent: build.mutation({
       query: (id) => ({
-        url: `${GENERAL_USER_URL}/${id}`,
+        url: `${STUDENT_URL}/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [tagTypes.student],
