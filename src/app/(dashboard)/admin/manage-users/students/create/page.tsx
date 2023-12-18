@@ -20,7 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, Upload, message } from "antd";
 
-const CreateGeneralUserPage = () => {
+const CreateStudentPage = () => {
   const [addStudentWithFormData, { isLoading }] =
     useAddStudentWithFormDataMutation();
 
@@ -44,7 +44,7 @@ const CreateGeneralUserPage = () => {
     // Success_model("Customer created successfully");
 
     try {
-      const res = await addStudentWithFormData({ ... studentData }).unwrap();
+      const res = await addStudentWithFormData({ ...studentData }).unwrap();
       console.log(res, "response");
       if (res?.success == false) {
         Error_model_hook(res?.message);
@@ -60,6 +60,10 @@ const CreateGeneralUserPage = () => {
     return message.loading("Loading...");
   }
 
+  // const defaultValues = {
+  //   blood,
+  // };
+
   return (
     <div>
       <h1>Create Customer/normal user</h1>
@@ -68,6 +72,10 @@ const CreateGeneralUserPage = () => {
         <Form
           submitHandler={onSubmit}
           // resolver={yupResolver(createStudentSchema)}
+          defaultValues={{
+            bloodGroup: bloodGroupOptions[0].value,
+            gender: genderOptions[0].value,
+          }}
         >
           <div
             style={{
@@ -144,7 +152,7 @@ const CreateGeneralUserPage = () => {
                 }}
               >
                 <FormInput
-                  type="number"
+                  type="string"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
@@ -165,8 +173,9 @@ const CreateGeneralUserPage = () => {
                   size="large"
                   name="bloodGroup"
                   options={bloodGroupOptions}
+                  defaultValue={bloodGroupOptions[0]}
                   label="bloodGroup"
-                  placeholder="Select"
+                  // placeholder="Select"
                   required={true}
                 />
               </Col>
@@ -285,4 +294,4 @@ const CreateGeneralUserPage = () => {
   );
 };
 
-export default CreateGeneralUserPage;
+export default CreateStudentPage;

@@ -7,13 +7,16 @@ const STUDENT_URL = "/student";
 export const studentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addStudentWithFormData: build.mutation({
-      query: (data) => ({
-        url: "/user/create-student",
-        method: "POST",
-        data,
-        // contentType: "multipart/form-data",
-        contentType: "application/json",
-      }),
+      query: (data) => {
+        // console.log(data, "student");
+        return {
+          url: "/user/create-student",
+          method: "POST",
+          data: data,
+          // contentType: "multipart/form-data",
+          contentType: "application/json",
+        };
+      },
       invalidatesTags: [tagTypes.student],
     }),
     getAllStudents: build.query({

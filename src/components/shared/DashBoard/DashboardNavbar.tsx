@@ -23,7 +23,7 @@ import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 
 const { Header } = Layout;
 
-const DashboardNavBar = ({
+const  DashboardNavBar = ({
   collapsed,
   setCollapsed,
 }: {
