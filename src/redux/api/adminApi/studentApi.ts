@@ -28,7 +28,7 @@ export const studentApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        // console.log(response);
+        console.log(response);
         return {
           data: response,
           meta,
@@ -44,12 +44,15 @@ export const studentApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.student],
     }),
     updateStudent: build.mutation({
-      query: (data) => ({
-        url: `${STUDENT_URL}/${data.id}?stat`,
-        method: "PATCH",
-        data: data.body,
-      }),
-      invalidatesTags: [tagTypes.student, tagTypes.student],
+      query: ({ data, id }) => {
+        console.log(data, "student data", id);
+        return {
+          url: `${STUDENT_URL}/${id}`,
+          method: "PUT",
+          data: data,
+        };
+      },
+      invalidatesTags: [tagTypes.student],
     }),
     deleteStudent: build.mutation({
       query: (id) => ({
