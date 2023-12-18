@@ -1,6 +1,7 @@
-import { tagTypes } from "@/redux/tag-types";
-import {  IMeta } from "@/types";
+// import { tagTypes.courseg-types";
+import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
+import { tagTypes } from "@/redux/tag-types";
 
 const COURSE_URL = "/course";
 
@@ -15,14 +16,14 @@ export const courseApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response:any[],meta:IMeta) => {
+      transformResponse: (response: any[], meta: IMeta) => {
         console.log(response);
         return {
           data: response,
-          meta
+          meta,
         };
       },
-      // providesTags: [tagTypes.academicDepartment],
+      providesTags: [tagTypes.course],
     }),
     // get single academic department
     getSingleCourse: build.query({
@@ -30,7 +31,7 @@ export const courseApi = baseApi.injectEndpoints({
         url: `${COURSE_URL}/${id}`,
         method: "GET",
       }),
-      // providesTags: [tagTypes.academicDepartment],
+      providesTags: [tagTypes.course],
     }),
     // create a new academic department
     addCourse: build.mutation({
@@ -39,16 +40,16 @@ export const courseApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
-      // invalidatesTags: [tagTypes.academicDepartment],
+      invalidatesTags: [tagTypes.course],
     }),
     // update ac department
     updateCourse: build.mutation({
-      query: (data) => ({
-        url: `${COURSE_URL}/${data.id}`,
-        method: "PATCH",
-        data: data.body,
+      query: ({ data, id }) => ({
+        url: `${COURSE_URL}/${id}`,
+        method: "PUT",
+        data: data,
       }),
-      // invalidatesTags: [tagTypes.academicDepartment],
+      invalidatesTags: [tagTypes.course],
     }),
 
     // delete ac department
@@ -57,7 +58,7 @@ export const courseApi = baseApi.injectEndpoints({
         url: `${COURSE_URL}/${id}`,
         method: "DELETE",
       }),
-      // invalidatesTags: [tagTypes.academicDepartment],
+      invalidatesTags: [tagTypes.course],
     }),
   }),
 });

@@ -16,6 +16,7 @@ import {
 import uploadImgBB from "@/hooks/imgbbUploads";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
+import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -27,7 +28,7 @@ import { useState } from "react";
 const CreateCoursePage = () => {
   const [addCourse, { isLoading }] = useAddCourseMutation();
 
-  // for category options selection
+  //! for category options selection
   const { data } = useGetAllCategoryQuery({});
   const CategoryData = data?.data;
   // console.log(CategoryData)
@@ -37,10 +38,23 @@ const CreateCoursePage = () => {
       value: item?._id,
     };
   });
+// ! for get all users
+  const { data:usersData} = useGetAllUsersQuery({})
+  console.log(usersData);
 
+  const AuthorOptions = usersData?.data?.data?.map((item: any) => {
+    return {
+      label: item?.email,
+      value: item?._id,
+    };
+  });
+
+  console.log(AuthorOptions);
+ 
+  
   // !  tag selection
 
-  const OPTIONS = ["Apples", "Nails", "Bananas", "Helicopters"];
+  const OPTIONS = ["course", "tech", "update", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
   console.log(selectedTags, "selectedTags........1");
@@ -216,6 +230,26 @@ const CreateCoursePage = () => {
               >
                 <FormSelectField
                   size="large"
+                  name="author"
+                  options={AuthorOptions}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Author"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
                   name="status"
                   options={courseStatusOptions}
                   // defaultValue={priceTypeOptions[0]}
@@ -339,9 +373,7 @@ const CreateCoursePage = () => {
                 {/* //!6. showing_number */}
               </Col>
 
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea name="address" label="Address" rows={4} />
-              </Col>
+          
             </Row>
           </div>
           <Button htmlType="submit" type="default">

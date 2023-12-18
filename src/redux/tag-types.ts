@@ -9,6 +9,7 @@ export enum tagTypes {
   module = "module",
   lesson = "lesson",
   quiz = "quiz",
+  course = "course",
 }
 
 export const tagTypesList = [
