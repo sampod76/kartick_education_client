@@ -12,7 +12,7 @@ import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { useGetSingleStudentQuery } from "@/redux/api/adminApi/studentApi";
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,

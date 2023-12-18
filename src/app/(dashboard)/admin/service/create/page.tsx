@@ -9,7 +9,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
 
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAddServiceWithFormDataMutation } from "@/redux/api/serviceApi";
 import { IServiceSchema } from "@/schemas/service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";

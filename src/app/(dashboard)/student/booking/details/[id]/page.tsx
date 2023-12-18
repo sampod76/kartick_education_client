@@ -12,13 +12,17 @@ import {
   useGetSingleBookingQuery,
   useUpdateBookingMutation,
 } from "@/redux/api/bookingApi";
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useAddRatingFeedbackMutation,
   useGetAllRatingFeedbackQuery,
 } from "@/redux/api/ratingFeedback";
 import { getUserInfo } from "@/services/auth.service";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
 import { Button, Col, Input, InputNumber, Row, Form, Rate } from "antd";
 import { Rationale } from "next/font/google";
 
@@ -85,7 +89,7 @@ const BookingDetails = ({ params }: any) => {
         //@ts-ignore
         const resBooking = await updateBooking({
           id: params?.id,
-          body: { ratingFeedback: res?._id ,status:'complete'},
+          body: { ratingFeedback: res?._id, status: "complete" },
         }).unwrap();
         console.log(resBooking);
         if (resBooking.success == false) {
@@ -99,24 +103,26 @@ const BookingDetails = ({ params }: any) => {
     }
   };
   const handlePayment = (value: string) => {
-    confirm_modal("Are you sure you want to payment this","Yes payment").then(async (res) => {
-      if (res.isConfirmed) {
-        try {
-          //@ts-ignore
-          const res = await updateBooking({
-            id: params?.id,
-            body: { payment: true },
-          }).unwrap();
-          if (res.success == false) {
-            Error_model_hook(res?.message + "");
-          } else {
-            Success_model("Successfully update booking");
+    confirm_modal("Are you sure you want to payment this", "Yes payment").then(
+      async (res) => {
+        if (res.isConfirmed) {
+          try {
+            //@ts-ignore
+            const res = await updateBooking({
+              id: params?.id,
+              body: { payment: true },
+            }).unwrap();
+            if (res.success == false) {
+              Error_model_hook(res?.message + "");
+            } else {
+              Success_model("Successfully update booking");
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
       }
-    });
+    );
   };
   if (isLoading || bookingLoading) {
     return <LoadingForDataFetch />;
@@ -276,12 +282,15 @@ const BookingDetails = ({ params }: any) => {
             readOnly={true}
           />
           <div className="m-2">
-
-          {defaultValues.status == "accept" && bookingData?.payment ==false && (
-              <Button onClick={() => handlePayment(params?.id)} type="primary">
-                Payment
-              </Button>
-            )}
+            {defaultValues.status == "accept" &&
+              bookingData?.payment == false && (
+                <Button
+                  onClick={() => handlePayment(params?.id)}
+                  type="primary"
+                >
+                  Payment
+                </Button>
+              )}
           </div>
           {/* <div className="my-2 flex justify-center items-center">
             <Button htmlType="submit" type="primary">
@@ -290,61 +299,66 @@ const BookingDetails = ({ params }: any) => {
           </div> */}
         </FormCustom>
         <h1 className="text-center text-2xl my-7">Rating and feedback</h1>
-       {bookingData?.payment && <div>
+        {bookingData?.payment && (
+          <div>
+            {ratingFeedBack?.rating ? (
+              <div className="border-2 rounded-xl p-5">
+                <Form
+                  name="rating-feedback"
+                  form={form}
+                  initialValues={{
+                    rating: ratingFeedBack?.rating || 0,
+                    feedback: ratingFeedBack?.feedback || "",
+                  }}
+                >
+                  <Form.Item name="rating" label="Rating">
+                    <Rate disabled />
+                  </Form.Item>
 
-        {ratingFeedBack?.rating ? (
-          <div className="border-2 rounded-xl p-5">
-            <Form
-              name="rating-feedback"
-              form={form}
-              initialValues={{
-                rating: ratingFeedBack?.rating || 0,
-                feedback: ratingFeedBack?.feedback || "",
-              }}
-            >
-              <Form.Item name="rating" label="Rating">
-                <Rate disabled />
-              </Form.Item>
+                  <Form.Item name="feedback" label="Feedback">
+                    <Input.TextArea readOnly rows={4} />
+                  </Form.Item>
+                </Form>
+              </div>
+            ) : (
+              <div className="border-2 rounded-xl p-5">
+                <Form name="rating-feedback" onFinish={onFinish}>
+                  <Form.Item
+                    name="rating"
+                    label="Rating"
+                    rules={[
+                      { required: true, message: "Please provide a rating" },
+                    ]}
+                  >
+                    <Rate />
+                  </Form.Item>
 
-              <Form.Item name="feedback" label="Feedback">
-                <Input.TextArea readOnly rows={4} />
-              </Form.Item>
-            </Form>
-          </div>
-        ) : (
-          <div className="border-2 rounded-xl p-5">
-            <Form name="rating-feedback" onFinish={onFinish}>
-              <Form.Item
-                name="rating"
-                label="Rating"
-                rules={[{ required: true, message: "Please provide a rating" }]}
-              >
-                <Rate />
-              </Form.Item>
+                  <Form.Item
+                    name="feedback"
+                    label="Feedback"
+                    rules={[
+                      { required: true, message: "Please provide feedback" },
+                    ]}
+                  >
+                    <Input.TextArea rows={4} />
+                  </Form.Item>
 
-              <Form.Item
-                name="feedback"
-                label="Feedback"
-                rules={[{ required: true, message: "Please provide feedback" }]}
-              >
-                <Input.TextArea rows={4} />
-              </Form.Item>
-
-              <Form.Item
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Button type="primary" htmlType="submit">
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
+                  <Form.Item
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Button type="primary" htmlType="submit">
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </div>
+            )}
           </div>
         )}
-        </div>}
       </div>
     </>
   );

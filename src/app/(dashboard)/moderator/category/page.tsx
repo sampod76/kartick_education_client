@@ -14,19 +14,25 @@ import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 
-
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
 
 import Image from "next/image";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
-import { useDeleteCategoryMutation, useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
+import {
+  useDeleteCategoryMutation,
+  useGetAllCategoryQuery,
+} from "@/redux/api/adminApi/categoryApi";
 import { USER_ROLE } from "@/constants/role";
 
 const ServiceList = () => {
   const query: Record<string, any> = {};
 
-  const SUPER_ADMIN=USER_ROLE.SUPER_ADMIN
+  const SUPER_ADMIN = USER_ROLE.SUPER_ADMIN;
 
   const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -55,48 +61,53 @@ const ServiceList = () => {
 
   //@ts-ignore
   const categoryData = data?.data;
-  console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", categoryData)
+  console.log(
+    "🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:",
+    categoryData
+  );
   //@ts-ignore
   const meta = data?.meta;
 
-  const handleDelete=(id:string)=>{
-    confirm_modal(`Are you sure you want to delete`).then(async(res) => {
+  const handleDelete = (id: string) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
           const res = await deleteCategory(id).unwrap();
-          if (res.success ==false) {
+          if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
-            Error_model_hook(res?.message)
-          }else{
-            Success_model("Category Successfully Deleted")
+            Error_model_hook(res?.message);
+          } else {
+            Success_model("Category Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
         }
       }
     });
-  }
+  };
 
   const columns = [
     {
       title: "",
-      render: function (data:any) {
-        return <>{<Image src={data?.image} width={80} height={50} alt="dd"/>}</>;
+      render: function (data: any) {
+        return (
+          <>{<Image src={data?.image} width={80} height={50} alt="dd" />}</>
+        );
       },
-      width:100
+      width: 100,
     },
     {
       title: "Name",
       dataIndex: "title",
       ellipsis: true,
     },
-  
+
     // {
     //   title: "Price",
     //   dataIndex: "price",
     // },
-   
+
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -183,7 +194,6 @@ const ServiceList = () => {
 
   return (
     <div>
-     
       {/* <UMBreadCrumb
         items={[
           {

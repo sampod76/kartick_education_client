@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Dropdown, Input, Menu, Space, message } from "antd";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -16,26 +16,22 @@ import UMTable from "@/components/ui/UMTable";
 
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
-import { useDeleteServiceMutation } from "@/redux/api/serviceApi";
+
 import Image from "next/image";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import {
-  useGetAllBookingQuery,
-  useUpdateBookingMutation,
-} from "@/redux/api/bookingApi";
-import { USER_ROLE } from "@/constants/role";
-import { ENUM_BOOKING_STATUS } from "../../../../constants/global";
 
-const BookignList = () => {
-  //
-  const ROLE = USER_ROLE.ADMIN;
-  //
+import { useDeleteCourseMutation, useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+
+const CourseList = () => {
   const query: Record<string, any> = {};
-  const [deleteService] = useDeleteServiceMutation();
+
+  // const SUPER_ADMIN=USER_ROLE.ADMIN
+
+  const [deleteCourse] = useDeleteCourseMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -49,6 +45,7 @@ const BookignList = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["status"] = "active";
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -58,33 +55,29 @@ const BookignList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllBookingQuery({ ...query });
-  const [updateBooking, { isLoading: bookingUpdateLoading }] =
-    useUpdateBookingMutation();
+  const { data = [], isLoading } = useGetAllCourseQuery({ ...query });
 
   //@ts-ignore
-  const allBookingData = data?.data;
-  console.log(
-    "🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:",
-    allBookingData
-  );
+  const courseData = data?.data;
+  console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", courseData);
   //@ts-ignore
   const meta = data?.meta;
 
-  const handleReject = (id: string) => {
-    confirm_modal(`Are you sure you want to Reject`,"Yes reject it").then(async (res) => {
+  const handleDelete = (id: string) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          const res = await updateBooking({
-            id,
-            body: { status: ENUM_BOOKING_STATUS.REJECT },
-          }).unwrap();
+          console.log(id);
+
+          const res = await deleteCourse(id).unwrap();
+
+          console.log(res, "response for delete course");
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Service Successfully Rejected!");
+            Success_model("Course Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
@@ -97,73 +90,87 @@ const BookignList = () => {
     {
       title: "",
       render: function (data: any) {
-        return (
-          <>
-            {
-              <Image
-                src={data?.service?.image}
-                width={80}
-                height={50}
-                alt="dd"
-              />
-            }
-          </>
-        );
+        return <>{<Image src={data?.img} width={80} height={50} alt="dd" />}</>;
       },
       width: 100,
     },
     {
       title: "Name",
-      // dataIndex: "service.title",
-      render: function (data: any) {
-        return <>{<p>{`${data?.service?.title} `}</p>}</>;
+      dataIndex: "title",
+      ellipsis: true,
+    },
+    {
+      title: "snid",
+      dataIndex: "snid",
+      ellipsis: true,
+    },
+    {
+      title: "price",
+      dataIndex: "price",
+      ellipsis: true,
+    },
+    {
+      title: "duration",
+      dataIndex: "duration",
+      ellipsis: true,
+    },
+    {
+      title: "level",
+      dataIndex: "level",
+      ellipsis: true,
+    },
+    {
+      title: "Price Type",
+      dataIndex: "price_type",
+      ellipsis: true,
+    },
+    {
+      title: "author",
+      dataIndex: "author",
+      render: function (data:any) {
+        // console.log(data);
+        return data.email
       },
       ellipsis: true,
     },
-
     {
-      title: "Total Price",
-      render: function (data: any) {
-        return (
-          <>
-            {
-              <p>
-                {`(${data?.service?.price} x ${data?.bookingTickets}) =`}
-                {Number(data?.service?.price) * Number(data?.bookingTickets)}
-              </p>
-            }
-          </>
-        );
+      title: "author Role",
+      dataIndex: "author",
+      render: function (data:any) {
+        // console.log(data);
+        return data.role
       },
-    },
-
-    {
-      title: "Booking Date",
-      dataIndex: "bookingDate",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      // sorter: true,
+      ellipsis: true,
     },
     {
-      title: "Create At",
+      title: "category",
+      dataIndex: "category",
+      render: function (data:any) {
+        console.log(data);
+        return data.title
+      },
+      ellipsis: true,
+    },
+  
+    {
+      title: "Created at",
       dataIndex: "createdAt",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
-      // sorter: true,
+      sorter: true,
     },
-    {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
-    },
-    {
-      title: "Category",
-      //   dataIndex: "category",
-      render: function (data: any) {
-        return <>{data?.service?.category?.title}</>;
-      },
-    },
+    // {
+    //   title: "Contact no.",
+    //   dataIndex: "contact",
+    // },
+    // {
+    //   title: "Course",
+    // //   dataIndex: "course",
+    //   render: function (data: any) {
+    //     return <>{data?.course?.title}</>;
+    //   },
+    // },
     {
       title: "Status",
       dataIndex: "status",
@@ -171,44 +178,31 @@ const BookignList = () => {
     {
       title: "Action",
       dataIndex: "_id",
-
-      render: (_id: any) => (
-        <Space size="middle">
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item
-                  key="view"
-                  onClick={() => {
-                    // Handle view logic here
-                  }}
-                >
-                  <Link href={`/${ROLE}/booking/details/${_id}`}>View</Link>
-                </Menu.Item>
-                <Menu.Item
-                  key="edit"
-                  onClick={() => {
-                    // Handle edit logic here
-                  }}
-                >
-                  <Link href={`/${ROLE}/booking/edit/${_id}`}>Edit</Link>
-                </Menu.Item>
-
-                <Menu.Item
-                  key="reject"
-                  onClick={() => {
-                    handleReject(_id);
-                  }}
-                >
-                  Reject
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <a>Action</a>
-          </Dropdown>
-        </Space>
-      ),
+      render: function (data: any) {
+        return (
+          <>
+            <Link href={`/admin/course/details/${data}`}>
+              <Button onClick={() => console.log(data)} type="default">
+                <EyeOutlined />
+              </Button>
+            </Link>
+            <Link href={`/admin/course/edit/${data}`}>
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                onClick={() => console.log(data)}
+                type="default"
+              >
+                <EditOutlined />
+              </Button>
+            </Link>
+            <Button onClick={() => handleDelete(data)} type="default" danger>
+              <DeleteOutlined />
+            </Button>
+          </>
+        );
+      },
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -229,17 +223,30 @@ const BookignList = () => {
     setSearchTerm("");
   };
 
+  const deleteAdminHandler = async (id: string) => {
+    // console.log(id);
+    try {
+      const res = await deleteCourse(id);
+      if (res) {
+        message.success("Admin Successfully Deleted!");
+        setOpen(false);
+      }
+    } catch (error: any) {
+      message.error(error.message);
+    }
+  };
+
   return (
     <div>
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${ROLE}",
-            link: "/${ROLE}",
+            label: "admin",
+            link: "/admin",
           },
         ]}
       /> */}
-      <ActionBar title="Booking List">
+      <ActionBar title="Service List">
         <Input
           size="large"
           placeholder="Search"
@@ -249,13 +256,13 @@ const BookignList = () => {
           }}
         />
         <div>
-          {/* <Link href={`/${ROLE}/service/create`}>
-            <Button type="primary">Create service</Button>
-          </Link> */}
+          <Link href={`/admin/course/create`}>
+            <Button type="default">Create Course</Button>
+          </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />
@@ -267,7 +274,7 @@ const BookignList = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={allBookingData}
+        dataSource={courseData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -276,16 +283,16 @@ const BookignList = () => {
         showPagination={true}
       />
 
-      {/* <UMModal
+      <UMModal
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteAdminHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> */}
+      </UMModal>
     </div>
   );
 };
 
-export default BookignList;
+export default CourseList;

@@ -48,6 +48,52 @@ export const bloodGroupOptions = [
     value: "O-",
   },
 ];
+export const priceTypeOptions = [
+  {
+    label: "free",
+    value: "free",
+  },
+  {
+    label: "paid",
+    value: "paid",
+  },
+  {
+    label: "open",
+    value: "open",
+  },
+  {
+    label: "close",
+    value: "close",
+  },
+  {
+    label: "recurrig",
+    value: "recurrig",
+  },
+  
+];
+export const courseStatusOptions = [
+  {
+    label: "active",
+    value: "active",
+  },
+  {
+    label: "deactivate",
+    value: "deactivate",
+  },
+  {
+    label: "save",
+    value: "save",
+  },
+  {
+    label: "disable",
+    value: "disable",
+  },
+  {
+    label: "block",
+    value: "block",
+  },
+  
+];
 
 
 

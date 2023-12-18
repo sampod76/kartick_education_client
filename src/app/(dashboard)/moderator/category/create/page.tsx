@@ -9,7 +9,10 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
 
-import { useAddCategoryMutation, useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import {
+  useAddCategoryMutation,
+  useGetAllCategoryQuery,
+} from "@/redux/api/adminApi/categoryApi";
 
 import { IServiceSchema } from "@/schemas/service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -18,17 +21,16 @@ import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
 const CreateCategory = () => {
-  const [addCategory, { isLoading: serviceLoading }] =
-    useAddCategoryMutation();
+  const [addCategory, { isLoading: serviceLoading }] = useAddCategoryMutation();
   const onSubmit = async (values: any) => {
     console.log(values);
-   
+
     try {
       const res = await addCategory(values).unwrap();
-      if(res.success == false) {
-        Error_model_hook(res?.message)
-      }else{
-        Success_model("Successfully added Category")
+      if (res.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Successfully added Category");
       }
       console.log(res);
     } catch (error: any) {
@@ -37,8 +39,8 @@ const CreateCategory = () => {
     }
   };
 
-  if(serviceLoading){
-    return message.loading("Loading...")
+  if (serviceLoading) {
+    return message.loading("Loading...");
   }
 
   return (
@@ -46,7 +48,7 @@ const CreateCategory = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} >
+        <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -66,7 +68,9 @@ const CreateCategory = () => {
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -81,14 +85,15 @@ const CreateCategory = () => {
               </Col>
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
               >
                 <UploadImage name="image" />
               </Col>
-            
             </Row>
           </div>
 

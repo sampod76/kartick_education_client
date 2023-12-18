@@ -11,12 +11,11 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
 } from "@/redux/api/serviceApi";
-
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -74,7 +73,6 @@ const EditServicePage = ({ params }: any) => {
   return (
     <div>
       <div>
-        
         {/* resolver={yupResolver(IServiceSchema)} */}
         <Form submitHandler={onSubmit} defaultValues={defaultValues}>
           <div

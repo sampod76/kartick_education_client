@@ -11,7 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
@@ -113,35 +113,33 @@ const EditServicePage = ({ params }: any) => {
                 />
               </Col>
               <div>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  // md={12}
 
-              <Col
-                className="gutter-row"
-                xs={24}
-                // md={12}
-                
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <div className="flex items-center justify-between gap-1">
-
-                <FormInput
-                  type="number"
-                  name="price"
-                  size="large"
-                  label="Per Ticket Price"
-                  required={true}
-                />
-                <FormInput
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <div className="flex items-center justify-between gap-1">
+                    <FormInput
+                      type="number"
+                      name="price"
+                      size="large"
+                      label="Per Ticket Price"
+                      required={true}
+                    />
+                    <FormInput
                       type="number"
                       name="availableTickets"
                       size="large"
                       label="Available Tickets/sit"
                       required={true}
                     />
-                </div>
-              </Col>
-              {/* <Col
+                  </div>
+                </Col>
+                {/* <Col
                     className="gutter-row"
                     span={12}
                     style={{
@@ -185,8 +183,8 @@ const EditServicePage = ({ params }: any) => {
                       marginBottom: "10px",
                     }}
                   > */}
-                    <FormDatePicker name="serviceDate" label="Date" />
-                  {/* </Col>
+                <FormDatePicker name="serviceDate" label="Date" />
+                {/* </Col>
                   
                 </Row> */}
               </Col>
@@ -263,14 +261,14 @@ const EditServicePage = ({ params }: any) => {
                 }}
               >
                 {/* <div className="flex justify-start items-center border-2 rounded-lg"> */}
-                  <UploadImage name="image" />
-                  <Image
-                    src={defaultValues?.image}
-                    width={100}
-                    height={100}
-                    className="w-36"
-                    alt="d"
-                  />
+                <UploadImage name="image" />
+                <Image
+                  src={defaultValues?.image}
+                  width={100}
+                  height={100}
+                  className="w-36"
+                  alt="d"
+                />
                 {/* </div> */}
               </Col>
               <Col span={12} style={{ margin: "10px 0" }}>
@@ -282,8 +280,8 @@ const EditServicePage = ({ params }: any) => {
               </Col>
 
               <Col span={12} style={{ margin: "10px 0" }}>
-              <FormTextArea name="address" label="Address" rows={4} />
-            </Col>
+                <FormTextArea name="address" label="Address" rows={4} />
+              </Col>
             </Row>
           </div>
           <div

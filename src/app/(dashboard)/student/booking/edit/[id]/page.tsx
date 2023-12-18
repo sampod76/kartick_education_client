@@ -12,7 +12,7 @@ import {
   useGetSingleBookingQuery,
   useUpdateBookingMutation,
 } from "@/redux/api/bookingApi";
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAddRatingFeedbackMutation } from "@/redux/api/ratingFeedback";
 import {
   Error_model_hook,

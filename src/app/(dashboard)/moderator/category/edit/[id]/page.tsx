@@ -11,7 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
@@ -67,7 +67,7 @@ const EditServicePage = ({ params }: any) => {
     availableTickets: serviceData?.availableTickets || "",
     serviceDate: serviceData?.serviceDate || "",
     status: serviceData?.status || "",
-   
+
     // managementDepartment: serviceData?.managementDepartment?.id || "",
   };
 

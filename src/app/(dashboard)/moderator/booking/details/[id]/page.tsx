@@ -12,7 +12,7 @@ import {
   useGetSingleBookingQuery,
   useUpdateBookingMutation,
 } from "@/redux/api/bookingApi";
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Button, Col, Input, InputNumber, Row } from "antd";
 

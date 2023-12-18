@@ -13,7 +13,7 @@ import uploadImgBB from "@/hooks/imgbbUploads";
 import {
   useAddCategoryMutation,
   useGetAllCategoryQuery,
-} from "@/redux/api/categoryApi";
+} from "@/redux/api/adminApi/categoryApi";
 
 import { IServiceSchema } from "@/schemas/service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";

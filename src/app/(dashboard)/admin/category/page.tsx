@@ -26,10 +26,10 @@ import {
 import {
   useDeleteCategoryMutation,
   useGetAllCategoryQuery,
-} from "@/redux/api/categoryApi";
+} from "@/redux/api/adminApi/categoryApi";
 import { USER_ROLE } from "@/constants/role";
 
-const ServiceList = () => {
+const CategoryList = () => {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
@@ -248,4 +248,4 @@ const ServiceList = () => {
   );
 };
 
-export default ServiceList;
+export default CategoryList;

@@ -9,7 +9,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
 
-import { useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAddServiceWithFormDataMutation } from "@/redux/api/serviceApi";
 import { IServiceSchema } from "@/schemas/service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -23,13 +23,13 @@ const CreateService = () => {
   const { data = [], isLoading } = useGetAllCategoryQuery({});
   const onSubmit = async (values: any) => {
     console.log(values);
-   
+
     try {
       const res = await addService(values).unwrap();
-      if(res.success == false) {
-        Error_model_hook(res?.message)
-      }else{
-        Success_model("Successfully added service")
+      if (res.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Successfully added service");
       }
       console.log(res);
     } catch (error: any) {
@@ -38,8 +38,8 @@ const CreateService = () => {
     }
   };
 
-  if(serviceLoading){
-    return message.loading("Loading...")
+  if (serviceLoading) {
+    return message.loading("Loading...");
   }
 
   return (
@@ -47,7 +47,7 @@ const CreateService = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} >
+        <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -67,7 +67,9 @@ const CreateService = () => {
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -82,7 +84,9 @@ const CreateService = () => {
               </Col>
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -97,7 +101,9 @@ const CreateService = () => {
               </Col>
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -112,7 +118,9 @@ const CreateService = () => {
               </Col>
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -125,7 +133,7 @@ const CreateService = () => {
                       marginBottom: "10px",
                     }}
                   >
-                    <FormDatePicker name="serviceDate" label="Date"  />
+                    <FormDatePicker name="serviceDate" label="Date" />
                   </Col>
                   <Col
                     className="gutter-row"
@@ -147,7 +155,9 @@ const CreateService = () => {
 
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -207,19 +217,20 @@ const CreateService = () => {
 
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage  name="image" />
+                <UploadImage name="image" />
               </Col>
               <Col span={12} style={{ margin: "10px 0" }}>
                 <FormTextArea
                   name="description"
                   label="Service description"
                   rows={4}
-                 
                 />
               </Col>
 
