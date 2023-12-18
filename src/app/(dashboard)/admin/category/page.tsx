@@ -14,19 +14,25 @@ import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 
-
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
 
 import Image from "next/image";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
-import { useDeleteCategoryMutation, useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
+import {
+  useDeleteCategoryMutation,
+  useGetAllCategoryQuery,
+} from "@/redux/api/categoryApi";
 import { USER_ROLE } from "@/constants/role";
 
 const ServiceList = () => {
   const query: Record<string, any> = {};
 
-  const SUPER_ADMIN=USER_ROLE.ADMIN
+  // const SUPER_ADMIN=USER_ROLE.ADMIN
 
   const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -42,6 +48,7 @@ const ServiceList = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["status"] = "active";
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -55,48 +62,49 @@ const ServiceList = () => {
 
   //@ts-ignore
   const categoryData = data?.data;
-  console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", categoryData)
+  console.log(
+    "🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:",
+    categoryData
+  );
   //@ts-ignore
   const meta = data?.meta;
 
-  const handleDelete=(id:string)=>{
-    confirm_modal(`Are you sure you want to delete`).then(async(res) => {
+  const handleDelete = (id: string) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
+          console.log(id);
+
           const res = await deleteCategory(id).unwrap();
-          if (res.success ==false) {
+
+          console.log(res, "response for delete category");
+          if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
-            Error_model_hook(res?.message)
-          }else{
-            Success_model("Category Successfully Deleted")
+            Error_model_hook(res?.message);
+          } else {
+            Success_model("Category Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
         }
       }
     });
-  }
+  };
 
   const columns = [
     {
       title: "",
-      render: function (data:any) {
-        return <>{<Image src={data?.image} width={80} height={50} alt="dd"/>}</>;
+      render: function (data: any) {
+        return <>{<Image src={data?.img} width={80} height={50} alt="dd" />}</>;
       },
-      width:100
+      width: 100,
     },
     {
       title: "Name",
       dataIndex: "title",
       ellipsis: true,
     },
-  
-    // {
-    //   title: "Price",
-    //   dataIndex: "price",
-    // },
-   
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -126,23 +134,23 @@ const ServiceList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/category/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+            <Link href={`/admin/category/details/${data}`}>
+              <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/category/edit/${data}`}>
+            <Link href={`/admin/category/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button onClick={() => handleDelete(data)} type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -183,12 +191,11 @@ const ServiceList = () => {
 
   return (
     <div>
-     
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${SUPER_ADMIN}",
-            link: "/${SUPER_ADMIN}",
+            label: "admin",
+            link: "/admin",
           },
         ]}
       /> */}
@@ -202,13 +209,13 @@ const ServiceList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/category/create`}>
-            <Button type="primary">Create Category</Button>
+          <Link href={`/admin/category/create`}>
+            <Button type="default">Create Category</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

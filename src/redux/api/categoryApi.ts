@@ -1,5 +1,5 @@
 import { tagTypes } from "@/redux/tag-types";
-import {  ICategory, IMeta } from "@/types";
+import { ICategory, IMeta } from "@/types";
 import { baseApi } from "./baseApi";
 
 const CATEGORY_URL = "/category";
@@ -15,10 +15,10 @@ export const categoryApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: ICategory[], meta: IMeta) => {
+      transformResponse: (response: { data: ICategory[]; meta: IMeta }) => {
         return {
-          data: response,
-          meta,
+          data: response.data,
+          meta: response.meta,
         };
       },
       // providesTags: [tagTypes.academicDepartment],

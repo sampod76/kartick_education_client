@@ -24,11 +24,13 @@ export const axiosBaseQuery =
         url: baseUrl + url,
         method,
         data,
+        
         params,
         headers: {
           "Content-Type": contentType || "application/json",
         },
-        withCredentials: true,
+        // withCredentials: true,
+        
       });
       return result;
     } catch (axiosError) {

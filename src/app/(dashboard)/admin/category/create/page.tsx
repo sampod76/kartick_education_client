@@ -8,8 +8,12 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
+import uploadImgBB from "@/hooks/imgbbUploads";
 
-import { useAddCategoryMutation, useGetAllCategoryQuery } from "@/redux/api/categoryApi";
+import {
+  useAddCategoryMutation,
+  useGetAllCategoryQuery,
+} from "@/redux/api/categoryApi";
 
 import { IServiceSchema } from "@/schemas/service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -18,17 +22,27 @@ import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
 const CreateCategory = () => {
-  const [addCategory, { isLoading: serviceLoading }] =
-    useAddCategoryMutation();
+  const [addCategory, { isLoading: serviceLoading }] = useAddCategoryMutation();
+
   const onSubmit = async (values: any) => {
     console.log(values);
-   
+    const status = "active";
+    const imgUrl = await uploadImgBB(values.img);
+
+    const categoryData = {
+      title: values.title,
+      img: imgUrl,
+      status: status,
+    };
+    console.log(categoryData);
+
     try {
       const res = await addCategory(values).unwrap();
-      if(res.success == false) {
-        Error_model_hook(res?.message)
-      }else{
-        Success_model("Successfully added Category")
+      console.log(res);
+      if (res.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Successfully added Category");
       }
       console.log(res);
     } catch (error: any) {
@@ -37,8 +51,8 @@ const CreateCategory = () => {
     }
   };
 
-  if(serviceLoading){
-    return message.loading("Loading...")
+  if (serviceLoading) {
+    return message.loading("Loading...");
   }
 
   return (
@@ -46,7 +60,7 @@ const CreateCategory = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} >
+        <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -66,7 +80,9 @@ const CreateCategory = () => {
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -81,18 +97,19 @@ const CreateCategory = () => {
               </Col>
               <Col
                 className="gutter-row"
-                 xs={24} md={12} lg={8}
+                xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="image" />
+                <UploadImage name="img" />
               </Col>
-            
             </Row>
           </div>
 
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" type="default">
             Create
           </Button>
         </Form>
