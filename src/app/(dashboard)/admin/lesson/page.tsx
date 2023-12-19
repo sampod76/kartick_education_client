@@ -13,29 +13,26 @@ import {
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
-
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
-
 import Image from "next/image";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import {
-  useDeleteCategoryMutation,
-  useGetAllCategoryQuery,
-} from "@/redux/api/adminApi/categoryApi";
-import { USER_ROLE } from "@/constants/role";
-import { useDeleteMilestoneMutation, useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
 
-const MileStoneList = () => {
+import { USER_ROLE } from "@/constants/role";
+import { useDeleteLessonMutation, useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
+
+
+
+const LessonList = () => {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
 
-  const [deleteMilestone] = useDeleteMilestoneMutation();
+  const [deleteLesson] = useDeleteLessonMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -59,11 +56,11 @@ const MileStoneList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
+  const { data = [], isLoading } = useGetAllLessonQuery({ ...query });
   console.log(data);
 
   //@ts-ignore
-  const milestoneData = data?.data;
+  const LessonData = data?.data;
 
   //@ts-ignore
   const meta = data?.meta;
@@ -74,15 +71,15 @@ const MileStoneList = () => {
         try {
           console.log(id);
 
-          const res = await deleteMilestone(id).unwrap();
+          const res = await deleteLesson(id).unwrap();
 
-          console.log(res, "response for delete Milestone");
+          console.log(res, "response for delete Lesson");
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Milestone Successfully Deleted");
+            Success_model("Lesson Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
@@ -110,13 +107,14 @@ const MileStoneList = () => {
       ellipsis: true,
     },
     {
-      title: "showing_number",
-      dataIndex: "showing_number",
+      title: "Lesson Number",
+      dataIndex: "lesson_number",
       ellipsis: true,
     },
+   
     {
-      title: "course",
-      dataIndex: "course",
+      title: "Lesson",
+      dataIndex: "lesson",
       ellipsis: true,
       render: function (data: any) {
         return <>{data?.title}</>;
@@ -140,12 +138,12 @@ const MileStoneList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/milestone/details/${data}`}>
+            <Link href={`/admin/lesson/details/${data}`}>
               <Button type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/milestone/edit/${data}`}>
+            <Link href={`/admin/lesson/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -182,12 +180,12 @@ const MileStoneList = () => {
     setSearchTerm("");
   };
 
-  const deleteAdminHandler = async (id: string) => {
+  const deleteLessonHandler = async (id: string) => {
     // console.log(id);
     try {
-      const res = await deleteMilestone(id);
+      const res = await deleteLesson(id);
       if (res) {
-        message.success("Milstone Successfully Deleted!");
+        message.success("Lesson Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
@@ -205,7 +203,7 @@ const MileStoneList = () => {
           },
         ]}
       /> */}
-      <ActionBar title="Milestone List">
+      <ActionBar title="Lesson List">
         <Input
           size="large"
           placeholder="Search"
@@ -215,8 +213,8 @@ const MileStoneList = () => {
           }}
         />
         <div>
-          <Link href={`/admin/milestone/create`}>
-            <Button type="default">Create Milestone</Button>
+          <Link href={`/admin/lesson/create`}>
+            <Button type="default">Create Lesson</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -233,7 +231,7 @@ const MileStoneList = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={milestoneData}
+        dataSource={LessonData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -243,10 +241,10 @@ const MileStoneList = () => {
       />
 
       <UMModal
-        title="Remove admin"
+        title="Remove Lesson"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteAdminHandler(adminId)}
+        handleOk={() => deleteLessonHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
@@ -254,4 +252,4 @@ const MileStoneList = () => {
   );
 };
 
-export default MileStoneList;
+export default LessonList;

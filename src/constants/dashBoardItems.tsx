@@ -173,8 +173,8 @@ export const dashboardItems = (role: USER_ROLE) => {
       ],
     },
     {
-      label: "Manage lesson",
-      key: "manage-lesson",
+      label: "Manage Module",
+      key: "manage-Module",
       icon: <ThunderboltOutlined />,
       children: [
         

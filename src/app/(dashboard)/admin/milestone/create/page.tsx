@@ -12,7 +12,6 @@ import uploadImgBB from "@/hooks/imgbbUploads";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
 
-
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 import { IServiceSchema } from "@/schemas/service";
@@ -50,7 +49,6 @@ const CreateMilestone = () => {
   });
   console.log(CourseOptions);
 
-
   // !  tag selection
 
   const OPTIONS = ["milestone", "online", "course", "english"];
@@ -58,16 +56,16 @@ const CreateMilestone = () => {
   const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
   console.log(selectedTags, "selectedTags........1");
 
-
   const onSubmit = async (values: any) => {
     // console.log(values);
     const status = "active";
     const imgUrl = await uploadImgBB(values.img);
 
-    values.img= imgUrl
+    values.img = imgUrl;
 
-    const MilestoneData: { } = {
-    ...values
+    const MilestoneData: {} = {
+      ...values,
+      tags: selectedTags,
     };
     // console.log(MilestoneData);
 

@@ -10,7 +10,11 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import {
+  bloodGroupOptions,
+  courseStatusOptions,
+  genderOptions,
+} from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
 import {
   useGetSingleCategoryQuery,
@@ -18,9 +22,16 @@ import {
 } from "@/redux/api/adminApi/categoryApi";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import {
-  useGetSingleMilestoneQuery,
-  useUpdateMilestoneMutation,
-} from "@/redux/api/adminApi/milestoneApi";
+  useGetSingleLessonQuery,
+  useUpdateLessonMutation,
+} from "@/redux/api/adminApi/lessoneApi";
+import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
+
+import {
+  useGetAllModuleQuery,
+  useGetSingleModuleQuery,
+  useUpdateModuleMutation,
+} from "@/redux/api/adminApi/moduleApi";
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 import { ICategory } from "@/types";
@@ -30,17 +41,14 @@ import { Button, Col, Row, Select, message } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 
-const EditMilestonePage = ({ params }: any) => {
-  const { data: MilestoneData, isLoading } = useGetSingleMilestoneQuery(
-    params?.id,
-    {
-      skip: !Boolean(params?.id),
-    }
-  );
-  console.log(MilestoneData);
-  // const { data: MilestoneData = [] } = useGetAllCategoryQuery({});
-  const [updateMilestone, { isLoading: updateLoading, error }] =
-    useUpdateMilestoneMutation();
+const EditModulePage = ({ params }: any) => {
+  const { data: LessonData, isLoading } = useGetSingleLessonQuery(params?.id, {
+    skip: !Boolean(params?.id),
+  });
+  console.log(LessonData);
+  // const { data: LessonData = [] } = useGetAllCategoryQuery({});
+  const [updateLesson, { isLoading: updateLoading, error }] =
+    useUpdateLessonMutation();
 
   // ! for get all users
   const { data: usersData } = useGetAllUsersQuery({});
@@ -55,29 +63,28 @@ const EditMilestonePage = ({ params }: any) => {
 
   console.log(AuthorOptions);
 
-  //! for Milestone options selection
-  const { data } = useGetAllCourseQuery({});
-  const CourseData = data?.data;
-  // console.log(CourseData)
-  const CourseOptions = CourseData?.map((item: any) => {
+  //! for Lesson options selection
+  const { data } = useGetAllModuleQuery({});
+  const moduleData = data?.data;
+  // console.log(moduleData)
+  const ModuleOptions = moduleData?.map((item: any) => {
     return {
       label: item?.title,
       value: item?._id,
     };
   });
-  console.log(CourseOptions);
+  console.log(ModuleOptions);
 
   // !  tag selection
 
-  const OPTIONS = ["milestone", "online", "course", "english"];
+  const OPTIONS = ["Lesson", "online", "course", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>(
-    MilestoneData?.tags || []
+    LessonData?.tags || []
   );
   const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
   console.log(selectedTags, "selectedTags........1");
 
   const onSubmit = async (values: any) => {
-    
     if (typeof values.img !== "string") {
       console.log(values);
       values.img = await uploadImgBB(values.img);
@@ -89,7 +96,7 @@ const EditMilestonePage = ({ params }: any) => {
 
     console.log(UpdateValues);
     try {
-      const res = await updateMilestone({
+      const res = await updateLesson({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
@@ -111,16 +118,17 @@ const EditMilestonePage = ({ params }: any) => {
     console.log(error);
   }
 
-  console.log(MilestoneData);
+  console.log(LessonData);
   const defaultValues = {
-    title: MilestoneData?.title || "",
+    title: LessonData?.title || "",
 
-    img: MilestoneData?.img || "",
+    img: LessonData?.img || "",
 
-    status: MilestoneData?.status || "",
-    details: MilestoneData?.details || "",
+    status: LessonData?.status || "",
+    details: LessonData?.details || "",
+    lesson_number: LessonData?.lesson_number || "",
 
-    // managementDepartment: MilestoneData?.managementDepartment?.id || "",
+    // managementDepartment: LessonData?.managementDepartment?.id || "",
   };
   console.log(defaultValues);
 
@@ -144,7 +152,7 @@ const EditMilestonePage = ({ params }: any) => {
                 marginBottom: "10px",
               }}
             >
-              Create Milestone
+              Create Lesson
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -160,9 +168,10 @@ const EditMilestonePage = ({ params }: any) => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Milestone Name"
+                  label="Lesson Name"
                   required={true}
                 />
+                {/*//! 1 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -173,8 +182,26 @@ const EditMilestonePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                {/*//! 3 */}
+                <FormInput
+                  type="number"
+                  name="lesson_number"
+                  size="large"
+                  label="Lesson No"
+                  required={true}
+                />
+                {/*//! 2 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
                 <FormTextArea name="details" />
+                {/*//! 3*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -189,13 +216,11 @@ const EditMilestonePage = ({ params }: any) => {
                   size="large"
                   name="author"
                   options={AuthorOptions}
-                  // defaultValue={priceTypeOptions[0]}
-                  defaultValue={MilestoneData?.author?.email}
                   label="Author"
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8 */}
+                {/* //! Author  4*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -208,14 +233,34 @@ const EditMilestonePage = ({ params }: any) => {
               >
                 <FormSelectField
                   size="large"
-                  name="course"
-                  options={CourseOptions as any}
+                  name="module"
+                  options={ModuleOptions as any}
                   // defaultValue={priceTypeOptions[0]}
-                  label="Course"
+                  label="module"
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8 */}
+                {/* //! price type 5*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="status"
+                  options={courseStatusOptions as any}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="status"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -237,7 +282,7 @@ const EditMilestonePage = ({ params }: any) => {
                     label: item,
                   }))}
                 />
-                {/*//! 11 */}
+                {/*//! 6 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -248,7 +293,8 @@ const EditMilestonePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="img" defaultImage={MilestoneData?.img} />
+                <UploadImage name="img" />
+                {/* //!7*/}
               </Col>
             </Row>
           </div>
@@ -269,4 +315,4 @@ const EditMilestonePage = ({ params }: any) => {
   );
 };
 
-export default EditMilestonePage;
+export default EditModulePage;
