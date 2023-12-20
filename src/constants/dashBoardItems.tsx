@@ -204,6 +204,38 @@ export const dashboardItems = (role: USER_ROLE) => {
         },
       ],
     },
+    {
+      label: "Manage Quiz",
+      key: "manage-quiz",
+      icon: <ThunderboltOutlined />,
+      children: [
+        
+        {
+          label: <Link href={`/admin/quiz`}>Quiz List</Link>,
+          key: `/admin/quiz`,
+        },
+        {
+          label: <Link href={`/admin/quiz/create`}>Create Quiz</Link>,
+          key: `/admin/quiz/create`,
+        },
+      ],
+    },
+    {
+      label: "Manage Single Quiz",
+      key: "manage-single-quiz",
+      icon: <ThunderboltOutlined />,
+      children: [
+        
+        {
+          label: <Link href={`/admin/single-quiz`}>Single Quiz List</Link>,
+          key: `/admin/single-quiz`,
+        },
+        {
+          label: <Link href={`/admin/single-quiz/create`}>Create Single Quiz</Link>,
+          key: `/admin/single-quiz/create`,
+        },
+      ],
+    },
   ];
 
   const moderatorSidebarItems: MenuProps["items"] = [

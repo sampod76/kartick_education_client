@@ -1,26 +1,26 @@
 "use client";
 
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
+
 import FormInput from "@/components/Forms/FormInput";
-import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
+
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import FormTimePicker from "@/components/Forms/FormTimePicker";
+
 import UploadImage from "@/components/ui/UploadImage";
+import TagUI from "@/components/ui/dashboardUI/TagUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+
 import { useAddLessonMutation, useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
 import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
 
 
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
-import { IServiceSchema } from "@/schemas/service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Col, Row, Select, message } from "antd";
+
+import { Button, Col, Row, message } from "antd";
 import React, { useState } from "react";
 
 const CreateLesson = () => {
@@ -55,9 +55,8 @@ const CreateLesson = () => {
 
   // !  tag selection
 
-  const OPTIONS = ["Lesson", "online", "course", "english"];
+  const tagOptions = ["course", "tech", "update", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
   console.log(selectedTags, "selectedTags........1");
 
   const onSubmit = async (values: any) => {
@@ -241,16 +240,10 @@ const CreateLesson = () => {
                   marginBottom: "10px",
                 }}
               >
-                <Select
-                  mode="multiple"
-                  placeholder="Inserted are removed"
-                  value={selectedTags}
-                  onChange={setSelectedTags}
-                  style={{ width: "100%" }}
-                  options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
-                  }))}
+                <TagUI
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                  tagOptions={tagOptions}
                 />
                 {/*//! 6 */}
               </Col>

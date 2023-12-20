@@ -11,6 +11,7 @@ import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
+import TagUI from "@/components/ui/dashboardUI/TagUI";
 import {
   bloodGroupOptions,
   courseStatusOptions,
@@ -58,9 +59,9 @@ const CreateCoursePage = () => {
 
   // !  tag selection
 
-  const OPTIONS = ["course", "tech", "update", "english"];
+  const tagOptions = ["course", "tech", "update", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
+
   console.log(selectedTags, "selectedTags........1");
 
   // console.log(courseStatusOptions,"Category",CategoryOptions,);
@@ -276,17 +277,10 @@ const CreateCoursePage = () => {
                   marginBottom: "10px",
                 }}
               >
-                <LabelUi>Add Tags</LabelUi>
-                <Select
-                  mode="multiple"
-                  placeholder="Inserted are removed"
-                  value={selectedTags}
-                  onChange={setSelectedTags}
-                  style={{ width: "100%" }}
-                  options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
-                  }))}
+                <TagUI
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                  tagOptions={tagOptions}
                 />
                 {/*//! 11 */}
               </Col>

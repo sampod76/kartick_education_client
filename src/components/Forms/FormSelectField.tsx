@@ -7,6 +7,7 @@ import LabelUi from "../ui/dashboardUI/LabelUi";
 export type SelectOptions = {
   label: string;
   value: string;
+
 };
 
 type SelectFieldProps = {
@@ -18,7 +19,7 @@ type SelectFieldProps = {
   label?: string;
   defaultValue?: SelectOptions;
   handleChange?: (el: string) => void;
-  required?:boolean;
+  required?: boolean;
 };
 
 const FormSelectField = ({
@@ -30,13 +31,13 @@ const FormSelectField = ({
   label,
   defaultValue,
   handleChange,
-  required
+  required,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
 
   return (
     <>
-      {label ?  <LabelUi>{label}</LabelUi> : null}
+      {label ? <LabelUi>{label}</LabelUi> : null}
       <Controller
         control={control}
         name={name}
@@ -44,8 +45,7 @@ const FormSelectField = ({
           <Select
             onChange={handleChange ? handleChange : onChange}
             size={size}
-            // defaultActiveFirstOption
-           
+            defaultActiveFirstOption
             options={options}
             value={value}
             style={{ width: "100%" }}

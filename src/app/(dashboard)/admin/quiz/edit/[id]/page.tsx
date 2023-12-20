@@ -3,27 +3,44 @@
 import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
-import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
-import FormSelectField from "@/components/Forms/FormSelectField";
+import FormSelectField, {
+  SelectOptions,
+} from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import FormTimePicker from "@/components/Forms/FormTimePicker";
+import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import TagUI from "@/components/ui/dashboardUI/TagUI";
+import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
+import {
+  useGetSingleCategoryQuery,
+  useUpdateCategoryMutation,
+} from "@/redux/api/adminApi/categoryApi";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
-
+import {
+  useGetSingleMilestoneQuery,
+  useUpdateMilestoneMutation,
+} from "@/redux/api/adminApi/milestoneApi";
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
-import { IServiceSchema } from "@/schemas/service";
+import { ICategory } from "@/types";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Col, Row, Select, message } from "antd";
-import React, { useState } from "react";
 
-const CreateMilestone = () => {
-  const [addMilestone, { isLoading: serviceLoading }] =
-    useAddMilestoneMutation();
+import { Button, Col, Row, Select, message } from "antd";
+import Image from "next/image";
+import { useState } from "react";
+
+const EditMilestonePage = ({ params }: any) => {
+  const { data: MilestoneData, isLoading } = useGetSingleMilestoneQuery(
+    params?.id,
+    {
+      skip: !Boolean(params?.id),
+    }
+  );
+  console.log(MilestoneData);
+  // const { data: MilestoneData = [] } = useGetAllCategoryQuery({});
+  const [updateMilestone, { isLoading: updateLoading, error }] =
+    useUpdateMilestoneMutation();
 
   // ! for get all users
   const { data: usersData } = useGetAllUsersQuery({});
@@ -52,47 +69,67 @@ const CreateMilestone = () => {
 
   // !  tag selection
 
-  const tagsOptions = ["milestone", "online", "course", "english"];
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const OPTIONS = ["milestone", "online", "course", "english"];
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    MilestoneData?.tags || []
+  );
+  const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
+  console.log(selectedTags, "selectedTags........1");
 
   const onSubmit = async (values: any) => {
-    // console.log(values);
-    const status = "active";
-    const imgUrl = await uploadImgBB(values.img);
-
-    values.img = imgUrl;
-
-    const MilestoneData: {} = {
-      ...values,
+    
+    if (typeof values.img !== "string") {
+      console.log(values);
+      values.img = await uploadImgBB(values.img);
+    }
+    const UpdateValues = {
       tags: selectedTags,
+      ...values,
     };
-    // console.log(MilestoneData);
 
+    console.log(UpdateValues);
     try {
-      const res = await addMilestone(MilestoneData).unwrap();
-      // console.log(res);
-      if (res.success == false) {
+      const res = await updateMilestone({
+        id: params?.id,
+        data: UpdateValues,
+      }).unwrap();
+
+      console.log(res);
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Milestone");
+        Success_model("successfully updated data");
       }
-      // console.log(res);
-    } catch (error: any) {
-      Error_model_hook(error?.message);
-      console.log(error);
+    } catch (err: any) {
+      console.error(err.message);
     }
   };
-
-  if (serviceLoading) {
-    return message.loading("Loading...");
+  if (isLoading || updateLoading) {
+    return <LoadingForDataFetch />;
   }
+  if (error) {
+    console.log(error);
+  }
+
+  console.log(MilestoneData);
+  const defaultValues = {
+    title: MilestoneData?.title || "",
+
+    img: MilestoneData?.img || "",
+
+    status: MilestoneData?.status || "",
+    details: MilestoneData?.details || "",
+
+    // managementDepartment: MilestoneData?.managementDepartment?.id || "",
+  };
+  console.log(defaultValues);
 
   return (
     <div>
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
-        {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        {/* resolver={yupResolver(ICategorySchema)} */}
+        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -153,6 +190,7 @@ const CreateMilestone = () => {
                   name="author"
                   options={AuthorOptions}
                   // defaultValue={priceTypeOptions[0]}
+                  defaultValue={MilestoneData?.author?.email}
                   label="Author"
                   // placeholder="Select"
                   required={true}
@@ -188,10 +226,16 @@ const CreateMilestone = () => {
                   marginBottom: "10px",
                 }}
               >
-                <TagUI
-                  selectedTags={selectedTags}
-                  setSelectedTags={setSelectedTags}
-                  tagOptions={tagsOptions}
+                <Select
+                  mode="multiple"
+                  placeholder="Inserted are removed"
+                  value={selectedTags}
+                  onChange={setSelectedTags}
+                  style={{ width: "100%" }}
+                  options={filteredOptions.map((item) => ({
+                    value: item,
+                    label: item,
+                  }))}
                 />
                 {/*//! 11 */}
               </Col>
@@ -204,18 +248,25 @@ const CreateMilestone = () => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="img" />
+                <UploadImage name="img" defaultImage={MilestoneData?.img} />
               </Col>
             </Row>
           </div>
-
-          <Button htmlType="submit" type="default">
-            Create
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button htmlType="submit" type="default">
+              Update
+            </Button>
+          </div>
         </Form>
       </div>
     </div>
   );
 };
 
-export default CreateMilestone;
+export default EditMilestonePage;
