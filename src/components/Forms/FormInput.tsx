@@ -4,6 +4,7 @@ import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
 import { Input, InputNumber } from "antd";
 import { spawn } from "child_process";
 import { useFormContext, Controller } from "react-hook-form";
+import LabelUi from "../ui/dashboardUI/LabelUi";
 interface IInput {
   name: string;
   type?: string;
@@ -29,7 +30,7 @@ const FormInput = ({
   label,
   required,
   disabled = false,
-  readOnly=false,
+  readOnly = false,
 }: IInput) => {
   const {
     control,
@@ -49,7 +50,7 @@ const FormInput = ({
           *
         </span>
       ) : null}
-      {label && type !== "number" ? label : null}
+      {label && type !== "number" ? <LabelUi>{label}</LabelUi> : null}
       <Controller
         control={control}
         name={name}
@@ -65,8 +66,8 @@ const FormInput = ({
               value={value ? value : field.value}
             />
           ) : type === "number" ? (
-            <div className="flex flex-col" >
-              <h1>
+            <div className="flex flex-col">
+              <h1 className="">
                 {required ? (
                   <span
                     style={{
@@ -76,11 +77,11 @@ const FormInput = ({
                     *
                   </span>
                 ) : null}
-                {label}
+                <LabelUi>{label}</LabelUi>
               </h1>
               <InputNumber
                 // type={type}
-                style={{width: "100%", marginRight:"2px"}}
+                style={{ width: "100%", marginRight: "2px" }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}

@@ -1,5 +1,6 @@
 import { Input } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
+import LabelUi from "../ui/dashboardUI/LabelUi";
 
 type TextAreaProps = {
   name: string;
@@ -21,7 +22,7 @@ const FormTextArea = ({
   const { control } = useFormContext();
   return (
     <div className={`flex flex-col  w-full`}>
-      {label ? label : null}
+      {label ?  <LabelUi>{label}</LabelUi> : null}
       <Controller
         name={name}
         control={control}

@@ -2,6 +2,7 @@
 
 import { Select } from "antd";
 import { useFormContext, Controller } from "react-hook-form";
+import LabelUi from "../ui/dashboardUI/LabelUi";
 
 export type SelectOptions = {
   label: string;
@@ -35,7 +36,7 @@ const FormSelectField = ({
 
   return (
     <>
-      {label ? label : null}
+      {label ?  <LabelUi>{label}</LabelUi> : null}
       <Controller
         control={control}
         name={name}
