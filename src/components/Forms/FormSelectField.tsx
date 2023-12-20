@@ -3,11 +3,11 @@
 import { Select } from "antd";
 import { useFormContext, Controller } from "react-hook-form";
 import LabelUi from "../ui/dashboardUI/LabelUi";
+import { useState } from "react";
 
 export type SelectOptions = {
   label: string;
   value: string;
-
 };
 
 type SelectFieldProps = {
@@ -34,6 +34,7 @@ const FormSelectField = ({
   required,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
+  const [selectedValue, setSelectedValue] = useState('');
 
   return (
     <>
@@ -43,11 +44,17 @@ const FormSelectField = ({
         name={name}
         render={({ field: { value, onChange } }) => (
           <Select
-            onChange={handleChange ? handleChange : onChange}
+            // onChange={handleChange ? handleChange : onChange}
+            onChange={(val) => {
+              setSelectedValue(val);
+              onChange(val);
+            }}
             size={size}
-            defaultActiveFirstOption
+            // defaultActiveFirstOption
+            defaultValue={defaultValue ? defaultValue : ""}
             options={options}
-            value={value}
+            // value={value}
+            value={selectedValue || value}
             style={{ width: "100%" }}
             placeholder={placeholder}
           />

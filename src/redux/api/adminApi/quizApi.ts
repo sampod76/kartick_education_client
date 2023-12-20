@@ -2,15 +2,15 @@ import { tagTypes } from "@/redux/tag-types";
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 
-const MODULE_URL = "/module";
+const QUIZ_URL = "/quiz";
 
-export const moduleApi = baseApi.injectEndpoints({
+export const QuizApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // get all academic departments
-    getAllModule: build.query({
+    getAllQuiz: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: MODULE_URL,
+          url: QUIZ_URL,
           method: "GET",
           params: arg,
         };
@@ -22,60 +22,60 @@ export const moduleApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.module],
+      providesTags: [tagTypes.quiz],
     }),
     // get single academic department
-    getSingleModule: build.query({
+    getSingleQuiz: build.query({
       query: (id: string | string[] | undefined) => {
         console.log(id);
         return {
-          url: `${MODULE_URL}/${id}`,
+          url: `${QUIZ_URL}/${id}`,
           method: "GET",
         };
       },
-      providesTags: [tagTypes.module],
+      providesTags: [tagTypes.quiz],
     }),
     // create a new academic department
-    addModule: build.mutation({
+    addQuiz: build.mutation({
       query: (data) => {
         // console.log(data, "cacccc");
 
         return {
-          url: MODULE_URL,
+          url: QUIZ_URL,
           method: "POST",
           data,
         };
       },
-      invalidatesTags: [tagTypes.module],
+      invalidatesTags: [tagTypes.quiz],
     }),
     // update ac department
-    updateModule: build.mutation({
+    updateQuiz: build.mutation({
       query: ({ data, id }) => {
-        console.log(data, "Module data");
+        console.log(data, "Quiz data");
         return {
-          url: `${MODULE_URL}/${id}`,
+          url: `${QUIZ_URL}/${id}`,
           method: "PATCH",
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.module],
+      invalidatesTags: [tagTypes.quiz],
     }),
 
     // delete ac department
-    deleteModule: build.mutation({
+    deleteQuiz: build.mutation({
       query: (id) => ({
-        url: `${MODULE_URL}/${id}`,
+        url: `${QUIZ_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.module],
+      invalidatesTags: [tagTypes.quiz],
     }),
   }),
 });
 
 export const {
-  useAddModuleMutation,
-  useDeleteModuleMutation,
-  useGetAllModuleQuery,
-  useGetSingleModuleQuery,
-  useUpdateModuleMutation,
-} = moduleApi;
+  useAddQuizMutation,
+  useDeleteQuizMutation,
+  useGetAllQuizQuery,
+  useGetSingleQuizQuery,
+  useUpdateQuizMutation,
+} = QuizApi;

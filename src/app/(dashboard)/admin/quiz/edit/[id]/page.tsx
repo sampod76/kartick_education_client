@@ -1,48 +1,44 @@
 "use client";
 
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
+
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField, {
-  SelectOptions,
+
 } from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+
 import UploadImage from "@/components/ui/UploadImage";
-import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
+import TagUI from "@/components/ui/dashboardUI/TagUI";
+import { courseStatusOptions } from "@/constants/global";
+import { removeUndefinedValues } from "@/constants/removeUndefined";
 import uploadImgBB from "@/hooks/imgbbUploads";
+
+import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
+
+import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
 import {
-  useGetSingleCategoryQuery,
-  useUpdateCategoryMutation,
-} from "@/redux/api/adminApi/categoryApi";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import {
-  useGetSingleMilestoneQuery,
-  useUpdateMilestoneMutation,
-} from "@/redux/api/adminApi/milestoneApi";
+  useGetSingleQuizQuery,
+  useUpdateQuizMutation,
+} from "@/redux/api/adminApi/quizApi";
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
-import { ICategory } from "@/types";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Row, Select, message } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 
-const EditMilestonePage = ({ params }: any) => {
-  const { data: MilestoneData, isLoading } = useGetSingleMilestoneQuery(
-    params?.id,
-    {
-      skip: !Boolean(params?.id),
-    }
-  );
-  console.log(MilestoneData);
+const EditQuizPage = ({ params }: any) => {
+  const { data: QuizData, isLoading } = useGetSingleQuizQuery(params?.id, {
+    skip: !Boolean(params?.id),
+  });
+  console.log(QuizData);
   // const { data: MilestoneData = [] } = useGetAllCategoryQuery({});
-  const [updateMilestone, { isLoading: updateLoading, error }] =
-    useUpdateMilestoneMutation();
-
-  // ! for get all users
+  const [updateQuiz, { isLoading: updateLoading, error }] =
+    useUpdateQuizMutation();
   const { data: usersData } = useGetAllUsersQuery({});
   console.log(usersData);
 
@@ -55,41 +51,61 @@ const EditMilestonePage = ({ params }: any) => {
 
   console.log(AuthorOptions);
 
-  //! for Milestone options selection
-  const { data } = useGetAllCourseQuery({});
-  const CourseData = data?.data;
-  // console.log(CourseData)
-  const CourseOptions = CourseData?.map((item: any) => {
+  //! for Module options selection
+  const { data } = useGetAllModuleQuery({});
+  const moduleData = data?.data;
+  // console.log(moduleData)
+  const ModuleOptions = moduleData?.map((item: any) => {
     return {
       label: item?.title,
       value: item?._id,
     };
   });
-  console.log(CourseOptions);
+  console.log(ModuleOptions);
+
+  //! for Lesson options selection
+  const { data: lessons } = useGetAllLessonQuery({});
+  const LessonData = lessons?.data;
+  // console.log(LessonData)
+  const LessonOptions = LessonData?.map((item: any) => {
+    return {
+      label: item?.title,
+      value: item?._id,
+    };
+  });
+  console.log(LessonOptions);
 
   // !  tag selection
 
-  const OPTIONS = ["milestone", "online", "course", "english"];
+  const tagOptions = ["course", "tech", "update", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>(
-    MilestoneData?.tags || []
+    QuizData?.tags || []
   );
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
-  console.log(selectedTags, "selectedTags........1");
+  console.log(selectedTags, "selectedTags........1", QuizData?.tags);
+
+  // ! for video insert
+  const [videoType, setVideoType] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
+
+  const demo_video = {
+    video: videoType,
+    platform: videoUrl,
+  };
 
   const onSubmit = async (values: any) => {
-    
     if (typeof values.img !== "string") {
       console.log(values);
       values.img = await uploadImgBB(values.img);
     }
-    const UpdateValues = {
+    const UpdateValues = removeUndefinedValues({
       tags: selectedTags,
       ...values,
-    };
+    });
 
     console.log(UpdateValues);
+
     try {
-      const res = await updateMilestone({
+      const res = await updateQuiz({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
@@ -111,14 +127,13 @@ const EditMilestonePage = ({ params }: any) => {
     console.log(error);
   }
 
-  console.log(MilestoneData);
+  console.log(QuizData);
   const defaultValues = {
-    title: MilestoneData?.title || "",
-
-    img: MilestoneData?.img || "",
-
-    status: MilestoneData?.status || "",
-    details: MilestoneData?.details || "",
+    title: QuizData?.title || "",
+    img: QuizData?.img || "",
+    status: QuizData?.status || "",
+    details: QuizData?.details || "",
+    passingGrade: QuizData?.passingGrade || "",
 
     // managementDepartment: MilestoneData?.managementDepartment?.id || "",
   };
@@ -144,7 +159,7 @@ const EditMilestonePage = ({ params }: any) => {
                 marginBottom: "10px",
               }}
             >
-              Create Milestone
+              Create Lesson
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -160,9 +175,10 @@ const EditMilestonePage = ({ params }: any) => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Milestone Name"
+                  label="Lesson Name"
                   required={true}
                 />
+                {/*//! 1-- */}
               </Col>
               <Col
                 className="gutter-row"
@@ -173,8 +189,26 @@ const EditMilestonePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                {/*//! 3 */}
+                <FormInput
+                  type="number"
+                  name="passingGrade"
+                  size="large"
+                  label="passingGrade "
+                  required={true}
+                />
+                {/*//! 4 --- */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
                 <FormTextArea name="details" />
+                {/*//! 3 ---*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -189,13 +223,11 @@ const EditMilestonePage = ({ params }: any) => {
                   size="large"
                   name="author"
                   options={AuthorOptions}
-                  // defaultValue={priceTypeOptions[0]}
-                  defaultValue={MilestoneData?.author?.email}
                   label="Author"
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8 */}
+                {/* //! Author 5 --*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -208,14 +240,14 @@ const EditMilestonePage = ({ params }: any) => {
               >
                 <FormSelectField
                   size="large"
-                  name="course"
-                  options={CourseOptions as any}
+                  name="module"
+                  options={ModuleOptions as any}
                   // defaultValue={priceTypeOptions[0]}
-                  label="Course"
+                  label="module"
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8 */}
+                {/* //! module 6 ----*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -226,18 +258,32 @@ const EditMilestonePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <Select
-                  mode="multiple"
-                  placeholder="Inserted are removed"
-                  value={selectedTags}
-                  onChange={setSelectedTags}
-                  style={{ width: "100%" }}
-                  options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
-                  }))}
+                <FormSelectField
+                  size="large"
+                  name="lesson"
+                  options={LessonOptions as any}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Lesson"
+                  // placeholder="Select"
+                  required={true}
                 />
-                {/*//! 11 */}
+                <Select
+                  labelInValue
+                  defaultValue={{ value: "lucy", label: "Lucy (101)" }}
+                  style={{ width: 120 }}
+                  // onChange={handleChange}
+                  options={[
+                    {
+                      value: "jack",
+                      label: "Jack (100)",
+                    },
+                    {
+                      value: "lucy",
+                      label: "Lucy (101)",
+                    },
+                  ]}
+                />
+                {/* //! Lesson 7 ----*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -248,7 +294,62 @@ const EditMilestonePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="img" defaultImage={MilestoneData?.img} />
+                <FormSelectField
+                  size="large"
+                  name="status"
+                  options={courseStatusOptions as any}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="status"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8 ---*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <DemoVideoUI
+                  videoType={videoType as any}
+                  setVideoType={setVideoType}
+                  videoUrl={videoUrl}
+                  setVideoUrl={setVideoUrl}
+                  options={["youtube", "vimeo"]}
+                />
+                {/* //! quiz type 8 ---*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <TagUI
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                  tagOptions={tagOptions}
+                />
+                {/*//! 10--- */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <UploadImage name="img" />
+                {/* //! 2 -- */}
               </Col>
             </Row>
           </div>
@@ -269,4 +370,4 @@ const EditMilestonePage = ({ params }: any) => {
   );
 };
 
-export default EditMilestonePage;
+export default EditQuizPage;

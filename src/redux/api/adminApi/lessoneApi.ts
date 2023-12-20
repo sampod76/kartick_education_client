@@ -54,7 +54,7 @@ export const lessonApi = baseApi.injectEndpoints({
         console.log(data, "Lesson data");
         return {
           url: `${LESSON_URL}/${id}`,
-          method: "PUT",
+          method: "PATCH",
           data: data,
         };
       },

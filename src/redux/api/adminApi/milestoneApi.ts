@@ -54,7 +54,7 @@ export const milestoneApi = baseApi.injectEndpoints({
         console.log(data, "Milestone data");
         return {
           url: `${MILESTONE_URL}/${id}`,
-          method: "PUT",
+          method: "PATCH",
           data: data,
         };
       },

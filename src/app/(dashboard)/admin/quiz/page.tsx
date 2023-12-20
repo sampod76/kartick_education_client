@@ -28,14 +28,16 @@ import {
   useGetAllCategoryQuery,
 } from "@/redux/api/adminApi/categoryApi";
 import { USER_ROLE } from "@/constants/role";
-import { useDeleteMilestoneMutation, useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
+import { useDeleteQuizMutation, useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
-const MileStoneList = () => {
+
+const QuizList = () => {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
 
-  const [deleteMilestone] = useDeleteMilestoneMutation();
+  const [deleteQuiz] = useDeleteQuizMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -59,11 +61,11 @@ const MileStoneList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
+  const { data = [], isLoading } = useGetAllQuizQuery({ ...query });
   console.log(data);
 
   //@ts-ignore
-  const milestoneData = data?.data;
+  const QuizData = data?.data;
 
   //@ts-ignore
   const meta = data?.meta;
@@ -74,15 +76,15 @@ const MileStoneList = () => {
         try {
           console.log(id);
 
-          const res = await deleteMilestone(id).unwrap();
+          const res = await deleteQuiz(id).unwrap();
 
-          console.log(res, "response for delete Milestone");
+          console.log(res, "response for delete Quiz");
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Milestone Successfully Deleted");
+            Success_model("Quiz Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
@@ -110,13 +112,13 @@ const MileStoneList = () => {
       ellipsis: true,
     },
     {
-      title: "showing_number",
-      dataIndex: "showing_number",
+      title: "passingGrade",
+      dataIndex: "passingGrade",
       ellipsis: true,
     },
     {
-      title: "course",
-      dataIndex: "course",
+      title: "module",
+      dataIndex: "module",
       ellipsis: true,
       render: function (data: any) {
         return <>{data?.title}</>;
@@ -140,12 +142,12 @@ const MileStoneList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/milestone/details/${data}`}>
+            <Link href={`/admin/quiz/details/${data}`}>
               <Button type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/milestone/edit/${data}`}>
+            <Link href={`/admin/quiz/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -185,9 +187,9 @@ const MileStoneList = () => {
   const deleteAdminHandler = async (id: string) => {
     // console.log(id);
     try {
-      const res = await deleteMilestone(id);
+      const res = await deleteQuiz(id);
       if (res) {
-        message.success("Milstone Successfully Deleted!");
+        message.success("Quiz Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
@@ -205,7 +207,7 @@ const MileStoneList = () => {
           },
         ]}
       /> */}
-      <ActionBar title="Milestone List">
+      <ActionBar title="Quiz List">
         <Input
           size="large"
           placeholder="Search"
@@ -215,8 +217,8 @@ const MileStoneList = () => {
           }}
         />
         <div>
-          <Link href={`/admin/milestone/create`}>
-            <Button type="default">Create Milestone</Button>
+          <Link href={`/admin/quiz/create`}>
+            <Button>Create Quiz</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -233,7 +235,7 @@ const MileStoneList = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={milestoneData}
+        dataSource={QuizData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -254,4 +256,4 @@ const MileStoneList = () => {
   );
 };
 
-export default MileStoneList;
+export default QuizList;

@@ -5,7 +5,7 @@ import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 
 import Image from "next/image";
 
-const ServiceDetiles = ({ params }: any) => {
+const QuizDetiles = ({ params }: any) => {
   const { data: data, isLoading } = useGetSingleCategoryQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
@@ -49,4 +49,4 @@ const ServiceDetiles = ({ params }: any) => {
   );
 };
 
-export default ServiceDetiles;
+export default QuizDetiles;

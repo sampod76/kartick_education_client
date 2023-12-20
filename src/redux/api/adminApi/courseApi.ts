@@ -46,7 +46,7 @@ export const courseApi = baseApi.injectEndpoints({
     updateCourse: build.mutation({
       query: ({ data, id }) => ({
         url: `${COURSE_URL}/${id}`,
-        method: "PUT",
+        method: "PATCH",
         data: data,
       }),
       invalidatesTags: [tagTypes.course],

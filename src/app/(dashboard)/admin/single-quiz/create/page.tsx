@@ -1,29 +1,39 @@
 "use client";
 
+import DynamicFormFiled from "@/components/Forms/DynamicFormFiled";
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
+
 import FormInput from "@/components/Forms/FormInput";
-import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
+
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import FormTimePicker from "@/components/Forms/FormTimePicker";
+
 import UploadImage from "@/components/ui/UploadImage";
+import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagUI from "@/components/ui/dashboardUI/TagUI";
+import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
+
+import {
+  useAddLessonMutation,
+  useGetAllLessonQuery,
+} from "@/redux/api/adminApi/lessoneApi";
+import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
+import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuiz";
 
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
-import { IServiceSchema } from "@/schemas/service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Col, Row, Select, message } from "antd";
+
+import { Button, Col, Row, message } from "antd";
 import React, { useState } from "react";
 
-const CreateMilestone = () => {
-  const [addMilestone, { isLoading: serviceLoading }] =
-    useAddMilestoneMutation();
+const CreateSingleQuiz = () => {
+  const [addSingleQuiz, { isLoading: serviceLoading }] =
+    useAddSingleQuizMutation();
+
+  const { data: existLesson } = useGetAllLessonQuery({});
 
   // ! for get all users
   const { data: usersData } = useGetAllUsersQuery({});
@@ -38,22 +48,44 @@ const CreateMilestone = () => {
 
   console.log(AuthorOptions);
 
-  //! for Milestone options selection
-  const { data } = useGetAllCourseQuery({});
-  const CourseData = data?.data;
-  // console.log(CourseData)
-  const CourseOptions = CourseData?.map((item: any) => {
+  //! for Module options selection
+  const { data } = useGetAllModuleQuery({});
+  const moduleData = data?.data;
+  // console.log(moduleData)
+  const ModuleOptions = moduleData?.map((item: any) => {
     return {
       label: item?.title,
       value: item?._id,
     };
   });
-  console.log(CourseOptions);
+  console.log(ModuleOptions);
+
+  //! for Lesson options selection
+  const { data: lessons } = useGetAllLessonQuery({});
+  const LessonData = lessons?.data;
+  // console.log(LessonData)
+  const LessonOptions = LessonData?.map((item: any) => {
+    return {
+      label: item?.title,
+      value: item?._id,
+    };
+  });
+  console.log(LessonOptions);
 
   // !  tag selection
 
-  const tagsOptions = ["milestone", "online", "course", "english"];
+  const tagOptions = ["course", "tech", "update", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  console.log(selectedTags, "selectedTags........1");
+
+  // ! for video insert
+  const [videoType, setVideoType] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
+
+  const demo_video = {
+    video: videoType,
+    platform: videoUrl,
+  };
 
   const onSubmit = async (values: any) => {
     // console.log(values);
@@ -62,19 +94,19 @@ const CreateMilestone = () => {
 
     values.img = imgUrl;
 
-    const MilestoneData: {} = {
+    const LessonData: {} = {
       ...values,
       tags: selectedTags,
     };
-    // console.log(MilestoneData);
+    console.log(LessonData);
 
     try {
-      const res = await addMilestone(MilestoneData).unwrap();
-      // console.log(res);
+      const res = await addSingleQuiz(LessonData).unwrap();
+      console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Milestone");
+        Success_model("Successfully added Lesson");
       }
       // console.log(res);
     } catch (error: any) {
@@ -101,14 +133,7 @@ const CreateMilestone = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Create Milestone
-            </p>
+            <HeadingUI>Create A Single Quiz</HeadingUI>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -123,9 +148,10 @@ const CreateMilestone = () => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Milestone Name"
+                  label="Lesson Name"
                   required={true}
                 />
+                {/*//! 1-- */}
               </Col>
               <Col
                 className="gutter-row"
@@ -136,8 +162,26 @@ const CreateMilestone = () => {
                   marginBottom: "10px",
                 }}
               >
-                {/*//! 3 */}
+                <FormInput
+                  type="number"
+                  name="passingGrade"
+                  size="large"
+                  label="passingGrade "
+                  required={true}
+                />
+                {/*//! 4 --- */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
                 <FormTextArea name="details" />
+                {/*//! 3 ---*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -152,12 +196,11 @@ const CreateMilestone = () => {
                   size="large"
                   name="author"
                   options={AuthorOptions}
-                  // defaultValue={priceTypeOptions[0]}
                   label="Author"
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8 */}
+                {/* //! Author 5 --*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -170,14 +213,72 @@ const CreateMilestone = () => {
               >
                 <FormSelectField
                   size="large"
-                  name="course"
-                  options={CourseOptions as any}
+                  name="module"
+                  options={ModuleOptions as any}
                   // defaultValue={priceTypeOptions[0]}
-                  label="Course"
+                  label="module"
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8 */}
+                {/* //! module 6 ----*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="lesson"
+                  options={LessonOptions as any}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Lesson"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! Lesson 7 ----*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="status"
+                  options={courseStatusOptions as any}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="status"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8 ---*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <DemoVideoUI
+                  videoType={videoType as any}
+                  setVideoType={setVideoType}
+                  videoUrl={videoUrl}
+                  setVideoUrl={setVideoUrl}
+                  options={["youtube", "vimeo"]}
+                />
+                {/* //! Singlequiz type 8 ---*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -191,9 +292,9 @@ const CreateMilestone = () => {
                 <TagUI
                   selectedTags={selectedTags}
                   setSelectedTags={setSelectedTags}
-                  tagOptions={tagsOptions}
+                  tagOptions={tagOptions}
                 />
-                {/*//! 11 */}
+                {/*//! 10--- */}
               </Col>
               <Col
                 className="gutter-row"
@@ -205,6 +306,21 @@ const CreateMilestone = () => {
                 }}
               >
                 <UploadImage name="img" />
+                {/* //! 2 -- */}
+              </Col>
+            </Row>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <DynamicFormFiled />
+                {/*//! 4 --- */}
               </Col>
             </Row>
           </div>
@@ -218,4 +334,4 @@ const CreateMilestone = () => {
   );
 };
 
-export default CreateMilestone;
+export default CreateSingleQuiz;

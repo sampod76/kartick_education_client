@@ -48,7 +48,7 @@ export const studentApi = baseApi.injectEndpoints({
         console.log(data, "student data", id);
         return {
           url: `${STUDENT_URL}/${id}`,
-          method: "PUT",
+          method: "PATCH",
           data: data,
         };
       },
