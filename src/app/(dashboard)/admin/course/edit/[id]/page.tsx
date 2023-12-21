@@ -82,7 +82,7 @@ const CourseDetails = ({ params }: any) => {
       //@ts-ignore
       const res = await updateCourse({
         id: params?.id,
-        body: updateData,
+        data: updateData,
       }).unwrap();
       if (res.success == false) {
         Error_model_hook(res?.message + "");
@@ -384,7 +384,7 @@ const CourseDetails = ({ params }: any) => {
       
           </div>
           <Button htmlType="submit" type="default">
-            Create
+           Update Course
           </Button>
         </Form>
       </div>

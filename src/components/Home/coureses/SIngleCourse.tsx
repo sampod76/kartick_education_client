@@ -10,9 +10,10 @@ import Image from "next/image";
 const { Meta, Grid } = Card;
 
 const SIngleCourse = ({ course }: { course: any }) => {
-  const { name, description, img, video, jam, students } = course;
+  console.log(course);
+  // const { title, details, img, demo_video, tags} = course;
   return (
-    <div className="w-[23rem]  shadow-md">
+    <div className="w-[23rem] mx-auto  shadow-md bg-red-200">
       <Card
         // className="w-96 bg-red-500"
         bodyStyle={{ borderRadius: "10px, 10px, 0px, 0px" }}
@@ -22,7 +23,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
             height={173}
             width={292}
             alt="example"
-            src={img} 
+            src={course?.img}
           />
         }
         hoverable
@@ -31,15 +32,15 @@ const SIngleCourse = ({ course }: { course: any }) => {
           position: "relative",
         }}
         actions={[
-          <button key="video">
-            <VideoCameraOutlined /> <span>{video.length} Video</span>
+          <button key="demo_video">
+            <VideoCameraOutlined /> <span>{course?.demo_video?.length} Video</span>
           </button>,
           <button key="time">
-            <FieldTimeOutlined /> <span>{jam.length} Jam</span>
+            <FieldTimeOutlined /> <span>{course?.tags?.length} Jam</span>
           </button>,
           <button key="users">
             <UsergroupDeleteOutlined />
-            <span>{students.length} students</span>
+            <span> 34 students</span>
           </button>,
         ]}
       >
@@ -69,12 +70,12 @@ const SIngleCourse = ({ course }: { course: any }) => {
             margin: "24px 0",
             padding: "0 10px",
           }}
-          title={<h2 className="text-black">{name}</h2>}
+          title={<h2 className="text-black">{course?.title}</h2>}
           description={
             <p className="text-[#282938] ">
-              {description?.length < 64
-                ? description
-                : description?.slice(0, 64) + "....."}
+              {course?.details?.length < 64
+                ? course?.details
+                : course?.details?.slice(0, 64) + "....."}
             </p>
           }
         />
