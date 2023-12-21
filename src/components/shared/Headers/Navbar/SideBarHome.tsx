@@ -22,7 +22,7 @@ const SideBarHome = () => {
 
   return (
     <>
-      <Space className="text-2xl">
+      <Space className="text-2xl ">
         {!open ? (
           <MenuUnfoldOutlined onClick={showDrawer} />
         ) : (

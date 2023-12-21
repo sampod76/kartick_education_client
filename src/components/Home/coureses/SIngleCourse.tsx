@@ -13,7 +13,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
   console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   return (
-    <div className="w-[23rem] mx-auto  shadow-md bg-red-200">
+    <div className="w-[23rem] mx-auto  shadow-md ">
       <Card
         // className="w-96 bg-red-500"
         bodyStyle={{ borderRadius: "10px, 10px, 0px, 0px" }}
