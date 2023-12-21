@@ -27,9 +27,14 @@ const beforeUpload = (file: RcFile) => {
 type ImageUploadProps = {
   name: string;
   defaultImage?: string;
+  customChange?: any;
 };
 
-const UploadImage = ({ name, defaultImage }: ImageUploadProps) => {
+const UploadImage = ({
+  name,
+  defaultImage,
+  customChange,
+}: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   const { setValue } = useFormContext();
@@ -66,12 +71,12 @@ const UploadImage = ({ name, defaultImage }: ImageUploadProps) => {
         className="avatar-uploader"
         showUploadList={false}
         action="/api/file"
-        beforeUpload={beforeUpload}
+        beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >
         {imageUrl || defaultImage ? (
           <Image
-            src={imageUrl ? imageUrl : defaultImage as string}
+            src={imageUrl ? imageUrl : (defaultImage as string)}
             alt="avatar"
             style={{ width: "100%" }}
             width={60}

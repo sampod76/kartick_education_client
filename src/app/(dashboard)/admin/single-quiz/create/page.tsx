@@ -16,15 +16,7 @@ import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
 import dayjs from "dayjs";
 
-import {
-  useAddLessonMutation,
-  useGetAllLessonQuery,
-} from "@/redux/api/adminApi/lessoneApi";
-import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
-import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
 import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuiz";
-
-import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -34,6 +26,8 @@ import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
 import SelectQUizField from "@/components/Forms/SelectData/SelectQUizField";
+import FormTimePicker from "@/components/Forms/FormTimePicker";
+import AnswerInputList from "@/components/Forms/DynamicFormFiled";
 
 const CreateSingleQuiz = () => {
   const [addSingleQuiz, { isLoading: serviceLoading }] =
@@ -54,6 +48,25 @@ const CreateSingleQuiz = () => {
     platform: videoUrl,
   };
 
+  // ! For quiz Answer
+  const [answers, setAnswers] = useState([
+    {
+      title: "Option A",
+      correct: true,
+      img: "https://...",
+      serialNumber: 1,
+      status: "active",
+    },
+    {
+      title: "Option B",
+      correct: false,
+      img: "https://...",
+      serialNumber: 2,
+      status: "active",
+    },
+  ]);
+
+  console.log(answers, "answer");
   const onSubmit = async (values: any) => {
     // console.log(values);
     const status = "active";
@@ -61,11 +74,13 @@ const CreateSingleQuiz = () => {
 
     values.img = imgUrl;
     values["status"] = status;
+    values.time_duration= Number(values.time_duration)
 
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
       demo_video,
+      answers,
     };
     console.log(LessonData);
 
@@ -75,7 +90,7 @@ const CreateSingleQuiz = () => {
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Lesson");
+        Success_model("Successfully added the Quiz");
       }
       // console.log(res);
     } catch (error: any) {
@@ -111,7 +126,7 @@ const CreateSingleQuiz = () => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Lesson Name"
+                  label="Quiz Name"
                   required={true}
                 />
                 {/*//! 1  */}
@@ -152,11 +167,12 @@ const CreateSingleQuiz = () => {
                   required={true}
                 /> */}
 
-                <TimePicker
+                {/* <TimePicker
                   // onChange={onChange}
-                  className="w-full mt-6"
+                  className="w-full my-3 lg:my-1 lg:mt-12"
                   defaultOpenValue={dayjs("00:00:00", "HH:mm:ss")}
-                />
+                /> */}
+                <FormTimePicker name="time_duration" label="Time Duration" />
                 {/*//! 5  */}
               </Col>
               <Col
@@ -195,14 +211,6 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                {/* <FormSelectField
-                  size="large"
-                  name="author"
-                  options={AuthorOptions}
-                  label="Author"
-                  // placeholder="Select"
-                  required={true}
-                /> */}
                 <SelectAuthorField />
                 {/* //! Author 9 */}
               </Col>
@@ -309,7 +317,12 @@ const CreateSingleQuiz = () => {
                 {/* //! 2  */}
               </Col>
             </Row>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Row
+              gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+              style={{
+                marginBlock: "2em",
+              }}
+            >
               <Col
                 className="gutter-row"
                 xs={24}
@@ -319,7 +332,8 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                <DynamicFormFiled />
+                {/* <DynamicFormFiled  /> */}
+                <AnswerInputList answers={answers} setAnswers={setAnswers} />
                 {/*//! 4 --- */}
               </Col>
             </Row>

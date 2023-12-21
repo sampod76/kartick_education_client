@@ -1,92 +1,134 @@
-import { Button, Form, Input, Radio, Space } from "antd";
-import React, { useState } from "react";
-import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-import type { RadioChangeEvent } from "antd";
-import FormSelectField from "./FormSelectField";
-import { courseStatusOptions } from "@/constants/global";
-const DynamicFormFiled = () => {
-  const onFinish = (values: any) => {
-    console.log("Received values of form:", values);
-  };
-  const [value, setValue] = useState(1);
+import { useState } from "react";
+import { Button, Input, Radio, Select, Space, Upload, message } from "antd";
+import {
+  PlusOutlined,
+  MinusCircleOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
+import HeadingUI from "../ui/dashboardUI/HeadingUI";
+import SubHeadingUI from "../ui/dashboardUI/SubHeadingUI";
 
-  const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
+interface Answer {
+  title: string;
+  correct: boolean;
+  img: string;
+  serialNumber: number;
+  status: string;
+}
+
+interface AnswerInputListProps {
+  answers: Answer[];
+  setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>;
+}
+
+const AnswerInputList: React.FC<AnswerInputListProps> = ({
+  answers,
+  setAnswers,
+}) => {
+  const handleAdd = () => {
+    setAnswers([
+      ...answers,
+      { title: "", correct: false, img: "", serialNumber: 0, status: "active" },
+    ]);
   };
+
+  const handleRemove = (index: number) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers.splice(index, 1);
+    setAnswers(updatedAnswers);
+  };
+
+  const handleChange = (index: number, updatedAnswer: Answer) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[index] = updatedAnswer;
+    setAnswers(updatedAnswers);
+  };
+
   return (
-    <Form
-      name="dynamic_form_nest_item"
-      onFinish={onFinish}
-      style={{ maxWidth: 600 }}
-      autoComplete="off"
-    >
-      <Form.List name="users">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, ...restField }) => (
-              <Space
-                key={key}
-                style={{ display: "flex", marginBottom: 8 }}
-                align="baseline"
-              >
-                <Form.Item
-                  {...restField}
-                  name={[name, "title"]}
-                  rules={[{ required: true, message: "Missing title" }]}
-                >
-                  <Input placeholder="title" />
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, "img"]}
-                  rules={[{ required: true, message: "Missing img img" }]}
-                >
-                  <Input type="URL" placeholder="img Url" />
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, "correct"]}
-                  rules={[{ required: true, message: "Missing correct img" }]}
-                >
-                  <Radio.Group onChange={onChange} value={value}>
-                    <Radio value={true}>True</Radio>
-                    <Radio value={false}>False</Radio>
-                  </Radio.Group>
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, "status"]}
-                  rules={[{ required: true, message: "Missing status name" }]}
-                >
-                  <FormSelectField
-                    size="large"
-                    name="status"
-                    options={courseStatusOptions as any}
-                    // defaultValue={priceTypeOptions[0]}
-                    label="status"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                </Form.Item>
-                <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
-            ))}
-            <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-              >
-                Add field
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
-    </Form>
+    <div className="w-[80vw] ">
+      <SubHeadingUI>Add Answer </SubHeadingUI>
+      {answers.map((answer, index) => (
+        <Space
+          key={index}
+          // style={{ display: "flex", marginBottom: 8 }}
+          style={{
+            display: "flex",
+            // flexDirection: "column",
+            marginBottom: 8,
+            width: "100%",
+            alignItems: "center",
+          }}
+          align="baseline"
+        >
+          <Input
+            placeholder="Option Title"
+            value={answer.title}
+            onChange={(e) =>
+              handleChange(index, { ...answer, title: e.target.value })
+            }
+          />
+          <Radio.Group
+            onChange={(e) =>
+              handleChange(index, { ...answer, correct: e.target.value })
+            }
+            value={answer.correct}
+          >
+            <Radio value={true}>Correct</Radio>
+            <Radio value={false}>Incorrect</Radio>
+          </Radio.Group>
+          <Upload
+            listType="picture"
+            showUploadList={true}
+            beforeUpload={(file) => {
+              // You can add custom logic before uploading, e.g., checking file type or size
+              handleChange(index, {
+                ...answer,
+                img: URL.createObjectURL(file),
+              });
+              return false; // Prevent default upload behavior
+            }}
+          >
+            <Button>+Image</Button>
+          </Upload>
+          <Input
+            placeholder="Serial Number"
+            type="number"
+            value={answer.serialNumber}
+            onChange={(e) =>
+              handleChange(index, { ...answer, serialNumber: +e.target.value })
+            }
+          />
+          {/* <Input
+            placeholder="Status"
+            value={answer.status}
+            onChange={(e) =>
+              handleChange(index, { ...answer, status: e.target.value })
+            }
+          /> */}
+          <Select
+            style={{ width: 120 }}
+            onChange={(value) =>
+              handleChange(index, { ...answer, status: value })
+            }
+            defaultValue={answer.status}
+          >
+            <Select.Option value="active">Active</Select.Option>
+            <Select.Option value="deactivate">Deactivate</Select.Option>
+          </Select>
+          <MinusCircleOutlined onClick={() => handleRemove(index)} />
+        </Space>
+      ))}
+      <Button
+        type="dashed"
+        disabled={answers?.length > 6 ? true : false}
+        onClick={handleAdd}
+        // block
+        icon={<PlusOutlined />}
+      >
+        {answers?.length < 7 ? "Add Answer" : "Already added 6"}
+      </Button>
+    </div>
   );
 };
 
-export default DynamicFormFiled;
+export default AnswerInputList;

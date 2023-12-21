@@ -28,7 +28,7 @@ password : 11223344
 
 ### Update of 20 December
 
-1. include video demo in create course,Quiz, single quiz
+- 1. include video demo in create course,Quiz, single quiz
 
 ```json
  "demo_video": {
@@ -36,16 +36,15 @@ password : 11223344
     "platform": "vimeo"
   }
 ```
-2.  Redux for quiz and Single Quiz
-3.  Created 2 reusable UI and hook
-4.  
 
-
-** Done with DemoVideoUI reusable UI**
+- 2.  Redux for quiz and Single Quiz --done
+- 3.  Created 2 reusable UI and hook --done
+- 4.  Done with DemoVideoUI reusable UI\*\* --done
 
 ### Update 21 December 2024
 
-1. Single Quiz with answer options
-2. Milestone showing
-3. Table Responsive
-4. Create UI
+- 1. Single Quiz with answer options -- Not Fixed
+- 2. Milestone showing 
+- 3. Table Responsive
+- 4. Create UI
+- 5. Reusable Selection Form --done
