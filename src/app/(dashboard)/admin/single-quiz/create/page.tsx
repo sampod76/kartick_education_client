@@ -14,63 +14,30 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagUI from "@/components/ui/dashboardUI/TagUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
+import dayjs from "dayjs";
 
 import {
   useAddLessonMutation,
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
 import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
+import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
 import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuiz";
 
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Row, TimePicker, message } from "antd";
 import React, { useState } from "react";
+import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
+import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
+import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
+import SelectQUizField from "@/components/Forms/SelectData/SelectQUizField";
 
 const CreateSingleQuiz = () => {
   const [addSingleQuiz, { isLoading: serviceLoading }] =
     useAddSingleQuizMutation();
-
-  const { data: existLesson } = useGetAllLessonQuery({});
-
-  // ! for get all users
-  const { data: usersData } = useGetAllUsersQuery({});
-  console.log(usersData);
-
-  const AuthorOptions = usersData?.data?.data?.map((item: any) => {
-    return {
-      label: item?.email,
-      value: item?._id,
-    };
-  });
-
-  console.log(AuthorOptions);
-
-  //! for Module options selection
-  const { data } = useGetAllModuleQuery({});
-  const moduleData = data?.data;
-  // console.log(moduleData)
-  const ModuleOptions = moduleData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(ModuleOptions);
-
-  //! for Lesson options selection
-  const { data: lessons } = useGetAllLessonQuery({});
-  const LessonData = lessons?.data;
-  // console.log(LessonData)
-  const LessonOptions = LessonData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(LessonOptions);
 
   // !  tag selection
 
@@ -93,10 +60,12 @@ const CreateSingleQuiz = () => {
     const imgUrl = await uploadImgBB(values.img);
 
     values.img = imgUrl;
+    values["status"] = status;
 
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
+      demo_video,
     };
     console.log(LessonData);
 
@@ -115,15 +84,9 @@ const CreateSingleQuiz = () => {
     }
   };
 
-  if (serviceLoading) {
-    return message.loading("Loading...");
-  }
-
   return (
     <div>
       <div>
-        {/* resolver={yupResolver(adminSchema)} */}
-        {/* resolver={yupResolver(IServiceSchema)} */}
         <Form submitHandler={onSubmit}>
           <div
             style={{
@@ -151,7 +114,7 @@ const CreateSingleQuiz = () => {
                   label="Lesson Name"
                   required={true}
                 />
-                {/*//! 1-- */}
+                {/*//! 1  */}
               </Col>
               <Col
                 className="gutter-row"
@@ -164,12 +127,37 @@ const CreateSingleQuiz = () => {
               >
                 <FormInput
                   type="number"
-                  name="passingGrade"
+                  name="serialNumber"
                   size="large"
-                  label="passingGrade "
+                  label="serialNumber "
                   required={true}
                 />
-                {/*//! 4 --- */}
+                {/*//! 4  */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10p",
+                  // background:"r ed"
+                }}
+              >
+                {/* <FormInput
+                  type="time"
+                  name="time_duration"
+                  size="large"
+                  label="time_duration "
+                  required={true}
+                /> */}
+
+                <TimePicker
+                  // onChange={onChange}
+                  className="w-full mt-6"
+                  defaultOpenValue={dayjs("00:00:00", "HH:mm:ss")}
+                />
+                {/*//! 5  */}
               </Col>
               <Col
                 className="gutter-row"
@@ -181,7 +169,7 @@ const CreateSingleQuiz = () => {
                 }}
               >
                 <FormTextArea name="details" />
-                {/*//! 3 ---*/}
+                {/*//! 3 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -192,15 +180,31 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
+                <FormTextArea
+                  name="hints"
+                  placeholder="Give hints for Answer"
+                />
+                {/*//! 6 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                {/* <FormSelectField
                   size="large"
                   name="author"
                   options={AuthorOptions}
                   label="Author"
                   // placeholder="Select"
                   required={true}
-                />
-                {/* //! Author 5 --*/}
+                /> */}
+                <SelectAuthorField />
+                {/* //! Author 9 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -211,16 +215,8 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="module"
-                  options={ModuleOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="module"
-                  // placeholder="Select"
-                  required={true}
-                />
-                {/* //! module 6 ----*/}
+                <SelectModuleField />
+                {/* //! module 10 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -231,16 +227,20 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="lesson"
-                  options={LessonOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Lesson"
-                  // placeholder="Select"
-                  required={true}
-                />
-                {/* //! Lesson 7 ----*/}
+                <SelectLessonField />
+                {/* //! Lesson 11 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <SelectQUizField />
+                {/* //! quiz 12  */}
               </Col>
               <Col
                 className="gutter-row"
@@ -260,7 +260,7 @@ const CreateSingleQuiz = () => {
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8 ---*/}
+                {/* //! price type 13 ---*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -278,7 +278,7 @@ const CreateSingleQuiz = () => {
                   setVideoUrl={setVideoUrl}
                   options={["youtube", "vimeo"]}
                 />
-                {/* //! Singlequiz type 8 ---*/}
+                {/* //! Demo Video 14 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -294,7 +294,7 @@ const CreateSingleQuiz = () => {
                   setSelectedTags={setSelectedTags}
                   tagOptions={tagOptions}
                 />
-                {/*//! 10--- */}
+                {/*//! 15  */}
               </Col>
               <Col
                 className="gutter-row"
@@ -306,7 +306,7 @@ const CreateSingleQuiz = () => {
                 }}
               >
                 <UploadImage name="img" />
-                {/* //! 2 -- */}
+                {/* //! 2  */}
               </Col>
             </Row>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

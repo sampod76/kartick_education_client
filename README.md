@@ -36,8 +36,16 @@ password : 11223344
     "platform": "vimeo"
   }
 ```
+2.  Redux for quiz and Single Quiz
+3.  Created 2 reusable UI and hook
+4.  
 
-**done with DemoVideoUI **
 
+** Done with DemoVideoUI reusable UI**
 
-2. 
+### Update 21 December 2024
+
+1. Single Quiz with answer options
+2. Milestone showing
+3. Table Responsive
+4. Create UI
