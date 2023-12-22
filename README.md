@@ -48,3 +48,14 @@ password : 11223344
 - 3. Table Responsive
 - 4. Create UI
 - 5. Reusable Selection Form --done
+
+
+#### up  22 December 2024
+
+- 1. Form responsive 
+  - Category create and update form
+  - Course create and update form
+  -
+- 2. Table sorting include
+- 3. details page of category, course,milestone, module,lesson, quiz
+- 4.   

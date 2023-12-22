@@ -10,6 +10,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
 import {
@@ -50,7 +51,7 @@ const EditCategoryPage = ({ params }: any) => {
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      
+
       console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
@@ -93,22 +94,17 @@ const EditCategoryPage = ({ params }: any) => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Category Information
-            </p>
+            <HeadingUI>Category Information</HeadingUI>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+                md={24}
+                lg={24}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: "20px",
+                  maxWidth: "30vw",
+                  margin: "0 auto",
                 }}
               >
                 <FormInput
@@ -120,23 +116,11 @@ const EditCategoryPage = ({ params }: any) => {
                 />
               </Col>
 
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2">
+              <Col className="gutter-row" xs={24} md={24} lg={24}>
+                <div className="">
                   <UploadImage name="img" defaultImage={categoryData.img} />
                 </div>
               </Col>
-
-              {/* <Col span={12} style={{ margin: "10px 0" }}>
-              <FormTextArea name="address" label="Address" rows={4} />
-            </Col> */}
             </Row>
           </div>
           <div
@@ -147,7 +131,7 @@ const EditCategoryPage = ({ params }: any) => {
             }}
           >
             <Button htmlType="submit" type="default">
-              Update
+              Update Category
             </Button>
           </div>
         </Form>

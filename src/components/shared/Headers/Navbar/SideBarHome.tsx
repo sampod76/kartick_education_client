@@ -18,7 +18,8 @@ const SideBarHome = () => {
     setOpen(false);
   };
 
-  const [selectedItem, setSelectedItem] = useState<null | any>(null);
+const [selectedItem, setSelectedItem] = useState<null | any>(null);
+
 
   return (
     <>

@@ -8,6 +8,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import uploadImgBB from "@/hooks/imgbbUploads";
 
 import {
@@ -29,7 +30,7 @@ const CreateCategory = () => {
     const status = "active";
     const imgUrl = await uploadImgBB(values.img);
 
-    const categoryData:{title:string,img:string,status:string} = {
+    const categoryData: { title: string; img: string; status: string } = {
       title: values.title,
       img: imgUrl,
       status: status,
@@ -69,22 +70,17 @@ const CreateCategory = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Create category
-            </p>
+            <HeadingUI>Create category</HeadingUI>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+                md={24}
+                lg={24}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: "20px",
+                  maxWidth: "30vw",
+                  margin: "0 auto",
                 }}
               >
                 <FormInput
@@ -98,19 +94,19 @@ const CreateCategory = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+                md={24}
+                lg={24}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="img"  />
+                <UploadImage name="img" />
               </Col>
             </Row>
           </div>
 
           <Button htmlType="submit" type="default">
-            Create
+            Create Category
           </Button>
         </Form>
       </div>
