@@ -35,6 +35,7 @@ const CourseDetails = ({ params }: any) => {
   const { data: CourseData, isLoading } = useGetSingleCourseQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
+  console.log(CourseData);
 
   const [updateCourse, { isLoading: CourseLoading }] =
     useUpdateCourseMutation();
@@ -42,9 +43,9 @@ const CourseDetails = ({ params }: any) => {
   const { data } = useGetAllCategoryQuery({});
 
   const tagOptions = ["course", "tech", "update", "english"];
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(CourseData?.tags);
 
-  console.log(selectedTags, "selectedTags........1");
+  // console.log(selectedTags, "selectedTags........1");
 
   // console.log(courseStatusOptions,"Category",CategoryOptions,);
 
