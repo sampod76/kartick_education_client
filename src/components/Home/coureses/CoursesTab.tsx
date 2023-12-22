@@ -5,7 +5,6 @@ import Courses from "./Courses";
 import onlineCourseServicesData from "@/db/courses";
 
 const CoursesTab = () => {
-  
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
@@ -21,32 +20,29 @@ const CoursesTab = () => {
     {
       label: (
         <button className={activeTabKey === "1" ? activeClass : inactiveClass}>
-          {" "}
           Math
         </button>
       ),
       key: "1",
-      children: <Courses data={onlineCourseServicesData} />,
+      children: <Courses query={{ status: "active" }} />,
     },
     {
       label: (
         <button className={activeTabKey === "2" ? activeClass : inactiveClass}>
-          {" "}
           Language Arts
         </button>
       ),
       key: "2",
-      children: <Courses data={onlineCourseServicesData} />,
+      children: <Courses query={{ status: "active" }} />,
     },
     {
       label: (
         <button className={activeTabKey === "3" ? activeClass : inactiveClass}>
-          {" "}
           Science
         </button>
       ),
       key: "3",
-      children: <Courses data={onlineCourseServicesData} />,
+      children: <Courses query={{ status: "active" }} />,
     },
   ];
   return (

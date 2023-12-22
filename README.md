@@ -1,15 +1,16 @@
-
- ## কেন জানি আমার সার্ভারে শুধু cors error  দেয়  যার কারণে কষ্ট করে একটা CORS এক্সটেনশন রান করে নিতে হয়
+## কেন জানি আমার সার্ভারে শুধু cors error দেয় যার কারণে কষ্ট করে একটা CORS এক্সটেনশন রান করে নিতে হয়
 
 ## এবং আমাকে আমার Deploy করার কোন ইমেজে শো করে না | লোকালি সব ঠিকঠাক মত চলে
 
 front end = https://assernment9.salontrainingpro.app/
 backend = https://school-api.salontrainingpro.app
 
-## front end github : 
+## front end github :
+
 https://github.com/sampod76/l2-assernment-9-Frontend-computer-repair-service.git
 
-## backend github : 
+## backend github :
+
 https://github.com/sampod76/l2-assernment-9-backend-computer-repair-service.git
 
 //
@@ -22,4 +23,28 @@ password : 11223344
 //
 customer:example@gmail.com
 password : 11223344
+
 # kartick_education_client
+
+### Update of 20 December
+
+- 1. include video demo in create course,Quiz, single quiz
+
+```json
+ "demo_video": {
+    "vimeo": "https://vimeo.com/848962637?share=copy",
+    "platform": "vimeo"
+  }
+```
+
+- 2.  Redux for quiz and Single Quiz --done
+- 3.  Created 2 reusable UI and hook --done
+- 4.  Done with DemoVideoUI reusable UI\*\* --done
+
+### Update 21 December 2024
+
+- 1. Single Quiz with answer options -- Not Fixed
+- 2. Milestone showing 
+- 3. Table Responsive
+- 4. Create UI
+- 5. Reusable Selection Form --done

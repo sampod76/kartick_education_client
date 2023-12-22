@@ -11,7 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useGetSingleStudentQuery } from "@/redux/api/adminApi/studentApi";
+import { useGetSingleStudentQuery, useUpdateStudentMutation } from "@/redux/api/adminApi/studentApi";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
@@ -28,22 +28,21 @@ const EditStudentPage = ({ params }: any) => {
   const { data: singleStudent, isLoading } = useGetSingleStudentQuery(
     params?.id
   );
-  const studentData = singleStudent?.data;
+  const studentData = singleStudent
 
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
   // console.log(studentData, "student data");
 
-  const [updateService, { isLoading: updateLoading, error }] =
-    useUpdateServiceMutation();
+  const [updateStudent, { isLoading: updateLoading, error }] =
+    useUpdateStudentMutation();
 
   const onSubmit = async (values: any) => {
     const UpdateValues = {
       ...values,
-      availableTickets: Number(values?.availableTickets || 0),
-      price: Number(values?.price || 0),
     };
+    console.log(UpdateValues);
     try {
-      const res = await updateService({
+      const res = await updateStudent({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
@@ -64,19 +63,21 @@ const EditStudentPage = ({ params }: any) => {
     console.log(error);
   }
 
+  console.log(studentData);
+
   const defaultValues = {
     name: {
-      firstName: studentData.name.firstName || "",
-      lastName: studentData.name.lastName || "",
-      middleName: studentData.middleName || "",
+      firstName: studentData?.name.firstName || "",
+      lastName: studentData?.name.lastName || "",
+      middleName: studentData?.middleName || "",
     },
-    gender: studentData.gender || "",
-    dateOfBirth: studentData.dateOfBirth || "",
-    email: studentData.email || "",
-    phoneNumber: studentData.phoneNumber || "",
-    bloodGroup: studentData.bloodGroup || "", // Optional blood group
-    address: studentData.address || "",
-    img: studentData.img || "",
+    gender: studentData?.gender || "",
+    // dateOfBirth: studentData?.dateOfBirth || "",
+    email: studentData?.email || "",
+    phoneNumber: studentData?.phoneNumber || "",
+    bloodGroup: studentData?.bloodGroup || "", // Optional blood group
+    address: studentData?.address || "",
+    img: studentData?.img || "",
   };
 
   console.log(defaultValues);
@@ -162,7 +163,7 @@ const EditStudentPage = ({ params }: any) => {
                 }}
               >
                 <FormInput
-                  type="number"
+                  type="text"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"

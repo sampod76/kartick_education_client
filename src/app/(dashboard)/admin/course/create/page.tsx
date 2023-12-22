@@ -7,6 +7,11 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
+import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import LabelUi from "@/components/ui/dashboardUI/LabelUi";
+import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
+import TagUI from "@/components/ui/dashboardUI/TagUI";
 import {
   bloodGroupOptions,
   courseStatusOptions,
@@ -16,18 +21,20 @@ import {
 import uploadImgBB from "@/hooks/imgbbUploads";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
-
+import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, Col, Row, Select, Upload, message } from "antd";
+import { Button, Col, Input, Row, Select, Upload, message } from "antd";
 import { useState } from "react";
+
+const { Option } = Select;
 
 const CreateCoursePage = () => {
   const [addCourse, { isLoading }] = useAddCourseMutation();
 
-  // for category options selection
+  //! for category options selection
   const { data } = useGetAllCategoryQuery({});
   const CategoryData = data?.data;
   // console.log(CategoryData)
@@ -37,16 +44,38 @@ const CreateCoursePage = () => {
       value: item?._id,
     };
   });
+  // ! for get all users
+  const { data: usersData } = useGetAllUsersQuery({});
+  console.log(usersData);
+
+  const AuthorOptions = usersData?.data?.data?.map((item: any) => {
+    return {
+      label: item?.email,
+      value: item?._id,
+    };
+  });
+
+  console.log(AuthorOptions);
 
   // !  tag selection
 
-  const OPTIONS = ["Apples", "Nails", "Bananas", "Helicopters"];
+  const tagOptions = ["course", "tech", "update", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
+
   console.log(selectedTags, "selectedTags........1");
 
   // console.log(courseStatusOptions,"Category",CategoryOptions,);
 
+  // ! for video insert
+  const [videoType, setVideoType] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
+
+  const demo_video = {
+    video: videoType,
+    platform: videoUrl,
+  };
+
+  // console.log(demo_video);
   const onSubmit = async (values: any) => {
     // console.log(values.img, "values of Course");
     let { img, ...others } = values;
@@ -60,6 +89,7 @@ const CreateCoursePage = () => {
     const CourseData = {
       img,
       tags: selectedTags,
+      demo_video,
       ...others,
     };
 
@@ -90,7 +120,7 @@ const CreateCoursePage = () => {
 
   return (
     <div>
-      <h1>Create Course </h1>
+      <HeadingUI>Create Course</HeadingUI>
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
         <Form
@@ -109,14 +139,7 @@ const CreateCoursePage = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Course Information
-            </p>
+            <SubHeadingUI>Course Information</SubHeadingUI>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -154,6 +177,43 @@ const CreateCoursePage = () => {
                 />
                 {/* //! 7 */}
               </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="text"
+                  name="level"
+                  size="large"
+                  label="Level"
+                  required={true}
+                />
+                {/*//! 5. */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="number"
+                  name="showing_number"
+                  size="large"
+                  label="showing_number"
+                  required={true}
+                />
+                {/* //!6. showing_number */}
+              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
@@ -164,8 +224,9 @@ const CreateCoursePage = () => {
                 }}
               >
                 {/*//! 3 */}
-                <FormTextArea name="details" />
+                <FormTextArea label="Details" name="details" />
               </Col>
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -184,7 +245,45 @@ const CreateCoursePage = () => {
                 />
                 {/* //!4  */}
               </Col>
+            </Row>
+          </div>
 
+          {/* basic info */}
+          <div
+            style={{
+              border: "1px solid #d9d9d9",
+              borderRadius: "5px",
+              padding: "15px",
+              marginBottom: "10px",
+            }}
+          >
+            <SubHeadingUI>Course Information</SubHeadingUI>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+              {/* for video insert */}
+              <DemoVideoUI
+                videoType={videoType as any}
+                setVideoType={setVideoType}
+                videoUrl={videoUrl}
+                setVideoUrl={setVideoUrl}
+                options={["youtube", "vimeo"]}
+              />
+              {/* tag selections */}
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <TagUI
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                  tagOptions={tagOptions}
+                />
+                {/*//! 11 */}
+              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
@@ -200,6 +299,26 @@ const CreateCoursePage = () => {
                   options={priceTypeOptions}
                   // defaultValue={priceTypeOptions[0]}
                   label="Price Type"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="author"
+                  options={AuthorOptions}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Author"
                   // placeholder="Select"
                   required={true}
                 />
@@ -256,91 +375,6 @@ const CreateCoursePage = () => {
               >
                 <UploadImage name="img" />
                 {/*//!  2 */}
-              </Col>
-            </Row>
-          </div>
-
-          {/* basic info */}
-          <div
-            style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
-              marginBottom: "10px",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Other Information
-            </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              {/* tag selections */}
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <Select
-                  mode="multiple"
-                  placeholder="Inserted are removed"
-                  value={selectedTags}
-                  onChange={setSelectedTags}
-                  style={{ width: "100%" }}
-                  options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
-                  }))}
-                />
-                {/*//! 11 */}
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="level"
-                  size="large"
-                  label="Level"
-                  required={true}
-                />
-                {/*//! 5. */}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="number"
-                  name="showing_number"
-                  size="large"
-                  label="showing_number"
-                  required={true}
-                />
-                {/* //!6. showing_number */}
-              </Col>
-
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea name="address" label="Address" rows={4} />
               </Col>
             </Row>
           </div>

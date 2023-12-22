@@ -25,26 +25,26 @@ const CreateCategory = () => {
   const [addCategory, { isLoading: serviceLoading }] = useAddCategoryMutation();
 
   const onSubmit = async (values: any) => {
-    console.log(values);
+    // console.log(values);
     const status = "active";
     const imgUrl = await uploadImgBB(values.img);
 
-    const categoryData = {
+    const categoryData:{title:string,img:string,status:string} = {
       title: values.title,
       img: imgUrl,
       status: status,
     };
-    console.log(categoryData);
+    // console.log(categoryData);
 
     try {
-      const res = await addCategory(values).unwrap();
-      console.log(res);
+      const res = await addCategory(categoryData).unwrap();
+      // console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Category");
       }
-      console.log(res);
+      // console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
       console.log(error);
@@ -104,7 +104,7 @@ const CreateCategory = () => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="img" />
+                <UploadImage name="img"  />
               </Col>
             </Row>
           </div>

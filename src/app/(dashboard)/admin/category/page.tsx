@@ -62,10 +62,7 @@ const CategoryList = () => {
 
   //@ts-ignore
   const categoryData = data?.data;
-  console.log(
-    "🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:",
-    categoryData
-  );
+
   //@ts-ignore
   const meta = data?.meta;
 
@@ -135,7 +132,7 @@ const CategoryList = () => {
         return (
           <>
             <Link href={`/admin/category/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="default">
+              <Button type="default">
                 <EyeOutlined />
               </Button>
             </Link>
