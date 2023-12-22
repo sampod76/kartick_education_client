@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Input, message } from "antd";
+import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -21,7 +21,11 @@ import {
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import { useDeleteCourseMutation, useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import {
+  useDeleteCourseMutation,
+  useGetAllCourseQuery,
+} from "@/redux/api/adminApi/courseApi";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
@@ -88,20 +92,28 @@ const CourseList = () => {
     {
       title: "",
       render: function (data: any) {
-        return <>{<Image src={data?.img} width={80} height={50} alt="dd" />}</>;
+        return (
+          <>
+            {
+              <Image
+                src={data?.img}
+                style={{ height: "50px", width: "80px" }}
+                width={50}
+                height={50}
+                alt="dd"
+              />
+            }
+          </>
+        );
       },
       width: 100,
     },
     {
       title: "Name",
+      // fixed:"left",
       dataIndex: "title",
       ellipsis: true,
-      responsive: ['md','sm'] 
-    },
-    {
-      title: "snid",
-      dataIndex: "snid",
-      ellipsis: true,
+      // responsive: ['md','sm']
     },
     {
       title: "price",
@@ -122,35 +134,27 @@ const CourseList = () => {
       title: "Price Type",
       dataIndex: "price_type",
       ellipsis: true,
+      width:100,
     },
     {
       title: "author",
       dataIndex: "author",
-      render: function (data:any) {
+      render: function (data: any) {
         // console.log(data);
-        return data.email
-      },
-      ellipsis: true,
-    },
-    {
-      title: "author Role",
-      dataIndex: "author",
-      render: function (data:any) {
-        // console.log(data);
-        return data.role
+        return data.email;
       },
       ellipsis: true,
     },
     {
       title: "category",
       dataIndex: "category",
-      render: function (data:any) {
+      render: function (data: any) {
         console.log(data);
-        return data.title
+        return data.title;
       },
       ellipsis: true,
     },
-  
+
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -159,49 +163,48 @@ const CourseList = () => {
       },
       sorter: true,
     },
-    // {
-    //   title: "Contact no.",
-    //   dataIndex: "contact",
-    // },
-    // {
-    //   title: "Course",
-    // //   dataIndex: "course",
-    //   render: function (data: any) {
-    //     return <>{data?.course?.title}</>;
-    //   },
-    // },
+ 
     {
       title: "Status",
       dataIndex: "status",
+      width:80,
+      // render:function(data:any){
+      //   console.log(data);
+      // }
     },
     {
       title: "Action",
       dataIndex: "_id",
-      render: function (data: any) {
-        return (
-          <>
-            <Link href={`/admin/course/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="default">
-                <EyeOutlined />
-              </Button>
-            </Link>
-            <Link href={`/admin/course/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="default"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => handleDelete(data)} type="default" danger>
-              <DeleteOutlined />
-            </Button>
-          </>
-        );
-      },
+      fixed: "right",
+      render: (record: any) => (
+        <>
+          <Space size="middle">
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="view">
+                    <Link href={`/work-plan/view/${record._id}`}>View</Link>
+                  </Menu.Item>
+                  <Menu.Item key="edit">
+                    <Link href={`/work-plan/edit/${record._id}`}>Edit</Link>
+                  </Menu.Item>
+
+                  <Menu.Item
+                    key="delete"
+                    onClick={() => {
+                      handleDelete(record._id);
+                    }}
+                  >
+                    Delete
+                  </Menu.Item>
+                </Menu>
+              }
+            >
+              <a>Action</a>
+            </Dropdown>
+          </Space>
+        </>
+      ),
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -245,7 +248,10 @@ const CourseList = () => {
           },
         ]}
       /> */}
-      <ActionBar title="Service List">
+
+      <HeadingUI>Course List</HeadingUI>
+
+      <ActionBar>
         <Input
           size="large"
           placeholder="Search"

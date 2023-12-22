@@ -52,10 +52,13 @@ password : 11223344
 
 #### up  22 December 2024
 
-- 1. Form responsive 
+- 1. Form responsive - OK 
   - Category create and update form
   - Course create and update form
   -
-- 2. Table sorting include
+- 2. Table sorting include - OK
+    - status condition 
+    - 
+
 - 3. details page of category, course,milestone, module,lesson, quiz
 - 4.   

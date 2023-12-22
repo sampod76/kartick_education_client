@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
@@ -58,40 +57,9 @@ const UploadImage = ({
   };
 
   const uploadButton = (
-    <div className="mt-[2rem]">
-      {loading ? (
-        <LoadingOutlined />
-      ) : (
-        <div
-          className="w-[300px] relative  border-2 border-gray-300 border-dashed rounded-lg p-6"
-          id="dropzone"
-        >
-          <div className="text-center">
-            <img
-              className="mx-auto h-[2.5rem] w-[2.5rem]"
-              src="https://www.svgrepo.com/show/357902/image-upload.svg"
-              alt="uploader"
-            />
-
-            <h3 className="mt-2 text-sm font-medium text-gray-900">
-              <label className="relative cursor-pointer">
-                <span>Drag and drop</span>
-                <span className="text-indigo-600"> or browse</span>
-                <span>to upload</span>
-                <input
-                  id="file-upload"
-                  name="file-upload"
-                  type="file"
-                  className="sr-only"
-                />
-              </label>
-            </h3>
-            <p className="mt-1 text-xs text-gray-500">
-              PNG, JPG, GIF up to 10MB
-            </p>
-          </div>
-        </div>
-      )}
+    <div className="">
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
 

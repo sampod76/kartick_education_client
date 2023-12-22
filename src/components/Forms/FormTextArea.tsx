@@ -21,7 +21,7 @@ const FormTextArea = ({
 }: TextAreaProps) => {
   const { control } = useFormContext();
   return (
-    <div className={`flex flex-col  w-full font-[550] text-xl`}>
+    <div className={`flex flex-col  w-full font-[500] text-[16px]`}>
       {label ?  <LabelUi>{label}</LabelUi> : null}
       <Controller
         name={name}

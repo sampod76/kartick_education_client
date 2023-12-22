@@ -113,7 +113,7 @@ const CreateCoursePage = () => {
           // }}
         >
           <div className="block lg:flex items-center gap- px-1 lg:px-[4rem]">
-            <div className="w-full lg:w-[50%] px-[2vw] py-[5rem]  my-3 border-1 border-[#d9d9d9] rounded-md">
+            <div className="w-full lg:w-[50%] px-[2vw] py-[5rem]  my-3 border-2 border-[#d9d9d9] rounded-md">
               <SubHeadingUI>Basic Information</SubHeadingUI>
               <Row gutter={[8, 8]}>
                 <Col
@@ -234,7 +234,7 @@ const CreateCoursePage = () => {
             </div>
 
             {/* basic info */}
-            <div className="w-full lg:w-[50%] px-[2vw] pt-[7rem]  my-3 border-1 border-[#d9d9d9] rounded-md ">
+            <div className="w-full lg:w-[50%] px-[2vw] pt-[7rem]  my-3 border-2 border-[#d9d9d9] rounded-md ">
               <SubHeadingUI>Other Information</SubHeadingUI>
               <Row gutter={[8, 8]}>
                 {/* for video insert */}
@@ -327,6 +327,7 @@ const CreateCoursePage = () => {
                   lg={24}
                   style={{
                     margin: "10px 0",
+                    textAlign:"start"
                   }}
                 >
                   <UploadImage name="img" />

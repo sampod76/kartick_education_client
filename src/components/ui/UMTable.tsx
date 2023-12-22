@@ -38,9 +38,10 @@ const UMTable = ({
   return (
     <Table
       style={{
-        overflowX: "auto",
+        // overflowX: "auto",
       }}
       loading={loading}
+      scroll={{x:1200}}
       columns={columns}
       dataSource={dataSource}
       pagination={paginationConfig}
