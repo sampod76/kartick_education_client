@@ -25,7 +25,7 @@ const DemoVideoUI = ({
     setVideoUrl(e.target.value);
   };
   return (
-    <div className="mx-auto my-5">
+    <div className="mx-auto">
       <Input
         className="w-full "
         addonBefore={

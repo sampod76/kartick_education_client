@@ -41,7 +41,7 @@ const FormInput = ({
 
   return (
     <>
-      {required && type !== "number" ? (
+      {/* {required && type !== "number" ? (
         <span
           style={{
             color: "red",
@@ -49,7 +49,7 @@ const FormInput = ({
         >
           *
         </span>
-      ) : null}
+      ) : null} */}
       {label && type !== "number" ? <LabelUi>{label}</LabelUi> : null}
       <Controller
         control={control}
@@ -68,16 +68,19 @@ const FormInput = ({
           ) : type === "number" ? (
             <div className="flex flex-col">
               <h1 className="">
-                {required ? (
-                  <span
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    *
-                  </span>
-                ) : null}
-                <LabelUi>{label}</LabelUi>
+                <LabelUi>
+                  {label}{" "}
+                  {required ? (
+                    <span
+                      style={{
+                        color: "red",
+                        textAlign: "start",
+                      }}
+                    >
+                      *
+                    </span>
+                  ) : null}
+                </LabelUi>
               </h1>
               <InputNumber
                 // type={type}

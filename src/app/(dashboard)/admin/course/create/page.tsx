@@ -112,239 +112,168 @@ const CreateCoursePage = () => {
           //   gender: genderOptions[0].value,
           // }}
         >
-          <div className="block lg:flex items-center gap- px-1 lg:px-[4rem]">
-            <div className="w-full lg:w-[50%] px-[2vw] py-[5rem]  my-3 border-2 border-[#d9d9d9] rounded-md">
-              <SubHeadingUI>Basic Information</SubHeadingUI>
-              <Row gutter={[8, 8]}>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={24}
-                  lg={24}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="text"
-                    name="title"
-                    size="large"
-                    label="Title"
-                    required={true}
-                  />
-                  {/*//! 1 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="number"
-                    name="price"
-                    size="large"
-                    label="Price"
-                    required={true}
-                  />
-                  {/* //! 7 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    // marginBottom: "10px",
-                    // background:'red',
-                    margin: "1.3em 0 0 0",
-                  }}
-                >
-                  <FormSelectField
-                    size="large"
-                    name="price_type"
-                    options={priceTypeOptions}
-                    // defaultValue={priceTypeOptions[0]}
-                    label="Price Type"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                  {/* //! price type 8 */}
-                </Col>
+          <section className="border-2 p-2 rounded-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
+              <div className="border-r-2 pr-2">
+                <SubHeadingUI>Basic Information</SubHeadingUI>
+                <Row gutter={[8, 8]}>
+                  <Col xs={24} md={24} lg={24} style={{}}>
+                    <FormInput
+                      type="text"
+                      name="title"
+                      size="large"
+                      label="Title"
+                      required={true}
+                    />
+                    {/*//! 1 */}
+                  </Col>
+                  <Col
+                    xs={24}
+                    md={12}
+                    lg={12}
+                    style={
+                      {
+                        // background:"red"
+                      }
+                    }
+                  >
+                    <FormInput
+                      type="number"
+                      name="price"
+                      size="large"
+                      label="Price"
+                      required={true}
+                    />
+                    {/* //! 7 */}
+                  </Col>
+                  <Col
+                    xs={24}
+                    md={12}
+                    lg={12}
+                    style={{
+                      //
+                      // background:'red',
+                      margin: "1.3em 0 0 0",
+                    }}
+                  >
+                    <FormSelectField
+                      size="large"
+                      name="price_type"
+                      options={priceTypeOptions}
+                      // defaultValue={priceTypeOptions[0]}
+                      label="Price Type"
+                      // placeholder="Select"
+                      required={true}
+                    />
+                    {/* //! price type 8 */}
+                  </Col>
 
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="text"
-                    name="level"
-                    size="large"
-                    label="Level"
-                    required={true}
-                  />
-                  {/*//! 5. */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="number"
-                    name="showing_number"
-                    size="large"
-                    label="Showing Number"
-                    required={true}
-                  />
-                  {/* //!6. Showing Number */}
-                </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormInput
+                      type="text"
+                      name="level"
+                      size="large"
+                      label="Level"
+                      required={true}
+                    />
+                    {/*//! 5. */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormInput
+                      type="number"
+                      name="showing_number"
+                      size="large"
+                      label="Showing Number"
+                      required={true}
+                    />
+                    {/* //!6. Showing Number */}
+                  </Col>
 
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="string"
-                    name="duration"
-                    size="large"
-                    label="Duration"
-                    required={true}
-                  />
-                  {/* //!4  */}
-                </Col>
-              </Row>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormInput
+                      type="string"
+                      name="duration"
+                      size="large"
+                      label="Duration"
+                      required={true}
+                    />
+                    {/* //!4  */}
+                  </Col>
+                </Row>
+              </div>
+
+              {/* basic info */}
+              <div className="    ">
+                <SubHeadingUI>Other Information</SubHeadingUI>
+                <Row>
+                  {/* for video insert */}
+
+                  <Col xs={24} md={24} lg={24} style={{}}>
+                    <DemoVideoUI
+                      videoType={videoType as any}
+                      setVideoType={setVideoType}
+                      videoUrl={videoUrl}
+                      setVideoUrl={setVideoUrl}
+                      options={["youtube", "vimeo"]}
+                    />
+                    {/*//! 12*/}
+                  </Col>
+
+                  {/* tag selections */}
+                  <Col xs={24} md={24} lg={24} style={{}}>
+                    <TagUI
+                      selectedTags={selectedTags}
+                      setSelectedTags={setSelectedTags}
+                      tagOptions={tagOptions}
+                    />
+                    {/*//! 11 */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <SelectCategoryField />
+                    {/* //! category 10 */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <SelectAuthorField />
+                    {/* //! price type 8 */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormSelectField
+                      size="large"
+                      name="status"
+                      options={courseStatusOptions as any}
+                      // defaultValue={priceTypeOptions[0]}
+                      label="status"
+                      // placeholder="Select"
+                      required={true}
+                    />
+                    {/* //! status 9 */}
+                  </Col>
+
+                  <Col
+                    xs={24}
+                    md={24}
+                    lg={24}
+                    style={{
+                      margin: "10px 0",
+                      textAlign: "start",
+                    }}
+                  >
+                    <UploadImage name="img" />
+                    {/*//!  2 */}
+                  </Col>
+                </Row>
+              </div>
             </div>
-
-            {/* basic info */}
-            <div className="w-full lg:w-[50%] px-[2vw] pt-[7rem]  my-3 border-2 border-[#d9d9d9] rounded-md ">
-              <SubHeadingUI>Other Information</SubHeadingUI>
-              <Row gutter={[8, 8]}>
-                {/* for video insert */}
-
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={24}
-                  lg={24}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <DemoVideoUI
-                    videoType={videoType as any}
-                    setVideoType={setVideoType}
-                    videoUrl={videoUrl}
-                    setVideoUrl={setVideoUrl}
-                    options={["youtube", "vimeo"]}
-                  />
-                  {/*//! 12*/}
-                </Col>
-
-                {/* tag selections */}
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={24}
-                  lg={24}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <TagUI
-                    selectedTags={selectedTags}
-                    setSelectedTags={setSelectedTags}
-                    tagOptions={tagOptions}
-                  />
-                  {/*//! 11 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <SelectCategoryField />
-                  {/* //! category 10 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <SelectAuthorField />
-                  {/* //! price type 8 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormSelectField
-                    size="large"
-                    name="status"
-                    options={courseStatusOptions as any}
-                    // defaultValue={priceTypeOptions[0]}
-                    label="status"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                  {/* //! status 9 */}
-                </Col>
-
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={24}
-                  lg={24}
-                  style={{
-                    margin: "10px 0",
-                    textAlign:"start"
-                  }}
-                >
-                  <UploadImage name="img" />
-                  {/*//!  2 */}
-                </Col>
-              </Row>
-            </div>
-          </div>
-          <section className="w-[70vw] mx-auto px-2 my-5">
-            {/*//! 3 */}
-            <FormTextArea
-              placeholder="Write details of course"
-              label="Details"
-              name="details"
-            />
+            <section className=" border-t-2">
+              {/*//! 3 */}
+              <FormTextArea
+                placeholder="Write details of course"
+                label="Details"
+                name="details"
+              />
+            </section>
+            <ButtonSubmitUI>Create Course</ButtonSubmitUI>
           </section>
-          <ButtonSubmitUI>Create Course</ButtonSubmitUI>
         </Form>
       </div>
     </div>

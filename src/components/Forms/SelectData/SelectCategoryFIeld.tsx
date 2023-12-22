@@ -18,7 +18,7 @@ const SelectCategoryField = ({ defaultData }: { defaultData?: any }) => {
   return (
     <FormSelectField
       size="large"
-      name="Category"
+      name="category"
       options={CategoryOptions as any}
       defaultValue={defaultData ? defaultData : null}
       label="Category"
