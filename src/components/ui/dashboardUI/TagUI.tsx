@@ -10,8 +10,9 @@ const TagUI = ({
   selectedTags: string[] | any;
   setSelectedTags: React.Dispatch<React.SetStateAction<any>>;
 }) => {
-
-  const filteredOptions = tagOptions?.filter((o:any) => !selectedTags.includes(o));
+  const filteredOptions = tagOptions?.filter(
+    (o: any) => !selectedTags?.includes(o)
+  );
   return (
     <div>
       <LabelUi>Add Tags</LabelUi>

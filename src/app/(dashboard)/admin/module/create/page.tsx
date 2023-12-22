@@ -59,7 +59,7 @@ const CreateModule = () => {
 
   const OPTIONS = ["module", "online", "course", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
+  const filteredOptions = OPTIONS.filter((o) => !selectedTags?.includes(o));
   console.log(selectedTags, "selectedTags........1");
 
   const onSubmit = async (values: any) => {

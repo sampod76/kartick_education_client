@@ -73,11 +73,10 @@ const EditMilestonePage = ({ params }: any) => {
   const [selectedTags, setSelectedTags] = useState<string[]>(
     MilestoneData?.tags || []
   );
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
+  const filteredOptions = OPTIONS.filter((o) => !selectedTags?.includes(o));
   console.log(selectedTags, "selectedTags........1");
 
   const onSubmit = async (values: any) => {
-    
     if (typeof values.img !== "string") {
       console.log(values);
       values.img = await uploadImgBB(values.img);

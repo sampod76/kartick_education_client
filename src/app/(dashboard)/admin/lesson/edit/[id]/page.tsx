@@ -81,7 +81,7 @@ const EditModulePage = ({ params }: any) => {
   const [selectedTags, setSelectedTags] = useState<string[]>(
     LessonData?.tags || []
   );
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags.includes(o));
+  const filteredOptions = OPTIONS.filter((o) => !selectedTags?.includes(o));
   console.log(selectedTags, "selectedTags........1");
 
   const onSubmit = async (values: any) => {

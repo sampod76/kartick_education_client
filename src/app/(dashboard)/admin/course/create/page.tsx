@@ -112,15 +112,15 @@ const CreateCoursePage = () => {
           //   gender: genderOptions[0].value,
           // }}
         >
-          <div className="block lg:flex gap-4">
-            <div className="w-full lg:w-[50%] px-[2vw] py-[5rem]  my-3 border-2 border-[#d9d9d9] rounded-md">
+          <div className="block lg:flex items-center gap- px-1 lg:px-[4rem]">
+            <div className="w-full lg:w-[50%] px-[2vw] py-[5rem]  my-3 border-1 border-[#d9d9d9] rounded-md">
               <SubHeadingUI>Basic Information</SubHeadingUI>
-              <Row gutter={[16, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
+              <Row gutter={[8, 8]}>
                 <Col
                   className="gutter-row"
                   xs={24}
-                  md={12}
-                  lg={12}
+                  md={24}
+                  lg={24}
                   style={{
                     marginBottom: "10px",
                   }}
@@ -147,10 +147,32 @@ const CreateCoursePage = () => {
                     type="number"
                     name="price"
                     size="large"
-                    label="price"
+                    label="Price"
                     required={true}
                   />
                   {/* //! 7 */}
+                </Col>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  md={12}
+                  lg={12}
+                  style={{
+                    // marginBottom: "10px",
+                    // background:'red',
+                    margin: "1.3em 0 0 0",
+                  }}
+                >
+                  <FormSelectField
+                    size="large"
+                    name="price_type"
+                    options={priceTypeOptions}
+                    // defaultValue={priceTypeOptions[0]}
+                    label="Price Type"
+                    // placeholder="Select"
+                    required={true}
+                  />
+                  {/* //! price type 8 */}
                 </Col>
 
                 <Col
@@ -184,22 +206,10 @@ const CreateCoursePage = () => {
                     type="number"
                     name="showing_number"
                     size="large"
-                    label="showing_number"
+                    label="Showing Number"
                     required={true}
                   />
-                  {/* //!6. showing_number */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  {/*//! 3 */}
-                  <FormTextArea label="Details" name="details" />
+                  {/* //!6. Showing Number */}
                 </Col>
 
                 <Col
@@ -224,23 +234,36 @@ const CreateCoursePage = () => {
             </div>
 
             {/* basic info */}
-            <div className="w-full lg:w-[50%] px-[2vw] py-[5rem]  my-3 border-2 border-[#d9d9d9] rounded-md">
+            <div className="w-full lg:w-[50%] px-[2vw] pt-[7rem]  my-3 border-1 border-[#d9d9d9] rounded-md ">
               <SubHeadingUI>Other Information</SubHeadingUI>
-              <Row gutter={[16, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
+              <Row gutter={[8, 8]}>
                 {/* for video insert */}
-                <DemoVideoUI
-                  videoType={videoType as any}
-                  setVideoType={setVideoType}
-                  videoUrl={videoUrl}
-                  setVideoUrl={setVideoUrl}
-                  options={["youtube", "vimeo"]}
-                />
+
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  md={24}
+                  lg={24}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <DemoVideoUI
+                    videoType={videoType as any}
+                    setVideoType={setVideoType}
+                    videoUrl={videoUrl}
+                    setVideoUrl={setVideoUrl}
+                    options={["youtube", "vimeo"]}
+                  />
+                  {/*//! 12*/}
+                </Col>
+
                 {/* tag selections */}
                 <Col
                   className="gutter-row"
                   xs={24}
-                  md={12}
-                  lg={12}
+                  md={24}
+                  lg={24}
                   style={{
                     marginBottom: "10px",
                   }}
@@ -251,50 +274,6 @@ const CreateCoursePage = () => {
                     tagOptions={tagOptions}
                   />
                   {/*//! 11 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormSelectField
-                    size="large"
-                    name="price_type"
-                    options={priceTypeOptions}
-                    // defaultValue={priceTypeOptions[0]}
-                    label="Price Type"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                  {/* //! price type 8 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <SelectAuthorField />
-                  {/* //! price type 8 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <SelectCourseField />
-                  {/* //! status 9 */}
                 </Col>
                 <Col
                   className="gutter-row"
@@ -317,12 +296,53 @@ const CreateCoursePage = () => {
                     marginBottom: "10px",
                   }}
                 >
+                  <SelectAuthorField />
+                  {/* //! price type 8 */}
+                </Col>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  md={12}
+                  lg={12}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormSelectField
+                    size="large"
+                    name="status"
+                    options={courseStatusOptions as any}
+                    // defaultValue={priceTypeOptions[0]}
+                    label="status"
+                    // placeholder="Select"
+                    required={true}
+                  />
+                  {/* //! status 9 */}
+                </Col>
+
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  md={24}
+                  lg={24}
+                  style={{
+                    margin: "10px 0",
+                  }}
+                >
                   <UploadImage name="img" />
                   {/*//!  2 */}
                 </Col>
               </Row>
             </div>
           </div>
+          <section className="w-[70vw] mx-auto px-2 my-5">
+            {/*//! 3 */}
+            <FormTextArea
+              placeholder="Write details of course"
+              label="Details"
+              name="details"
+            />
+          </section>
           <ButtonSubmitUI>Create Course</ButtonSubmitUI>
         </Form>
       </div>

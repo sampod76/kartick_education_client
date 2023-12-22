@@ -21,13 +21,16 @@ const FormTextArea = ({
 }: TextAreaProps) => {
   const { control } = useFormContext();
   return (
-    <div className={`flex flex-col  w-full`}>
+    <div className={`flex flex-col  w-full font-[550] text-xl`}>
       {label ?  <LabelUi>{label}</LabelUi> : null}
       <Controller
         name={name}
         control={control}
         render={({ field }) => (
           <Input.TextArea
+          style={{
+            minHeight:"5rem"
+          }}
             rows={rows}
             placeholder={placeholder}
             readOnly={readOnly}
