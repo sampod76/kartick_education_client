@@ -13,73 +13,74 @@ export const homeNavItems: MenuProps["items"] = [
     children: [
       {
         label: <Link href="/services/web-development/frontend">Frontend</Link>,
-        key: "1/services/web-development/frontend",
+        key: "f/services/web-development/frontend",
       },
       {
         label: <Link href="/services/web-development/backend">backend</Link>,
-        key: "1/services/web-development/backend",
+        key: "b/services/web-development/backend",
+      
         children: [
           {
             label: (
-              <Link href="/services/web-development/backend/node-js">
+              <Link href="b/services/web-development/backend/node-js">
                Node.js
               </Link>
             ),
-            key: "1/services/web-development/backend/node-js",
+            key: "b/services/web-development/backend/node-js",
           },
         ],
       },
     ],
   },
   {
-    label: <Link href="/services/math">Mathematics Academy</Link>,
-    key: "1/services/math",
+    label: <Link href="/Education/math">Mathematics Academy</Link>,
+    key: "1/Education/math",
     children: [
       {
-        label: <Link href="/services/math/kinderOne">Elementory Math</Link>,
-        key: "1/services/math/kinderOne",
+        label: <Link href="/Education/math/kinderOne">Elementory Math</Link>,
+        key: "1/Education/math/kinderOne",
         children: [
           {
-            label: <Link href="/services/math/kinderOne">Math Kinder 1</Link>,
-            key: "1/services/math/kinderOne",
+            label: <Link href="/Education/math/kinderOne">Math Kinder 1</Link>,
+            key: "1/Education/math/kinderOne",
             children: [
               {
                 label: (
-                  <Link href="/services/math/kinderOne/lavel1">
+                  <Link href="/Education/math/kinderOne/lavel1">
                     Math Level 1
                   </Link>
                 ),
-                key: "services/math/kinderOne/lavel1",
+                key: "Education/math/kinderOne/lavel1",
               },
               {
                 label: (
-                  <Link href="/services/math/kinderOne/lavel2">
+                  <Link href="/Education/math/kinderOne/lavel2">
                     Math Level 2
                   </Link>
                 ),
-                key: "services/math/kinderOne/lavel2",
+                key: "Education/math/kinderOne/lavel2",
               },
             ],
           },
           {
-            label: <Link href="/services/math/kinderTwo">Math Kinder 1</Link>,
-            key: "1/services/math/kinderTwo",
+            label: <Link href="/Education/math/kinderTwo">Math Kinder 1</Link>,
+            key: "1/Education/math/kinderTwo",
             children: [
               {
                 label: (
-                  <Link href="/services/math/kinderTwo/lavel1">
+                  <Link href="/Education/math/kinderTwo/lavel1">
                     Math Level 1
                   </Link>
                 ),
-                key: "services/math/kinderTwo/lavel1",
+                key: "Education/math/kinderTwo/lavel1",
               },
               {
                 label: (
-                  <Link href="/services/math/kinderTwo/lavel2">
+                  <Link href="/Education/math/kinderTwo/lavel2">
                     Math Level 2
                   </Link>
                 ),
-                key: "services/math/kinderTwo/lavel2",
+                key: "Education/math/kinderTwo/lavel2",
               },
             ],
           },
@@ -88,54 +89,54 @@ export const homeNavItems: MenuProps["items"] = [
     ],
   },
   {
-    label: <Link href="/services/Physics">Physics Academy</Link>,
-    key: "1/services/Physics",
+    label: <Link href="/science/Physics">Physics Academy</Link>,
+    key: "2/services/Physics",
     children: [
       {
-        label: <Link href="/services/Physics/kinderOne">Elementary Physics</Link>,
-        key: "1/services/Physics/kinderOne",
+        label: <Link href="/science/Physics/kinderOne">Elementary Physics</Link>,
+        key: "2/science/Physics/kinderOne",
         children: [
           {
-            label: <Link href="/services/Physics/kinderOne">Physics Kinder 1</Link>,
-            key: "1/services/Physics/kinderOne",
+            label: <Link href="/science/Physics/kinderOne">Physics Kinder 2</Link>,
+            key: "2/science/Physics/kinderOne",
             children: [
               {
                 label: (
-                  <Link href="/services/Physics/kinderOne/lavel1">
-                    Physics Level 1
-                  </Link>
-                ),
-                key: "services/Physics/kinderOne/lavel1",
-              },
-              {
-                label: (
-                  <Link href="/services/Physics/kinderOne/lavel2">
+                  <Link href="/science/Physics/kinderOne/lavel2">
                     Physics Level 2
                   </Link>
                 ),
-                key: "services/Physics/kinderOne/lavel2",
+                key: "science/Physics/kinderOne/lavel2",
+              },
+              {
+                label: (
+                  <Link href="/science/Physics/kinderOne/lavel2">
+                    Physics Level 2
+                  </Link>
+                ),
+                key: "science/Physics/kinderOne/lavel2",
               },
             ],
           },
           {
-            label: <Link href="/services/Physics/kinderTwo">Physics Kinder 1</Link>,
-            key: "1/services/Physics/kinderTwo",
+            label: <Link href="/science/Physics/kinderTwo">Physics Kinder 2</Link>,
+            key: "2/science/Physics/kinderTwo",
             children: [
               {
                 label: (
-                  <Link href="/services/Physics/kinderTwo/lavel1">
-                    Physics Level 1
-                  </Link>
-                ),
-                key: "services/Physics/kinderTwo/lavel1",
-              },
-              {
-                label: (
-                  <Link href="/services/Physics/kinderTwo/lavel2">
+                  <Link href="/science/Physics/kinderTwo/lavel2">
                     Physics Level 2
                   </Link>
                 ),
-                key: "services/Physics/kinderTwo/lavel2",
+                key: "science/Physics/kinderTwo/lavel2",
+              },
+              {
+                label: (
+                  <Link href="/science/Physics/kinderTwo/lavel2">
+                    Physics Level 2
+                  </Link>
+                ),
+                key: "science/Physics/kinderTwo/lavel2",
               },
             ],
           },
@@ -144,54 +145,54 @@ export const homeNavItems: MenuProps["items"] = [
     ],
   },
   {
-    label: <Link href="/services/Skills">Skills Academy</Link>,
-    key: "1/services/Skills",
+    label: <Link href="/sk/Skills">Skills Academy</Link>,
+    key: "3/sk/Skills",
     children: [
       {
-        label: <Link href="/services/Skills/kinderOne">Elementary Skills</Link>,
-        key: "1/services/Skills/kinderOne",
+        label: <Link href="/sk/Skills/kinderOne">Elementary Skills</Link>,
+        key: "3/sk/Skills/kinderOne",
         children: [
           {
-            label: <Link href="/services/Skills/kinderOne">Skills Kinder 1</Link>,
-            key: "1/services/Skills/kinderOne",
+            label: <Link href="/sk/Skills/kinderOne">Skills Kinder 3</Link>,
+            key: "3/sk/Skills/kinderOne",
             children: [
               {
                 label: (
-                  <Link href="/services/Skills/kinderOne/lavel1">
-                    Skills Level 1
+                  <Link href="/sk/Skills/kinderOne/lavel3">
+                    Skills Level 3
                   </Link>
                 ),
-                key: "services/Skills/kinderOne/lavel1",
+                key: "sk/Skills/kinderOne/lavel3",
               },
               {
                 label: (
-                  <Link href="/services/Skills/kinderOne/lavel2">
+                  <Link href="/sk/Skills/kinderOne/lavel2">
                     Skills Level 2
                   </Link>
                 ),
-                key: "services/Skills/kinderOne/lavel2",
+                key: "sk/Skills/kinderOne/lavel2",
               },
             ],
           },
           {
-            label: <Link href="/services/Skills/kinderTwo">Skills Kinder 1</Link>,
-            key: "1/services/Skills/kinderTwo",
+            label: <Link href="/sk/Skills/kinderTwo">Skills Kinder 3</Link>,
+            key: "3/sk/Skills/kinderTwo",
             children: [
               {
                 label: (
-                  <Link href="/services/Skills/kinderTwo/lavel1">
-                    Skills Level 1
+                  <Link href="/sk/Skills/kinderTwo/lavel3">
+                    Skills Level 3
                   </Link>
                 ),
-                key: "services/Skills/kinderTwo/lavel1",
+                key: "sk/Skills/kinderTwo/lavel3",
               },
               {
                 label: (
-                  <Link href="/services/Skills/kinderTwo/lavel2">
+                  <Link href="/sk/Skills/kinderTwo/lavel2">
                     Skills Level 2
                   </Link>
                 ),
-                key: "services/Skills/kinderTwo/lavel2",
+                key: "sk/Skills/kinderTwo/lavel2",
               },
             ],
           },
