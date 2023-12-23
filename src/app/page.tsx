@@ -7,8 +7,8 @@ import CoursesTab from "@/components/Home/coureses/CoursesTab";
 import Programmes from "@/components/Home/programms/Programmes";
 import HomeHeader from "@/components/shared/Headers/HomeHeader";
 
-
 const HomePage = () => {
+
   return (
     <>
       <HomeHeader />
