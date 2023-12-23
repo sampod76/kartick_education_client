@@ -1,12 +1,11 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Input, message } from "antd";
+import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
   ReloadOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
@@ -23,12 +22,12 @@ import {
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
+
 import {
-  useDeleteCategoryMutation,
-  useGetAllCategoryQuery,
-} from "@/redux/api/adminApi/categoryApi";
-import { USER_ROLE } from "@/constants/role";
-import { useDeleteMilestoneMutation, useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
+  useDeleteMilestoneMutation,
+  useGetAllMilestoneQuery,
+} from "@/redux/api/adminApi/milestoneApi";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 const MileStoneList = () => {
   const query: Record<string, any> = {};
@@ -93,9 +92,21 @@ const MileStoneList = () => {
 
   const columns = [
     {
-      title: "",
+      title: "Image",
       render: function (data: any) {
-        return <>{<Image src={data?.img} width={80} height={50} alt="dd" />}</>;
+        return (
+          <>
+            {
+              <Image
+                src={data?.img}
+                style={{ height: "50px", width: "80px" }}
+                width={50}
+                height={50}
+                alt="dd"
+              />
+            }
+          </>
+        );
       },
       width: 100,
     },
@@ -110,17 +121,17 @@ const MileStoneList = () => {
       ellipsis: true,
     },
     {
-      title: "showing_number",
+      title: "Milestone Number",
       dataIndex: "showing_number",
       ellipsis: true,
     },
     {
       title: "course",
-      dataIndex: "course",
+      dataIndex: ["course", "title"],
       ellipsis: true,
-      render: function (data: any) {
-        return <>{data?.title}</>;
-      },
+      // render: function (data: any) {
+      //   return <>{data?.title}</>;
+      // },
     },
     {
       title: "Created at",
@@ -131,37 +142,38 @@ const MileStoneList = () => {
       sorter: true,
     },
     {
-      title: "Status",
-      dataIndex: "status",
-    },
-    {
       title: "Action",
       dataIndex: "_id",
-      render: function (data: any) {
-        return (
-          <>
-            <Link href={`/admin/milestone/details/${data}`}>
-              <Button type="default">
-                <EyeOutlined />
-              </Button>
-            </Link>
-            <Link href={`/admin/milestone/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="default"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => handleDelete(data)} type="default" danger>
-              <DeleteOutlined />
-            </Button>
-          </>
-        );
-      },
+      fixed: "right",
+      render: (record: any) => (
+        <>
+          <Space size="middle">
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="view">
+                    <Link href={`/milestone/details/${record._id}`}>View</Link>
+                  </Menu.Item>
+                  <Menu.Item key="edit">
+                    <Link href={`/milestone/edit/${record._id}`}>Edit</Link>
+                  </Menu.Item>
+
+                  <Menu.Item
+                    key="delete"
+                    onClick={() => {
+                      handleDelete(record._id);
+                    }}
+                  >
+                    Delete
+                  </Menu.Item>
+                </Menu>
+              }
+            >
+              <a>Action</a>
+            </Dropdown>
+          </Space>
+        </>
+      ),
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -187,7 +199,7 @@ const MileStoneList = () => {
     try {
       const res = await deleteMilestone(id);
       if (res) {
-        message.success("Milstone Successfully Deleted!");
+        message.success("Milestone Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
@@ -197,15 +209,20 @@ const MileStoneList = () => {
 
   return (
     <div>
-      {/* <UMBreadCrumb
+      <UMBreadCrumb
         items={[
           {
             label: "admin",
             link: "/admin",
           },
+          {
+            label: "Milestone",
+            link: "/admin/milestones",
+          },
         ]}
-      /> */}
-      <ActionBar title="Milestone List">
+      />
+      <HeadingUI>Milestone List</HeadingUI>
+      <ActionBar>
         <Input
           size="large"
           placeholder="Search"

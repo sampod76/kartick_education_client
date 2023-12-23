@@ -46,7 +46,7 @@ const CoursesTab = () => {
     },
   ];
   return (
-    <div className="mt-[4rem]">
+    <div className="mt-5">
       <Tabs
         defaultActiveKey="1"
         centered

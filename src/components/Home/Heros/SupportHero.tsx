@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const SupportHero = () => {
   return (
-    <div className="block lg:flex justify-between text-start my-[332px] container mx-auto">
+    <div className="block lg:flex justify-between text-start my-[5rem] container mx-auto">
       <section>
         <h2 className="text-[#31576A] uppercase text-5xl font-[800]">
           Literacy suppot in <span className="text-secondary">Math</span>

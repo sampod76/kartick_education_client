@@ -33,7 +33,7 @@ const NavbarPublic = () => {
       <div className="flex lg:hidden">
         <SideBarHome></SideBarHome>
       </div>
-      <UserAvatarUI />
+      {/* <UserAvatarUI /> */}
     </nav>
   );
 };
