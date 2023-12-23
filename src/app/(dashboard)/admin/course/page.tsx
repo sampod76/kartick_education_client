@@ -40,7 +40,7 @@ const CourseList = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
+  const [courseId, setCourseId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -225,7 +225,7 @@ const CourseList = () => {
     setSearchTerm("");
   };
 
-  const deleteAdminHandler = async (id: string) => {
+  const deleteCourseHandler = async (id: string) => {
     // console.log(id);
     try {
       const res = await deleteCourse(id);
@@ -293,12 +293,13 @@ const CourseList = () => {
       />
 
       <UMModal
-        title="Remove admin"
+        title="Remove Course"
+    
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteAdminHandler(adminId)}
+        handleOk={() => deleteCourseHandler(courseId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this Course?</p>
       </UMModal>
     </div>
   );

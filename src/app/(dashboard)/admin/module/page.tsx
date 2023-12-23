@@ -26,6 +26,7 @@ import {
 
 import { USER_ROLE } from "@/constants/role";
 import { useDeleteModuleMutation, useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 
 const MileStoneList = () => {
@@ -213,15 +214,20 @@ const MileStoneList = () => {
 
   return (
     <div>
-      {/* <UMBreadCrumb
+      <UMBreadCrumb
         items={[
           {
             label: "admin",
             link: "/admin",
           },
+          {
+            label: "Module",
+            link: "/admin/module",
+          },
         ]}
-      /> */}
-      <ActionBar title="Module List">
+      />
+      <HeadingUI>Module List</HeadingUI>
+      <ActionBar >
         <Input
           size="large"
           placeholder="Search"

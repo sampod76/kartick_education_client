@@ -27,6 +27,7 @@ import {
   useDeleteLessonMutation,
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 const LessonList = () => {
   const query: Record<string, any> = {};
@@ -148,6 +149,7 @@ const LessonList = () => {
       title: "Action",
       dataIndex: "_id",
       fixed: "right",
+      width:130,
       render: (record: any) => (
         <>
           <Space size="middle">
@@ -224,7 +226,8 @@ const LessonList = () => {
           },
         ]}
       />
-      <ActionBar title="Lesson List">
+      <HeadingUI>Lesson List</HeadingUI>
+      <ActionBar >
         <Input
           size="large"
           placeholder="Search"
