@@ -62,3 +62,10 @@ password : 11223344
 
 - 3. details page of category, course,milestone, module,lesson, quiz
 - 4.   
+
+### 
+
+- 1. navbar user icon
+- 2. navItems change
+- 3. HomePage
+
