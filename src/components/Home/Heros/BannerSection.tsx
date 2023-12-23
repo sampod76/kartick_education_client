@@ -8,14 +8,14 @@ import Link from "next/link";
 const BannerSection = () => {
   return (
     <div
-      className="mt-5 block lg:flex justify-betwee place-items-end bg-blue-20 min-h-[45rem] text-left "
+      className="mt-5 block lg:flex justify-between place-items-end bg-blue-20 min-h-[45rem] text-left "
       style={{
         backgroundImage: `url('/banner/bannerBG.png')`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
     >
-      <section className="w-full lg:w-[70%] px-[59px] py-[3rem]">
+      <section className="w-full lg:w-[60%] px-[59px] py-[3rem]">
         <div className="text-7xl font-[800] text-black uppercase">
           <h1>Feel bored or anxious</h1>
           <h1>
@@ -60,9 +60,9 @@ const BannerSection = () => {
           </Link>
         </div>
       </section>
-      <section className="w-full lg:w-[30%] mt-0 lg:-mt-[2rem]">
+      <section className="w-full lg:w-[40%] mt-0 flex justify-end lg:-mt-[2rem] ">
         <Image
-          className="w-auto mx-auto "
+          className="w-[60%] h-[38rem]   py-2"
           src={treeBoy}
           height={602}
           width={510}
