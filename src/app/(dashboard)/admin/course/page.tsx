@@ -90,7 +90,7 @@ const CourseList = () => {
 
   const columns = [
     {
-      title: "",
+      title: "Image",
       render: function (data: any) {
         return (
           <>
@@ -182,11 +182,11 @@ const CourseList = () => {
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item key="view">
-                    <Link href={`/work-plan/view/${record._id}`}>View</Link>
+                  <Menu.Item key="details">
+                    <Link href={`/course/details/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/work-plan/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/course/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -240,14 +240,18 @@ const CourseList = () => {
 
   return (
     <div>
-      {/* <UMBreadCrumb
+      <UMBreadCrumb
         items={[
           {
             label: "admin",
             link: "/admin",
           },
+          {
+            label: "Courses",
+            link: "/admin/course",
+          },
         ]}
-      /> */}
+      />
 
       <HeadingUI>Course List</HeadingUI>
 
