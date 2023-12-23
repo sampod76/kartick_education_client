@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Input, message } from "antd";
+import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -23,13 +23,9 @@ import {
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import {
-  useDeleteCategoryMutation,
-  useGetAllCategoryQuery,
-} from "@/redux/api/adminApi/categoryApi";
-import { USER_ROLE } from "@/constants/role";
+
 import { useDeleteQuizMutation, useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+
 
 
 const QuizList = () => {
@@ -95,9 +91,21 @@ const QuizList = () => {
 
   const columns = [
     {
-      title: "",
+      title: "Image",
       render: function (data: any) {
-        return <>{<Image src={data?.img} width={80} height={50} alt="dd" />}</>;
+        return (
+          <>
+            {
+              <Image
+                src={data?.img}
+                style={{ height: "50px", width: "80px" }}
+                width={50}
+                height={50}
+                alt="dd"
+              />
+            }
+          </>
+        );
       },
       width: 100,
     },
@@ -118,11 +126,9 @@ const QuizList = () => {
     },
     {
       title: "module",
-      dataIndex: "module",
+      dataIndex:[ "module",'title'],
       ellipsis: true,
-      render: function (data: any) {
-        return <>{data?.title}</>;
-      },
+  
     },
     {
       title: "Created at",
@@ -132,38 +138,40 @@ const QuizList = () => {
       },
       sorter: true,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-    },
+  
     {
       title: "Action",
       dataIndex: "_id",
-      render: function (data: any) {
-        return (
-          <>
-            <Link href={`/admin/quiz/details/${data}`}>
-              <Button type="default">
-                <EyeOutlined />
-              </Button>
-            </Link>
-            <Link href={`/admin/quiz/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="default"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => handleDelete(data)} type="default" danger>
-              <DeleteOutlined />
-            </Button>
-          </>
-        );
-      },
+      fixed: "right",
+      render: (record: any) => (
+        <>
+          <Space size="middle">
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="view">
+                    <Link href={`/quiz/details/${record._id}`}>View</Link>
+                  </Menu.Item>
+                  <Menu.Item key="edit">
+                    <Link href={`/quiz/edit/${record._id}`}>Edit</Link>
+                  </Menu.Item>
+
+                  <Menu.Item
+                    key="delete"
+                    onClick={() => {
+                      handleDelete(record._id);
+                    }}
+                  >
+                    Delete
+                  </Menu.Item>
+                </Menu>
+              }
+            >
+              <a>Action</a>
+            </Dropdown>
+          </Space>
+        </>
+      ),
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -199,14 +207,18 @@ const QuizList = () => {
 
   return (
     <div>
-      {/* <UMBreadCrumb
+      <UMBreadCrumb
         items={[
           {
             label: "admin",
             link: "/admin",
           },
+          {
+            label: "Quiz",
+            link: "/admin/quiz",
+          },
         ]}
-      /> */}
+      />
       <ActionBar title="Quiz List">
         <Input
           size="large"

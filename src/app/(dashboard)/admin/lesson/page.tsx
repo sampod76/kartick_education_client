@@ -212,14 +212,18 @@ const LessonList = () => {
 
   return (
     <div>
-      {/* <UMBreadCrumb
+      <UMBreadCrumb
         items={[
           {
             label: "admin",
             link: "/admin",
           },
+          {
+            label: "Lesson",
+            link: "/admin/lesson",
+          },
         ]}
-      /> */}
+      />
       <ActionBar title="Lesson List">
         <Input
           size="large"
