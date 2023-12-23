@@ -25,6 +25,7 @@ import {
 } from "@/utils/modalHook";
 
 import { useDeleteQuizMutation, useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 
 
@@ -219,7 +220,8 @@ const QuizList = () => {
           },
         ]}
       />
-      <ActionBar title="Quiz List">
+      <HeadingUI>Quiz List</HeadingUI>
+      <ActionBar>
         <Input
           size="large"
           placeholder="Search"
