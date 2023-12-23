@@ -40,7 +40,7 @@ const CourseList = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
+  const [courseId, setCourseId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -90,7 +90,7 @@ const CourseList = () => {
 
   const columns = [
     {
-      title: "",
+      title: "Image",
       render: function (data: any) {
         return (
           <>
@@ -182,11 +182,11 @@ const CourseList = () => {
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item key="view">
-                    <Link href={`/work-plan/view/${record._id}`}>View</Link>
+                  <Menu.Item key="details">
+                    <Link href={`/course/details/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/work-plan/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/course/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -225,7 +225,7 @@ const CourseList = () => {
     setSearchTerm("");
   };
 
-  const deleteAdminHandler = async (id: string) => {
+  const deleteCourseHandler = async (id: string) => {
     // console.log(id);
     try {
       const res = await deleteCourse(id);
@@ -240,14 +240,18 @@ const CourseList = () => {
 
   return (
     <div>
-      {/* <UMBreadCrumb
+      <UMBreadCrumb
         items={[
           {
             label: "admin",
             link: "/admin",
           },
+          {
+            label: "Courses",
+            link: "/admin/course",
+          },
         ]}
-      /> */}
+      />
 
       <HeadingUI>Course List</HeadingUI>
 
@@ -289,12 +293,13 @@ const CourseList = () => {
       />
 
       <UMModal
-        title="Remove admin"
+        title="Remove Course"
+    
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteAdminHandler(adminId)}
+        handleOk={() => deleteCourseHandler(courseId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this Course?</p>
       </UMModal>
     </div>
   );
