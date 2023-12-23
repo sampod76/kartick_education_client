@@ -5,8 +5,8 @@ import Success from "@/components/Home/Success/Success";
 import CoursesTab from "@/components/Home/coureses/CoursesTab";
 import HomeHeader from "@/components/shared/Headers/HomeHeader";
 
-
 const HomePage = () => {
+
   return (
     <>
       <HomeHeader />
@@ -14,7 +14,7 @@ const HomePage = () => {
         <BannerSection />
         <CoursesTab />
         <SupportHero />
-        <Success/>
+        <Success />
       </main>
       <Footer />
     </>
