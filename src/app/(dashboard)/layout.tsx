@@ -16,7 +16,7 @@ const { Content } = Layout;
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   // const userLoggedIn = isLoggedIn();
   const userLoggedIn = USER_ROLE.ADMIN;
-  console.log(userLoggedIn);
+  // console.log(userLoggedIn);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [collapsed, setCollapsed] = useState(false);

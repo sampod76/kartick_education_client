@@ -8,7 +8,7 @@ import Link from "next/link";
 const DropDownUI = ({children,itemData}:{children:React.ReactNode,itemData:any}) => {
 
   const generateSubMenu = (data: any[]) => {
-    return data.map((item) => (
+    return data?.map((item) => (
       <Menu.Item
         style={{
           // background:"red",

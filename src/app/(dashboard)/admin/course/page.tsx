@@ -134,7 +134,7 @@ const CourseList = () => {
       title: "Price Type",
       dataIndex: "price_type",
       ellipsis: true,
-      width:100,
+      width: 100,
     },
     {
       title: "author",
@@ -163,18 +163,17 @@ const CourseList = () => {
       },
       sorter: true,
     },
- 
+
     {
       title: "Status",
       dataIndex: "status",
-      width:80,
+      width: 80,
       // render:function(data:any){
       //   console.log(data);
       // }
     },
     {
       title: "Action",
-      dataIndex: "_id",
       fixed: "right",
       render: (record: any) => (
         <>
@@ -183,10 +182,10 @@ const CourseList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="details">
-                    <Link href={`/course/details/${record._id}`}>View</Link>
+                    <Link href={`/admin/course/details/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/course/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/admin/course/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -294,7 +293,6 @@ const CourseList = () => {
 
       <UMModal
         title="Remove Course"
-    
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteCourseHandler(courseId)}

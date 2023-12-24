@@ -22,7 +22,7 @@ const TagUI = ({
         value={selectedTags}
         onChange={setSelectedTags}
         style={{ width: "100%" }}
-        options={filteredOptions.map((item: any) => ({
+        options={filteredOptions?.map((item: any) => ({
           value: item,
           label: item,
         }))}

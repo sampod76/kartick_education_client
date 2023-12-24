@@ -2,34 +2,28 @@
 
 import Form from "@/components/Forms/Form";
 import FormDataRange from "@/components/Forms/FormDataRange";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
+
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
-import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
+
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import LabelUi from "@/components/ui/dashboardUI/LabelUi";
+
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
-import TagUI from "@/components/ui/dashboardUI/TagUI";
-import {
-  bloodGroupOptions,
-  courseStatusOptions,
-  genderOptions,
-  priceTypeOptions,
-} from "@/constants/global";
+
+import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
+import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
-import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
   Button,
@@ -50,10 +44,12 @@ const CreateCoursePage = () => {
 
   // !  tag selection
 
-  const tagOptions = ["course", "tech", "update", "english"];
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([
+    "course",
+    "tech",
+  ]);
 
-  console.log(selectedTags, "selectedTags........1");
+  // console.log(selectedTags, "selectedTags........1");
 
   // console.log(courseStatusOptions,"Category",CategoryOptions,);
 
@@ -114,14 +110,7 @@ const CreateCoursePage = () => {
       <HeadingUI>Create Course</HeadingUI>
       {/* resolver={yupResolver(adminSchema)} */}
       <div className="">
-        <Form
-          submitHandler={onSubmit}
-          // resolver={yupResolver(createCourseSchema)}
-          // defaultValues={{
-          //   bloodGroup: bloodGroupOptions[0].value,
-          //   gender: genderOptions[0].value,
-          // }}
-        >
+        <Form submitHandler={onSubmit}>
           <section className="border-2 p-2 rounded-2">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
               <div className="border-r-2 pr-2">
@@ -191,7 +180,7 @@ const CreateCoursePage = () => {
                   </Col>
 
                   <Col xs={24} md={12} lg={12} style={{}}>
-                   <FormDataRange name='duration' label="Duration"/>
+                    <FormDataRange name="duration" label="Duration" />
                     {/* //!4  */}
                   </Col>
                 </Row>
@@ -201,7 +190,7 @@ const CreateCoursePage = () => {
               <div className="    ">
                 <SubHeadingUI>Other Information</SubHeadingUI>
                 <Row gutter={[12, 12]}>
-                <Col xs={24} md={12} lg={12} style={{}}>
+                  <Col xs={24} md={12} lg={12} style={{}}>
                     <SelectCategoryField />
                     {/* //! category 10 */}
                   </Col>
@@ -236,14 +225,18 @@ const CreateCoursePage = () => {
 
                   {/* tag selections */}
                   <Col xs={24} md={24} lg={24} style={{}}>
-                    <TagUI
+                    {/* <TagUI
                       selectedTags={selectedTags}
                       setSelectedTags={setSelectedTags}
                       tagOptions={tagOptions}
+                    /> */}
+                    <TagsSelectUI
+                      selected={selectedTags}
+                      setSelected={setSelectedTags}
                     />
+
                     {/*//! 11 */}
                   </Col>
-                  
 
                   <Col
                     xs={24}
