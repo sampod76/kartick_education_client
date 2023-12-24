@@ -21,20 +21,17 @@ import {
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import {
-  useDeleteGeneralUserMutation,
-  useGetMultipleGeneralUsersQuery,
-} from "@/redux/api/adminApi/userManageApi";
 import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import StatusTag from "@/components/ui/CustomTag/StatusTag";
 import Image from "next/image";
 import ImageTag from "@/components/ui/CustomTag/ImageTag";
+import { useDeleteUserMutation, useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 const AdminPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
-  const [deleteGeneralUser] = useDeleteGeneralUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -57,28 +54,30 @@ const AdminPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetMultipleGeneralUsersQuery({
+  const { data = [], isLoading } = useGetAllUsersQuery({
     ...query,
   });
 
   //@ts-ignore
-  const generalUserData = data?.data?.data;
-  console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ generalUserData:", generalUserData)
+  const UserData = data?.data?.data;
+  console.log(
+    "🚀 ~ file: page.tsx:63 ~ AdminPage ~ UserData:",
+    UserData
+  );
   //@ts-ignore
   const meta = data?.data?.meta;
 
   const columns = [
     {
       title: "",
-     
+
       render: function (data: any) {
-        const img = data[data.role]['img']
+        const img = data[data.role]["img"];
         return (
           <>
             {
               <ImageTag
                 url={img}
-                
                 width={100}
                 height={100}
                 style="w-[5rem] h-[2.8rem] rounded"
@@ -87,11 +86,12 @@ const AdminPage = () => {
             }
           </>
         );
-    }},
+      },
+    },
     {
       title: "Name",
       render: function (data: any) {
-        const fullName = data[data.role]['name']['firstName']
+        const fullName = data[data.role]["name"]["firstName"];
         return <>{fullName}</>;
       },
     },
@@ -102,22 +102,22 @@ const AdminPage = () => {
     {
       title: "Role",
       render: function (data: any) {
-        const role = data?.role
+        const role = data?.role;
         return <>{role}</>;
       },
     },
     {
       title: "Status",
       render: function (data: any) {
-        const status = data?.status
-        return <StatusTag status={status}/>
+        const status = data?.status;
+        return <StatusTag status={status} />;
       },
     },
 
     {
       title: "Contact no.",
       render: function (data: any) {
-        const Contact = data[data.role]['phoneNumber']
+        const Contact = data[data.role]["phoneNumber"];
         return <>{Contact}</>;
       },
     },
@@ -133,14 +133,15 @@ const AdminPage = () => {
       title: "Action",
       dataIndex: "_id",
       render: function (data: any) {
+        console.log(data);
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+            <Link href={`/${SUPER_ADMIN}/manage-users/all-users/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
+            <Link href={`/${SUPER_ADMIN}/manage-users/all-users/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -152,7 +153,7 @@ const AdminPage = () => {
               </Button>
             </Link>
             <Button
-              onClick={() => deleteGeneralUserHandler(data)}
+              onClick={() => deleteUserHandler(data)}
               type="primary"
               danger
             >
@@ -181,12 +182,12 @@ const AdminPage = () => {
     setSearchTerm("");
   };
 
-  const deleteGeneralUserHandler = async (id: string) => {
+  const deleteUserHandler = async (id: string) => {
     console.log(id);
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          const res = await deleteGeneralUser(id).unwrap();
+          const res = await deleteUser(id).unwrap();
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -207,8 +208,7 @@ const AdminPage = () => {
     <div>
       <h1 className="text-center font-bold text-2xl">All User List</h1>
       <hr />
-      <ActionBar >
-        
+      <ActionBar>
         <Input
           size="large"
           placeholder="Search"
@@ -218,7 +218,7 @@ const AdminPage = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/general_user/create`}>
+          <Link href={`/${SUPER_ADMIN}/manage-users/all-users/create`}>
             <Button type="primary">Create Customer</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -236,7 +236,7 @@ const AdminPage = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={generalUserData}
+        dataSource={UserData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -249,7 +249,7 @@ const AdminPage = () => {
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteGeneralUserHandler(adminId)}
+        handleOk={() => deleteUserHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
