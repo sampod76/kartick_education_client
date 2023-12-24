@@ -3,6 +3,7 @@ import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import dayjs from "dayjs";
 import SubHeadingUI from "../ui/dashboardUI/SubHeadingUI";
+import LabelUi from "../ui/dashboardUI/LabelUi";
 
 type FormTimePickerProps = {
   name: string;
@@ -18,8 +19,8 @@ export default function FormTimePicker({ name, label }: FormTimePickerProps) {
         name={name}
         control={control}
         render={({ field }) => (
-          <div className="flex flex-col items-center">
-            <h1>{label ? <SubHeadingUI>{label}</SubHeadingUI> : null}</h1>
+          <div className="flex flex-col items-start capitalize">
+            <h1>{label ? <LabelUi>{label}</LabelUi> : null}</h1>
             <TimePicker
               size="large"
               defaultValue={dayjs(field.value ? field.value : "00:00", "HH:mm")}

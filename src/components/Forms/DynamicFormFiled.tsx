@@ -45,7 +45,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
   };
 
   return (
-    <div className="w-[80vw] ">
+    <div className="">
       <SubHeadingUI>Add Answer </SubHeadingUI>
       {answers?.map((answer, index) => (
         <Space
@@ -62,6 +62,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
         >
           <Input
             placeholder="Option Title"
+          width={200}
             value={answer.title}
             onChange={(e) =>
               handleChange(index, { ...answer, title: e.target.value })

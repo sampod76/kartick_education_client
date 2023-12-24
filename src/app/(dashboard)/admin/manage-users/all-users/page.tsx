@@ -69,8 +69,8 @@ const AdminPage = () => {
 
   const columns = [
     {
-      title: "",
-
+      title: "Profile",
+      width: 100,
       render: function (data: any) {
         const img = data[data.role]["img"];
         return (
@@ -90,17 +90,20 @@ const AdminPage = () => {
     },
     {
       title: "Name",
+      ellipsis: true,
       render: function (data: any) {
-        const fullName = data[data.role]["name"]["firstName"];
-        return <>{fullName}</>;
+        const fullName = data[data.role]['name']['firstName'] + " " + data[data.role]['name']['lastName'] 
+        return <p className="capitalize">{fullName}</p>;
       },
     },
     {
       title: "Email",
+      ellipsis: true,
       dataIndex: "email",
     },
     {
       title: "Role",
+      width: 100,
       render: function (data: any) {
         const role = data?.role;
         return <>{role}</>;
@@ -108,6 +111,7 @@ const AdminPage = () => {
     },
     {
       title: "Status",
+      width: 100,
       render: function (data: any) {
         const status = data?.status;
         return <StatusTag status={status} />;
@@ -147,7 +151,7 @@ const AdminPage = () => {
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                type="default"
               >
                 <EditOutlined />
               </Button>
@@ -224,7 +228,7 @@ const AdminPage = () => {
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

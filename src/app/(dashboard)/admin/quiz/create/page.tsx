@@ -86,7 +86,7 @@ const CreateQuiz = () => {
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
               padding: "15px",
-              marginBottom: "10px",
+              
             }}
           >
             <HeadingUI
@@ -101,7 +101,7 @@ const CreateQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <FormInput
@@ -119,7 +119,7 @@ const CreateQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <FormInput
@@ -131,25 +131,14 @@ const CreateQuiz = () => {
                 />
                 {/*//! 4 --- */}
               </Col>
+              
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormTextArea name="details" />
-                {/*//! 3 ---*/}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
               <SelectAuthorField/>
@@ -161,7 +150,7 @@ const CreateQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
               <SelectModuleField/>
@@ -173,7 +162,7 @@ const CreateQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
              <SelectLessonField/>
@@ -185,7 +174,7 @@ const CreateQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <FormSelectField
@@ -205,7 +194,7 @@ const CreateQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <DemoVideoUI
@@ -214,8 +203,9 @@ const CreateQuiz = () => {
                   videoUrl={videoUrl}
                   setVideoUrl={setVideoUrl}
                   options={["youtube", "vimeo"]}
+                  label="Demo video"
                 />
-                {/* //! quiz type 8 ---*/}
+               
               </Col>
               <Col
                 className="gutter-row"
@@ -223,7 +213,7 @@ const CreateQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginTop:"10px"
                 }}
               >
                <TagsSelectUI
@@ -239,11 +229,22 @@ const CreateQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <UploadImage name="img" />
                 {/* //! 2 -- */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+              
+                style={{
+                  
+                }}
+              >
+                <FormTextArea rows={15} label="Description" name="details" />
+               
               </Col>
             </Row>
           </div>
