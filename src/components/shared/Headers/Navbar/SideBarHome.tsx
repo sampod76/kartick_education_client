@@ -18,7 +18,7 @@ const SideBarHome = () => {
     setOpen(false);
   };
 
-const [selectedItem, setSelectedItem] = useState<null | any>(null);
+// const [selectedItem, setSelectedItem] = useState<null | any>(null);
 
 
   return (
@@ -31,7 +31,7 @@ const [selectedItem, setSelectedItem] = useState<null | any>(null);
         )}
       </Space>
       <Drawer
-        className="bg-secondary"
+        
         // title="Drawer with extra actions"
         placement={"right"}
         width={400}
