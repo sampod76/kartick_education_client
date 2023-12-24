@@ -7,8 +7,13 @@ import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
+import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
+import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
+import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagUI from "@/components/ui/dashboardUI/TagUI";
+import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import uploadImgBB from "@/hooks/imgbbUploads";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
@@ -22,39 +27,9 @@ import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
 const CreateMilestone = () => {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(["tech"]);
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
-
-  // ! for get all users
-  const { data: usersData } = useGetAllUsersQuery({});
-  console.log(usersData);
-
-  const AuthorOptions = usersData?.data?.data?.map((item: any) => {
-    return {
-      label: item?.email,
-      value: item?._id,
-    };
-  });
-
-  console.log(AuthorOptions);
-
-  //! for Milestone options selection
-  const { data } = useGetAllCourseQuery({});
-  const CourseData = data?.data;
-  // console.log(CourseData)
-  const CourseOptions = CourseData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(CourseOptions);
-
-  // !  tag selection
-
-  const tagsOptions = ["milestone", "online", "course", "english"];
-
 
   const onSubmit = async (values: any) => {
     // console.log(values);
@@ -101,14 +76,7 @@ const CreateMilestone = () => {
               padding: "15px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Create Milestone
-            </p>
+            <HeadingUI>Create Milestone</HeadingUI>
             <Row gutter={[12, 12]}>
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormInput
@@ -121,34 +89,17 @@ const CreateMilestone = () => {
               </Col>
 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                <FormSelectField
-                  size="large"
-                  name="author"
-                  options={AuthorOptions}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Author"
-                  // placeholder="Select"
-                  required={true}
-                />
+                <SelectAuthorField />
                 {/* //! price type 8 */}
               </Col>
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                <FormSelectField
-                  size="large"
-                  name="course"
-                  options={CourseOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Course"
-                  // placeholder="Select"
-                  required={true}
-                />
+                <SelectCourseField />
                 {/* //! price type 8 */}
               </Col>
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                <TagUI
-                  selectedTags={selectedTags}
-                  setSelectedTags={setSelectedTags}
-                  tagOptions={tagsOptions}
+                <TagsSelectUI
+                  selected={selectedTags}
+                  setSelected={setSelectedTags}
                 />
                 {/*//! 11 */}
               </Col>
@@ -168,13 +119,7 @@ const CreateMilestone = () => {
             </Row>
           </div>
 
-          <Button
-            htmlType="submit"
-            style={{ marginTop: "10px" }}
-            type="default"
-          >
-            Create
-          </Button>
+          <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
         </Form>
       </div>
     </div>

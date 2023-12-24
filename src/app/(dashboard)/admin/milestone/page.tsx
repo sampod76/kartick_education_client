@@ -143,19 +143,19 @@ const MileStoneList = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
       fixed: "right",
       render: (record: any) => (
+        // console.log(object);
         <>
           <Space size="middle">
             <Dropdown
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/milestone/details/${record._id}`}>View</Link>
+                    <Link href={`/admin/milestone/details/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/milestone/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/admin/milestone/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
 
                   <Menu.Item

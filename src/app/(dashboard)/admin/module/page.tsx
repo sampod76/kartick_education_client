@@ -4,11 +4,9 @@ import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 import Link from "next/link";
 import {
-  DeleteOutlined,
-  EditOutlined,
 
   ReloadOutlined,
-  EyeOutlined,
+
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
@@ -24,10 +22,12 @@ import {
   confirm_modal,
 } from "@/utils/modalHook";
 
-import { USER_ROLE } from "@/constants/role";
-import { useDeleteModuleMutation, useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
+import {
+  useDeleteModuleMutation,
+  useGetAllModuleQuery,
+} from "@/redux/api/adminApi/moduleApi";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 const MileStoneList = () => {
   const query: Record<string, any> = {};
@@ -125,7 +125,7 @@ const MileStoneList = () => {
       dataIndex: "module_number",
       ellipsis: true,
     },
-   
+
     {
       title: "Milestone",
       dataIndex: "milestone",
@@ -148,7 +148,6 @@ const MileStoneList = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
       fixed: "right",
       render: (record: any) => (
         <>
@@ -157,10 +156,10 @@ const MileStoneList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/module/details/${record._id}`}>View</Link>
+                    <Link href={`/admin/module/details/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/module/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/admin/module/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -227,7 +226,7 @@ const MileStoneList = () => {
         ]}
       />
       <HeadingUI>Module List</HeadingUI>
-      <ActionBar >
+      <ActionBar>
         <Input
           size="large"
           placeholder="Search"
@@ -238,7 +237,7 @@ const MileStoneList = () => {
         />
         <div>
           <Link href={`/admin/module/create`}>
-            <Button type="default">Create Milestone</Button>
+            <Button type="default">Create Module</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button

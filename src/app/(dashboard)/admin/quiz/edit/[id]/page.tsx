@@ -3,15 +3,19 @@
 import Form from "@/components/Forms/Form";
 
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField, {
-
-} from "@/components/Forms/FormSelectField";
+import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
+import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
+import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagUI from "@/components/ui/dashboardUI/TagUI";
+import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import { removeUndefinedValues } from "@/constants/removeUndefined";
 import uploadImgBB from "@/hooks/imgbbUploads";
@@ -39,49 +43,12 @@ const EditQuizPage = ({ params }: any) => {
   // const { data: MilestoneData = [] } = useGetAllCategoryQuery({});
   const [updateQuiz, { isLoading: updateLoading, error }] =
     useUpdateQuizMutation();
-  const { data: usersData } = useGetAllUsersQuery({});
-  console.log(usersData);
-
-  const AuthorOptions = usersData?.data?.data?.map((item: any) => {
-    return {
-      label: item?.email,
-      value: item?._id,
-    };
-  });
-
-  console.log(AuthorOptions);
-
-  //! for Module options selection
-  const { data } = useGetAllModuleQuery({});
-  const moduleData = data?.data;
-  // console.log(moduleData)
-  const ModuleOptions = moduleData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(ModuleOptions);
-
-  //! for Lesson options selection
-  const { data: lessons } = useGetAllLessonQuery({});
-  const LessonData = lessons?.data;
-  // console.log(LessonData)
-  const LessonOptions = LessonData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(LessonOptions);
 
   // !  tag selection
 
-  const tagOptions = ["course", "tech", "update", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>(
     QuizData?.tags || []
   );
-  console.log(selectedTags, "selectedTags........1", QuizData?.tags);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -100,6 +67,7 @@ const EditQuizPage = ({ params }: any) => {
     const UpdateValues = removeUndefinedValues({
       tags: selectedTags,
       ...values,
+      demo_video,
     });
 
     console.log(UpdateValues);
@@ -153,14 +121,7 @@ const EditQuizPage = ({ params }: any) => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Create Lesson
-            </p>
+            <HeadingUI>Update Quiz</HeadingUI>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -219,14 +180,7 @@ const EditQuizPage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="author"
-                  options={AuthorOptions}
-                  label="Author"
-                  // placeholder="Select"
-                  required={true}
-                />
+                <SelectAuthorField />
                 {/* //! Author 5 --*/}
               </Col>
               <Col
@@ -238,15 +192,7 @@ const EditQuizPage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="module"
-                  options={ModuleOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="module"
-                  // placeholder="Select"
-                  required={true}
-                />
+                <SelectModuleField />
                 {/* //! module 6 ----*/}
               </Col>
               <Col
@@ -258,31 +204,7 @@ const EditQuizPage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="lesson"
-                  options={LessonOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Lesson"
-                  // placeholder="Select"
-                  required={true}
-                />
-                <Select
-                  labelInValue
-                  defaultValue={{ value: "lucy", label: "Lucy (101)" }}
-                  style={{ width: 120 }}
-                  // onChange={handleChange}
-                  options={[
-                    {
-                      value: "jack",
-                      label: "Jack (100)",
-                    },
-                    {
-                      value: "lucy",
-                      label: "Lucy (101)",
-                    },
-                  ]}
-                />
+                <SelectLessonField />
                 {/* //! Lesson 7 ----*/}
               </Col>
               <Col
@@ -332,10 +254,9 @@ const EditQuizPage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <TagUI
-                  selectedTags={selectedTags}
-                  setSelectedTags={setSelectedTags}
-                  tagOptions={tagOptions}
+                <TagsSelectUI
+                  selected={selectedTags}
+                  setSelected={setSelectedTags}
                 />
                 {/*//! 10--- */}
               </Col>
@@ -353,17 +274,8 @@ const EditQuizPage = ({ params }: any) => {
               </Col>
             </Row>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button htmlType="submit" type="default">
-              Update
-            </Button>
-          </div>
+
+          <ButtonSubmitUI>Update Quiz</ButtonSubmitUI>
         </Form>
       </div>
     </div>

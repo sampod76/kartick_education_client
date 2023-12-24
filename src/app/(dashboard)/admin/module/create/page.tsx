@@ -1,29 +1,31 @@
 "use client";
 
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
+
 import FormInput from "@/components/Forms/FormInput";
-import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
+
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import FormTimePicker from "@/components/Forms/FormTimePicker";
+import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
+import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
+
 import UploadImage from "@/components/ui/UploadImage";
-import TagUI from "@/components/ui/dashboardUI/TagUI";
+
+import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
+
+
 import {
   useAddModuleMutation,
   useGetAllModuleQuery,
 } from "@/redux/api/adminApi/moduleApi";
 
-import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
-import { IServiceSchema } from "@/schemas/service";
+
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Col, Row, Select, message } from "antd";
+
+import { Button, Col, Row,  message } from "antd";
 import React, { useState } from "react";
 
 const CreateModule = () => {
@@ -31,42 +33,16 @@ const CreateModule = () => {
 
   const { data: existModule } = useGetAllModuleQuery({});
 
-  // ! for get all users
-  const { data: usersData } = useGetAllUsersQuery({});
-  console.log(usersData);
-
-  const AuthorOptions = usersData?.data?.data?.map((item: any) => {
-    return {
-      label: item?.email,
-      value: item?._id,
-    };
-  });
-
-  console.log(AuthorOptions);
-
-  //! for Module options selection
-  const { data } = useGetAllMilestoneQuery({});
-  const milestoneData = data?.data;
-  // console.log(milestoneData)
-  const MilestoneOptions = milestoneData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(MilestoneOptions);
-
   // !  tag selection
 
-  const OPTIONS = ["module", "online", "course", "english"];
-  const tagsOptions = ["milestone", "online", "course", "english"];
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags?.includes(o));
-  console.log(selectedTags, "selectedTags........1");
+  const [selectedTags, setSelectedTags] = useState<string[]>([
+    "tags1",
+    "tags2",
+  ]);
 
   const onSubmit = async (values: any) => {
     // console.log(values);
-    const status = "active";
+
     const imgUrl = await uploadImgBB(values.img);
 
     values.img = imgUrl;
@@ -100,7 +76,7 @@ const CreateModule = () => {
   // Add 0.1 to the rounded number and use toFixed again when logging
   const preModule_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
 
-  console.log(preModule_number);
+  // console.log(preModule_number);
 
   return (
     <div>
@@ -116,7 +92,6 @@ const CreateModule = () => {
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
               padding: "15px",
-              
             }}
           >
             <p
@@ -127,16 +102,14 @@ const CreateModule = () => {
             >
               Create Module
             </p>
-            <hr className="border-1.5 mb-2"/>
+            <hr className="border-1.5 mb-2" />
             <Row gutter={[16, 16]}>
               <Col
                 className="gutter-row"
                 xs={24}
                 md={20}
                 // lg={8}
-                style={{
-                  
-                }}
+                style={{}}
               >
                 <FormInput
                   type="text"
@@ -147,14 +120,7 @@ const CreateModule = () => {
                 />
                 {/*//! 1 */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={4}
-                
-                style={{
-                  
-                }}
-              >
+              <Col className="gutter-row" xs={4} style={{}}>
                 <FormInput
                   type="number"
                   name="module_number"
@@ -164,58 +130,17 @@ const CreateModule = () => {
                 />
                 {/*//! 2 */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="milestone"
-                  options={MilestoneOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="milestone"
-                  // placeholder="Select"
-                  required={true}
-                />
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <SelectMilestoneField />
                 {/* //! price type 5*/}
               </Col>
-           
 
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="author"
-                  options={AuthorOptions}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Author"
-                  // placeholder="Select"
-                  required={true}
-                />
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <SelectAuthorField />
                 {/* //! price type 4*/}
               </Col>
-              
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
+
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormSelectField
                   size="large"
                   name="status"
@@ -228,22 +153,13 @@ const CreateModule = () => {
                 {/* //! price type 8*/}
               </Col>
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                <TagUI
-                  selectedTags={selectedTags}
-                  setSelectedTags={setSelectedTags}
-                  tagOptions={tagsOptions}
+                <TagsSelectUI
+                  selected={selectedTags}
+                  setSelected={setSelectedTags}
                 />
                 {/*//! 11 */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <UploadImage name="img" />
                 {/* //!7*/}
               </Col>

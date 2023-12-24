@@ -140,7 +140,6 @@ const MileStoneList = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
       fixed: "right",
       render: (record: any) => (
         <>

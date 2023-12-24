@@ -24,10 +24,11 @@ import {
   confirm_modal,
 } from "@/utils/modalHook";
 
-import { useDeleteQuizMutation, useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
+import {
+  useDeleteQuizMutation,
+  useGetAllQuizQuery,
+} from "@/redux/api/adminApi/quizApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-
-
 
 const QuizList = () => {
   const query: Record<string, any> = {};
@@ -127,9 +128,8 @@ const QuizList = () => {
     },
     {
       title: "module",
-      dataIndex:[ "module",'title'],
+      dataIndex: ["module", "title"],
       ellipsis: true,
-  
     },
     {
       title: "Created at",
@@ -139,10 +139,9 @@ const QuizList = () => {
       },
       sorter: true,
     },
-  
+
     {
       title: "Action",
-      dataIndex: "_id",
       fixed: "right",
       render: (record: any) => (
         <>
@@ -151,10 +150,10 @@ const QuizList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/quiz/details/${record._id}`}>View</Link>
+                    <Link href={`/admin/quiz/details/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/quiz/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/admin/quiz/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
 
                   <Menu.Item

@@ -32,7 +32,7 @@ const  DashboardNavBar = ({
 }) => {
   //   const userInfo = getUserInfo() as any;
   const userLoggedIn = USER_ROLE.ADMIN;
-  console.log(userLoggedIn);
+  // console.log(userLoggedIn);
 
   return (
     <Header

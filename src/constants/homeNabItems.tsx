@@ -207,7 +207,7 @@ export const homeNavItems: MenuProps["items"] = [
     key: "/About",
   },
   {
-    label: <Link href="/course">Dashboard</Link>,
+    label: <Link href="/dashboard">Dashboard</Link>,
     key: "/dashboard",
   },
 ];

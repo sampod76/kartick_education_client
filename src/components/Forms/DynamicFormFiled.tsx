@@ -47,7 +47,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
   return (
     <div className="w-[80vw] ">
       <SubHeadingUI>Add Answer </SubHeadingUI>
-      {answers.map((answer, index) => (
+      {answers?.map((answer, index) => (
         <Space
           key={index}
           // style={{ display: "flex", marginBottom: 8 }}
