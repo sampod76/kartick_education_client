@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { useGetSingleUserQuery } from "@/redux/api/adminApi/usersApi";
+import ImageTag from "@/components/ui/CustomTag/ImageTag";
 
 const EditUserPage = ({ params }: any) => {
   const id = params.id;
@@ -26,6 +27,12 @@ const EditUserPage = ({ params }: any) => {
     return <LoadingForDataFetch />;
   }
 
+  const img = userData[userData.role]["img"];
+  const gender = userData[userData.role]["gender"];
+  const address = userData[userData.role]["address"];
+  const firstName = userData[userData.role]["name"].firstName;
+  const lastName = userData[userData.role]["name"].lastName;
+
   return (
     <>
       <section className="block lg:flex justify-between gap-5">
@@ -33,17 +40,24 @@ const EditUserPage = ({ params }: any) => {
           {/* profile card */}
           <div className=" bg-white p-6 rounded-lg shadow-lg">
             <div className="flex justify-center">
-              <Image
-                width={800}
-                height={800}
-                src={userData?.profileImage || NO_IMAGE}
-                alt="Profile Image"
-                className="w-60 h-60 rounded-full"
+              <ImageTag
+                url={img}
+                width={100}
+                height={100}
+                style="w-[8rem] h-[9rem] rounded-[50%]"
+                alt="dd"
               />
             </div>
             <div className="mt-4 text-center">
-              <h2 className="text-xl font-bold">Name: {userData?.name}</h2>
-              <p className="text-gray-600">Gender: {userData?.gender}</p>
+              <h2 className="text-xl font-bold">
+                Name: {firstName} {lastName}
+              </h2>
+              <h2 className="text-xl font-bold text-gray-600">
+                Role: {userData?.role}
+              </h2>
+              <h2 className="text-xl font-bold text-gray-600">
+                Address: {address}
+              </h2>
             </div>
           </div>
           {/* website cards */}
@@ -102,7 +116,9 @@ const EditUserPage = ({ params }: any) => {
           {/* Information card */}
           <div className="flex flex-col gap-3 bg-white shadow-xl p-7 rounded">
             <div className="flex gap-5 justify-between  text-start  py-3">
-              <h1 className="text-[18px] font-semibold text-start">Full Name</h1>
+              <h1 className="text-[18px] font-semibold text-start">
+                Full Name
+              </h1>
               <h3 className="text-[18px] ">Sampod Debnath</h3>
             </div>
             <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
@@ -110,7 +126,9 @@ const EditUserPage = ({ params }: any) => {
               <h3 className="text-[18px] ">samp@gamil.com</h3>
             </div>
             <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
-              <h1 className="text-[18px] font-semibold text-start">Contact No</h1>
+              <h1 className="text-[18px] font-semibold text-start">
+                Contact No
+              </h1>
               <h3 className="text-[18px] ">+880182213100</h3>
             </div>
             <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
