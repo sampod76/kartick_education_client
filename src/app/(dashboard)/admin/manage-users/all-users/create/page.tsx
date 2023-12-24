@@ -10,7 +10,7 @@ import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-import { adminSchema,  userSchema } from '@/schemas/student';
+import { adminSchema } from '@/schemas/student';
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
