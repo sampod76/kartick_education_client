@@ -1,3 +1,5 @@
+import { USER_ROLE } from "./role";
+
 export const genderOptions = [
   {
     label: "Male",
@@ -12,7 +14,6 @@ export const genderOptions = [
     value: "others",
   },
 ];
-
 
 export const bloodGroupOptions = [
   {
@@ -69,7 +70,6 @@ export const priceTypeOptions = [
     label: "recurrig",
     value: "recurrig",
   },
-  
 ];
 export const courseStatusOptions = [
   {
@@ -92,10 +92,21 @@ export const courseStatusOptions = [
     label: "block",
     value: "block",
   },
-  
 ];
-
-
+export const roleOptions = [
+  {
+    label: "Admin",
+    value: "admin",
+  },
+  {
+    label: "Student",
+    value: "student",
+  },
+  {
+    label: USER_ROLE.TRAINER,
+    value: USER_ROLE.TRAINER,
+  },
+];
 
 export const months = [
   "January",
@@ -145,7 +156,6 @@ export enum ExamType {
 export enum ENUM_STATUS {
   ACTIVE = "active",
   DEACTIVATE = "deactivate",
-
 }
 // 'pending' | 'accept' | 'reject' | 'complete'|'cancel'
 export enum ENUM_BOOKING_STATUS {

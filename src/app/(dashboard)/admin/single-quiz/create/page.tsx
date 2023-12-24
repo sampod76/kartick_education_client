@@ -116,8 +116,8 @@ const CreateSingleQuiz = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+              
+           
                 style={{
                   marginBottom: "10px",
                 }}
@@ -126,7 +126,7 @@ const CreateSingleQuiz = () => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Quiz Name"
+                  label="Quiz Title"
                   required={true}
                 />
                 {/*//! 1  */}
@@ -155,7 +155,7 @@ const CreateSingleQuiz = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10p",
+                 
                   // background:"r ed"
                 }}
               >
@@ -175,45 +175,7 @@ const CreateSingleQuiz = () => {
                 <FormTimePicker name="time_duration" label="Time Duration" />
                 {/*//! 5  */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormTextArea name="details" />
-                {/*//! 3 */}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormTextArea
-                  name="hints"
-                  placeholder="Give hints for Answer"
-                />
-                {/*//! 6 */}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <SelectAuthorField />
-                {/* //! Author 9 */}
-              </Col>
+             
               <Col
                 className="gutter-row"
                 xs={24}
@@ -285,6 +247,7 @@ const CreateSingleQuiz = () => {
                   videoUrl={videoUrl}
                   setVideoUrl={setVideoUrl}
                   options={["youtube", "vimeo"]}
+                  label="Demo video"
                 />
                 {/* //! Demo Video 14 */}
               </Col>
@@ -317,6 +280,46 @@ const CreateSingleQuiz = () => {
                 {/* //! 2  */}
               </Col>
             </Row>
+            <Col
+                className="gutter-row"
+                xs={24}
+                
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormTextArea label="Description" name="details" />
+                {/*//! 3 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormTextArea
+                  name="hints"
+                  label="hints"
+                  placeholder="Give hints for Answer"
+                />
+                {/*//! 6 */}
+              </Col>
+              
+             {/*  
+             <Col
+                className="gutter-row"
+                xs={24}
+              
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <SelectAuthorField />
+              
+              </Col> 
+              */}
             <Row
               gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
               style={{
@@ -326,8 +329,7 @@ const CreateSingleQuiz = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+               
                 style={{
                   marginBottom: "10px",
                 }}

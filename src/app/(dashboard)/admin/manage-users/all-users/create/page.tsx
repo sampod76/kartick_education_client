@@ -7,10 +7,10 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { bloodGroupOptions, genderOptions, roleOptions } from "@/constants/global";
 import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-import { adminSchema, userSchema } from "@/schemas/student";
+import { adminSchema } from "@/schemas/student";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -41,10 +41,9 @@ const CreateGeneralUserPage = () => {
 
   return (
     <div>
-      <h1>Create Customer/normal user</h1>
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
-        <Form submitHandler={onSubmit} resolver={yupResolver(userSchema)}>
+        <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -55,12 +54,13 @@ const CreateGeneralUserPage = () => {
           >
             <p
               style={{
-                fontSize: "18px",
                 marginBottom: "10px",
               }}
+              className="font-semibold text-2xl text-center"
             >
-              Admin Information
+              Create User
             </p>
+            <hr className="border my-2" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -113,12 +113,28 @@ const CreateGeneralUserPage = () => {
                   required={true}
                 />
               </Col>
-
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
                 lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="role"
+                  options={roleOptions}
+                  label="role"
+                  placeholder="Select"
+                  required={true}
+                />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -206,7 +222,7 @@ const CreateGeneralUserPage = () => {
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" type="default">
             Create
           </Button>
         </Form>
