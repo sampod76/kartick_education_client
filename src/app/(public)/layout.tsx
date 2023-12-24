@@ -1,4 +1,5 @@
 import Footer from "@/components/Home/Footer";
+import BannerCourses from "@/components/Home/Heros/BannerCourses";
 import NavbarPublic from "@/components/shared/Headers/Navbar/NavbarPublic";
 import TopBar from "@/components/shared/Headers/TopBar";
 
@@ -9,7 +10,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="">
       <TopBar />
       <NavbarPublic />
+      <BannerCourses />
       {children}
+      <Footer />
     </div>
   );
 };
