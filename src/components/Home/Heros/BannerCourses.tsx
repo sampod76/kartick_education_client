@@ -23,7 +23,7 @@ const BannerCourses = () => {
       >
         <div className="flex   uppercase justify-between items-center gap-5  font-[550] mb-[3rem] pl-4">
           <Link
-            className="py-3 px-7 rounded-tl-[20px] rounded-br-[20px] bg-green-500 text-white border-2 border-white"
+            className="py-3 px-7 rounded-tl-[20px] rounded-br-[20px] bg-green-500 text-white"
             href="/login"
           >
             {" "}

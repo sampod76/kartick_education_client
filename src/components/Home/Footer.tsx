@@ -7,7 +7,7 @@ const Footer = () => {
     <div
       className="max-w-[2500px] mx-auto"
     >
-      <footer className="bg-white dark:bg-gray-900 border-2 rounded-md">
+      <footer className="bg-white dark:bg-[#5371FF] border-2 rounded-md">
         <div className=" p-6 mx-auto">
           <div className="flex">
             <div className="w-full -mx-6 lg:w-2/5">
