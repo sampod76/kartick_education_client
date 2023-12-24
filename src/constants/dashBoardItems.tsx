@@ -11,6 +11,9 @@ import {
   AlipayCircleFilled,
   BorderOuterOutlined,
   UserOutlined,
+  BookOutlined,
+  DatabaseOutlined ,
+  AlignCenterOutlined 
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -159,7 +162,7 @@ export const dashboardItems = (role: USER_ROLE) => {
     {
       label: "Manage Milestone",
       key: "manage-Milestone",
-      icon: <ThunderboltOutlined />,
+      icon: <BookOutlined />,
       children: [
         
         {
@@ -175,7 +178,7 @@ export const dashboardItems = (role: USER_ROLE) => {
     {
       label: "Manage Module",
       key: "manage-Module",
-      icon: <ThunderboltOutlined />,
+      icon: <DatabaseOutlined />,
       children: [
         
         {
@@ -191,7 +194,7 @@ export const dashboardItems = (role: USER_ROLE) => {
     {
       label: "Manage Lesson",
       key: "manage-lesson",
-      icon: <ThunderboltOutlined />,
+      icon: <AlignCenterOutlined  />,
       children: [
         
         {

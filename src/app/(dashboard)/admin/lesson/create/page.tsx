@@ -12,9 +12,11 @@ import TagUI from "@/components/ui/dashboardUI/TagUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
 
-import { useAddLessonMutation, useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
+import {
+  useAddLessonMutation,
+  useGetAllLessonQuery,
+} from "@/redux/api/adminApi/lessoneApi";
 import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
-
 
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
@@ -122,12 +124,12 @@ const CreateLesson = () => {
             >
               Create Lesson
             </p>
+            <hr className="border-1 my-1" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -136,16 +138,15 @@ const CreateLesson = () => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Lesson Name"
+                  label="Lesson Title"
                   required={true}
                 />
                 {/*//! 1 */}
               </Col>
               <Col
                 className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
+                xs={2}
+              
                 style={{
                   marginBottom: "10px",
                 }}
@@ -159,23 +160,12 @@ const CreateLesson = () => {
                 />
                 {/*//! 2 */}
               </Col>
+              
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormTextArea name="details" />
-                {/*//! 3*/}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
+                lg={7}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -184,7 +174,6 @@ const CreateLesson = () => {
                   size="large"
                   name="author"
                   options={AuthorOptions}
-             
                   label="Author"
                   // placeholder="Select"
                   required={true}
@@ -195,7 +184,7 @@ const CreateLesson = () => {
                 className="gutter-row"
                 xs={24}
                 md={12}
-                lg={8}
+                lg={7}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -258,6 +247,16 @@ const CreateLesson = () => {
               >
                 <UploadImage name="img" />
                 {/* //!7*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                // md={12}
+                // lg={8}
+                style={{}}
+              >
+                {/*//! 3 */}
+                <FormTextArea label="Description" rows={15} name="details" />
               </Col>
             </Row>
           </div>

@@ -16,11 +16,7 @@ module.exports = {
 
       }
     },
-    // screens:{
-    //   sm:"425px",
-    //   md:"786px",
-    //   lg:"1080px" 
-    // }
+   
   },
   plugins: [],
 }

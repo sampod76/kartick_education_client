@@ -1,4 +1,6 @@
-import { Input, Select } from "antd";
+import { Input, Select, Typography } from "antd";
+
+const { Title } = Typography;
 import React, { useState } from "react";
 const { Option } = Select;
 
@@ -8,12 +10,16 @@ const DemoVideoUI = ({
   videoUrl,
   setVideoUrl,
   options,
+  label,
+  required,
 }: {
   videoType: string | null;
   setVideoType: React.Dispatch<React.SetStateAction<any>>;
   videoUrl: any;
   setVideoUrl: React.Dispatch<React.SetStateAction<any>>;
   options: string[];
+  label?: string;
+  required?: boolean;
 }) => {
   //   const [videoType, setVideoType] = useState(null);
   //   const [videoUrl, setVideoUrl] = useState("");
@@ -25,12 +31,16 @@ const DemoVideoUI = ({
     setVideoUrl(e.target.value);
   };
   return (
-    <div className="mx-auto">
+    <div className="">
+      <Title level={5} style={{ textAlign: "start" }}>
+        {label} {required ? <span className="text-red-500">*</span> : null}
+      </Title>
+
       <Input
         className="w-full "
         addonBefore={
           <Select
-            className=" b"
+            className=""
             placeholder="Select Video Platform"
             onChange={handleVideoTypeChange}
           >
@@ -43,7 +53,7 @@ const DemoVideoUI = ({
         }
         type="URL"
         suffix=".com"
-        defaultValue="mysite"
+        // defaultValue="mysite"
         placeholder={`Enter ${videoType} Video URL`}
         value={videoUrl}
         onChange={handleVideoUrlChange}

@@ -22,6 +22,7 @@ import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
 const CreateMilestone = () => {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
 
@@ -53,7 +54,7 @@ const CreateMilestone = () => {
   // !  tag selection
 
   const tagsOptions = ["milestone", "online", "course", "english"];
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
 
   const onSubmit = async (values: any) => {
     // console.log(values);
@@ -98,7 +99,6 @@ const CreateMilestone = () => {
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
               padding: "15px",
-              marginBottom: "10px",
             }}
           >
             <p
@@ -109,45 +109,18 @@ const CreateMilestone = () => {
             >
               Create Milestone
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+            <Row gutter={[12, 12]}>
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormInput
                   type="text"
                   name="title"
                   size="large"
-                  label="Milestone Name"
+                  label="Milestone Title"
                   required={true}
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                {/*//! 3 */}
-                <FormTextArea name="details" />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormSelectField
                   size="large"
                   name="author"
@@ -159,15 +132,7 @@ const CreateMilestone = () => {
                 />
                 {/* //! price type 8 */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormSelectField
                   size="large"
                   name="course"
@@ -179,15 +144,7 @@ const CreateMilestone = () => {
                 />
                 {/* //! price type 8 */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <TagUI
                   selectedTags={selectedTags}
                   setSelectedTags={setSelectedTags}
@@ -195,21 +152,27 @@ const CreateMilestone = () => {
                 />
                 {/*//! 11 */}
               </Col>
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <UploadImage name="img" />
+              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                // md={12}
+                // lg={8}
+                style={{}}
               >
-                <UploadImage name="img" />
+                {/*//! 3 */}
+                <FormTextArea label="Description" rows={15} name="details" />
               </Col>
             </Row>
           </div>
 
-          <Button htmlType="submit" type="default">
+          <Button
+            htmlType="submit"
+            style={{ marginTop: "10px" }}
+            type="default"
+          >
             Create
           </Button>
         </Form>

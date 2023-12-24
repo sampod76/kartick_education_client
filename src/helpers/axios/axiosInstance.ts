@@ -17,9 +17,6 @@ instance.interceptors.request.use(
     const accessToken = getFromLocalStorage(authKey);
     if (accessToken) {
       config.headers.Authorization = accessToken;
-    } else {
-      config.headers.Authorization =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBvZG5hdGhAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyOTcwMjcxLCJleHAiOjE3MzQ1MDYyNzF9.zatIAeeSNq-nadQJXcLgQMaTF83bh5M7oSfWQov0nkU";
     }
 
     return config;
@@ -35,27 +32,27 @@ instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
     const responseObject: ResponseSuccessType = {
-      // success: response?.data?.success,
+      success: response?.data?.success,
+      message: response?.data?.message,
       data: response?.data?.data,
       meta: response?.data?.meta,
     };
     return responseObject;
   },
   async function (error) {
-    // if (error?.response?.status === 403) {
+    if (error?.response?.status === 403) {
+    } else {
+      const responseObject: any = {
+        statusCode: error?.response?.status || 500,
+        message: error?.response?.data?.message || "Something went wrong",
+        errorMessages: error?.response?.data?.errorMessage,
+      };
+      // return Promise.reject(responseObject);
+      return error.response;
+    }
 
-    // } else {
-    const responseObject: any = {
-      statusCode: error?.response?.status || 500,
-      message: error?.response?.data?.message || "Something went wrong",
-      errorMessages: error?.response?.data?.errorMessage,
-    };
-    // return Promise.reject(responseObject);
-    return error.response;
+    // return Promise.reject(error);
   }
-
-  //   return Promise.reject(error);
-  // }
 );
 
 export { instance };

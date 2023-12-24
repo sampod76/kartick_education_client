@@ -8,6 +8,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
+import TagUI from "@/components/ui/dashboardUI/TagUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
@@ -58,6 +59,7 @@ const CreateModule = () => {
   // !  tag selection
 
   const OPTIONS = ["module", "online", "course", "english"];
+  const tagsOptions = ["milestone", "online", "course", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const filteredOptions = OPTIONS.filter((o) => !selectedTags?.includes(o));
   console.log(selectedTags, "selectedTags........1");
@@ -114,7 +116,7 @@ const CreateModule = () => {
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
               padding: "15px",
-              marginBottom: "10px",
+              
             }}
           >
             <p
@@ -125,32 +127,32 @@ const CreateModule = () => {
             >
               Create Module
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <hr className="border-1.5 mb-2"/>
+            <Row gutter={[16, 16]}>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+                md={20}
+                // lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <FormInput
                   type="text"
                   name="title"
                   size="large"
-                  label="Module Name"
+                  label="Module Title"
                   required={true}
                 />
                 {/*//! 1 */}
               </Col>
               <Col
                 className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
+                xs={4}
+                
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <FormInput
@@ -168,39 +170,7 @@ const CreateModule = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormTextArea name="details" />
-                {/*//! 3*/}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="author"
-                  options={AuthorOptions}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Author"
-                  // placeholder="Select"
-                  required={true}
-                />
-                {/* //! price type 4*/}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <FormSelectField
@@ -214,13 +184,36 @@ const CreateModule = () => {
                 />
                 {/* //! price type 5*/}
               </Col>
+           
+
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="author"
+                  options={AuthorOptions}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Author"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 4*/}
+              </Col>
+              
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  
                 }}
               >
                 <FormSelectField
@@ -234,27 +227,13 @@ const CreateModule = () => {
                 />
                 {/* //! price type 8*/}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <Select
-                  mode="multiple"
-                  placeholder="Inserted are removed"
-                  value={selectedTags}
-                  onChange={setSelectedTags}
-                  style={{ width: "100%" }}
-                  options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
-                  }))}
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <TagUI
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                  tagOptions={tagsOptions}
                 />
-                {/*//! 6 */}
+                {/*//! 11 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -262,11 +241,21 @@ const CreateModule = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  
                 }}
               >
                 <UploadImage name="img" />
                 {/* //!7*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                // md={12}
+                // lg={8}
+                style={{}}
+              >
+                {/*//! 3 */}
+                <FormTextArea label="Description" rows={15} name="details" />
               </Col>
             </Row>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Form from "@/components/Forms/Form";
+import FormDataRange from "@/components/Forms/FormDataRange";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
@@ -30,7 +31,16 @@ import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, Col, Input, Row, Select, Upload, message } from "antd";
+import {
+  Button,
+  Col,
+  Input,
+  Row,
+  Select,
+  Typography,
+  Upload,
+  message,
+} from "antd";
 import { useState } from "react";
 
 const { Option } = Select;
@@ -146,16 +156,7 @@ const CreateCoursePage = () => {
                     />
                     {/* //! 7 */}
                   </Col>
-                  <Col
-                    xs={24}
-                    md={12}
-                    lg={12}
-                    style={{
-                      //
-                      // background:'red',
-                      margin: "1.3em 0 0 0",
-                    }}
-                  >
+                  <Col xs={24} md={12} lg={12}>
                     <FormSelectField
                       size="large"
                       name="price_type"
@@ -190,13 +191,7 @@ const CreateCoursePage = () => {
                   </Col>
 
                   <Col xs={24} md={12} lg={12} style={{}}>
-                    <FormInput
-                      type="string"
-                      name="duration"
-                      size="large"
-                      label="Duration"
-                      required={true}
-                    />
+                   <FormDataRange name='duration' label="Duration"/>
                     {/* //!4  */}
                   </Col>
                 </Row>
@@ -205,30 +200,8 @@ const CreateCoursePage = () => {
               {/* basic info */}
               <div className="    ">
                 <SubHeadingUI>Other Information</SubHeadingUI>
-                <Row>
-                  {/* for video insert */}
-
-                  <Col xs={24} md={24} lg={24} style={{}}>
-                    <DemoVideoUI
-                      videoType={videoType as any}
-                      setVideoType={setVideoType}
-                      videoUrl={videoUrl}
-                      setVideoUrl={setVideoUrl}
-                      options={["youtube", "vimeo"]}
-                    />
-                    {/*//! 12*/}
-                  </Col>
-
-                  {/* tag selections */}
-                  <Col xs={24} md={24} lg={24} style={{}}>
-                    <TagUI
-                      selectedTags={selectedTags}
-                      setSelectedTags={setSelectedTags}
-                      tagOptions={tagOptions}
-                    />
-                    {/*//! 11 */}
-                  </Col>
-                  <Col xs={24} md={12} lg={12} style={{}}>
+                <Row gutter={[12, 12]}>
+                <Col xs={24} md={12} lg={12} style={{}}>
                     <SelectCategoryField />
                     {/* //! category 10 */}
                   </Col>
@@ -248,6 +221,29 @@ const CreateCoursePage = () => {
                     />
                     {/* //! status 9 */}
                   </Col>
+
+                  <Col xs={24} md={24} lg={24} style={{}}>
+                    <DemoVideoUI
+                      label="Demo Video"
+                      videoType={videoType as any}
+                      setVideoType={setVideoType}
+                      videoUrl={videoUrl}
+                      setVideoUrl={setVideoUrl}
+                      options={["youtube", "vimeo"]}
+                    />
+                    {/*//! 12*/}
+                  </Col>
+
+                  {/* tag selections */}
+                  <Col xs={24} md={24} lg={24} style={{}}>
+                    <TagUI
+                      selectedTags={selectedTags}
+                      setSelectedTags={setSelectedTags}
+                      tagOptions={tagOptions}
+                    />
+                    {/*//! 11 */}
+                  </Col>
+                  
 
                   <Col
                     xs={24}

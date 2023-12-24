@@ -16,7 +16,7 @@ const ProfileTemplate = () => {
   const [update, setUpdate] = useState(false);
   console.log(update);
   const { data = {}, isLoading } = useGetProfileQuery("");
-
+console.log(data);
   const userData = data?.generalUser || data?.admin || data?.superAdmin;
   if (isLoading) {
     return <LoadingForDataFetch />;
