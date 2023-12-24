@@ -8,7 +8,7 @@ export const homeNavItems: MenuProps["items"] = [
     key: "1",
   },
   {
-    label: <Link href="/services/web-development">Web Development</Link>,
+    label: <Link href="/course">Web Development</Link>,
     key: "1/services/web-development",
     children: [
       {
@@ -18,12 +18,12 @@ export const homeNavItems: MenuProps["items"] = [
       {
         label: <Link href="/services/web-development/backend">backend</Link>,
         key: "b/services/web-development/backend",
-      
+
         children: [
           {
             label: (
               <Link href="b/services/web-development/backend/node-js">
-               Node.js
+                Node.js
               </Link>
             ),
             key: "b/services/web-development/backend/node-js",
@@ -33,7 +33,7 @@ export const homeNavItems: MenuProps["items"] = [
     ],
   },
   {
-    label: <Link href="/Education/math">Mathematics Academy</Link>,
+    label: <Link href="/course">Mathematics Academy</Link>,
     key: "1/Education/math",
     children: [
       {
@@ -89,15 +89,19 @@ export const homeNavItems: MenuProps["items"] = [
     ],
   },
   {
-    label: <Link href="/science/Physics">Physics Academy</Link>,
+    label: <Link href="/course">Physics Academy</Link>,
     key: "2/services/Physics",
     children: [
       {
-        label: <Link href="/science/Physics/kinderOne">Elementary Physics</Link>,
+        label: (
+          <Link href="/science/Physics/kinderOne">Elementary Physics</Link>
+        ),
         key: "2/science/Physics/kinderOne",
         children: [
           {
-            label: <Link href="/science/Physics/kinderOne">Physics Kinder 2</Link>,
+            label: (
+              <Link href="/science/Physics/kinderOne">Physics Kinder 2</Link>
+            ),
             key: "2/science/Physics/kinderOne",
             children: [
               {
@@ -119,7 +123,9 @@ export const homeNavItems: MenuProps["items"] = [
             ],
           },
           {
-            label: <Link href="/science/Physics/kinderTwo">Physics Kinder 2</Link>,
+            label: (
+              <Link href="/science/Physics/kinderTwo">Physics Kinder 2</Link>
+            ),
             key: "2/science/Physics/kinderTwo",
             children: [
               {
@@ -145,7 +151,7 @@ export const homeNavItems: MenuProps["items"] = [
     ],
   },
   {
-    label: <Link href="/sk/Skills">Skills Academy</Link>,
+    label: <Link href="/course">Skills Academy</Link>,
     key: "3/sk/Skills",
     children: [
       {
@@ -158,17 +164,13 @@ export const homeNavItems: MenuProps["items"] = [
             children: [
               {
                 label: (
-                  <Link href="/sk/Skills/kinderOne/lavel3">
-                    Skills Level 3
-                  </Link>
+                  <Link href="/sk/Skills/kinderOne/lavel3">Skills Level 3</Link>
                 ),
                 key: "sk/Skills/kinderOne/lavel3",
               },
               {
                 label: (
-                  <Link href="/sk/Skills/kinderOne/lavel2">
-                    Skills Level 2
-                  </Link>
+                  <Link href="/sk/Skills/kinderOne/lavel2">Skills Level 2</Link>
                 ),
                 key: "sk/Skills/kinderOne/lavel2",
               },
@@ -180,17 +182,13 @@ export const homeNavItems: MenuProps["items"] = [
             children: [
               {
                 label: (
-                  <Link href="/sk/Skills/kinderTwo/lavel3">
-                    Skills Level 3
-                  </Link>
+                  <Link href="/sk/Skills/kinderTwo/lavel3">Skills Level 3</Link>
                 ),
                 key: "sk/Skills/kinderTwo/lavel3",
               },
               {
                 label: (
-                  <Link href="/sk/Skills/kinderTwo/lavel2">
-                    Skills Level 2
-                  </Link>
+                  <Link href="/sk/Skills/kinderTwo/lavel2">Skills Level 2</Link>
                 ),
                 key: "sk/Skills/kinderTwo/lavel2",
               },
@@ -201,15 +199,15 @@ export const homeNavItems: MenuProps["items"] = [
     ],
   },
   {
-    label: <Link href="/">Contact</Link>,
+    label: <Link href="/course">Contact</Link>,
     key: "/contact",
   },
   {
-    label: <Link href="/">About</Link>,
+    label: <Link href="/course">About</Link>,
     key: "/About",
   },
   {
-    label: <Link href="/admin/course">Dashboard</Link>,
+    label: <Link href="/course">Dashboard</Link>,
     key: "/dashboard",
   },
 ];
