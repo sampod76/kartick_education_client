@@ -12,7 +12,7 @@ const CoursesPage = () => {
     { name: "Gems", icon: lessonIcon, No: 100 },
   ];
   return (
-    <div>
+    <div className="mt-7">
       <section className="grid grid-cols-2 lg:grid-cols-4 w-[60%] mx-auto gap-2 py-5">
         {overViews?.map((item: any, index: number) => {
           return (
