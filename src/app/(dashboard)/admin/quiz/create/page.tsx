@@ -6,75 +6,33 @@ import FormInput from "@/components/Forms/FormInput";
 
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
+import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
+import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
+import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import TagUI from "@/components/ui/dashboardUI/TagUI";
+
+import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
 
-import {
-  useAddLessonMutation,
-  useGetAllLessonQuery,
-} from "@/redux/api/adminApi/lessoneApi";
-import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
+
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 
-import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Button, Col, Row, message } from "antd";
+import {  Col, Row, message } from "antd";
 import React, { useState } from "react";
 
 const CreateQuiz = () => {
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
-  const { data: existLesson } = useGetAllLessonQuery({});
+  const [selectedTags, setSelectedTags] = useState<string[]>(["tag1","tag2"]);
 
-  // ! for get all users
-  const { data: usersData } = useGetAllUsersQuery({});
-  console.log(usersData);
-
-  const AuthorOptions = usersData?.data?.data?.map((item: any) => {
-    return {
-      label: item?.email,
-      value: item?._id,
-    };
-  });
-
-  console.log(AuthorOptions);
-
-  //! for Module options selection
-  const { data } = useGetAllModuleQuery({});
-  const moduleData = data?.data;
-  // console.log(moduleData)
-  const ModuleOptions = moduleData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(ModuleOptions);
-
-  //! for Lesson options selection
-  const { data: lessons } = useGetAllLessonQuery({});
-  const LessonData = lessons?.data;
-  // console.log(LessonData)
-  const LessonOptions = LessonData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(LessonOptions);
-
-  // !  tag selection
-
-  const tagOptions = ["course", "tech", "update", "english"];
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  console.log(selectedTags, "selectedTags........1");
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -86,8 +44,7 @@ const CreateQuiz = () => {
   };
 
   const onSubmit = async (values: any) => {
-    // console.log(values);
-    const status = "active";
+
     const imgUrl = await uploadImgBB(values.img);
 
     values.img = imgUrl;
@@ -95,6 +52,7 @@ const CreateQuiz = () => {
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
+      demo_video,
     };
     console.log(LessonData);
 
@@ -183,14 +141,7 @@ const CreateQuiz = () => {
                   
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="author"
-                  options={AuthorOptions}
-                  label="Author"
-                  // placeholder="Select"
-                  required={true}
-                />
+              <SelectAuthorField/>
                 {/* //! Author 5 --*/}
               </Col>
               <Col
@@ -202,15 +153,7 @@ const CreateQuiz = () => {
                   
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="module"
-                  options={ModuleOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="module"
-                  // placeholder="Select"
-                  required={true}
-                />
+              <SelectModuleField/>
                 {/* //! module 6 ----*/}
               </Col>
               <Col
@@ -222,15 +165,7 @@ const CreateQuiz = () => {
                   
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="lesson"
-                  options={LessonOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Lesson"
-                  // placeholder="Select"
-                  required={true}
-                />
+             <SelectLessonField/>
                 {/* //! Lesson 7 ----*/}
               </Col>
               <Col
@@ -281,11 +216,11 @@ const CreateQuiz = () => {
                   marginTop:"10px"
                 }}
               >
-                <TagUI
-                  selectedTags={selectedTags}
-                  setSelectedTags={setSelectedTags}
-                  tagOptions={tagOptions}
-                />
+               <TagsSelectUI
+                      selected={selectedTags}
+                      setSelected={setSelectedTags}
+
+                    />
                 {/*//! 10--- */}
               </Col>
               <Col
@@ -314,9 +249,9 @@ const CreateQuiz = () => {
             </Row>
           </div>
 
-          <Button htmlType="submit" type="default">
+          <ButtonSubmitUI>
             Create
-          </Button>
+          </ButtonSubmitUI>
         </Form>
       </div>
     </div>

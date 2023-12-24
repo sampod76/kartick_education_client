@@ -7,9 +7,14 @@ import FormSelectField, {
   SelectOptions,
 } from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
+import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import {
   bloodGroupOptions,
   courseStatusOptions,
@@ -25,20 +30,10 @@ import {
   useGetSingleLessonQuery,
   useUpdateLessonMutation,
 } from "@/redux/api/adminApi/lessoneApi";
-import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
-
-import {
-  useGetAllModuleQuery,
-  useGetSingleModuleQuery,
-  useUpdateModuleMutation,
-} from "@/redux/api/adminApi/moduleApi";
-import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
-
-import { ICategory } from "@/types";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Button, Col, Row, Select, message } from "antd";
-import Image from "next/image";
+import {Col, Row } from "antd";
+
 import { useState } from "react";
 
 const EditModulePage = ({ params }: any) => {
@@ -50,39 +45,12 @@ const EditModulePage = ({ params }: any) => {
   const [updateLesson, { isLoading: updateLoading, error }] =
     useUpdateLessonMutation();
 
-  // ! for get all users
-  const { data: usersData } = useGetAllUsersQuery({});
-  console.log(usersData);
 
-  const AuthorOptions = usersData?.data?.data?.map((item: any) => {
-    return {
-      label: item?.email,
-      value: item?._id,
-    };
-  });
 
-  console.log(AuthorOptions);
 
-  //! for Lesson options selection
-  const { data } = useGetAllModuleQuery({});
-  const moduleData = data?.data;
-  // console.log(moduleData)
-  const ModuleOptions = moduleData?.map((item: any) => {
-    return {
-      label: item?.title,
-      value: item?._id,
-    };
-  });
-  console.log(ModuleOptions);
-
-  // !  tag selection
-
-  const OPTIONS = ["Lesson", "online", "course", "english"];
   const [selectedTags, setSelectedTags] = useState<string[]>(
     LessonData?.tags || []
   );
-  const filteredOptions = OPTIONS.filter((o) => !selectedTags?.includes(o));
-  console.log(selectedTags, "selectedTags........1");
 
   const onSubmit = async (values: any) => {
     if (typeof values.img !== "string") {
@@ -137,8 +105,9 @@ const EditModulePage = ({ params }: any) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(ICategorySchema)} */}
+        <HeadingUI>Update Lesson</HeadingUI>
         <Form submitHandler={onSubmit} defaultValues={defaultValues}>
-          <div
+        <div
             style={{
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
@@ -146,20 +115,13 @@ const EditModulePage = ({ params }: any) => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Create Lesson
-            </p>
+          
+            <hr className="border-1 my-1" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -168,16 +130,15 @@ const EditModulePage = ({ params }: any) => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Lesson Name"
+                  label="Lesson Title"
                   required={true}
                 />
                 {/*//! 1 */}
               </Col>
               <Col
                 className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
+                xs={2}
+              
                 style={{
                   marginBottom: "10px",
                 }}
@@ -191,55 +152,29 @@ const EditModulePage = ({ params }: any) => {
                 />
                 {/*//! 2 */}
               </Col>
+              
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
-                lg={8}
+                lg={7}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <FormTextArea name="details" />
-                {/*//! 3*/}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="author"
-                  options={AuthorOptions}
-                  label="Author"
-                  // placeholder="Select"
-                  required={true}
-                />
+               <SelectAuthorField/>
                 {/* //! Author  4*/}
               </Col>
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
-                lg={8}
+                lg={7}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
-                  size="large"
-                  name="module"
-                  options={ModuleOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="module"
-                  // placeholder="Select"
-                  required={true}
-                />
+                <SelectModuleField/>
                 {/* //! price type 5*/}
               </Col>
               <Col
@@ -271,17 +206,11 @@ const EditModulePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <Select
-                  mode="multiple"
-                  placeholder="Inserted are removed"
-                  value={selectedTags}
-                  onChange={setSelectedTags}
-                  style={{ width: "100%" }}
-                  options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
-                  }))}
-                />
+               <TagsSelectUI
+                      selected={selectedTags}
+                      setSelected={setSelectedTags}
+
+                    />
                 {/*//! 6 */}
               </Col>
               <Col
@@ -296,19 +225,22 @@ const EditModulePage = ({ params }: any) => {
                 <UploadImage name="img" />
                 {/* //!7*/}
               </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                // md={12}
+                // lg={8}
+                style={{}}
+              >
+                {/*//! 3 */}
+                <FormTextArea label="Description" rows={15} name="details" />
+              </Col>
             </Row>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button htmlType="submit" type="default">
-              Update
-            </Button>
-          </div>
+
+          <ButtonSubmitUI>
+            Update Lesson
+          </ButtonSubmitUI>
         </Form>
       </div>
     </div>

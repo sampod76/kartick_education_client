@@ -22,7 +22,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
 
-const EditServicePage = ({ params }: any) => {
+const EditUserData = ({ params }: any) => {
   const { data: serviceData, isLoading } = useGetSingleServiceQuery(params?.id);
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
   const [updateService, { isLoading: updateLoading, error }] =
@@ -31,8 +31,7 @@ const EditServicePage = ({ params }: any) => {
   const onSubmit = async (values: any) => {
     const UpdateValues = {
       ...values,
-      availableTickets: Number(values?.availableTickets || 0),
-      price: Number(values?.price || 0),
+  
     };
     try {
       const res = await updateService({
@@ -293,4 +292,4 @@ const EditServicePage = ({ params }: any) => {
   );
 };
 
-export default EditServicePage;
+export default EditUserData;

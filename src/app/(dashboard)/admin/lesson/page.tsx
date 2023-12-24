@@ -124,14 +124,14 @@ const LessonList = () => {
       title: "Lesson Number",
       dataIndex: "lesson_number",
       ellipsis: true,
-      width:80
+      width: 80,
     },
 
     {
       title: "Module",
       dataIndex: ["module", "title"],
       ellipsis: true,
-      width:100
+      width: 100,
       // render: function (data: any) {
       //   return <>{data?.title}</>;
       // },
@@ -147,9 +147,8 @@ const LessonList = () => {
 
     {
       title: "Action",
-      dataIndex: "_id",
       fixed: "right",
-      width:130,
+      width: 130,
       render: (record: any) => (
         <>
           <Space size="middle">
@@ -157,10 +156,10 @@ const LessonList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/lesson/details/${record._id}`}>View</Link>
+                    <Link href={`/admin/lesson/details/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/lesson/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/admin/lesson/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -227,7 +226,7 @@ const LessonList = () => {
         ]}
       />
       <HeadingUI>Lesson List</HeadingUI>
-      <ActionBar >
+      <ActionBar>
         <Input
           size="large"
           placeholder="Search"

@@ -122,7 +122,7 @@ export const months = [
   "November",
   "December",
 ];
-export const monthOptions = months.map((month: string) => {
+export const monthOptions = months?.map((month: string) => {
   return {
     label: month,
     value: month,
@@ -138,7 +138,7 @@ export const days = [
   "THURSDAY",
   "FRIDAY",
 ];
-export const daysOptions = days.map((day: string) => {
+export const daysOptions = days?.map((day: string) => {
   return {
     label: day,
     value: day,

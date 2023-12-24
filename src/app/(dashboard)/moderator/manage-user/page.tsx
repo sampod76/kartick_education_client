@@ -91,12 +91,12 @@ const AdminPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/super_admin/general_user/details/${data}`}>
+            <Link href={`/super_admin/manage-users/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/super_admin/general_user/edit/${data}`}>
+            <Link href={`/super_admin/manage-users/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -172,7 +172,7 @@ const AdminPage = () => {
           }}
         />
         <div>
-          <Link href="/super_admin/general_user/create">
+          <Link href="/super_admin/manage-users/create">
             <Button type="primary">Create Customer</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

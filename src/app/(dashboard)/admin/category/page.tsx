@@ -136,9 +136,8 @@ const CategoryList = () => {
     // },
     {
       title: "Action",
-      dataIndex: "_id",
       fixed: "right",
-      width:120,
+      width: 120,
       render: (record: any) => (
         <>
           <Space size="middle">
@@ -215,8 +214,8 @@ const CategoryList = () => {
           },
         ]}
       />
-       <HeadingUI>Category List</HeadingUI>
-      <ActionBar >
+      <HeadingUI>Category List</HeadingUI>
+      <ActionBar>
         <Input
           size="large"
           placeholder="Search"

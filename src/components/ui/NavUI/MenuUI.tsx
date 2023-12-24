@@ -8,7 +8,7 @@ const MenuItem = AntMenu.Item;
 const MenuUI = ({ itemData }:{itemData:any}) => {
 
 const generateMenuItems = (data:any) => {
-  return data.map((item:any) => {
+  return data?.map((item:any) => {
     if (item.children) {
       return (
         <SubMenu key={item.key} icon={item.icon} title={item.label}>
