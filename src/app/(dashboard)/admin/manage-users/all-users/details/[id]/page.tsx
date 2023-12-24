@@ -29,6 +29,7 @@ const EditUserPage = ({ params }: any) => {
 
   const img = userData[userData.role]["img"];
   const gender = userData[userData.role]["gender"];
+  const phoneNumber = userData[userData.role]["phoneNumber"];
   const address = userData[userData.role]["address"];
   const firstName = userData[userData.role]["name"].firstName;
   const lastName = userData[userData.role]["name"].lastName;
@@ -44,7 +45,7 @@ const EditUserPage = ({ params }: any) => {
                 url={img}
                 width={100}
                 height={100}
-                style="w-[8rem] h-[9rem] rounded-[50%]"
+                style="w-[9rem] h-[9rem] rounded-[50%]"
                 alt="dd"
               />
             </div>
@@ -52,12 +53,10 @@ const EditUserPage = ({ params }: any) => {
               <h2 className="text-xl font-bold">
                 Name: {firstName} {lastName}
               </h2>
-              <h2 className="text-xl font-bold text-gray-600">
-                Role: {userData?.role}
+              <h2 className="text-[18px] font-bold text-gray-700">
+                {userData?.role}
               </h2>
-              <h2 className="text-xl font-bold text-gray-600">
-                Address: {address}
-              </h2>
+              <h2 className="text-[18px] font-bold text-gray-700">{address}</h2>
             </div>
           </div>
           {/* website cards */}
@@ -119,25 +118,29 @@ const EditUserPage = ({ params }: any) => {
               <h1 className="text-[18px] font-semibold text-start">
                 Full Name
               </h1>
-              <h3 className="text-[18px] ">Sampod Debnath</h3>
+              <h3 className="text-[18px] ">
+                {firstName} {lastName}
+              </h3>
             </div>
             <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
               <h1 className="text-[18px] font-semibold text-start">Email</h1>
-              <h3 className="text-[18px] ">samp@gamil.com</h3>
+              <h3 className="text-[18px] ">{userData?.role}</h3>
             </div>
             <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
               <h1 className="text-[18px] font-semibold text-start">
                 Contact No
               </h1>
-              <h3 className="text-[18px] ">+880182213100</h3>
+              <h3 className="text-[18px] ">{phoneNumber}</h3>
             </div>
             <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
-              <h1 className="text-[18px] font-semibold text-start">Country</h1>
-              <h3 className="text-[18px] ">Bangladesh</h3>
+              <h1 className="text-[18px] font-semibold text-start">
+                User status
+              </h1>
+              <h3 className="text-[18px] ">{userData?.status}</h3>
             </div>
             <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
               <h1 className="text-[18px] font-semibold text-start">Address</h1>
-              <h3 className="text-[18px] ">Maijdee, Noakhali</h3>
+              <h3 className="text-[18px] ">{address}</h3>
             </div>
           </div>
         </aside>
