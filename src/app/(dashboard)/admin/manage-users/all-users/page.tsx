@@ -69,8 +69,8 @@ const AdminPage = () => {
 
   const columns = [
     {
-      title: "",
-     
+      title: "Profile",
+      width: 100,
       render: function (data: any) {
         const img = data[data.role]['img']
         return (
@@ -78,7 +78,6 @@ const AdminPage = () => {
             {
               <ImageTag
                 url={img}
-                
                 width={100}
                 height={100}
                 style="w-[5rem] h-[2.8rem] rounded"
@@ -90,24 +89,36 @@ const AdminPage = () => {
     }},
     {
       title: "Name",
+      ellipsis: true,
       render: function (data: any) {
-        const fullName = data[data.role]['name']['firstName']
-        return <>{fullName}</>;
+        const fullName = data[data.role]['name']['firstName'] + " " + data[data.role]['name']['lastName'] 
+        return <p className="capitalize">{fullName}</p>;
       },
     },
     {
       title: "Email",
+      ellipsis: true,
       dataIndex: "email",
     },
     {
       title: "Role",
+      width: 100,
       render: function (data: any) {
         const role = data?.role
-        return <>{role}</>;
+        return <p className="capitalize text-center font-semibold">{role}</p>;
+      },
+    },
+    {
+      title: "Gender",
+      width:100,
+      render: function (data: any) {
+        const gender = data[data.role]['gender'] 
+        return <p className="capitalize text-center">{gender}</p>;
       },
     },
     {
       title: "Status",
+      width: 100,
       render: function (data: any) {
         const status = data?.status
         return <StatusTag status={status}/>
@@ -136,7 +147,7 @@ const AdminPage = () => {
         return (
           <>
             <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -146,14 +157,14 @@ const AdminPage = () => {
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
             <Button
               onClick={() => deleteGeneralUserHandler(data)}
-              type="primary"
+              type="default"
               danger
             >
               <DeleteOutlined />
@@ -219,12 +230,12 @@ const AdminPage = () => {
         />
         <div>
           <Link href={`/${SUPER_ADMIN}/general_user/create`}>
-            <Button type="primary">Create Customer</Button>
+            <Button type="default">Create user</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />
