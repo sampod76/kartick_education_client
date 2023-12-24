@@ -27,6 +27,9 @@ import {
 } from "@/redux/api/adminApi/userManageApi";
 import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import StatusTag from "@/components/ui/CustomTag/StatusTag";
+import Image from "next/image";
+import ImageTag from "@/components/ui/CustomTag/ImageTag";
 
 const AdminPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -59,15 +62,36 @@ const AdminPage = () => {
   });
 
   //@ts-ignore
-  const generalUserData = data?.data;
+  const generalUserData = data?.data?.data;
+  console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ generalUserData:", generalUserData)
   //@ts-ignore
-  const meta = data?.meta;
+  const meta = data?.data?.meta;
 
   const columns = [
     {
+      title: "",
+     
+      render: function (data: any) {
+        const img = data[data.role]['img']
+        return (
+          <>
+            {
+              <ImageTag
+                url={img}
+                
+                width={100}
+                height={100}
+                style="w-[5rem] h-[2.8rem] rounded"
+                alt="dd"
+              />
+            }
+          </>
+        );
+    }},
+    {
       title: "Name",
       render: function (data: any) {
-        const fullName = `${data?.name} `;
+        const fullName = data[data.role]['name']['firstName']
         return <>{fullName}</>;
       },
     },
@@ -75,7 +99,28 @@ const AdminPage = () => {
       title: "Email",
       dataIndex: "email",
     },
+    {
+      title: "Role",
+      render: function (data: any) {
+        const role = data?.role
+        return <>{role}</>;
+      },
+    },
+    {
+      title: "Status",
+      render: function (data: any) {
+        const status = data?.status
+        return <StatusTag status={status}/>
+      },
+    },
 
+    {
+      title: "Contact no.",
+      render: function (data: any) {
+        const Contact = data[data.role]['phoneNumber']
+        return <>{Contact}</>;
+      },
+    },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -83,10 +128,6 @@ const AdminPage = () => {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
-    },
-    {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
     },
     {
       title: "Action",
@@ -164,7 +205,10 @@ const AdminPage = () => {
   }
   return (
     <div>
-      <ActionBar title="Customer List">
+      <h1 className="text-center font-bold text-2xl">All User List</h1>
+      <hr />
+      <ActionBar >
+        
         <Input
           size="large"
           placeholder="Search"

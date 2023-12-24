@@ -63,14 +63,16 @@ const CreateCategory = () => {
         {/* resolver={yupResolver(IServiceSchema)} */}
         <Form submitHandler={onSubmit}>
           <div
-            style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
-              marginBottom: "10px",
-            }}
+            // style={{
+            //   border: "1px solid #d9d9d9",
+            //   borderRadius: "5px",
+            //   padding: "15px",
+            //   marginBottom: "10px",
+            // }}
+            className="w-fit p-3 rounded-xl mx-auto shadow-2xl"
           >
-            <HeadingUI>Create category</HeadingUI>
+            <h1 className="text-center text-lg font-semibold">Create category</h1>
+            <hr className="border my-1"/>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -87,7 +89,7 @@ const CreateCategory = () => {
                   type="text"
                   name="title"
                   size="large"
-                  label="Category Name"
+                  label="Category Title"
                   required={true}
                 />
               </Col>
@@ -98,16 +100,17 @@ const CreateCategory = () => {
                 lg={24}
                 style={{
                   marginBottom: "10px",
+                  marginTop: "10px",
                 }}
               >
                 <UploadImage name="img" />
               </Col>
             </Row>
-          </div>
 
-          <Button htmlType="submit" type="default">
-            Create Category
-          </Button>
+            <Button htmlType="submit" type="default">
+              Create Category
+            </Button>
+          </div>
         </Form>
       </div>
     </div>

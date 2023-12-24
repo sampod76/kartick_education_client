@@ -24,12 +24,11 @@ export const axiosBaseQuery =
         url: baseUrl + url,
         method,
         data,
-        
         params,
         headers: {
           "Content-Type": contentType || "application/json",
         },
-        // withCredentials: true,
+        withCredentials: true,
         
       });
       return result;
@@ -38,7 +37,7 @@ export const axiosBaseQuery =
       return {
         error: {
           status: err.response?.status,
-          data: err.response?.data || err.message,
+          data: err.response?.data || err?.message,
         },
       };
     }

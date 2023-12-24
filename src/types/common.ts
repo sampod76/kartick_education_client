@@ -6,6 +6,7 @@ export interface IMeta {
 
 export type ResponseSuccessType = {
   success?: string;
+  message?: string;
   data: any;
   meta?: IMeta;
 };

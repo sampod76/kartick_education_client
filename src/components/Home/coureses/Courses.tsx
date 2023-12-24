@@ -6,7 +6,7 @@ import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 const Courses = ({ query }: { query: any }) => {
 
   const {data} = useGetAllCourseQuery({...query})
-  console.log("🚀 ~ file: Courses.tsx:5 ~ Courses ~ data:", data?.data)
+  // console.log("🚀 ~ file: Courses.tsx:5 ~ Courses ~ data:", data?.data)
 
   return (
     <div className="mt-[5rem] container mx-auto ">

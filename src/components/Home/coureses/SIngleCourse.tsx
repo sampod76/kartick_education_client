@@ -10,7 +10,7 @@ import Image from "next/image";
 const { Meta, Grid } = Card;
 
 const SIngleCourse = ({ course }: { course: any }) => {
-  console.log(course);
+  // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   return (
     <div className="w-[23rem] mx-auto  shadow-md ">
@@ -19,7 +19,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
         bodyStyle={{ borderRadius: "10px, 10px, 0px, 0px" }}
         cover={
           <Image
-            className="max-h-[173px]"
+            className="h-[18rem]"
             height={173}
             width={292}
             alt="example"

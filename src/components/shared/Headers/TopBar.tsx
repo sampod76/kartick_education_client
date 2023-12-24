@@ -44,7 +44,7 @@ const TopBar = () => {
           </Link>
           <Link
             className="py-3 px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary"
-            href="/"
+            href="/login"
           >
             Login
           </Link>
