@@ -63,22 +63,24 @@ const AdminPage = () => {
 
   //@ts-ignore
   const generalUserData = data?.data?.data;
-  console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ generalUserData:", generalUserData)
+  console.log(
+    "🚀 ~ file: page.tsx:63 ~ AdminPage ~ generalUserData:",
+    generalUserData
+  );
   //@ts-ignore
   const meta = data?.data?.meta;
 
   const columns = [
     {
       title: "",
-     
+
       render: function (data: any) {
-        const img = data[data.role]['img']
+        const img = data[data.role]["img"];
         return (
           <>
             {
               <ImageTag
                 url={img}
-                
                 width={100}
                 height={100}
                 style="w-[5rem] h-[2.8rem] rounded"
@@ -87,11 +89,12 @@ const AdminPage = () => {
             }
           </>
         );
-    }},
+      },
+    },
     {
       title: "Name",
       render: function (data: any) {
-        const fullName = data[data.role]['name']['firstName']
+        const fullName = data[data.role]["name"]["firstName"];
         return <>{fullName}</>;
       },
     },
@@ -102,22 +105,22 @@ const AdminPage = () => {
     {
       title: "Role",
       render: function (data: any) {
-        const role = data?.role
+        const role = data?.role;
         return <>{role}</>;
       },
     },
     {
       title: "Status",
       render: function (data: any) {
-        const status = data?.status
-        return <StatusTag status={status}/>
+        const status = data?.status;
+        return <StatusTag status={status} />;
       },
     },
 
     {
       title: "Contact no.",
       render: function (data: any) {
-        const Contact = data[data.role]['phoneNumber']
+        const Contact = data[data.role]["phoneNumber"];
         return <>{Contact}</>;
       },
     },
@@ -135,12 +138,12 @@ const AdminPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+            <Link href={`/${SUPER_ADMIN}/manage-users/all-users/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
+            <Link href={`/${SUPER_ADMIN}/manage-users/all-users/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -207,8 +210,7 @@ const AdminPage = () => {
     <div>
       <h1 className="text-center font-bold text-2xl">All User List</h1>
       <hr />
-      <ActionBar >
-        
+      <ActionBar>
         <Input
           size="large"
           placeholder="Search"
@@ -218,7 +220,7 @@ const AdminPage = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/general_user/create`}>
+          <Link href={`/${SUPER_ADMIN}/manage-users/all-users/create`}>
             <Button type="primary">Create Customer</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
