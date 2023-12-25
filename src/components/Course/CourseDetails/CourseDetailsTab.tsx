@@ -1,10 +1,11 @@
 "use client";
+import Courses from "@/components/Home/coureses/Courses";
 import { Tabs, TabsProps } from "antd";
 import React, { useState } from "react";
-import Courses from "./Courses";
-import onlineCourseServicesData from "@/db/courses";
+import MilestoneList from "../MilestoneList";
+import ReviewsPage from "./ReviewsPage";
 
-const CoursesTab = () => {
+const CourseDetailsTab = () => {
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
@@ -18,31 +19,19 @@ const CoursesTab = () => {
 
   const tabsItems: TabsProps["items"] = [
     {
-      label: (
-        <button className={activeTabKey === "1" ? activeClass : inactiveClass}>
-          Math
-        </button>
-      ),
+      label: <button>About</button>,
       key: "1",
       children: <Courses query={{ status: "active" }} />,
     },
     {
-      label: (
-        <button className={activeTabKey === "2" ? activeClass : inactiveClass}>
-          Language Arts
-        </button>
-      ),
+      label: <button>Course Content</button>,
       key: "2",
-      children: <Courses query={{ status: "active" }} />,
+      children: <MilestoneList />,
     },
     {
-      label: (
-        <button className={activeTabKey === "3" ? activeClass : inactiveClass}>
-          Science
-        </button>
-      ),
+      label: <button>Reviews</button>,
       key: "3",
-      children: <Courses query={{ status: "active" }} />,
+      children: <ReviewsPage />,
     },
   ];
   return (
@@ -52,11 +41,9 @@ const CoursesTab = () => {
         centered
         onChange={handleTabClick}
         items={tabsItems}
-
-      
       />
     </div>
   );
 };
 
-export default CoursesTab;
+export default CourseDetailsTab;
