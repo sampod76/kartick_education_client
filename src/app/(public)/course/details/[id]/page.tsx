@@ -1,4 +1,5 @@
 "use client";
+import AuthorCourseDetails from "@/components/Course/CourseDetails/AuthorCourseDetails";
 import CourseDetailsTop from "@/components/Course/CourseDetails/CourseDetailsTop";
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import React from "react";
@@ -38,6 +39,7 @@ const CourseDetailsPublicPage = ({ params }: any) => {
     <div className="container mx-auto">
       {/* <h2>The Web Developer Boot Camp</h2> */}
       <CourseDetailsTop />
+      <AuthorCourseDetails authorData={CourseData?.author}/>
     </div>
   );
 };
