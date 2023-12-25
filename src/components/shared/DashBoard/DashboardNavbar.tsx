@@ -62,7 +62,7 @@ const  DashboardNavBar = ({
           }}
         />
 
-        <Logo></Logo>
+        {/* <Logo></Logo> */}
       </section>
 
       <section
