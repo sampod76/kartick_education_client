@@ -8,14 +8,14 @@ import {
 } from "@ant-design/icons";
 
 const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
-  console.log(authorData);
+//   console.log(authorData);
   return (
     <div
-      className="block lg:flex justify-between "
+      className="block lg:flex justify-between items-center gap-8"
       style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
+        // display: "flex",
+        // justifyContent: "space-between",
+        // alignItems: "center",
         padding: "18px 16px",
       }}
     >
