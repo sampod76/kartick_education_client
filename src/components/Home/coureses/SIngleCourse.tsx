@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Card, Rate } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 
 const { Meta, Grid } = Card;
 
@@ -13,7 +14,10 @@ const SIngleCourse = ({ course }: { course: any }) => {
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   return (
-    <div className="w-[23rem] mx-auto  shadow-md ">
+    <Link
+      href={`/course/details/${course?._id}`}
+      className="w-[23rem] mx-auto  shadow-md "
+    >
       <Card
         // className="w-96 bg-red-500"
         bodyStyle={{ borderRadius: "10px, 10px, 0px, 0px" }}
@@ -33,7 +37,8 @@ const SIngleCourse = ({ course }: { course: any }) => {
         }}
         actions={[
           <button key="demo_video">
-            <VideoCameraOutlined /> <span>{course?.demo_video?.length} Video</span>
+            <VideoCameraOutlined />{" "}
+            <span>{course?.demo_video?.length} Video</span>
           </button>,
           <button key="time">
             <FieldTimeOutlined /> <span>{course?.tags?.length} Jam</span>
@@ -80,7 +85,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
           }
         />
       </Card>
-    </div>
+    </Link>
   );
 };
 

@@ -1,0 +1,144 @@
+import { Rate } from "antd";
+import React from "react";
+import { MessageOutlined, EuroCircleOutlined } from "@ant-design/icons";
+
+const CourseDetailsTop = () => {
+  return (
+    <div className="bg-[#333333] block lg:flex gap-3">
+      <section className="w-full lg:w-[40%]">
+        <iframe
+          style={{
+            height: "25rem",
+            width: "100%",
+          }}
+          src="https://www.youtube.com/embed/zmxBHKa8AVk"
+          title="TypeScript, MongoDB and Prisma Crash Courses included - Reactive Accelerator React-Next.js Course"
+          //   frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          //   allowfullscreen
+        ></iframe>
+      </section>
+      <aside
+        className="w-full lg:w-[60%]"
+        style={{
+          padding: "18px 10px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "start",
+          gap: "18px",
+          color: "#FFFFFF",
+        }}
+      >
+        <h1
+          className="text-[2rem] font-[550] text-white"
+          style={{
+            fontSize: "24px",
+            fontWeight: "600",
+            color: "white",
+          }}
+        >
+          The Web Developer Boot camp
+        </h1>
+        <p
+          //   className="text-[#d8d5d5]"
+          style={{
+            color: "#d8d5d5",
+            fontSize: "14px",
+            fontWeight: "400",
+          }}
+        >
+          The only course you need to learn web development - HTML, CSS, JS,
+          Node, and More!
+        </p>
+
+        <p
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "4px",
+          }}
+        >
+          <div
+            style={{
+              //   color: "black",
+              background: "#8a8a20",
+              borderRadius: "5px",
+              padding: "1px 8px",
+              fontWeight: "550",
+              color: "#FFFFFF",
+            }}
+          >
+            <Rate
+              count={1}
+              value={1}
+              disabled
+              style={{
+                color: "white",
+              }}
+            />
+            <span>2.5</span>
+          </div>
+
+          <span>(81,665 ratings)</span>
+        </p>
+        <p>
+          <span>114,521 student enrolled</span>
+        </p>
+        <div
+          className=""
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <button
+            style={{ display: "flex ", alignItems: "center", gap: "5px" }}
+          >
+            <MessageOutlined />
+            <span>English</span>
+          </button>
+          <button
+            style={{ display: "flex ", alignItems: "center", gap: "5px" }}
+          >
+            <EuroCircleOutlined />
+            <span>English,Duch </span>
+            <span>12 more...</span>
+          </button>
+        </div>
+        <p>Last updated 1/2020</p>
+
+        <section style={{ display: "flex ", gap: "1em" }}>
+          <button
+            className="bg-primary"
+            style={{
+              padding: "10px",
+              color: "white",
+              fontWeight: "bold",
+              borderRadius: "4px",
+            }}
+          >
+            Add to cart
+          </button>
+          <button
+            style={{
+              padding: "10px",
+              color: "white",
+              fontWeight: "bold",
+              borderRadius: "4px",
+              border: "2px solid gray",
+            }}
+          >
+            Buy Now
+          </button>
+        </section>
+        <p>30-Day Money-Back-Guarantee</p>
+      </aside>
+    </div>
+  );
+};
+
+export default CourseDetailsTop;

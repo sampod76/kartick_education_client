@@ -10,8 +10,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="">
       <TopBar />
       <NavbarPublic />
-      <BannerCourses />
-      {children}
+      <div className="min-h-screen">{children}</div>
       <Footer />
     </div>
   );
