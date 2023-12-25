@@ -11,12 +11,13 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        primary:"#5371FF",
-        secondary:"#FB8500"
-
+        // primary:"#5371FF",
+        // secondary:"#FB8500"
       }
     },
    
   },
-  plugins: [],
+  plugins: [
+   
+  ],
 }

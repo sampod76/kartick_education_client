@@ -9,3 +9,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.jodit-container h1 {
+  color: red !important;
+}
+.jodit-container ul {
+  list-style-type: disc !important;
+}

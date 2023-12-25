@@ -22,7 +22,7 @@ const DashboardSidebar = ({
       className="bg-primar"
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
-      width={200}
+      width={215}
       style={{
         overflow: "auto",
         height: "110vh",
@@ -34,6 +34,7 @@ const DashboardSidebar = ({
         top: 0,
         bottom: 0,
         padding: "10px 0 0 0",
+        marginRight:"10px",
         // width: "70vw",
         background: "white",
         // background:"",
@@ -47,17 +48,17 @@ const DashboardSidebar = ({
       }}
     >
       {!collapsed ? (
-        <section className="ml-6 text-3xl mt-3 flex gap-2 items-center">
+        <section className=" text-3xl mt-3 flex gap-2 justify-center items-center ">
           <UserOutlined className="text-2xl " />
           <Link
             href={`/admin/`}
             className={`font-semibold font-serif text-primary`}
           >
-            DashBoard
+            E.D.M
           </Link>
         </section>
       ) : (
-        <UserOutlined className="text-2xl ml-7 mt-3" />
+        <UserOutlined className="text-2xl  mt-3" />
       )}
 
   
