@@ -5,6 +5,7 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import TextEditor from "@/components/Utlis/textEditor";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions, roleOptions } from "@/constants/global";
@@ -219,6 +220,9 @@ const CreateGeneralUserPage = () => {
               </Col>
               <Col span={12} style={{ margin: "10px 0" }}>
                 <FormTextArea name="description" label="Description" rows={4} />
+              </Col>
+              <Col span={24} style={{ margin: "10px 0" }}>
+                <TextEditor/>
               </Col>
             </Row>
           </div>
