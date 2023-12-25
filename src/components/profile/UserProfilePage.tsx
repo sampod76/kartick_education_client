@@ -12,9 +12,9 @@ import React from "react";
 import ImageTag from "../ui/CustomTag/ImageTag";
 
 const ProfilePage = ({ userData }: { userData: any }) => {
-  console.log(userData);
+  // console.log(userData);
   const img = userData?.img || userData[userData.role]["img"];
-  console.log(img);
+  // console.log(img);
   const gender = userData?.gender || userData[userData.role]["gender"];
   const phoneNumber =
     userData?.phoneNumber || userData[userData.role]["phoneNumber"];

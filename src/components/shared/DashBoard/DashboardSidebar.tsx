@@ -6,6 +6,7 @@ import { dashboardItems } from "@/constants/dashBoardItems";
 import { USER_ROLE } from "@/constants/role";
 
 import { ProfileOutlined, UserOutlined } from "@ant-design/icons";
+import Logo from "../Logo";
 
 const { Sider } = Layout;
 
@@ -22,7 +23,7 @@ const DashboardSidebar = ({
       className="bg-primar"
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
-      width={200}
+      width={300}
       style={{
         overflow: "auto",
         height: "110vh",
@@ -46,7 +47,8 @@ const DashboardSidebar = ({
         
       }}
     >
-      {!collapsed ? (
+      
+      {/* {!collapsed ? (
         <section className="ml-6 text-3xl mt-3 flex gap-2 items-center">
           <UserOutlined className="text-2xl " />
           <Link
@@ -58,7 +60,10 @@ const DashboardSidebar = ({
         </section>
       ) : (
         <UserOutlined className="text-2xl ml-7 mt-3" />
-      )}
+      )} */}
+
+      <Logo/>
+      
 
   
       <Menu
