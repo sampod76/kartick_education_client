@@ -6,6 +6,7 @@ import { dashboardItems } from "@/constants/dashBoardItems";
 import { USER_ROLE } from "@/constants/role";
 
 import { ProfileOutlined, UserOutlined } from "@ant-design/icons";
+import Logo from "../Logo";
 
 const { Sider } = Layout;
 
