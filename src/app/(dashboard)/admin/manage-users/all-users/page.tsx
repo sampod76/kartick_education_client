@@ -205,11 +205,17 @@ const AdminPage = () => {
       }
     });
   };
-  if (isLoading) {
-    return <LoadingForDataFetch />;
-  }
+  // if (isLoading) {
+  //   return <LoadingForDataFetch />;
+  // }
   return (
-    <div>
+    <div style={{
+      boxShadow:
+        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      borderRadius: "1rem",
+      backgroundColor: "white",
+      padding: "1rem",
+    }}>
       <h1 className="text-center font-bold text-2xl">All User List</h1>
       <hr />
       <ActionBar>

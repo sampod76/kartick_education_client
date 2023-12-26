@@ -11,9 +11,9 @@ import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 // import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
-import { IStudentCreate } from "@/schemas/studentSchema";
 
 import { adminSchema, createStudentSchema } from "@/schemas/student";
+import { IStudentCreate } from "@/types/userTypes";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,7 +24,7 @@ const CreateStudentPage = () => {
   const [addStudentWithFormData, { isLoading }] =
     useAddStudentWithFormDataMutation();
 
-  const onSubmit = async (values: IStudentCreate) => {
+  const onSubmit = async (values: IStudentCreate & { img: any }) => {
     // console.log(values.img, "values of student");
     let { img, ...others } = values;
 
@@ -65,7 +65,15 @@ const CreateStudentPage = () => {
   // };
 
   return (
-    <div>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <h1>Create Customer/normal user</h1>
       {/* resolver={yupResolver(adminSchema)} */}
       <div>

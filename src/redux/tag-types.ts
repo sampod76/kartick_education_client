@@ -10,6 +10,9 @@ export enum tagTypes {
   lesson = "lesson",
   quiz = "quiz",
   course = "course",
+  service = "service",
+  booking = "booking",
+  faq = "faq",
 }
 
 export const tagTypesList = [
@@ -23,4 +26,6 @@ export const tagTypesList = [
   tagTypes.module,
   tagTypes.lesson,
   tagTypes.quiz,
+  tagTypes.faq,
+  tagTypes.service,
 ];

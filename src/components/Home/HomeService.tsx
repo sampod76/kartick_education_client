@@ -18,7 +18,7 @@ import { BOOKING_STATUS, IBooking, IBookingSchema } from "@/schemas/booking";
 import { useAddBookingMutation } from "@/redux/api/bookingApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import Link from "next/link";
-import { ENUM_BOOKING_STATUS } from "@/constants/global";
+import { ENUM_BOOKING_STATUS } from "@/constants/globalEnums";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useDebounced } from "@/redux/hooks";
 import Search, { SearchProps } from "antd/es/input/Search";

@@ -29,7 +29,7 @@ const DashboardSidebar = ({
         height: "110vh",
         position: "sticky",
         // position: "fixed",
-        overflowY:"auto",
+        overflowY: "auto",
         zIndex: 40,
         left: 0,
         top: 0,
@@ -44,10 +44,8 @@ const DashboardSidebar = ({
         // left: 0,
         // top: 0,
         // bottom: 0,
-        
       }}
     >
-      
       {/* {!collapsed ? (
         <section className="ml-6 text-3xl mt-3 flex gap-2 items-center">
           <UserOutlined className="text-2xl " />
@@ -62,13 +60,11 @@ const DashboardSidebar = ({
         <UserOutlined className="text-2xl ml-7 mt-3" />
       )} */}
 
-      <Logo/>
-      
+      <Logo />
 
-  
       <Menu
         // theme="light"
-        className="bg-white lg:mt-4"
+
         defaultSelectedKeys={["1"]}
         style={{
           overflowY: "auto",

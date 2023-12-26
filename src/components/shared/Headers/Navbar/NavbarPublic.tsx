@@ -1,3 +1,4 @@
+
 "use client";
 import { Menu } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
@@ -12,14 +13,13 @@ const NavbarPublic = () => {
 
   return (
     <nav
-      className="bg-[white] text-black py-[1em] px-[2em] 
-    flex align-center justify-between  gap-2 lg:gap-[5rem]"
+      className="bg-[#ffffff] text-black py-[1em] px-[2em] 
+    flex align-center justify-between  gap-2 "
     >
       <Logo />
 
       <Menu
         mode="horizontal"
-        className="hidden lg:flex"
         style={{
           // color:"#5371FF"
           fontWeight: "700",
@@ -38,4 +38,4 @@ const NavbarPublic = () => {
   );
 };
 
-export default NavbarPublic;
+export default NavbarPublic

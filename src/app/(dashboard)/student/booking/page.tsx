@@ -28,13 +28,13 @@ import {
   useUpdateBookingMutation,
 } from "@/redux/api/bookingApi";
 import { USER_ROLE } from "@/constants/role";
-import { ENUM_BOOKING_STATUS } from "../../../../constants/global";
+import { ENUM_BOOKING_STATUS } from "../../../../constants/globalEnums";
 import { getUserInfo } from "@/services/auth.service";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 const GeneralUserBooking = () => {
   //
-  const ROLE = USER_ROLE.GENERAL_USER;
+  const ROLE = USER_ROLE.STUDENT;
   //
   const query: Record<string, any> = {};
 

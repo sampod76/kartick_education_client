@@ -28,7 +28,7 @@ import {
   useUpdateBookingMutation,
 } from "@/redux/api/bookingApi";
 import { USER_ROLE } from "@/constants/role";
-import { ENUM_BOOKING_STATUS } from "../../../../constants/global";
+import { ENUM_BOOKING_STATUS } from "../../../../constants/globalEnums";
 
 const BookignList = () => {
   //
