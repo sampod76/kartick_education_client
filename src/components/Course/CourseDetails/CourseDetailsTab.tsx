@@ -16,6 +16,7 @@ const CourseDetailsTab = () => {
     "h-[48px] min-w-[167px] rounded-[5px] bg-secondary text-white text-[18px] font-bold p-1";
   const inactiveClass =
     "h-[48px] w-[167px] rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[18px] font-bold p-1";
+    
 
   const tabsItems: TabsProps["items"] = [
     {

@@ -1,10 +1,11 @@
-import { IFeedback, feedbackData } from "@/db/reviews";
+import { IFeedback, IReview, feedbackData, reviewsData } from "@/db/reviews";
 import { Progress, Rate } from "antd";
 import React from "react";
+import FeedbackSection from "./FeedbackSection";
 
 const ReviewsPage = () => {
   return (
-    <div style={{ maxWidth: "35vw" ,marginInline:"auto"}}>
+    <div style={{ width: "100%", marginInline: "auto" }}>
       <aside
         style={{
           padding: "10px 16px",
@@ -27,19 +28,17 @@ const ReviewsPage = () => {
           <Rate defaultValue={5.5} value={5.5} allowHalf disabled />
           <span style={{ fontWeight: "550" }}>Course Rating</span>
         </div>
+        {/* feedback  */}
+        <FeedbackSection></FeedbackSection>
 
-        <div>
-          {feedbackData?.map((item: IFeedback, index: number) => {
-            return (
-              <div
-                key={index}
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <Progress percent={50} size={[300, 20]} />
-                <Rate defaultValue={5.5} value={5.5} allowHalf disabled />
-                <h3>{item?.percent}%</h3>
-              </div>
-            );
+        {/* user reviews section */}
+
+        <div className="">
+          {reviewsData?.map((item: IReview, index: number) => {
+            return <div className="" key={index}>
+
+              
+            </div>;
           })}
         </div>
       </aside>
