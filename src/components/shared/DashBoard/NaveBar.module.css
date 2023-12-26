@@ -1,0 +1,15 @@
+/* components/Navbar.module.css */
+.navbar {
+  background-color: transparent;
+  padding: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #333; /* Set your desired background color */
+  color: #fff; /* Set your desired text color */
+  z-index: 1000;
+}

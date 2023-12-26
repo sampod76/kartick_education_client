@@ -17,9 +17,25 @@ const BlogDetalis = ({ params }: any) => {
   }
   return (
     <>
-      <div className="container mx-auto mt-10">
-        <h1 className="text-center text-lg">{data?.title}</h1>
-        <div className="w-full rounded overflow-hidden shadow-lg">
+      <div style={{ marginTop: "2.5rem" }} className="container ">
+        <h1
+          style={{
+            fontSize: "1.125rem",
+            lineHeight: "1.75rem",
+            textAlign: "center",
+          }} /* className="text-center text-lg" */
+        >
+          {data?.title}
+        </h1>
+        <div
+          style={{
+            overflow: "hidden",
+            borderRadius: "0.25rem",
+            width: "100%",
+            boxShadow:
+              "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+          }} /* className="w-full rounded overflow-hidden shadow-lg" */
+        >
           <section className="grid  grid-cols-1 xl:grid-cols-2">
             <div>
               <Image
@@ -27,7 +43,8 @@ const BlogDetalis = ({ params }: any) => {
                 height={1800}
                 src={data?.image}
                 alt="Transport Image"
-                className="w-full"
+                // className="w-full"
+                style={{"width":"100%"}}
               />
             </div>
             <div>

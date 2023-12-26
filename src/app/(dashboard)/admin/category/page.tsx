@@ -258,7 +258,7 @@ const CategoryList = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deleteAdminHandler(adminId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p style={{"marginTop":"1.25rem","marginBottom":"1.25rem"}}>Do you want to remove this admin?</p>
       </UMModal>
     </div>
   );

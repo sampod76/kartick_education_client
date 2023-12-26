@@ -15,7 +15,13 @@ const QuizDetiles = ({ params }: any) => {
     return <LoadingForDataFetch />;
   }
   return (
-    <>
+    <section style={{
+      boxShadow:
+        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      borderRadius: "1rem",
+      backgroundColor: "white",
+      padding: "1rem",
+    }}>
       <div className="container mx-auto mt-10">
         <div className="w-full rounded overflow-hidden shadow-lg">
           <section className="grid  grid-cols-1 xl:grid-cols-2">
@@ -45,7 +51,7 @@ const QuizDetiles = ({ params }: any) => {
           </section>
         </div>
       </div>
-    </>
+    </section>
   );
 };
 

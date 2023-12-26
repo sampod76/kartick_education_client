@@ -63,16 +63,18 @@ const CreateCategory = () => {
         {/* resolver={yupResolver(IServiceSchema)} */}
         <Form submitHandler={onSubmit}>
           <div
-            // style={{
-            //   border: "1px solid #d9d9d9",
-            //   borderRadius: "5px",
-            //   padding: "15px",
-            //   marginBottom: "10px",
-            // }}
-            className="w-fit p-3 rounded-xl mx-auto shadow-2xl"
+            style={{
+              padding: "0.75rem",
+              borderRadius: "0.75rem",
+              width: "fit-content",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+            }}
+            // className="w-fit p-3 rounded-xl mx-auto shadow-2xl"
           >
-            <h1 className="text-center text-lg font-semibold">Create category</h1>
-            <hr className="border my-1"/>
+            <h1 style={{"fontSize":"1.125rem","lineHeight":"1.75rem","fontWeight":600,"textAlign":"center"}} className="text-center text-lg font-semibold">
+              Create category
+            </h1>
+            <hr style={{"marginTop":"0.25rem","marginBottom":"0.25rem","borderWidth":"1px"}} /* className="border my-1" */ />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"

@@ -106,6 +106,10 @@ export const roleOptions = [
     label: USER_ROLE.TRAINER,
     value: USER_ROLE.TRAINER,
   },
+  {
+    label: USER_ROLE.SELLER,
+    value: USER_ROLE.SELLER,
+  },
 ];
 
 export const months = [
@@ -147,21 +151,3 @@ export const daysOptions = days?.map((day: string) => {
 
 export const serviceStatus = ["available", "upcoming", "unavailable"];
 // 'available' | 'upcoming' | 'unavailable'
-
-export enum ExamType {
-  FINAL = "FINAL",
-  MIDTERM = "MIDTERM",
-}
-
-export enum ENUM_STATUS {
-  ACTIVE = "active",
-  DEACTIVATE = "deactivate",
-}
-// 'pending' | 'accept' | 'reject' | 'complete'|'cancel'
-export enum ENUM_BOOKING_STATUS {
-  PENDING = "pending",
-  ACCEPT = "accept",
-  REJECT = "reject",
-  COMPLETE = "complete",
-  CANCEL = "cancel",
-}

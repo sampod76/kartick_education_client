@@ -106,14 +106,27 @@ const CreateCoursePage = () => {
   // };
 
   return (
-    <div>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <HeadingUI>Create Course</HeadingUI>
       {/* resolver={yupResolver(adminSchema)} */}
       <div className="">
         <Form submitHandler={onSubmit}>
-          <section className="border-2 p-2 rounded-2">
+          <section
+            style={{
+              padding: "0.5rem",
+              borderWidth: "2px",
+            }} /* className="border-2 p-2 rounded-2" */
+          >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
-              <div className="border-r-2 pr-2">
+              <div style={{"paddingRight":"0.5rem","borderRightWidth":"2px"}} /* className="border-r-2 pr-2" */>
                 <SubHeadingUI>Basic Information</SubHeadingUI>
                 <Row gutter={[8, 8]}>
                   <Col xs={24} md={24} lg={24} style={{}}>
@@ -253,7 +266,7 @@ const CreateCoursePage = () => {
                 </Row>
               </div>
             </div>
-            <section className=" border-t-2">
+            <section style={{"borderTopWidth":"2px"}} /* className=" border-t-2" */>
               {/*//! 3 */}
               <FormTextArea
                 placeholder="Write details of course"

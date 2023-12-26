@@ -47,18 +47,19 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/all-users`}>Users List</Link>
-              ),
-              key: `/admin/user/all-users-list`,
-            },
-            {
-              label: (
                 <Link href={`/admin/manage-users/all-users/create`}>
                   Create user{" "}
                 </Link>
               ),
               key: `/admin/manage-users/create`,
             },
+            {
+              label: (
+                <Link href={`/admin/manage-users/all-users`}>Users List</Link>
+              ),
+              key: `/admin/user/all-users-list`,
+            },
+           
           ],
         },
         {
@@ -68,18 +69,19 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/students`}>Students List</Link>
-              ),
-              key: `admin/manage-users/students`,
-            },
-            {
-              label: (
                 <Link href={`/admin/manage-users/students/create`}>
                   Create Student
                 </Link>
               ),
               key: `/admin/manage-users/students/create`,
             },
+            {
+              label: (
+                <Link href={`/admin/manage-users/students`}>Students List</Link>
+              ),
+              key: `admin/manage-users/students`,
+            },
+            
           ],
         },
         {
@@ -89,39 +91,41 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
+                <Link href={`/admin/manage-users/trainers/create`}>
+                  Create Trainer
+                </Link>
+              ),
+              key: `//admin/manage-users/trainers/create`,
+            },
+            {
+              label: (
                 <Link href={`/admin/manage-users/trainers`}>Trainers List</Link>
               ),
               key: `/admin/manage-users/trainers`,
             },
-            {
-              label: (
-                <Link href={`/admin/manage-users/all-users/trainers/create`}>
-                  Create Trainer
-                </Link>
-              ),
-              key: `//admin/manage-users/all-users/trainers/create`,
-            },
+           
           ],
         },
         {
-          label: "Moderators",
-          key: "moderators",
+          label: "Admin",
+          key: "admin",
           icon: <UserOutlined />,
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/moderators`}>Moderators List</Link>
+                <Link href={`/admin/manage-users/admin/create`}>
+                  Create Admin
+                </Link>
               ),
-              key: `/admin/manage-users/moderators`,
+              key: `/admin/manage-users/admin/create`,
             },
             {
               label: (
-                <Link href={`/admin/manage-users/all-users/moderators/create`}>
-                  Create Moderator
-                </Link>
+                <Link href={`/admin/manage-users/admin`}>Admin List</Link>
               ),
-              key: `//admin/manage-users/all-users/moderators/create`,
+              key: `/admin/manage-users/admin`,
             },
+            
           ],
         },
       
@@ -133,13 +137,14 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <CreditCardOutlined />,
       children: [
         {
-          label: <Link href={`/admin/category`}>Category List</Link>,
-          key: `/admin/category`,
-        },
-        {
           label: <Link href={`/admin/category/create`}>Create Category</Link>,
           key: `/admin/category/create`,
         },
+        {
+          label: <Link href={`/admin/category`}>Category List</Link>,
+          key: `/admin/category`,
+        },
+       
        
       ],
     },
@@ -148,15 +153,16 @@ export const dashboardItems = (role: USER_ROLE) => {
       key: "manage-Course",
       icon: <FileTextOutlined />,
       children: [
+        {
+          label: <Link href={`/admin/course/create`}>Create course</Link>,
+          key: `/admin/Course/create`,
+        },
         
         {
           label: <Link href={`/admin/course`}>Course List</Link>,
           key: `/admin/Course`,
         },
-        {
-          label: <Link href={`/admin/course/create`}>Create course</Link>,
-          key: `/admin/Course/create`,
-        },
+       
       ],
     },
     {
@@ -164,15 +170,16 @@ export const dashboardItems = (role: USER_ROLE) => {
       key: "manage-Milestone",
       icon: <BookOutlined />,
       children: [
+        {
+          label: <Link href={`/admin/milestone/create`}>Create Milestone</Link>,
+          key: `/admin/milestone/create`,
+        },
         
         {
           label: <Link href={`/admin/milestone`}>Milestone List</Link>,
           key: `/admin/milestone`,
         },
-        {
-          label: <Link href={`/admin/milestone/create`}>Create Milestone</Link>,
-          key: `/admin/milestone/create`,
-        },
+       
       ],
     },
     {
@@ -180,15 +187,15 @@ export const dashboardItems = (role: USER_ROLE) => {
       key: "manage-Module",
       icon: <DatabaseOutlined />,
       children: [
-        
-        {
-          label: <Link href={`/admin/module`}>Modules List</Link>,
-          key: `/admin/module`,
-        },
         {
           label: <Link href={`/admin/module/create`}>Create modules</Link>,
           key: `/admin/module/create`,
         },
+        {
+          label: <Link href={`/admin/module`}>Modules List</Link>,
+          key: `/admin/module`,
+        },
+        
       ],
     },
     {
@@ -196,15 +203,15 @@ export const dashboardItems = (role: USER_ROLE) => {
       key: "manage-lesson",
       icon: <AlignCenterOutlined  />,
       children: [
-        
-        {
-          label: <Link href={`/admin/lesson`}>lesson List</Link>,
-          key: `/admin/lesson`,
-        },
         {
           label: <Link href={`/admin/lesson/create`}>Create Lesson</Link>,
           key: `/admin/lesson/create`,
         },
+        {
+          label: <Link href={`/admin/lesson`}>lesson List</Link>,
+          key: `/admin/lesson`,
+        },
+       
       ],
     },
     {
@@ -212,15 +219,15 @@ export const dashboardItems = (role: USER_ROLE) => {
       key: "manage-quiz",
       icon: <ThunderboltOutlined />,
       children: [
-        
-        {
-          label: <Link href={`/admin/quiz`}>Quiz List</Link>,
-          key: `/admin/quiz`,
-        },
         {
           label: <Link href={`/admin/quiz/create`}>Create Quiz</Link>,
           key: `/admin/quiz/create`,
         },
+        {
+          label: <Link href={`/admin/quiz`}>Quiz List</Link>,
+          key: `/admin/quiz`,
+        },
+        
       ],
     },
     {
@@ -228,15 +235,15 @@ export const dashboardItems = (role: USER_ROLE) => {
       key: "manage-single-quiz",
       icon: <ThunderboltOutlined />,
       children: [
-        
-        {
-          label: <Link href={`/admin/single-quiz`}>Single Quiz List</Link>,
-          key: `/admin/single-quiz`,
-        },
         {
           label: <Link href={`/admin/single-quiz/create`}>Create Single Quiz</Link>,
           key: `/admin/single-quiz/create`,
         },
+        {
+          label: <Link href={`/admin/single-quiz`}>Single Quiz List</Link>,
+          key: `/admin/single-quiz`,
+        },
+       
       ],
     },
   ];

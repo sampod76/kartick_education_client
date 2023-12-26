@@ -14,27 +14,29 @@ type SelectFieldProps = {
   options: SelectOptions[];
   name: string;
   size?: "large" | "small";
-  value?: string | string[] | undefined;
+  valueFixed?: string | string[] | undefined;
   placeholder?: string;
   label?: string;
   defaultValue?: SelectOptions;
   handleChange?: (el: string) => void;
   required?: boolean;
+  disabled?: boolean;
 };
 
 const FormSelectField = ({
   name,
   size = "large",
-  value,
+  valueFixed,
   placeholder = "select",
   options,
   label,
   defaultValue,
   handleChange,
   required,
+  disabled = false,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState("");
 
   return (
     <>
@@ -49,14 +51,14 @@ const FormSelectField = ({
               setSelectedValue(val);
               onChange(val);
             }}
+            disabled={disabled}
             size={size}
             // defaultActiveFirstOption
             defaultValue={defaultValue ? defaultValue : ""}
             options={options}
-            // value={value}
             value={selectedValue || value}
             style={{ width: "100%" }}
-            placeholder={placeholder}
+            // placeholder={placeholder}
           />
         )}
       />
