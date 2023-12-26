@@ -41,7 +41,7 @@ const CourseDetailsPublicPage = ({ params }: any) => {
       {/* <h2>The Web Developer Boot Camp</h2> */}
       <CourseDetailsTop />
       <AuthorCourseDetails authorData={CourseData?.author} />
-      <CourseDetailsTab />
+      <CourseDetailsTab courseId={id}/>
     </div>
   );
 };

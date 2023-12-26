@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   FacebookFilled,
@@ -10,10 +11,20 @@ import {
   YoutubeOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const TopBar = () => {
+  const screens = useBreakpoint();
   return (
-    <div className="py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between">
+    <div
+      style={{
+        background: "#5371FF",
+        padding: `0.5rem ${screens.sm ? "0.5rem" : "1rem"}`,
+        display: `${screens.sm ? "flex" : "block"}`,
+        justifyContent: "space-between",
+        color: "white",
+      }}
+    >
       <section>
         <h2 className="font-[800] text-[17px]">
           ATTEND ORIENTATION! IBL SCHOOL STORE!{" "}
@@ -37,14 +48,31 @@ const TopBar = () => {
         </div>
         <div className="flex gap-2 font-[700]">
           <Link
-            className="py-3 px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
+            style={{
+              background: "#FB8500",
+              paddingTop: "0.75rem",
+              paddingBottom: "0.75rem",
+              paddingLeft: "1.75rem",
+              paddingRight: "1.75rem",
+              borderWidth: "2px",
+              borderColor: "#ffffff",
+            }}
             href="/"
           >
             Register
           </Link>
           <Link
-            className="py-3 px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary"
             href="/login"
+            style={{
+              background: "white",
+              paddingTop: "0.75rem",
+              paddingBottom: "0.75rem",
+              paddingLeft: "1.75rem",
+              paddingRight: "1.75rem",
+              borderWidth: "2px",
+              borderColor: "#5371FF",
+              color: "#5371FF",
+            }}
           >
             Login
           </Link>

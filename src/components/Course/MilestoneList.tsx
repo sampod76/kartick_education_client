@@ -1,3 +1,6 @@
+"use client"
+import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
+import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
 import { Divider } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -6,7 +9,7 @@ const MilestoneList = ({courseId}:{courseId:any}) => {
   console.log(courseId);
 
 
-  const milestonesData = [
+  const milestonesStaticData = [
     {
       title: "Foundations of Knowledge",
       module: [
@@ -70,12 +73,19 @@ const MilestoneList = ({courseId}:{courseId:any}) => {
       ],
     },
   ];
+  const {data:courseData} = useGetSingleCourseQuery(courseId);
+  console.log(courseData);
 
+  const {data} = useGetAllMilestoneQuery({course:courseId})
+
+  console.log(data,"courseId");
+  const milestoneData =data?.data
+  console.log(milestoneData);
   
   return (
     <div className="mt-5">
       <h2 className=" Math text-black text-[35px] font-normal font-['Lato'] tracking-[3.50px] uppercase text-center ">
-        language arts
+        {courseData?.title}
         {/* //! Course Title */}
       </h2>
       <Divider
@@ -86,7 +96,7 @@ const MilestoneList = ({courseId}:{courseId:any}) => {
         }}
       />
       <div className="grid  grid-cols-1 lg:grid-cols-2 gap-2 max-w-[80%] mx-auto mt-5">
-        {milestonesData?.map((milestone: any, index: number) => {
+        {milestoneData?.map((milestone: any, index: number) => {
           return (
             <div key={index} className="p-2 ">
               <Link
@@ -97,7 +107,7 @@ const MilestoneList = ({courseId}:{courseId:any}) => {
                 {/* //! Milestone Title */}
               </Link>
               <ul className="py-3">
-                {milestone?.module?.map((module: any, index: number) => {
+                {milestonesStaticData[0]?.module?.map((module: any, index: number) => {
                   return (
                     <Link
                       href={`/course`}

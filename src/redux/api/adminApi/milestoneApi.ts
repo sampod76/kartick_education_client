@@ -9,6 +9,7 @@ export const milestoneApi = baseApi.injectEndpoints({
     // get all academic departments
     getAllMilestone: build.query({
       query: (arg: Record<string, any>) => {
+        console.log(arg,"aaaaaaa");
         return {
           url: MILESTONE_URL,
           method: "GET",
