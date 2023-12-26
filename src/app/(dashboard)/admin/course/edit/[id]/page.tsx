@@ -108,11 +108,34 @@ const CourseDetails = ({ params }: any) => {
   }
   return (
     <>
-      <div className="container mx-auto mt-10">
+      <div
+        style={{ marginTop: "2.5rem", marginLeft: "auto", marginRight: "auto" }}
+        className="container"
+      >
         <HeadingUI>Update Course</HeadingUI>
         <Form submitHandler={onSubmit} defaultValues={defaultValues}>
-          <div className="block lg:flex items-center gap- px-1 lg:px-[4rem]">
-            <div className="w-full lg:w-[50%] px-[2vw] py-[2rem]  my-1 border-1 border-[#d9d9d9] rounded-md">
+          <div
+            style={{
+              display: "block",
+              paddingLeft: "0.25rem",
+              paddingRight: "0.25rem",
+              alignItems: "center",
+              //@ts-ignore
+              "@media (min-width: 1024px)": { display: "flex" },
+            }}
+            /* className="block lg:flex items-center gap- px-1 lg:px-[4rem]" */
+          >
+            <div
+              style={{
+                marginTop: "0.25rem",
+                marginBottom: "0.25rem",
+                borderRadius: "0.375rem",
+                width: "100%",
+                borderColor: "#d9d9d9",
+                //@ts-ignore
+                "@media (min-width: 1024px)": { width: "50%" },
+              }} /* className="w-full lg:w-[50%] px-[2vw] py-[2rem]  my-1 border-1 border-[#d9d9d9] rounded-md" */
+            >
               <SubHeadingUI>Basic Information</SubHeadingUI>
               <Row gutter={[8, 8]}>
                 <Col
@@ -233,7 +256,19 @@ const CourseDetails = ({ params }: any) => {
             </div>
 
             {/* basic info */}
-            <div className="w-full lg:w-[50%] px-[2vw] pt-[7rem]  my-3 border-1 border-[#d9d9d9] rounded-md ">
+            <div
+              style={{
+                marginTop: "0.75rem",
+                marginBottom: "0.75rem",
+                borderRadius: "0.375rem",
+                width: "100%",
+                paddingTop: "7rem",
+                borderColor: "#d9d9d9",
+                //@ts-ignore
+                "@media (min-width: 1024px)": { width: "50%" },
+              }}
+              /* className="w-full lg:w-[50%] px-[2vw] pt-[7rem]  my-3 border-1 border-[#d9d9d9] rounded-md " */
+            >
               <SubHeadingUI>Other Information</SubHeadingUI>
               <Row gutter={[8, 8]}>
                 {/* for video insert */}
@@ -334,7 +369,7 @@ const CourseDetails = ({ params }: any) => {
               </Row>
             </div>
           </div>
-          <section className="w-[70vw] mx-auto px-2 my-3">
+          <section >
             {/*//! 3 */}
             <FormTextArea
               placeholder="Write details of course"

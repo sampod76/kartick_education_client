@@ -182,7 +182,9 @@ const CourseList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="details">
-                    <Link href={`/admin/course/details/${record._id}`}>View</Link>
+                    <Link href={`/admin/course/details/${record._id}`}>
+                      View
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
                     <Link href={`/admin/course/edit/${record._id}`}>Edit</Link>
@@ -297,7 +299,9 @@ const CourseList = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deleteCourseHandler(courseId)}
       >
-        <p className="my-5">Do you want to remove this Course?</p>
+        <p style={{ marginTop: "1.25rem", marginBottom: "1.25rem" }}>
+          Do you want to remove this Course?
+        </p>
       </UMModal>
     </div>
   );

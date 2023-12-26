@@ -8,17 +8,16 @@ import Programmes from "@/components/Home/programms/Programmes";
 import HomeHeader from "@/components/shared/Headers/HomeHeader";
 
 const HomePage = () => {
-
   return (
     <>
       <HomeHeader />
-      <main className="min-h-[100vh] text-center">
+      <main style={{ textAlign: "center" }}>
         <BannerSection />
-        <CommonCourse/>
+        <CommonCourse />
         <CoursesTab />
         <SupportHero />
-        <Success/>
-        <Programmes/>
+        <Success />
+        <Programmes />
       </main>
       <Footer />
     </>

@@ -47,7 +47,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <Layout hasSider style={{display:"flex",justifyContent:"space-between"}}>
+    <Layout
+      hasSider
+      style={{ display: "flex", justifyContent: "space-between" }}
+    >
       {!screens.sm ? (
         <Drawer
           title={`${userLoggedIn} Dash`}
@@ -56,7 +59,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           open={collapsed}
         >
           <Menu
-            className="bg-white"
+            // className="bg-white"
+            style={{ backgroundColor: "#ffffff" }}
             defaultSelectedKeys={["1"]}
             mode="inline"
             items={dashboardItems(userLoggedIn)}
@@ -71,7 +75,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <Layout style={{ overflow: "hidden" }}>
         <DashboardNavBar collapsed={collapsed} setCollapsed={setCollapsed} />
         <Content
-          style={{ padding: "1em", minHeight: "100vh", overflowY: "initial",textAlign: "center"}}
+          style={{
+            padding: "1em",
+            minHeight: "100vh",
+            overflowY: "initial",
+            textAlign: "center",
+          }}
         >
           {children}
         </Content>

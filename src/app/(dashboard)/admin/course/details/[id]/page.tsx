@@ -77,17 +77,33 @@ const BookingDetails = ({ params }: any) => {
   }
   return (
     <>
-      <div className="container mx-auto mt-10">
+      <div
+        style={{ marginLeft: "auto", marginRight: "auto", marginTop: "2.5rem" }}
+        className="container "
+      >
         <Form submitHandler={onSubmit} defaultValues={defaultValues}>
-          <div className="flex justify-between items-center">
-            <h1 className="text-lg font-bold">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }} /* className="flex justify-between items-center" */
+          >
+            <h1
+              style={{
+                fontSize: "1.125rem",
+                lineHeight: "1.75rem",
+                fontWeight: 700,
+              }} /* className="text-lg font-bold" */
+            >
               Service name : {bookingData?.service?.title}
             </h1>
             <Image
               src={bookingData?.service?.image || NO_IMAGE}
               width={300}
               height={300}
-              className="w-16 h-16"
+              style={{ width: "4rem", height: "4rem" }}
+              /* className="w-16 h-16" */
               alt="booking"
             />
           </div>
@@ -144,8 +160,15 @@ const BookingDetails = ({ params }: any) => {
             </Col>
           </Row>
 
-          <div className="mt-1">
-            <div className="flex flex-wrap justify-between items-center">
+          <div style={{ marginTop: "0.25rem" }} /* className="mt-1" */>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }} /* className="flex flex-wrap justify-between items-center" */
+            >
               {/* <FormInput
                 label="Booking Sit "
                 type="number"
@@ -239,7 +262,15 @@ const BookingDetails = ({ params }: any) => {
             name="authorityNote"
             placeholder="Please provide authorityNote"
           />
-          <div className="my-2 flex justify-center items-center">
+          <div
+            style={{
+              display: "flex",
+              marginTop: "0.5rem",
+              marginBottom: "0.5rem",
+              justifyContent: "center",
+              alignItems: "center",
+            }} /* className="my-2 flex justify-center items-center" */
+          >
             <Button htmlType="submit" type="primary">
               Submit
             </Button>
