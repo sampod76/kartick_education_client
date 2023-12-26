@@ -1,15 +1,34 @@
-import { IFeedback, IReview, feedbackData, reviewsData } from "@/db/reviews";
-import { Progress, Rate } from "antd";
+import { Rate } from "antd";
 import React from "react";
 import FeedbackSection from "./FeedbackSection";
+// import ReviewUserSection from "./ReviewUserSection";
+import dynamic from "next/dynamic";
+
+const ReviewUserSection = dynamic(() => import("./ReviewUserSection"), {
+  ssr: false,
+});
 
 const ReviewsPage = () => {
   return (
-    <div style={{ width: "100%", marginInline: "auto" }}>
-      <aside
+    <div
+      className="block-flex"
+      style={{
+        width: "100%",
+        marginInline: "auto",
+        gap: "2rem",
+        background: "#F7F7F7",
+        padding:"0 10px"
+        // display: "flex",
+        // alignItems: "center",
+        // maxWidth:"100rem"
+      }}
+    >
+      <div
         style={{
-          padding: "10px 16px",
+          padding: "10px 24px",
           background: "white",
+          width: "40%",
+
         }}
       >
         <h2 style={{ color: "#333333", fontSize: "20px", fontWeight: "600" }}>
@@ -24,24 +43,19 @@ const ReviewsPage = () => {
             padding: "8px 14px",
           }}
         >
-          <span style={{ fontSize: "16px", color: "#333333" }}>4.6</span>
+          <h4 style={{ fontSize: "16px", color: "#333333" }}>4.6</h4>
           <Rate defaultValue={5.5} value={5.5} allowHalf disabled />
-          <span style={{ fontWeight: "550" }}>Course Rating</span>
+          <h4 style={{ fontWeight: "550" }}>Course Rating</h4>
         </div>
+
         {/* feedback  */}
         <FeedbackSection></FeedbackSection>
+      </div>
 
-        {/* user reviews section */}
-
-        <div className="">
-          {reviewsData?.map((item: IReview, index: number) => {
-            return <div className="" key={index}>
-
-              
-            </div>;
-          })}
-        </div>
-      </aside>
+      {/* user reviews section */}
+      <div style={{ width: "60%", marginInline: "auto" }}>
+        <ReviewUserSection />
+      </div>
     </div>
   );
 };

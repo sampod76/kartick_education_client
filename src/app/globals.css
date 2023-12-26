@@ -40,6 +40,20 @@
   }
 }
 
-.width_respon {
-  width: "100%";
+.shadow1 {
+  box-shadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
+}
+.block-flex {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  gap: "1em";
+}
+
+@media screen and (max-width: 600px) {
+  .block-flex {
+    display: flex;
+    flex-direction: column;
+    /* background-color: aqua; */
+  }
 }

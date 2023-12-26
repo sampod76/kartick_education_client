@@ -30,7 +30,7 @@ const courseData = {
   __v: 0,
 };
 const CourseDetailsPublicPage = ({ params }: any) => {
-  console.log(params, "params");
+  // console.log(params, "params");
   const id = params?.id;
   const { data: CourseData, isLoading } = useGetSingleCourseQuery(params?.id, {
     skip: !Boolean(params?.id),
