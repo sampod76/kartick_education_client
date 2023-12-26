@@ -78,9 +78,9 @@ const MilestoneList = ({courseId}:{courseId:any}) => {
 
   const {data} = useGetAllMilestoneQuery({course:courseId})
 
-  console.log(data,"courseId");
+  // console.log(data,"courseId");
   const milestoneData =data?.data
-  console.log(milestoneData);
+  // console.log(milestoneData);
   
   return (
     <div className="mt-5">
