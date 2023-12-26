@@ -12,11 +12,7 @@ const CoursesPage = () => {
     <div className="mt-7">
       {/* <TopBar />
       <NavbarPublic /> */}
-      <BannerCourses />
-      <CourseStatistics />
-
-      <MilestoneList />
-      <SupportHero />
+     <h1>Courses Page</h1>
     </div>
   );
 };

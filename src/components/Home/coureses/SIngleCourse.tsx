@@ -15,7 +15,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
   // const { title, details, img, demo_video, tags} = course;
   return (
     <Link
-      href={`/course/details/${course?._id}`}
+      href={`/course/milestone/${course?._id}`}
       className="w-[23rem] mx-auto  shadow-md "
     >
       <Card
