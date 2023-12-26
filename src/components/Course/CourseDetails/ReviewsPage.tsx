@@ -1,14 +1,17 @@
+"use client";
 import { Rate } from "antd";
 import React from "react";
 import FeedbackSection from "./FeedbackSection";
 // import ReviewUserSection from "./ReviewUserSection";
 import dynamic from "next/dynamic";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const ReviewUserSection = dynamic(() => import("./ReviewUserSection"), {
   ssr: false,
 });
 
 const ReviewsPage = () => {
+  const { xs, sm, md, lg, xl } = useBreakpoint();
   return (
     <div
       className="block-flex"
@@ -17,7 +20,7 @@ const ReviewsPage = () => {
         marginInline: "auto",
         gap: "2rem",
         background: "#F7F7F7",
-        padding:"0 10px"
+        padding: "0 10px",
         // display: "flex",
         // alignItems: "center",
         // maxWidth:"100rem"
@@ -27,8 +30,7 @@ const ReviewsPage = () => {
         style={{
           padding: "10px 24px",
           background: "white",
-          width: "40%",
-
+          width: `${sm ? "40%" : "100%"}`,
         }}
       >
         <h2 style={{ color: "#333333", fontSize: "20px", fontWeight: "600" }}>
@@ -53,7 +55,7 @@ const ReviewsPage = () => {
       </div>
 
       {/* user reviews section */}
-      <div style={{ width: "60%", marginInline: "auto" }}>
+      <div style={{ width: `${sm ? "60%" : "100%"}` }}>
         <ReviewUserSection />
       </div>
     </div>

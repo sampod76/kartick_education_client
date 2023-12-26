@@ -68,11 +68,12 @@ const SIngleCourse = ({ course }: { course: any }) => {
             <Rate className="h-[12px]" count={1} value={1} /> 5.0
           </h2>
         </Grid>
+        
 
         <Meta
-          // avatar={
-          //   <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
-          // }
+          avatar={
+            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+          }
           style={{
             fontSize: "16px",
             fontWeight: "500",
@@ -82,10 +83,11 @@ const SIngleCourse = ({ course }: { course: any }) => {
           }}
           title={<h2 style={{ color: "black" }}>{course?.title}</h2>}
           description={
-            <p className="text-[#282938] ">
+            <p style={{color:"#282938",minHeight:"3rem"}}>
               {course?.details?.length < 64
                 ? course?.details
                 : course?.details?.slice(0, 64) + "....."}
+
             </p>
           }
         />

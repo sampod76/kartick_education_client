@@ -25,12 +25,20 @@ const NavbarPublic = () => {
           fontWeight: "700",
           fontSize: "15px",
           fontFamily: "fantasy",
+          display:`${screens.sm ? "flex":"none"}`
         }}
         disabledOverflow
         // items={sidebarItems("homeNav")}
         items={homeNavItems}
       />
-      <div className="flex lg:hidden">
+      <div
+      
+      // className="flex lg:hidden"
+      style={{
+        display:`${screens.sm ? "none":"flex"}`
+      }}
+      
+      >
         <SideBarHome></SideBarHome>
       </div>
       {/* <UserAvatarUI /> */}

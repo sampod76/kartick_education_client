@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import MilestoneList from "../MilestoneList";
 import ReviewsPage from "./ReviewsPage";
 
-const CourseDetailsTab = () => {
+const CourseDetailsTab = ({ courseId }: { courseId: string }) => {
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
@@ -16,7 +16,6 @@ const CourseDetailsTab = () => {
     "h-[48px] min-w-[167px] rounded-[5px] bg-secondary text-white text-[18px] font-bold p-1";
   const inactiveClass =
     "h-[48px] w-[167px] rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[18px] font-bold p-1";
-    
 
   const tabsItems: TabsProps["items"] = [
     {
@@ -27,7 +26,7 @@ const CourseDetailsTab = () => {
     {
       label: <button>Course Content</button>,
       key: "2",
-      children: <MilestoneList />,
+      children: <MilestoneList courseId={courseId} />,
     },
     {
       label: <button>Reviews</button>,

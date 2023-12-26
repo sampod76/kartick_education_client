@@ -15,12 +15,19 @@ export default function ReviewUserSection() {
   // console.log(reviews);
 
   return (
-    <div style={{ width: "100%" }}>
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1em",
+      }}
+    >
       {reviews?.map((item: IReview, index: number) => {
         return (
           <div
             className="shadow1"
-            style={{ padding: "2rem", width: "100%" }}
+            style={{ padding: "2rem 10px", width: "100%", background: "white" }}
             key={index}
           >
             <div
@@ -51,7 +58,7 @@ export default function ReviewUserSection() {
                     fontWeight: "bold",
                     borderRadius: "4px",
                     color: "white",
-                    marginTop: "5px",
+                    marginBlock: "8px",
                   }}
                 >
                   Subscribe
@@ -71,14 +78,23 @@ export default function ReviewUserSection() {
               <Rate allowHalf defaultValue={4.5} disabled />
               <p style={{ fontSize: "14px", color: "grey" }}>{item?.review}</p>
               <div
-                style={{ display: "flex", alignItems: "center", gap: "2em" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "2em",
+                  marginBlock: "2px 12px",
+                }}
               >
                 <p style={{ fontSize: "14px", color: "grey" }}>
                   Was this review helpful?
                 </p>
                 <Radio.Group onChange={onChange} value={value}>
-                  <Radio value={1}>Yes</Radio>
-                  <Radio value={2}>No</Radio>
+                  <Radio value={1} key={index + 1}>
+                    Yes
+                  </Radio>
+                  <Radio value={2} key={index + 2}>
+                    No
+                  </Radio>
                 </Radio.Group>
                 <h1 style={{ fontSize: "16px", color: "black" }}>Report</h1>
               </div>
