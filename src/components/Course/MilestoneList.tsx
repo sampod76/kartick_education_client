@@ -2,7 +2,10 @@ import { Divider } from "antd";
 import Link from "next/link";
 import React from "react";
 
-const MilestoneList = () => {
+const MilestoneList = ({courseId}:{courseId:any}) => {
+  console.log(courseId);
+
+
   const milestonesData = [
     {
       title: "Foundations of Knowledge",
@@ -67,6 +70,8 @@ const MilestoneList = () => {
       ],
     },
   ];
+
+  
   return (
     <div className="mt-5">
       <h2 className=" Math text-black text-[35px] font-normal font-['Lato'] tracking-[3.50px] uppercase text-center ">

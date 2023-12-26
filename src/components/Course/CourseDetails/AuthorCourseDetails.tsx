@@ -8,7 +8,15 @@ import {
 } from "@ant-design/icons";
 
 const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
-//   console.log(authorData);
+  console.log(authorData, "author");
+
+  // const img = userData?.img || userData[userData.role]["img"];
+
+  // const authImg = authorData[authorData?.role]["img"] || "";
+  // console.log(authImg);
+  // const role = authorData?.role;
+  // const img = authorData[role]["img"];
+
   return (
     <div
       className="block lg:flex justify-between items-center gap-8"
@@ -27,7 +35,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
         }}
       >
         <Image
-          src={authorData?.admin.img}
+          src={""}
           alt="author"
           style={{
             height: "64px",

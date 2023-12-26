@@ -9,7 +9,7 @@ import HomeHeader from "@/components/shared/Headers/HomeHeader";
 
 const HomePage = () => {
   return (
-    <>
+    <div>
       <HomeHeader />
       <main style={{ textAlign: "center" }}>
         <BannerSection />
@@ -20,7 +20,7 @@ const HomePage = () => {
         <Programmes />
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -15,7 +15,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
   // const { title, details, img, demo_video, tags} = course;
   return (
     <Link
-      href={`/course/details/${course?._id}`}
+      href={`/course/milestone/${course?._id}`}
       className="w-[23rem] mx-auto  shadow-md "
     >
       <Card
@@ -50,13 +50,18 @@ const SIngleCourse = ({ course }: { course: any }) => {
         ]}
       >
         <Grid
-          className="bg-primary height-[30px] text-[16px] width-[36px] rounded-2xl text-white font-semibold py-2"
+          // className="bg-primary height-[30px] text-[16px] width-[36px] rounded-2xl text-white font-semibold py-2"
           style={{
             position: "absolute",
             right: 16,
             bottom: 164,
             padding: 0,
-            borderRadius: "10px",
+            // borderRadius: "10px",
+            paddingTop: "0.5rem",
+            paddingBottom: "0.5rem",
+            borderRadius: "1rem",
+            fontWeight: 600,
+            color: "ffffff",
           }}
         >
           <h2>
@@ -75,7 +80,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
             margin: "24px 0",
             padding: "0 10px",
           }}
-          title={<h2 className="text-black">{course?.title}</h2>}
+          title={<h2 style={{ color: "black" }}>{course?.title}</h2>}
           description={
             <p className="text-[#282938] ">
               {course?.details?.length < 64

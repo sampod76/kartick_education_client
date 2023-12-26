@@ -14,45 +14,45 @@ export const reviewsData: IReview[] = [
     user: {
       title: "Student",
       name: "John Doe",
-      img: "https://example.com/john-doe.jpg",
+      img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
     },
-    review: "Great course! I learned a lot.",
+    review: "Great course! I learned a lot.Nam gravida elit a velit rutrum, eget dapibus ex elementum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce lacinia, ",
     rating: 5,
   },
   {
     user: {
       title: "Student",
       name: "Alice Smith",
-      img: "https://example.com/alice-smith.jpg",
+      img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
     },
-    review: "The content was informative. Enjoyed the lessons.",
+    review: "Nam gravida elit a velit rutrum, eget dapibus ex elementum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce lacinia,The content was informative. Enjoyed the lessons.",
     rating: 4,
   },
   {
     user: {
       title: "Student",
       name: "Bob Johnson",
-      img: "https://example.com/bob-johnson.jpg",
+      img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
     },
-    review: "The instructor was engaging. Would recommend.",
+    review: " Would recommend.Nam gravida elit a velit rutrum, eget dapibus ex elementum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce lacinia, nunc sit amet tincidunt venenatis.",
     rating: 5,
   },
   {
     user: {
       title: "Student",
       name: "Eva Brown",
-      img: "https://example.com/eva-brown.jpg",
+      img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
     },
-    review: "Helped me understand complex topics easily.",
+    review: "Nam gravida elit a velit rutrum, eget dapibus ex elementum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Helped me understand complex topics easily.",
     rating: 4,
   },
   {
     user: {
       title: "Student",
       name: "Mike Davis",
-      img: "https://example.com/mike-davis.jpg",
+      img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
     },
-    review: "Interesting and well-structured lessons.",
+    review: "Nam gravida elit a velit rutrum, eget dapibus ex elementum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce lacinia, nunc sit amet tincidunt venenatis.",
     rating: 5,
   },
 ];
