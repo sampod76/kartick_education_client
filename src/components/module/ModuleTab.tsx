@@ -11,8 +11,10 @@ import {
   CommentOutlined,
   BlockOutlined,
 } from "@ant-design/icons";
+import Quizes from "../Quiz/Quizes";
 
 export default function ModuleTab({ moduleId }: { moduleId: string }) {
+
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
@@ -46,7 +48,7 @@ export default function ModuleTab({ moduleId }: { moduleId: string }) {
         </button>
       ),
       key: "2",
-      children: <Courses query={{ status: "active" }} />,
+      children: <Quizes/>,
     },
 
     {
@@ -67,6 +69,7 @@ export default function ModuleTab({ moduleId }: { moduleId: string }) {
   ];
   return (
     <div className="mt-5">
+      
       <Tabs
         defaultActiveKey="1"
         centered
