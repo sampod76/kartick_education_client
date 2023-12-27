@@ -5,6 +5,12 @@ import ModuleList from "./ModuleList";
 import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
 import Courses from "../Home/coureses/Courses";
 import LessonList from "../lesson/LessonList";
+import {
+  BookOutlined,
+  QuestionOutlined,
+  CommentOutlined,
+  BlockOutlined,
+} from "@ant-design/icons";
 
 export default function ModuleTab({ moduleId }: { moduleId: string }) {
   const [activeTabKey, setActiveTabKey] = useState("1");
@@ -15,18 +21,46 @@ export default function ModuleTab({ moduleId }: { moduleId: string }) {
 
   const tabsItems: TabsProps["items"] = [
     {
-      label: <button>Lesson Summery</button>,
+      label: (
+        <button className="text-xl font-bold ">
+          <BlockOutlined
+            style={{
+              fontSize: "1.5rem",
+            }}
+          />{" "}
+          <h1>Lesson Summery</h1>
+        </button>
+      ),
       key: "1",
       children: <LessonList moduleId={moduleId} />,
     },
     {
-      label: <button>Quiz </button>,
+      label: (
+        <button className="text-xl font-bold ">
+          <QuestionOutlined
+            style={{
+              fontSize: "1.5rem",
+            }}
+          />{" "}
+          <h1>Quiz</h1>
+        </button>
+      ),
       key: "2",
       children: <Courses query={{ status: "active" }} />,
     },
 
     {
-      label: <button>Reviews</button>,
+      label: (
+        <button className="text-xl font-bold ">
+          {" "}
+          <CommentOutlined
+            style={{
+              fontSize: "1.5rem",
+            }}
+          />
+          <h1> Reviews</h1>
+        </button>
+      ),
       key: "3",
       children: <ReviewsPage />,
     },

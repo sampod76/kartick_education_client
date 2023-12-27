@@ -7,7 +7,7 @@ export default function LessonPage({ params }: { params: { id: string } }) {
   console.log(moduleId);
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 container mx-auto">
       <ModuleTop moduleId={moduleId} />
       <ModuleTab moduleId={moduleId} />
     </div>
