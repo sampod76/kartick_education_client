@@ -2,6 +2,8 @@
 import AuthorCourseDetails from "@/components/Course/CourseDetails/AuthorCourseDetails";
 import CourseDetailsTab from "@/components/Course/CourseDetails/CourseDetailsTab";
 import CourseDetailsTop from "@/components/Course/CourseDetails/CourseDetailsTop";
+import CourseStatistics from "@/components/Course/CourseStatistics";
+import BannerCourses from "@/components/Home/Heros/BannerCourses";
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import React from "react";
 
@@ -29,6 +31,8 @@ const courseData = {
   updatedAt: "2023-12-22T20:03:32.355Z",
   __v: 0,
 };
+
+
 const CourseDetailsPublicPage = ({ params }: any) => {
   // console.log(params, "params");
   const id = params?.id;
@@ -39,9 +43,11 @@ const CourseDetailsPublicPage = ({ params }: any) => {
   return (
     <div className="container mx-auto">
       {/* <h2>The Web Developer Boot Camp</h2> */}
+      <BannerCourses />
+      <CourseStatistics />
       <CourseDetailsTop />
       <AuthorCourseDetails authorData={CourseData?.author} />
-      <CourseDetailsTab courseId={id}/>
+      <CourseDetailsTab courseId={id} />
     </div>
   );
 };

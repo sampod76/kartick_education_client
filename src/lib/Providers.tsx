@@ -15,7 +15,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
           theme={{
             token: {
               colorPrimary:"#5371FF",
-              // colorTextSecondary:"#5371FF"
+              colorTextSecondary:"#5371FF"
             },
           }}
         >

@@ -66,6 +66,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
 
   return (
     <div
+      className="w-full  lg:w-[60vw] mx-auto"
       style={{
         padding: "10px 5vw",
       }}
