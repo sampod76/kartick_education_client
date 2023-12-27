@@ -115,7 +115,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
           return (
             <div key={index} className="p-2 ">
               <Link
-                href={`/course`}
+                href={`/module/${milestone?._id}`}
                 className="text-start text-gray-800 text-[24px] font-semibold font-['Inter'] leading-2 "
               >
                 {milestone?.title}
@@ -125,7 +125,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
                 {milestone?.modules?.map((module: any, index: number) => {
                   return (
                     <Link
-                      href={`/module/${module?._id}`}
+                      href={`/lesson/${module?._id}`}
                       // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
                       style={{
                         display: "flex",

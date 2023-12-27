@@ -33,8 +33,8 @@ const getItems: (panelStyle: CSSProperties) => CollapseProps["items"] = (
   },
 ];
 
-export default function ModuleList({ moduleId }: { moduleId: string }) {
-  console.log(moduleId);
+export default function ModuleList({ milestoneId }: { milestoneId: string }) {
+  console.log(milestoneId);
   const { token } = theme.useToken();
 
   const panelStyle: React.CSSProperties = {
