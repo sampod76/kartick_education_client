@@ -6,8 +6,10 @@ export default function LessonPage({ params }: { params: { id: string } }) {
   const moduleId = params.id;
   console.log(moduleId);
 
-  return <div>
-       <ModuleTop moduleId={moduleId} />
-      <ModuleTab moduleId={moduleId}/>
-  </div>;
+  return (
+    <div className="mt-5">
+      <ModuleTop moduleId={moduleId} />
+      <ModuleTab moduleId={moduleId} />
+    </div>
+  );
 }
