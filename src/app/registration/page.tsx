@@ -12,7 +12,7 @@ import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
 import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-import { adminSchema } from "@/schemas/student";
+
 import { storeUserInfo } from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
