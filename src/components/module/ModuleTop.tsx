@@ -6,9 +6,9 @@ import {
 } from "@/redux/api/adminApi/moduleApi";
 import React from "react";
 
-export default function ModuleTop({ milestoneId }: { milestoneId: any }) {
-  const { data } = useGetSingleMilestoneQuery(milestoneId);
-  console.log(data);
+export default function ModuleTop({ moduleId }: { moduleId: any }) {
+  const { data } = useGetSingleModuleQuery(moduleId);
+  console.log(data,"");
   return (
     <div>
       <div
@@ -23,7 +23,7 @@ export default function ModuleTop({ milestoneId }: { milestoneId: any }) {
           fontSize: "2rem",
         }}
       >
-        {data?.title} Milestone Overviews
+        {data?.title} Module Overviews
       </div>
     </div>
   );
