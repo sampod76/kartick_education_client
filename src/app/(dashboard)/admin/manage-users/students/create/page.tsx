@@ -12,7 +12,7 @@ import uploadImgBB from "@/hooks/imgbbUploads";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 // import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-import { adminSchema, createStudentSchema } from "@/schemas/student";
+
 import { IStudentCreate } from "@/types/userTypes";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";

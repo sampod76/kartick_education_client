@@ -17,7 +17,7 @@ import {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
 } from "@/redux/api/serviceApi";
-import { IStudentCreate } from "@/schemas/studentSchema";
+
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 

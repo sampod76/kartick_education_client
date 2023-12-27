@@ -1,13 +1,11 @@
-import React from 'react';
-import { Button, Result } from 'antd';
-
-const App: React.FC = () => (
-  <Result
-    status="403"
-    title="403"
-    subTitle="Sorry, you are not authorized to access this page."
-    extra={<Button type="primary">Back Home</Button>}
-  />
-);
-
-export default App;
+import Link from 'next/link'
+ 
+export default function NotFound() {
+  return (
+    <div>
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
+      <Link href="/">Return Home</Link>
+    </div>
+  )
+}

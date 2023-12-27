@@ -10,7 +10,7 @@ import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 
-import { adminSchema } from "@/schemas/student";
+
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -44,7 +44,7 @@ const CreateAdminPage = () => {
       <h1>Create Admin</h1>
       {/*  */}
       <div>
-        <Form submitHandler={onSubmit} resolver={yupResolver(adminSchema)}>
+        <Form submitHandler={onSubmit} >
           <div
             style={{
               border: "1px solid #d9d9d9",

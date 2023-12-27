@@ -1,30 +1,21 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
 import FormDataRange from "@/components/Forms/FormDataRange";
-
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
-
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
-
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
-
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-
 import {
   Button,
   Col,
@@ -39,7 +30,12 @@ import { useState } from "react";
 
 const { Option } = Select;
 
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(() => import("@/components/Utlis/textEditor"), {
+ssr: false,
+});
 const CreateCoursePage = () => {
+  const [value, setValue] = useState("");
   const [addCourse, { isLoading }] = useAddCourseMutation();
 
   // !  tag selection
@@ -66,13 +62,8 @@ const CreateCoursePage = () => {
   const onSubmit = async (values: any) => {
     // console.log(values.img, "values of Course");
     let { img, ...others } = values;
-
     const imageUrl = await uploadImgBB(values.img);
-
-    // console.log(imageUrl, "image url");
-
     img = imageUrl;
-
     const CourseData = {
       img,
       tags: selectedTags,
@@ -267,12 +258,7 @@ const CreateCoursePage = () => {
               </div>
             </div>
             <section style={{"borderTopWidth":"2px"}} /* className=" border-t-2" */>
-              {/*//! 3 */}
-              <FormTextArea
-                placeholder="Write details of course"
-                label="Details"
-                name="details"
-              />
+            <TextEditor value={value} setValue={setValue} />
             </section>
             <ButtonSubmitUI>Create Course</ButtonSubmitUI>
           </section>
