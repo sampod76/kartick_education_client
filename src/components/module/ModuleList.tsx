@@ -17,12 +17,13 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
 
   const { data } = useGetAllModuleQuery({
     course: milestoneId,
-    modules: "yes",
+    lesson: "yes",
+    status:"active"
   });
 
   // console.log(data,"milestoneId");
   const modulesData = data?.data;
-  console.log(modulesData);
+  console.log(modulesData,"module Data");
 
   return (
     <div
@@ -55,7 +56,7 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
           return (
             <div key={index} className="p-2 ">
               <Link
-                href={`/module/${module?._id}`}
+                href={`/lesson/${module?._id}`}
                 className="text-start text-gray-800 text-[24px] font-semibold font-['Inter'] leading-2 "
               >
                 {module?.title}
@@ -65,7 +66,7 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
                 {module?.lesson?.map((module: any, index: number) => {
                   return (
                     <Link
-                      href={`/lesson/${module?._id}`}
+                      href={`/lessonDetails/${module?._id}`}
                       // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
                       style={{
                         display: "flex",

@@ -73,7 +73,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
     },
   ];
   const { data: courseData } = useGetSingleCourseQuery(courseId);
-  console.log(courseData);
+  console.log(courseData,"courseDat");
 
   const { data } = useGetAllMilestoneQuery({
     course: courseId,
@@ -82,7 +82,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
 
   // console.log(data,"courseId");
   const milestoneData = data?.data;
-  console.log(milestoneData);
+  console.log(milestoneData,"milestoneData");
 
   return (
     <div
@@ -100,7 +100,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
           fontFamily: "Lato",
         }}
       >
-        {courseData?.title}
+      Course  {courseData?.title}
         {/* //! Course Title */}
       </h2>
       <Divider

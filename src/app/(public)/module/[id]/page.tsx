@@ -10,8 +10,7 @@ export default function ModulePage({ params }: { params: { id: string } }) {
     <div>
       <h1>ModulePageDetails Page</h1>
       <ModuleList milestoneId={milestoneId}></ModuleList>
-      {/* <ModuleTop milestoneId={milestoneId} />
-      <ModuleTab milestoneId={milestoneId}/> */}
+   
     </div>
   );
 }

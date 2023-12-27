@@ -1,11 +1,12 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { Tabs, TabsProps } from "antd";
 import ModuleList from "./ModuleList";
 import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
 import Courses from "../Home/coureses/Courses";
+import LessonList from "../lesson/LessonList";
 
-export default function ModuleTab({ milestoneId }: { milestoneId: string }) {
+export default function ModuleTab({ moduleId }: { moduleId: string }) {
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
@@ -14,16 +15,16 @@ export default function ModuleTab({ milestoneId }: { milestoneId: string }) {
 
   const tabsItems: TabsProps["items"] = [
     {
-        label: <button>Lesson Summery</button>,
-        key: "1",
-        children: <ModuleList milestoneId={milestoneId} />,
-      },
+      label: <button>Lesson Summery</button>,
+      key: "1",
+      children: <LessonList moduleId={moduleId} />,
+    },
     {
       label: <button>Quiz </button>,
       key: "2",
       children: <Courses query={{ status: "active" }} />,
     },
-   
+
     {
       label: <button>Reviews</button>,
       key: "3",
