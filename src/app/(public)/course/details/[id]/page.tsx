@@ -4,6 +4,7 @@ import CourseDetailsTab from "@/components/Course/CourseDetails/CourseDetailsTab
 import CourseDetailsTop from "@/components/Course/CourseDetails/CourseDetailsTop";
 import CourseStatistics from "@/components/Course/CourseStatistics";
 import BannerCourses from "@/components/Home/Heros/BannerCourses";
+import SupportHero from "@/components/Home/Heros/SupportHero";
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import React from "react";
 
@@ -48,6 +49,7 @@ const CourseDetailsPublicPage = ({ params }: any) => {
       <CourseDetailsTop />
       <AuthorCourseDetails authorData={CourseData?.author} />
       <CourseDetailsTab courseId={id} />
+      <SupportHero />
     </div>
   );
 };

@@ -20,7 +20,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
 
     
-      <SupportHero />
+  
       <Footer />
     </div>
   );

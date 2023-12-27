@@ -10,10 +10,10 @@ import Link from "next/link";
 import React from "react";
 
 const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
-  console.log(milestoneId);
+  // console.log(milestoneId);
 
   const { data: milestoneData } = useGetSingleMilestoneQuery(milestoneId);
-  console.log(milestoneData);
+  // console.log(milestoneData);
 
   const { data } = useGetAllModuleQuery({
     course: milestoneId,
@@ -54,7 +54,7 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
       <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3 max-w-[80%] mx-auto mt-5">
         {modulesData?.map((module: any, index: number) => {
           return (
-            <div key={index} className="p-2 ">
+            <div key={index} className="p-2">
               <Link
                 href={`/lesson/${module?._id}`}
                 className="text-start text-gray-800 text-[24px] font-semibold font-['Inter'] leading-2 "

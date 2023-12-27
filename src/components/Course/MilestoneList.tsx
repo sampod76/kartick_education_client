@@ -8,70 +8,7 @@ import React from "react";
 const MilestoneList = ({ courseId }: { courseId: any }) => {
   console.log(courseId);
 
-  const milestonesStaticData = [
-    {
-      title: "Foundations of Knowledge",
-      modules: [
-        { _id: "1", title: "Addition and Subtraction Fluency" },
-        { _id: "2", title: "Place Value Understanding" },
-        { _id: "3", title: "Introduction to Multiplication and Division" },
-        { _id: "4", title: "Basic Fractions" },
-        { _id: "5", title: "Time and Money Concepts" },
-        { _id: "6", title: "Geometry Fundamentals" },
-      ],
-    },
-    {
-      title: "Intermediate Concepts",
-      modules: [
-        { _id: "7", title: "Advanced Fractions" },
-        { _id: "8", title: "Decimal and Percentage Understanding" },
-        { _id: "9", title: "Algebraic Expressions" },
-      ],
-    },
-    {
-      title: "Advanced Mathematics",
-      modules: [
-        { _id: "10", title: "Advanced Algebra" },
-        { _id: "11", title: "Trigonometry Basics" },
-        { _id: "12", title: "Calculus Fundamentals" },
-      ],
-    },
-    {
-      title: "Science Exploration",
-      modules: [
-        { _id: "13", title: "Introduction to Physics" },
-        { _id: "14", title: "Biology Basics" },
-        { _id: "15", title: "Chemistry Concepts" },
-      ],
-    },
-    {
-      title: "Computer Science Fundamentals",
-      modules: [
-        { _id: "16", title: "Programming Basics" },
-        { _id: "17", title: "Data Structures and Algorithms" },
-        { _id: "18", title: "Web Development Essentials" },
-      ],
-    },
-    {
-      title: "Foundations of Knowledge",
-      modules: [
-        { _id: "1", title: "Addition and Subtraction Fluency" },
-        { _id: "2", title: "Place Value Understanding" },
-        { _id: "3", title: "Introduction to Multiplication and Division" },
-        { _id: "4", title: "Basic Fractions" },
-        { _id: "5", title: "Time and Money Concepts" },
-        { _id: "6", title: "Geometry Fundamentals" },
-      ],
-    },
-    {
-      title: "Intermediate Concepts",
-      modules: [
-        { _id: "7", title: "Advanced Fractions" },
-        { _id: "8", title: "Decimal and Percentage Understanding" },
-        { _id: "9", title: "Algebraic Expressions" },
-      ],
-    },
-  ];
+ 
   const { data: courseData } = useGetSingleCourseQuery(courseId);
   console.log(courseData,"courseDat");
 
