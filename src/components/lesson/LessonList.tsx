@@ -1,38 +1,14 @@
-import { CaretRightOutlined } from "@ant-design/icons";
+import {
+  CaretRightOutlined,
+  RightCircleOutlined,
+  EyeOutlined,
+  LockOutlined,
+} from "@ant-design/icons";
 import type { CSSProperties } from "react";
 import React from "react";
 import type { CollapseProps } from "antd";
 import { Collapse, theme } from "antd";
 import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
-
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-
-const getItems: (panelStyle: CSSProperties) => CollapseProps["items"] = (
-  panelStyle
-) => [
-  {
-    key: "1",
-    label: "Lesson 1",
-    children: <p>{text}</p>,
-    // style: panelStyle,
-  },
-  {
-    key: "2",
-    label: "Lesson 2",
-    children: <p>{text}</p>,
-    // style: panelStyle,
-  },
-  {
-    key: "3",
-    label: "Lesson 3",
-    children: <p>{text}</p>,
-    // style: panelStyle,
-  },
-];
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
   console.log(moduleId, "moduleId from LessonList");
@@ -54,15 +30,38 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     border: "none",
   };
 
-  const collapseLessonData = lessonData?.data?.map((lesson: any) => {
-    console.log("🚀 ~ file: LessonList.tsx:58 ", lesson);
-    return {
-      key: lesson?._id,
-      label: <h4>{lesson?.title}</h4>,
-      children: <p>{lesson?.details}</p>,
-      // style: panelStyle,
-    };
-  });
+  const collapseLessonData = lessonData?.data?.map(
+    (lesson: any, index: number) => {
+      console.log("🚀 ~ file: LessonList.tsx:58 ", lesson);
+      return {
+        key: lesson?._id,
+        label: (
+          <div className="text-[18px]  px-1 font-semibold   py-2 shadow-1 ">
+            <button className="flex justify-between w-full">
+              <h2>
+                <span>Lesson {index + 1}: </span> {lesson?.title}
+              </h2>
+              <EyeOutlined style={{ fontSize: "18px" }} />
+            </button>
+            <button className="text-[14px] flex justify-between w-full mt-3">
+              <h2>
+                Quiz {index + 1} : <span>smart quiz </span>
+              </h2>
+              <LockOutlined style={{ fontSize: "18px" }} />
+            </button>
+          </div>
+        ),
+        children: (
+          <div>
+            <p>{lesson?.details?.slice(0, 220)}</p>
+          </div>
+        ),
+        // style: panelStyle,
+      };
+    }
+  );
+
+  // <RightCircleOutlined />
 
   return (
     <div
@@ -75,7 +74,15 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
         bordered={false}
         defaultActiveKey={["1"]}
         expandIcon={({ isActive }) => (
-          <CaretRightOutlined rotate={isActive ? 90 : 0} />
+          <RightCircleOutlined
+            style={{
+              fontSize: "24px",
+              padding: "8px",
+              fontWeight: 600,
+              marginTop: "24px",
+            }}
+            rotate={isActive ? 90 : 0}
+          />
         )}
         style={{ background: token.colorBgContainer }}
         items={collapseLessonData}
