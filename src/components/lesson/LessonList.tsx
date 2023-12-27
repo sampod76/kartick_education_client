@@ -9,6 +9,7 @@ import React from "react";
 import type { CollapseProps } from "antd";
 import { Collapse, theme } from "antd";
 import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
+import Link from "next/link";
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
   console.log(moduleId, "moduleId from LessonList");
@@ -43,12 +44,15 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               </h2>
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
-            <button className="text-[14px] flex justify-between w-full mt-3">
+            <Link
+              href={`/quiz/${lesson?._id}`}
+              className="text-[14px] flex justify-between w-full mt-3"
+            >
               <h2>
                 Quiz {index + 1} : <span>smart quiz </span>
               </h2>
               <LockOutlined style={{ fontSize: "18px" }} />
-            </button>
+            </Link>
           </div>
         ),
         children: (
