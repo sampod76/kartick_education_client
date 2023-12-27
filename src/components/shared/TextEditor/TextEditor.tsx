@@ -1,17 +1,40 @@
 "use client";
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, useEffect } from "react";
 import JoditEditor from "jodit-react";
-import parse from "html-react-parser";
-const TextEditor = (/* {setValue} */) => {
+
+const TextEditor = ({
+  value,
+  setValue,
+}: {
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-  const [vlaue, setValue] = useState("");
-  console.log("🚀 ~ file: textEditor.js:8 ~ TextEditor ~ vlaue:", vlaue);
+  // const [vlaue, setValue] = useState("");
+  // useEffect(() => {
+  //   // Load MathJax
+  //   const script = document.createElement("script");
+  //   script.src = "https://polyfill.io/v3/polyfill.min.js?features=es6";
+  //   script.async = true;
+  //   document.head.appendChild(script);
 
+  //   script.onload = () => {
+  //     const mathJaxScript = document.createElement("script");
+  //     mathJaxScript.src =
+  //       "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML";
+  //     mathJaxScript.async = true;
+  //     document.head.appendChild(mathJaxScript);
+  //   };
+  // }, []);
   const editorConfig = useMemo(
     () => ({
       readonly: false,
       placeholder: "Start typing...",
+      // allowFileUpload: true,
+      // sanitize: false,
+      defaultMode: 0, // Set default alignment to left
+      toolbarAdaptive: false,
     }),
     []
   );
@@ -26,7 +49,6 @@ const TextEditor = (/* {setValue} */) => {
         onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
         onChange={(newContent) => setValue(newContent)}
       />
-      <div className="my-5 jodit-wysiwyg">{parse(vlaue)}</div>
     </div>
   );
 };
