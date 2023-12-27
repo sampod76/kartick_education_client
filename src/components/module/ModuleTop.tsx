@@ -1,12 +1,13 @@
 "use client";
+import { useGetSingleMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
 import {
   useGetAllModuleQuery,
   useGetSingleModuleQuery,
 } from "@/redux/api/adminApi/moduleApi";
 import React from "react";
 
-export default function ModuleTop({ moduleId }: { moduleId: any }) {
-  const { data } = useGetSingleModuleQuery(moduleId);
+export default function ModuleTop({ milestoneId }: { milestoneId: any }) {
+  const { data } = useGetSingleMilestoneQuery(milestoneId);
   console.log(data);
   return (
     <div>
@@ -22,7 +23,7 @@ export default function ModuleTop({ moduleId }: { moduleId: any }) {
           fontSize: "2rem",
         }}
       >
-        {data?.title} Overview
+        {data?.title} Milestone Overviews
       </div>
     </div>
   );

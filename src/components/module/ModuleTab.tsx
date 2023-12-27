@@ -5,7 +5,7 @@ import ModuleList from "./ModuleList";
 import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
 import Courses from "../Home/coureses/Courses";
 
-export default function ModuleTab({ moduleId }: { moduleId: string }) {
+export default function ModuleTab({ milestoneId }: { milestoneId: string }) {
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
@@ -16,7 +16,7 @@ export default function ModuleTab({ moduleId }: { moduleId: string }) {
     {
         label: <button>Lesson Summery</button>,
         key: "1",
-        children: <ModuleList moduleId={moduleId} />,
+        children: <ModuleList milestoneId={milestoneId} />,
       },
     {
       label: <button>Quiz </button>,
