@@ -29,12 +29,13 @@ export const UserApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: any, meta: IMeta) => {
         console.log(response);
+
         return {
-          data: response,
-          meta,
+          data: response.data,
+          meta: response.meta,
         };
       },
-      
+
       providesTags: [tagTypes.user],
     }),
     getSingleUser: build.query({
@@ -53,7 +54,7 @@ export const UserApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.user, tagTypes.user],
     }),
     deleteUser: build.mutation({
-      query: (id:string) => ({
+      query: (id: string) => ({
         url: `${User_URL}/${id}`,
         method: "DELETE",
       }),

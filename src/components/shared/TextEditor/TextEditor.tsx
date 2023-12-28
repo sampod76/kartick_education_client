@@ -3,15 +3,17 @@ import React, { useState, useRef, useMemo, useEffect } from "react";
 import JoditEditor from "jodit-react";
 
 const TextEditor = ({
-  value,
-  setValue,
+  textEditorValue,
+  setTextEditorValue,
+  defultTextEditorValue = "",
 }: {
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  textEditorValue: string;
+  defultTextEditorValue?: string;
+  setTextEditorValue: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
-  // const [vlaue, setValue] = useState("");
+  const [content, setContent] = useState(defultTextEditorValue);
+  // const [vlaue, setTextEditorValue] = useState("");
   // useEffect(() => {
   //   // Load MathJax
   //   const script = document.createElement("script");
@@ -33,7 +35,7 @@ const TextEditor = ({
       placeholder: "Start typing...",
       // allowFileUpload: true,
       // sanitize: false,
-      defaultMode: 0, // Set default alignment to left
+      defaultMode: 1, // Set default alignment to left
       toolbarAdaptive: false,
     }),
     []
@@ -47,7 +49,7 @@ const TextEditor = ({
         value={content}
         // tabIndex={1} // tabIndex of textarea
         onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-        onChange={(newContent) => setValue(newContent)}
+        onChange={(newContent) => setTextEditorValue(newContent)}
       />
     </div>
   );

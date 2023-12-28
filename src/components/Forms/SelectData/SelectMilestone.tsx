@@ -3,8 +3,13 @@ import FormSelectField from "../FormSelectField";
 import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
 
 const SelectMilestoneField = () => {
+  const query: Record<string, any> = {};
+  //! for Course options selection
+  query["limit"] = 999999;
+  query["sortBy"] = "title";
+  query["sortOrder"] = "asc";
   //! for Milestone options selection
-  const { data } = useGetAllMilestoneQuery({});
+  const { data } = useGetAllMilestoneQuery({ ...query });
   const milestoneData = data?.data;
   // console.log(milestoneData)
   const MilestoneOptions = milestoneData?.map((item: any) => {
@@ -13,13 +18,13 @@ const SelectMilestoneField = () => {
       value: item?._id,
     };
   });
-//   console.log(MilestoneOptions);
+  //   console.log(MilestoneOptions);
   return (
     <FormSelectField
       size="large"
       name="milestone"
       options={MilestoneOptions as any}
-      // defaultValue={priceTypeOptions[0]}
+      defaultValue={{ label: "Select Milestone", value: "" }}
       label="milestone"
       // placeholder="Select"
       required={true}

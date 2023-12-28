@@ -116,7 +116,7 @@ const EditCategoryPage = ({ params }: any) => {
                 />
               </Col>
 
-              <Col className="gutter-row" xs={24} md={24} lg={24}>
+              <Col className="gutter-row" xs={24} >
                 <div className="">
                   <UploadImage name="img" defaultImage={categoryData.img} />
                 </div>

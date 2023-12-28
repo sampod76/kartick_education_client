@@ -9,6 +9,7 @@ type TextAreaProps = {
   value?: string;
   placeholder?: string;
   readOnly?: boolean;
+  required?: boolean;
 };
 
 const FormTextArea = ({
@@ -17,20 +18,26 @@ const FormTextArea = ({
   rows,
   value,
   placeholder,
-  readOnly=false,
+  readOnly = false,
+  required,
 }: TextAreaProps) => {
   const { control } = useFormContext();
   return (
     <div className={`flex flex-col  w-full font-[500] text-[16px]`}>
-      {label ?  <LabelUi>{label}</LabelUi> : null}
+      {label ? (
+        <LabelUi>
+          {label}
+          {required && <span className="text-red-400"> *</span>}
+        </LabelUi>
+      ) : null}
       <Controller
         name={name}
         control={control}
         render={({ field }) => (
           <Input.TextArea
-          style={{
-            minHeight:"5rem"
-          }}
+            style={{
+              minHeight: "5rem",
+            }}
             rows={rows}
             placeholder={placeholder}
             readOnly={readOnly}

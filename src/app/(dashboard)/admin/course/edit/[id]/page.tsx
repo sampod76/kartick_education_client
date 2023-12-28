@@ -357,8 +357,7 @@ const CourseDetails = ({ params }: any) => {
                 <Col
                   className="gutter-row"
                   xs={24}
-                  md={24}
-                  lg={24}
+                 
                   style={{
                     margin: "10px 0",
                   }}

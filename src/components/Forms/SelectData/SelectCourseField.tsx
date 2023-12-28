@@ -2,10 +2,16 @@ import React from "react";
 import FormSelectField from "../FormSelectField";
 
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import FormSearchSelectField from "../FormSearchSelectField";
 
 const SelectCourseField = () => {
-     //! for Course options selection
-  const { data: Course } = useGetAllCourseQuery({});
+  const query: Record<string, any> = {};
+  //! for Course options selection
+  query["limit"] = 999999;
+  query["sortBy"] = "title";
+  query["sortOrder"] = "asc";
+
+  const { data: Course } = useGetAllCourseQuery({ ...query });
   const CourseData = Course?.data;
   // console.log(CourseData)
   const CourseOptions = CourseData?.map((item: any) => {
@@ -16,11 +22,11 @@ const SelectCourseField = () => {
   });
   console.log(CourseOptions);
   return (
-    <FormSelectField
+    <FormSearchSelectField
       size="large"
       name="Course"
       options={CourseOptions as any}
-      // defaultValue={priceTypeOptions[0]}
+      defaultValue={{ label: "Select Course", value: "" }}
       label="Course"
       // placeholder="Select"
       required={true}

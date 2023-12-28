@@ -21,10 +21,13 @@ export default function FormDataRange({ name, label }: FormDataRangeProps) {
         render={({ field }) => (
           <div className="flex flex-col items-start">
             <h1>{label ? <LabelUi>{label}</LabelUi> : null}</h1>
-            <DatePicker.RangePicker size="large"   onChange={(el, value) => {
+            <DatePicker.RangePicker
+              size="large"
+              onChange={(el, value) => {
                 setValue(name, value);
               }}
-              style={{ width: "100%" }} />
+              style={{ width: "100%" }}
+            />
             {/* <TimePicker
               
               defaultValue={dayjs(field.value ? field.value : "00:00", "HH:mm")}

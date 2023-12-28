@@ -14,7 +14,6 @@ import {
 } from "@/constants/global";
 import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -28,9 +27,9 @@ const UserCreateComponent = ({
     value: string;
   };
 }) => {
-  const [addGeneralUserWithFormData, { isLoading }] =
+  const [addGeneralUserWithFormData, { isLoading, error }] =
     useAddGeneralUserWithFormDataMutation();
-console.log(role);
+  console.log(role);
   const onSubmit = async (values: any) => {
     console.log(values);
     try {

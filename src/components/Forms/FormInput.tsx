@@ -25,7 +25,7 @@ const FormInput = ({
   size = "large",
   value,
   id,
-  placeholder,
+  placeholder='Please enter..',
   validation,
   label,
   required,
@@ -50,7 +50,12 @@ const FormInput = ({
           *
         </span>
       ) : null} */}
-      {label && type !== "number" ? <LabelUi>{label}</LabelUi> : null}
+      {label && type !== "number" ? (
+        <LabelUi>
+          {label}
+          {required && <span className="text-red-400"> *</span>}
+        </LabelUi>
+      ) : null}
       <Controller
         control={control}
         name={name}

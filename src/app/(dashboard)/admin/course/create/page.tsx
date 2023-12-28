@@ -22,6 +22,7 @@ import {
   Input,
   Row,
   Select,
+  Spin,
   Typography,
   Upload,
   message,
@@ -31,19 +32,25 @@ import { useState } from "react";
 const { Option } = Select;
 
 import dynamic from "next/dynamic";
-const TextEditor = dynamic(() => import("@/components/Utlis/textEditor"), {
-ssr: false,
-});
+import LabelUi from "@/components/ui/dashboardUI/LabelUi";
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
+// const TextEditor = dynamic(
+//   () => import("@/components/shared/TextEditor/TextEditor"),
+//   {
+//     ssr: false,
+//   }
+// );
 const CreateCoursePage = () => {
-  const [value, setValue] = useState("");
+  const [textEditorValue, setTextEditorValue] = useState("");
+  console.log(
+    "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
+    textEditorValue
+  );
   const [addCourse, { isLoading }] = useAddCourseMutation();
 
   // !  tag selection
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([
-    "course",
-    "tech",
-  ]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // console.log(selectedTags, "selectedTags........1");
 
@@ -54,8 +61,8 @@ const CreateCoursePage = () => {
   const [videoUrl, setVideoUrl] = useState("");
 
   const demo_video = {
-    video: videoType,
-    platform: videoUrl,
+    video: videoUrl,
+    platform: videoType,
   };
 
   // console.log(demo_video);
@@ -68,6 +75,7 @@ const CreateCoursePage = () => {
       img,
       tags: selectedTags,
       demo_video,
+      details: textEditorValue,
       ...others,
     };
 
@@ -82,15 +90,19 @@ const CreateCoursePage = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Course created successfully");
+        setVideoType(null);
+        setVideoUrl("");
+        setSelectedTags([]);
+        setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
     }
   };
-  if (isLoading) {
-    return message.loading("Loading...");
-  }
+  // if (isLoading) {
+  //   return message.loading("Loading...");
+  // }
 
   // const defaultValues = {
   //   blood,
@@ -117,7 +129,12 @@ const CreateCoursePage = () => {
             }} /* className="border-2 p-2 rounded-2" */
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
-              <div style={{"paddingRight":"0.5rem","borderRightWidth":"2px"}} /* className="border-r-2 pr-2" */>
+              <div
+                style={{
+                  paddingRight: "0.5rem",
+                  borderRightWidth: "2px",
+                }} /* className="border-r-2 pr-2" */
+              >
                 <SubHeadingUI>Basic Information</SubHeadingUI>
                 <Row gutter={[8, 8]}>
                   <Col xs={24} md={24} lg={24} style={{}}>
@@ -168,7 +185,7 @@ const CreateCoursePage = () => {
                       name="level"
                       size="large"
                       label="Level"
-                      required={true}
+                      // required={true}
                     />
                     {/*//! 5. */}
                   </Col>
@@ -178,7 +195,7 @@ const CreateCoursePage = () => {
                       name="showing_number"
                       size="large"
                       label="Showing Number"
-                      required={true}
+                      // required={true}
                     />
                     {/* //!6. Showing Number */}
                   </Col>
@@ -244,8 +261,7 @@ const CreateCoursePage = () => {
 
                   <Col
                     xs={24}
-                    md={24}
-                    lg={24}
+                   
                     style={{
                       margin: "10px 0",
                       textAlign: "start",
@@ -257,10 +273,20 @@ const CreateCoursePage = () => {
                 </Row>
               </div>
             </div>
-            <section style={{"borderTopWidth":"2px"}} /* className=" border-t-2" */>
-            <TextEditor value={value} setValue={setValue} />
+            <section
+              style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
+            >
+              <p className="text-center my-3 font-bold text-xl">Description</p>
+              <TextEditor
+                textEditorValue={textEditorValue}
+                setTextEditorValue={setTextEditorValue}
+              />
             </section>
-            <ButtonSubmitUI>Create Course</ButtonSubmitUI>
+            {isLoading ? (
+              <Spin />
+            ) : (
+              <ButtonSubmitUI>Create Course</ButtonSubmitUI>
+            )}
           </section>
         </Form>
       </div>
