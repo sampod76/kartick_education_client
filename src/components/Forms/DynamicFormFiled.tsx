@@ -53,7 +53,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
       {answers?.map((answer, index) => (
         <Space
           key={index}
-          className="shadow-1 "
+          
           style={{
             display: "flex",
             alignItems: "start",
@@ -63,6 +63,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
             padding: "10px 8px",
             borderRadius: "4px",
           }}
+          className="shadow-1 w-full lg:w-[30%] "
         >
           <Space
             // style={{ display: "flex", marginBottom: 8 }}
@@ -70,7 +71,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "10px",
+              gap: "18px",
               width: "100%",
               alignItems: "start",
             }}
@@ -100,6 +101,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
             {/* quiz uploader */}
             <Upload
               listType="picture"
+              style={{textAlign:"start"}}
               showUploadList={true}
               beforeUpload={async (file) => {
                 // You can add custom logic before uploading, e.g., checking file type or size
@@ -113,7 +115,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
                 return false; // Prevent default upload behavior
               }}
             >
-              <Button>+Image</Button>
+              <Button style={{textAlign:"start"}}>Answer Image +</Button>
             </Upload>
             {/* serial number */}
             <div className="text-start ">
