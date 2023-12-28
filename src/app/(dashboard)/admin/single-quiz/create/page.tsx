@@ -28,6 +28,7 @@ import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
 import SelectQUizField from "@/components/Forms/SelectData/SelectQUizField";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import AnswerInputList from "@/components/Forms/DynamicFormFiled";
+import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 
 const CreateSingleQuiz = () => {
   const [addSingleQuiz, { isLoading: serviceLoading }] =
@@ -35,9 +36,10 @@ const CreateSingleQuiz = () => {
 
   // !  tag selection
 
-  const tagOptions = ["course", "tech", "update", "english"];
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  console.log(selectedTags, "selectedTags........1");
+  const [selectedTags, setSelectedTags] = useState<string[]>([
+    "course",
+    "tech",
+  ]);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -74,7 +76,7 @@ const CreateSingleQuiz = () => {
 
     values.img = imgUrl;
     values["status"] = status;
-    values.time_duration= Number(values.time_duration)
+    values.time_duration = Number(values.time_duration);
 
     const LessonData: {} = {
       ...values,
@@ -100,13 +102,15 @@ const CreateSingleQuiz = () => {
   };
 
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <div>
         <Form submitHandler={onSubmit}>
           <div
@@ -122,8 +126,6 @@ const CreateSingleQuiz = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-              
-           
                 style={{
                   marginBottom: "10px",
                 }}
@@ -160,28 +162,16 @@ const CreateSingleQuiz = () => {
                 xs={24}
                 md={12}
                 lg={8}
-                style={{
-                 
-                  // background:"r ed"
-                }}
+                style={
+                  {
+                    // background:"r ed"
+                  }
+                }
               >
-                {/* <FormInput
-                  type="time"
-                  name="time_duration"
-                  size="large"
-                  label="time_duration "
-                  required={true}
-                /> */}
-
-                {/* <TimePicker
-                  // onChange={onChange}
-                  className="w-full my-3 lg:my-1 lg:mt-12"
-                  defaultOpenValue={dayjs("00:00:00", "HH:mm:ss")}
-                /> */}
                 <FormTimePicker name="time_duration" label="Time Duration" />
                 {/*//! 5  */}
               </Col>
-             
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -260,22 +250,19 @@ const CreateSingleQuiz = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <TagUI
-                  selectedTags={selectedTags}
-                  setSelectedTags={setSelectedTags}
-                  tagOptions={tagOptions}
+                <TagsSelectUI
+                  selected={selectedTags}
+                  setSelected={setSelectedTags}
                 />
                 {/*//! 15  */}
               </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-                
                 style={{
                   marginBottom: "10px",
                 }}
@@ -285,33 +272,31 @@ const CreateSingleQuiz = () => {
               </Col>
             </Row>
             <Col
-                className="gutter-row"
-                xs={24}
-                
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormTextArea label="Description" name="details" />
-                {/*//! 3 */}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormTextArea
-                  name="hints"
-                  label="hints"
-                  placeholder="Give hints for Answer"
-                />
-                {/*//! 6 */}
-              </Col>
-              
-             {/*  
+              className="gutter-row"
+              xs={24}
+              style={{
+                marginBottom: "10px",
+              }}
+            >
+              <FormTextArea label="Description" name="details" />
+              {/*//! 3 */}
+            </Col>
+            <Col
+              className="gutter-row"
+              xs={24}
+              style={{
+                marginBottom: "10px",
+              }}
+            >
+              <FormTextArea
+                name="hints"
+                label="hints"
+                placeholder="Give hints for Answer"
+              />
+              {/*//! 6 */}
+            </Col>
+
+            {/*  
              <Col
                 className="gutter-row"
                 xs={24}
@@ -333,7 +318,6 @@ const CreateSingleQuiz = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
