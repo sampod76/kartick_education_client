@@ -260,8 +260,7 @@ const CreateSingleQuiz = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+                
                 style={{
                   marginBottom: "10px",
                 }}
@@ -276,8 +275,7 @@ const CreateSingleQuiz = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+                
                 style={{
                   marginBottom: "10px",
                 }}

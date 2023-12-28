@@ -3,9 +3,7 @@
 import Form from "@/components/Forms/Form";
 
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField, {
-
-} from "@/components/Forms/FormSelectField";
+import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
@@ -25,7 +23,7 @@ import {
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import {  Col, Row,  } from "antd";
+import { Col, Row } from "antd";
 
 import { useState } from "react";
 
@@ -37,7 +35,7 @@ const EditModulePage = ({ params }: any) => {
   // const { data: ModuleData = [] } = useGetAllCategoryQuery({});
   const [updateModule, { isLoading: updateLoading, error }] =
     useUpdateModuleMutation();
- 
+
   // !  tag selection
 
   const [selectedTags, setSelectedTags] = useState<string[]>(
@@ -93,13 +91,15 @@ const EditModulePage = ({ params }: any) => {
   console.log(defaultValues);
 
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(ICategorySchema)} */}
@@ -169,14 +169,16 @@ const EditModulePage = ({ params }: any) => {
                 />
                 {/* //! price type 8*/}
               </Col>
-              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+              <Col className="gutter-row" xs={24}  style={{}}>
+                {" "}
                 <TagsSelectUI
                   selected={selectedTags}
                   setSelected={setSelectedTags}
                 />
                 {/*//! 11 */}
               </Col>
-              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+              <Col className="gutter-row" xs={24}  style={{}}>
+                {" "}
                 <UploadImage name="img" />
                 {/* //!7*/}
               </Col>

@@ -1,57 +1,39 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
-
 import FormInput from "@/components/Forms/FormInput";
-
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
-
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
+import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
-
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-
-
 import {
   useAddModuleMutation,
   useGetAllModuleQuery,
 } from "@/redux/api/adminApi/moduleApi";
-
-
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-
-import { Button, Col, Row,  message } from "antd";
+import { Button, Col, Row, Spin, message } from "antd";
 import React, { useState } from "react";
 
 const CreateModule = () => {
+  const [textEditorValue, setTextEditorValue] = useState("");
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
-
   const { data: existModule } = useGetAllModuleQuery({});
-
   // !  tag selection
-
-  const [selectedTags, setSelectedTags] = useState<string[]>([
-    "tags1",
-    "tags2",
-  ]);
-
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const onSubmit = async (values: any) => {
     // console.log(values);
-
     const imgUrl = await uploadImgBB(values.img);
-
     values.img = imgUrl;
-
     const ModuleData: {} = {
       ...values,
       tags: selectedTags,
+      details: textEditorValue,
     };
-    console.log(ModuleData);
 
     try {
       const res = await addModule(ModuleData).unwrap();
@@ -68,27 +50,25 @@ const CreateModule = () => {
     }
   };
 
-  if (serviceLoading) {
-    return message.loading("Loading...");
-  }
+  // if (serviceLoading) {
+  //   return message.loading("Loading...");
+  // }
   const roundedNumber = Number(existModule?.data[0].module_number).toFixed(1);
-
   // Add 0.1 to the rounded number and use toFixed again when logging
   const preModule_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
-
   // console.log(preModule_number);
 
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <div>
-        {/* resolver={yupResolver(adminSchema)} */}
-        {/* resolver={yupResolver(IServiceSchema)} */}
         <Form
           submitHandler={onSubmit}
           defaultValues={{ module_number: Number(preModule_number) }}
@@ -124,7 +104,6 @@ const CreateModule = () => {
                   label="Module Title"
                   required={true}
                 />
-                {/*//! 1 */}
               </Col>
               <Col className="gutter-row" xs={4} style={{}}>
                 <FormInput
@@ -134,16 +113,13 @@ const CreateModule = () => {
                   label="Module No"
                   required={true}
                 />
-                {/*//! 2 */}
               </Col>
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectMilestoneField />
-                {/* //! price type 5*/}
               </Col>
 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectAuthorField />
-                {/* //! price type 4*/}
               </Col>
 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
@@ -151,23 +127,20 @@ const CreateModule = () => {
                   size="large"
                   name="status"
                   options={courseStatusOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
+                  defaultValue={{ label: "Select", value: "" }}
                   label="status"
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8*/}
               </Col>
-              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+              <Col className="gutter-row" xs={24} style={{}}>
                 <TagsSelectUI
                   selected={selectedTags}
                   setSelected={setSelectedTags}
                 />
-                {/*//! 11 */}
               </Col>
-              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+              <Col className="gutter-row" xs={24} style={{}}>
                 <UploadImage name="img" />
-                {/* //!7*/}
               </Col>
               <Col
                 className="gutter-row"
@@ -177,14 +150,27 @@ const CreateModule = () => {
                 style={{}}
               >
                 {/*//! 3 */}
-                <FormTextArea label="Description" rows={15} name="details" />
+                <section
+                  style={{
+                    borderTopWidth: "2px",
+                  }} /* className=" border-t-2" */
+                >
+                  <p className="text-center my-3 font-bold text-xl">
+                    Description
+                  </p>
+                  <TextEditor
+                    textEditorValue={textEditorValue}
+                    setTextEditorValue={setTextEditorValue}
+                  />
+                </section>
               </Col>
             </Row>
           </div>
-
-          <Button htmlType="submit" type="default">
-            Create
-          </Button>
+          {serviceLoading ? (
+            <Spin />
+          ) : (
+            <ButtonSubmitUI>Create Module</ButtonSubmitUI>
+          )}
         </Form>
       </div>
     </div>

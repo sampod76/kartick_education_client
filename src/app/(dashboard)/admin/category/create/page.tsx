@@ -30,7 +30,11 @@ const CreateCategory = () => {
     const status = "active";
     const imgUrl = await uploadImgBB(values.img);
 
-    const categoryData: { title: string; img: string; status: string } = {
+    const categoryData: {
+      title: string;
+      img?: string | null;
+      status: string;
+    } = {
       title: values.title,
       img: imgUrl,
       status: status,
@@ -71,10 +75,24 @@ const CreateCategory = () => {
             }}
             // className="w-fit p-3 rounded-xl mx-auto shadow-2xl"
           >
-            <h1 style={{"fontSize":"1.125rem","lineHeight":"1.75rem","fontWeight":600,"textAlign":"center"}} className="text-center text-lg font-semibold">
+            <h1
+              style={{
+                fontSize: "1.125rem",
+                lineHeight: "1.75rem",
+                fontWeight: 600,
+                textAlign: "center",
+              }}
+              className="text-center text-lg font-semibold"
+            >
               Create category
             </h1>
-            <hr style={{"marginTop":"0.25rem","marginBottom":"0.25rem","borderWidth":"1px"}} /* className="border my-1" */ />
+            <hr
+              style={{
+                marginTop: "0.25rem",
+                marginBottom: "0.25rem",
+                borderWidth: "1px",
+              }} /* className="border my-1" */
+            />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -98,8 +116,6 @@ const CreateCategory = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={24}
-                lg={24}
                 style={{
                   marginBottom: "10px",
                   marginTop: "10px",

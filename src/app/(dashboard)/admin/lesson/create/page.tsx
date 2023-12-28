@@ -30,9 +30,10 @@ import { Col, Row, message } from "antd";
 import React, { useState } from "react";
 
 const CreateLesson = () => {
+  const [textEditorValue, setTextEditorValue] = useState("");
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
 
-  const { data: existLesson } = useGetAllLessonQuery({});
+  const { data: existLesson,isLoading } = useGetAllLessonQuery({});
 
 
 
@@ -199,8 +200,7 @@ const CreateLesson = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+               
                 style={{
                   marginBottom: "10px",
                 }}

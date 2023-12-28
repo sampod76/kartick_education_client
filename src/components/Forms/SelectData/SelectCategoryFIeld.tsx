@@ -2,10 +2,11 @@ import React from "react";
 import FormSelectField from "../FormSelectField";
 
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import FormSearchSelectField from "../FormSearchSelectField";
 
 const SelectCategoryField = ({ defaultData }: { defaultData?: any }) => {
   //! for Category options selection
-  const { data: Category } = useGetAllCategoryQuery({});
+  const { data: Category, isLoading } = useGetAllCategoryQuery({});
   const CategoryData = Category?.data;
   // console.log(CategoryData)
   const CategoryOptions = CategoryData?.map((item: any) => {
@@ -14,15 +15,15 @@ const SelectCategoryField = ({ defaultData }: { defaultData?: any }) => {
       value: item?._id,
     };
   });
-  console.log(CategoryOptions);
+
   return (
-    <FormSelectField
+    <FormSearchSelectField
       size="large"
       name="category"
       options={CategoryOptions as any}
-      defaultValue={defaultData ? defaultData : null}
+      defaultValue={{ label: "Select Category", value: "" }}
       label="Category"
-      // placeholder="Select"
+      loading={isLoading}
       required={true}
     />
   );

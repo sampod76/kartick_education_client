@@ -24,7 +24,7 @@ type SelectFieldProps = {
   loading?: boolean;
 };
 
-const FormSelectField = ({
+const FormSearchSelectField = ({
   name,
   size = "large",
   valueFixed,
@@ -39,10 +39,18 @@ const FormSelectField = ({
 }: SelectFieldProps) => {
   const { control } = useFormContext();
   const [selectedValue, setSelectedValue] = useState("");
+  // Filter `option.label` match the user type `input`
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const onSearch = (value: string) => {
+    console.log("search:", value);
+  };
 
   return (
     <>
-     {label ? (
+      {label ? (
         <LabelUi>
           {label}
           {required && <span className="text-red-400"> *</span>}
@@ -65,6 +73,10 @@ const FormSelectField = ({
             options={options}
             value={selectedValue || value}
             style={{ width: "100%" }}
+            showSearch
+            onSearch={onSearch}
+            filterOption={filterOption}
+            optionFilterProp="children"
             loading={loading}
             // placeholder={placeholder}
           />
@@ -74,4 +86,4 @@ const FormSelectField = ({
   );
 };
 
-export default FormSelectField;
+export default FormSearchSelectField;

@@ -2,6 +2,7 @@
 
 import { Select } from "antd";
 import { useFormContext, Controller } from "react-hook-form";
+import LabelUi from "../ui/dashboardUI/LabelUi";
 
 export type SelectOptions = {
   label: string;
@@ -16,6 +17,8 @@ type SelectFieldProps = {
   placeholder?: string;
   label?: string;
   defaultValue?: SelectOptions;
+  loading?: boolean;
+  required?: boolean;
 };
 
 const FormMultiSelectField = ({
@@ -26,12 +29,19 @@ const FormMultiSelectField = ({
   options,
   label,
   defaultValue,
+  loading = false,
+  required,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
 
   return (
     <>
-      {label ? label : null}
+      {label ? (
+        <LabelUi>
+          {label}
+          {required && <span className="text-red-400"> *</span>}
+        </LabelUi>
+      ) : null}
       <Controller
         control={control}
         name={name}
@@ -45,6 +55,7 @@ const FormMultiSelectField = ({
             placeholder={placeholder}
             allowClear
             mode="multiple"
+            loading={loading}
           />
         )}
       />
