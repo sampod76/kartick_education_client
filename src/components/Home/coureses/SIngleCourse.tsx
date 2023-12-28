@@ -7,7 +7,7 @@ import {
 import { Avatar, Card, Rate } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-
+import parse from 'html-react-parser';
 const { Meta, Grid } = Card;
 
 const SIngleCourse = ({ course }: { course: any }) => {
@@ -85,8 +85,8 @@ const SIngleCourse = ({ course }: { course: any }) => {
           description={
             <p style={{color:"#282938",minHeight:"3rem"}}>
               {course?.details?.length < 64
-                ? course?.details
-                : course?.details?.slice(0, 64) + "....."}
+                ? parse(course?.details)
+                : parse(course?.details?.slice(0, 64)) + "....."}
 
             </p>
           }
