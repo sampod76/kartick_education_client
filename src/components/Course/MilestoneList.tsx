@@ -14,7 +14,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
 
   const { data } = useGetAllMilestoneQuery({
     course: courseId,
-    modules: "yes",
+    module: "yes",
   });
 
   // console.log(data,"courseId");
