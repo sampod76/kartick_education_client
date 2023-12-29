@@ -35,7 +35,6 @@ const CreateSingleQuiz = () => {
     useAddSingleQuizMutation();
 
   // !  tag selection
-
   const [selectedTags, setSelectedTags] = useState<string[]>([
     "course",
     "tech",
@@ -55,14 +54,14 @@ const CreateSingleQuiz = () => {
     {
       title: "Option A",
       correct: true,
-      img: "https://...",
+      img: "https://",
       serialNumber: 1,
       status: "active",
     },
     {
       title: "Option B",
       correct: false,
-      img: "https://...",
+      img: "https://",
       serialNumber: 2,
       status: "active",
     },
