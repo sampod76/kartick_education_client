@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import HeadingUI from "../ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "../ui/dashboardUI/SubHeadingUI";
+import uploadImgBB from "@/hooks/imgbbUploads";
 
 interface Answer {
   title: string;
@@ -25,6 +26,8 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
   answers,
   setAnswers,
 }) => {
+  console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answers:", answers);
+
   const handleAdd = () => {
     setAnswers([
       ...answers,
@@ -50,73 +53,101 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
       {answers?.map((answer, index) => (
         <Space
           key={index}
-          // style={{ display: "flex", marginBottom: 8 }}
+          className="shadow-1 "
           style={{
             display: "flex",
-            // flexDirection: "column",
-            marginBottom: 8,
-            width: "100%",
-            alignItems: "center",
+            alignItems: "start",
+            justifyContent: "space-between",
+            margin: "10px 0",
+            border: "1px solid gray",
+            padding: "10px 8px",
+            borderRadius: "4px",
           }}
-          align="baseline"
         >
-          <Input
-            placeholder="Option Title"
-          width={200}
-            value={answer.title}
-            onChange={(e) =>
-              handleChange(index, { ...answer, title: e.target.value })
-            }
-          />
-          <Radio.Group
-            onChange={(e) =>
-              handleChange(index, { ...answer, correct: e.target.value })
-            }
-            value={answer.correct}
-          >
-            <Radio value={true}>Correct</Radio>
-            <Radio value={false}>Incorrect</Radio>
-          </Radio.Group>
-          <Upload
-            listType="picture"
-            showUploadList={true}
-            beforeUpload={(file) => {
-              // You can add custom logic before uploading, e.g., checking file type or size
-              handleChange(index, {
-                ...answer,
-                img: URL.createObjectURL(file),
-              });
-              return false; // Prevent default upload behavior
+          <Space
+            // style={{ display: "flex", marginBottom: 8 }}
+
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              width: "100%",
+              alignItems: "start",
             }}
+            align="start"
           >
-            <Button>+Image</Button>
-          </Upload>
-          <Input
-            placeholder="Serial Number"
-            type="number"
-            value={answer.serialNumber}
-            onChange={(e) =>
-              handleChange(index, { ...answer, serialNumber: +e.target.value })
-            }
+            {/* quiz option */}
+            <Input
+              placeholder="Option Title"
+              width={200}
+              value={answer.title}
+              onChange={(e) =>
+                handleChange(index, { ...answer, title: e.target.value })
+              }
+              // defaultValue={index + 1}
+            />
+            {/* Quiz radio select */}
+
+            <Radio.Group
+              onChange={(e) =>
+                handleChange(index, { ...answer, correct: e.target.value })
+              }
+              value={answer.correct}
+            >
+              <Radio value={true}>Correct</Radio>
+              <Radio value={false}>Incorrect</Radio>
+            </Radio.Group>
+            {/* quiz uploader */}
+            <Upload
+              listType="picture"
+              showUploadList={true}
+              beforeUpload={async (file) => {
+                // You can add custom logic before uploading, e.g., checking file type or size
+                const imgUrl = await uploadImgBB(file);
+                // console.log(imgUrl);
+
+                handleChange(index, {
+                  ...answer,
+                  img: imgUrl as string,
+                });
+                return false; // Prevent default upload behavior
+              }}
+            >
+              <Button>+Image</Button>
+            </Upload>
+            {/* serial number */}
+            <div className="text-start ">
+              <label>Serial number</label>
+              <Input
+                placeholder="Serial Number"
+                type="number"
+                value={answer.serialNumber}
+                defaultValue={index + 1}
+                onChange={(e) =>
+                  handleChange(index, {
+                    ...answer,
+                    serialNumber: +e.target.value,
+                  })
+                }
+              />
+            </div>
+          
+            {/* select status */}
+            <Select
+              style={{ width: 120 }}
+              onChange={(value) =>
+                handleChange(index, { ...answer, status: value })
+              }
+              defaultValue={answer.status}
+            >
+              <Select.Option value="active">Active</Select.Option>
+              <Select.Option value="deactivate">Deactivate</Select.Option>
+            </Select>
+          </Space>
+          <MinusCircleOutlined
+            style={{ fontSize: "1.5rem" }}
+            onClick={() => handleRemove(index)}
           />
-          {/* <Input
-            placeholder="Status"
-            value={answer.status}
-            onChange={(e) =>
-              handleChange(index, { ...answer, status: e.target.value })
-            }
-          /> */}
-          <Select
-            style={{ width: 120 }}
-            onChange={(value) =>
-              handleChange(index, { ...answer, status: value })
-            }
-            defaultValue={answer.status}
-          >
-            <Select.Option value="active">Active</Select.Option>
-            <Select.Option value="deactivate">Deactivate</Select.Option>
-          </Select>
-          <MinusCircleOutlined onClick={() => handleRemove(index)} />
         </Space>
       ))}
       <Button
