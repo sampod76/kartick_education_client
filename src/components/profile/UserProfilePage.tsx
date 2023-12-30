@@ -10,8 +10,9 @@ import Link from "next/link";
 
 import React from "react";
 import ImageTag from "../ui/CustomTag/ImageTag";
+import TopProfileSection from "./TopProfileSection";
 
-const ProfilePage = ({ userData }: { userData: any }) => {
+const UserProfilePage = ({ userData }: { userData: any }) => {
   // console.log(userData);
   const img = userData?.img || userData[userData.role]["img"];
   // console.log(img);
@@ -25,8 +26,10 @@ const ProfilePage = ({ userData }: { userData: any }) => {
     userData?.name?.lastName || userData[userData.role]["name"].lastName;
 
   return (
-    <div className="max-w-full lg:max-w-[80%] mx-auto block lg:flex justify-between gap-5"></div>
+    <div className="">
+      <TopProfileSection userData={userData} />
+    </div>
   );
 };
 
-export default ProfilePage;
+export default UserProfilePage;

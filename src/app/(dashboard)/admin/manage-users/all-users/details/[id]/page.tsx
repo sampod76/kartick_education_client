@@ -4,7 +4,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 import { useGetSingleUserQuery } from "@/redux/api/adminApi/usersApi";
 
-import ProfilePage from "@/components/profile/UserProfilePage";
+import UserProfilePage from "@/components/profile/UserProfilePage";
 
 const UserDetailsPage = ({ params }: any) => {
   const id = params.id;
@@ -19,7 +19,7 @@ const UserDetailsPage = ({ params }: any) => {
 
   return (
     <div>
-      <ProfilePage userData={userData}></ProfilePage>
+      <UserProfilePage userData={userData}></UserProfilePage>
     </div>
   );
 };
