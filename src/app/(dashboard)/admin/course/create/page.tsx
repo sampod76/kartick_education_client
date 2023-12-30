@@ -34,6 +34,7 @@ const { Option } = Select;
 import dynamic from "next/dynamic";
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import TextEditor from "@/components/shared/TextEditor/TextEditor";
+import UploadMultpalImage from "@/hooks/multipleImageUpload";
 // const TextEditor = dynamic(
 //   () => import("@/components/shared/TextEditor/TextEditor"),
 //   {
@@ -261,7 +262,6 @@ const CreateCoursePage = () => {
 
                   <Col
                     xs={24}
-                   
                     style={{
                       margin: "10px 0",
                       textAlign: "start",
@@ -273,6 +273,14 @@ const CreateCoursePage = () => {
                 </Row>
               </div>
             </div>
+            <div>
+              <FormTextArea
+                name="short_description"
+                label="Short description"
+                rows={5}
+                placeholder="Please enter short description"
+              />
+            </div>
             <section
               style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
             >
@@ -282,6 +290,9 @@ const CreateCoursePage = () => {
                 setTextEditorValue={setTextEditorValue}
               />
             </section>
+            <div>
+              <UploadMultpalImage />
+            </div>
             {isLoading ? (
               <Spin />
             ) : (
