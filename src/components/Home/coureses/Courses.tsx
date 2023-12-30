@@ -4,9 +4,10 @@ import SIngleCourse from "./SIngleCourse";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 
 const Courses = ({ query }: { query: any }) => {
+  console.log("🚀 ~ file: Courses.tsx:7 ~ Courses ~ query:", query);
 
-  const {data} = useGetAllCourseQuery({...query})
-  // console.log("🚀 ~ file: Courses.tsx:5 ~ Courses ~ data:", data?.data)
+  const { data } = useGetAllCourseQuery({ ...query });
+  console.log("🚀 file: Courses.tsx:5 data:", data);
 
   return (
     <div className="mt-[5rem] container mx-auto ">

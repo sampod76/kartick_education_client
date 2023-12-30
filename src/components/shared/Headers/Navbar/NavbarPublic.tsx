@@ -1,4 +1,3 @@
-
 "use client";
 import { Menu } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
@@ -9,7 +8,7 @@ import { homeNavItems } from "@/constants/homeNabItems";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 
 const NavbarPublic = () => {
-  const screens = useBreakpoint();
+  // const screens = useBreakpoint();
 
   return (
     <nav
@@ -20,24 +19,23 @@ const NavbarPublic = () => {
 
       <Menu
         mode="horizontal"
+        className="hidden lg:flex"
         style={{
           // color:"#5371FF"
           fontWeight: "700",
           fontSize: "15px",
           fontFamily: "fantasy",
-          display:`${screens.sm ? "flex":"none"}`
+          // display:`${screens.sm ? "flex":"none"}`
         }}
         disabledOverflow
         // items={sidebarItems("homeNav")}
         items={homeNavItems}
       />
       <div
-      
-      // className="flex lg:hidden"
-      style={{
-        display:`${screens.sm ? "none":"flex"}`
-      }}
-      
+        className="flex lg:hidden"
+        // style={{
+        //   display: `${screens.sm ? "none" : "flex"}`,
+        // }}
       >
         <SideBarHome></SideBarHome>
       </div>
@@ -46,4 +44,4 @@ const NavbarPublic = () => {
   );
 };
 
-export default NavbarPublic
+export default NavbarPublic;

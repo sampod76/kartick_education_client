@@ -322,7 +322,7 @@ const CreateSingleQuiz = () => {
                 }}
               >
                 {/* <DynamicFormFiled  /> */}
-                <AnswerInputList answers={answers} setAnswers={setAnswers} />
+                <AnswerInputList answers={answers} setAnswers={setAnswers as any} />
                 {/*//! 4 --- */}
               </Col>
             </Row>

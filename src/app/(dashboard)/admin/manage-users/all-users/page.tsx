@@ -26,7 +26,10 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import StatusTag from "@/components/ui/CustomTag/StatusTag";
 import Image from "next/image";
 import ImageTag from "@/components/ui/CustomTag/ImageTag";
-import { useDeleteUserMutation, useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
+import {
+  useDeleteUserMutation,
+  useGetAllUsersQuery,
+} from "@/redux/api/adminApi/usersApi";
 
 const AdminPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -58,12 +61,11 @@ const AdminPage = () => {
     ...query,
   });
 
+  console.log("🚀 ~ file: page.tsx:58 ~ AdminPage ~ data:", data);
+
   //@ts-ignore
-  const UserData = data?.data?.data;
-  console.log(
-    "🚀 ~ file: page.tsx:63 ~ AdminPage ~ UserData:",
-    UserData
-  );
+  const UserData = data?.data;
+  // console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ UserData:", UserData);
   //@ts-ignore
   const meta = data?.data?.meta;
 
@@ -92,7 +94,10 @@ const AdminPage = () => {
       title: "Name",
       ellipsis: true,
       render: function (data: any) {
-        const fullName = data[data.role]['name']['firstName'] + " " + data[data.role]['name']['lastName'] 
+        const fullName =
+          data[data.role]["name"]["firstName"] +
+          " " +
+          data[data.role]["name"]["lastName"];
         return <p className="capitalize">{fullName}</p>;
       },
     },
@@ -140,7 +145,9 @@ const AdminPage = () => {
         console.log(data);
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/manage-users/all-users/details/${data}`}>
+            <Link
+              href={`/${SUPER_ADMIN}/manage-users/all-users/details/${data}`}
+            >
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
@@ -209,13 +216,15 @@ const AdminPage = () => {
   //   return <LoadingForDataFetch />;
   // }
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <h1 className="text-center font-bold text-2xl">All User List</h1>
       <hr />
       <ActionBar>
