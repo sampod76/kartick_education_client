@@ -11,6 +11,7 @@ import Link from "next/link";
 import React from "react";
 import ImageTag from "../ui/CustomTag/ImageTag";
 import TopProfileSection from "./TopProfileSection";
+import ProfileMainSection from "./ProfileTabSection";
 
 const UserProfilePage = ({ userData }: { userData: any }) => {
   // console.log(userData);
@@ -28,6 +29,7 @@ const UserProfilePage = ({ userData }: { userData: any }) => {
   return (
     <div className="">
       <TopProfileSection userData={userData} />
+      <ProfileMainSection />
     </div>
   );
 };
