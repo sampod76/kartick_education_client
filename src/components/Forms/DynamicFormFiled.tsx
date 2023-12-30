@@ -12,7 +12,7 @@ import uploadImgBB from "@/hooks/imgbbUploads";
 interface Answer {
   title: string;
   correct: boolean;
-  img: string;
+  img: string | [];
   serialNumber: number;
   status: string;
 }
@@ -53,7 +53,6 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
       {answers?.map((answer, index) => (
         <Space
           key={index}
-          
           style={{
             display: "flex",
             alignItems: "start",
@@ -62,8 +61,9 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
             border: "1px solid gray",
             padding: "10px 8px",
             borderRadius: "4px",
+            width: "100%",
           }}
-          className="shadow-1 w-full lg:w-[30%] "
+          className="shadow-1 "
         >
           <Space
             // style={{ display: "flex", marginBottom: 8 }}
@@ -74,13 +74,17 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
               gap: "18px",
               width: "100%",
               alignItems: "start",
+              // background:"red"
             }}
             align="start"
           >
             {/* quiz option */}
             <Input
               placeholder="Option Title"
-              width={200}
+              style={{
+                width: "20rem",
+              }}
+              // width={500}
               value={answer.title}
               onChange={(e) =>
                 handleChange(index, { ...answer, title: e.target.value })
@@ -101,13 +105,25 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
             {/* quiz uploader */}
             <Upload
               listType="picture"
-              style={{textAlign:"start"}}
+              style={{ textAlign: "start" }}
               showUploadList={true}
+              multiple={true}
+              // multiple
               beforeUpload={async (file) => {
+                console.log(
+                  "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
+                  file
+                );
                 // You can add custom logic before uploading, e.g., checking file type or size
                 const imgUrl = await uploadImgBB(file);
-                // console.log(imgUrl);
+                console.log(imgUrl);
 
+                // if (answer?.img) {
+                //   // handleChange(index, {
+                //   //   ...answer,
+                //   //   img:
+                //   // });
+                // }
                 handleChange(index, {
                   ...answer,
                   img: imgUrl as string,
@@ -115,7 +131,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
                 return false; // Prevent default upload behavior
               }}
             >
-              <Button style={{textAlign:"start"}}>Answer Image +</Button>
+              <Button style={{ textAlign: "start" }}>Answer Image +</Button>
             </Upload>
             {/* serial number */}
             <div className="text-start ">
@@ -133,7 +149,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
                 }
               />
             </div>
-          
+
             {/* select status */}
             <Select
               style={{ width: 120 }}
