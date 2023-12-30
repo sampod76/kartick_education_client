@@ -8,7 +8,7 @@ import { homeNavItems } from "@/constants/homeNabItems";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 
 const NavbarPublic = () => {
-  const screens = useBreakpoint();
+  // const screens = useBreakpoint();
 
   return (
     <nav
