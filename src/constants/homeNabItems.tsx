@@ -1,5 +1,4 @@
-import DropDownUI from "@/components/ui/NavUI/DropDownUI";
-import { dropDownItemsData } from "@/db/publicNavDB";
+
 import type { MenuProps } from "antd";
 import Link from "next/link";
 export const homeNavItems: MenuProps["items"] = [

@@ -2,7 +2,7 @@ import React from "react";
 import FormSelectField from "../FormSelectField";
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 import { ENUM_STATUS } from "@/constants/globalEnums";
-import FormSearchSelectField from '../FormSearchSelectField';
+import FormSearchSelectField from "../FormSearchSelectField";
 
 const SelectAuthorField = () => {
   const query: Record<string, any> = {};
@@ -24,7 +24,7 @@ const SelectAuthorField = () => {
     };
   });
 
-  console.log(AuthorOptions);
+
   return (
     <FormSearchSelectField
       size="large"

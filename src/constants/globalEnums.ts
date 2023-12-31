@@ -8,6 +8,10 @@ export enum ENUM_YN {
   YES = 'yes',
   NO = 'no',
 }
+export enum ENUM_SORT_ORDER {
+  ASC = 'asc',
+  DESC = 'desc',
+}
 
 // 'pending' | 'accept' | 'reject' | 'complete'|'cancel'
 export enum ENUM_BOOKING_STATUS {
