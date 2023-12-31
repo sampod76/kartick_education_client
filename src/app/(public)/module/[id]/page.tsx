@@ -8,9 +8,7 @@ export default function ModulePage({ params }: { params: { id: string } }) {
   console.log(milestoneId);
   return (
     <div>
-      <h1>ModulePageDetails Page</h1>
       <ModuleList milestoneId={milestoneId}></ModuleList>
-   
     </div>
   );
 }

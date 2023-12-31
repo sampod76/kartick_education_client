@@ -59,10 +59,10 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
 
                 {/* //! Milestone Title */}
               </Link>
-              <ul className="py-3 list-[circle]">
+              <ul className="py-3 list-[circle] ">
                 {milestone?.modules?.map((module: any, index: number) => {
                   return (
-                    <li key={index}>
+                    <li key={index} className="px-2 text-slate-800 ">
                       <Link
                         href={`/lesson/${module?._id}`}
                         // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
@@ -71,11 +71,12 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
                           gap: "0.5rem",
                           alignItems: "center",
                           fontWeight: 500,
-                          color: "grey",
+                          // color: "grey",
                           fontSize: "18px",
                           fontFamily: "Inter",
                           marginBlock: "1rem",
                           textDecoration: "uppercase",
+                          // padding: "2px 16px",
                         }}
                       >
                         {/* //! Modules List  */}
