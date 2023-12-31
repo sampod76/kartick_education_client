@@ -12,7 +12,7 @@ const NavbarPublic = () => {
 
   return (
     <nav
-      className="bg-[#ffffff] text-black py-[1em] px-[2em] 
+      className="bg-[#ffffff bg-slate-50 shadow-xl text-black py-[1em] px-[2em] 
     flex align-center justify-between  gap-2 "
     >
       <Logo />
