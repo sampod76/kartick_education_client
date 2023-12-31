@@ -8,9 +8,8 @@ import React from "react";
 const MilestoneList = ({ courseId }: { courseId: any }) => {
   console.log(courseId);
 
- 
   const { data: courseData } = useGetSingleCourseQuery(courseId);
-  console.log(courseData,"courseDat");
+  console.log(courseData, "courseDat");
 
   const { data } = useGetAllMilestoneQuery({
     course: courseId,
@@ -19,7 +18,8 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
 
   // console.log(data,"courseId");
   const milestoneData = data?.data;
-  console.log(milestoneData,"milestoneData");
+
+  console.log(milestoneData, "milestoneData");
 
   return (
     <div
@@ -37,7 +37,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
           fontFamily: "Lato",
         }}
       >
-      Course  {courseData?.title}
+        {courseData?.title}
         {/* //! Course Title */}
       </h2>
       <Divider
@@ -56,30 +56,34 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
                 className="text-start text-gray-800 text-[24px] font-semibold font-['Inter'] leading-2 "
               >
                 {milestone?.title}
+
                 {/* //! Milestone Title */}
               </Link>
-              <ul className="py-3">
+              <ul className="py-3 list-[circle] ">
                 {milestone?.modules?.map((module: any, index: number) => {
                   return (
-                    <Link
-                      href={`/lesson/${module?._id}`}
-                      // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
-                      style={{
-                        display: "flex",
-                        gap: "0.5rem",
-                        alignItems: "center",
-                        fontWeight: 500,
-                        color: "grey",
-                        fontSize: "18px",
-                        fontFamily: "Inter",
-                        marginBlock: "1rem",
-                      }}
-                      key={index}
-                    >
-                      {/* //! Modules List  */}
-                      <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div>
-                      <h1>{module?.title}</h1>
-                    </Link>
+                    <li key={index} className="px-2 text-slate-800 ">
+                      <Link
+                        href={`/lesson/${module?._id}`}
+                        // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
+                        style={{
+                          display: "flex",
+                          gap: "0.5rem",
+                          alignItems: "center",
+                          fontWeight: 500,
+                          // color: "grey",
+                          fontSize: "18px",
+                          fontFamily: "Inter",
+                          marginBlock: "1rem",
+                          textDecoration: "uppercase",
+                          // padding: "2px 16px",
+                        }}
+                      >
+                        {/* //! Modules List  */}
+                        {/* <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div> */}
+                        <h1>{module?.title}</h1>
+                      </Link>
+                    </li>
                   );
                 })}
               </ul>

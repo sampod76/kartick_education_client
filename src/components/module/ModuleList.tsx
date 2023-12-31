@@ -23,7 +23,7 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
 
   // console.log(data,"milestoneId");
   const modulesData = data?.data;
-  console.log(modulesData, "module Data");
+  // console.log(modulesData, "module Data");
 
   return (
     <div
@@ -33,15 +33,15 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
     >
       <h2
         style={{
-          fontWeight: 400,
+          fontWeight: 700,
           textAlign: "center",
           color: "black",
           textTransform: "uppercase",
-          fontSize: "35px",
+          fontSize: "24px",
           fontFamily: "Lato",
         }}
       >
-        Milestone {milestoneData?.title}
+        {milestoneData?.title}
         {/* //! Course Title */}
       </h2>
       <Divider
@@ -51,13 +51,13 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
           background: "red",
         }}
       />
-      <div className="grid  grid-cols-1 lg:grid-cols-2 bg-slate-500 gap-3 max-w-[80%] mx-auto mt-5 ">
+      <div className="grid  grid-cols-1 lg:grid-cols-2  gap-3 max-w-[80%] mx-auto mt-5 ">
         {modulesData?.map((module: any, index: number) => {
           return (
             <div key={index} className="p-2 ">
               <Link
                 href={`/lesson/${module?._id}`}
-                className="text-start  text-[24px] font-semibold font-['Inter'] leading-2 "
+                className="text-start  text-[20px] font-[550] font-['Inter'] leading-2 "
               >
                 {module?.title}
                 {/* //! module Title */}

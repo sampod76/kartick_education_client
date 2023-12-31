@@ -12,7 +12,7 @@ const NavbarPublic = () => {
 
   return (
     <nav
-      className="bg-[#ffffff] text-black py-[1em] px-[2em] 
+      className=" bg-white shadow-xl text-black py-[1em] px-[2em] 
     flex align-center justify-between  gap-2 "
     >
       <Logo />
@@ -26,6 +26,7 @@ const NavbarPublic = () => {
           fontSize: "15px",
           fontFamily: "fantasy",
           // display:`${screens.sm ? "flex":"none"}`
+          background: "white",
         }}
         disabledOverflow
         // items={sidebarItems("homeNav")}

@@ -8,7 +8,8 @@ import React from "react";
 
 export default function ModuleTop({ moduleId }: { moduleId: any }) {
   const { data } = useGetSingleModuleQuery(moduleId);
-  console.log(data, "");
+  // console.log(data, "");
+
   return (
     <div
       style={{
@@ -23,7 +24,7 @@ export default function ModuleTop({ moduleId }: { moduleId: any }) {
         fontSize: "2rem",
       }}
     >
-      {data?.title} Module Overviews
+      {data?.title}
     </div>
   );
 }
