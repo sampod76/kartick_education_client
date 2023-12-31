@@ -29,7 +29,6 @@ export const axiosBaseQuery =
           "Content-Type": contentType || "application/json",
         },
         withCredentials: true,
-        
       });
       return result;
     } catch (axiosError) {
@@ -37,7 +36,7 @@ export const axiosBaseQuery =
       return {
         error: {
           status: err.response?.status,
-          data: err.response?.data || err?.message,
+          data: err.response?.data || err.message,
         },
       };
     }

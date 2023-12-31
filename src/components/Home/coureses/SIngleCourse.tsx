@@ -16,16 +16,17 @@ const SIngleCourse = ({ course }: { course: any }) => {
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className="w-[23rem] mx-auto  shadow-md "
+      className="max-w-xs mx-auto  shadow-md "
     >
       <Card
         // className="w-96 bg-red-500"
         bodyStyle={{ borderRadius: "10px, 10px, 0px, 0px" }}
         cover={
           <Image
-            className="h-[18rem]"
-            height={173}
-            width={292}
+            className="h-44 w-full object-cover"
+            height={300}
+            width={300}
+            // layout="responsive"
             alt="example"
             src={course?.img}
           />
@@ -49,7 +50,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
           </button>,
         ]}
       >
-        <Grid
+        {/* <Grid
           // className="bg-primary height-[30px] text-[16px] width-[36px] rounded-2xl text-white font-semibold py-2"
           style={{
             position: "absolute",
@@ -67,26 +68,24 @@ const SIngleCourse = ({ course }: { course: any }) => {
           <h2>
             <Rate className="h-[12px]" count={1} value={1} /> 5.0
           </h2>
-        </Grid>
+        </Grid> */}
         
 
         <Meta
-          avatar={
-            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
-          }
+          
           style={{
             fontSize: "16px",
             fontWeight: "500",
             textAlign: "start",
-            margin: "24px 0",
-            padding: "0 10px",
+            // margin: "24px 0",
+            // padding: "0 10px",
           }}
-          title={<h2 style={{ color: "black" }}>{course?.title}</h2>}
+          title={<h2 className="text-sm md:text-base" style={{ color: "black" }}>{course?.title}</h2>}
           description={
-            <p style={{color:"#282938",minHeight:"3rem"}}>
-              {course?.details?.length < 64
-                ? parse(course?.details)
-                : parse(course?.details?.slice(0, 64)) + "....."}
+            <p className="text-xs md:text-sm" style={{color:"#282938",}}>
+              {course?.short_description?.length < 80
+                ? parse(course?.short_description)
+                : parse(course?.short_description?.slice(0, 80)) + "....."}
 
             </p>
           }

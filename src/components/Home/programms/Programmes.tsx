@@ -4,7 +4,7 @@ import SIngleProgramme from "./SinglePrograme";
 
 const Programmes = () => {
   return (
-    <div className="mt-7  container mx-auto">
+    <div className="mt-7  container mx-auto ">
       <section className="block lg:flex  justify-between py-2">
         <h1 className="text-3xl text-[#282938] font-[600]">
           Book & Online Programs Grades K-12
