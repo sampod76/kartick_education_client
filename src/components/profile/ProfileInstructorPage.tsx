@@ -13,7 +13,7 @@ import ImageTag from "../ui/CustomTag/ImageTag";
 import TopProfileSection from "./TopProfileSection";
 import ProfileMainSection from "./ProfileTabSection";
 
-const UserProfilePage = ({ userData }: { userData: any }) => {
+const ProfileInstructorPage = ({ userData }: { userData: any }) => {
   // console.log(userData);
   const img = userData?.img || userData[userData.role]["img"];
   // console.log(img);
@@ -34,4 +34,4 @@ const UserProfilePage = ({ userData }: { userData: any }) => {
   );
 };
 
-export default UserProfilePage;
+export default ProfileInstructorPage;

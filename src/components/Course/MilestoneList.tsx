@@ -19,7 +19,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
   // console.log(data,"courseId");
   const milestoneData = data?.data;
 
-  console.log(milestoneData, "milestoneData");
+  // console.log(milestoneData, "milestoneData");
 
   return (
     <div
