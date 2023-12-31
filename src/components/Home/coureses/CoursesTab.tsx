@@ -54,7 +54,10 @@ const CoursesTab = () => {
         //@ts-ignore
         data?.data?.message
     );
-  }
+  };
+
+
+  
   return (
     <div className="mt-5 bg-slate-100 p-3">
       {isLoading ? (
