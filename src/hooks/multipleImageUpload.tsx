@@ -21,7 +21,7 @@ const UploadMultpalImage = () => {
   ///
   const props = {
     name: "image",
-    action: `https://api.imgbb.com/1/upload?key=a50f3571eea0f08e932e0a8e13295351`,
+    action: `${process.env.NEXT_PUBLIC_API_BASE_URL}/upload/upload-multipal-images`,
     headers: {
       // authorization: 'authorization-text',
     },

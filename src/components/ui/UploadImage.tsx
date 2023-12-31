@@ -44,7 +44,7 @@ const UploadImage = ({
   ) => {
     if (info.file.status === "uploading") {
       setLoading(true);
-      return;
+      // return;
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
@@ -70,7 +70,7 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="/api/file"
+        action={`${process.env.NEXT_PUBLIC_API_BASE_URL}/upload/upload-multipal-images`}
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >
