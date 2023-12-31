@@ -26,9 +26,15 @@ const beforeUpload = (file: RcFile) => {
 
 type ImageUploadProps = {
   name: string;
+  defaultImage?: string;
+  customChange?: any;
 };
 
-const UploadImage = ({ name }: ImageUploadProps) => {
+const UploadImage = ({
+  name,
+  defaultImage,
+  customChange,
+}: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   const { setValue } = useFormContext();
@@ -38,14 +44,11 @@ const UploadImage = ({ name }: ImageUploadProps) => {
   ) => {
     if (info.file.status === "uploading") {
       setLoading(true);
-      
       return;
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      console.log(info.file.response.data.url);
-      // only image links get
-      setValue(name, info.file.response.data.url);
+      setValue(name, info.file.originFileObj);
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
         setImageUrl(url);
@@ -54,7 +57,7 @@ const UploadImage = ({ name }: ImageUploadProps) => {
   };
 
   const uploadButton = (
-    <div>
+    <div className="">
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
@@ -67,17 +70,18 @@ const UploadImage = ({ name }: ImageUploadProps) => {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action={`${process.env.NEXT_PUBLIC_API_BASE_URL}/upload/uploade-single-image`}
-        beforeUpload={beforeUpload}
+        action="/api/file"
+        beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >
-        {imageUrl ? (
+        {imageUrl || defaultImage ? (
           <Image
-            src={imageUrl}
+            src={imageUrl ? imageUrl : (defaultImage as string)}
             alt="avatar"
-            className="w-full h-fit"
-            width={100}
-            height={100}
+            style={{ width: "100%" }}
+            width={60}
+            height={60}
+            // fill
           />
         ) : (
           uploadButton

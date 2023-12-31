@@ -1,22 +1,62 @@
 import { Col, Row, Tabs } from "antd";
 import React from "react";
 import SIngleCourse from "./SIngleCourse";
+import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import { ENUM_SORT_ORDER, ENUM_STATUS } from "@/constants/globalEnums";
+import CardLoading from "@/components/ui/Loading/CardLoading";
+import { Error_model_hook } from "@/utils/modalHook";
+import NotFoundCourse from "@/components/ui/NotFound/NotFoundCourse";
 
-const Courses = ({ data }: { data: any[] }) => {
-  // console.log("🚀 ~ file: Courses.tsx:5 ~ Courses ~ data:", data)
+interface ICourseItemType {
+  status?: string;
+  category?: string;
+  categoryTitle?: string;
+  [key: string]: string | undefined;
+}
 
+const Courses = ({ query }: { query: ICourseItemType }) => {
+  const queryAll: Record<string, any> = {};
+  queryAll["status"] = ENUM_STATUS.ACTIVE;
+  queryAll["limit"] = 99999;
+  queryAll["sortOrder"] = ENUM_SORT_ORDER.ASC;
+  for (const key in query) {
+    if (Object.prototype.hasOwnProperty.call(query, key)) {
+      queryAll[key] = query[key];
+    }
+  }
+
+  const { data, isLoading, error } = useGetAllCourseQuery({ ...queryAll });
+  if (
+    error ||
+    //@ts-ignore
+    data?.data?.success === false
+  ) {
+    const errorType: any = error;
+    Error_model_hook(
+      errorType?.message ||
+        //@ts-ignore
+        data?.data?.message
+    );
+    console.log(
+      errorType?.message ||
+        //@ts-ignore
+        data?.data?.message
+    );
+  }
   return (
-    <div className="mt-[5rem] container mx-auto">
-      <Row justify="space-around" align="middle" gutter={[16, 16]}>
-        {data.map((item: any, index: number) => {
-          return (
-            <Col key={index + 1} lg={6} md={12} sm={24}>
-              <SIngleCourse course={item} />
-            </Col>
-          );
-        })}
-      </Row>
-    </div>
+    <>
+      {isLoading ? (
+        <CardLoading />
+      ) :data?.data?.length===0?<NotFoundCourse/>: (
+        <div className="mt-3 container mx-auto ">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            {data?.data?.map((item: any, index: number) => {
+              return <SIngleCourse course={item} key={index + 1} />;
+            })}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

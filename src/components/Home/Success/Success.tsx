@@ -49,7 +49,7 @@ const Success = () => {
     },
   ];
   return (
-    <div className="bg-[#A2B0F321] my-2 py-[100px] container mx-auto">
+    <div className="bg-[#A2B0F321] mt-5 py-[100px] container mx-auto">
       <h1 className="text-3xl text-[#282938] font-[600]">
         Discover how <span className="text-secondary">iBlossomLearn </span>{" "}
         success for every learner with personalized and interactive lessons.

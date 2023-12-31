@@ -1,6 +1,7 @@
 import { DatePicker, DatePickerProps, Input } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import dayjs, { Dayjs } from "dayjs";
+import LabelUi from "../ui/dashboardUI/LabelUi";
 
 type UMDatePikerProps = {
   onChange?: (valOne: Dayjs | null, valTwo: string) => void;
@@ -9,7 +10,8 @@ type UMDatePikerProps = {
   value?: Dayjs;
   size?: "large" | "small";
   disablePrevious?: boolean;
-  specificDates?:string[]
+  required?: boolean;
+  specificDates?: string[];
 };
 
 const FormDatePicker = ({
@@ -17,8 +19,9 @@ const FormDatePicker = ({
   label,
   onChange,
   size = "large",
-  disablePrevious = true,
-  specificDates
+  disablePrevious = false,
+  specificDates,
+  required,
 }: UMDatePikerProps) => {
   const { control, setValue } = useFormContext();
 
@@ -27,22 +30,31 @@ const FormDatePicker = ({
     setValue(name, date);
   };
 
-  const disabledDate = (current:any) => {
+  const disabledDate = (current: any) => {
     // Convert the specific dates to JavaScript Date objects
     // const specificDatesConvert = [new Date('2023-10-20'), new Date('2014-05-05')];
-    const specificDatesConvert = specificDates?.map(date => new Date(date));
+    const specificDatesConvert = specificDates?.map((date) => new Date(date));
     // Get the current date without time
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     // Check if the current date is before today or in the specific dates array
-    return current && (current < today || specificDatesConvert?.some((date) => current.isSame(date, 'day')));
+    return (
+      current &&
+      (current < today ||
+        specificDatesConvert?.some((date) => current.isSame(date, "day")))
+    );
   };
 
   return (
     <div>
-      {label ? label : null}
-      <br />
+      {label ? (
+        <LabelUi>
+          {label}
+          {required && <span className="text-red-400"> *</span>}
+        </LabelUi>
+      ) : null}
+
       <Controller
         name={name}
         control={control}
@@ -57,7 +69,6 @@ const FormDatePicker = ({
             />
           ) : (
             <DatePicker
-              
               defaultValue={dayjs(field.value) || Date.now()}
               size={size}
               onChange={handleOnChange}

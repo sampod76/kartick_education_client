@@ -37,11 +37,20 @@ const UMTable = ({
 
   return (
     <Table
+      style={{
+        // overflowX: "auto",
+      
+       
+      }}
       loading={loading}
+      scroll={{ x: 1200 }}
       columns={columns}
+      bordered
+      
       dataSource={dataSource}
       pagination={paginationConfig}
       onChange={onTableChange}
+      
     />
   );
 };

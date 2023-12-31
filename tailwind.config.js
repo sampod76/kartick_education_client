@@ -13,14 +13,11 @@ module.exports = {
       colors:{
         primary:"#5371FF",
         secondary:"#FB8500"
-
       }
     },
-    // screens:{
-    //   sm:"425px",
-    //   md:"786px",
-    //   lg:"1080px" 
-    // }
+   
   },
-  plugins: [],
+  plugins: [
+   
+  ],
 }

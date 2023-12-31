@@ -19,10 +19,13 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body
-          // className="container mx-auto"
+          // className="container mx-auto "
           style={{
-            maxWidth: "2000px",
+            boxShadow:
+              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            maxWidth: "1990px",
             marginInline: "auto",
+            padding: "5px",
           }}
         >
           <Providers>{children}</Providers>

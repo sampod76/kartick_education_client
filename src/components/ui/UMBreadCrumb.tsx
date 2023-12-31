@@ -18,7 +18,7 @@ const UMBreadCrumb = ({
         </Link>
       ),
     },
-    ...items.map((item) => {
+    ...items?.map((item) => {
       return {
         title: item.link ? (
           <Link href={item.link}>{item.label}</Link>
@@ -29,7 +29,7 @@ const UMBreadCrumb = ({
     }),
   ];
 
-  return <Breadcrumb items={breadCrumbItems}></Breadcrumb>;
+  return <Breadcrumb style={{marginBlock:"1rem"}}  items={breadCrumbItems}></Breadcrumb>;
 };
 
 export default UMBreadCrumb;

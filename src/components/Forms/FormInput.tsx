@@ -4,6 +4,7 @@ import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
 import { Input, InputNumber } from "antd";
 import { spawn } from "child_process";
 import { useFormContext, Controller } from "react-hook-form";
+import LabelUi from "../ui/dashboardUI/LabelUi";
 interface IInput {
   name: string;
   type?: string;
@@ -24,12 +25,12 @@ const FormInput = ({
   size = "large",
   value,
   id,
-  placeholder,
+  placeholder='Please enter..',
   validation,
   label,
   required,
   disabled = false,
-  readOnly=false,
+  readOnly = false,
 }: IInput) => {
   const {
     control,
@@ -40,7 +41,7 @@ const FormInput = ({
 
   return (
     <>
-      {required && type !== "number" ? (
+      {/* {required && type !== "number" ? (
         <span
           style={{
             color: "red",
@@ -48,8 +49,13 @@ const FormInput = ({
         >
           *
         </span>
+      ) : null} */}
+      {label && type !== "number" ? (
+        <LabelUi>
+          {label}
+          {required && <span className="text-red-400"> *</span>}
+        </LabelUi>
       ) : null}
-      {label && type !== "number" ? label : null}
       <Controller
         control={control}
         name={name}
@@ -65,22 +71,25 @@ const FormInput = ({
               value={value ? value : field.value}
             />
           ) : type === "number" ? (
-            <div className="flex flex-col" >
-              <h1>
-                {required ? (
-                  <span
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    *
-                  </span>
-                ) : null}
-                {label}
+            <div className="flex flex-col">
+              <h1 className="">
+                <LabelUi>
+                  {label}{" "}
+                  {required ? (
+                    <span
+                      style={{
+                        color: "red",
+                        textAlign: "start",
+                      }}
+                    >
+                      *
+                    </span>
+                  ) : null}
+                </LabelUi>
               </h1>
               <InputNumber
                 // type={type}
-                style={{width: "100%", marginRight:"2px"}}
+                style={{ width: "100%", marginRight: "2px" }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}

@@ -1,16 +1,15 @@
-import LoginPage from "@/components/Login/Login";
+import Login from "@/components/Login/LoginPage";
 import { Metadata } from "next";
-
 export const metadata: Metadata = {
-  title: "UMS | Login",
+  title: "Login",
+  description: "..",
 };
-
-const Login = () => {
+const LoginPage = () => {
   return (
     <>
-      <LoginPage />
+      <Login />
     </>
   );
 };
 
-export default Login;
+export default LoginPage;

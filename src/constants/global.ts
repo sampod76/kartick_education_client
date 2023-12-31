@@ -1,3 +1,5 @@
+import { USER_ROLE } from "./role";
+
 export const genderOptions = [
   {
     label: "Male",
@@ -12,7 +14,6 @@ export const genderOptions = [
     value: "others",
   },
 ];
-
 
 export const bloodGroupOptions = [
   {
@@ -48,8 +49,68 @@ export const bloodGroupOptions = [
     value: "O-",
   },
 ];
-
-
+export const priceTypeOptions = [
+  {
+    label: "free",
+    value: "free",
+  },
+  {
+    label: "paid",
+    value: "paid",
+  },
+  {
+    label: "open",
+    value: "open",
+  },
+  {
+    label: "close",
+    value: "close",
+  },
+  {
+    label: "recurrig",
+    value: "recurrig",
+  },
+];
+export const courseStatusOptions = [
+  {
+    label: "active",
+    value: "active",
+  },
+  {
+    label: "deactivate",
+    value: "deactivate",
+  },
+  {
+    label: "save",
+    value: "save",
+  },
+  {
+    label: "disable",
+    value: "disable",
+  },
+  {
+    label: "block",
+    value: "block",
+  },
+];
+export const roleOptions = [
+  {
+    label: "Admin",
+    value: "admin",
+  },
+  {
+    label: "Student",
+    value: "student",
+  },
+  {
+    label: USER_ROLE.TRAINER,
+    value: USER_ROLE.TRAINER,
+  },
+  {
+    label: USER_ROLE.SELLER,
+    value: USER_ROLE.SELLER,
+  },
+];
 
 export const months = [
   "January",
@@ -65,7 +126,7 @@ export const months = [
   "November",
   "December",
 ];
-export const monthOptions = months.map((month: string) => {
+export const monthOptions = months?.map((month: string) => {
   return {
     label: month,
     value: month,
@@ -81,7 +142,7 @@ export const days = [
   "THURSDAY",
   "FRIDAY",
 ];
-export const daysOptions = days.map((day: string) => {
+export const daysOptions = days?.map((day: string) => {
   return {
     label: day,
     value: day,
@@ -90,22 +151,3 @@ export const daysOptions = days.map((day: string) => {
 
 export const serviceStatus = ["available", "upcoming", "unavailable"];
 // 'available' | 'upcoming' | 'unavailable'
-
-export enum ExamType {
-  FINAL = "FINAL",
-  MIDTERM = "MIDTERM",
-}
-
-export enum ENUM_STATUS {
-  ACTIVE = "active",
-  DEACTIVATE = "deactivate",
-
-}
-// 'pending' | 'accept' | 'reject' | 'complete'|'cancel'
-export enum ENUM_BOOKING_STATUS {
-  PENDING = "pending",
-  ACCEPT = "accept",
-  REJECT = "reject",
-  COMPLETE = "complete",
-  CANCEL = "cancel",
-}

@@ -3,7 +3,7 @@ import { authKey } from "@/constants/storageKey";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
-import { message } from 'antd';
+// import { message } from 'antd';
 
 const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
@@ -18,6 +18,7 @@ instance.interceptors.request.use(
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }
+
     return config;
   },
   function (error) {
@@ -31,29 +32,27 @@ instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
     const responseObject: ResponseSuccessType = {
-      // success: response?.data?.success,
+      success: response?.data?.success,
+      message: response?.data?.message,
       data: response?.data?.data,
       meta: response?.data?.meta,
     };
     return responseObject;
   },
   async function (error) {
- 
-   
-    // if (error?.response?.status === 403) {
-
-    // } else {
+    if (error?.response?.status === 403) {
+    } else {
       const responseObject: any = {
         statusCode: error?.response?.status || 500,
         message: error?.response?.data?.message || "Something went wrong",
         errorMessages: error?.response?.data?.errorMessage,
       };
       // return Promise.reject(responseObject);
-      return error.response
+      return error.response;
     }
 
-  //   return Promise.reject(error);
-  // }
+    // return Promise.reject(error);
+  }
 );
 
 export { instance };

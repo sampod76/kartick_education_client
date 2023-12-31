@@ -5,19 +5,22 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import HomeHeader from "@/components/Home/HomeHeader";
+
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { USER_ROLE } from "@/constants/role";
 import { useUpdateAdminMutation } from "@/redux/api/adminApi";
-import { useGetProfileQuery, useUserLoginMutation } from "@/redux/api/authApi";
+import {
+  useGetProfileQuery,
+  useUserLoginMutation,
+} from "@/redux/api/auth/authApi";
 import {
   useAddGeneralUserWithFormDataMutation,
   useUpdateGeneralUserMutation,
-} from "@/redux/api/generalUserApi";
+} from "@/redux/api/adminApi/userManageApi";
 
-import { adminSchema } from "@/schemas/admin";
+
 import { getUserInfo, storeUserInfo } from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -52,7 +55,7 @@ const UpdateProfile = () => {
 
     try {
       let res;
-      if (user?.role === USER_ROLE.GENERAL_USER) {
+      if (user?.role === USER_ROLE.STUDENT) {
         res = await updateGeneralUser({
           id: userData?._id,
           body: values,
@@ -153,15 +156,14 @@ const UpdateProfile = () => {
                   size="large"
                   label="Email address"
                   disabled={true}
-                //   readOnly={true}
+                  //   readOnly={true}
                 />
               </Col>
 
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+                
                 style={{
                   marginBottom: "10px",
                 }}
@@ -246,7 +248,6 @@ const UpdateProfile = () => {
                   label="Date of birth"
                   size="large"
                   disablePrevious={false}
-                  
                 />
               </Col>
 
