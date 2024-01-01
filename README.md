@@ -74,3 +74,9 @@ password : 11223344
 - 1.  User(Student, Admin,trainer, seller) view , delete in dashboard
 - 2.  Nav item
 
+### 1 January 2024
+
+1. category in courses list in dashboard;
+2. course action with add new milestone .
+3. details course with skelton in dashboard.
+4. 
