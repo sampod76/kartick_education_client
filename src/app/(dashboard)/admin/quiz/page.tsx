@@ -29,6 +29,7 @@ import {
   useGetAllQuizQuery,
 } from "@/redux/api/adminApi/quizApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import FilterLesson from "@/components/dashboard/Filter/FilterLesson";
 
 const QuizList = () => {
   const query: Record<string, any> = {};
@@ -44,12 +45,17 @@ const QuizList = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const [adminId, setAdminId] = useState<string>("");
+  const [filterValue, setFilterValue] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
+
+  if (filterValue) {
+    query["lesson"] = filterValue;
+  }
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -206,13 +212,15 @@ const QuizList = () => {
   };
 
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <UMBreadCrumb
         items={[
           {
@@ -227,14 +235,20 @@ const QuizList = () => {
       />
       <HeadingUI>Quiz List</HeadingUI>
       <ActionBar>
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
+        <div className="flex gap-2">
+          <Input
+            size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              width: "20%",
+            }}
+          />
+          <FilterLesson
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+          />
+        </div>
         <div>
           <Link href={`/admin/quiz/create`}>
             <Button>Create Quiz</Button>

@@ -58,7 +58,7 @@ export default function FilterModule({
       size={"large"}
       options={ModuleOptions}
       value={filterValue}
-      style={{ width: "24rem" }}
+      style={{ width: "10rem" }}
       loading={isLoading}
       //! for search & filter
       showSearch

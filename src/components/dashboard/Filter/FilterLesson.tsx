@@ -57,7 +57,7 @@ export default function FilterLesson({
       size={"large"}
       options={LessonOptions}
       value={filterValue}
-      style={{ width: "24rem" }}
+      style={{ width: "10rem" }}
       loading={isLoading}
       //! for search & filter
       showSearch
