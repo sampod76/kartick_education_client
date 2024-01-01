@@ -46,6 +46,7 @@ export default function CreateCourseFromCourse({
   const moduleName = searchParams.get("moduleName");
 
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
+  const [textEditorValue, setTextEditorValue] = useState("");
 
   const { data: existLesson, isLoading } = useGetAllLessonQuery({});
 
@@ -64,6 +65,7 @@ export default function CreateCourseFromCourse({
       ...values,
       tags: selectedTags,
       module: params.moduleId,
+      details:textEditorValue
     };
     console.log(LessonData);
 
@@ -204,16 +206,29 @@ export default function CreateCourseFromCourse({
                 <UploadImage name="img" />
                 {/* //!7*/}
               </Col>
-              <Col className="gutter-row" xs={24} style={{}}>
-                <div>
-                  <FormTextArea
-                    name="short_description"
-                    label="Short description"
-                    rows={5}
-                    placeholder="Please enter short description"
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                // md={12}
+                // lg={8}
+                style={{}}
+              >
+                {/*//! 3 */}
+                <section
+                  style={{
+                    borderTopWidth: "2px",
+                  }} /* className=" border-t-2" */
+                >
+                  <p className="text-center my-3 font-bold text-xl">
+                    Description
+                  </p>
+                  <TextEditor
+                    textEditorValue={textEditorValue}
+                    setTextEditorValue={setTextEditorValue}
                   />
-                </div>
-              </Col>
+                </section>
+                </Col>
               <Col
                 className="gutter-row"
                 xs={24}

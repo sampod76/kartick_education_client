@@ -55,6 +55,7 @@ export default function CreateCourseFromCourse({
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
   const [selectedTags, setSelectedTags] = useState<string[]>(["tag1", "tag2"]);
+  const [textEditorValue, setTextEditorValue] = useState("");
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -76,6 +77,7 @@ export default function CreateCourseFromCourse({
       demo_video,
       module: lessonData?.module,
       lesson: params.lessonId,
+      details: textEditorValue,
     };
     console.log(LessonData);
 
@@ -112,7 +114,9 @@ export default function CreateCourseFromCourse({
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
         <Form submitHandler={onSubmit}>
-        <h2 className="text-start font-bold tex-3xl">Lesson :{lessonData?.title}</h2>
+          <h2 className="text-start font-bold tex-3xl">
+            Lesson :{lessonData?.title}
+          </h2>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -147,7 +151,6 @@ export default function CreateCourseFromCourse({
                 <SelectAuthorField />
                 {/* //! Author 5 --*/}
               </Col>
-           
 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormSelectField
@@ -189,7 +192,36 @@ export default function CreateCourseFromCourse({
                 {/* //! 2 -- */}
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
-                <FormTextArea rows={15} label="Description" name="details" />
+                <div>
+                  <FormTextArea
+                    name="short_description"
+                    label="Short description"
+                    rows={5}
+                    placeholder="Please enter short description"
+                  />
+                </div>
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                // md={12}
+                // lg={8}
+                style={{}}
+              >
+                {/*//! 3 */}
+                <section
+                  style={{
+                    borderTopWidth: "2px",
+                  }} /* className=" border-t-2" */
+                >
+                  <p className="text-center my-3 font-bold text-xl">
+                    Description
+                  </p>
+                  <TextEditor
+                    textEditorValue={textEditorValue}
+                    setTextEditorValue={setTextEditorValue}
+                  />
+                </section>
               </Col>
             </Row>
           </div>
