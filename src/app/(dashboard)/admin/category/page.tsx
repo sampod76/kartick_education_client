@@ -145,12 +145,18 @@ const CategoryList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/milestone/details/${record._id}`}>View</Link>
+                    <Link href={`/category/details/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/milestone/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/category/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
-
+                  <Menu.Item key="add_milestone">
+                    <Link
+                      href={`/admin/category/create/course/${record?._id}?categoryName=${record?.title}`}
+                    >
+                      Add Course
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item
                     key="delete"
                     onClick={() => {
@@ -258,7 +264,9 @@ const CategoryList = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deleteAdminHandler(adminId)}
       >
-        <p style={{"marginTop":"1.25rem","marginBottom":"1.25rem"}}>Do you want to remove this admin?</p>
+        <p style={{ marginTop: "1.25rem", marginBottom: "1.25rem" }}>
+          Do you want to remove this admin?
+        </p>
       </UMModal>
     </div>
   );

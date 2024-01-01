@@ -2,6 +2,7 @@
 import AuthorCourseDetails from "@/components/Course/CourseDetails/AuthorCourseDetails";
 import CourseDetailsTab from "@/components/Course/CourseDetails/CourseDetailsTab";
 import CourseDetailsTop from "@/components/Course/CourseDetails/CourseDetailsTop";
+import CourseDetailsMain from "@/components/Course/CourseDetails/CourseDetailsMain";
 import CourseStatistics from "@/components/Course/CourseStatistics";
 import BannerCourses from "@/components/Home/Heros/BannerCourses";
 import SupportHero from "@/components/Home/Heros/SupportHero";
@@ -46,9 +47,7 @@ const CourseDetailsPublicPage = ({ params }: any) => {
       {/* <h2>The Web Developer Boot Camp</h2> */}
       <BannerCourses />
       <CourseStatistics />
-      <CourseDetailsTop />
-      <AuthorCourseDetails authorData={CourseData?.author} />
-      <CourseDetailsTab courseId={id} />
+ <CourseDetailsMain courseId={id}/>
       <SupportHero />
     </div>
   );

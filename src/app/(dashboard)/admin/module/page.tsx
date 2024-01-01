@@ -3,11 +3,7 @@ import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 import Link from "next/link";
-import {
-
-  ReloadOutlined,
-
-} from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
@@ -22,12 +18,12 @@ import {
   confirm_modal,
 } from "@/utils/modalHook";
 
-
 import {
   useDeleteModuleMutation,
   useGetAllModuleQuery,
 } from "@/redux/api/adminApi/moduleApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import FilterMilestone from "@/components/dashboard/Filter/FilterMilestone";
 
 const MileStoneList = () => {
   const query: Record<string, any> = {};
@@ -43,12 +39,16 @@ const MileStoneList = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const [adminId, setAdminId] = useState<string>("");
+  const [filterValue, setFilterValue] = useState("");
 
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
+  if (filterValue) {
+    query["milestone"] = filterValue;
+  }
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -156,12 +156,20 @@ const MileStoneList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/admin/module/details/${record._id}`}>View</Link>
+                    <Link href={`/admin/module/details/${record._id}`}>
+                      View
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
                     <Link href={`/admin/module/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
-
+                  <Menu.Item key="add_milestone">
+                    <Link
+                      href={`/admin/module/create/lesson/${record?._id}?moduleName=${record?.title}`}
+                    >
+                      Add lesson
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item
                     key="delete"
                     onClick={() => {
@@ -212,13 +220,15 @@ const MileStoneList = () => {
   };
 
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <UMBreadCrumb
         items={[
           {
@@ -240,6 +250,11 @@ const MileStoneList = () => {
           style={{
             width: "20%",
           }}
+        />
+
+        <FilterMilestone
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
         />
         <div>
           <Link href={`/admin/module/create`}>

@@ -6,6 +6,8 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
+import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
@@ -14,45 +16,42 @@ import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import {
-  Button,
-  Col,
-  Input,
-  Row,
-  Select,
-  Spin,
-  Typography,
-  Upload,
-  message,
-} from "antd";
-import { useState } from "react";
-
-const { Option } = Select;
-
-
-import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-// import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import UploadMultpalImage from "@/hooks/multipleImageUpload";
-import dynamic from "next/dynamic";
-const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
-  {
-    ssr: false,
-  }
-);
-const CreateCoursePage = () => {
+import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
+import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { Col, Row, Spin } from "antd";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+
+export default function CreateCourseFromCourse({
+  params,
+}: {
+  params: { categoryId: string };
+}) {
+  // console.log(params);
+
+  const searchParams = useSearchParams();
+
+  const categoryName = searchParams.get("categoryName");
+
+  // console.log("🚀 ~ file: page.tsx:28 ~ categoryName:", categoryName);
+
   const [textEditorValue, setTextEditorValue] = useState("");
-  console.log(
-    "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
-    textEditorValue
-  );
-  const [addCourse, { isLoading ,error}] = useAddCourseMutation();
+  // console.log(
+  //   "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
+  //   textEditorValue
+  // );
+  const [addCourse, { isLoading }] = useAddCourseMutation();
 
   // !  tag selection
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  // console.log(selectedTags, "selectedTags........1");
+
+  // console.log(courseStatusOptions,"Category",CategoryOptions,);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -74,6 +73,7 @@ const CreateCoursePage = () => {
       tags: selectedTags,
       demo_video,
       details: textEditorValue,
+      category: params.categoryId,
       ...others,
     };
 
@@ -96,7 +96,6 @@ const CreateCoursePage = () => {
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
-      Error_model_hook(err?.message);
     }
   };
   // if (isLoading) {
@@ -127,6 +126,9 @@ const CreateCoursePage = () => {
               borderWidth: "2px",
             }} /* className="border-2 p-2 rounded-2" */
           >
+            <h2 className="text-start font-bold tex-3xl">
+              Category :{categoryName}
+            </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
               <div
                 style={{
@@ -211,10 +213,6 @@ const CreateCoursePage = () => {
                 <SubHeadingUI>Other Information</SubHeadingUI>
                 <Row gutter={[12, 12]}>
                   <Col xs={24} md={12} lg={12} style={{}}>
-                    <SelectCategoryField />
-                    {/* //! category 10 */}
-                  </Col>
-                  <Col xs={24} md={12} lg={12} style={{}}>
                     <SelectAuthorField />
                     {/* //! price type 8 */}
                   </Col>
@@ -277,7 +275,6 @@ const CreateCoursePage = () => {
                 label="Short description"
                 rows={5}
                 placeholder="Please enter short description"
-                required
               />
             </div>
             <section
@@ -289,9 +286,9 @@ const CreateCoursePage = () => {
                 setTextEditorValue={setTextEditorValue}
               />
             </section>
-            {/* <div>
+            <div>
               <UploadMultpalImage />
-            </div> */}
+            </div>
             {isLoading ? (
               <Spin />
             ) : (
@@ -302,6 +299,4 @@ const CreateCoursePage = () => {
       </div>
     </div>
   );
-};
-
-export default CreateCoursePage;
+}

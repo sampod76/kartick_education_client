@@ -1,53 +1,76 @@
 "use client";
 import Form from "@/components/Forms/Form";
+
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
-import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
-// import TextEditor from "@/components/shared/TextEditor/TextEditor";
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
+import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import {
-  useAddModuleMutation,
-  useGetAllModuleQuery,
-} from "@/redux/api/adminApi/moduleApi";
+import {useGetSingleLessonQuery} from "@/redux/api/adminApi/lessoneApi";
+
+import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { Button, Col, Row, Spin, message } from "antd";
+import { Col, Row,  message } from "antd";
+
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
-const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
-  {
-    ssr: false,
-  }
-);
-const CreateModule = () => {
-  const [textEditorValue, setTextEditorValue] = useState("");
-  const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
-  const { data: existModule } = useGetAllModuleQuery({});
-  // !  tag selection
+
+export default function CreateCourseFromCourse({
+  params,
+}: {
+  params: { lessonId: string };
+}) {
+  console.log(params);
+
+  // const searchParams = useSearchParams();
+
+  // const lessonName = searchParams.get("lessonName");
+  // console.log("🚀 ~ file: page.tsx:49 ~ lessonName:", lessonName);
+
+  const { data: lessonData } = useGetSingleLessonQuery(params.lessonId);
+  console.log(lessonData);
+
+  const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
+
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [textEditorValue, setTextEditorValue] = useState("");
+
+  // ! for video insert
+  const [videoType, setVideoType] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
+
+  const demo_video = {
+    video: videoType,
+    platform: videoUrl,
+  };
+
   const onSubmit = async (values: any) => {
-    // console.log(values);
     const imgUrl = await uploadImgBB(values.img);
+
     values.img = imgUrl;
-    const ModuleData: {} = {
+
+    const LessonData: {} = {
       ...values,
       tags: selectedTags,
+      demo_video,
+      module: lessonData?.module,
+      lesson: params.lessonId,
       details: textEditorValue,
     };
+    console.log(LessonData);
 
     try {
-      const res = await addModule(ModuleData).unwrap();
+      const res = await addQuiz(LessonData).unwrap();
       console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Module");
+        Success_model("Successfully added Lesson");
       }
       // console.log(res);
     } catch (error: any) {
@@ -56,13 +79,9 @@ const CreateModule = () => {
     }
   };
 
-  // if (serviceLoading) {
-  //   return message.loading("Loading...");
-  // }
-  const roundedNumber = Number(existModule?.data[0].module_number).toFixed(1);
-  // Add 0.1 to the rounded number and use toFixed again when logging
-  const preModule_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
-  // console.log(preModule_number);
+  if (serviceLoading) {
+    return message.loading("Loading...");
+  }
 
   return (
     <div
@@ -75,10 +94,13 @@ const CreateModule = () => {
       }}
     >
       <div>
-        <Form
-          submitHandler={onSubmit}
-          defaultValues={{ module_number: Number(preModule_number) }}
-        >
+        {/* resolver={yupResolver(adminSchema)} */}
+        {/* resolver={yupResolver(IServiceSchema)} */}
+        <HeadingUI>Create Quiz</HeadingUI>
+        <Form submitHandler={onSubmit}>
+          <h2 className="text-start font-bold tex-3xl">
+            Lesson :{lessonData?.title}
+          </h2>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -86,67 +108,90 @@ const CreateModule = () => {
               padding: "15px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Create Module
-            </p>
-            <hr className="border-1.5 mb-2" />
-            <Row gutter={[16, 16]}>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={20}
-                // lg={8}
-                style={{}}
+                md={24}
+                lg={24}
+                style={{ marginBlock: "10px" }}
               >
                 <FormInput
                   type="text"
                   name="title"
                   size="large"
-                  label="Module Title"
+                  label="Quiz Title"
                   required={true}
                 />
+                {/*//! 1-- */}
               </Col>
-              <Col className="gutter-row" xs={4} style={{}}>
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormInput
                   type="number"
-                  name="module_number"
+                  name="passingGrade"
                   size="large"
-                  label="Module No"
+                  label="passingGrade "
                   required={true}
                 />
-              </Col>
-              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                <SelectMilestoneField />
+                {/*//! 4 --- */}
               </Col>
 
+              {/* 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectAuthorField />
-              </Col>
+            
+              </Col> */}
 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormSelectField
                   size="large"
                   name="status"
                   options={courseStatusOptions as any}
-                  defaultValue={{ label: "Select", value: "" }}
+                  // defaultValue={priceTypeOptions[0]}
                   label="status"
                   // placeholder="Select"
                   required={true}
                 />
+                {/* //! price type 8 ---*/}
               </Col>
-              <Col className="gutter-row" xs={24} style={{}}>
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <DemoVideoUI
+                  videoType={videoType as any}
+                  setVideoType={setVideoType}
+                  videoUrl={videoUrl}
+                  setVideoUrl={setVideoUrl}
+                  options={["youtube", "vimeo"]}
+                  label="Demo video"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginTop: "10px",
+                }}
+              >
                 <TagsSelectUI
                   selected={selectedTags}
                   setSelected={setSelectedTags}
                 />
+                {/*//! 10--- */}
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
                 <UploadImage name="img" />
+                {/* //! 2 -- */}
+              </Col>
+              <Col className="gutter-row" xs={24} style={{}}>
+                <div>
+                  <FormTextArea
+                    name="short_description"
+                    label="Short description"
+                    rows={5}
+                    placeholder="Please enter short description"
+                  />
+                </div>
               </Col>
               <Col
                 className="gutter-row"
@@ -172,15 +217,10 @@ const CreateModule = () => {
               </Col>
             </Row>
           </div>
-          {serviceLoading ? (
-            <Spin />
-          ) : (
-            <ButtonSubmitUI>Create Module</ButtonSubmitUI>
-          )}
+
+          <ButtonSubmitUI>Create Quiz</ButtonSubmitUI>
         </Form>
       </div>
     </div>
   );
-};
-
-export default CreateModule;
+}

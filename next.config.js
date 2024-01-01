@@ -7,41 +7,41 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'img.freepik.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "img.freepik.com",
+        pathname: "**",
       },
       {
-        protocol: 'https',
-        hostname: 'i.ibb.co',
-        pathname: '**',
+        protocol: "https",
+        hostname: "i.ibb.co",
+        pathname: "**",
       },
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "**",
       },
       {
-        protocol: 'https',
-        hostname: 'i.pinimg.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "i.pinimg.com",
+        pathname: "**",
       },
       {
-        protocol: 'https',
-        hostname: 'gw.alipayobjects.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "gw.alipayobjects.com",
+        pathname: "**",
       },
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        pathname: '**',
+        protocol: "http",
+        hostname: "localhost",
+        pathname: "**",
       },
+     
     ],
   },
   // swcMinify:true
   // fastRefresh:true,
   // concurrentFeatures:true
-
 };
 
-module.exports = nextConfig;
+module.exports = nextConfig;

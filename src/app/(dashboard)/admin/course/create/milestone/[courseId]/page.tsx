@@ -1,32 +1,34 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
-
 import FormInput from "@/components/Forms/FormInput";
-
+import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
-// import TextEditor from "@/components/shared/TextEditor/TextEditor";
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import uploadImgBB from "@/hooks/imgbbUploads";
-
 import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-
 import { Col, Row, Spin } from "antd";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
-const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
-  {
-    ssr: false,
-  }
-);
-const CreateMilestone = () => {
+
+export default function CreateMilestoneFromCourse({
+  params,
+}: {
+  params: { courseId: string };
+}) {
+  console.log(params);
+
+  const searchParams = useSearchParams();
+
+  const courseName = searchParams.get("courseName");
+
+  console.log("🚀 ~ file: page.tsx:28 ~ courseName:", courseName);
+
   const [textEditorValue, setTextEditorValue] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>(["tech"]);
   const [addMilestone, { isLoading: serviceLoading }] =
@@ -42,8 +44,9 @@ const CreateMilestone = () => {
       ...values,
       tags: selectedTags,
       details: textEditorValue,
+      course: params.courseId,
     };
-    // console.log(MilestoneData);
+    console.log(MilestoneData);
 
     try {
       const res = await addMilestone(MilestoneData).unwrap();
@@ -59,8 +62,6 @@ const CreateMilestone = () => {
       console.log(error);
     }
   };
-
-
 
   return (
     <div
@@ -87,7 +88,9 @@ const CreateMilestone = () => {
             <Row gutter={[12, 12]}>
               <Col className="gutter-row" xs={24}>
                 <Col xs={24} md={12} lg={8}>
-                  <SelectCourseField />
+                  <h1 className="text-start font-bold tex-2xl">
+                    Course Name:{courseName}
+                  </h1>
                 </Col>
               </Col>
               <hr className="border-2 my-2" />
@@ -103,8 +106,8 @@ const CreateMilestone = () => {
               </Col>
 
               {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                <SelectAuthorField />
-              </Col> */}
+                  <SelectAuthorField />
+                </Col> */}
 
               <Col className="gutter-row" xs={24} style={{}}>
                 <TagsSelectUI
@@ -114,7 +117,32 @@ const CreateMilestone = () => {
                 {/*//! 11 */}
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
-                <UploadImage  name="img" />
+                <UploadImage name="img" />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                // md={12}
+                // lg={8}
+                style={{}}
+              >
+                {/*//! 3 */}
+                <section
+                  style={{
+                    borderTopWidth: "2px",
+                    marginBlock: "10px",
+                  }} /* className=" border-t-2" */
+                >
+                  <div>
+                    <FormTextArea
+                      name="short_description"
+                      label="Short description"
+                      rows={5}
+                      placeholder="Please enter short description"
+                    />
+                  </div>
+                </section>
               </Col>
               <Col
                 className="gutter-row"
@@ -149,6 +177,4 @@ const CreateMilestone = () => {
       </div>
     </div>
   );
-};
-
-export default CreateMilestone;
+}

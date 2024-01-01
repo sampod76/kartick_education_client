@@ -1,31 +1,46 @@
 "use client";
 import Form from "@/components/Forms/Form";
+import FormDataRange from "@/components/Forms/FormDataRange";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
+import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
+import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
 import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
-// import TextEditor from "@/components/shared/TextEditor/TextEditor";
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
+import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import { courseStatusOptions } from "@/constants/global";
+import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
+import UploadMultpalImage from "@/hooks/multipleImageUpload";
+import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
+import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
 import {
   useAddModuleMutation,
   useGetAllModuleQuery,
 } from "@/redux/api/adminApi/moduleApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { Button, Col, Row, Spin, message } from "antd";
+import { Col, Row, Spin } from "antd";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
-const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
-  {
-    ssr: false,
-  }
-);
-const CreateModule = () => {
+
+export default function CreateCourseFromCourse({
+  params,
+}: {
+  params: { milestoneId: string };
+}) {
+  console.log(params);
+
+  const searchParams = useSearchParams();
+
+  const milestoneName = searchParams.get("milestoneName");
+
   const [textEditorValue, setTextEditorValue] = useState("");
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
   const { data: existModule } = useGetAllModuleQuery({});
@@ -39,6 +54,7 @@ const CreateModule = () => {
       ...values,
       tags: selectedTags,
       details: textEditorValue,
+      milestone: params.milestoneId,
     };
 
     try {
@@ -79,6 +95,9 @@ const CreateModule = () => {
           submitHandler={onSubmit}
           defaultValues={{ module_number: Number(preModule_number) }}
         >
+          <h2 className="text-start font-bold tex-3xl">
+            Milestone :{milestoneName}
+          </h2>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -120,9 +139,6 @@ const CreateModule = () => {
                   required={true}
                 />
               </Col>
-              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                <SelectMilestoneField />
-              </Col>
 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectAuthorField />
@@ -133,7 +149,7 @@ const CreateModule = () => {
                   size="large"
                   name="status"
                   options={courseStatusOptions as any}
-                  defaultValue={{ label: "Select", value: "" }}
+                  defaultValue={{ label: "Select you status", value: "" }}
                   label="status"
                   // placeholder="Select"
                   required={true}
@@ -147,6 +163,16 @@ const CreateModule = () => {
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
                 <UploadImage name="img" />
+              </Col>
+              <Col className="gutter-row" xs={24} style={{}}>
+                <div>
+                  <FormTextArea
+                    name="short_description"
+                    label="Short description"
+                    rows={5}
+                    placeholder="Please enter short description"
+                  />
+                </div>
               </Col>
               <Col
                 className="gutter-row"
@@ -181,6 +207,4 @@ const CreateModule = () => {
       </div>
     </div>
   );
-};
-
-export default CreateModule;
+}

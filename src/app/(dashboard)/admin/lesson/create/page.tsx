@@ -121,7 +121,7 @@ const CreateLesson = () => {
               </Col>
               <Col
                 className="gutter-row"
-                xs={2}
+                xs={4}
               
                 style={{
                   marginBottom: "10px",
@@ -207,6 +207,16 @@ const CreateLesson = () => {
               >
                 <UploadImage name="img" />
                 {/* //!7*/}
+              </Col>
+              <Col className="gutter-row" xs={24} style={{}}>
+                <div>
+                  <FormTextArea
+                    name="short_description"
+                    label="Short description"
+                    rows={5}
+                    placeholder="Please enter short description"
+                  />
+                </div>
               </Col>
               <Col
                 className="gutter-row"

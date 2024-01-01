@@ -4,7 +4,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 import { useGetSingleUserQuery } from "@/redux/api/adminApi/usersApi";
 
-import UserProfilePage from "@/components/profile/UserProfilePage";
+import UserProfilePage from "@/components/profile/ProfileInstructorPage";
 
 const UserDetailsPage = ({ params }: any) => {
   const id = params.id;

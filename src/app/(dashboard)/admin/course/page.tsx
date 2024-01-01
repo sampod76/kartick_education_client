@@ -26,6 +26,7 @@ import {
   useGetAllCourseQuery,
 } from "@/redux/api/adminApi/courseApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import FilterCategorySelect from "@/components/dashboard/Filter/FilterCategory";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
@@ -42,11 +43,16 @@ const CourseList = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [courseId, setCourseId] = useState<string>("");
 
+  const [filterValue, setFilterValue] = useState("");
+
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
+  if (filterValue) {
+    query["category"] = filterValue;
+  }
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -198,6 +204,14 @@ const CourseList = () => {
                   >
                     Delete
                   </Menu.Item>
+
+                  <Menu.Item key="add_milestone">
+                    <Link
+                      href={`/admin/course/create/milestone/${record?._id}?courseName=${record?.title}`}
+                    >
+                      Add Milestone
+                    </Link>
+                  </Menu.Item>
                 </Menu>
               }
             >
@@ -257,14 +271,21 @@ const CourseList = () => {
       <HeadingUI>Course List</HeadingUI>
 
       <ActionBar>
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
+        <div className="flex gap-2">
+          <Input
+            size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              width: "20%",
+            }}
+          />
+          <FilterCategorySelect
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+          />
+        </div>
+
         <div>
           <Link href={`/admin/course/create`}>
             <Button type="default">Create Course</Button>
