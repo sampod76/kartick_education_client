@@ -14,8 +14,23 @@ export default function FilterCourse({
   // const [filterValue, setFilterValue] = useState("Filter by a course");
   console.log("🚀 filterValue:", filterValue);
 
+  // const [filterValue, setFilterValue] = useState("Filter by a category");
+  const query: Record<string, any> = {};
   //! for Course options selection
-  const { data: Course, isLoading } = useGetAllCourseQuery({});
+  query["limit"] = 999999;
+  query["sortBy"] = "title";
+  query["sortOrder"] = "asc";
+  //
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const onSearch = (value: string) => {
+    console.log("search:", value);
+  };
+
+  //! for Course options selection
+  const { data: Course, isLoading } = useGetAllCourseQuery({ ...query });
 
   const CourseData = Course?.data;
 
@@ -27,32 +42,23 @@ export default function FilterCourse({
     };
   });
 
-  
   // CourseOptions?.unshift({ value: "disabled", label: "Disabled", disabled: true });
-  
+
   // console.log(CourseOptions);
   return (
     <Select
-      // placeholder="Filter by a course"
-      // onChange={handleChange ? handleChange : onChange}
       onChange={(val) => {
         setFilterValue(val);
       }}
-      // defaultActiveFirstOption
-      // dropdownRender={(menu) => (
-      //   <div>
-      //     <Button type="default">Filter</Button>
-      //   </div>
-      // )}
-      // disabled={disabled}
       size={"large"}
       options={CourseOptions}
       value={filterValue}
       style={{ width: "10rem" }}
       loading={isLoading}
-
-      // loading={true}
-      // placeholder={placeholder}
+      showSearch
+      onSearch={onSearch}
+      filterOption={filterOption}
+      optionFilterProp="children"
     />
   );
 }

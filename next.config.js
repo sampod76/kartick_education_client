@@ -37,11 +37,10 @@ const nextConfig = {
         pathname: "**",
       },
       {
-        protocol: "http",
+        protocol: "https",
         hostname: "example.com",
         pathname: "**",
       },
-     
     ],
   },
   // swcMinify:true

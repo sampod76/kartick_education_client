@@ -17,7 +17,7 @@ const FilterCategorySelect = ({
   query["limit"] = 999999;
   query["sortBy"] = "title";
   query["sortOrder"] = "asc";
-  //
+  //! for search and select
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
@@ -47,6 +47,7 @@ const FilterCategorySelect = ({
       value={filterValue}
       style={{ width: "10rem" }}
       loading={isLoading}
+      //! for search & filter
       showSearch
       onSearch={onSearch}
       filterOption={filterOption}
