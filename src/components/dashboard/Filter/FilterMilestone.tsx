@@ -4,7 +4,6 @@ import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
 
 import { Button, Select } from "antd";
 
-
 export default function FilterMilestone({
   filterValue,
   setFilterValue,
@@ -16,22 +15,21 @@ export default function FilterMilestone({
   console.log("🚀 filterValue:", filterValue);
 
   const query: Record<string, any> = {};
-    //! for Course options selection
-    query["limit"] = 999999;
-    query["sortBy"] = "title";
-    query["sortOrder"] = "asc";
-    //! for search and select
-    const filterOption = (
-      input: string,
-      option?: { label: string; value: string }
-    ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-    const onSearch = (value: string) => {
-      console.log("search:", value);
-    };
+  //! for Course options selection
+  query["limit"] = 999999;
+  query["sortBy"] = "title";
+  query["sortOrder"] = "asc";
+  //! for search and select
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const onSearch = (value: string) => {
+    console.log("search:", value);
+  };
 
   //! for Milestone options selection
   const { data: Milestone, isLoading } = useGetAllMilestoneQuery({});
-
 
   const MilestoneData = Milestone?.data;
 
@@ -61,14 +59,14 @@ export default function FilterMilestone({
       size={"large"}
       options={MilestoneOptions}
       value={filterValue}
-      style={{ width: "24rem" }}
+      style={{ width: "10rem" }}
       loading={isLoading}
- //! for search & filter
- showSearch
- onSearch={onSearch}
- filterOption={filterOption}
- optionFilterProp="children"
- placeholder="Inserted are removed"
+      //! for search & filter
+      showSearch
+      onSearch={onSearch}
+      filterOption={filterOption}
+      optionFilterProp="children"
+      placeholder="Inserted are removed"
     />
   );
 }

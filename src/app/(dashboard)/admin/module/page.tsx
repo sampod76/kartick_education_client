@@ -163,13 +163,7 @@ const MileStoneList = () => {
                   <Menu.Item key="edit">
                     <Link href={`/admin/module/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
-                  <Menu.Item key="add_milestone">
-                    <Link
-                      href={`/admin/module/create/lesson/${record?._id}?moduleName=${record?.title}`}
-                    >
-                      Add lesson
-                    </Link>
-                  </Menu.Item>
+               
                   <Menu.Item
                     key="delete"
                     onClick={() => {
@@ -243,19 +237,20 @@ const MileStoneList = () => {
       />
       <HeadingUI>Module List</HeadingUI>
       <ActionBar>
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-
-        <FilterMilestone
-          filterValue={filterValue}
-          setFilterValue={setFilterValue}
-        />
+      <div className="flex gap-2">
+          <Input
+            size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              width: "20%",
+            }}
+          />
+          <FilterMilestone
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+          />
+        </div>
         <div>
           <Link href={`/admin/module/create`}>
             <Button type="default">Create Module</Button>
