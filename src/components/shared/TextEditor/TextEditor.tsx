@@ -14,21 +14,7 @@ const TextEditor = ({
   const editor = useRef(null);
   const [content, setContent] = useState(defultTextEditorValue);
   // const [vlaue, setTextEditorValue] = useState("");
-  // useEffect(() => {
-  //   // Load MathJax
-  //   const script = document.createElement("script");
-  //   script.src = "https://polyfill.io/v3/polyfill.min.js?features=es6";
-  //   script.async = true;
-  //   document.head.appendChild(script);
 
-  //   script.onload = () => {
-  //     const mathJaxScript = document.createElement("script");
-  //     mathJaxScript.src =
-  //       "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML";
-  //     mathJaxScript.async = true;
-  //     document.head.appendChild(mathJaxScript);
-  //   };
-  // }, []);
   const editorConfig = useMemo(
     () => ({
       readonly: false,
@@ -40,6 +26,7 @@ const TextEditor = ({
     }),
     []
   );
+ 
 
   return (
     <div>

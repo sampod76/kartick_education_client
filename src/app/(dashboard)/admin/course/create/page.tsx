@@ -31,16 +31,17 @@ import { useState } from "react";
 
 const { Option } = Select;
 
-import dynamic from "next/dynamic";
+
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-import TextEditor from "@/components/shared/TextEditor/TextEditor";
+// import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import UploadMultpalImage from "@/hooks/multipleImageUpload";
-// const TextEditor = dynamic(
-//   () => import("@/components/shared/TextEditor/TextEditor"),
-//   {
-//     ssr: false,
-//   }
-// );
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 const CreateCoursePage = () => {
   const [textEditorValue, setTextEditorValue] = useState("");
   console.log(

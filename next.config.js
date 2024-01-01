@@ -36,11 +36,7 @@ const nextConfig = {
         hostname: "localhost",
         pathname: "**",
       },
-      {
-        protocol: "https",
-        hostname: "example.com",
-        pathname: "**",
-      },
+     
     ],
   },
   // swcMinify:true

@@ -32,8 +32,7 @@ instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
     const responseObject: ResponseSuccessType = {
-      success: response?.data?.success,
-      message: response?.data?.message,
+      
       data: response?.data?.data,
       meta: response?.data?.meta,
     };

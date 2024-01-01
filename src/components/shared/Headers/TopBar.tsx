@@ -50,13 +50,13 @@ const TopBar = () => {
         <div className="block lg:flex gap-2 font-[700]">
           <Link
             className="py-3 px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
-            href="/login"
+            href="/"
           >
             Register
           </Link>
           <Link
             className="py-3 px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary"
-            href="/"
+            href="/login"
           >
             Login
           </Link>

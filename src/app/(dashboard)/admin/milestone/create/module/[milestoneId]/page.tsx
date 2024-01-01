@@ -149,7 +149,7 @@ export default function CreateCourseFromCourse({
                   size="large"
                   name="status"
                   options={courseStatusOptions as any}
-                  defaultValue={{ label: "Select", value: "" }}
+                  defaultValue={{ label: "Select you status", value: "" }}
                   label="status"
                   // placeholder="Select"
                   required={true}

@@ -5,7 +5,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
-import TextEditor from "@/components/shared/TextEditor/TextEditor";
+// import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
@@ -18,7 +18,13 @@ import {
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Button, Col, Row, Spin, message } from "antd";
 import React, { useState } from "react";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 const CreateModule = () => {
   const [textEditorValue, setTextEditorValue] = useState("");
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();

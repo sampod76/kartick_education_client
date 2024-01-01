@@ -1,4 +1,4 @@
-const url = `https://api.imgbb.com/1/upload?key=a50f3571eea0f08e932e0a8e13295351`;
+const url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB}`;
 
 const uploadImgBB = async (img: any): Promise<string | undefined | null> => {
 console.log("🚀 ~ file: imgbbUploads.ts:4 ~ uploadImgBB ~ img:", img)

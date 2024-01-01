@@ -46,7 +46,7 @@ const UploadImage = ({
     if (info.file.status === "uploading") {
       setError(false);
       setLoading(true);
-      // return;
+      return;
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
@@ -83,7 +83,7 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action={`${process.env.NEXT_PUBLIC_API_BASE_URL}/upload/upload-single-image`}
+        action={`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB}`}
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >

@@ -5,7 +5,7 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 
 import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
-import TextEditor from "@/components/shared/TextEditor/TextEditor";
+// import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
@@ -19,7 +19,13 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Col, Row, Spin } from "antd";
 import React, { useState } from "react";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 const CreateMilestone = () => {
   const [textEditorValue, setTextEditorValue] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>(["tech"]);
