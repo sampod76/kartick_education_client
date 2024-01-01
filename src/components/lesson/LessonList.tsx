@@ -10,29 +10,49 @@ import type { CollapseProps } from "antd";
 import { Collapse, theme } from "antd";
 import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
 import Link from "next/link";
+import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
   console.log(moduleId, "moduleId from LessonList");
-  const { token } = theme.useToken();
 
-  const { data: lessonData } = useGetAllLessonQuery({
+  const lesson_query: Record<string, any> = {};
+  //! for Course options selection
+  lesson_query["limit"] = 999999;
+  lesson_query["sortBy"] = "lesson_number";
+  lesson_query["sortOrder"] = "asc";
+
+  const { data: lessonData, isLoading } = useGetAllLessonQuery({
     status: "active",
     module: moduleId,
+    ...lesson_query,
   });
-  console.log("🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:", lessonData)
 
+  console.log(
+    "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
+    lessonData
+  );
 
+  const quiz_query: Record<string, any> = {};
+  //! for Course options selection
+  quiz_query["limit"] = 999999;
+  quiz_query["sortOrder"] = "asc";
 
-  const panelStyle: React.CSSProperties = {
-    marginBottom: 24,
-    background: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    border: "none",
-  };
+  const { data: QuizData } = useGetAllQuizQuery({
+    status: "active",
+    module: moduleId,
+    ...quiz_query,
+  });
+  console.log(
+    "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ QuizData:",
+    QuizData
+  );
 
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
-      console.log("🚀 ~ file: LessonList.tsx:58 ", lesson);
+      const lessonQuizData:any = QuizData?.data?.find(
+        (item: any) => item?.lesson === lesson?._id
+      );
+      console.log("🚀 lessonQuizData", lessonQuizData);
       return {
         key: lesson?._id,
         label: (
@@ -44,11 +64,11 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
             <Link
-              href={`/quiz/${lesson?._id}`}
+              href={`/lesson/quiz/${lessonQuizData?._id}`}
               className="text-[14px] flex justify-between w-full mt-3"
             >
               <h2>
-                Quiz {index + 1} : <span>smart quiz </span>
+                Quiz {index + 1} : <span>{lessonQuizData?.title} </span>
               </h2>
               <LockOutlined style={{ fontSize: "18px" }} />
             </Link>
@@ -87,7 +107,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
             rotate={isActive ? 90 : 0}
           />
         )}
-        style={{ background: token.colorBgContainer }}
+        // style={{ background: token.colorBgContainer }}
         items={collapseLessonData}
       />
     </div>

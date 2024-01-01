@@ -4,12 +4,13 @@ import React from "react";
 import { Card, Radio, Input, Select, Button } from "antd";
 import QuizAside from "./QuizAside";
 import UMBreadCrumb from "../ui/UMBreadCrumb";
+import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
 
 const { Option } = Select;
 
 const quizData: {
   _id: number;
-  question: string;
+  title: string;
   type: string;
   answer: {
     title: string;
@@ -17,7 +18,7 @@ const quizData: {
 }[] = [
   {
     _id: 1,
-    question: "What is the capital of France?",
+    title: "What is the capital of France?",
     type: "radio",
     // ", "Berlin", "London", "Rome"
     answer: [
@@ -38,7 +39,7 @@ const quizData: {
 
   {
     _id: 2,
-    question: "How many continents are there?",
+    title: "How many continents are there?",
     type: "select",
     answer: [
       {
@@ -57,19 +58,19 @@ const quizData: {
   },
   {
     _id: 3,
-    question: "2 + 2 equals?",
+    title: "2 + 2 equals?",
     type: "text",
     answer: [],
   },
   {
     _id: 4,
-    question: "What is JavaScript primarily used for in web development?",
+    title: "What is JavaScript primarily used for in web development?",
     type: "textArea",
     answer: [],
   },
   {
     _id: 5,
-    question: "Which is not language of Programming?",
+    title: "Which is not language of Programming?",
     type: "radio",
     // answer: ["Javascript", "C++", "Python", "English"],
     answer: [
@@ -89,7 +90,21 @@ const quizData: {
   },
 ];
 
-export default function Quizes() {
+export default function QuizeSinglePage({ quizeId }: { quizeId: string }) {
+  const quiz_query: Record<string, any> = {};
+  //! for Course options selection
+  quiz_query["limit"] = 999999;
+  quiz_query["sortBy"] = "serialNumber";
+  quiz_query["sortOrder"] = "asc";
+
+  const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
+    ...quiz_query,
+  });
+  console.log(
+    "🚀 ~ file: Quizes.tsx:103 ~ QuizeSinglePage ~ allSingleQuizeData:",
+    allSingleQuizeData
+  );
+
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
   };
@@ -97,36 +112,39 @@ export default function Quizes() {
   return (
     <div className="w-full lg:w-[84vw] mx-auto ">
       <div className="bg-white py-2 mb-2 px-3">
-        <UMBreadCrumb
+        {/* <UMBreadCrumb
           items={[
             {
-              label: "Leadership",
-              link: "/course",
+              label: "lesson",
+              link: "/lesson",
             },
             {
-              label: "Public Lead",
-              link: "/course/milstone",
+              label: "quize",
+              link: "/lesson/quize",
             },
             {
               label: "Be Smart Lesson Quiz",
               link: "/course/module",
             },
           ]}
-        />
+        /> */}
         <h1 className="text-3xl font-bold my-9 text-slate-700">
           Be Smart Lesson Quiz
         </h1>
       </div>
       <div className="block lg:flex gap-2 items-start  ">
-        <QuizAside />
+        <QuizAside
+          time_duration={2000}
+          questionLength={allSingleQuizeData?.data?.length}
+        />
         <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0 ">
           <div className="flex flex-col gap-3">
-            {quizData.map((quiz: any, index: number) => (
-              <Card key={quiz._id} className="mb-4">
+            {allSingleQuizeData?.data?.map((quiz: any, index: number) => (
+              <Card key={quiz?._id} className="mb-4">
                 <p className="text-lg font-[550] mb-2">
-                  Question {index + 1} : {quiz.question}
+                  Question {index + 1} : {quiz?.title}
                 </p>
-                {quiz.type === "radio" && (
+                {quiz?.type === "select" && (
                   <Radio.Group
                     style={{
                       display: "flex",
@@ -134,29 +152,29 @@ export default function Quizes() {
                       gap: "1rem",
                     }}
                   >
-                    {quiz.answer.map((option: any) => (
+                    {quiz?.answers.map((option: any) => (
                       <Radio key={option?.title} value={option?.title}>
                         {option?.title}
                       </Radio>
                     ))}
                   </Radio.Group>
                 )}
-                {quiz.type === "select" && (
+                {quiz?.type === "radio" && (
                   <Select placeholder="Select an option" className="w-full">
-                    {quiz.answer.map((option: any) => (
+                    {quiz?.answers?.map((option: any) => (
                       <Option key={option?.title} value={option?.title}>
                         {option?.title}
                       </Option>
                     ))}
                   </Select>
                 )}
-                {quiz.type === "text" && (
+                {quiz?.type === "text" && (
                   <Input
                     style={{ minHeight: "1rem", width: "12rem" }}
                     placeholder="Type your answer"
                   />
                 )}
-                {quiz.type === "textArea" && (
+                {quiz?.type === "textArea" && (
                   <Input.TextArea
                     style={{ minHeight: "6rem" }}
                     placeholder="Type your answer"
