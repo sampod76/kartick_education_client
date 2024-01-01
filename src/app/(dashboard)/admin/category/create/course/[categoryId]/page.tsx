@@ -39,10 +39,10 @@ export default function CreateCourseFromCourse({
   // console.log("🚀 ~ file: page.tsx:28 ~ categoryName:", categoryName);
 
   const [textEditorValue, setTextEditorValue] = useState("");
-  console.log(
-    "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
-    textEditorValue
-  );
+  // console.log(
+  //   "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
+  //   textEditorValue
+  // );
   const [addCourse, { isLoading }] = useAddCourseMutation();
 
   // !  tag selection

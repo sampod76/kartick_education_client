@@ -1,47 +1,58 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
-
+import FormDataRange from "@/components/Forms/FormDataRange";
 import FormInput from "@/components/Forms/FormInput";
-
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
-import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
+import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
+import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
+import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
-
 import UploadImage from "@/components/ui/UploadImage";
+import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
-
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import { courseStatusOptions } from "@/constants/global";
+import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-
+import UploadMultpalImage from "@/hooks/multipleImageUpload";
+import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
 import {
   useAddLessonMutation,
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
-
-
-
+import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
+import {
+  useAddModuleMutation,
+  useGetAllModuleQuery,
+} from "@/redux/api/adminApi/moduleApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-
-import { Col, Row, message } from "antd";
+import { Col, Row, Spin, message } from "antd";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-const CreateLesson = () => {
-  const [textEditorValue, setTextEditorValue] = useState("");
+export default function CreateCourseFromCourse({
+  params,
+}: {
+  params: { moduleId: string };
+}) {
+  console.log(params);
+
+  const searchParams = useSearchParams();
+
+  const moduleName = searchParams.get("moduleName");
+
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
+  const [textEditorValue, setTextEditorValue] = useState("");
 
-  const { data: existLesson,isLoading } = useGetAllLessonQuery({});
-
-
+  const { data: existLesson, isLoading } = useGetAllLessonQuery({});
 
   // !  tag selection
 
-
   const [selectedTags, setSelectedTags] = useState<string[]>(["tag1"]);
-
 
   const onSubmit = async (values: any) => {
     // console.log(values);
@@ -53,6 +64,8 @@ const CreateLesson = () => {
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
+      module: params.moduleId,
+      details:textEditorValue
     };
     console.log(LessonData);
 
@@ -91,6 +104,7 @@ const CreateLesson = () => {
           submitHandler={onSubmit}
           defaultValues={{ lesson_number: Number(prelesson_number) }}
         >
+          <h2 className="text-start font-bold tex-3xl">Module :{moduleName}</h2>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -99,13 +113,11 @@ const CreateLesson = () => {
               marginBottom: "10px",
             }}
           >
-          
             <hr className="border-1 my-1" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -122,7 +134,6 @@ const CreateLesson = () => {
               <Col
                 className="gutter-row"
                 xs={4}
-              
                 style={{
                   marginBottom: "10px",
                 }}
@@ -136,7 +147,7 @@ const CreateLesson = () => {
                 />
                 {/*//! 2 */}
               </Col>
-              
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -146,21 +157,10 @@ const CreateLesson = () => {
                   marginBottom: "10px",
                 }}
               >
-               <SelectAuthorField/>
+                <SelectAuthorField />
                 {/* //! Author  4*/}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={7}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <SelectModuleField/>
-                {/* //! price type 5*/}
-              </Col>
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -190,17 +190,15 @@ const CreateLesson = () => {
                   marginBottom: "10px",
                 }}
               >
-               <TagsSelectUI
-                      selected={selectedTags}
-                      setSelected={setSelectedTags}
-
-                    />
+                <TagsSelectUI
+                  selected={selectedTags}
+                  setSelected={setSelectedTags}
+                />
                 {/*//! 6 */}
               </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -208,16 +206,29 @@ const CreateLesson = () => {
                 <UploadImage name="img" />
                 {/* //!7*/}
               </Col>
-              <Col className="gutter-row" xs={24} style={{}}>
-                <div>
-                  <FormTextArea
-                    name="short_description"
-                    label="Short description"
-                    rows={5}
-                    placeholder="Please enter short description"
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                // md={12}
+                // lg={8}
+                style={{}}
+              >
+                {/*//! 3 */}
+                <section
+                  style={{
+                    borderTopWidth: "2px",
+                  }} /* className=" border-t-2" */
+                >
+                  <p className="text-center my-3 font-bold text-xl">
+                    Description
+                  </p>
+                  <TextEditor
+                    textEditorValue={textEditorValue}
+                    setTextEditorValue={setTextEditorValue}
                   />
-                </div>
-              </Col>
+                </section>
+                </Col>
               <Col
                 className="gutter-row"
                 xs={24}
@@ -231,13 +242,9 @@ const CreateLesson = () => {
             </Row>
           </div>
 
-          <ButtonSubmitUI>
-            Create Lesson
-          </ButtonSubmitUI>
+          <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
         </Form>
       </div>
     </div>
   );
-};
-
-export default CreateLesson;
+}
