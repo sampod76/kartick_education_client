@@ -19,7 +19,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
   // console.log(data,"courseId");
   const milestoneData = data?.data;
 
-  // console.log(milestoneData, "milestoneData");
+  console.log(milestoneData, "milestoneData");
 
   return (
     <div
@@ -50,10 +50,10 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
       <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3 max-w-[80%] mx-auto mt-5">
         {milestoneData?.map((milestone: any, index: number) => {
           return (
-            <div key={index} className="p-2 ">
+            <div key={index} className=" ">
               <Link
                 href={`/module/${milestone?._id}`}
-                className="text-start text-gray-800 text-[24px] font-semibold font-['Inter'] leading-2 "
+                className="text-start text-gray-800 text-[20px] font-semibold font-['Inter'] leading-1 "
               >
                 {milestone?.title}
 
@@ -62,9 +62,10 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
               <ul className="py-3 list-[circle] ">
                 {milestone?.modules?.map((module: any, index: number) => {
                   return (
-                    <li key={index} className="px-2 text-slate-800 ">
+                    <li key={index} className="px-2  text-start">
                       <Link
                         href={`/lesson/${module?._id}`}
+                        className="text-secondary"
                         // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
                         style={{
                           display: "flex",
@@ -81,7 +82,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
                       >
                         {/* //! Modules List  */}
                         {/* <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div> */}
-                        <h1>{module?.title}</h1>
+                        {module?.title}
                       </Link>
                     </li>
                   );
