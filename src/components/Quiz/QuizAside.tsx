@@ -1,8 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-export default function QuizAside() {
-  const initialTime = 20 * 60; // 20 minutes in seconds
+export default function QuizAside({
+  time_duration,
+  questionLength,
+}: {
+  time_duration: any;
+  questionLength: any;
+}) {
+  // const initialTime = 20 * 60; // 20 minutes in seconds
+  const initialTime = Number(time_duration); // 20 minutes in seconds
   const [timeRemaining, setTimeRemaining] = useState(initialTime);
 
   useEffect(() => {
@@ -29,7 +36,7 @@ export default function QuizAside() {
     <div className="w-full lg:w-[30%] mx-auto flex items-center">
       <div className="text-center bg-white shadow flex flex-col items-center justify-center gap-2 p-8 rounded">
         <div className="h-[9rem] w-[9rem] p-[1rem] border-2 border-slate-900 rounded-full  flex justify-center items-center">
-          <button className="text-3xl font-bold">20</button>
+          <button className="text-3xl font-bold">{questionLength}</button>
         </div>
         <h4 className="text-xl font-[500]">Questions</h4>
       </div>
