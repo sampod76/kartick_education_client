@@ -30,7 +30,7 @@ import React, { useState } from "react";
 const CreateQuiz = () => {
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
-  const [selectedTags, setSelectedTags] = useState<string[]>(["tag1", "tag2"]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);

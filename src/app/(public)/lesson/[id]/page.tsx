@@ -4,16 +4,20 @@ import ModuleList from "@/components/module/ModuleList";
 import ModuleTab from "@/components/module/ModuleTab";
 import ModuleTop from "@/components/module/ModuleTop";
 import SideModuleList from "@/components/module/SideModuleList";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { useGetSingleModuleQuery } from "@/redux/api/adminApi/moduleApi";
 import React from "react";
 
 export default function LessonPage({ params }: { params: { id: string } }) {
   const moduleId = params.id;
   // console.log(moduleId);
-  const { data: moduleData } = useGetSingleModuleQuery(moduleId);
+  const { data: moduleData, isLoading } = useGetSingleModuleQuery(moduleId);
   // console.log("🚀 ~ file: page.tsx:12 ~ LessonPage ~ moduleData:", moduleData);
   const milestoneId = moduleData?.milestone;
   // console.log(milestoneId);
+  if (isLoading) {
+    return <LoadingSkeleton number={10} />;
+  }
   return (
     <div className="mt-5 container mx-auto">
       <ModuleTop moduleId={moduleId} />

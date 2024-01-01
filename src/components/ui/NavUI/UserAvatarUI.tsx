@@ -8,14 +8,11 @@ import React from "react";
 const UserAvatarUI = () => {
   const router = useRouter();
 
-  const logoutHandler = () => {
-    message.error("Logout Successfully");
-    router.push("/");
-  };
+  
 
   return (
-    <section style={{ display: "flex", alignItems: "center", gap: "1.5em" }}>
-      <Link href={`/profile`}>
+    <section style={{ display: "flex", alignItems: "center", gap: "1.5em" }} className="mb-5">
+      <Link href={`/profile`} >
         <Avatar size="large" icon={<UserOutlined />} />
       </Link>
     </section>
