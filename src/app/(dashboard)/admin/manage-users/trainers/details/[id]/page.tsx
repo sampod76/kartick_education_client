@@ -4,6 +4,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 import { useGetSingleStudentQuery } from "@/redux/api/adminApi/moderatorApi";
 import StudentProfile from "@/components/profile/StudentProfile";
+import ProfileInstructorPage from "@/components/profile/ProfileInstructorPage";
 
 const StudentDetailsPage = ({ params }: any) => {
   const id = params.id;
@@ -18,7 +19,8 @@ const StudentDetailsPage = ({ params }: any) => {
 
   return (
     <div>
-      <StudentProfile userData={userData}></StudentProfile>
+      {/* <StudentProfile userData={userData}></StudentProfile> */}
+      <ProfileInstructorPage userData={userData} />
     </div>
   );
 };

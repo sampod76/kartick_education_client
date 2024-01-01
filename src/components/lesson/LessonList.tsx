@@ -19,10 +19,9 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     status: "active",
     module: moduleId,
   });
-  // console.log(
-  //   "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ lessonData:",
-  //   lessonData
-  // );
+  console.log("🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:", lessonData)
+
+
 
   const panelStyle: React.CSSProperties = {
     marginBottom: 24,

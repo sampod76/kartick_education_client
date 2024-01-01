@@ -112,7 +112,7 @@ const TrainerListPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/manage-users/students/details/${data}`}>
+            <Link href={`/admin/manage-users/trainers/details/${data}`}>
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
@@ -181,13 +181,15 @@ const TrainerListPage = () => {
     return <LoadingForDataFetch />;
   }
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <ActionBar title="Student List">
         <Input
           size="large"

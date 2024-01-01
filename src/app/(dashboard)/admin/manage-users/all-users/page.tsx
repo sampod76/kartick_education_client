@@ -142,13 +142,13 @@ const AdminPage = () => {
       title: "Action",
       dataIndex: "_id",
       render: function (data: any) {
-        console.log(data);
+        // console.log(data);
         return (
           <>
             <Link
               href={`/${SUPER_ADMIN}/manage-users/all-users/details/${data}`}
             >
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>

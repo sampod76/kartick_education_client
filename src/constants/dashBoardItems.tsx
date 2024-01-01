@@ -12,8 +12,8 @@ import {
   BorderOuterOutlined,
   UserOutlined,
   BookOutlined,
-  DatabaseOutlined ,
-  AlignCenterOutlined 
+  DatabaseOutlined,
+  AlignCenterOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -59,7 +59,6 @@ export const dashboardItems = (role: USER_ROLE) => {
               ),
               key: `/admin/user/all-users-list`,
             },
-           
           ],
         },
         {
@@ -81,7 +80,6 @@ export const dashboardItems = (role: USER_ROLE) => {
               ),
               key: `admin/manage-users/students`,
             },
-            
           ],
         },
         {
@@ -103,7 +101,6 @@ export const dashboardItems = (role: USER_ROLE) => {
               ),
               key: `/admin/manage-users/trainers`,
             },
-           
           ],
         },
         {
@@ -120,15 +117,11 @@ export const dashboardItems = (role: USER_ROLE) => {
               key: `/admin/manage-users/admin/create`,
             },
             {
-              label: (
-                <Link href={`/admin/manage-users/admin`}>Admin List</Link>
-              ),
+              label: <Link href={`/admin/manage-users/admin`}>Admin List</Link>,
               key: `/admin/manage-users/admin`,
             },
-            
           ],
         },
-      
       ],
     },
     {
@@ -144,8 +137,6 @@ export const dashboardItems = (role: USER_ROLE) => {
           label: <Link href={`/admin/category`}>Category List</Link>,
           key: `/admin/category`,
         },
-       
-       
       ],
     },
     {
@@ -157,12 +148,11 @@ export const dashboardItems = (role: USER_ROLE) => {
           label: <Link href={`/admin/course/create`}>Create course</Link>,
           key: `/admin/Course/create`,
         },
-        
+
         {
           label: <Link href={`/admin/course`}>Course List</Link>,
           key: `/admin/Course`,
         },
-       
       ],
     },
     {
@@ -174,12 +164,11 @@ export const dashboardItems = (role: USER_ROLE) => {
           label: <Link href={`/admin/milestone/create`}>Create Milestone</Link>,
           key: `/admin/milestone/create`,
         },
-        
+
         {
           label: <Link href={`/admin/milestone`}>Milestone List</Link>,
           key: `/admin/milestone`,
         },
-       
       ],
     },
     {
@@ -195,13 +184,12 @@ export const dashboardItems = (role: USER_ROLE) => {
           label: <Link href={`/admin/module`}>Modules List</Link>,
           key: `/admin/module`,
         },
-        
       ],
     },
     {
       label: "Manage Lesson",
       key: "manage-lesson",
-      icon: <AlignCenterOutlined  />,
+      icon: <AlignCenterOutlined />,
       children: [
         {
           label: <Link href={`/admin/lesson/create`}>Create Lesson</Link>,
@@ -211,7 +199,6 @@ export const dashboardItems = (role: USER_ROLE) => {
           label: <Link href={`/admin/lesson`}>lesson List</Link>,
           key: `/admin/lesson`,
         },
-       
       ],
     },
     {
@@ -227,7 +214,6 @@ export const dashboardItems = (role: USER_ROLE) => {
           label: <Link href={`/admin/quiz`}>Quiz List</Link>,
           key: `/admin/quiz`,
         },
-        
       ],
     },
     {
@@ -236,19 +222,20 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <ThunderboltOutlined />,
       children: [
         {
-          label: <Link href={`/admin/single-quiz/create`}>Create Single Quiz</Link>,
+          label: (
+            <Link href={`/admin/single-quiz/create`}>Create Single Quiz</Link>
+          ),
           key: `/admin/single-quiz/create`,
         },
         {
           label: <Link href={`/admin/single-quiz`}>Single Quiz List</Link>,
           key: `/admin/single-quiz`,
         },
-       
       ],
     },
   ];
 
-  const moderatorSidebarItems: MenuProps["items"] = [
+  const trainerSidebarItems: MenuProps["items"] = [
     ...adminSidebarItems,
     {
       label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
@@ -277,7 +264,7 @@ export const dashboardItems = (role: USER_ROLE) => {
     },
   ];
 
-  if (role === USER_ROLE.ADMIN) return moderatorSidebarItems;
-  else if (role === USER_ROLE.MODERATOR) return adminSidebarItems;
+  if (role === USER_ROLE.TRAINER) return trainerSidebarItems;
+  else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.STUDENT) return studentSidebarItems;
 };
