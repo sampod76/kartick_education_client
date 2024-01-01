@@ -168,7 +168,13 @@ const LessonList = () => {
                   <Menu.Item key="edit">
                     <Link href={`/admin/lesson/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
-
+                  <Menu.Item key="add_milestone">
+                    <Link
+                      href={`/admin/lesson/create/quiz/${record?._id}?lessonName=${record?.title}`}
+                    >
+                      Add Quiz
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item
                     key="delete"
                     onClick={() => {
