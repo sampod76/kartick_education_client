@@ -166,7 +166,13 @@ const MileStoneList = () => {
                       Edit
                     </Link>
                   </Menu.Item>
-
+                  <Menu.Item key="add_milestone">
+                    <Link
+                      href={`/admin/milestone/create/module/${record?._id}?milestoneName=${record?.title}`}
+                    >
+                      Add Module
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item
                     key="delete"
                     onClick={() => {
