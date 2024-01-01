@@ -45,7 +45,6 @@ const CourseList = () => {
 
   const [filterValue, setFilterValue] = useState("");
 
-
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
@@ -205,6 +204,14 @@ const CourseList = () => {
                   >
                     Delete
                   </Menu.Item>
+
+                  <Menu.Item key="add_milestone">
+                    <Link
+                      href={`/admin/course/create/milestone/${record?._id}?courseName=${record?.title}`}
+                    >
+                      Add Milestone
+                    </Link>
+                  </Menu.Item>
                 </Menu>
               }
             >
@@ -264,19 +271,20 @@ const CourseList = () => {
       <HeadingUI>Course List</HeadingUI>
 
       <ActionBar>
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-
-        <FilterCategorySelect
-          filterValue={filterValue}
-          setFilterValue={setFilterValue}
-        />
+        <div className="flex gap-2">
+          <Input
+            size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              width: "20%",
+            }}
+          />
+          <FilterCategorySelect
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+          />
+        </div>
 
         <div>
           <Link href={`/admin/course/create`}>

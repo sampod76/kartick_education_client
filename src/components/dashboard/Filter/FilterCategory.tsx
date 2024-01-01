@@ -50,7 +50,7 @@ const FilterCategorySelect = ({
       size={"large"}
       options={CategoryOptions}
       value={filterValue}
-      style={{ width: "24rem" }}
+      style={{ width: "10rem" }}
       loading={isLoading}
 
       // loading={true}
