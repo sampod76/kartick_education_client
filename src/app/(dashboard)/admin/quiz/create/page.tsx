@@ -6,9 +6,10 @@ import FormInput from "@/components/Forms/FormInput";
 
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
+
 import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
 import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import UploadImage from "@/components/ui/UploadImage";
@@ -19,24 +20,22 @@ import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
 
-
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
-
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import {  Col, Row, message } from "antd";
+import { Col, Row, message } from "antd";
 import React, { useState } from "react";
 
 const CreateQuiz = () => {
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
-  const [selectedTags, setSelectedTags] = useState<string[]>(["tag1","tag2"]);
-
+  const [selectedTags, setSelectedTags] = useState<string[]>(["tag1", "tag2"]);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
   const [videoUrl, setVideoUrl] = useState("");
+  const [textEditorValue, setTextEditorValue] = useState("");
 
   const demo_video = {
     video: videoType,
@@ -44,7 +43,6 @@ const CreateQuiz = () => {
   };
 
   const onSubmit = async (values: any) => {
-
     const imgUrl = await uploadImgBB(values.img);
 
     values.img = imgUrl;
@@ -76,13 +74,15 @@ const CreateQuiz = () => {
   }
 
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
@@ -92,42 +92,27 @@ const CreateQuiz = () => {
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
               padding: "15px",
-              
             }}
           >
-            <HeadingUI
-           
-            >
-              Create Quiz
-            </HeadingUI>
+            <HeadingUI>Create Quiz</HeadingUI>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
+                md={24}
+                lg={24}
+                style={{ marginBlock: "10px" }}
               >
                 <FormInput
                   type="text"
                   name="title"
                   size="large"
-                  label="Lesson Name"
+                  label="Lesson Title"
                   required={true}
                 />
                 {/*//! 1-- */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormInput
                   type="number"
                   name="passingGrade"
@@ -137,52 +122,20 @@ const CreateQuiz = () => {
                 />
                 {/*//! 4 --- */}
               </Col>
-              
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
-              <SelectAuthorField/>
-                {/* //! Author 5 --*/}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
-              <SelectModuleField/>
+
+              {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <SelectAuthorField />
+  
+              </Col> */}
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <SelectModuleField />
                 {/* //! module 6 ----*/}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
-             <SelectLessonField/>
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <SelectLessonField />
                 {/* //! Lesson 7 ----*/}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormSelectField
                   size="large"
                   name="status"
@@ -194,15 +147,7 @@ const CreateQuiz = () => {
                 />
                 {/* //! price type 8 ---*/}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  
-                }}
-              >
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <DemoVideoUI
                   videoType={videoType as any}
                   setVideoType={setVideoType}
@@ -211,51 +156,62 @@ const CreateQuiz = () => {
                   options={["youtube", "vimeo"]}
                   label="Demo video"
                 />
-               
               </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-               
+                md={12}
+                lg={8}
                 style={{
-                  marginTop:"10px"
+                  marginTop: "10px",
                 }}
               >
-               <TagsSelectUI
-                      selected={selectedTags}
-                      setSelected={setSelectedTags}
-
-                    />
+                <TagsSelectUI
+                  selected={selectedTags}
+                  setSelected={setSelectedTags}
+                />
                 {/*//! 10--- */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-               
-                style={{
-                  
-                }}
-              >
+              <Col className="gutter-row" xs={24} style={{}}>
                 <UploadImage name="img" />
                 {/* //! 2 -- */}
               </Col>
+              <Col className="gutter-row" xs={24} style={{}}>
+                <div>
+                  <FormTextArea
+                    name="short_description"
+                    label="Short description"
+                    rows={5}
+                    placeholder="Please enter short description"
+                  />
+                </div>
+              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-              
-                style={{
-                  
-                }}
+                // md={12}
+                // lg={8}
+                style={{}}
               >
-                <FormTextArea rows={15} label="Description" name="details" />
-               
+                {/*//! 3 */}
+                <section
+                  style={{
+                    borderTopWidth: "2px",
+                  }} /* className=" border-t-2" */
+                >
+                  <p className="text-center my-3 font-bold text-xl">
+                    Description
+                  </p>
+                  <TextEditor
+                    textEditorValue={textEditorValue}
+                    setTextEditorValue={setTextEditorValue}
+                  />
+                </section>
               </Col>
             </Row>
           </div>
 
-          <ButtonSubmitUI>
-            Create
-          </ButtonSubmitUI>
+          <ButtonSubmitUI>Create</ButtonSubmitUI>
         </Form>
       </div>
     </div>

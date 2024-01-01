@@ -37,16 +37,14 @@ const UploadImage = ({
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
-  const [error, setError] = useState(false);
   const { setValue } = useFormContext();
 
   const handleChange: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
   ) => {
     if (info.file.status === "uploading") {
-      setError(false);
       setLoading(true);
-      // return;
+      return;
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
@@ -56,23 +54,12 @@ const UploadImage = ({
         setImageUrl(url);
       });
     }
-    if (info.file.status === "error") {
-      // Get this url from response in real world.
-      setError(true);
-      setLoading(false);
-    }
   };
 
   const uploadButton = (
     <div className="">
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      {error ? (
-        <div className="text-red-600 text-center" style={{ marginTop: 8 }}>
-          Error:Please try
-        </div>
-      ) : (
-        <div style={{ marginTop: 8 }}>Upload</div>
-      )}
+      <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
 
@@ -83,7 +70,7 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action={`${process.env.NEXT_PUBLIC_API_BASE_URL}/upload/upload-single-image`}
+        action="/api/file"
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >

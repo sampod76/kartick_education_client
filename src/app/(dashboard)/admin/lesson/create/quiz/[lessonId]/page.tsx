@@ -1,40 +1,23 @@
 "use client";
 import Form from "@/components/Forms/Form";
-import FormDataRange from "@/components/Forms/FormDataRange";
+
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
-import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
-import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
-import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
-import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
+import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import UploadMultpalImage from "@/hooks/multipleImageUpload";
-import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
-import {
-  useAddLessonMutation,
-  useGetAllLessonQuery,
-  useGetSingleLessonQuery,
-} from "@/redux/api/adminApi/lessoneApi";
-import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
-import {
-  useAddModuleMutation,
-  useGetAllModuleQuery,
-} from "@/redux/api/adminApi/moduleApi";
+import {useGetSingleLessonQuery} from "@/redux/api/adminApi/lessoneApi";
+
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { Col, Row, Spin, message } from "antd";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { Col, Row,  message } from "antd";
+
 import React, { useState } from "react";
 
 export default function CreateCourseFromCourse({
@@ -54,7 +37,7 @@ export default function CreateCourseFromCourse({
 
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
-  const [selectedTags, setSelectedTags] = useState<string[]>(["tag1", "tag2"]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [textEditorValue, setTextEditorValue] = useState("");
 
   // ! for video insert
@@ -113,6 +96,7 @@ export default function CreateCourseFromCourse({
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
+        <HeadingUI>Create Quiz</HeadingUI>
         <Form submitHandler={onSubmit}>
           <h2 className="text-start font-bold tex-3xl">
             Lesson :{lessonData?.title}
@@ -124,14 +108,19 @@ export default function CreateCourseFromCourse({
               padding: "15px",
             }}
           >
-            <HeadingUI>Create Quiz</HeadingUI>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={24}
+                lg={24}
+                style={{ marginBlock: "10px" }}
+              >
                 <FormInput
                   type="text"
                   name="title"
                   size="large"
-                  label="Lesson Name"
+                  label="Quiz Title"
                   required={true}
                 />
                 {/*//! 1-- */}
@@ -147,10 +136,11 @@ export default function CreateCourseFromCourse({
                 {/*//! 4 --- */}
               </Col>
 
+              {/* 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectAuthorField />
-                {/* //! Author 5 --*/}
-              </Col>
+            
+              </Col> */}
 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormSelectField
@@ -177,6 +167,8 @@ export default function CreateCourseFromCourse({
               <Col
                 className="gutter-row"
                 xs={24}
+                md={12}
+                lg={8}
                 style={{
                   marginTop: "10px",
                 }}
