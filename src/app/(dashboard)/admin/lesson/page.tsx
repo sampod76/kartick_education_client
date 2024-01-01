@@ -28,6 +28,7 @@ import {
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import FilterModule from "@/components/dashboard/Filter/FilterModule";
 
 const LessonList = () => {
   const query: Record<string, any> = {};
@@ -43,12 +44,16 @@ const LessonList = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const [adminId, setAdminId] = useState<string>("");
+  const [filterValue, setFilterValue] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
+  if (filterValue) {
+    query["module"] = filterValue;
+  }
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -59,7 +64,7 @@ const LessonList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllLessonQuery({ ...query });
-  console.log(data);
+  // console.log(data);
 
   //@ts-ignore
   const LessonData = data?.data;
@@ -156,7 +161,9 @@ const LessonList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/admin/lesson/details/${record._id}`}>View</Link>
+                    <Link href={`/admin/lesson/details/${record._id}`}>
+                      View
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
                     <Link href={`/admin/lesson/edit/${record._id}`}>Edit</Link>
@@ -234,6 +241,10 @@ const LessonList = () => {
           style={{
             width: "20%",
           }}
+        />
+        <FilterModule
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
         />
         <div>
           <Link href={`/admin/lesson/create`}>

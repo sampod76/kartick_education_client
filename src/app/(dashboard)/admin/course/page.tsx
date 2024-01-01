@@ -44,10 +44,7 @@ const CourseList = () => {
   const [courseId, setCourseId] = useState<string>("");
 
   const [filterValue, setFilterValue] = useState("");
-  console.log(
-    "🚀 ~ file: page.tsx:47 ~ CourseList ~ filterValue:",
-    filterValue
-  );
+
 
   query["limit"] = size;
   query["page"] = page;
