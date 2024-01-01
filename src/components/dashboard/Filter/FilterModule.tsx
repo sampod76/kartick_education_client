@@ -4,7 +4,6 @@ import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
 
 import { Button, Select } from "antd";
 
-
 export default function FilterModule({
   filterValue,
   setFilterValue,
@@ -14,10 +13,22 @@ export default function FilterModule({
 }) {
   // const [filterValue, setFilterValue] = useState("Filter by a Module");
   console.log("🚀 filterValue:", filterValue);
+  const query: Record<string, any> = {};
+  //! for Course options selection
+  query["limit"] = 999999;
+  query["sortBy"] = "title";
+  query["sortOrder"] = "asc";
+  //! for search and select
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const onSearch = (value: string) => {
+    console.log("search:", value);
+  };
 
   //! for Module options selection
   const { data: Module, isLoading } = useGetAllModuleQuery({});
-
 
   const ModuleData = Module?.data;
 
@@ -49,9 +60,12 @@ export default function FilterModule({
       value={filterValue}
       style={{ width: "24rem" }}
       loading={isLoading}
-
-      // loading={true}
-      // placeholder={placeholder}
+      //! for search & filter
+      showSearch
+      onSearch={onSearch}
+      filterOption={filterOption}
+      optionFilterProp="children"
+      placeholder="Inserted are removed"
     />
   );
 }

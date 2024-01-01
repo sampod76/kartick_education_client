@@ -15,6 +15,20 @@ export default function FilterMilestone({
   // const [filterValue, setFilterValue] = useState("Filter by a Milestone");
   console.log("🚀 filterValue:", filterValue);
 
+  const query: Record<string, any> = {};
+    //! for Course options selection
+    query["limit"] = 999999;
+    query["sortBy"] = "title";
+    query["sortOrder"] = "asc";
+    //! for search and select
+    const filterOption = (
+      input: string,
+      option?: { label: string; value: string }
+    ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+    const onSearch = (value: string) => {
+      console.log("search:", value);
+    };
+
   //! for Milestone options selection
   const { data: Milestone, isLoading } = useGetAllMilestoneQuery({});
 
@@ -49,9 +63,12 @@ export default function FilterMilestone({
       value={filterValue}
       style={{ width: "24rem" }}
       loading={isLoading}
-
-      // loading={true}
-      // placeholder={placeholder}
+ //! for search & filter
+ showSearch
+ onSearch={onSearch}
+ filterOption={filterOption}
+ optionFilterProp="children"
+ placeholder="Inserted are removed"
     />
   );
 }

@@ -12,9 +12,22 @@ export default function FilterLesson({
 }) {
   // const [filterValue, setFilterValue] = useState("Filter by a Lesson");
   console.log("🚀 filterValue:", filterValue);
+  const query: Record<string, any> = {};
+  //! for Course options selection
+  query["limit"] = 999999;
+  query["sortBy"] = "title";
+  query["sortOrder"] = "asc";
+  //! for search and select
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const onSearch = (value: string) => {
+    console.log("search:", value);
+  };
 
   //! for Lesson options selection
-  const { data: Lesson, isLoading } = useGetAllLessonQuery({});
+  const { data: Lesson, isLoading } = useGetAllLessonQuery({ ...query });
 
   const LessonData = Lesson?.data;
 
@@ -46,6 +59,12 @@ export default function FilterLesson({
       value={filterValue}
       style={{ width: "24rem" }}
       loading={isLoading}
+      //! for search & filter
+      showSearch
+      onSearch={onSearch}
+      filterOption={filterOption}
+      optionFilterProp="children"
+      placeholder="Inserted are removed"
 
       // loading={true}
       // placeholder={placeholder}
