@@ -12,7 +12,7 @@ export default function CourseDetailsMain({courseId}:{courseId:string}) {
       console.log(CourseData, "courseData");
   return (
     <div>
-          <CourseStatistics/>
+          {/* <CourseStatistics/> */}
       <CourseDetailsTop />
       <AuthorCourseDetails authorData={CourseData?.author} />
       <CourseDetailsTab courseId={courseId} />

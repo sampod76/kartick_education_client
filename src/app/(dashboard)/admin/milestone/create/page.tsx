@@ -114,7 +114,7 @@ const CreateMilestone = () => {
                 {/*//! 11 */}
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
-                <UploadImage name="img" />
+                <UploadImage  name="img" />
               </Col>
               <Col
                 className="gutter-row"
