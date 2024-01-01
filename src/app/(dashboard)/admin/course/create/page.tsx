@@ -48,15 +48,11 @@ const CreateCoursePage = () => {
     "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
     textEditorValue
   );
-  const [addCourse, { isLoading }] = useAddCourseMutation();
+  const [addCourse, { isLoading ,error}] = useAddCourseMutation();
 
   // !  tag selection
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-  // console.log(selectedTags, "selectedTags........1");
-
-  // console.log(courseStatusOptions,"Category",CategoryOptions,);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -100,6 +96,7 @@ const CreateCoursePage = () => {
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
+      Error_model_hook(err?.message);
     }
   };
   // if (isLoading) {
@@ -280,6 +277,7 @@ const CreateCoursePage = () => {
                 label="Short description"
                 rows={5}
                 placeholder="Please enter short description"
+                required
               />
             </div>
             <section
@@ -291,9 +289,9 @@ const CreateCoursePage = () => {
                 setTextEditorValue={setTextEditorValue}
               />
             </section>
-            <div>
+            {/* <div>
               <UploadMultpalImage />
-            </div>
+            </div> */}
             {isLoading ? (
               <Spin />
             ) : (

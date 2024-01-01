@@ -12,18 +12,23 @@ const FilterCategorySelect = ({
   setFilterValue: any;
 }) => {
   // const [filterValue, setFilterValue] = useState("Filter by a category");
-  console.log("🚀 filterValue:", filterValue);
+  const query: Record<string, any> = {};
+  //! for Course options selection
+  query["limit"] = 999999;
+  query["sortBy"] = "title";
+  query["sortOrder"] = "asc";
+  //
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const onSearch = (value: string) => {
+    console.log("search:", value);
+  };
 
   //! for Category options selection
-  const { data: Category, isLoading } = useGetAllCategoryQuery({});
-
-  // console.log(
-  //   "🚀 ~ file: FilterCategory.tsx:13 ~ FilterCategorySelect ~ isLoading:",
-  //   isLoading
-  // );
-
+  const { data: Category, isLoading } = useGetAllCategoryQuery({ ...query });
   const CategoryData = Category?.data;
-
   // console.log(CategoryData)
   const CategoryOptions = CategoryData?.map((item: any) => {
     return {
@@ -32,29 +37,21 @@ const FilterCategorySelect = ({
     };
   });
 
-  console.log(CategoryOptions);
-
   return (
     <Select
-      // placeholder="Filter by a category"
-      // onChange={handleChange ? handleChange : onChange}
       onChange={(val) => {
         setFilterValue(val);
       }}
-      // dropdownRender={(menu) => (
-      //   <div>
-      //     <Button type="default">Filter</Button>
-      //   </div>
-      // )}
-      // disabled={disabled}
       size={"large"}
       options={CategoryOptions}
       value={filterValue}
       style={{ width: "10rem" }}
       loading={isLoading}
-
-      // loading={true}
-      // placeholder={placeholder}
+      showSearch
+      onSearch={onSearch}
+      filterOption={filterOption}
+      optionFilterProp="children"
+      placeholder="Inserted are removed"
     />
   );
 };

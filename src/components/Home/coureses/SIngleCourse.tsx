@@ -83,7 +83,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
           title={<h2 className="text-sm md:text-base" style={{ color: "black" }}>{course?.title}</h2>}
           description={
             <p className="text-xs md:text-sm" style={{color:"#282938",}}>
-              {course?.short_description?.length < 80
+              { course?.short_description && course?.short_description?.length < 80
                 ? parse(course?.short_description)
                 : parse(course?.short_description?.slice(0, 80)) + "....."}
 
