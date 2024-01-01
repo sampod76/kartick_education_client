@@ -240,18 +240,20 @@ const MileStoneList = () => {
       />
       <HeadingUI>Milestone List</HeadingUI>
       <ActionBar>
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-        <FilterCourse
-          filterValue={filterValue}
-          setFilterValue={setFilterValue}
-        />
+        <div className="flex gap-2">
+          <Input
+            size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              width: "20%",
+            }}
+          />
+          <FilterCourse
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+          />
+        </div>
         <div>
           <Link href={`/admin/milestone/create`}>
             <Button type="default">Create Milestone</Button>

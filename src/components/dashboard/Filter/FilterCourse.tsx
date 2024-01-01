@@ -4,7 +4,6 @@ import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 
 import { Button, Select } from "antd";
 
-
 export default function FilterCourse({
   filterValue,
   setFilterValue,
@@ -18,7 +17,6 @@ export default function FilterCourse({
   //! for Course options selection
   const { data: Course, isLoading } = useGetAllCourseQuery({});
 
-
   const CourseData = Course?.data;
 
   // console.log(CourseData)
@@ -29,8 +27,10 @@ export default function FilterCourse({
     };
   });
 
-  console.log(CourseOptions);
-
+  
+  // CourseOptions?.unshift({ value: "disabled", label: "Disabled", disabled: true });
+  
+  // console.log(CourseOptions);
   return (
     <Select
       // placeholder="Filter by a course"
@@ -38,6 +38,7 @@ export default function FilterCourse({
       onChange={(val) => {
         setFilterValue(val);
       }}
+      // defaultActiveFirstOption
       // dropdownRender={(menu) => (
       //   <div>
       //     <Button type="default">Filter</Button>
@@ -47,7 +48,7 @@ export default function FilterCourse({
       size={"large"}
       options={CourseOptions}
       value={filterValue}
-      style={{ width: "24rem" }}
+      style={{ width: "10rem" }}
       loading={isLoading}
 
       // loading={true}
