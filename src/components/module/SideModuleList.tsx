@@ -32,7 +32,6 @@ const SideModuleList = ({
   // console.log(data,"milestoneId");
   const modulesData = data?.data;
 
- 
   if (isLoading || moduleLoading) {
     return <LoadingSkeleton />;
   }
@@ -42,7 +41,9 @@ const SideModuleList = ({
         marginTop: "1.35rem",
       }}
     >
-      <h2 className="text-[1.4rem] font-[550] ">{milestoneData?.title}</h2>
+      <h2 className="text-[18px] lg:text-[20px] font-[550] ">
+        {milestoneData?.title}
+      </h2>
       {/* <Divider
         style={{
           color: "red",
@@ -57,7 +58,7 @@ const SideModuleList = ({
             <Link
               href={`/lesson/${module?._id}`}
               key={index}
-              className={`shadow-md p-3 rounded text-start  text-[16px] font-[550] font-['Inter'] leading-2 ${
+              className={`shadow-md p-3 rounded text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2 ${
                 module?._id === moduleId
                   ? "bg-primary text-white"
                   : "bg-slate-50  text-gray-900"

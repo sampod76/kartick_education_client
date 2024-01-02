@@ -4,13 +4,13 @@ import Image from "next/image";
 
 const SupportHero = () => {
   return (
-    <div className="block lg:flex justify-between text-start my-[5rem] gap-5 container mx-auto">
+    <div className="block lg:flex justify-between text-start my-[5rem] gap-5 container mx-auto px-3 lg:px-0">
       <section>
         <h2 className="text-[#31576A]  text-4xl lg:text-7xl font-[800] uppercase">
           Literacy suppot in <span className="text-secondary">Math</span>
           <br />& <span className="text-secondary">languages arts</span>
         </h2>
-        <ul className="text-[#023047E5] text-xl gap-y-3 font-[500] mt-7 list-none">
+        <ul className="text-[#023047E5] text-md lg:text-xl gap-y-3 font-[500] mt-7 list-none">
           <li className="flex items-center my-1 ">
             <span className="bg-secondary rounded-full inline-block w-3 h-3 mr-3"></span>
             Curriculum Packages at Affordable Rates
@@ -42,7 +42,7 @@ const SupportHero = () => {
         </ul>
       </section>
       <section className="mt-5 lg:mt-0">
-        <h1 className="text-[#31576A] text-4xl lg:text-5xl font-[400]">
+        <h1 className="text-[#31576A] text-3xl lg:text-5xl font-[500]">
           FIND YOU SKILLS PLAN
         </h1>
 

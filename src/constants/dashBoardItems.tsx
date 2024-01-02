@@ -17,7 +17,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
-export const dashboardItems = (role: USER_ROLE) => {
+export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: "Profile",
@@ -25,7 +25,11 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <ProfileOutlined />,
       children: [
         {
-          label: <Link href={`/profile`}>Your Profile</Link>,
+          label: (
+            <Link onClick={() => setCollapsed(false)} href={`/profile`}>
+              Your Profile
+            </Link>
+          ),
           key: `/${role}/profile`,
         },
       ],
@@ -47,7 +51,10 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/all-users/create`}>
+                <Link
+                  onClick={() => setCollapsed(false)}
+                  href={`/admin/manage-users/all-users/create`}
+                >
                   Create user{" "}
                 </Link>
               ),
@@ -55,7 +62,12 @@ export const dashboardItems = (role: USER_ROLE) => {
             },
             {
               label: (
-                <Link href={`/admin/manage-users/all-users`}>Users List</Link>
+                <Link
+                  onClick={() => setCollapsed(false)}
+                  href={`/admin/manage-users/all-users`}
+                >
+                  Users List
+                </Link>
               ),
               key: `/admin/user/all-users-list`,
             },
@@ -68,7 +80,10 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/students/create`}>
+                <Link
+                  onClick={() => setCollapsed(false)}
+                  href={`/admin/manage-users/students/create`}
+                >
                   Create Student
                 </Link>
               ),
@@ -76,7 +91,12 @@ export const dashboardItems = (role: USER_ROLE) => {
             },
             {
               label: (
-                <Link href={`/admin/manage-users/students`}>Students List</Link>
+                <Link
+                  onClick={() => setCollapsed(false)}
+                  href={`/admin/manage-users/students`}
+                >
+                  Students List
+                </Link>
               ),
               key: `admin/manage-users/students`,
             },
@@ -89,7 +109,10 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/trainers/create`}>
+                <Link
+                  onClick={() => setCollapsed(false)}
+                  href={`/admin/manage-users/trainers/create`}
+                >
                   Create Trainer
                 </Link>
               ),
@@ -97,7 +120,12 @@ export const dashboardItems = (role: USER_ROLE) => {
             },
             {
               label: (
-                <Link href={`/admin/manage-users/trainers`}>Trainers List</Link>
+                <Link
+                  onClick={() => setCollapsed(false)}
+                  href={`/admin/manage-users/trainers`}
+                >
+                  Trainers List
+                </Link>
               ),
               key: `/admin/manage-users/trainers`,
             },
@@ -110,14 +138,24 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/admin/create`}>
+                <Link
+                  onClick={() => setCollapsed(false)}
+                  href={`/admin/manage-users/admin/create`}
+                >
                   Create Admin
                 </Link>
               ),
               key: `/admin/manage-users/admin/create`,
             },
             {
-              label: <Link href={`/admin/manage-users/admin`}>Admin List</Link>,
+              label: (
+                <Link
+                  onClick={() => setCollapsed(false)}
+                  href={`/admin/manage-users/admin`}
+                >
+                  Admin List
+                </Link>
+              ),
               key: `/admin/manage-users/admin`,
             },
           ],
@@ -130,11 +168,22 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <CreditCardOutlined />,
       children: [
         {
-          label: <Link href={`/admin/category/create`}>Create Category</Link>,
+          label: (
+            <Link
+              onClick={() => setCollapsed(false)}
+              href={`/admin/category/create`}
+            >
+              Create Category
+            </Link>
+          ),
           key: `/admin/category/create`,
         },
         {
-          label: <Link href={`/admin/category`}>Category List</Link>,
+          label: (
+            <Link onClick={() => setCollapsed(false)} href={`/admin/category`}>
+              Category List
+            </Link>
+          ),
           key: `/admin/category`,
         },
       ],
@@ -145,12 +194,23 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <FileTextOutlined />,
       children: [
         {
-          label: <Link href={`/admin/course/create`}>Create course</Link>,
+          label: (
+            <Link
+              onClick={() => setCollapsed(false)}
+              href={`/admin/course/create`}
+            >
+              Create course
+            </Link>
+          ),
           key: `/admin/Course/create`,
         },
 
         {
-          label: <Link href={`/admin/course`}>Course List</Link>,
+          label: (
+            <Link onClick={() => setCollapsed(false)} href={`/admin/course`}>
+              Course List
+            </Link>
+          ),
           key: `/admin/Course`,
         },
       ],
@@ -161,12 +221,23 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <BookOutlined />,
       children: [
         {
-          label: <Link href={`/admin/milestone/create`}>Create Milestone</Link>,
+          label: (
+            <Link
+              onClick={() => setCollapsed(false)}
+              href={`/admin/milestone/create`}
+            >
+              Create Milestone
+            </Link>
+          ),
           key: `/admin/milestone/create`,
         },
 
         {
-          label: <Link href={`/admin/milestone`}>Milestone List</Link>,
+          label: (
+            <Link onClick={() => setCollapsed(false)} href={`/admin/milestone`}>
+              Milestone List
+            </Link>
+          ),
           key: `/admin/milestone`,
         },
       ],
@@ -177,11 +248,22 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <DatabaseOutlined />,
       children: [
         {
-          label: <Link href={`/admin/module/create`}>Create modules</Link>,
+          label: (
+            <Link
+              onClick={() => setCollapsed(false)}
+              href={`/admin/module/create`}
+            >
+              Create modules
+            </Link>
+          ),
           key: `/admin/module/create`,
         },
         {
-          label: <Link href={`/admin/module`}>Modules List</Link>,
+          label: (
+            <Link onClick={() => setCollapsed(false)} href={`/admin/module`}>
+              Modules List
+            </Link>
+          ),
           key: `/admin/module`,
         },
       ],
@@ -192,11 +274,22 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <AlignCenterOutlined />,
       children: [
         {
-          label: <Link href={`/admin/lesson/create`}>Create Lesson</Link>,
+          label: (
+            <Link
+              onClick={() => setCollapsed(false)}
+              href={`/admin/lesson/create`}
+            >
+              Create Lesson
+            </Link>
+          ),
           key: `/admin/lesson/create`,
         },
         {
-          label: <Link href={`/admin/lesson`}>lesson List</Link>,
+          label: (
+            <Link onClick={() => setCollapsed(false)} href={`/admin/lesson`}>
+              lesson List
+            </Link>
+          ),
           key: `/admin/lesson`,
         },
       ],
@@ -207,11 +300,22 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <ThunderboltOutlined />,
       children: [
         {
-          label: <Link href={`/admin/quiz/create`}>Create Quiz</Link>,
+          label: (
+            <Link
+              onClick={() => setCollapsed(false)}
+              href={`/admin/quiz/create`}
+            >
+              Create Quiz
+            </Link>
+          ),
           key: `/admin/quiz/create`,
         },
         {
-          label: <Link href={`/admin/quiz`}>Quiz List</Link>,
+          label: (
+            <Link onClick={() => setCollapsed(false)} href={`/admin/quiz`}>
+              Quiz List
+            </Link>
+          ),
           key: `/admin/quiz`,
         },
       ],
@@ -223,12 +327,24 @@ export const dashboardItems = (role: USER_ROLE) => {
       children: [
         {
           label: (
-            <Link href={`/admin/single-quiz/create`}>Create Single Quiz</Link>
+            <Link
+              onClick={() => setCollapsed(false)}
+              href={`/admin/single-quiz/create`}
+            >
+              Create Single Quiz
+            </Link>
           ),
           key: `/admin/single-quiz/create`,
         },
         {
-          label: <Link href={`/admin/single-quiz`}>Single Quiz List</Link>,
+          label: (
+            <Link
+              onClick={() => setCollapsed(false)}
+              href={`/admin/single-quiz`}
+            >
+              Single Quiz List
+            </Link>
+          ),
           key: `/admin/single-quiz`,
         },
       ],
@@ -238,7 +354,11 @@ export const dashboardItems = (role: USER_ROLE) => {
   const trainerSidebarItems: MenuProps["items"] = [
     ...adminSidebarItems,
     {
-      label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
+      label: (
+        <Link onClick={() => setCollapsed(false)} href={`/${role}/admin`}>
+          Manage Admin
+        </Link>
+      ),
       icon: <AlipayCircleFilled />,
       key: `/${role}/admin`,
     },
@@ -247,18 +367,30 @@ export const dashboardItems = (role: USER_ROLE) => {
   const studentSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
-      label: <Link href={`/${role}/booking`}>Booking History</Link>,
+      label: (
+        <Link onClick={() => setCollapsed(false)} href={`/${role}/booking`}>
+          Booking History
+        </Link>
+      ),
       icon: <ThunderboltOutlined />,
       key: `/${role}/Service`,
     },
     {
-      label: <Link href={`/${role}/review`}>Review/Feedback History</Link>,
+      label: (
+        <Link onClick={() => setCollapsed(false)} href={`/${role}/review`}>
+          Review/Feedback History
+        </Link>
+      ),
       icon: <AccountBookFilled />,
       key: `/${role}/review`,
     },
 
     {
-      label: <Link href={`/${role}/support`}>Support and Help</Link>,
+      label: (
+        <Link onClick={() => setCollapsed(false)} href={`/${role}/support`}>
+          Support and Help
+        </Link>
+      ),
       icon: <BorderOuterOutlined />,
       key: `/${role}/support`,
     },

@@ -59,7 +59,7 @@ const Success = () => {
         {successHistoryData?.map((item: any, index: any) => {
           return (
             <div
-              className="w-[406px] max-h-[316px] bg-white rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
+              className="w-full lg:w-[406px] max-h-[316px] bg-white rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
               key={index + 1}
             >
               <p className="h-10 w-10 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-2 text-white">
@@ -68,7 +68,7 @@ const Success = () => {
               <h2 className="font-[500] text-2xl text-[#282938] ">
                 {item?.name}
               </h2>
-              <p className="text-[#282938] font[400] text-[16px]">
+              <p className="text-[#1f1f2b] font[400] text-[16px]">
                 {item?.description}
               </p>
             </div>

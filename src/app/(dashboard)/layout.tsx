@@ -28,7 +28,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       router.push("/login");
     }
     setIsLoading(true);
-  }, [router, isLoading]);
+  }, [router, isLoading, userLoggedIn]);
 
   if (!isLoading) {
     return (
@@ -54,7 +54,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       {!screens.sm ? (
         <Drawer
           title={`${userLoggedIn} Dash`}
-          placement="left"
+          placement="right"
           onClose={() => setCollapsed(false)}
           open={collapsed}
         >
@@ -63,7 +63,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             style={{ backgroundColor: "#ffffff" }}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={dashboardItems(userLoggedIn)}
+            items={dashboardItems(userLoggedIn,setCollapsed)}
           />
         </Drawer>
       ) : (

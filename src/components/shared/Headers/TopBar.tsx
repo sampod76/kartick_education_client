@@ -35,7 +35,7 @@ const TopBar = () => {
           <h4>info.iblossomelearn@gmail.com</h4>
         </div>
       </section>
-      <section className="flex justify-between gap-3 mt-5 lg:mt-0">
+      <section className="flex justify-between gap-3 mt-5 lg:mt-0 ">
         <div className="flex gap-2 text-2xl">
           <FacebookFilled />
           <TwitterCircleFilled />
@@ -47,15 +47,15 @@ const TopBar = () => {
             }}
           />
         </div>
-        <div className="block lg:flex gap-2 font-[700]">
+        <div className="flex gap-3 font-[700]">
           <Link
-            className="py-3 px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
+            className="py-3 px-5 lg:px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
             href="/"
           >
             Register
           </Link>
           <Link
-            className="py-3 px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary"
+            className="py-3 px-5 lg:px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1"
             href="/login"
           >
             Login
