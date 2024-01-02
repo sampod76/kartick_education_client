@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Drawer,  Space } from "antd";
+import { Button, Drawer, Space } from "antd";
 
 import { MenuUnfoldOutlined, CloseOutlined } from "@ant-design/icons";
 import Logo from "../../Logo";
 import MenuUI from "@/components/ui/NavUI/MenuUI";
-import { homeSIdeItems } from "@/constants/homeSideBarItems";
+import homeSIdeItems from "@/constants/homeSideBarItems";
 
 const SideBarHome = () => {
   const [open, setOpen] = useState(false);
@@ -18,8 +18,7 @@ const SideBarHome = () => {
     setOpen(false);
   };
 
-// const [selectedItem, setSelectedItem] = useState<null | any>(null);
-
+  // const [selectedItem, setSelectedItem] = useState<null | any>(null);
 
   return (
     <>
@@ -31,10 +30,9 @@ const SideBarHome = () => {
         )}
       </Space>
       <Drawer
-        
         // title="Drawer with extra actions"
         placement={"left"}
-        width={400}
+        width={320}
         onClose={onClose}
         open={open}
         extra={
@@ -45,7 +43,7 @@ const SideBarHome = () => {
           </Space>
         }
       >
-        <MenuUI itemData={homeSIdeItems} />
+        <MenuUI itemData={homeSIdeItems(onClose)} />
       </Drawer>
     </>
   );
