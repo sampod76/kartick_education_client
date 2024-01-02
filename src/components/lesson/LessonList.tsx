@@ -55,7 +55,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
         (item: any) => item?.lesson === lesson?._id
       );
       console.log(lesson);
-      console.log("🚀 lessonQuizData", lessonQuizData);
+       //  // console.log("🚀 lessonQuizData", lessonQuizData);
       return {
         key: lesson?._id,
         label: (

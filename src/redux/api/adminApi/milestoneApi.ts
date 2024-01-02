@@ -17,7 +17,7 @@ export const milestoneApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        console.log("🚀 ~ file: milestoneApi.ts:28 ~ response:", response);
+         //  // console.log("🚀 ~ file: milestoneApi.ts:28 ~ response:", response);
         return {
           data: response,
           meta,

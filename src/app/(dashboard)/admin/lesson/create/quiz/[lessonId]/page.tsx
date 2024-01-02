@@ -12,11 +12,11 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import {useGetSingleLessonQuery} from "@/redux/api/adminApi/lessoneApi";
+import { useGetSingleLessonQuery } from "@/redux/api/adminApi/lessoneApi";
 
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { Col, Row,  message } from "antd";
+import { Col, Row, message } from "antd";
 
 import React, { useState } from "react";
 
@@ -30,7 +30,7 @@ export default function CreateCourseFromCourse({
   // const searchParams = useSearchParams();
 
   // const lessonName = searchParams.get("lessonName");
-  // console.log("🚀 ~ file: page.tsx:49 ~ lessonName:", lessonName);
+  //  //  // console.log("🚀 ~ file: page.tsx:49 ~ lessonName:", lessonName);
 
   const { data: lessonData } = useGetSingleLessonQuery(params.lessonId);
   console.log(lessonData);

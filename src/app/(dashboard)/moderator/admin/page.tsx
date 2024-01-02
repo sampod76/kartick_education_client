@@ -66,7 +66,6 @@ const AdminPage = () => {
     {
       title: "",
       render: function (data: any) {
-     
         return (
           <>
             <Image
@@ -151,7 +150,7 @@ const AdminPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -208,7 +207,7 @@ const AdminPage = () => {
     );
   };
   if (isLoading) {
-    return <LoadingForDataFetch/>;
+    return <LoadingForDataFetch />;
   }
   console.log(data);
   return (
