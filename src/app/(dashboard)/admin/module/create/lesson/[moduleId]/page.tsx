@@ -56,10 +56,10 @@ export default function CreateCourseFromCourse({
 
   const onSubmit = async (values: any) => {
     // console.log(values);
-    const status = "active";
-    const imgUrl = await uploadImgBB(values.img);
+    // const status = "active";
+    // const imgUrl = await uploadImgBB(values.img);
 
-    values.img = imgUrl;
+    // values.img = imgUrl;
 
     const LessonData: {} = {
       ...values,
@@ -67,11 +67,11 @@ export default function CreateCourseFromCourse({
       module: params.moduleId,
       details:textEditorValue
     };
-    console.log(LessonData);
+    // console.log(LessonData);
 
     try {
       const res = await addLesson(LessonData).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {

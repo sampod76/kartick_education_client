@@ -48,19 +48,19 @@ const CreateLesson = () => {
   const onSubmit = async (values: any) => {
     // console.log(values);
 
-    const imgUrl = await uploadImgBB(values.img);
+    // const imgUrl = await uploadImgBB(values.img);
 
-    values.img = imgUrl;
+    // values.img = imgUrl;
     values.vedios = [video];
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
     };
-    console.log(LessonData);
-    return;
+    // console.log(LessonData);
+    // return;
     try {
       const res = await addLesson(LessonData).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {

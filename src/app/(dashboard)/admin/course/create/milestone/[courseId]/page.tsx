@@ -36,9 +36,9 @@ export default function CreateMilestoneFromCourse({
 
   const onSubmit = async (values: any) => {
     // console.log(values);
-    const imgUrl = await uploadImgBB(values.img);
+    // const imgUrl = await uploadImgBB(values.img);
 
-    values.img = imgUrl;
+    // values.img = imgUrl;
 
     const MilestoneData: {} = {
       ...values,
@@ -46,7 +46,7 @@ export default function CreateMilestoneFromCourse({
       details: textEditorValue,
       course: params.courseId,
     };
-    console.log(MilestoneData);
+    // console.log(MilestoneData);
 
     try {
       const res = await addMilestone(MilestoneData).unwrap();

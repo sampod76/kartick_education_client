@@ -43,9 +43,9 @@ const CreateQuiz = () => {
   };
 
   const onSubmit = async (values: any) => {
-    const imgUrl = await uploadImgBB(values.img);
+    // const imgUrl = await uploadImgBB(values.img);
 
-    values.img = imgUrl;
+    // values.img = imgUrl;
 
     const LessonData: {} = {
       ...values,

@@ -37,22 +37,22 @@ const EditCategoryPage = ({ params }: any) => {
     useUpdateCategoryMutation();
 
   const onSubmit = async (values: any) => {
-    if (typeof values.img !== "string") {
-      console.log(values);
-      values.img = await uploadImgBB(values.img);
-    }
+    // if (typeof values.img !== "string") {
+    //   console.log(values);
+    //   values.img = await uploadImgBB(values.img);
+    // }
     const UpdateValues = {
       ...values,
     };
 
-    console.log(UpdateValues);
+    // console.log(UpdateValues);
     try {
       const res = await updateCategory({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
 
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -78,7 +78,7 @@ const EditCategoryPage = ({ params }: any) => {
 
     // managementDepartment: CategoryData?.managementDepartment?.id || "",
   };
-  console.log(defaultValues);
+  // console.log(defaultValues);
 
   return (
     <div>

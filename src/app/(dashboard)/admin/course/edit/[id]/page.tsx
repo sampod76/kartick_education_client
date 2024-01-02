@@ -51,10 +51,10 @@ const CourseDetails = ({ params }: any) => {
 
   console.log(videoUrl, videoType);
   const onSubmit = async (values: any) => {
-    if (typeof values.img !== "string") {
-      console.log(values);
-      values.img = await uploadImgBB(values.img);
-    }
+    // if (typeof values.img !== "string") {
+    //   console.log(values);
+    //   values.img = await uploadImgBB(values.img);
+    // }
     const updateData = {
       ...values,
       tags: selectedTags,
@@ -64,7 +64,7 @@ const CourseDetails = ({ params }: any) => {
       },
     };
 
-    console.log(updateData);
+    // console.log(updateData);
 
     try {
       //@ts-ignore
@@ -82,7 +82,7 @@ const CourseDetails = ({ params }: any) => {
     }
   };
   //
-  console.log(CourseData);
+  // console.log(CourseData);
 
   const defaultValues = {
     // name:,

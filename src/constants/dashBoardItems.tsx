@@ -26,7 +26,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
       children: [
         {
           label: (
-            <Link onClick={() => setCollapsed(false)} href={`/profile`}>
+            <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/profile`}>
               Your Profile
             </Link>
           ),
@@ -52,7 +52,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
             {
               label: (
                 <Link
-                  onClick={() => setCollapsed(false)}
+                  onClick={() => setCollapsed ? setCollapsed(false) : null}
                   href={`/admin/manage-users/all-users/create`}
                 >
                   Create user{" "}
@@ -63,7 +63,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
             {
               label: (
                 <Link
-                  onClick={() => setCollapsed(false)}
+                  onClick={() => setCollapsed ? setCollapsed(false) : null}
                   href={`/admin/manage-users/all-users`}
                 >
                   Users List
@@ -81,7 +81,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
             {
               label: (
                 <Link
-                  onClick={() => setCollapsed(false)}
+                  onClick={() => setCollapsed ? setCollapsed(false) : null}
                   href={`/admin/manage-users/students/create`}
                 >
                   Create Student
@@ -92,7 +92,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
             {
               label: (
                 <Link
-                  onClick={() => setCollapsed(false)}
+                  onClick={() => setCollapsed ? setCollapsed(false) : null}
                   href={`/admin/manage-users/students`}
                 >
                   Students List
@@ -110,7 +110,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
             {
               label: (
                 <Link
-                  onClick={() => setCollapsed(false)}
+                  onClick={() => setCollapsed ? setCollapsed(false) : null}
                   href={`/admin/manage-users/trainers/create`}
                 >
                   Create Trainer
@@ -121,7 +121,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
             {
               label: (
                 <Link
-                  onClick={() => setCollapsed(false)}
+                  onClick={() => setCollapsed ? setCollapsed(false) : null}
                   href={`/admin/manage-users/trainers`}
                 >
                   Trainers List
@@ -139,7 +139,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
             {
               label: (
                 <Link
-                  onClick={() => setCollapsed(false)}
+                  onClick={() => setCollapsed ? setCollapsed(false) : null}
                   href={`/admin/manage-users/admin/create`}
                 >
                   Create Admin
@@ -150,7 +150,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
             {
               label: (
                 <Link
-                  onClick={() => setCollapsed(false)}
+                  onClick={() => setCollapsed ? setCollapsed(false) : null}
                   href={`/admin/manage-users/admin`}
                 >
                   Admin List
@@ -170,7 +170,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
-              onClick={() => setCollapsed(false)}
+              onClick={() => setCollapsed ? setCollapsed(false) : null}
               href={`/admin/category/create`}
             >
               Create Category
@@ -180,7 +180,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         },
         {
           label: (
-            <Link onClick={() => setCollapsed(false)} href={`/admin/category`}>
+            <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/admin/category`}>
               Category List
             </Link>
           ),
@@ -196,7 +196,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
-              onClick={() => setCollapsed(false)}
+              onClick={() => setCollapsed ? setCollapsed(false) : null}
               href={`/admin/course/create`}
             >
               Create course
@@ -207,7 +207,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
 
         {
           label: (
-            <Link onClick={() => setCollapsed(false)} href={`/admin/course`}>
+            <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/admin/course`}>
               Course List
             </Link>
           ),
@@ -223,7 +223,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
-              onClick={() => setCollapsed(false)}
+              onClick={() => setCollapsed ? setCollapsed(false) : null}
               href={`/admin/milestone/create`}
             >
               Create Milestone
@@ -234,7 +234,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
 
         {
           label: (
-            <Link onClick={() => setCollapsed(false)} href={`/admin/milestone`}>
+            <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/admin/milestone`}>
               Milestone List
             </Link>
           ),
@@ -250,7 +250,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
-              onClick={() => setCollapsed(false)}
+              onClick={() => setCollapsed ? setCollapsed(false) : null}
               href={`/admin/module/create`}
             >
               Create modules
@@ -260,7 +260,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         },
         {
           label: (
-            <Link onClick={() => setCollapsed(false)} href={`/admin/module`}>
+            <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/admin/module`}>
               Modules List
             </Link>
           ),
@@ -276,7 +276,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
-              onClick={() => setCollapsed(false)}
+              onClick={() => setCollapsed ? setCollapsed(false) : null}
               href={`/admin/lesson/create`}
             >
               Create Lesson
@@ -286,7 +286,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         },
         {
           label: (
-            <Link onClick={() => setCollapsed(false)} href={`/admin/lesson`}>
+            <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/admin/lesson`}>
               lesson List
             </Link>
           ),
@@ -302,7 +302,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
-              onClick={() => setCollapsed(false)}
+              onClick={() => setCollapsed ? setCollapsed(false) : null}
               href={`/admin/quiz/create`}
             >
               Create Quiz
@@ -312,7 +312,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         },
         {
           label: (
-            <Link onClick={() => setCollapsed(false)} href={`/admin/quiz`}>
+            <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/admin/quiz`}>
               Quiz List
             </Link>
           ),
@@ -328,7 +328,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
-              onClick={() => setCollapsed(false)}
+              onClick={() => setCollapsed ? setCollapsed(false) : null}
               href={`/admin/single-quiz/create`}
             >
               Create Single Quiz
@@ -339,7 +339,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
-              onClick={() => setCollapsed(false)}
+              onClick={() => setCollapsed ? setCollapsed(false) : null}
               href={`/admin/single-quiz`}
             >
               Single Quiz List
@@ -355,7 +355,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
     ...adminSidebarItems,
     {
       label: (
-        <Link onClick={() => setCollapsed(false)} href={`/${role}/admin`}>
+        <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/${role}/admin`}>
           Manage Admin
         </Link>
       ),
@@ -368,7 +368,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
     ...defaultSidebarItems,
     {
       label: (
-        <Link onClick={() => setCollapsed(false)} href={`/${role}/booking`}>
+        <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/${role}/booking`}>
           Booking History
         </Link>
       ),
@@ -377,7 +377,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
     },
     {
       label: (
-        <Link onClick={() => setCollapsed(false)} href={`/${role}/review`}>
+        <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/${role}/review`}>
           Review/Feedback History
         </Link>
       ),
@@ -387,7 +387,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
 
     {
       label: (
-        <Link onClick={() => setCollapsed(false)} href={`/${role}/support`}>
+        <Link onClick={() => setCollapsed ? setCollapsed(false) : null} href={`/${role}/support`}>
           Support and Help
         </Link>
       ),

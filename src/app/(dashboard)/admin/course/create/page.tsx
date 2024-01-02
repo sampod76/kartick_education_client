@@ -66,18 +66,18 @@ const CreateCoursePage = () => {
   // console.log(demo_video);
   const onSubmit = async (values: any) => {
     // console.log(values.img, "values of Course");
-    let { img, ...others } = values;
-    const imageUrl = await uploadImgBB(values.img);
-    img = imageUrl;
+    // let { img, ...others } = values;
+    // const imageUrl = await uploadImgBB(values.img);
+    // img = imageUrl;
     const CourseData = {
-      img,
+     
       tags: selectedTags,
       demo_video,
       details: textEditorValue,
-      ...others,
+      ...values,
     };
 
-    console.log(CourseData, "Course");
+    // console.log(CourseData, "Course");
 
     // Success_model("Customer created successfully");
 
