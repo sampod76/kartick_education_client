@@ -17,7 +17,7 @@ export const lessonApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: any[], meta: IMeta) => {
 
-        // console.log(response);
+
 
         return {
           data: response,
@@ -30,8 +30,6 @@ export const lessonApi = baseApi.injectEndpoints({
     getSingleLesson: build.query({
       query: (id: string | string[] | undefined) => {
 
-        // console.log(id);
-
         return {
           url: `${LESSON_URL}/${id}`,
           method: "GET",
@@ -42,8 +40,7 @@ export const lessonApi = baseApi.injectEndpoints({
     // create a new academic department
     addLesson: build.mutation({
       query: (data) => {
-        // 
-
+ 
         return {
           url: LESSON_URL,
           method: "POST",

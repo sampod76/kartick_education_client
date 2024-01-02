@@ -26,9 +26,7 @@ export const moduleApi = baseApi.injectEndpoints({
     }),
     // get single academic department
     getSingleModule: build.query({
-
-        // console.log(id);
-
+      query: (id: string | string[] | undefined) => {
         return {
           url: `${MODULE_URL}/${id}`,
           method: "GET",
@@ -39,8 +37,6 @@ export const moduleApi = baseApi.injectEndpoints({
     // create a new academic department
     addModule: build.mutation({
       query: (data) => {
-        // 
-
         return {
           url: MODULE_URL,
           method: "POST",
