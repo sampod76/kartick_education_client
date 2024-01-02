@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TagsInput } from "react-tag-input-component";
+import LabelUi from "./LabelUi";
 
 const TagsSelectUI = ({
   selected,
@@ -12,7 +13,7 @@ const TagsSelectUI = ({
 
   return (
     <div>
-      <h1>Select Tags</h1>
+      <LabelUi >Select Tags</LabelUi>
       {/* <pre>{JSON.stringify(selected)}</pre> */}
       <TagsInput
         value={selected}

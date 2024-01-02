@@ -11,6 +11,7 @@ import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import UploadImage from "@/components/ui/UploadImage";
+import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
@@ -22,8 +23,6 @@ import {
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
 
-
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Col, Row, message } from "antd";
@@ -31,31 +30,34 @@ import React, { useState } from "react";
 
 const CreateLesson = () => {
   const [textEditorValue, setTextEditorValue] = useState("");
+  // ! for video insert
+  const [videoType, setVideoType] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
+  const video = {
+    video: videoUrl,
+    platform: videoType,
+  };
+
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
-
-  const { data: existLesson,isLoading } = useGetAllLessonQuery({});
-
-
+  const { data: existLesson, isLoading } = useGetAllLessonQuery({});
 
   // !  tag selection
 
-
-  const [selectedTags, setSelectedTags] = useState<string[]>(["tag1"]);
-
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const onSubmit = async (values: any) => {
     // console.log(values);
-    const status = "active";
+
     const imgUrl = await uploadImgBB(values.img);
 
     values.img = imgUrl;
-
+    values.vedios = [video];
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
     };
     console.log(LessonData);
-
+    return;
     try {
       const res = await addLesson(LessonData).unwrap();
       console.log(res);
@@ -63,6 +65,9 @@ const CreateLesson = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
+        setVideoType(null);
+        setVideoUrl("");
+        setSelectedTags([]);
       }
       // console.log(res);
     } catch (error: any) {
@@ -83,7 +88,7 @@ const CreateLesson = () => {
 
   return (
     <div>
-      <div>
+      <div className="shadow-xl rounded-lg bg-white">
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
         <SubHeadingUI>Create Lesson</SubHeadingUI>
@@ -99,13 +104,11 @@ const CreateLesson = () => {
               marginBottom: "10px",
             }}
           >
-          
             <hr className="border-1 my-1" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -119,25 +122,8 @@ const CreateLesson = () => {
                 />
                 {/*//! 1 */}
               </Col>
-              <Col
-                className="gutter-row"
-                xs={4}
-              
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="number"
-                  name="lesson_number"
-                  size="large"
-                  label="Lesson No"
-                  required={true}
-                />
-                {/*//! 2 */}
-              </Col>
-              
-              <Col
+
+              {/* <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
@@ -146,20 +132,18 @@ const CreateLesson = () => {
                   marginBottom: "10px",
                 }}
               >
-               <SelectAuthorField/>
-                {/* //! Author  4*/}
-              </Col>
+                <SelectAuthorField />
+              </Col> */}
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
-                lg={7}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <SelectModuleField/>
-                {/* //! price type 5*/}
+                <SelectModuleField />
               </Col>
               <Col
                 className="gutter-row"
@@ -179,34 +163,55 @@ const CreateLesson = () => {
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 8*/}
               </Col>
               <Col
                 className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
+                xs={4}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-               <TagsSelectUI
-                      selected={selectedTags}
-                      setSelected={setSelectedTags}
-
-                    />
+                <FormInput
+                  type="number"
+                  name="lesson_number"
+                  size="large"
+                  label="Lesson No"
+                  required={true}
+                />
+                {/*//! 2 */}
+              </Col>
+              <Col xs={24}>
+                <DemoVideoUI
+                  label="Video"
+                  videoType={videoType as any}
+                  setVideoType={setVideoType}
+                  videoUrl={videoUrl}
+                  setVideoUrl={setVideoUrl}
+                  options={["youtube", "vimeo"]}
+                />
+                {/*//! 12*/}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <TagsSelectUI
+                  selected={selectedTags}
+                  setSelected={setSelectedTags}
+                />
                 {/*//! 6 */}
               </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
               >
                 <UploadImage name="img" />
-                {/* //!7*/}
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
                 <div>
@@ -231,9 +236,7 @@ const CreateLesson = () => {
             </Row>
           </div>
 
-          <ButtonSubmitUI>
-            Create Lesson
-          </ButtonSubmitUI>
+          <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
         </Form>
       </div>
     </div>

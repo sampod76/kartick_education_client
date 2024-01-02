@@ -22,7 +22,7 @@ function VimeoPlayer({ link }: { link: string }) {
   }, [link]);
 
   return (
-    <div className="z-50">
+    <div className="">
       <div ref={playerRef}></div>
     </div>
   );

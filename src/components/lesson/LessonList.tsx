@@ -11,18 +11,21 @@ import { Collapse, theme } from "antd";
 import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
 import Link from "next/link";
 import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
+import { CutText } from "@/utils/CutText";
+import VimeoPlayer from "@/utils/vimoPlayer";
+import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
   console.log(moduleId, "moduleId from LessonList");
 
-  const lesson_query: Record<string, any> = {};
   //! for Course options selection
+  const lesson_query: Record<string, any> = {};
   lesson_query["limit"] = 999999;
   lesson_query["sortBy"] = "lesson_number";
   lesson_query["sortOrder"] = "asc";
+  lesson_query["status"] = "active";
 
   const { data: lessonData, isLoading } = useGetAllLessonQuery({
-    status: "active",
     module: moduleId,
     ...lesson_query,
   });
@@ -35,7 +38,6 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
   quiz_query["limit"] = 999999;
-  quiz_query["sortOrder"] = "asc";
 
   const { data: QuizData } = useGetAllQuizQuery({
     status: "active",
@@ -49,9 +51,10 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
 
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
-      const lessonQuizData:any = QuizData?.data?.find(
+      const lessonQuizData: any = QuizData?.data?.find(
         (item: any) => item?.lesson === lesson?._id
       );
+      console.log(lesson);
       console.log("🚀 lessonQuizData", lessonQuizData);
       return {
         key: lesson?._id,
@@ -63,6 +66,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               </h2>
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
+           
             <Link
               href={`/lesson/quiz/${lessonQuizData?._id}`}
               className="text-[14px] flex justify-between w-full mt-3"
@@ -76,7 +80,14 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
         ),
         children: (
           <div>
-            <p>{lesson?.details?.slice(0, 220)}</p>
+            <p className="text-center">
+            <div className="flex justify-center items-center my-2">
+              {lesson?.videos?.length && lesson?.videos[0]?.platform === ENUM_VIDEO_PLATFORM.VIMEO && (
+                <VimeoPlayer link={lesson?.videos[0]?.link} />
+              )}
+            </div>
+              {lesson?.details && CutText(lesson?.details, 200)}
+            </p>
           </div>
         ),
         // style: panelStyle,
@@ -88,7 +99,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
 
   return (
     <div
-      className="w-full  lg:w-[60vw] mx-auto"
+      className="w-full  lg:w-[60vw] mx-auto "
       style={{
         padding: "10px 5vw",
       }}

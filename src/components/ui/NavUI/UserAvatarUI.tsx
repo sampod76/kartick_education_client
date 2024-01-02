@@ -8,13 +8,14 @@ import React from "react";
 const UserAvatarUI = () => {
   const router = useRouter();
 
-  
-
   return (
-    <section style={{ display: "flex", alignItems: "center", gap: "1.5em" }} className="mb-5">
-      <Link href={`/profile`} >
+    <section
+      style={{ display: "flex", alignItems: "center", gap: "1.5em" }}
+      className="mb-5"
+    >
+      <>
         <Avatar size="large" icon={<UserOutlined />} />
-      </Link>
+      </>
     </section>
   );
 };
