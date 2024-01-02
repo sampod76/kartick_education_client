@@ -124,9 +124,9 @@ const CreateModule = () => {
                 <SelectMilestoneField />
               </Col>
 
-              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+              {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectAuthorField />
-              </Col>
+              </Col> */}
 
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <FormSelectField

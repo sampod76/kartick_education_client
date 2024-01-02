@@ -33,7 +33,7 @@ const CourseDetails = ({ params }: any) => {
   const { data: CourseData, isLoading } = useGetSingleCourseQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
-  console.log(CourseData);
+  
 
   const [updateCourse, { isLoading: CourseLoading }] =
     useUpdateCourseMutation();
@@ -49,12 +49,14 @@ const CourseDetails = ({ params }: any) => {
     CourseData?.demo_video?.platform || ""
   );
 
-  console.log(videoUrl, videoType);
+  
   const onSubmit = async (values: any) => {
+
     // if (typeof values.img !== "string") {
     //   console.log(values);
     //   values.img = await uploadImgBB(values.img);
     // }
+
     const updateData = {
       ...values,
       tags: selectedTags,
@@ -64,7 +66,7 @@ const CourseDetails = ({ params }: any) => {
       },
     };
 
-    // console.log(updateData);
+
 
     try {
       //@ts-ignore
@@ -78,11 +80,11 @@ const CourseDetails = ({ params }: any) => {
         Success_model("Successfully update Course");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
   //
-  // console.log(CourseData);
+
 
   const defaultValues = {
     // name:,
@@ -102,7 +104,7 @@ const CourseDetails = ({ params }: any) => {
     tags: CourseData?.tags || "",
     address: CourseData?.address || "",
   };
-  console.log(defaultValues);
+  
   if (isLoading || CourseLoading) {
     return <LoadingForDataFetch />;
   }

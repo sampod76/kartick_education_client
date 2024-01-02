@@ -62,12 +62,12 @@ const CourseList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  console.log(query);
+  
   const { data = [], isLoading } = useGetAllCourseQuery({ ...query });
 
   //@ts-ignore
   const courseData = data?.data;
-  //  // console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", courseData);
+
   //@ts-ignore
   const meta = data?.meta;
 
@@ -75,11 +75,11 @@ const CourseList = () => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          
 
           const res = await deleteCourse(id).unwrap();
 
-          console.log(res, "response for delete course");
+          
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -155,7 +155,7 @@ const CourseList = () => {
       title: "category",
       dataIndex: "category",
       render: function (data: any) {
-        console.log(data);
+        
         return data.title;
       },
       ellipsis: true,
@@ -223,7 +223,7 @@ const CourseList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+
     setPage(page);
     setSize(pageSize);
   };

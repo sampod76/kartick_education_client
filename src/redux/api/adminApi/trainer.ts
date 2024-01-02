@@ -2,75 +2,71 @@ import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "../../tag-types";
 
-const STUDENT_URL = "/student";
+const ADMIN_URL = "/trainer";
 
-export const studentApi = baseApi.injectEndpoints({
+export const trainerApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    addStudentWithFormData: build.mutation({
+    addTrainerWithFormData: build.mutation({
       query: (data) => {
         // 
         return {
-          url: "/user/create-student",
+          url: "/user/create-trainer",
           method: "POST",
           data: data,
           // contentType: "multipart/form-data",
           contentType: "application/json",
         };
       },
-      invalidatesTags: [tagTypes.student],
+      invalidatesTags: [tagTypes.admin],
     }),
-    getAllStudents: build.query({
+    getAllTrainers: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: STUDENT_URL,
+          url: ADMIN_URL,
           method: "GET",
           params: arg,
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-
-
+        
         return {
           data: response,
           meta,
         };
       },
-      providesTags: [tagTypes.student],
+      providesTags: [tagTypes.admin],
     }),
-    getSingleStudent: build.query({
+    getSingleTrainer: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `${STUDENT_URL}/${id}`,
+        url: `${ADMIN_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.student],
+      providesTags: [tagTypes.admin],
     }),
-    updateStudent: build.mutation({
+    updateTrainer: build.mutation({
       query: ({ data, id }) => {
-
-        // console.log(data, "student data", id);
-
         return {
-          url: `${STUDENT_URL}/${id}`,
+          url: `${ADMIN_URL}/${id}`,
           method: "PATCH",
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.student],
+      invalidatesTags: [tagTypes.admin],
     }),
-    deleteStudent: build.mutation({
+    deleteTrainer: build.mutation({
       query: (id) => ({
-        url: `${STUDENT_URL}/${id}`,
+        url: `${ADMIN_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.student],
+      invalidatesTags: [tagTypes.admin],
     }),
   }),
 });
 
 export const {
-  useGetAllStudentsQuery,
-  useGetSingleStudentQuery,
-  useAddStudentWithFormDataMutation,
-  useUpdateStudentMutation,
-  useDeleteStudentMutation,
-} = studentApi;
+  useGetAllTrainersQuery,
+  useGetSingleTrainerQuery,
+  useAddTrainerWithFormDataMutation,
+  useUpdateTrainerMutation,
+  useDeleteTrainerMutation,
+} = trainerApi;

@@ -1,3 +1,4 @@
+// only modula in single quiz 
 "use client";
 
 import React from "react";

@@ -9,7 +9,7 @@ export const milestoneApi = baseApi.injectEndpoints({
     // get all academic departments
     getAllMilestone: build.query({
       query: (arg: Record<string, any>) => {
-        // console.log(arg, "aaaaaaa");
+
         return {
           url: MILESTONE_URL,
           method: "GET",
@@ -17,7 +17,7 @@ export const milestoneApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-         //  // console.log("🚀 ~ file: milestoneApi.ts:28 ~ response:", response);
+
         return {
           data: response,
           meta,
@@ -29,7 +29,7 @@ export const milestoneApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleMilestone: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id);
+
         return {
           url: `${MILESTONE_URL}/${id}`,
           method: "GET",
@@ -40,7 +40,7 @@ export const milestoneApi = baseApi.injectEndpoints({
     // create a new academic department
     addMilestone: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+        //
 
         return {
           url: MILESTONE_URL,
@@ -53,7 +53,7 @@ export const milestoneApi = baseApi.injectEndpoints({
     // update ac department
     updateMilestone: build.mutation({
       query: ({ data, id }) => {
-        // console.log(data, "Milestone data");
+
         return {
           url: `${MILESTONE_URL}/${id}`,
           method: "PATCH",
