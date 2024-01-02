@@ -8,7 +8,7 @@ export const UserApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addUserWithFormData: build.mutation({
       query: (data) => {
-        // console.log(data, "User");
+        // 
         return {
           url: "/user/create-User",
           method: "POST",
@@ -28,7 +28,7 @@ export const UserApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any, meta: IMeta) => {
-        console.log(response);
+        
 
         return {
           data: response.data,

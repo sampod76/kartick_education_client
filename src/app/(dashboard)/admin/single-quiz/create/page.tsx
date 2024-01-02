@@ -83,11 +83,11 @@ const CreateSingleQuiz = () => {
       demo_video,
       answers,
     };
-    console.log(singleQuizDat);
+   
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
-      console.log(res);
+     
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {

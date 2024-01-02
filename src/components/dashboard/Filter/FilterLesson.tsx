@@ -11,7 +11,7 @@ export default function FilterLesson({
   setFilterValue: any;
 }) {
   // const [filterValue, setFilterValue] = useState("Filter by a Lesson");
-  console.log("🚀 filterValue:", filterValue);
+ 
   const query: Record<string, any> = {};
   //! for Course options selection
   query["limit"] = 999999;
@@ -23,7 +23,7 @@ export default function FilterLesson({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-    console.log("search:", value);
+   
   };
 
   //! for Lesson options selection
@@ -31,7 +31,7 @@ export default function FilterLesson({
 
   const LessonData = Lesson?.data;
 
-  // console.log(LessonData)
+  //
   const LessonOptions = LessonData?.map((item: any) => {
     return {
       label: item?.title,
@@ -39,7 +39,7 @@ export default function FilterLesson({
     };
   });
 
-  console.log(LessonOptions);
+ 
 
   return (
     <Select

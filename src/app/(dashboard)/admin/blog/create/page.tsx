@@ -21,7 +21,7 @@ const CreateBlog = () => {
 
   const [addBlog, { isLoading: blogLoading }] = useAddBlogMutation();
   const onSubmit = async (values: any) => {
-    console.log(values);
+   
 
     try {
       const res = await addBlog(values).unwrap();
@@ -30,7 +30,7 @@ const CreateBlog = () => {
       } else {
         Success_model("Successfully added Blog");
       }
-      console.log(res);
+     
     } catch (error: any) {
       Error_model_hook(error?.message);
       console.log(error);

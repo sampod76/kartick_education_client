@@ -4,7 +4,7 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import TextEditor from "@/components/shared/TextEditor/TextEditor";
+
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
@@ -17,7 +17,13 @@ import {useGetSingleLessonQuery} from "@/redux/api/adminApi/lessoneApi";
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Col, Row,  message } from "antd";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 import React, { useState } from "react";
 
 export default function CreateCourseFromCourse({

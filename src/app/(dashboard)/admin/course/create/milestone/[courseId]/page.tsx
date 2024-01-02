@@ -3,7 +3,7 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
-import TextEditor from "@/components/shared/TextEditor/TextEditor";
+
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
@@ -15,19 +15,25 @@ import { Col, Row, Spin } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 export default function CreateMilestoneFromCourse({
   params,
 }: {
   params: { courseId: string };
 }) {
-  console.log(params);
+  
 
   const searchParams = useSearchParams();
 
   const courseName = searchParams.get("courseName");
 
-  console.log("🚀 ~ file: page.tsx:28 ~ courseName:", courseName);
+  
 
   const [textEditorValue, setTextEditorValue] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>(["tech"]);
@@ -35,7 +41,7 @@ export default function CreateMilestoneFromCourse({
     useAddMilestoneMutation();
 
   const onSubmit = async (values: any) => {
-    // console.log(values);
+    // 
     const imgUrl = await uploadImgBB(values.img);
 
     values.img = imgUrl;
@@ -46,20 +52,20 @@ export default function CreateMilestoneFromCourse({
       details: textEditorValue,
       course: params.courseId,
     };
-    console.log(MilestoneData);
+    
 
     try {
       const res = await addMilestone(MilestoneData).unwrap();
-      // console.log(res);
+      // 
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Milestone");
       }
-      // console.log(res);
+      // 
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      
     }
   };
 
