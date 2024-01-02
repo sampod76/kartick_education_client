@@ -16,7 +16,7 @@ export const lessonApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        console.log(response);
+        // console.log(response);
         return {
           data: response,
           meta,
@@ -27,7 +27,7 @@ export const lessonApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleLesson: build.query({
       query: (id: string | string[] | undefined) => {
-        console.log(id);
+        // console.log(id);
         return {
           url: `${LESSON_URL}/${id}`,
           method: "GET",

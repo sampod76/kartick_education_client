@@ -28,7 +28,7 @@ export const studentApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        console.log(response);
+        // console.log(response);
         return {
           data: response,
           meta,
@@ -45,7 +45,7 @@ export const studentApi = baseApi.injectEndpoints({
     }),
     updateStudent: build.mutation({
       query: ({ data, id }) => {
-        console.log(data, "student data", id);
+        // console.log(data, "student data", id);
         return {
           url: `${STUDENT_URL}/${id}`,
           method: "PATCH",
