@@ -22,6 +22,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
+import ButtonLoading from "../Utlis/ButtonLoading";
 
 const UserCreateComponent = ({
   role = { label: "Please select role", value: "" },
@@ -47,36 +48,36 @@ const UserCreateComponent = ({
           password: password,
           [USER_ROLE.ADMIN]: { ...allValue },
         };
-        
-       res= await addAdminUserWithFormData({ ...modifyValue }).unwrap();
+
+        res = await addAdminUserWithFormData({ ...modifyValue }).unwrap();
       } else if (role.value === USER_ROLE.STUDENT) {
         const { password, ...allValue } = values;
         const modifyValue = {
           password: password,
           [USER_ROLE.STUDENT]: { ...allValue },
         };
-        res=  await addStudentUserWithFormData({ ...modifyValue }).unwrap();
+        res = await addStudentUserWithFormData({ ...modifyValue }).unwrap();
       } else if (role.value === USER_ROLE.SELLER) {
         const { password, ...allValue } = values;
         const modifyValue = {
           password: password,
           [USER_ROLE.SELLER]: { ...allValue },
         };
-        res=  await addSellerUserWithFormData({ ...allValue }).unwrap();
+        res = await addSellerUserWithFormData({ ...allValue }).unwrap();
       } else if (role.value === USER_ROLE.TRAINER) {
         const { password, ...allValue } = values;
         const modifyValue = {
           password: password,
           [USER_ROLE.TRAINER]: { ...allValue },
         };
-        res=  await addSellerUserWithFormData({ ...modifyValue }).unwrap();
+        res = await addSellerUserWithFormData({ ...modifyValue }).unwrap();
       } else {
         res = {
           success: false,
           message: "not found",
         };
       }
-      
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -87,10 +88,10 @@ const UserCreateComponent = ({
       console.error(err.message);
     }
   };
-  if (AdminLoading || StudentLoading || SellerLoading) {
-    message.loading("Loading...");
-    return
-  }
+  // if (AdminLoading || StudentLoading || SellerLoading) {
+  //   message.loading("Loading...");
+  //   return
+  // }
 
   return (
     <div
@@ -318,9 +319,13 @@ const UserCreateComponent = ({
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="default">
-            Create
-          </Button>
+          {AdminLoading || StudentLoading || SellerLoading ? (
+            <ButtonLoading />
+          ) : (
+            <Button htmlType="submit" type="default">
+              Create
+            </Button>
+          )}
         </Form>
       </div>
     </div>

@@ -28,7 +28,6 @@ const EditFaq = ({params}:{params:any}) => {
   })
   const [updateBlog, { isLoading: blogLoading }] = useUpdateBlogMutation();
   const onSubmit = async (values: any) => {
-    console.log(values);
 
     try {
       const res = await updateBlog({id:params.id,body:values}).unwrap();
