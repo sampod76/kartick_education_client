@@ -8,7 +8,7 @@ import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
 import SelectCourseField from "@/components/Forms/SelectData/SelectCourseField";
 import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
-import TextEditor from "@/components/shared/TextEditor/TextEditor";
+
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
@@ -29,7 +29,13 @@ import { Col, Row, Spin } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 export default function CreateCourseFromCourse({
   params,
 }: {

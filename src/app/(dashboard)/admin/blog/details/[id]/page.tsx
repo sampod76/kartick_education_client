@@ -10,7 +10,7 @@ const BlogDetalis = ({ params }: any) => {
   const { data: data, isLoading } = useGetSingleBlogQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
-  console.log(data);
+
 
   if (isLoading) {
     return <LoadingForDataFetch />;

@@ -3,108 +3,91 @@
 import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField from "@/components/Forms/FormSelectField";
+import FormSelectField, {
+  SelectOptions,
+} from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
+import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { useGetSingleStudentQuery, useUpdateStudentMutation } from "@/redux/api/adminApi/studentApi";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
-  bloodGroupOptions,
-  genderOptions,
-  roleOptions,
-} from "@/constants/global";
-import { USER_ROLE } from "@/constants/role";
-import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
-import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/seller";
-import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
-import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
+  useGetSingleServiceQuery,
+  useUpdateServiceMutation,
+} from "@/redux/api/serviceApi";
+
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
+import Image from "next/image";
 
-const UserCreateComponent = ({
-  role = { label: "Please select role", value: "" },
-}: {
-  role?: {
-    label: string;
-    value: string;
-  };
-}) => {
-  const [addAdminUserWithFormData, { isLoading: AdminLoading }] =
-    useAddAdminWithFormDataMutation();
-  const [addStudentUserWithFormData, { isLoading: StudentLoading }] =
-    useAddStudentWithFormDataMutation();
-  const [addSellerUserWithFormData, { isLoading: SellerLoading }] =
-    useAddSellerWithFormDataMutation();
+const EditStudentPage = ({ params }: any) => {
+  const { data: singleStudent, isLoading } = useGetSingleStudentQuery(
+    params?.id
+  );
+  const studentData = singleStudent
+
+  const { data: categoryData = [] } = useGetAllCategoryQuery({});
+  // console.log(studentData, "student data");
+
+  const [updateStudent, { isLoading: updateLoading, error }] =
+    useUpdateStudentMutation();
 
   const onSubmit = async (values: any) => {
+    const UpdateValues = {
+      ...values,
+    };
+    console.log(UpdateValues);
     try {
-      let res;
-      if (role.value === USER_ROLE.ADMIN) {
-        const { password, ...allValue } = values;
-        const modifyValue = {
-          password: password,
-          [USER_ROLE.ADMIN]: { ...allValue },
-        };
-        
-       res= await addAdminUserWithFormData({ ...modifyValue }).unwrap();
-      } else if (role.value === USER_ROLE.STUDENT) {
-        const { password, ...allValue } = values;
-        const modifyValue = {
-          password: password,
-          [USER_ROLE.STUDENT]: { ...allValue },
-        };
-        res=  await addStudentUserWithFormData({ ...modifyValue }).unwrap();
-      } else if (role.value === USER_ROLE.SELLER) {
-        const { password, ...allValue } = values;
-        const modifyValue = {
-          password: password,
-          [USER_ROLE.SELLER]: { ...allValue },
-        };
-        res=  await addSellerUserWithFormData({ ...allValue }).unwrap();
-      } else if (role.value === USER_ROLE.TRAINER) {
-        const { password, ...allValue } = values;
-        const modifyValue = {
-          password: password,
-          [USER_ROLE.TRAINER]: { ...allValue },
-        };
-        res=  await addSellerUserWithFormData({ ...modifyValue }).unwrap();
-      } else {
-        res = {
-          success: false,
-          message: "not found",
-        };
-      }
-      
+      const res = await updateStudent({
+        id: params?.id,
+        data: UpdateValues,
+      }).unwrap();
+      console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Customar created successfully");
+        Success_model("successfully updated data");
       }
-      // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
     }
   };
-  if (AdminLoading || StudentLoading || SellerLoading) {
-    message.loading("Loading...");
-    return
+  if (isLoading || updateLoading) {
+    return <LoadingForDataFetch />;
+  }
+  if (error) {
+    console.log(error);
   }
 
+  console.log(studentData);
+
+  const defaultValues = {
+    name: {
+      firstName: studentData?.name.firstName || "",
+      lastName: studentData?.name.lastName || "",
+      middleName: studentData?.middleName || "",
+    },
+    gender: studentData?.gender || "",
+    // dateOfBirth: studentData?.dateOfBirth || "",
+    email: studentData?.email || "",
+    phoneNumber: studentData?.phoneNumber || "",
+    bloodGroup: studentData?.bloodGroup || "", // Optional blood group
+    address: studentData?.address || "",
+    img: studentData?.img || "",
+  };
+
+  console.log(defaultValues);
+
   return (
-    <div
-      style={{
-        boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
-      }}
-    >
-      {/* resolver={yupResolver(adminSchema)} */}
+    <div>
       <div>
-        <Form submitHandler={onSubmit}>
+        {/* resolver={yupResolver(adminSchema)} */}
+        {/* resolver={yupResolver(IServiceSchema)} */}
+        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -115,13 +98,12 @@ const UserCreateComponent = ({
           >
             <p
               style={{
+                fontSize: "18px",
                 marginBottom: "10px",
               }}
-              className="font-semibold text-2xl text-center"
             >
-              Create User ({role.value})
+              Student Information
             </p>
-            <hr className="border my-2" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -137,25 +119,20 @@ const UserCreateComponent = ({
                   name="name.firstName"
                   size="large"
                   label="First Name"
-                  placeholder="Please enter a full name"
                   required={true}
                 />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+                <FormInput
+                  type="text"
+                  name="name.middleName"
+                  size="large"
+                  label="Middle Name"
+                  // required={true}
+                />
                 <FormInput
                   type="text"
                   name="name.lastName"
                   size="large"
                   label="Last Name"
-                  placeholder="Please enter a full name"
                   required={true}
                 />
               </Col>
@@ -173,7 +150,6 @@ const UserCreateComponent = ({
                   name="email"
                   size="large"
                   label="Email address"
-                  placeholder="please enter your email address"
                   required={true}
                 />
               </Col>
@@ -187,14 +163,14 @@ const UserCreateComponent = ({
                 }}
               >
                 <FormInput
-                  type="password"
-                  name="password"
-                  placeholder="Please enter your password"
+                  type="text"
+                  name="phoneNumber"
                   size="large"
-                  label="Password"
+                  label="Phone Number"
                   required={true}
                 />
               </Col>
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -206,24 +182,23 @@ const UserCreateComponent = ({
               >
                 <FormSelectField
                   size="large"
-                  name="role"
-                  defaultValue={role}
-                  disabled={!!role.value}
-                  options={roleOptions}
-                  label="role"
+                  name="bloodGroup"
+                  defaultValue={defaultValues?.gender}
+                  options={bloodGroupOptions}
+                  label="bloodGroup"
                   placeholder="Select"
                   required={true}
                 />
               </Col>
-
               <Col
                 className="gutter-row"
                 xs={24}
+               
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="image" />
+                <UploadImage defaultImage={defaultValues?.img} name="img" />
               </Col>
             </Row>
           </div>
@@ -259,7 +234,6 @@ const UserCreateComponent = ({
                   size="large"
                   name="gender"
                   options={genderOptions}
-                  defaultValue={{ label: "Please select gender", value: "" }}
                   label="Gender"
                   placeholder="Select"
                   required={true}
@@ -277,10 +251,26 @@ const UserCreateComponent = ({
               >
                 <FormInput
                   type="text"
+                  name="address"
+                  size="large"
+                  label="Address"
+                  required={true}
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
-                  placeholder="Please enter a phone number"
                   required={true}
                 />
               </Col>
@@ -300,21 +290,8 @@ const UserCreateComponent = ({
                 />
               </Col>
 
-              <Col xs={24} md={12} style={{ margin: "10px 0" }}>
-                <FormTextArea
-                  placeholder="Please enter your address"
-                  name="address"
-                  label="Address"
-                  rows={4}
-                />
-              </Col>
-              <Col xs={24} md={12} style={{ margin: "10px 0" }}>
-                <FormTextArea
-                  placeholder="Please enter your description"
-                  name="description"
-                  label="Description"
-                  rows={4}
-                />
+              <Col span={12} style={{ margin: "10px 0" }}>
+                <FormTextArea name="address" label="Address" rows={4} />
               </Col>
             </Row>
           </div>
@@ -327,4 +304,19 @@ const UserCreateComponent = ({
   );
 };
 
-export default UserCreateComponent;
+export default EditStudentPage;
+
+{
+  /* <FormSelectField
+  name="category"
+  label="Select Category"
+  required={true}
+  options={
+    //@ts-ignore
+    categoryData?.data?.map((e) => ({
+      value: e._id,
+      label: e.title,
+    }))
+  }
+/> */
+}

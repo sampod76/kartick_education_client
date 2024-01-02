@@ -71,11 +71,11 @@ const CategoryList = () => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          
 
           const res = await deleteCategory(id).unwrap();
 
-          console.log(res, "response for delete category");
+          
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -176,13 +176,13 @@ const CategoryList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    // 
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -194,7 +194,7 @@ const CategoryList = () => {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    // 
     try {
       const res = await deleteCategory(id);
       if (res) {

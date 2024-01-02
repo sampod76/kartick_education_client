@@ -6,7 +6,7 @@ export default function QuizPage() {
   return (
     <div className=" bg-slate-100">
       
-      <Quizes />
+      {/* <Quizes quizeId="" /> */}
     </div>
   );
 }
