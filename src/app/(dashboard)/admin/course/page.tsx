@@ -67,7 +67,7 @@ const CourseList = () => {
 
   //@ts-ignore
   const courseData = data?.data;
-  
+
   //@ts-ignore
   const meta = data?.meta;
 
@@ -223,7 +223,7 @@ const CourseList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    
+
     setPage(page);
     setSize(pageSize);
   };

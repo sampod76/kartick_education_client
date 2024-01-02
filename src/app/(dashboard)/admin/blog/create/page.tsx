@@ -21,7 +21,7 @@ const CreateBlog = () => {
 
   const [addBlog, { isLoading: blogLoading }] = useAddBlogMutation();
   const onSubmit = async (values: any) => {
-   
+
 
     try {
       const res = await addBlog(values).unwrap();

@@ -8,7 +8,7 @@ import React from "react";
 
 export default function LessonQUizPage({ params }: { params: { id: string } }) {
   const { data: quizData, isLoading } = useGetSingleQuizQuery(params?.id);
- 
+
 
   if (isLoading) {
     return <LoadingSkeleton number={10} />;

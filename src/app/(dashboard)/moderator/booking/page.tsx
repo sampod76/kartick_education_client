@@ -72,25 +72,27 @@ const BookignList = () => {
   const meta = data?.meta;
 
   const handleReject = (id: string) => {
-    confirm_modal(`Are you sure you want to Reject`,"Yes reject it").then(async (res) => {
-      if (res.isConfirmed) {
-        try {
-          const res = await updateBooking({
-            id,
-            body: { status: ENUM_BOOKING_STATUS.REJECT },
-          }).unwrap();
-          if (res.success == false) {
-            // message.success("Admin Successfully Deleted!");
-            // setOpen(false);
-            Error_model_hook(res?.message);
-          } else {
-            Success_model("Service Successfully Rejected!");
+    confirm_modal(`Are you sure you want to Reject`, "Yes reject it").then(
+      async (res) => {
+        if (res.isConfirmed) {
+          try {
+            const res = await updateBooking({
+              id,
+              body: { status: ENUM_BOOKING_STATUS.REJECT },
+            }).unwrap();
+            if (res.success == false) {
+              // message.success("Admin Successfully Deleted!");
+              // setOpen(false);
+              Error_model_hook(res?.message);
+            } else {
+              Success_model("Service Successfully Rejected!");
+            }
+          } catch (error: any) {
+            message.error(error.message);
           }
-        } catch (error: any) {
-          message.error(error.message);
         }
       }
-    });
+    );
   };
 
   const columns = [
@@ -212,7 +214,7 @@ const BookignList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

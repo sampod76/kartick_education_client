@@ -176,7 +176,7 @@ const CategoryList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    
+
     setPage(page);
     setSize(pageSize);
   };
