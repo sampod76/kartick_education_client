@@ -83,9 +83,6 @@ const CreateSingleQuiz = () => {
 
     // console.log(singleQuizDat);
 
-    try {
-      const res = await addSingleQuiz(singleQuizDat).unwrap();
-      // console.log(res);
 
 
     try {
@@ -106,7 +103,7 @@ const CreateSingleQuiz = () => {
       Error_model_hook(error?.message);
       console.log(error);
     }
-  };
+  }
 
   return (
     <div
