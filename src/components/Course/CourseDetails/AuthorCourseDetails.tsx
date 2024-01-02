@@ -8,14 +8,17 @@ import {
 } from "@ant-design/icons";
 
 const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
-  console.log(authorData, "author");
+  // console.log(authorData, "author");
 
   // const img = userData?.img || userData[userData.role]["img"];
 
   // const authImg = authorData[authorData?.role]["img"] || "";
   // console.log(authImg);
   // const role = authorData?.role;
-  // const img = authorData[role]["img"];
+  let img = "";
+  if (authorData?.role) {
+    img = authorData[authorData?.role]["img"];
+  }
 
   return (
     <div
@@ -35,7 +38,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
         }}
       >
         <Image
-          src={""}
+          src={img}
           alt="author"
           style={{
             height: "64px",
@@ -63,7 +66,10 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
         </div>
       </section>
 
-      <section style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <section
+        style={{ display: "flex", alignItems: "center", gap: "8px" }}
+        className="mt-5 lg:mt-0"
+      >
         <button
           style={{
             background: "white",

@@ -16,7 +16,7 @@ export const categoryApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        console.log(response);
+        // console.log(response);
         return {
           data: response,
           meta,
@@ -27,7 +27,7 @@ export const categoryApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleCategory: build.query({
       query: (id: string | string[] | undefined) => {
-        console.log(id);
+        // console.log(id);
         return {
           url: `${CATEGORY_URL}/${id}`,
           method: "GET",
@@ -51,7 +51,7 @@ export const categoryApi = baseApi.injectEndpoints({
     // update ac department
     updateCategory: build.mutation({
       query: ({ data, id }) => {
-        console.log(data, "category data");
+        // console.log(data, "category data");
         return {
           url: `${CATEGORY_URL}/${id}`,
           method: "PATCH",

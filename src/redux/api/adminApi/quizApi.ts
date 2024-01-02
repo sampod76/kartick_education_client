@@ -16,7 +16,9 @@ export const QuizApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        
+
+        // console.log(response);
+
         return {
           data: response,
           meta,
@@ -27,7 +29,9 @@ export const QuizApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleQuiz: build.query({
       query: (id: string | string[] | undefined) => {
-        
+
+        // console.log(id);
+
         return {
           url: `${QUIZ_URL}/${id}`,
           method: "GET",
@@ -51,7 +55,8 @@ export const QuizApi = baseApi.injectEndpoints({
     // update ac department
     updateQuiz: build.mutation({
       query: ({ data, id }) => {
-        
+
+
         return {
           url: `${QUIZ_URL}/${id}`,
           method: "PATCH",

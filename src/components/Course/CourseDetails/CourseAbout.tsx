@@ -5,16 +5,10 @@ import parse from "html-react-parser";
 import { Spin } from "antd";
 
 export default function CourseAbout({ courseId }: { courseId: string }) {
-  console.log(
-    "🚀 ~ file: CourseAbout.tsx:4 ~ CourseAbout ~ courseId:",
-    courseId
-  );
+ 
 
   const { data: courseData, isLoading } = useGetSingleCourseQuery(courseId);
-  console.log(
-    "🚀 ~ file: CourseAbout.tsx:11 ~ CourseAbout ~ courseData:",
-    courseData
-  );
+
 
   if (isLoading) {
     return <Spin />;
