@@ -17,7 +17,7 @@ const DashboardCourseDetailsPublicPage = ({ params }: any) => {
   const { data: CourseData, isLoading } = useGetSingleCourseQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
-  
+
   return (
     <div className="container mx-auto">
       {/* <h2>The Web Developer Boot Camp</h2> */}

@@ -1,24 +1,16 @@
 "use client";
 
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
+
 import FormInput from "@/components/Forms/FormInput";
-import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
-import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
-import FormTimePicker from "@/components/Forms/FormTimePicker";
+
 import UploadImage from "@/components/ui/UploadImage";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import uploadImgBB from "@/hooks/imgbbUploads";
 
-import {
-  useAddCategoryMutation,
-  useGetAllCategoryQuery,
-} from "@/redux/api/adminApi/categoryApi";
+import uploadImgCloudinary from "@/hooks/ImgUploadCloudinary";
 
-import { IServiceSchema } from "@/schemas/service";
+import { useAddCategoryMutation } from "@/redux/api/adminApi/categoryApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
+
 import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
@@ -28,7 +20,8 @@ const CreateCategory = () => {
   const onSubmit = async (values: any) => {
     // console.log(values);
     const status = "active";
-    const imgUrl = await uploadImgBB(values.img);
+    // const imgUrl = await uploadImgCloudinary(values.img);
+    // console.log("🚀 ~ file: page.tsx:33 ~ onSubmit ~ imgUrl:", imgUrl)
 
     const categoryData: {
       title: string;
@@ -36,10 +29,10 @@ const CreateCategory = () => {
       status: string;
     } = {
       title: values.title,
-      img: imgUrl,
+      img: values.img,
       status: status,
     };
-    console.log(categoryData);
+    // console.log(categoryData);
 
     try {
       const res = await addCategory(categoryData).unwrap();

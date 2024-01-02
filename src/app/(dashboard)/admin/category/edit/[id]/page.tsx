@@ -37,22 +37,18 @@ const EditCategoryPage = ({ params }: any) => {
     useUpdateCategoryMutation();
 
   const onSubmit = async (values: any) => {
-    if (typeof values.img !== "string") {
-      
-      values.img = await uploadImgBB(values.img);
-    }
+
     const UpdateValues = {
       ...values,
     };
 
-    
     try {
       const res = await updateCategory({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
 
-      
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {

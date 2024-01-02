@@ -43,10 +43,10 @@ const EditModulePage = ({ params }: any) => {
   );
 
   const onSubmit = async (values: any) => {
-    if (typeof values.img !== "string") {
-      console.log(values);
-      values.img = await uploadImgBB(values.img);
-    }
+    // if (typeof values.img !== "string") {
+    //   console.log(values);
+    //   values.img = await uploadImgBB(values.img);
+    // }
     const UpdateValues = {
       tags: selectedTags,
       ...values,

@@ -54,8 +54,8 @@ export default function CreateCourseFromCourse({
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const onSubmit = async (values: any) => {
     // console.log(values);
-    const imgUrl = await uploadImgBB(values.img);
-    values.img = imgUrl;
+    // const imgUrl = await uploadImgBB(values.img);
+    // values.img = imgUrl;
     const ModuleData: {} = {
       ...values,
       tags: selectedTags,

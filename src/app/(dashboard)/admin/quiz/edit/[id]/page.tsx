@@ -14,32 +14,27 @@ import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import TagUI from "@/components/ui/dashboardUI/TagUI";
+
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import { removeUndefinedValues } from "@/constants/removeUndefined";
 import uploadImgBB from "@/hooks/imgbbUploads";
-
-import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
-
-import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
 import {
   useGetSingleQuizQuery,
   useUpdateQuizMutation,
 } from "@/redux/api/adminApi/quizApi";
-import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Button, Col, Row, Select, message } from "antd";
-import Image from "next/image";
+import { Col, Row} from "antd";
+
 import { useState } from "react";
 
 const EditQuizPage = ({ params }: any) => {
   const { data: QuizData, isLoading } = useGetSingleQuizQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
-  console.log(QuizData);
+  // console.log(QuizData);
   // const { data: MilestoneData = [] } = useGetAllCategoryQuery({});
   const [updateQuiz, { isLoading: updateLoading, error }] =
     useUpdateQuizMutation();
@@ -60,17 +55,17 @@ const EditQuizPage = ({ params }: any) => {
   };
 
   const onSubmit = async (values: any) => {
-    if (typeof values.img !== "string") {
-      console.log(values);
-      values.img = await uploadImgBB(values.img);
-    }
+    // if (typeof values.img !== "string") {
+    //   console.log(values);
+    //   values.img = await uploadImgBB(values.img);
+    // }
     const UpdateValues = removeUndefinedValues({
       tags: selectedTags,
       ...values,
       demo_video,
     });
 
-    console.log(UpdateValues);
+    // console.log(UpdateValues);
 
     try {
       const res = await updateQuiz({
@@ -78,7 +73,7 @@ const EditQuizPage = ({ params }: any) => {
         data: UpdateValues,
       }).unwrap();
 
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {

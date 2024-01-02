@@ -1,6 +1,5 @@
 "use client";
 
-import DynamicFormFiled from "@/components/Forms/DynamicFormFiled";
 import Form from "@/components/Forms/Form";
 
 import FormInput from "@/components/Forms/FormInput";
@@ -11,20 +10,18 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import TagUI from "@/components/ui/dashboardUI/TagUI";
+
 import { courseStatusOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import dayjs from "dayjs";
+
 
 import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuiz";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Button, Col, Row, TimePicker, message } from "antd";
+import { Button, Col, Row} from "antd";
 import React, { useState } from "react";
-import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
-import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
-import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
+
 import SelectQUizField from "@/components/Forms/SelectData/SelectQUizField";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import AnswerInputList from "@/components/Forms/DynamicFormFiled";
@@ -69,9 +66,9 @@ const CreateSingleQuiz = () => {
   const onSubmit = async (values: any) => {
     // console.log(values);
     const status = "active";
-    const imgUrl = await uploadImgBB(values.img);
+    // const imgUrl = await uploadImgBB(values.img);
 
-    values.imgs = [imgUrl];
+    // values.imgs = [imgUrl];
     values["status"] = status;
     if (values?.time_duration) {
       values.time_duration = timeDurationToMilliseconds(values.time_duration);
@@ -83,11 +80,18 @@ const CreateSingleQuiz = () => {
       demo_video,
       answers,
     };
-   
+
+    // console.log(singleQuizDat);
+
+    try {
+      const res = await addSingleQuiz(singleQuizDat).unwrap();
+      // console.log(res);
+
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
      
+
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {

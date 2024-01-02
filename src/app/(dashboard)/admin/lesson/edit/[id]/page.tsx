@@ -1,31 +1,25 @@
 "use client";
 
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
+
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField, {
-  SelectOptions,
+
 } from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import {
-  bloodGroupOptions,
-  courseStatusOptions,
-  genderOptions,
+import {  courseStatusOptions,
+
 } from "@/constants/global";
 import uploadImgBB from "@/hooks/imgbbUploads";
-import {
-  useGetSingleCategoryQuery,
-  useUpdateCategoryMutation,
-} from "@/redux/api/adminApi/categoryApi";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+
 import {
   useGetSingleLessonQuery,
   useUpdateLessonMutation,
@@ -40,7 +34,7 @@ const EditModulePage = ({ params }: any) => {
   const { data: LessonData, isLoading } = useGetSingleLessonQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
-  console.log(LessonData);
+  // console.log(LessonData);
   // const { data: LessonData = [] } = useGetAllCategoryQuery({});
   const [updateLesson, { isLoading: updateLoading, error }] =
     useUpdateLessonMutation();
@@ -53,23 +47,23 @@ const EditModulePage = ({ params }: any) => {
   );
 
   const onSubmit = async (values: any) => {
-    if (typeof values.img !== "string") {
-      console.log(values);
-      values.img = await uploadImgBB(values.img);
-    }
+    // if (typeof values.img !== "string") {
+    //   console.log(values);
+    //   values.img = await uploadImgBB(values.img);
+    // }
     const UpdateValues = {
       tags: selectedTags,
       ...values,
     };
 
-    console.log(UpdateValues);
+    // console.log(UpdateValues);
     try {
       const res = await updateLesson({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
 
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {

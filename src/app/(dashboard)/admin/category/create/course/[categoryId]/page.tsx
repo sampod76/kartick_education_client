@@ -71,16 +71,15 @@ export default function CreateCourseFromCourse({
   // console.log(demo_video);
   const onSubmit = async (values: any) => {
     // console.log(values.img, "values of Course");
-    let { img, ...others } = values;
-    const imageUrl = await uploadImgBB(values.img);
-    img = imageUrl;
+    // let { img, ...others } = values;
+    // const imageUrl = await uploadImgBB(values.img);
+    // img = imageUrl;
     const CourseData = {
-      img,
       tags: selectedTags,
       demo_video,
       details: textEditorValue,
       category: params.categoryId,
-      ...others,
+      ...values,
     };
 
     

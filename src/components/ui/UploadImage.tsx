@@ -1,3 +1,4 @@
+import uploadImgCloudinary from "@/hooks/ImgUploadCloudinary";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
@@ -39,7 +40,7 @@ const UploadImage = ({
   const [imageUrl, setImageUrl] = useState<string>();
   const { setValue } = useFormContext();
 
-  const handleChange: UploadProps["onChange"] = (
+  const handleChange: UploadProps["onChange"] = async(
     info: UploadChangeParam<UploadFile>
   ) => {
     if (info.file.status === "uploading") {
@@ -48,7 +49,11 @@ const UploadImage = ({
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      setValue(name, info.file.originFileObj);
+      const imgUrl =await uploadImgCloudinary(info.file.originFileObj);
+      console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
+
+      // setValue(name, info.file.originFileObj);
+      setValue(name, imgUrl);
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
         setImageUrl(url);

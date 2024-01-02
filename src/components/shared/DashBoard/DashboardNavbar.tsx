@@ -83,7 +83,7 @@ const DashboardNavBar = ({
           }}
           type="dashed"
         >
-          {" "}
+          
           Log out
         </Button>
       ),

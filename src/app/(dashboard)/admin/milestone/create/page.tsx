@@ -44,9 +44,9 @@ const CreateMilestone = () => {
 
   const onSubmit = async (values: any) => {
     // console.log(values);
-    const imgUrl = await uploadImgBB(values.img);
+    // const imgUrl = await uploadImgBB(values.img);
 
-    values.img = imgUrl;
+    // values.img = imgUrl;
     if (!course) {
       Error_model_hook("Course must be select");
       return;

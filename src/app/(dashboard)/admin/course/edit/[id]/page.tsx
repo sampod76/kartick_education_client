@@ -51,10 +51,12 @@ const CourseDetails = ({ params }: any) => {
 
   
   const onSubmit = async (values: any) => {
-    if (typeof values.img !== "string") {
-      
-      values.img = await uploadImgBB(values.img);
-    }
+
+    // if (typeof values.img !== "string") {
+    //   console.log(values);
+    //   values.img = await uploadImgBB(values.img);
+    // }
+
     const updateData = {
       ...values,
       tags: selectedTags,
@@ -64,7 +66,7 @@ const CourseDetails = ({ params }: any) => {
       },
     };
 
-    
+
 
     try {
       //@ts-ignore
@@ -82,7 +84,7 @@ const CourseDetails = ({ params }: any) => {
     }
   };
   //
-  
+
 
   const defaultValues = {
     // name:,
