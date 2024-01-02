@@ -16,7 +16,7 @@ import VimeoPlayer from "@/utils/vimoPlayer";
 import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
-  console.log(moduleId, "moduleId from LessonList");
+  // console.log(moduleId, "moduleId from LessonList");
 
   //! for Course options selection
   const lesson_query: Record<string, any> = {};
@@ -30,10 +30,10 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     ...lesson_query,
   });
 
-  console.log(
-    "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
-    lessonData
-  );
+  // console.log(
+  //   "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
+  //   lessonData
+  // );
 
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
@@ -44,17 +44,17 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     module: moduleId,
     ...quiz_query,
   });
-  console.log(
-    "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ QuizData:",
-    QuizData
-  );
+  // console.log(
+  //   "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ QuizData:",
+  //   QuizData
+  // );
 
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
       const lessonQuizData: any = QuizData?.data?.find(
         (item: any) => item?.lesson === lesson?._id
       );
-      console.log(lesson);
+      // console.log(lesson);
        //  // console.log("🚀 lessonQuizData", lessonQuizData);
       return {
         key: lesson?._id,

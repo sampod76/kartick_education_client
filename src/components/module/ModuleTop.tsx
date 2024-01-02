@@ -21,10 +21,10 @@ export default function ModuleTop({ moduleId }: { moduleId: any }) {
         textAlign: "center",
         fontWeight: "800",
         color: "white",
-        fontSize: "2rem",
+        // fontSize: "2rem",
       }}
     >
-      {data?.title}
+      <h2 className="text-xl lg:text-2xl">{data?.title}</h2>
     </div>
   );
 }

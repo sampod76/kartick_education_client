@@ -5,7 +5,7 @@ import SIngleProgramme from "./SinglePrograme";
 const Programmes = () => {
   return (
     <div className="mt-7  container mx-auto ">
-      <section className="block lg:flex  justify-between py-2">
+      <section className="block lg:flex  justify-between py-3 ">
         <h1 className="text-3xl text-[#282938] font-[600]">
           Book & Online Programs Grades K-12
         </h1>
@@ -14,7 +14,7 @@ const Programmes = () => {
         </button>
       </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 first-letter:">
         {onlineProgramsData?.map((item: any, index: number) => {
           return <SIngleProgramme programme={item} key={index + 1} />;
         })}
