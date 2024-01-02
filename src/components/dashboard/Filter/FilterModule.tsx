@@ -12,7 +12,7 @@ export default function FilterModule({
   setFilterValue: any;
 }) {
   // const [filterValue, setFilterValue] = useState("Filter by a Module");
-  console.log("🚀 filterValue:", filterValue);
+   //  // console.log("🚀 filterValue:", filterValue);
   const query: Record<string, any> = {};
   //! for Course options selection
   query["limit"] = 999999;
@@ -24,7 +24,7 @@ export default function FilterModule({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-    console.log("search:", value);
+     //  // console.log("search:", value);
   };
 
   //! for Module options selection

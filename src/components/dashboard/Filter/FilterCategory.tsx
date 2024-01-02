@@ -23,7 +23,7 @@ const FilterCategorySelect = ({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-    console.log("search:", value);
+     //  // console.log("search:", value);
   };
 
   //! for Category options selection

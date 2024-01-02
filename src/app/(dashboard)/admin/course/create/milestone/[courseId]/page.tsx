@@ -33,7 +33,7 @@ export default function CreateMilestoneFromCourse({
 
   const courseName = searchParams.get("courseName");
 
-  
+
 
   const [textEditorValue, setTextEditorValue] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>(["tech"]);

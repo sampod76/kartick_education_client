@@ -26,7 +26,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
   answers,
   setAnswers,
 }) => {
-  console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answers:", answers);
+   //  // console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answers:", answers);
 
   const handleAdd = () => {
     setAnswers([

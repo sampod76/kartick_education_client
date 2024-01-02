@@ -39,7 +39,7 @@ const CreateCategory = () => {
       img: imgUrl,
       status: status,
     };
-    // console.log(categoryData);
+    console.log(categoryData);
 
     try {
       const res = await addCategory(categoryData).unwrap();

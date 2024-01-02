@@ -8,11 +8,15 @@ import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { useGetSingleModuleQuery } from "@/redux/api/adminApi/moduleApi";
 import React from "react";
 
-export default function LessonPage({ params }: { params: { moduleId: string } }) {
+export default function LessonPage({
+  params,
+}: {
+  params: { moduleId: string };
+}) {
   const moduleId = params.moduleId;
   // console.log(moduleId);
   const { data: moduleData, isLoading } = useGetSingleModuleQuery(moduleId);
-  // console.log("🚀 ~ file: page.tsx:12 ~ LessonPage ~ moduleData:", moduleData);
+  //  //  // console.log("🚀 ~ file: page.tsx:12 ~ LessonPage ~ moduleData:", moduleData);
   const milestoneId = moduleData?.milestone;
   // console.log(milestoneId);
   if (isLoading) {

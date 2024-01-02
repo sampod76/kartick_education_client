@@ -42,7 +42,7 @@ export default function CreateCourseFromCourse({
 
   const categoryName = searchParams.get("categoryName");
 
-  // console.log("🚀 ~ file: page.tsx:28 ~ categoryName:", categoryName);
+  //  //  // console.log("🚀 ~ file: page.tsx:28 ~ categoryName:", categoryName);
 
   const [textEditorValue, setTextEditorValue] = useState("");
   // console.log(

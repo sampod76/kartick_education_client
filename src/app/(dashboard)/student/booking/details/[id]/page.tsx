@@ -71,7 +71,7 @@ const BookingDetails = ({ params }: any) => {
     perSitPrice: bookingData?.service?.price || 0,
   };
   const onFinish = async (values: any) => {
-    
+
     try {
       const res = await addRating({
         ...values,

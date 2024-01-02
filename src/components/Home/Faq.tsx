@@ -17,7 +17,7 @@ const items: CollapseProps['items'] = data?.data?.map((item:any,key:string)=>({
   label: item.title,
   children: <p>{item?.content}</p>,
 }));
-  console.log("🚀 ~ file: Faq.tsx:7 ~ FaqList ~ data:", data);
+   //  // console.log("🚀 ~ file: Faq.tsx:7 ~ FaqList ~ data:", data);
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
