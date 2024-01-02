@@ -12,7 +12,7 @@ export default function FilterCourse({
   setFilterValue: any;
 }) {
   // const [filterValue, setFilterValue] = useState("Filter by a course");
-  console.log("🚀 filterValue:", filterValue);
+   //  // console.log("🚀 filterValue:", filterValue);
 
   // const [filterValue, setFilterValue] = useState("Filter by a category");
   const query: Record<string, any> = {};
@@ -26,7 +26,7 @@ export default function FilterCourse({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-    console.log("search:", value);
+     //  // console.log("search:", value);
   };
 
   //! for Course options selection

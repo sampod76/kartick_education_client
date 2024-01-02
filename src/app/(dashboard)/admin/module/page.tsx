@@ -163,7 +163,7 @@ const MileStoneList = () => {
                   <Menu.Item key="edit">
                     <Link href={`/admin/module/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
-               
+
                   <Menu.Item
                     key="delete"
                     onClick={() => {
@@ -183,7 +183,7 @@ const MileStoneList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -237,7 +237,7 @@ const MileStoneList = () => {
       />
       <HeadingUI>Module List</HeadingUI>
       <ActionBar>
-      <div className="flex gap-2">
+        <div className="flex gap-2">
           <Input
             size="large"
             placeholder="Search"

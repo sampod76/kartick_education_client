@@ -67,7 +67,7 @@ const CourseList = () => {
 
   //@ts-ignore
   const courseData = data?.data;
-  console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", courseData);
+  //  // console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", courseData);
   //@ts-ignore
   const meta = data?.meta;
 
@@ -223,7 +223,7 @@ const CourseList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

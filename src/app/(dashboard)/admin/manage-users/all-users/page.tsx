@@ -61,11 +61,11 @@ const AdminPage = () => {
     ...query,
   });
 
-  console.log("🚀 ~ file: page.tsx:58 ~ AdminPage ~ data:", data);
+  //  // console.log("🚀 ~ file: page.tsx:58 ~ AdminPage ~ data:", data);
 
   //@ts-ignore
   const UserData = data?.data;
-  // console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ UserData:", UserData);
+  //  //  // console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ UserData:", UserData);
   //@ts-ignore
   const meta = data?.data?.meta;
 
@@ -176,7 +176,7 @@ const AdminPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

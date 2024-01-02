@@ -28,7 +28,7 @@ const AllBlogs = () => {
   const { data = [], isLoading } = useGetAllBlogQuery({ ...query });
   //@ts-ignore
   const blogData = data?.data;
-  console.log("🚀 ~ file: BlogComponent.tsx:29 ~ AllBlogs ~ data:", blogData);
+   //  // console.log("🚀 ~ file: BlogComponent.tsx:29 ~ AllBlogs ~ data:", blogData);
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
