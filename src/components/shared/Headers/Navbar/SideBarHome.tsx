@@ -33,7 +33,7 @@ const SideBarHome = () => {
       <Drawer
         
         // title="Drawer with extra actions"
-        placement={"right"}
+        placement={"left"}
         width={400}
         onClose={onClose}
         open={open}

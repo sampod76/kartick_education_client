@@ -8,6 +8,7 @@ import {
   EuroOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
+
 export const homeSIdeItems: MenuProps["items"] = [
   {
     label: <Link href="/">Home</Link>,
