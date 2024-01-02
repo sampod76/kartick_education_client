@@ -28,7 +28,7 @@ const EditBlog = ({params}:{params:any}) => {
   })
   const [updateBlog, { isLoading: blogLoading }] = useUpdateBlogMutation();
   const onSubmit = async (values: any) => {
-    console.log(values);
+    
 
     try {
       const res = await updateBlog({id:params.id,body:values}).unwrap();
@@ -37,7 +37,7 @@ const EditBlog = ({params}:{params:any}) => {
       } else {
         Success_model("Successfully added Blog");
       }
-      console.log(res);
+      
     } catch (error: any) {
       Error_model_hook(error?.message);
       console.log(error);

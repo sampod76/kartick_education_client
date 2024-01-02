@@ -9,7 +9,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 
 import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
 import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
-import TextEditor from "@/components/shared/TextEditor/TextEditor";
+
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import UploadImage from "@/components/ui/UploadImage";
@@ -26,7 +26,13 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Col, Row, message } from "antd";
 import React, { useState } from "react";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 const CreateQuiz = () => {
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 

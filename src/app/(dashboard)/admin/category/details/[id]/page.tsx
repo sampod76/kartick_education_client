@@ -9,7 +9,7 @@ const ServiceDetiles = ({ params }: any) => {
   const { data: data, isLoading } = useGetSingleCategoryQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
-  console.log(data);
+
 
   if (isLoading) {
     return <LoadingForDataFetch />;

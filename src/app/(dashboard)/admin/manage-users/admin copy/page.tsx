@@ -17,22 +17,22 @@ import UMTable from "@/components/ui/UMTable";
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
 import {
-  useDeleteServiceMutation,
-  useGetMultipalServicesQuery,
-} from "@/redux/api/serviceApi";
-import Image from "next/image";
-import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import { useDeleteBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
-import { USER_ROLE } from "@/constants/role";
 
-const BlogList = () => {
+import { USER_ROLE } from "@/constants/role";
+import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import {
+  useDeleteStudentMutation,
+  useGetAllStudentsQuery,
+} from "@/redux/api/adminApi/studentApi";
+
+const TrainerListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
-  const [deleteBlog] = useDeleteBlogMutation();
+  const [deleteStudent] = useDeleteStudentMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -46,56 +46,40 @@ const BlogList = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["status"] = "active";
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
   });
-
+  console.log(query, "query");
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllBlogQuery({ ...query });
+  const { data = [], isLoading } = useGetAllStudentsQuery({
+    ...query,
+  });
 
   //@ts-ignore
-  const blogData = data?.data;
+  const StudentData = data?.data;
+
+  console.log(StudentData, "student data");
 
   //@ts-ignore
   const meta = data?.meta;
 
-  const handleDelete = (id: string) => {
-    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-      if (res.isConfirmed) {
-        try {
-          const res = await deleteBlog(id).unwrap();
-          if (res.success == false) {
-            // message.success("Admin Successfully Deleted!");
-            // setOpen(false);
-            Error_model_hook(res?.message);
-          } else {
-            Success_model("Service Successfully Deleted");
-          }
-        } catch (error: any) {
-          message.error(error.message);
-        }
-      }
-    });
-  };
-
   const columns = [
     {
-      title: "",
+      title: "Name",
       render: function (data: any) {
-        return (
-          <>{<Image src={data?.image} width={80} height={50} alt="dd" />}</>
-        );
+        // console.log(data);
+        const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
+        return <>{fullName}</>;
       },
-      width: 100,
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      ellipsis: true,
+      title: "Email",
+      dataIndex: "email",
     },
 
     {
@@ -106,7 +90,18 @@ const BlogList = () => {
       },
       sorter: true,
     },
-
+    {
+      title: "Contact no.",
+      dataIndex: "phoneNumber",
+    },
+    {
+      title: "Date Of Birth",
+      dataIndex: "dateOfBirth",
+    },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+    },
     {
       title: "Status",
       dataIndex: "status",
@@ -117,23 +112,27 @@ const BlogList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/blog/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+            <Link href={`/admin/manage-users/students/details/${data}`}>
+              <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/blog/edit/${data}`}>
+            <Link href={`/admin/manage-users/students/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button
+              onClick={() => deleteStudentHandler(data)}
+              type="default"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </>
@@ -142,7 +141,7 @@ const BlogList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  //  // console.log("Page:", page, "PageSize:", pageSize);
+    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -159,30 +158,37 @@ const BlogList = () => {
     setSearchTerm("");
   };
 
-  const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
-    try {
-      const res = await deleteBlog(id);
-      if (res) {
-        message.success("Admin Successfully Deleted!");
-        setOpen(false);
+  const deleteStudentHandler = async (id: string) => {
+    console.log(id);
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
+      if (res.isConfirmed) {
+        try {
+          const res = await deleteStudent(id).unwrap();
+          if (res.success == false) {
+            // message.success("Admin Successfully Deleted!");
+            // setOpen(false);
+            Error_model_hook(res?.message);
+          } else {
+            Success_model("Student Successfully Deleted");
+          }
+        } catch (error: any) {
+          message.error(error.message);
+        }
       }
-    } catch (error: any) {
-      message.error(error.message);
-    }
+    });
   };
-
+  // if (isLoading) {
+  //   return <LoadingForDataFetch />;
+  // }
   return (
-    <div>
-      {/* <UMBreadCrumb
-        items={[
-          {
-            label: "${SUPER_ADMIN}",
-            link: "/${SUPER_ADMIN}",
-          },
-        ]}
-      /> */}
-      <ActionBar title="blog List">
+    <div style={{
+      boxShadow:
+        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      borderRadius: "1rem",
+      backgroundColor: "white",
+      padding: "1rem",
+    }}>
+      <ActionBar title="Student List">
         <Input
           size="large"
           placeholder="Search"
@@ -192,13 +198,13 @@ const BlogList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/blog/create`}>
-            <Button type="primary">Create blog</Button>
+          <Link href={`/admin/manage-users/students/create`}>
+            <Button type="default">Create Student</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />
@@ -210,7 +216,7 @@ const BlogList = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={blogData}
+        dataSource={StudentData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -223,14 +229,12 @@ const BlogList = () => {
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteAdminHandler(adminId)}
+        handleOk={() => deleteStudentHandler(adminId)}
       >
-        <p style={{ marginTop: "1.25rem", marginBottom: "1.25rem" }}>
-          Do you want to remove this admin?
-        </p>
+        <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
     </div>
   );
 };
 
-export default BlogList;
+export default TrainerListPage;
