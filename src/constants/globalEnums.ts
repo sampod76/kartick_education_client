@@ -21,3 +21,10 @@ export enum ENUM_BOOKING_STATUS {
   COMPLETE = "complete",
   CANCEL = "cancel",
 }
+
+export enum ENUM_VIDEO_PLATFORM {
+  VIMEO = 'vimeo',
+  YOUTUBE = 'youtube',
+  FACEBOOK = 'facebook',
+}
+

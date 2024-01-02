@@ -22,6 +22,9 @@ import {
 import Logo from "../Logo";
 import { USER_ROLE } from "@/constants/role";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
+import { removeUserInfo } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
+import { authKey } from "@/constants/storageKey";
 
 const { Header } = Layout;
 const styles = {
@@ -41,6 +44,7 @@ const DashboardNavBar = ({
   collapsed: boolean;
   setCollapsed: any;
 }) => {
+  const router = useRouter();
   //   const userInfo = getUserInfo() as any;
   const userLoggedIn = USER_ROLE.ADMIN;
   // console.log(userLoggedIn);
@@ -60,6 +64,31 @@ const DashboardNavBar = ({
     };
   }, []); 
   */
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: <Link href={"/profile"}> Profile</Link>,
+    },
+    {
+      key: "2",
+      label: <Link href={"/dashboard"}>Dashboard</Link>,
+    },
+    {
+      key: "3",
+      label: (
+        <Button
+          onClick={() => {
+            removeUserInfo(authKey);
+            router.push("/login");
+          }}
+          type="dashed"
+        >
+          {" "}
+          Log out
+        </Button>
+      ),
+    },
+  ];
   return (
     <nav>
       <Header
@@ -76,11 +105,6 @@ const DashboardNavBar = ({
           marginRight: "0.5rem",
 
           borderRadius: "0 0.5rem 0.5rem",
-
-          // position:"absolute",
-          // top:0,
-          // width:"100%",
-          // zIndex:100,
         }}
       >
         <section style={{ display: "flex", alignItems: "center" }}>
@@ -99,13 +123,18 @@ const DashboardNavBar = ({
         </section>
 
         <section
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "5px",
-          }}
+       
+        // style={{
+        //   display: "flex",
+        //   alignItems: "center",
+        //   gap: "5px",
+        // }}
         >
-          <UserAvatarUI />
+          <Dropdown menu={{ items }}>
+            <Button shape="circle" style={{opacity:"0px", }}>
+              <UserAvatarUI />
+            </Button>
+          </Dropdown>
         </section>
       </Header>
     </nav>

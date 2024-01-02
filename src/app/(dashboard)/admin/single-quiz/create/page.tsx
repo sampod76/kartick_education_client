@@ -29,16 +29,15 @@ import SelectQUizField from "@/components/Forms/SelectData/SelectQUizField";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import AnswerInputList from "@/components/Forms/DynamicFormFiled";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
+import ButtonLoading from "@/components/Utlis/ButtonLoading";
+import timeDurationToMilliseconds from "@/hooks/stringToMiliSecend";
 
 const CreateSingleQuiz = () => {
   const [addSingleQuiz, { isLoading: serviceLoading }] =
     useAddSingleQuizMutation();
 
   // !  tag selection
-  const [selectedTags, setSelectedTags] = useState<string[]>([
-    "course",
-    "tech",
-  ]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -54,44 +53,49 @@ const CreateSingleQuiz = () => {
     {
       title: "Option A",
       correct: true,
-      img: "https://",
+      img: "",
       serialNumber: 1,
       status: "active",
     },
     {
       title: "Option B",
       correct: false,
-      img: "https://",
+      img: "",
       serialNumber: 2,
       status: "active",
     },
   ]);
 
-  console.log(answers, "answer");
   const onSubmit = async (values: any) => {
     // console.log(values);
     const status = "active";
     const imgUrl = await uploadImgBB(values.img);
 
-    values.img = imgUrl;
+    values.imgs = [imgUrl];
     values["status"] = status;
-    values.time_duration = Number(values.time_duration);
+    if (values?.time_duration) {
+      values.time_duration = timeDurationToMilliseconds(values.time_duration);
+    }
 
-    const LessonData: {} = {
+    const singleQuizDat: {} = {
       ...values,
       tags: selectedTags,
       demo_video,
       answers,
     };
-    console.log(LessonData);
+    console.log(singleQuizDat);
 
     try {
-      const res = await addSingleQuiz(LessonData).unwrap();
+      const res = await addSingleQuiz(singleQuizDat).unwrap();
       console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added the Quiz");
+        setVideoUrl("")
+        setVideoType(null)
+        setSelectedTags([])
+        setAnswers([])
       }
       // console.log(res);
     } catch (error: any) {
@@ -129,6 +133,16 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
+                <SelectQUizField />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
                 <FormInput
                   type="text"
                   name="title"
@@ -136,7 +150,6 @@ const CreateSingleQuiz = () => {
                   label="Quiz Title"
                   required={true}
                 />
-                {/*//! 1  */}
               </Col>
               <Col
                 className="gutter-row"
@@ -154,7 +167,6 @@ const CreateSingleQuiz = () => {
                   label="serialNumber "
                   required={true}
                 />
-                {/*//! 4  */}
               </Col>
               <Col
                 className="gutter-row"
@@ -168,10 +180,9 @@ const CreateSingleQuiz = () => {
                 }
               >
                 <FormTimePicker name="time_duration" label="Time Duration" />
-                {/*//! 5  */}
               </Col>
 
-              <Col
+              {/*     <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
@@ -181,7 +192,7 @@ const CreateSingleQuiz = () => {
                 }}
               >
                 <SelectModuleField />
-                {/* //! module 10 */}
+                
               </Col>
               <Col
                 className="gutter-row"
@@ -193,20 +204,9 @@ const CreateSingleQuiz = () => {
                 }}
               >
                 <SelectLessonField />
-                {/* //! Lesson 11 */}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <SelectQUizField />
-                {/* //! quiz 12  */}
-              </Col>
+                
+              </Col>  */}
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -225,13 +225,10 @@ const CreateSingleQuiz = () => {
                   // placeholder="Select"
                   required={true}
                 />
-                {/* //! price type 13 ---*/}
               </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -244,7 +241,6 @@ const CreateSingleQuiz = () => {
                   options={["youtube", "vimeo"]}
                   label="Demo video"
                 />
-                {/* //! Demo Video 14 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -257,7 +253,6 @@ const CreateSingleQuiz = () => {
                   selected={selectedTags}
                   setSelected={setSelectedTags}
                 />
-                {/*//! 15  */}
               </Col>
               <Col
                 className="gutter-row"
@@ -267,7 +262,6 @@ const CreateSingleQuiz = () => {
                 }}
               >
                 <UploadImage name="img" />
-                {/* //! 2  */}
               </Col>
             </Row>
             <Col
@@ -278,7 +272,6 @@ const CreateSingleQuiz = () => {
               }}
             >
               <FormTextArea label="Description" name="details" />
-              {/*//! 3 */}
             </Col>
             <Col
               className="gutter-row"
@@ -292,11 +285,9 @@ const CreateSingleQuiz = () => {
                 label="hints"
                 placeholder="Give hints for Answer"
               />
-              {/*//! 6 */}
             </Col>
 
-            {/*  
-             <Col
+            {/* <Col
                 className="gutter-row"
                 xs={24}
               
@@ -306,8 +297,8 @@ const CreateSingleQuiz = () => {
               >
                 <SelectAuthorField />
               
-              </Col> 
-              */}
+              </Col>  */}
+
             <Row
               gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
               style={{
@@ -321,16 +312,20 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                {/* <DynamicFormFiled  /> */}
-                <AnswerInputList answers={answers} setAnswers={setAnswers as any} />
-                {/*//! 4 --- */}
+                <AnswerInputList
+                  answers={answers}
+                  setAnswers={setAnswers as any}
+                />
               </Col>
             </Row>
           </div>
-
-          <Button htmlType="submit" type="default">
-            Create
-          </Button>
+          {serviceLoading ? (
+            <ButtonLoading />
+          ) : (
+            <Button htmlType="submit" type="default">
+              Create
+            </Button>
+          )}
         </Form>
       </div>
     </div>

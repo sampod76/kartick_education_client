@@ -4,7 +4,7 @@ import FormSelectField from "../FormSelectField";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import FormSearchSelectField from "../FormSearchSelectField";
 
-const SelectCourseField = () => {
+const SelectCourseField = ({}) => {
   const query: Record<string, any> = {};
   //! for Course options selection
   query["limit"] = 999999;

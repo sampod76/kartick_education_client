@@ -20,6 +20,12 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Col, Row, Spin } from "antd";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+
+//!
+import SelectStatusCategoryFIeld from "@/components/Forms/GeneralField/SelectStatusCategoryFIeld";
+import SelectStatusCoursesFIeld from "@/components/Forms/GeneralField/SelectStatusCoursesFIeld";
+//
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -28,7 +34,11 @@ const TextEditor = dynamic(
 );
 const CreateMilestone = () => {
   const [textEditorValue, setTextEditorValue] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>(["tech"]);
+  //!
+  const [category, setCategoryValue] = useState(null);
+  const [course, setCourseValue] = useState(null);
+//
+  const [selectedTags, setSelectedTags] = useState<string[]>([""]);
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
 
@@ -37,7 +47,11 @@ const CreateMilestone = () => {
     const imgUrl = await uploadImgBB(values.img);
 
     values.img = imgUrl;
-
+    if (!course) {
+      Error_model_hook("Course must be select");
+      return;
+    }
+    values.course = course;
     const MilestoneData: {} = {
       ...values,
       tags: selectedTags,
@@ -48,10 +62,14 @@ const CreateMilestone = () => {
     try {
       const res = await addMilestone(MilestoneData).unwrap();
       // console.log(res);
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Milestone");
+        setCategoryValue(null);
+        setCourseValue(null);
+        setTextEditorValue("")
+        setSelectedTags([])
       }
       // console.log(res);
     } catch (error: any) {
@@ -59,8 +77,6 @@ const CreateMilestone = () => {
       console.log(error);
     }
   };
-
-
 
   return (
     <div
@@ -86,9 +102,23 @@ const CreateMilestone = () => {
             <HeadingUI>Create Milestone</HeadingUI>
             <Row gutter={[12, 12]}>
               <Col className="gutter-row" xs={24}>
+                <div className="flex justify-start items-center gap-4 ">
+                  <div className="w-5/12">
+                    <SelectStatusCategoryFIeld
+                      setCategoryValue={setCategoryValue}
+                    />
+                  </div>
+                  <div className="w-7/12">
+                    <SelectStatusCoursesFIeld
+                      categoryId={category}
+                      setCourseValue={setCourseValue}
+                    />
+                  </div>
+                </div>
+                {/* <Col xs={24} md={12} lg={8} >
+                R</Col>
                 <Col xs={24} md={12} lg={8}>
-                  <SelectCourseField />
-                </Col>
+                </Col> */}
               </Col>
               <hr className="border-2 my-2" />
               <Col className="gutter-row" xs={24} style={{}}>
@@ -111,10 +141,9 @@ const CreateMilestone = () => {
                   selected={selectedTags}
                   setSelected={setSelectedTags}
                 />
-                {/*//! 11 */}
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
-                <UploadImage  name="img" />
+                <UploadImage name="img" />
               </Col>
               <Col
                 className="gutter-row"
@@ -123,7 +152,6 @@ const CreateMilestone = () => {
                 // lg={8}
                 style={{}}
               >
-                {/*//! 3 */}
                 <section
                   style={{
                     borderTopWidth: "2px",

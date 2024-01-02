@@ -5,6 +5,8 @@ import { Card, Radio, Input, Select, Button } from "antd";
 import QuizAside from "./QuizAside";
 import UMBreadCrumb from "../ui/UMBreadCrumb";
 import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
+import { usePathname, useSearchParams } from 'next/navigation'
 
 const { Option } = Select;
 
@@ -90,7 +92,9 @@ const quizData: {
   },
 ];
 
-export default function QuizeSinglePage({ quizeId }: { quizeId: string }) {
+export default function QuizeSinglePage({ quizeId,quiz_title }: { quizeId: string,quiz_title:string }) {
+
+  const searchParams = useSearchParams()
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
   quiz_query["limit"] = 999999;
@@ -108,10 +112,13 @@ export default function QuizeSinglePage({ quizeId }: { quizeId: string }) {
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
   };
-
+  if (isLoading) {
+    return <LoadingSkeleton number={10} />;
+  }
   return (
-    <div className="w-full lg:w-[84vw] mx-auto ">
-      <div className="bg-white py-2 mb-2 px-3">
+    <div className="container mx-auto rounded-xl mt-3 shadow-2xl">
+      <h1 className=" text-2xl  font-bold p-5">➿{quiz_title}</h1>
+      <div className=" py-2 m2-2 px-3">
         {/* <UMBreadCrumb
           items={[
             {
@@ -128,9 +135,7 @@ export default function QuizeSinglePage({ quizeId }: { quizeId: string }) {
             },
           ]}
         /> */}
-        <h1 className="text-3xl font-bold my-9 text-slate-700">
-          Be Smart Lesson Quiz
-        </h1>
+       
       </div>
       <div className="block lg:flex gap-2 items-start  ">
         <QuizAside

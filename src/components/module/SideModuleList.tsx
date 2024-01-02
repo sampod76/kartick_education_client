@@ -8,6 +8,7 @@ import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
 import { Divider } from "antd";
 import Link from "next/link";
 import React from "react";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 
 const SideModuleList = ({
   milestoneId,
@@ -18,10 +19,11 @@ const SideModuleList = ({
 }) => {
   // console.log(milestoneId);
 
-  const { data: milestoneData } = useGetSingleMilestoneQuery(milestoneId);
+  const { data: milestoneData, isLoading } =
+    useGetSingleMilestoneQuery(milestoneId);
   // console.log(milestoneData);
 
-  const { data } = useGetAllModuleQuery({
+  const { data, isLoading: moduleLoading } = useGetAllModuleQuery({
     course: milestoneId,
     // lesson: "yes",
     status: "active",
@@ -30,8 +32,10 @@ const SideModuleList = ({
   // console.log(data,"milestoneId");
   const modulesData = data?.data;
 
-  console.log(moduleId, "and", modulesData, "module Data");
-
+ 
+  if (isLoading || moduleLoading) {
+    return <LoadingSkeleton />;
+  }
   return (
     <div
       style={{

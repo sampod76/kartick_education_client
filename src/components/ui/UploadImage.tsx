@@ -70,7 +70,7 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action={`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB}`}
+        action="/api/file"
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >

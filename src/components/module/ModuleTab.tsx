@@ -48,7 +48,7 @@ export default function ModuleTab({ moduleId }: { moduleId: string }) {
         </button>
       ),
       key: "2",
-      children: <Quizes />,
+      children: <Quizes quizeId=""/>,
     },
 
     {

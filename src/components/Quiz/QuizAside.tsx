@@ -33,19 +33,22 @@ export default function QuizAside({
 
   // const formattedTime = currentTime.toLocaleTimeString();
   return (
-    <div className="w-full lg:w-[30%] mx-auto flex items-center">
+    <div className="text-center">
+      <h1 className="text-2xl animate-pulse font-bold">Quiz timer</h1>
+    <div className="w-full mx-auto flex items-center justify-center">
       <div className="text-center bg-white shadow flex flex-col items-center justify-center gap-2 p-8 rounded">
-        <div className="h-[9rem] w-[9rem] p-[1rem] border-2 border-slate-900 rounded-full  flex justify-center items-center">
+        <div className="h-[6rem] w-[6rem] p-[1rem] border-2 border-slate-900 rounded-full  flex justify-center items-center">
           <button className="text-3xl font-bold">{questionLength}</button>
         </div>
         <h4 className="text-xl font-[500]">Questions</h4>
       </div>
       <div className="text-center bg-white shadow flex flex-col items-center justify-center gap-2 p-8 rounded">
-        <div className="h-[9rem] w-[9rem] p-[1rem] border-2 border-slate-900 rounded-full  flex justify-center items-center">
-          <button className="text-3xl font-bold">{formattedTime}</button>
+        <div className="h-[6rem] w-[6rem] p-[1rem] border-2 border-slate-900 rounded-full  flex justify-center items-center">
+          <button className="text-3xl font-bold animate-pulse">{formattedTime}</button>
         </div>
         <h4 className="text-xl font-[500]">Minute</h4>
       </div>
+    </div>
     </div>
   );
 }
