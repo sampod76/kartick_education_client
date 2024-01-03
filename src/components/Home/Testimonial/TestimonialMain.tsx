@@ -1,178 +1,129 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-// import OwlCarousel, { Options } from "react-owl-carousel3";
-import "owl.carousel/dist/assets/owl.carousel.css"; // Import Owl Carousel CSS
-import "owl.carousel/dist/assets/owl.theme.default.css";
+import React, { useEffect, useRef, useState } from "react";
 import "./testimonial.css";
 
-// interface TestimonialMainProps {}
+import Slider from "react-slick";
 
-// const responsive: Options.Responsive = {
-//   0: {
-//     items: 1,
-//   },
-//   768: {
-//     items: 2,
-//   },
-//   1170: {
-//     items: 3,
-//   },
-// };
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Image } from "antd";
+import { CutText } from "@/utils/CutText";
 
 export default function TestimonialMain() {
+  const testimonials = [
+    {
+      details:
+        "Opportunity here is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took type scrambled it to make a type specimen book. It has survived not only five centuries,",
+      name: "John Doe",
+      image: "https://i.ibb.co/J5GHxyX/Ellipse-31.png",
+      role: "student",
+    },
+    {
+      details:
+        "Best dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took type scrambled it to make a type specimen book. It has survived not only five centuries,",
+      name: "Sompad Nath",
+      image: "https://i.ibb.co/KqdRK2M/Ellipse-34.png",
+
+      role: "student",
+    },
+    {
+      details:
+        "Online dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took type scrambled it to make a type specimen book. It has survived not only five centuries,",
+      name: "Joe Smith",
+      image: "https://i.ibb.co/VxhHWhd/professional-Side.png",
+      role: "student",
+    },
+    {
+      details:
+        "Classroom Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took type scrambled it to make a type specimen book. It has survived not only five centuries,",
+      name: "Mr. Lorem",
+      image: "https://i.ibb.co/JC6DGp4/Ellipse-36.png",
+      role: "student",
+    },
+  ];
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    // speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "24px",
+    className: "center",
+    customPaging: (i: any) => {
+      const isActive = i === 1; // Check if the current item is centered
+
+      const dotStyle = {
+        width: "16px",
+        height: "16px",
+        borderRadius: "8px",
+        backgroundColor: isActive ? "#FB8500" : "rgba(251, 133, 0, 0.5)", // Set opacity for non-active items
+        margin: "36px 10px",
+        border: "1px white solid",
+      };
+
+      return <div style={dotStyle}></div>;
+    },
+    responsive: [
+      {
+        breakpoint: 768, // Medium devices and above
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+    autoplay: true,
+    speed: 800,
+    autoplaySpeed: 5000,
+    cssEase: "linear",
+  };
+
   return (
-    <div>
-      <section className="main">
-        {/* <OwlCarousel
-        ref={testimonialsSliderRef}
-        loop
-        center
-        items={3}
-        margin={0}
-        autoplay
-        dots
-        autoplayTimeout={8500}
-        smartSpeed={450}
-        responsive={responsive}
-      >
-        {/* Your testimonial items go here */}
-        {/* </OwlCarousel> */}
-        <div className="customer-feedback">
-          <div className="container text-center">
-            <div className="row">
-              <div className="col-sm-offset-2 col-sm-8">
-                <div>
-                  <h2 className="section-title">What Clients Say</h2>
-                </div>
-              </div>
+    <div className="container mx-auto my-16 py-3 px-2">
+      <h2 className="text-2xl  lg:text-3xl text-[#282938] font-[600] mb-7">
+        Explore how <span className="text-secondary">iBlossomLearn </span>{" "}
+        supports students and be inspired <br /> by their success stories.
+      </h2>
+      <Slider {...settings}>
+        {testimonials.map((testimonial, index) => (
+          <div key={index} className="text-center">
+            {/* <img
+              className="mx-auto mt-4 rounded-full h-[9rem] w-[9rem]"
+              src={testimonial.image}
+              alt={`name ${index + 1}`}
+            /> */}
+
+            <div className="border-[2px] border-slate-200 h-[14rem] w-[14rem] p-1 mx-auto rounded-full">
+              <Image
+                style={{
+                  marginInline: "auto",
+                  width: "14rem",
+                  height: "14rem",
+                  borderRadius: "100%",
+                }}
+                // className="mx-auto mt-4 rounded-full h-[9rem] w-[9rem]"
+                src={testimonial.image}
+                alt={`name ${index + 1}`}
+              />
             </div>
 
-            <div className="row">
-              <div className="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
-                <div className="owl-carousel feedback-slider">
-                  <div className="feedback-slider-item">
-                    <img
-                      src="//c2.staticflickr.com/8/7310/buddyicons/24846422@N06_r.jpg"
-                      className="center-block img-circle"
-                      alt="Customer Feedback"
-                    />
-                    <h3 className="customer-name">Lisa Redfern</h3>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. It is a long established fact that a
-                      reader will be distracted by the readable its layout.
-                    </p>
-                    <span className="light-bg customer-rating" data-rating="5">
-                      5<i className="fa fa-star"></i>
-                    </span>
-                  </div>
-
-                  <div className="feedback-slider-item">
-                    <img
-                      src="https://i.ibb.co/VxhHWhd/professional-Side.png"
-                      className="center-block img-circle"
-                      alt="Customer Feedback"
-                    />
-                    <h3 className="customer-name">Cassi</h3>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. It is a long established fact that a
-                      reader will be distracted by the readable its layout.
-                    </p>
-                    <span className="light-bg customer-rating" data-rating="4">
-                      4<i className="fa fa-star"></i>
-                    </span>
-                  </div>
-
-                  <div className="feedback-slider-item">
-                    <img
-                      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/451270/profile/profile-80.jpg"
-                      className="center-block img-circle"
-                      alt="Customer Feedback"
-                    />
-                    <h3 className="customer-name">Md Nahidul</h3>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. It is a long established fact that a
-                      reader will be distracted by the readable its layout.
-                    </p>
-                    <span className="light-bg customer-rating" data-rating="5">
-                      5<i className="fa fa-star"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="feedback-slider-thumb hidden-xs">
-                  <div className="thumb-prev">
-                    <span>
-                      <img
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/451270/profile/profile-80.jpg"
-                        alt="Customer Feedback"
-                      />
-                    </span>
-                    <span className="light-bg customer-rating">
-                      5<i className="fa fa-star"></i>
-                    </span>
-                  </div>
-
-                  <div className="thumb-next">
-                    <span>
-                      <img
-                        src="https://res.cloudinary.com/hnmqik4yn/image/upload/c_fill,fl_force_strip,h_128,q_100,w_128/v1493982718/ah57hnfnwxkmsciwivve.jpg"
-                        alt="Customer Feedback"
-                      />
-                    </span>
-                    <span className="light-bg customer-rating">
-                      4<i className="fa fa-star"></i>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <blockquote className="mx-auto mt-3 px-2">
+              <p className="text-base lg:text-[16px] text-[#1E1E1E] font-[550] px-2 capitalize">
+                {CutText(testimonial?.details, 154)}
+              </p>
+              <h2 className="font-bold text-xl lg:text-2xl mt-5">
+                {testimonial?.name} <span className="">| </span>
+                <span className="text-[#1E1E1E] text-[18px]">
+                  {testimonial?.role}
+                </span>
+              </h2>
+              {/* <small>{testimonial.name}</small> */}
+            </blockquote>
           </div>
-        </div>
-      </section>
-
-      <div className="copyright">
-        <p>
-          Me On:
-          <a
-            href="https://www.toptal.com/resume/md-nahidul-islam"
-            target="_blank"
-            className="toptal"
-          >
-            Toptal
-          </a>
-          <a
-            href="https://upstack.co/team/md-35"
-            target="_blank"
-            className="upstack"
-          >
-            Upstack
-          </a>
-          <a
-            href="https://www.upwork.com/o/profiles/users/_~0195eb53c731b0e159/"
-            target="_blank"
-            className="upwork"
-          >
-            UpWork
-          </a>
-          <a
-            href="https://www.fiverr.com/thenahidul"
-            target="_blank"
-            className="fiverr"
-          >
-            Fiverr
-          </a>
-        </p>
-        <a
-          href="https://www.toptal.com/B7avWk/worlds-top-talent"
-          className="jobs"
-          target="_blank"
-        >
-          Jobs
-        </a>
-      </div>
+        ))}
+      </Slider>
     </div>
   );
 }
