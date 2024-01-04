@@ -6,6 +6,7 @@ import { message } from "antd";
 import StudentBasicInfo from "./StudentBasicInfo";
 import StudentPersonalInfo from "./StudentPersonalInfo";
 import StudentOtherInfo from "./StudentOtherInfo";
+import HeadingUI from "../ui/dashboardUI/HeadingUI";
 
 const CreateStudentPage = () => {
   //   const [addStudentWithFormData] = useAddStudentWithFormDataMutation();
@@ -15,11 +16,11 @@ const CreateStudentPage = () => {
       content: <StudentBasicInfo />,
     },
     {
-      title: "Guardian Information",
+      title: "Personal Information",
       content: <StudentPersonalInfo />,
     },
     {
-      title: "Student Others Information",
+      title: "Others Information",
       content: <StudentOtherInfo />,
     },
   ];
@@ -45,21 +46,24 @@ const CreateStudentPage = () => {
 
   const base = "super_admin";
   return (
-    <div>
+    <div className="px-3 mt-2">
       <UMBreadCrumb
         items={[
           { label: `${base}`, link: `/${base}` },
           { label: "manage-student", link: `/${base}/manage-student` },
         ]}
       />
-      <h1 style={{ margin: "10px 0px" }}>Create Student</h1>
-      <StepperForm
-        persistKey="student-create-form"
-        submitHandler={(value) => {
-          handleStudentSubmit(value);
-        }}
-        steps={steps}
-      />
+      <HeadingUI>Create Student</HeadingUI>
+
+      <div className="mt-5">
+        <StepperForm
+          persistKey="student-create-form"
+          submitHandler={(value) => {
+            handleStudentSubmit(value);
+          }}
+          steps={steps}
+        />
+      </div>
     </div>
   );
 };
