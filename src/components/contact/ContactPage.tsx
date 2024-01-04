@@ -58,7 +58,7 @@ export default function ContactPage() {
               </div>
             </div>
             <div className="w-full border-slate-100 pr-5 rounded-md border-y-[1px] bg-white">
-              <div className="flex align-top py-7 shadow pr-5 gap-[2rem] text-start ">
+              <div className="flex align-top py-7 shadow-sm pr-5 gap-[2rem] text-start ">
                 <EnvironmentOutlined
                   style={{
                     fontSize: "3rem",

@@ -23,7 +23,7 @@ export default function ContactForm() {
     // }
   };
   return (
-    <div>
+    <div className=" mt-10 lg:mt-0 shadow py-3 px-5">
       <div className="mb-10 w-full">
         <h2 className="mb-6 text-3xl lg:text-5xl font-bold">Send A Message</h2>
         <p className="mb-6 text-slate-700">We will not public your message.It will store with private</p>
