@@ -80,3 +80,10 @@ password : 11223344
 2. course action with add new milestone .
 3. details course with skelton in dashboard.
 4. 
+
+
+### 3 January
+
+1. registration from for student
+2. update in dashboard
+3. 
