@@ -12,13 +12,23 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { USER_ROLE } from "@/constants/role";
+import { userInfo } from "os";
+import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 
 const TopBar = () => {
   const screens = useBreakpoint();
+  const userLoggedIn = {
+    name: "",
+    role: "admin",
+    email: "sarwarasik@gmail.com",
+  };
+
   return (
     <div
       className="py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5"
       // style={{
+      // fontSize:"36px",
       //   background: "#5371FF",
       //   padding: `0.5rem ${screens.sm ? "0.5rem" : "1rem"}`,
       //   display: `${screens.sm ? "flex" : "block"}`,
@@ -37,30 +47,47 @@ const TopBar = () => {
       </section>
       <section className="flex justify-between gap-3 mt-5 lg:mt-0 ">
         <div className="flex gap-2 text-2xl">
-          <FacebookFilled />
-          <TwitterCircleFilled />
-          <LinkedinFilled />
+          <FacebookFilled
+            style={{
+              fontSize: "36px",
+            }}
+          />
+          <TwitterCircleFilled
+            style={{
+              fontSize: "36px",
+            }}
+          />
+          <LinkedinFilled
+            style={{
+              fontSize: "36px",
+            }}
+          />
           {/* <LinkedinOutlined /> */}
           <YoutubeOutlined
             style={{
+              fontSize: "36px",
               color: "red",
             }}
           />
         </div>
-        <div className="flex gap-3 font-[700]">
-          <Link
-            className="py-3 px-5 lg:px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
-            href="/"
-          >
-            Register
-          </Link>
-          <Link
-            className="py-3 px-5 lg:px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1"
-            href="/login"
-          >
-            Login
-          </Link>
-        </div>
+        {userLoggedIn?.email ? (
+          <UserAvatarUI />
+        ) : (
+          <div className="flex gap-3 font-[700]">
+            <Link
+              className="py-3 px-5 lg:px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
+              href="/"
+            >
+              Register
+            </Link>
+            <Link
+              className="py-3 px-5 lg:px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1"
+              href="/login"
+            >
+              Login
+            </Link>
+          </div>
+        )}
       </section>
     </div>
   );

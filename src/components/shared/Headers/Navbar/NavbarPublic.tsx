@@ -40,7 +40,7 @@ const NavbarPublic = () => {
       >
         <SideBarHome></SideBarHome>
       </div>
-      {/* <UserAvatarUI /> */}
+    
     </nav>
   );
 };
