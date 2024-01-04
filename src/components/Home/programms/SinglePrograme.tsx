@@ -10,7 +10,7 @@ import Image from "next/image";
 const { Meta, Grid } = Card;
 
 const SIngleProgramme = ({ programme }: { programme: any }) => {
-  console.log(programme);
+  // console.log(programme);
   // const { title, details, img, demo_video, tags} = programme;
   return (
     <div className="w-[23rem] mx-auto  shadow-md py-2  text-start">

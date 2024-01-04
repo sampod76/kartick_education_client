@@ -50,7 +50,7 @@ const StepperForm = ({
     setCurrent(current - 1);
   };
 
-  const items = steps?.map((item) => ({ key: item.title, title: item.title }));
+  const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
   const methods = useForm({ defaultValues: savedValues });
   const watch = methods.watch();
@@ -73,32 +73,26 @@ const StepperForm = ({
     <>
       <Steps current={current} items={items} />
       <FormProvider {...methods}>
-        <form
-          onSubmit={handleSubmit(handleStudentOnSubmit)}
-          style={{ marginTop: "36px" }}
-        >
+        <form onSubmit={handleSubmit(handleStudentOnSubmit)}>
           <div>{steps[current].content}</div>
-          <div style={{ marginTop: 30 }}>
+          <div style={{ marginTop: 24 }}>
             {current < steps.length - 1 && (
               <Button type="primary" onClick={() => next()}>
                 Next
-              </Button>
-            )}
-            {current > 0 && (
-              <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-                Previous
               </Button>
             )}
             {current === steps.length - 1 && (
               <Button
                 type="primary"
                 htmlType="submit"
-                style={{
-                  minWidth: "8rem",
-                }}
                 onClick={() => message.success("Processing complete!")}
               >
-                Submit
+                Done
+              </Button>
+            )}
+            {current > 0 && (
+              <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+                Previous
               </Button>
             )}
           </div>

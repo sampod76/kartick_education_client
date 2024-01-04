@@ -83,7 +83,6 @@ const DashboardNavBar = ({
           }}
           type="dashed"
         >
-          
           Log out
         </Button>
       ),
@@ -123,18 +122,14 @@ const DashboardNavBar = ({
         </section>
 
         <section
-       
+
         // style={{
         //   display: "flex",
         //   alignItems: "center",
         //   gap: "5px",
         // }}
         >
-          <Dropdown menu={{ items }}>
-            <Button shape="circle" style={{opacity:"0px", }}>
-              <UserAvatarUI />
-            </Button>
-          </Dropdown>
+          <UserAvatarUI />
         </section>
       </Header>
     </nav>
