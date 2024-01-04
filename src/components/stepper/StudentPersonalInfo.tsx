@@ -3,7 +3,7 @@ import FormInput from "../Forms/FormInput";
 import FormDatePicker from "../Forms/FormDatePicker";
 import FormSelectField from "../Forms/FormSelectField";
 import FormTextArea from "../Forms/FormTextArea";
-import { bloodGroupOptions } from "@/constants/global";
+import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import React from "react";
 
 export default function StudentPersonalInfo() {
@@ -18,61 +18,51 @@ export default function StudentPersonalInfo() {
       }}
     >
       <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-        <Col span={8} style={{ margin: "10px 0" }}>
+        <Col span={24} style={{ margin: "10px 0" }}>
           <FormInput
-            type="email"
-            name="student.email"
-            label="Email address"
+            type="text"
+            name="address"
             size="large"
+            label="Address"
+            required={true}
           />
         </Col>
-
-        <Col span={8} style={{ margin: "10px 0" }}>
-          <FormInput
-            name="student.contactNo"
-            label="Contact no."
-            size="large"
-          />
-        </Col>
-
-        <Col span={8} style={{ margin: "10px 0" }}>
-          <FormInput
-            name="student.emergencyContactNo"
-            label="Emergency contact no."
-            size="large"
-          />
-        </Col>
-
         <Col span={12} style={{ margin: "10px 0" }}>
+          <FormSelectField
+            size="large"
+            name="gender"
+            options={genderOptions}
+            label="Gender"
+            placeholder="Select"
+            required={true}
+          />
+        </Col>
+        <Col span={12} style={{ margin: "10px 0" }}>
+          <FormSelectField
+            size="large"
+            name="bloodGroup"
+            options={bloodGroupOptions}
+            label="bloodGroup"
+            // placeholder="Select"
+            required={true}
+          />
+        </Col>
+
+        <Col span={24} style={{ margin: "10px 0" }}>
           <FormDatePicker
-            name="student.dateOfBirth"
+            name="dateOfBirth"
             label="Date of birth"
             size="large"
           />
         </Col>
 
-        <Col span={12} style={{ margin: "10px 0" }}>
-          <FormSelectField
-            name="student.bloodGroup"
-            label="Blood group"
-            options={bloodGroupOptions}
+        <Col span={24} style={{ margin: "10px 0" }}>
+          <FormInput
+            type="string"
+            name="phoneNumber"
             size="large"
-          />
-        </Col>
-
-        <Col span={12} style={{ margin: "10px 0" }}>
-          <FormTextArea
-            name="student.presentAddress"
-            label="Present address"
-            rows={4}
-          />
-        </Col>
-
-        <Col span={12} style={{ margin: "10px 0" }}>
-          <FormTextArea
-            name="student.permanentAddress"
-            label="Permanent address"
-            rows={4}
+            label="Phone Number"
+            required={true}
           />
         </Col>
       </Row>

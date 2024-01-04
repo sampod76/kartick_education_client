@@ -19,10 +19,6 @@ const CreateStudentPage = () => {
       title: "Personal Information",
       content: <StudentPersonalInfo />,
     },
-    {
-      title: "Others Information",
-      content: <StudentOtherInfo />,
-    },
   ];
 
   const handleStudentSubmit = async (values: any) => {
@@ -46,16 +42,16 @@ const CreateStudentPage = () => {
 
   const base = "super_admin";
   return (
-    <div className="px-3 mt-2">
+    <div className="px-3 mt-2 ">
       <UMBreadCrumb
         items={[
           { label: `${base}`, link: `/${base}` },
           { label: "manage-student", link: `/${base}/manage-student` },
         ]}
       />
-      <HeadingUI>Create Student</HeadingUI>
 
-      <div className="mt-5">
+      <div className="mt-5 w-full lg:max-w-7xl mx-auto shadow-xl py-3 px-5">
+        <HeadingUI>Create Student</HeadingUI>
         <StepperForm
           persistKey="student-create-form"
           submitHandler={(value) => {
