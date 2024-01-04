@@ -2,11 +2,13 @@
 import StepperForm from "@/components/StepperForm/StepperForm";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 
-import { message } from "antd";
 import StudentBasicInfo from "./StudentBasicInfo";
 import StudentPersonalInfo from "./StudentPersonalInfo";
-import StudentOtherInfo from "./StudentOtherInfo";
+
 import HeadingUI from "../ui/dashboardUI/HeadingUI";
+
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 
 const CreateStudentPage = () => {
   //   const [addStudentWithFormData] = useAddStudentWithFormDataMutation();
@@ -20,21 +22,29 @@ const CreateStudentPage = () => {
       content: <StudentPersonalInfo />,
     },
   ];
+  const [addStudentWithFormData, { isLoading }] =
+    useAddStudentWithFormDataMutation();
 
   const handleStudentSubmit = async (values: any) => {
-    const obj = { ...values };
-    const file = obj["file"];
-    delete obj["file"];
-    const data = JSON.stringify(obj);
-    const formData = new FormData();
-    formData.append("file", file as Blob);
-    formData.append("data", data);
-    message.loading("Creating...");
+    const { password, ...others } = values;
+    const studentData = {
+      password: values.password,
+      student: others,
+    };
+    console.log(
+      "🚀 ~ file: CreateStudent.tsx:34 ~ handleStudentSubmit ~ studentData:",
+      studentData
+    );
+
     try {
-      //   const res = await addStudentWithFormData(formData);
-      //   if (!!res) {
-      //     message.success("Student created successfully!");
-      //   }
+      const res = await addStudentWithFormData(studentData).unwrap();
+      console.log(res, "response");
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Student created successfully");
+      }
+      // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
     }
@@ -42,7 +52,7 @@ const CreateStudentPage = () => {
 
   const base = "super_admin";
   return (
-    <div className="px-3 mt-2 ">
+    <div className="px-3 bg-slate-200 h-auto lg:min-h-screen py-2">
       <UMBreadCrumb
         items={[
           { label: `${base}`, link: `/${base}` },
@@ -50,8 +60,8 @@ const CreateStudentPage = () => {
         ]}
       />
 
-      <div className="mt-5 w-full lg:max-w-7xl mx-auto shadow-xl py-3 px-5">
-        <HeadingUI>Create Student</HeadingUI>
+      <div className="mt-5 w-full lg:max-w-7xl mx-auto shadow-xl py-7 px-5 bg-white rounded-md">
+        <HeadingUI>Sign Up </HeadingUI>
         <StepperForm
           persistKey="student-create-form"
           submitHandler={(value) => {

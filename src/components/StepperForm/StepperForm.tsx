@@ -73,26 +73,32 @@ const StepperForm = ({
     <>
       <Steps current={current} items={items} />
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(handleStudentOnSubmit)}>
+        <form
+          onSubmit={handleSubmit(handleStudentOnSubmit)}
+          style={{ marginTop: "36px" }}
+        >
           <div>{steps[current].content}</div>
-          <div style={{ marginTop: 24 }}>
+          <div style={{ marginTop: 30 }}>
             {current < steps.length - 1 && (
               <Button type="primary" onClick={() => next()}>
                 Next
+              </Button>
+            )}
+            {current > 0 && (
+              <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+                Previous
               </Button>
             )}
             {current === steps.length - 1 && (
               <Button
                 type="primary"
                 htmlType="submit"
+                style={{
+                  minWidth: "8rem",
+                }}
                 onClick={() => message.success("Processing complete!")}
               >
-                Done
-              </Button>
-            )}
-            {current > 0 && (
-              <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-                Previous
+                Submit
               </Button>
             )}
           </div>

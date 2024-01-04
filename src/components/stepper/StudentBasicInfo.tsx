@@ -49,6 +49,14 @@ export default function StudentBasicInfo() {
         <Col span={24} style={{ margin: "10px 0" }}>
           <FormInput type="email" name="Email" label="Email" size="large" />
         </Col>
+        <Col span={24} style={{ margin: "10px 0" }}>
+          <FormInput
+            type="password"
+            name="password"
+            label="Password"
+            size="large"
+          />
+        </Col>
       </Row>
     </div>
   );
