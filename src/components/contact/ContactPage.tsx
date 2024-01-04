@@ -31,7 +31,7 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="w-full flex gap-5  border-slate-300 pr-5 rounded-md border-y-[1px] bg-white">
+            <div className="w-full flex gap-5  border-slate-100 pr-5 rounded-md border-y-[1px] bg-white">
               <div className="flex align-top py-9  pr-5 pl-2  gap-[2rem] text-start ">
                 <ContactsFilled
                   style={{
@@ -57,7 +57,7 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-            <div className="w-full border-slate-300 pr-5 rounded-md border-y-[1px] bg-white">
+            <div className="w-full border-slate-100 pr-5 rounded-md border-y-[1px] bg-white">
               <div className="flex align-top py-7 shadow pr-5 gap-[2rem] text-start ">
                 <EnvironmentOutlined
                   style={{
