@@ -22,7 +22,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
-import ButtonLoading from "../Utlis/ButtonLoading";
+import ButtonLoading from "../ui/Loading/ButtonLoading";
 
 const UserCreateComponent = ({
   role = { label: "Please select role", value: "" },

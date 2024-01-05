@@ -75,7 +75,7 @@ const quizData: {
     _id: 5,
     title: "Which is not language of Programming?",
     type: "radio",
-    // answer: ["Javascript", "C++", "Python", "English"],
+    //answer: ["Javascript", "C++", "Python", "English"],
     answer: [
       {
         title: "Javascript",
@@ -105,10 +105,7 @@ export default function QuizeSinglePage({ quizeId,quiz_title }: { quizeId: strin
   const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
     ...quiz_query,
   });
-  console.log(
-    "🚀 ~ file: Quizes.tsx:103 ~ QuizeSinglePage ~ allSingleQuizeData:",
-    allSingleQuizeData
-  );
+
 
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
@@ -118,9 +115,10 @@ export default function QuizeSinglePage({ quizeId,quiz_title }: { quizeId: strin
   }
   return (
     <div className="container mx-auto rounded-xl mt-3 shadow-2xl">
-      <h1 className=" text-2xl  font-bold p-5">➿{quiz_title}</h1>
+      <h1 className=" text-[1.206vw]  font-bold p-5">➿{quiz_title}</h1>
       <div className=" py-2 m2-2 px-3">
-        {/* <UMBreadCrumb
+        {/*
+         <UMBreadCrumb
           items={[
             {
               label: "lesson",
@@ -135,7 +133,8 @@ export default function QuizeSinglePage({ quizeId,quiz_title }: { quizeId: strin
               link: "/course/module",
             },
           ]}
-        /> */}
+        /> 
+        */}
        
       </div>
       <div className="block lg:flex gap-2 items-start  ">

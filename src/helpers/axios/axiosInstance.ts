@@ -37,6 +37,7 @@ instance.interceptors.response.use(
     };
     return responseObject;
   },
+ 
   async function (error) {
     if (error?.response?.status === 403) {
     } else {

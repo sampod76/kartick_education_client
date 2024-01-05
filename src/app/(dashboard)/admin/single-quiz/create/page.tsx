@@ -26,7 +26,7 @@ import SelectQUizField from "@/components/Forms/SelectData/SelectQUizField";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import AnswerInputList from "@/components/Forms/DynamicFormFiled";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import ButtonLoading from "@/components/Utlis/ButtonLoading";
+import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import timeDurationToMilliseconds from "@/hooks/stringToMiliSecend";
 
 const CreateSingleQuiz = () => {

@@ -16,9 +16,6 @@ export const lessonApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-
-
-
         return {
           data: response,
           meta,

@@ -10,7 +10,7 @@ export const trainerApi = baseApi.injectEndpoints({
       query: (data) => {
         // 
         return {
-          url: "/user/create-trainer",
+          url: "/users/create-trainer",
           method: "POST",
           data: data,
           // contentType: "multipart/form-data",

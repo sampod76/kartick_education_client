@@ -13,14 +13,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="">
       <TopBar />
       <NavbarPublic />
+   
       {/* <BannerCourses /> */}
       {/* <BannerCourses /> */}
       {/* <CourseStatistics /> */}
       <main style={{ minHeight: "100vh" }}>{children}</main>
-
-
-    
-  
       <Footer />
     </div>
   );
