@@ -27,8 +27,6 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Col, Row, message } from "antd";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectDynamicCategory from "@/components/Forms/DynamicSelect/SelectDynamicCategory";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -39,27 +37,6 @@ const CreateQuiz = () => {
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const query: Record<string, any> = {};
-  query["limit"] = 999999;
-  query["sortBy"] = "title";
-  query["sortOrder"] = "asc";
-  query["status"] = "active";
-  query["children"] = "course-milestone-module";
-
-  const { data: totalCategoryData, isLoading } = useGetAllCategoryChildrenQuery(
-    {
-      ...query,
-    }
-  );
-
-  const [categoryValue, setCategoryValue] = useState<string[]>([]);
-
-  console.log(
-    "🚀 ~ file: page.tsx:56 ~ CreateQuiz ~ categoryValue:",
-    categoryValue
-  );
-
-  
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -125,20 +102,6 @@ const CreateQuiz = () => {
           >
             <HeadingUI>Create Quiz</HeadingUI>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                xs={12}
-                md={12}
-                lg={12}
-                style={{ marginBlock: "10px" }}
-              >
-                <SelectDynamicCategory
-                  setCategoryValue={setCategoryValue}
-                  CategoryData={totalCategoryData?.data}
-                  isLoading={isLoading}
-                />
-                {/*//! 1-- */}
-              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
