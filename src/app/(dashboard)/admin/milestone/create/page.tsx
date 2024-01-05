@@ -169,7 +169,7 @@ const CreateMilestone = () => {
             </Row>
           </div>
           {serviceLoading ? (
-            <Spin />
+            <Spin tip="Loading data..........."/>
           ) : (
             <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
           )}

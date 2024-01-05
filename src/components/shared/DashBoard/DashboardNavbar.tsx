@@ -1,25 +1,11 @@
 "use client";
 import "./NaveBar.module.css";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import Link from "next/link";
-import {
-  Avatar,
-  Button,
-  Dropdown,
-  Layout,
-  Menu,
-  MenuProps,
-  Space,
-  message,
-} from "antd";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  ShoppingCartOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import Logo from "../Logo";
+import { Button, Layout, MenuProps } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+
 import { USER_ROLE } from "@/constants/role";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 import { removeUserInfo } from "@/services/auth.service";
@@ -45,50 +31,7 @@ const DashboardNavBar = ({
   setCollapsed: any;
 }) => {
   const router = useRouter();
-  //   const userInfo = getUserInfo() as any;
-  const userLoggedIn = USER_ROLE.ADMIN;
-  // console.log(userLoggedIn);
-  /* 
-  const [isNavbarFixed, setNavbarFixed] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setNavbarFixed(window.scrollY > 0);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    // Cleanup the event listener when the component is unmounted
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []); 
-  */
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: <Link href={"/profile"}> Profile</Link>,
-    },
-    {
-      key: "2",
-      label: <Link href={"/dashboard"}>Dashboard</Link>,
-    },
-    {
-      key: "3",
-      label: (
-        <Button
-          onClick={() => {
-            removeUserInfo(authKey);
-            router.push("/login");
-          }}
-          type="dashed"
-        >
-          
-          Log out
-        </Button>
-      ),
-    },
-  ];
   return (
     <nav>
       <Header
@@ -118,23 +61,10 @@ const DashboardNavBar = ({
               height: 64,
             }}
           />
-
-          {/* <Logo></Logo> */}
         </section>
 
-        <section
-       
-        // style={{
-        //   display: "flex",
-        //   alignItems: "center",
-        //   gap: "5px",
-        // }}
-        >
-          <Dropdown menu={{ items }}>
-            <Button shape="circle" style={{opacity:"0px", }}>
-              <UserAvatarUI />
-            </Button>
-          </Dropdown>
+        <section>
+          {/* <UserAvatarUI /> */}
         </section>
       </Header>
     </nav>

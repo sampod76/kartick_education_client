@@ -295,7 +295,7 @@ export default function CreateCourseFromCourse({
               <UploadMultpalImage />
             </div>
             {isLoading ? (
-              <Spin />
+              <Spin tip="Loading data..........."/>
             ) : (
               <ButtonSubmitUI>Create Course</ButtonSubmitUI>
             )}

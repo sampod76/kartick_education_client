@@ -138,6 +138,10 @@ const CreateQuiz = () => {
                 {/* //! module 6 ----*/}
               </Col>
               <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                <SelectModuleField />
+                {/* //! module 6 ----*/}
+              </Col>
+              <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectLessonField />
                 {/* //! Lesson 7 ----*/}
               </Col>

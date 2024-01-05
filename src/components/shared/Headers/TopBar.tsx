@@ -12,20 +12,14 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { USER_ROLE } from "@/constants/role";
+import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 
 const TopBar = () => {
-  const screens = useBreakpoint();
+  const userLoggedIn = USER_ROLE.ADMIN;
+
   return (
-    <div
-      className="py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5"
-      // style={{
-      //   background: "#5371FF",
-      //   padding: `0.5rem ${screens.sm ? "0.5rem" : "1rem"}`,
-      //   display: `${screens.sm ? "flex" : "block"}`,
-      //   justifyContent: "space-between",
-      //   color: "white",
-      // }}
-    >
+    <div className="py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5">
       <section>
         <h2 className="font-[800] text-md lg:text-[17px]">
           ATTEND ORIENTATION! IBL SCHOOL STORE!{" "}
@@ -46,6 +40,9 @@ const TopBar = () => {
               color: "red",
             }}
           />
+        </div>
+        <div>
+          <UserAvatarUI />
         </div>
         <div className="flex gap-3 font-[700]">
           <Link

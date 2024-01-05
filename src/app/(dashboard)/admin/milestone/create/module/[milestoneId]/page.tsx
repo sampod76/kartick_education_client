@@ -205,7 +205,7 @@ export default function CreateCourseFromCourse({
             </Row>
           </div>
           {serviceLoading ? (
-            <Spin />
+            <Spin tip="Loading data..........."/>
           ) : (
             <ButtonSubmitUI>Create Module</ButtonSubmitUI>
           )}

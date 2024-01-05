@@ -11,7 +11,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
 
   const { data: courseData, isLoading: courseLoadin } =
     useGetSingleCourseQuery(courseId);
-  console.log(courseData, "courseDat");
+  // console.log(courseData, "courseDat");
 
   const { data, isLoading } = useGetAllMilestoneQuery({
     course: courseId,

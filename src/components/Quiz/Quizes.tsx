@@ -105,10 +105,10 @@ export default function QuizeSinglePage({ quizeId,quiz_title }: { quizeId: strin
   const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
     ...quiz_query,
   });
-  console.log(
-    "🚀 ~ file: Quizes.tsx:103 ~ QuizeSinglePage ~ allSingleQuizeData:",
-    allSingleQuizeData
-  );
+  // console.log(
+  //   "🚀 ~ file: Quizes.tsx:103 ~ QuizeSinglePage ~ allSingleQuizeData:",
+  //   allSingleQuizeData
+  // );
 
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here

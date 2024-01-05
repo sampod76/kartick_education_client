@@ -50,7 +50,7 @@ const UploadImage = ({
     if (info.file.status === "done") {
       // Get this url from response in real world.
       const imgUrl =await uploadImgCloudinary(info.file.originFileObj);
-      console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
+      // console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
       // setValue(name, info.file.originFileObj);
       setValue(name, imgUrl);

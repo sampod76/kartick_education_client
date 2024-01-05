@@ -15,7 +15,7 @@ const SelectAuthorField = () => {
   const { data: usersData, isLoading } = useGetAllUsersQuery({
     ...query,
   });
-  console.log(usersData);
+  // console.log(usersData);
 
   const AuthorOptions = usersData?.data?.map((item: any) => {
     return {

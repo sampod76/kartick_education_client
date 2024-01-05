@@ -9,7 +9,6 @@ const CommonCourse = () => {
   return (
     <div className="mt-5  container mx-auto">
    
-
       <div className="">
         <div className="mt-[5rem] container mx-auto ">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">

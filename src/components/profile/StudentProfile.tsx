@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 const StudentProfile = ({ userData }: { userData: any }) => {
-  console.log(userData);
+  // console.log(userData);
 
   return (
     <div className="max-w-full lg:max-w-[80%] mx-auto block lg:flex justify-between gap-5">

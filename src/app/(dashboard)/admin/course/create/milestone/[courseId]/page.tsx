@@ -171,7 +171,7 @@ export default function CreateMilestoneFromCourse({
             </Row>
           </div>
           {serviceLoading ? (
-            <Spin />
+            <Spin tip="Loading data..........."/>
           ) : (
             <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
           )}

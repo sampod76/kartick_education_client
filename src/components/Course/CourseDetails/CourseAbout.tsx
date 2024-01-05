@@ -11,7 +11,7 @@ export default function CourseAbout({ courseId }: { courseId: string }) {
 
 
   if (isLoading) {
-    return <Spin />;
+    return <Spin tip="Loading data..........."/>;
   }
 
   return (
