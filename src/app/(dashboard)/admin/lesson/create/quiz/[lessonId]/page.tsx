@@ -11,13 +11,13 @@ import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import { useGetSingleLessonQuery } from "@/redux/api/adminApi/lessoneApi";
 
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Col, Row,  message } from "antd";
+import { Col, Row, message } from "antd";
 import dynamic from "next/dynamic";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),

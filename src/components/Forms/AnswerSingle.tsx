@@ -7,7 +7,8 @@ import {
 } from "@ant-design/icons";
 import HeadingUI from "../ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "../ui/dashboardUI/SubHeadingUI";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
+import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 
 interface Answer {
   title: string;
@@ -22,11 +23,11 @@ interface AnswerInputListProps {
   setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>;
 }
 
-const AnswerInputList: React.FC<AnswerInputListProps> = ({
+const AnswerSInlge: React.FC<AnswerInputListProps> = ({
   answers,
   setAnswers,
 }) => {
-   //  // console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answers:", answers);
+  //  // console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answers:", answers);
 
   const handleAdd = () => {
     setAnswers([
@@ -37,13 +38,23 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
 
   const handleRemove = (index: number) => {
     const updatedAnswers = [...answers];
+
     updatedAnswers.splice(index, 1);
     setAnswers(updatedAnswers);
   };
 
   const handleChange = (index: number, updatedAnswer: Answer) => {
-    const updatedAnswers = [...answers];
+    let updatedAnswers = [...answers];
     updatedAnswers[index] = updatedAnswer;
+    // If the selected answer is correct, set other answers to incorrect
+    if (updatedAnswer.correct) {
+      updatedAnswers = updatedAnswers.map((answer, i) => ({
+        ...answer,
+        correct: i === index,
+      }));
+    } else {
+      updatedAnswers[index] = updatedAnswer;
+    }
     setAnswers(updatedAnswers);
   };
 
@@ -115,7 +126,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
                   file
                 );
                 // You can add custom logic before uploading, e.g., checking file type or size
-                const imgUrl = await uploadImgBB(file);
+                const imgUrl = await uploadImgCloudinary(file);
                 console.log(imgUrl);
 
                 // if (answer?.img) {
@@ -181,4 +192,4 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
   );
 };
 
-export default AnswerInputList;
+export default AnswerSInlge;

@@ -15,7 +15,7 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import UploadMultpalImage from "@/hooks/multipleImageUpload";
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
 import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
@@ -82,13 +82,11 @@ export default function CreateCourseFromCourse({
       ...values,
     };
 
-    
-
     // Success_model("Customer created successfully");
 
     try {
       const res = await addCourse({ ...CourseData }).unwrap();
-      
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {

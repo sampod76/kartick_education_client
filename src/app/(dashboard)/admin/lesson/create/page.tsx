@@ -16,7 +16,7 @@ import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 
 import {
   useAddLessonMutation,

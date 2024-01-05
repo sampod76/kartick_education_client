@@ -18,7 +18,7 @@ import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagUI from "@/components/ui/dashboardUI/TagUI";
 
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import {
   useGetSingleCourseQuery,
   useUpdateCourseMutation,
@@ -33,7 +33,6 @@ const CourseDetails = ({ params }: any) => {
   const { data: CourseData, isLoading } = useGetSingleCourseQuery(params?.id, {
     skip: !Boolean(params?.id),
   });
-  
 
   const [updateCourse, { isLoading: CourseLoading }] =
     useUpdateCourseMutation();
@@ -49,9 +48,7 @@ const CourseDetails = ({ params }: any) => {
     CourseData?.demo_video?.platform || ""
   );
 
-  
   const onSubmit = async (values: any) => {
-
     // if (typeof values.img !== "string") {
     //   console.log(values);
     //   values.img = await uploadImgBB(values.img);
@@ -66,8 +63,6 @@ const CourseDetails = ({ params }: any) => {
       },
     };
 
-
-
     try {
       //@ts-ignore
       const res = await updateCourse({
@@ -79,12 +74,9 @@ const CourseDetails = ({ params }: any) => {
       } else {
         Success_model("Successfully update Course");
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
   //
-
 
   const defaultValues = {
     // name:,
@@ -104,7 +96,7 @@ const CourseDetails = ({ params }: any) => {
     tags: CourseData?.tags || "",
     address: CourseData?.address || "",
   };
-  
+
   if (isLoading || CourseLoading) {
     return <LoadingForDataFetch />;
   }
@@ -359,7 +351,6 @@ const CourseDetails = ({ params }: any) => {
                 <Col
                   className="gutter-row"
                   xs={24}
-                 
                   style={{
                     margin: "10px 0",
                   }}
@@ -370,7 +361,7 @@ const CourseDetails = ({ params }: any) => {
               </Row>
             </div>
           </div>
-          <section >
+          <section>
             {/*//! 3 */}
             <FormTextArea
               placeholder="Write details of course"

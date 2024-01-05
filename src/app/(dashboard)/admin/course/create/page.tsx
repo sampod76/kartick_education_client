@@ -13,7 +13,7 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import {
@@ -31,7 +31,6 @@ import { useState } from "react";
 
 const { Option } = Select;
 
-
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 // import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import UploadMultpalImage from "@/hooks/multipleImageUpload";
@@ -48,7 +47,7 @@ const CreateCoursePage = () => {
     "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
     textEditorValue
   );
-  const [addCourse, { isLoading ,error}] = useAddCourseMutation();
+  const [addCourse, { isLoading, error }] = useAddCourseMutation();
 
   // !  tag selection
 
@@ -70,7 +69,6 @@ const CreateCoursePage = () => {
     // const imageUrl = await uploadImgBB(values.img);
     // img = imageUrl;
     const CourseData = {
-     
       tags: selectedTags,
       demo_video,
       details: textEditorValue,

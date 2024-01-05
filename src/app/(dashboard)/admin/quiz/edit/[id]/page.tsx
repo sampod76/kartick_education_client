@@ -18,7 +18,7 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 import { removeUndefinedValues } from "@/constants/removeUndefined";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import {
   useGetSingleQuizQuery,
   useUpdateQuizMutation,
@@ -26,7 +26,7 @@ import {
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Col, Row} from "antd";
+import { Col, Row } from "antd";
 
 import { useState } from "react";
 
@@ -103,13 +103,15 @@ const EditQuizPage = ({ params }: any) => {
   console.log(defaultValues);
 
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(ICategorySchema)} */}
@@ -249,7 +251,6 @@ const EditQuizPage = ({ params }: any) => {
               <Col
                 className="gutter-row"
                 xs={24}
-              
                 style={{
                   marginBottom: "10px",
                 }}
@@ -263,7 +264,6 @@ const EditQuizPage = ({ params }: any) => {
               <Col
                 className="gutter-row"
                 xs={24}
-                
                 style={{
                   marginBottom: "10px",
                 }}

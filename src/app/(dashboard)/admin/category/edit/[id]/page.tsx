@@ -12,7 +12,7 @@ import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import {
   useGetSingleCategoryQuery,
   useUpdateCategoryMutation,
@@ -31,13 +31,12 @@ const EditCategoryPage = ({ params }: any) => {
       skip: !Boolean(params?.id),
     }
   );
-  
+
   // const { data: categoryData = [] } = useGetAllCategoryQuery({});
   const [updateCategory, { isLoading: updateLoading, error }] =
     useUpdateCategoryMutation();
 
   const onSubmit = async (values: any) => {
-
     const UpdateValues = {
       ...values,
     };
@@ -47,7 +46,6 @@ const EditCategoryPage = ({ params }: any) => {
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-
 
       if (res?.success == false) {
         Error_model_hook(res?.message);
@@ -74,7 +72,6 @@ const EditCategoryPage = ({ params }: any) => {
 
     // managementDepartment: CategoryData?.managementDepartment?.id || "",
   };
-
 
   return (
     <div>
@@ -112,7 +109,7 @@ const EditCategoryPage = ({ params }: any) => {
                 />
               </Col>
 
-              <Col className="gutter-row" xs={24} >
+              <Col className="gutter-row" xs={24}>
                 <div className="">
                   <UploadImage name="img" defaultImage={categoryData.img} />
                 </div>

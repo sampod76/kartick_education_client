@@ -4,7 +4,7 @@ import { message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
@@ -31,14 +31,18 @@ type ImageUploadProps = {
   customChange?: any;
 };
 
-const UploadImage = ({
+const UploadMultipalImage = ({
   name,
   defaultImage,
   customChange,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
+
+  const [imagesUrl, setImagesUrl] = useState<string[]>([]);
   const { setValue } = useFormContext();
+  useEffect(() => {
+    setValue(name, imagesUrl);
+  }, [imagesUrl, name, setValue]);
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
@@ -53,10 +57,11 @@ const UploadImage = ({
       console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
       setValue(name, imgUrl);
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
+      setImagesUrl((c) => [...c, imgUrl]);
+      //   getBase64(info.file.originFileObj as RcFile, (url) => {
+      //     setLoading(false);
+      //     setImagesUrl(url);
+      //   });
     }
   };
 
@@ -74,26 +79,28 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-    
+        multiple={true}
+        maxCount={4}
         action="/api/file"
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >
-        {imageUrl || defaultImage ? (
-          <Image
-            src={imageUrl ? imageUrl : (defaultImage as string)}
-            alt="avatar"
-            style={{ width: "100%" }}
-            width={60}
-            height={60}
-            // fill
-          />
-        ) : (
-          uploadButton
-        )}
+        {imagesUrl || defaultImage
+          ? imagesUrl.map((image, i) => (
+              <Image
+                key={i}
+                src={image}
+                alt="avatar"
+                style={{ width: "100%" }}
+                width={60}
+                height={60}
+                // fill
+              />
+            ))
+          : uploadButton}
       </Upload>
     </>
   );
 };
 
-export default UploadImage;
+export default UploadMultipalImage;

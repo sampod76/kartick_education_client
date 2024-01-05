@@ -6,6 +6,7 @@ export const getCloudinaryEnv = (): {
   upload_preset: string;
   cloud_name: string;
 } => {
+  
   return {
     upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET || "",
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "",

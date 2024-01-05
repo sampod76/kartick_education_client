@@ -3,9 +3,7 @@
 import Form from "@/components/Forms/Form";
 
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField, {
-
-} from "@/components/Forms/FormSelectField";
+import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
@@ -15,10 +13,8 @@ import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import {  courseStatusOptions,
-
-} from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import { courseStatusOptions } from "@/constants/global";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 
 import {
   useGetSingleLessonQuery,
@@ -26,7 +22,7 @@ import {
 } from "@/redux/api/adminApi/lessoneApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import {Col, Row } from "antd";
+import { Col, Row } from "antd";
 
 import { useState } from "react";
 
@@ -38,9 +34,6 @@ const EditModulePage = ({ params }: any) => {
   // const { data: LessonData = [] } = useGetAllCategoryQuery({});
   const [updateLesson, { isLoading: updateLoading, error }] =
     useUpdateLessonMutation();
-
-
-
 
   const [selectedTags, setSelectedTags] = useState<string[]>(
     LessonData?.tags || []
@@ -101,7 +94,7 @@ const EditModulePage = ({ params }: any) => {
         {/* resolver={yupResolver(ICategorySchema)} */}
         <HeadingUI>Update Lesson</HeadingUI>
         <Form submitHandler={onSubmit} defaultValues={defaultValues}>
-        <div
+          <div
             style={{
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
@@ -109,13 +102,11 @@ const EditModulePage = ({ params }: any) => {
               marginBottom: "10px",
             }}
           >
-          
             <hr className="border-1 my-1" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -132,7 +123,6 @@ const EditModulePage = ({ params }: any) => {
               <Col
                 className="gutter-row"
                 xs={2}
-              
                 style={{
                   marginBottom: "10px",
                 }}
@@ -146,7 +136,7 @@ const EditModulePage = ({ params }: any) => {
                 />
                 {/*//! 2 */}
               </Col>
-              
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -156,7 +146,7 @@ const EditModulePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-               <SelectAuthorField/>
+                <SelectAuthorField />
                 {/* //! Author  4*/}
               </Col>
               <Col
@@ -168,7 +158,7 @@ const EditModulePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <SelectModuleField/>
+                <SelectModuleField />
                 {/* //! price type 5*/}
               </Col>
               <Col
@@ -200,17 +190,15 @@ const EditModulePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-               <TagsSelectUI
-                      selected={selectedTags}
-                      setSelected={setSelectedTags}
-
-                    />
+                <TagsSelectUI
+                  selected={selectedTags}
+                  setSelected={setSelectedTags}
+                />
                 {/*//! 6 */}
               </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -231,9 +219,7 @@ const EditModulePage = ({ params }: any) => {
             </Row>
           </div>
 
-          <ButtonSubmitUI>
-            Update Lesson
-          </ButtonSubmitUI>
+          <ButtonSubmitUI>Update Lesson</ButtonSubmitUI>
         </Form>
       </div>
     </div>

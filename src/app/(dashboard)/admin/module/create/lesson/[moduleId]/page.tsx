@@ -16,7 +16,7 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import UploadMultpalImage from "@/hooks/multipleImageUpload";
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
 import {
@@ -71,7 +71,7 @@ export default function CreateCourseFromCourse({
       ...values,
       tags: selectedTags,
       module: params.moduleId,
-      details:textEditorValue
+      details: textEditorValue,
     };
     // console.log(LessonData);
 
@@ -234,7 +234,7 @@ export default function CreateCourseFromCourse({
                     setTextEditorValue={setTextEditorValue}
                   />
                 </section>
-                </Col>
+              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
