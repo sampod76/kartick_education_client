@@ -16,7 +16,6 @@ export const moduleApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-
         return {
           data: response,
           meta,
@@ -26,17 +25,22 @@ export const moduleApi = baseApi.injectEndpoints({
     }),
     // get single academic department
     getSingleModule: build.query({
+
       query: (id: string | string[] | undefined) => {
+
         return {
-          url: `${MODULE_URL}/${id}`,
+          url: `${MODULE_URL}/${arg.id}`,
           method: "GET",
+          params: arg,
         };
       },
+
       providesTags: [tagTypes.module],
     }),
     // create a new academic department
     addModule: build.mutation({
       query: (data) => {
+
         return {
           url: MODULE_URL,
           method: "POST",
@@ -48,7 +52,6 @@ export const moduleApi = baseApi.injectEndpoints({
     // update ac department
     updateModule: build.mutation({
       query: ({ data, id }) => {
-        
         return {
           url: `${MODULE_URL}/${id}`,
           method: "PATCH",

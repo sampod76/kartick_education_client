@@ -12,7 +12,6 @@ import uploadImgBB from "@/hooks/imgbbUploads";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 // import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-
 import { IStudentCreate } from "@/types/userTypes";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -26,17 +25,10 @@ const CreateStudentPage = () => {
 
   const onSubmit = async (values: IStudentCreate & { img: any }) => {
     // console.log(values.img, "values of student");
-    let { img, ...others } = values;
-
-    const imageUrl = await uploadImgBB(values.img);
-
-    // console.log(imageUrl, "image url");
-
-    img = imageUrl;
 
     const studentData = {
       password: "1234asdf",
-      student: { img: imageUrl, ...others },
+      student: { ...values },
     };
 
     console.log(studentData, "student");
@@ -190,7 +182,6 @@ const CreateStudentPage = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-              
                 style={{
                   marginBottom: "10px",
                 }}
