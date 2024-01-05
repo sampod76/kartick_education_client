@@ -19,7 +19,7 @@ const SelectModuleField = () => {
       value: item?._id,
     };
   });
-  console.log(ModuleOptions);
+  // console.log(ModuleOptions);
   return (
     <FormSearchSelectField
       size="large"

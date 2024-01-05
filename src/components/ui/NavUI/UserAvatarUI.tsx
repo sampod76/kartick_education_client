@@ -57,38 +57,57 @@ const UserAvatarUI = () => {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "18px",
+        gap: "28px",
         marginLeft: "24px",
       }}
     >
       <Badge count={3}>
-        <Avatar
+        {/* <Avatar
           style={{
             fontSize: "",
+            color: "black",
           }}
           shape="circle"
           size={35}
-          icon={<ShopOutlined style={{ fontSize: "1.7rem" }} />}
+          icon={}
+        /> */}
+        <ShopOutlined
+          style={{
+            fontSize: "1.7rem",
+            background: "white",
+            color: "black",
+            borderRadius: "50%",
+          }}
         />
       </Badge>
-      <Badge count={3}>
-        <Avatar
+      <Badge count={3} style={{ opacity: "0px" }}>
+        {/* <Avatar
           style={{
             fontSize: "",
+            color:"black"
           }}
           shape="circle"
           size={35}
-          icon={<MessageOutlined style={{ fontSize: "1.7rem" }} />}
+          icon={<MessageOutlined style={{ fontSize: "1.7rem" ,background:"white",color:"black",borderRadius:"50%"}} />}
+        /> */}
+
+        <MessageOutlined
+          style={{
+            fontSize: "1.7rem",
+            background: "white",
+            color: "black",
+            borderRadius: "50%",
+          }}
         />
       </Badge>
-      <Badge count={5}>
-        <Avatar
+      <Badge count={5} style={{ opacity: "0px" }}>
+        <NotificationOutlined
           style={{
-            fontSize: "",
+            fontSize: "1.7rem",
+            background: "white",
+            color: "black",
+            borderRadius: "50%",
           }}
-          shape="circle"
-          size={35}
-          icon={<NotificationOutlined style={{ fontSize: "1.7rem" }} />}
         />
       </Badge>
       <Dropdown
@@ -99,12 +118,21 @@ const UserAvatarUI = () => {
         }}
       >
         <button style={{ opacity: "0px" }}>
-          <Avatar
+          {/* <Avatar
             style={{
               fontSize: "",
+              color: "black",
             }}
             size={50}
-            icon={<UserOutlined style={{ fontSize: "1.7rem" }} />}
+            icon={}
+          /> */}
+          <UserOutlined
+            style={{
+              fontSize: "2.7rem",
+              background: "white",
+              color: "black",
+              borderRadius: "50%",
+            }}
           />
         </button>
       </Dropdown>
