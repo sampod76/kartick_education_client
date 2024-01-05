@@ -11,7 +11,7 @@ import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 
 import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
 
@@ -37,7 +37,7 @@ const CreateMilestone = () => {
   //!
   const [category, setCategoryValue] = useState(null);
   const [course, setCourseValue] = useState(null);
-//
+  //
   const [selectedTags, setSelectedTags] = useState<string[]>([""]);
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
@@ -68,8 +68,8 @@ const CreateMilestone = () => {
         Success_model("Successfully added Milestone");
         setCategoryValue(null);
         setCourseValue(null);
-        setTextEditorValue("")
-        setSelectedTags([])
+        setTextEditorValue("");
+        setSelectedTags([]);
       }
       // console.log(res);
     } catch (error: any) {

@@ -7,8 +7,8 @@ import {
 } from "@ant-design/icons";
 import HeadingUI from "../ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "../ui/dashboardUI/SubHeadingUI";
-import uploadImgBB from "@/hooks/imgbbUploads";
-import uploadImgCloudinary from "@/hooks/ImgUploadCloudinary";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
+import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 
 interface Answer {
   title: string;

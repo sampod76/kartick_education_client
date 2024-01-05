@@ -8,10 +8,9 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 // import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
-
 
 import { ITrainerCreate } from "@/types/userTypes";
 
@@ -118,7 +117,7 @@ const CreateTrainerPage = () => {
                   label="First Name"
                   required={true}
                 />
-                
+
                 <FormInput
                   type="text"
                   name="name.lastName"
@@ -184,7 +183,6 @@ const CreateTrainerPage = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}

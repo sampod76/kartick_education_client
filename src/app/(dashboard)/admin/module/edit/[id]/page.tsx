@@ -14,7 +14,7 @@ import UploadImage from "@/components/ui/UploadImage";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 
 import {
   useGetSingleModuleQuery,
@@ -169,7 +169,7 @@ const EditModulePage = ({ params }: any) => {
                 />
                 {/* //! price type 8*/}
               </Col>
-              <Col className="gutter-row" xs={24}  style={{}}>
+              <Col className="gutter-row" xs={24} style={{}}>
                 {" "}
                 <TagsSelectUI
                   selected={selectedTags}
@@ -177,7 +177,7 @@ const EditModulePage = ({ params }: any) => {
                 />
                 {/*//! 11 */}
               </Col>
-              <Col className="gutter-row" xs={24}  style={{}}>
+              <Col className="gutter-row" xs={24} style={{}}>
                 {" "}
                 <UploadImage name="img" />
                 {/* //!7*/}

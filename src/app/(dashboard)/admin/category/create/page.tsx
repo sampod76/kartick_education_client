@@ -6,7 +6,7 @@ import FormInput from "@/components/Forms/FormInput";
 
 import UploadImage from "@/components/ui/UploadImage";
 
-import uploadImgCloudinary from "@/hooks/ImgUploadCloudinary";
+import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 
 import { useAddCategoryMutation } from "@/redux/api/adminApi/categoryApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";

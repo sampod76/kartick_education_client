@@ -8,7 +8,7 @@ import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Col, Row, Spin } from "antd";
@@ -27,13 +27,9 @@ export default function CreateMilestoneFromCourse({
 }: {
   params: { courseId: string };
 }) {
-  
-
   const searchParams = useSearchParams();
 
   const courseName = searchParams.get("courseName");
-
-
 
   const [textEditorValue, setTextEditorValue] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>(["tech"]);
@@ -41,7 +37,6 @@ export default function CreateMilestoneFromCourse({
     useAddMilestoneMutation();
 
   const onSubmit = async (values: any) => {
-
     const MilestoneData: {} = {
       ...values,
       tags: selectedTags,
@@ -49,19 +44,17 @@ export default function CreateMilestoneFromCourse({
       course: params.courseId,
     };
 
-
     try {
       const res = await addMilestone(MilestoneData).unwrap();
-      // 
+      //
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Milestone");
       }
-      // 
+      //
     } catch (error: any) {
       Error_model_hook(error?.message);
-      
     }
   };
 

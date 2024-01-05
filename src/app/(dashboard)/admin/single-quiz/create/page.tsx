@@ -12,7 +12,7 @@ import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 import { courseStatusOptions, singleQuizTypes } from "@/constants/global";
-import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 
 import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuiz";
 
@@ -28,6 +28,7 @@ import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import timeDurationToMilliseconds from "@/hooks/stringToMiliSecend";
 import AnswerMultiple from "@/components/Forms/AnswerMultiple";
+import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 
 const CreateSingleQuiz = () => {
   const [addSingleQuiz, { isLoading: serviceLoading }] =
@@ -283,7 +284,7 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="img" />
+                <UploadMultipalImage name="img" />
               </Col>
             </Row>
             <Col
