@@ -1,4 +1,3 @@
-
 import type { MenuProps } from "antd";
 import Link from "next/link";
 export const homeNavItems: MenuProps["items"] = [
@@ -7,11 +6,14 @@ export const homeNavItems: MenuProps["items"] = [
     key: "1",
   },
   {
+    label: <Link href="/contact">Contact</Link>,
+    key: "2",
+  },
+  {
     label: <Link href="/course">Web Development</Link>,
-    key: "1/services/web-development",
+    key: "2/services/web-development",
     children: [
       {
-        
         label: <Link href="/services/web-development/frontend">Frontend</Link>,
         key: "f/services/web-development/frontend",
       },
