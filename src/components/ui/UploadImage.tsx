@@ -40,7 +40,7 @@ const UploadImage = ({
   const [imageUrl, setImageUrl] = useState<string>();
   const { setValue } = useFormContext();
 
-  const handleChange: UploadProps["onChange"] = async(
+  const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
   ) => {
     if (info.file.status === "uploading") {
@@ -49,7 +49,7 @@ const UploadImage = ({
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      const imgUrl =await uploadImgCloudinary(info.file.originFileObj);
+      const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
       console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
       // setValue(name, info.file.originFileObj);

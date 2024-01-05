@@ -8,6 +8,7 @@ import {
 import HeadingUI from "../ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "../ui/dashboardUI/SubHeadingUI";
 import uploadImgBB from "@/hooks/imgbbUploads";
+import uploadImgCloudinary from "@/hooks/ImgUploadCloudinary";
 
 interface Answer {
   title: string;
@@ -18,39 +19,41 @@ interface Answer {
 }
 
 interface AnswerInputListProps {
-  answers: Answer[];
-  setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>;
+  answersMultiple: Answer[];
+  setAnswersMultiple: React.Dispatch<React.SetStateAction<Answer[]>>;
 }
 
-const AnswerInputList: React.FC<AnswerInputListProps> = ({
-  answers,
-  setAnswers,
+const AnswerMultiple: React.FC<AnswerInputListProps> = ({
+  answersMultiple,
+  setAnswersMultiple,
 }) => {
-   //  // console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answers:", answers);
+  //  // console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answersMultiple:", answersMultiple);
 
   const handleAdd = () => {
-    setAnswers([
-      ...answers,
+    setAnswersMultiple([
+      ...answersMultiple,
       { title: "", correct: false, img: "", serialNumber: 0, status: "active" },
     ]);
   };
 
   const handleRemove = (index: number) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers.splice(index, 1);
-    setAnswers(updatedAnswers);
+    const updatedAnswersMultiple = [...answersMultiple];
+    updatedAnswersMultiple.splice(index, 1);
+    setAnswersMultiple(updatedAnswersMultiple);
   };
 
   const handleChange = (index: number, updatedAnswer: Answer) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[index] = updatedAnswer;
-    setAnswers(updatedAnswers);
+    let updatedAnswersMultiple = [...answersMultiple];
+    updatedAnswersMultiple[index] = updatedAnswer;
+   
+ 
+    setAnswersMultiple(updatedAnswersMultiple);
   };
 
   return (
     <div className="">
       <SubHeadingUI>Add Answer </SubHeadingUI>
-      {answers?.map((answer, index) => (
+      {answersMultiple?.map((answer, index) => (
         <Space
           key={index}
           style={{
@@ -115,7 +118,7 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
                   file
                 );
                 // You can add custom logic before uploading, e.g., checking file type or size
-                const imgUrl = await uploadImgBB(file);
+                const imgUrl = await uploadImgCloudinary(file);
                 console.log(imgUrl);
 
                 // if (answer?.img) {
@@ -170,15 +173,15 @@ const AnswerInputList: React.FC<AnswerInputListProps> = ({
       ))}
       <Button
         type="dashed"
-        disabled={answers?.length > 6 ? true : false}
+        disabled={answersMultiple?.length > 6 ? true : false}
         onClick={handleAdd}
         // block
         icon={<PlusOutlined />}
       >
-        {answers?.length < 7 ? "Add Answer" : "Already added 6"}
+        {answersMultiple?.length < 7 ? "Add Answer" : "Already added 6"}
       </Button>
     </div>
   );
 };
 
-export default AnswerInputList;
+export default AnswerMultiple;

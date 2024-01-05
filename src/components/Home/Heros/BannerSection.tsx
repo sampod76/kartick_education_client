@@ -8,7 +8,7 @@ import Link from "next/link";
 const BannerSection = () => {
   return (
     <div
-      className="mt-5 block lg:flex justify-between place-items-end bg-blue-20 min-h-[45rem] text-left "
+      className=" block  lg:flex justify-between place-items-end bg-blue-20 min-h-[45rem] text-left "
       style={{
         backgroundImage: `url('/banner/bannerBG.png')`,
         backgroundRepeat: "no-repeat",

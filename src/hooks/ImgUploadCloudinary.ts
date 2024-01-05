@@ -1,16 +1,21 @@
 import { getCloudinaryEnv } from "@/helpers/config/envConfig";
 
-const upload_preset = getCloudinaryEnv().upload_preset;
-const cloud_name = getCloudinaryEnv().cloud_name;
-const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
+const env = getCloudinaryEnv();
+
+const url = `https://api.cloudinary.com/v1_1/${"duyfxtcdd"}/image/upload`;
 
 const uploadImgCloudinary = async (file: any) => {
+  console.log(
+    "🚀 ~ file: ImgUploadCloudinary.ts:8 ~ uploadImgCloudinary ~ file:",
+    file
+  );
+
   // console.log(url);
   try {
     const formData = new FormData();
     formData.append("file", file as Blob);
-    formData.append("upload_preset", upload_preset as string);
-    formData.append("cloud_name", cloud_name as string);
+    formData.append("upload_preset", "mvfmecoi");
+    formData.append("cloud_name", "duyfxtcdd");
 
     const response = await fetch(url, {
       method: "post",
