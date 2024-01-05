@@ -131,6 +131,16 @@ const CreateMilestone = () => {
                   required={true}
                 />
               </Col>
+              <Col className="gutter-row" xs={24} style={{}}>
+                <FormInput
+                  type="text"
+                  name="milestone_number"
+                  size="large"
+                  label="Milestone No"
+                  placeholder="Please enter a milestone No"
+                  required={true}
+                />
+              </Col>
 
               {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectAuthorField />
