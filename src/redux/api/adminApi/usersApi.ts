@@ -2,7 +2,7 @@ import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "../../tag-types";
 
-const User_URL = "/user";
+const User_URL = "/users";
 
 export const UserApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -10,7 +10,7 @@ export const UserApi = baseApi.injectEndpoints({
       query: (data) => {
         // 
         return {
-          url: "/user/create-User",
+          url: "/users/create-User",
           method: "POST",
           data: data,
           // contentType: "multipart/form-data",
@@ -29,7 +29,7 @@ export const UserApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: any, meta: IMeta) => {
 
-        // console.log(response);
+        console.log(response);
 
 
         return {

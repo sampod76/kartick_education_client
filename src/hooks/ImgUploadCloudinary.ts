@@ -1,5 +1,7 @@
-const upload_preset ="Ordain";
-const cloud_name = "dwaiudyzc";
+import { getCloudinaryEnv } from "@/helpers/config/envConfig";
+
+const upload_preset = getCloudinaryEnv().upload_preset;
+const cloud_name = getCloudinaryEnv().cloud_name;
 const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
 
 const uploadImgCloudinary = async (file: any) => {
@@ -17,8 +19,7 @@ const uploadImgCloudinary = async (file: any) => {
 
     if (response.ok) {
       const data = await response.json();
-      return data?.secure_url
-
+      return data?.secure_url;
     } else {
       console.error("Failed to upload image to Cloudinary");
     }

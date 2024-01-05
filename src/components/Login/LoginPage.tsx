@@ -13,7 +13,8 @@ import { loginSchema } from "@/schemas/login";
 import { Error_model_hook } from "@/utils/modalHook";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
-import ButtonLoading from "../Utlis/ButtonLoading";
+import ButtonLoading from "../ui/Loading/ButtonLoading";
+import { useEffect, useState } from "react";
 
 type FormValues = {
   email: string;
@@ -23,13 +24,16 @@ type FormValues = {
 const Login = () => {
   const router = useRouter();
   const [userLogin, { error, isLoading }] = useUserLoginMutation();
+  const [isLoginLoading, setSetisloading] = useState(true);
   const login = isLoggedIn();
 
-  // console.log( data)
-  if (login) {
-    // router.back();
-    router.push("/dashboard");
-  }
+  useEffect(() => {
+    setSetisloading(true);
+    if (login) {
+      router.push("/dashboard");
+    }
+    setSetisloading(false);
+  }, [login, router]);
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
@@ -55,6 +59,10 @@ const Login = () => {
     //@ts-ignore
     Error_model_hook(error?.message);
   }
+  if (isLoginLoading) {
+    return <LoadingForDataFetch />;
+  }
+
   return (
     <Row
       justify="center"

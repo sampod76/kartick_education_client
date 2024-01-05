@@ -10,7 +10,7 @@ export const sellerApi = baseApi.injectEndpoints({
       query: (data) => {
         // 
         return {
-          url: "/user/create-seller",
+          url: "/users/create-seller",
           method: "POST",
           data: data,
           // contentType: "multipart/form-data",

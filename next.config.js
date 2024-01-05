@@ -41,6 +41,11 @@ const nextConfig = {
         hostname: "example.com",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "**",
+      },
     ],
   },
   // swcMinify:true

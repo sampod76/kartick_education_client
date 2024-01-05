@@ -10,7 +10,9 @@ export const studentApi = baseApi.injectEndpoints({
       query: (data) => {
         // console.log(data, "student");
         return {
-          url: "/user/create-student",
+
+          url: "/users/create-admin",
+
           method: "POST",
           data: data,
           // contentType: "multipart/form-data",
