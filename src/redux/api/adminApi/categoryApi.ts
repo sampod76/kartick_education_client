@@ -56,7 +56,7 @@ export const categoryApi = baseApi.injectEndpoints({
     // create a new academic department
     addCategory: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+
 
         return {
           url: CATEGORY_URL,
