@@ -11,8 +11,10 @@ const NavbarPublic = () => {
   // const screens = useBreakpoint();
 
   return (
+    <div className="">
+
     <nav
-      className=" bg-white shadow-xl text-black py-[1em] px-[2em] 
+      className=" bg-transparent backdrop-blur shadow-xl text-black py-[1em] px-[2em] 
     flex align-center justify-between  gap-2 "
     >
       <Logo />
@@ -25,8 +27,10 @@ const NavbarPublic = () => {
           fontWeight: "700",
           fontSize: "15px",
           fontFamily: "fantasy",
+          // backdropBlur:"blur(8px)"
           // display:`${screens.sm ? "flex":"none"}`
-          background: "white",
+          background: "none",
+          backdropFilter:"blur(8px)"
         }}
         disabledOverflow
         // items={sidebarItems("homeNav")}
@@ -42,6 +46,7 @@ const NavbarPublic = () => {
       </div>
       {/* <UserAvatarUI /> */}
     </nav>
+    </div>
   );
 };
 
