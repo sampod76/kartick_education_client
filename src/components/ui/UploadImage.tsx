@@ -53,6 +53,7 @@ const UploadImage = ({
       console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
       // setValue(name, info.file.originFileObj);
+    
       setValue(name, imgUrl);
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
@@ -75,6 +76,7 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
+        multiple={true}
         action="/api/file"
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
@@ -91,6 +93,7 @@ const UploadImage = ({
         ) : (
           uploadButton
         )}
+
       </Upload>
     </>
   );
