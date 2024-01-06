@@ -40,7 +40,7 @@ export const courseApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
-      invalidatesTags: [tagTypes.course],
+      invalidatesTags: [tagTypes.course,tagTypes.categoryChildren],
     }),
     // update ac department
     updateCourse: build.mutation({

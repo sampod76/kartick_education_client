@@ -44,7 +44,7 @@ export const lessonApi = baseApi.injectEndpoints({
           data,
         };
       },
-      invalidatesTags: [tagTypes.lesson],
+      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
     }),
     // update ac department
     updateLesson: build.mutation({
@@ -56,7 +56,7 @@ export const lessonApi = baseApi.injectEndpoints({
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.lesson],
+      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
     }),
 
     // delete ac department
@@ -65,7 +65,7 @@ export const lessonApi = baseApi.injectEndpoints({
         url: `${LESSON_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.lesson],
+      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
     }),
   }),
 });

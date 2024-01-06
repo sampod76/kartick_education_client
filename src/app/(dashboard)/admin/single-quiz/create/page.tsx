@@ -44,17 +44,10 @@ const CreateSingleQuiz = () => {
   const [videoType, setVideoType] = useState(null); // ! for video insert
   const [videoUrl, setVideoUrl] = useState("");
   // ! For quiz Answer
-  const [answers, setAnswers] = useState([
-    {
-      title: "Option A",
-      correct: true,
-      imgs: [""],
-      serialNumber: 1,
-      status: "active",
-    },
-  ]);
+  const [answers, setAnswers] = useState([]);
 
-  const [answerInput, setAnswerInput] = useState<string>("");
+  const [singleAnswer, setSingleAnswerInput] = useState<string>("");
+  console.log("🚀 ~ file: page.tsx:58 ~ CreateSingleQuiz ~ singleAnswer:", singleAnswer)
   //
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
@@ -86,12 +79,17 @@ const CreateSingleQuiz = () => {
       Error_model_hook("Please ensure your are selected quiz");
       return;
     }
-    if (answers) {
+    if (answers.length) {
       values["answers"] = answers;
-    } else if (answerInput) {
-      values["single_answer"] = answerInput;
+    } else if (singleAnswer) {
+      values["single_answer"] = singleAnswer;
     } else {
       Error_model_hook("Please select an answer");
+      return;
+    }
+
+    if(!quizType){
+      Error_model_hook("Please select an quiz type");
       return;
     }
 
@@ -103,6 +101,7 @@ const CreateSingleQuiz = () => {
       tags: selectedTags,
       demo_video,
       quiz: quiz?._id,
+      type: quizType
     };
 
     // console.log(singleQuizDat);
@@ -125,6 +124,7 @@ const CreateSingleQuiz = () => {
       console.log(error);
     }
   };
+
 
   return (
     <div>
@@ -413,12 +413,17 @@ const CreateSingleQuiz = () => {
                     />
                   )}
                   {quizType === "input" && (
-                    <Input
-                      placeholder="Type the answer"
-                      onBlur={(value: any) =>
-                        setAnswerInput(value.target.value)
-                      }
-                    />
+                    <>
+                      <LabelUi>
+                        Answer <span className="text-red-700">*</span>
+                      </LabelUi>
+                      <Input
+                        placeholder="Type the answer"
+                        onBlur={(value: any) =>
+                          setSingleAnswerInput(value.target.value)
+                        }
+                      />
+                    </>
                   )}
                 </Col>
               </Row>

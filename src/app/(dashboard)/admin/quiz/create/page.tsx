@@ -44,7 +44,7 @@ const CreateQuiz = () => {
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
 
   const query: Record<string, any> = {};
-  query["children"] = "course-milestone-module-lessons-quiz";
+  query["children"] = "course-milestone-module-lessons";
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
@@ -91,7 +91,7 @@ const CreateQuiz = () => {
   };
 
   if (serviceLoading) {
-    return message.loading("Loading...");
+    message.loading("Loading...");
   }
 
   return (
@@ -162,147 +162,143 @@ const CreateQuiz = () => {
           </Row>
         </div>
       </div>
-      <div
-        style={{
-          boxShadow:
-            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-          borderRadius: "1rem",
-          backgroundColor: "white",
-          padding: "1rem",
-        }}
-      >
-        <div>
-          {/* resolver={yupResolver(adminSchema)} */}
-          {/* resolver={yupResolver(IServiceSchema)} */}
-          <Form submitHandler={onSubmit}>
-            <div
-              style={{
-                border: "1px solid #d9d9d9",
-                borderRadius: "5px",
-                padding: "15px",
-              }}
-            >
-              <h1 className="text-center text-lg font-bold">Create Quiz</h1>
-              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={24}
-                  lg={24}
-                  style={{ marginBlock: "10px" }}
-                >
-                  <FormInput
-                    type="text"
-                    name="title"
-                    size="large"
-                    label="Lesson Title"
-                    required={true}
-                  />
-                  {/*//! 1-- */}
-                </Col>
-                <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                  <FormInput
-                    type="number"
-                    name="passingGrade"
-                    size="large"
-                    label="passingGrade "
-                    required={true}
-                  />
-                  {/*//! 4 --- */}
-                </Col>
-
-                {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                <SelectAuthorField />
-  
-              </Col> */}
-                <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                  <SelectModuleField />
-                  {/* //! module 6 ----*/}
-                </Col>
-                <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                  <SelectLessonField />
-                  {/* //! Lesson 7 ----*/}
-                </Col>
-                <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                  <FormSelectField
-                    size="large"
-                    name="status"
-                    options={courseStatusOptions as any}
-                    // defaultValue={priceTypeOptions[0]}
-                    label="status"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                  {/* //! price type 8 ---*/}
-                </Col>
-                <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                  <DemoVideoUI
-                    videoType={videoType as any}
-                    setVideoType={setVideoType}
-                    videoUrl={videoUrl}
-                    setVideoUrl={setVideoUrl}
-                    options={["youtube", "vimeo"]}
-                    label="Demo video"
-                  />
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={8}
-                  style={{
-                    marginTop: "10px",
-                  }}
-                >
-                  <TagsSelectUI
-                    selected={selectedTags}
-                    setSelected={setSelectedTags}
-                  />
-                  {/*//! 10--- */}
-                </Col>
-                <Col className="gutter-row" xs={24} style={{}}>
-                  <UploadMultipalImage name="imgs" />
-                  {/* //! 2 -- */}
-                </Col>
-                <Col className="gutter-row" xs={24} style={{}}>
-                  <div>
-                    <FormTextArea
-                      name="short_description"
-                      label="Short description"
-                      rows={5}
-                      placeholder="Please enter short description"
-                    />
-                  </div>
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  // md={12}
-                  // lg={8}
-                  style={{}}
-                >
-                  {/*//! 3 */}
-                  <section
-                    style={{
-                      borderTopWidth: "2px",
-                    }} /* className=" border-t-2" */
+      {lesson._id ? (
+        <div
+          style={{
+            boxShadow:
+              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            borderRadius: "1rem",
+            backgroundColor: "white",
+            padding: "1rem",
+          }}
+        >
+          <div>
+            {/* resolver={yupResolver(adminSchema)} */}
+            {/* resolver={yupResolver(IServiceSchema)} */}
+            <Form submitHandler={onSubmit}>
+              <div
+                style={{
+                  border: "1px solid #d9d9d9",
+                  borderRadius: "5px",
+                  padding: "15px",
+                }}
+              >
+                <h1 className="text-center text-lg font-bold">Create Quiz</h1>
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                  <Col
+                    className="gutter-row"
+                    xs={24}
+                    md={24}
+                    lg={24}
+                    style={{ marginBlock: "10px" }}
                   >
-                    <p className="text-center my-3 font-bold text-xl">
-                      Description
-                    </p>
-                    <TextEditor
-                      textEditorValue={textEditorValue}
-                      setTextEditorValue={setTextEditorValue}
+                    <FormInput
+                      type="text"
+                      name="title"
+                      size="large"
+                      label="Lesson Title"
+                      required={true}
                     />
-                  </section>
-                </Col>
-              </Row>
-            </div>
+                    {/*//! 1-- */}
+                  </Col>
+                  <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                    <FormInput
+                      type="number"
+                      name="passingGrade"
+                      size="large"
+                      label="passingGrade "
+                      required={true}
+                    />
+                    {/*//! 4 --- */}
+                  </Col>
 
-            <ButtonSubmitUI>Create</ButtonSubmitUI>
-          </Form>
+             
+                  <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                    <FormSelectField
+                      size="large"
+                      name="status"
+                      options={courseStatusOptions as any}
+                      // defaultValue={priceTypeOptions[2]}
+                      label="status"
+                      // placeholder="Select"
+                      required={true}
+                    />
+             
+                  </Col>
+                  <Col className="gutter-row" xs={24}  style={{}}>
+                    <DemoVideoUI
+                      videoType={videoType as any}
+                      setVideoType={setVideoType}
+                      videoUrl={videoUrl}
+                      setVideoUrl={setVideoUrl}
+                      options={["youtube", "vimeo"]}
+                      label="Demo video"
+                    />
+                  </Col>
+                  <Col
+                    className="gutter-row"
+                    xs={24}
+                   
+                    style={{
+                      marginTop: "10px",
+                    }}
+                  >
+                    <TagsSelectUI
+                      selected={selectedTags}
+                      setSelected={setSelectedTags}
+                    />
+                   
+                  </Col>
+                  <Col className="gutter-row" xs={24} style={{}}>
+                    <UploadMultipalImage name="imgs" />
+                 
+                  </Col>
+                  <Col className="gutter-row" xs={24} style={{}}>
+                    <div>
+                      <FormTextArea
+                        name="short_description"
+                        label="Short description"
+                        rows={5}
+                        placeholder="Please enter short description"
+                      />
+                    </div>
+                  </Col>
+                  <Col
+                    className="gutter-row"
+                    xs={24}
+                    // md={12}
+                    // lg={8}
+                    style={{}}
+                  >
+                    {/*//! 3 */}
+                    <section
+                      style={{
+                        borderTopWidth: "2px",
+                      }} /* className=" border-t-2" */
+                    >
+                      <p className="text-center my-3 font-bold text-xl">
+                        Description
+                      </p>
+                      <TextEditor
+                        textEditorValue={textEditorValue}
+                        setTextEditorValue={setTextEditorValue}
+                      />
+                    </section>
+                  </Col>
+                </Row>
+              </div>
+
+              <ButtonSubmitUI>Create</ButtonSubmitUI>
+            </Form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-full  flex justify-center items-center min-h-64 animate-pulse">
+          <h1 className="text-center text-red-600 font-semibold text-2xl">
+            First select your Lesson by filtering{" "}
+          </h1>
+        </div>
+      )}
     </>
   );
 };

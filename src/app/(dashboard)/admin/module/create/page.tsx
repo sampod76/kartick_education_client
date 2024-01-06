@@ -38,7 +38,7 @@ const CreateModule = () => {
   );
 
   const query: Record<string, any> = {};
-  query["children"] = "course-milestone-module-lessons-quiz";
+  query["children"] = "course-milestone";
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
@@ -133,129 +133,136 @@ const CreateModule = () => {
           </Row>
         </div>
       </div>
-      <div
-        style={{
-          boxShadow:
-            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-          borderRadius: "1rem",
-          backgroundColor: "white",
-          padding: "1rem",
-        }}
-      >
-        <div>
-          <Form
-            submitHandler={onSubmit}
-            defaultValues={{ module_number: Number(preModule_number) }}
-          >
-            <div
-              style={{
-                border: "1px solid #d9d9d9",
-                borderRadius: "5px",
-                padding: "15px",
-              }}
+      {milestone?._id ? (
+        <div
+          style={{
+            boxShadow:
+              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            borderRadius: "1rem",
+            backgroundColor: "white",
+            padding: "1rem",
+          }}
+        >
+          <div>
+            <Form
+              submitHandler={onSubmit}
+              defaultValues={{ module_number: Number(preModule_number) }}
             >
-              <p
+              <div
                 style={{
-                  fontSize: "18px",
-                  marginBottom: "10px",
+                  border: "1px solid #d9d9d9",
+                  borderRadius: "5px",
+                  padding: "15px",
                 }}
               >
-                Create Module
-              </p>
-              <hr className="border-1.5 mb-2" />
-              <Row gutter={[16, 16]}>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={20}
-                  // lg={8}
-                  style={{}}
+                <p
+                  style={{
+                    fontSize: "18px",
+                    marginBottom: "10px",
+                  }}
                 >
-                  <FormInput
-                    type="text"
-                    name="title"
-                    size="large"
-                    label="Module Title"
-                    required={true}
-                  />
-                </Col>
-                <Col className="gutter-row" xs={4} style={{}}>
-                  <FormInput
-                    type="number"
-                    name="module_number"
-                    size="large"
-                    label="Module No"
-                    required={true}
-                  />
-                </Col>
-               
+                  Create Module
+                </p>
+                <hr className="border-1.5 mb-2" />
+                <Row gutter={[16, 16]}>
+                  <Col
+                    className="gutter-row"
+                    xs={24}
+                    md={20}
+                    // lg={8}
+                    style={{}}
+                  >
+                    <FormInput
+                      type="text"
+                      name="title"
+                      size="large"
+                      label="Module Title"
+                      required={true}
+                    />
+                  </Col>
+                  <Col className="gutter-row" xs={4} style={{}}>
+                    <FormInput
+                      type="number"
+                      name="module_number"
+                      size="large"
+                      label="Module No"
+                      required={true}
+                    />
+                  </Col>
 
-                {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                  {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                 <SelectAuthorField />
               </Col> */}
 
-                <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                  <FormSelectField
-                    size="large"
-                    name="status"
-                    options={courseStatusOptions as any}
-                    defaultValue={{ label: "Select", value: "" }}
-                    label="status"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                </Col>
-                <Col className="gutter-row" xs={24} style={{}}>
-                  <TagsSelectUI
-                    selected={selectedTags}
-                    setSelected={setSelectedTags}
-                  />
-                </Col>
-                <Col className="gutter-row" xs={24} style={{}}>
-                <UploadMultipalImage name="imgs" />
-                </Col>
-                <Col className="gutter-row" xs={24} style={{}}>
-                  <div>
-                    <FormTextArea
-                      name="short_description"
-                      label="Short description"
-                      rows={5}
-                      placeholder="Please enter short description"
+                  <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                    <FormSelectField
+                      size="large"
+                      name="status"
+                      options={courseStatusOptions as any}
+                      defaultValue={{ label: "Select", value: "" }}
+                      label="status"
+                      // placeholder="Select"
+                      required={true}
                     />
-                  </div>
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  // md={12}
-                  // lg={8}
-                  style={{}}
-                >
-                  {/*//! 3 */}
-                  <section
-                    style={{
-                      borderTopWidth: "2px",
-                    }} /* className=" border-t-2" */
+                  </Col>
+                  <Col className="gutter-row" xs={24} style={{}}>
+                    <TagsSelectUI
+                      selected={selectedTags}
+                      setSelected={setSelectedTags}
+                    />
+                  </Col>
+                  <Col className="gutter-row" xs={24} style={{}}>
+                    <UploadMultipalImage name="imgs" />
+                  </Col>
+                  <Col className="gutter-row" xs={24} style={{}}>
+                    <div>
+                      <FormTextArea
+                        name="short_description"
+                        label="Short description"
+                        rows={5}
+                        placeholder="Please enter short description"
+                      />
+                    </div>
+                  </Col>
+                  <Col
+                    className="gutter-row"
+                    xs={24}
+                    // md={12}
+                    // lg={8}
+                    style={{}}
                   >
-                    <p className="text-center my-3 font-bold text-xl">
-                      Description
-                    </p>
-                    <TextEditor
-                      textEditorValue={textEditorValue}
-                      setTextEditorValue={setTextEditorValue}
-                    />
-                  </section>
-                </Col>
-              </Row>
-            </div>
-            {serviceLoading ? (
-              <Spin />
-            ) : (
-              <ButtonSubmitUI>Create Module</ButtonSubmitUI>
-            )}
-          </Form>
+                    {/*//! 3 */}
+                    <section
+                      style={{
+                        borderTopWidth: "2px",
+                      }} /* className=" border-t-2" */
+                    >
+                      <p className="text-center my-3 font-bold text-xl">
+                        Description
+                      </p>
+                      <TextEditor
+                        textEditorValue={textEditorValue}
+                        setTextEditorValue={setTextEditorValue}
+                      />
+                    </section>
+                  </Col>
+                </Row>
+              </div>
+              {serviceLoading ? (
+                <Spin />
+              ) : (
+                <ButtonSubmitUI>Create Module</ButtonSubmitUI>
+              )}
+            </Form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-full  flex justify-center items-center min-h-64 animate-pulse">
+          <h1 className="text-center text-red-600 font-semibold text-2xl">
+            First select your Milestone by filtering{" "}
+          </h1>
+        </div>
+      )}
     </>
   );
 };
