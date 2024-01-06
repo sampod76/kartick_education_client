@@ -1,373 +1,297 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
-
+import FormDataRange from "@/components/Forms/FormDataRange";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
-
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
-import TagUI from "@/components/ui/dashboardUI/TagUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import {
+  useAddCourseMutation,
   useGetSingleCourseQuery,
   useUpdateCourseMutation,
 } from "@/redux/api/adminApi/courseApi";
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { Col, Row } from "antd";
-
+import {
+  Button,
+  Col,
+  Input,
+  Row,
+  Select,
+  Spin,
+  Typography,
+  Upload,
+  message,
+} from "antd";
 import { useState } from "react";
 
-const CourseDetails = ({ params }: any) => {
-  const { data: CourseData, isLoading } = useGetSingleCourseQuery(params?.id, {
-    skip: !Boolean(params?.id),
-  });
-
-  const [updateCourse, { isLoading: CourseLoading }] =
+import dynamic from "next/dynamic";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
+const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
+  const [updateCourse, { isLoading: courseUpdateLoading }] =
     useUpdateCourseMutation();
+  const {
+    data: getCourse = {},
+    isLoading,
+    error,
+  } = useGetSingleCourseQuery(params.id, { skip: !Boolean(params.id) });
+  const [textEditorValue, setTextEditorValue] = useState("");
 
+  console.log(getCourse);
   // ! for video insert
-  const [videoType, setVideoType] = useState(
-    CourseData?.demo_video?.video || null
-  );
-  const [videoUrl, setVideoUrl] = useState(
-    CourseData?.demo_video?.platform || ""
-  );
+  const [videoType, setVideoType] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
 
+  const demo_video = {
+    video: videoUrl,
+    platform: videoType,
+  };
+
+  // console.log(demo_video);
   const onSubmit = async (values: any) => {
-    // if (typeof values.img !== "string") {
-    //   console.log(values);
-    //   values.img = await uploadImgBB(values.img);
-    // }
-
-    const updateData = {
+    const CourseData = {
+      // tags: selectedTags,
+      demo_video,
+      details: textEditorValue,
       ...values,
-      demo_video: {
-        video: videoType,
-        platform: videoUrl,
-      },
     };
 
+    console.log(CourseData, "Course");
+
+
     try {
-      //@ts-ignore
       const res = await updateCourse({
-        id: params?.id,
-        data: updateData,
+        id: params.id,
+        data: { ...CourseData },
       }).unwrap();
-      if (res.success == false) {
-        Error_model_hook(res?.message + "");
+      console.log(res, "response");
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully update Course");
+        Success_model("Course update successfully");
+        setVideoType(null);
+        setVideoUrl("");
+        setTextEditorValue("");
       }
-    } catch (error) {}
-  };
-  //
-
-  console.log(CourseData?.tags, "cccccccccc");
-  const defaultValues = {
-    // name:,
-    title: CourseData?.title || "",
-    CourseDate: CourseData?.CourseDate || "",
-    img: CourseData?.img || "",
-    details: CourseData?.details || "",
-    author: CourseData?.author || "",
-    category: CourseData?.category || "",
-    price: CourseData?.price || "",
-
-    duration: CourseData?.duration || "",
-    level: CourseData?.level || "",
-    price_type: CourseData?.price_type || "",
-    status: CourseData?.status || "",
-    showing_number: CourseData?.showing_number || "",
-    tags: CourseData?.tags || "",
-    address: CourseData?.address || "",
+      // message.success("Admin created successfully!");
+    } catch (err: any) {
+      console.error(err.message);
+      Error_model_hook(err?.message);
+    }
   };
 
-  if (isLoading || CourseLoading) {
-    return <LoadingForDataFetch />;
+  if (isLoading) {
+    return <LoadingSkeleton />;
   }
+
   return (
-    <>
-      <div
-        style={{ marginTop: "2.5rem", marginLeft: "auto", marginRight: "auto" }}
-        className="container"
-      >
-        <HeadingUI>Update Course</HeadingUI>
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
-          <div
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
+      <HeadingUI>Create Course</HeadingUI>
+      {/* resolver={yupResolver(adminSchema)} */}
+      <div className="">
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={getCourse?._id ? getCourse : {}}
+        >
+          <section
             style={{
-              display: "block",
-              paddingLeft: "0.25rem",
-              paddingRight: "0.25rem",
-              alignItems: "center",
-              //@ts-ignore
-              "@media (min-width: 1024px)": { display: "flex" },
-            }}
-            /* className="block lg:flex items-center gap- px-1 lg:px-[4rem]" */
+              padding: "0.5rem",
+              borderWidth: "2px",
+            }} /* className="border-2 p-2 rounded-2" */
           >
-            <div
-              style={{
-                marginTop: "0.25rem",
-                marginBottom: "0.25rem",
-                borderRadius: "0.375rem",
-                width: "100%",
-                borderColor: "#d9d9d9",
-                //@ts-ignore
-                "@media (min-width: 1024px)": { width: "50%" },
-              }} /* className="w-full lg:w-[50%] px-[2vw] py-[2rem]  my-1 border-1 border-[#d9d9d9] rounded-md" */
-            >
-              <SubHeadingUI>Basic Information</SubHeadingUI>
-              <Row gutter={[8, 8]}>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={24}
-                  lg={24}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="text"
-                    name="title"
-                    size="large"
-                    label="Title"
-                    required={true}
-                  />
-                  {/*//! 1 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="number"
-                    name="price"
-                    size="large"
-                    label="Price"
-                    required={true}
-                  />
-                  {/* //! 7 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    // marginBottom: "10px",
-                    // background:'red',
-                    margin: "1.3em 0 0 0",
-                  }}
-                >
-                  <FormSelectField
-                    size="large"
-                    name="price_type"
-                    options={priceTypeOptions}
-                    // defaultValue={priceTypeOptions[0]}
-                    label="Price Type"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                  {/* //! price type 8 */}
-                </Col>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
+              <div
+                style={{
+                  paddingRight: "0.5rem",
+                  borderRightWidth: "2px",
+                }} /* className="border-r-2 pr-2" */
+              >
+                <SubHeadingUI>Basic Information</SubHeadingUI>
+                <Row gutter={[8, 8]}>
+                  <Col xs={24} md={24} lg={24} style={{}}>
+                    <FormInput
+                      type="text"
+                      name="title"
+                      size="large"
+                      label="Title"
+                      required={true}
+                    />
+                    {/*//! 1 */}
+                  </Col>
+                  <Col
+                    xs={24}
+                    md={12}
+                    lg={12}
+                    style={
+                      {
+                        // background:"red"
+                      }
+                    }
+                  >
+                    <FormInput
+                      type="number"
+                      name="price"
+                      size="large"
+                      label="Price"
+                      required={true}
+                    />
+                    {/* //! 7 */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12}>
+                    <FormSelectField
+                      size="large"
+                      name="price_type"
+                      options={priceTypeOptions}
+                      // defaultValue={priceTypeOptions[0]}
+                      label="Price Type"
+                      // placeholder="Select"
+                      required={true}
+                    />
+                    {/* //! price type 8 */}
+                  </Col>
 
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="text"
-                    name="level"
-                    size="large"
-                    label="Level"
-                    required={true}
-                  />
-                  {/*//! 5. */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="number"
-                    name="showing_number"
-                    size="large"
-                    label="Showing Number"
-                    required={true}
-                  />
-                  {/* //!6. Showing Number */}
-                </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormInput
+                      type="text"
+                      name="level"
+                      size="large"
+                      label="Level"
+                      // required={true}
+                    />
+                    {/*//! 5. */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormInput
+                      type="number"
+                      name="showing_number"
+                      size="large"
+                      label="Showing Number"
+                      // required={true}
+                    />
+                    {/* //!6. Showing Number */}
+                  </Col>
 
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="string"
-                    name="duration"
-                    size="large"
-                    label="Duration"
-                    required={true}
-                  />
-                  {/* //!4  */}
-                </Col>
-              </Row>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormDataRange name="duration" label="Duration" />
+                    {/* //!4  */}
+                  </Col>
+                </Row>
+              </div>
+
+              {/* basic info */}
+              <div className="    ">
+                <SubHeadingUI>Other Information</SubHeadingUI>
+                <Row gutter={[12, 12]}>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <SelectCategoryField />
+                    {/* //! category 10 */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <SelectAuthorField />
+                    {/* //! price type 8 */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormSelectField
+                      size="large"
+                      name="status"
+                      options={courseStatusOptions as any}
+                      // defaultValue={priceTypeOptions[0]}
+                      label="status"
+                      // placeholder="Select"
+                      required={true}
+                    />
+                    {/* //! status 9 */}
+                  </Col>
+
+                  <Col xs={24} md={24} lg={24} style={{}}>
+                    <DemoVideoUI
+                      label="Demo Video"
+                      videoType={videoType as any}
+                      setVideoType={setVideoType}
+                      videoUrl={videoUrl}
+                      setVideoUrl={setVideoUrl}
+                      options={["youtube", "vimeo"]}
+                      defaultValue={getCourse?.demo_video || {}}
+                    />
+                  </Col>
+
+                  {/* tag selections */}
+                  <Col xs={24} md={24} lg={24} style={{}}>
+                    <TagsSelectUI defaultTags={getCourse?.tags} />
+
+                    {/*//! 11 */}
+                  </Col>
+
+                  <Col
+                    xs={24}
+                    style={{
+                      margin: "10px 0",
+                      textAlign: "start",
+                    }}
+                  >
+                    <UploadImage name="img" />
+                    {/*//!  2 */}
+                  </Col>
+                </Row>
+              </div>
             </div>
-
-            {/* basic info */}
-            <div
-              style={{
-                marginTop: "0.75rem",
-                marginBottom: "0.75rem",
-                borderRadius: "0.375rem",
-                width: "100%",
-                paddingTop: "7rem",
-                borderColor: "#d9d9d9",
-                //@ts-ignore
-                "@media (min-width: 1024px)": { width: "50%" },
-              }}
-              /* className="w-full lg:w-[50%] px-[2vw] pt-[7rem]  my-3 border-1 border-[#d9d9d9] rounded-md " */
-            >
-              <SubHeadingUI>Other Information</SubHeadingUI>
-              <Row gutter={[8, 8]}>
-                {/* for video insert */}
-
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={24}
-                  lg={24}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <DemoVideoUI
-                    videoType={videoType as any}
-                    setVideoType={setVideoType}
-                    videoUrl={videoUrl}
-                    setVideoUrl={setVideoUrl}
-                    options={["youtube", "vimeo"]}
-                  />
-                  {/*//! 12*/}
-                </Col>
-
-                {/* tag selections */}
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={24}
-                  lg={24}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <TagsSelectUI defaultTags={CourseData?.tags} />
-                  {/*//! 11 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <SelectCategoryField />
-                  {/* //! category 10 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <SelectAuthorField />
-                  {/* //! price type 8 */}
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={12}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormSelectField
-                    size="large"
-                    name="status"
-                    options={courseStatusOptions as any}
-                    // defaultValue={priceTypeOptions[0]}
-                    label="status"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                  {/* //! status 9 */}
-                </Col>
-
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  style={{
-                    margin: "10px 0",
-                  }}
-                >
-                  <UploadImage defaultImage={CourseData?.img} name="img" />
-                  {/*//!  2 */}
-                </Col>
-              </Row>
+            <div>
+              <FormTextArea
+                name="short_description"
+                label="Short description"
+                rows={5}
+                placeholder="Please enter short description"
+                required
+              />
             </div>
-          </div>
-          <section>
-            {/*//! 3 */}
-            <FormTextArea
-              placeholder="Write details of course"
-              label="Details"
-              name="details"
-            />
+            <section
+              style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
+            >
+              <p className="text-center my-3 font-bold text-xl">Description</p>
+              <TextEditor
+                textEditorValue={textEditorValue}
+                setTextEditorValue={setTextEditorValue}
+                defultTextEditorValue={getCourse?.details || ""}
+              />
+            </section>
+            {/* <div>
+              <UploadMultpalImage />
+            </div> */}
+            {isLoading ? (
+              <Spin />
+            ) : (
+              <ButtonSubmitUI>Update Course</ButtonSubmitUI>
+            )}
           </section>
-          <ButtonSubmitUI>Update Course</ButtonSubmitUI>
         </Form>
       </div>
-    </>
+    </div>
   );
 };
 
-export default CourseDetails;
+// export default CreateCoursePage;
+export default dynamic(() => Promise.resolve(UpdateCoursePage), {
+  ssr: false,
+});

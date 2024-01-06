@@ -3,6 +3,7 @@
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetSingleBlogQuery } from "@/redux/api/blogApi";
 import { Input } from "antd";
+import dynamic from "next/dynamic";
 
 import Image from "next/image";
 
@@ -57,4 +58,8 @@ const BlogDetalis = ({ params }: any) => {
   );
 };
 
-export default BlogDetalis;
+// export default BlogDetalis;
+export default dynamic(() => Promise.resolve(BlogDetalis), {
+   ssr: false,
+ });
+

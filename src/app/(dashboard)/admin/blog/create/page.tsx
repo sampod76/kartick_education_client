@@ -13,6 +13,7 @@ import { useAddBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row, Select, message } from "antd";
+import dynamic from "next/dynamic";
 import React, { useState } from "react";
 
 const CreateBlog = () => {
@@ -116,4 +117,8 @@ const CreateBlog = () => {
   );
 };
 
-export default CreateBlog;
+// export default CreateBlog;
+export default dynamic(() => Promise.resolve(CreateBlog), {
+   ssr: false,
+ });
+

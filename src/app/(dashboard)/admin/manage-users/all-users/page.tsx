@@ -94,10 +94,20 @@ const AdminPage = () => {
       title: "Name",
       ellipsis: true,
       render: function (data: any) {
-        const fullName =
-          data[data.role]["name"]["firstName"] +
-          " " +
-          data[data.role]["name"]["lastName"];
+        let fullName = "";
+        if (data?.role === USER_ROLE.ADMIN) {
+          fullName = data?.admin?.name?.firstName + data?.admin?.name?.lastName;
+        } else if (data?.role === USER_ROLE.TRAINER) {
+          fullName =
+            data?.trainer?.name?.firstName + data?.trainer?.name?.lastName;
+        } else if (data?.role === USER_ROLE.SELLER) {
+          fullName =
+            data?.seller?.name?.firstName + data?.seller?.name?.lastName;
+        } else if (data?.role === USER_ROLE.STUDENT) {
+          fullName =
+            data?.student?.name?.firstName + data?.student?.name?.lastName;
+        }
+
         return <p className="capitalize">{fullName}</p>;
       },
     },
@@ -126,7 +136,16 @@ const AdminPage = () => {
     {
       title: "Contact no.",
       render: function (data: any) {
-        const Contact = data[data.role]["phoneNumber"];
+        let Contact = "";
+        if (data?.role === USER_ROLE.ADMIN) {
+          Contact = data?.admin?.phoneNumber;
+        } else if (data?.role === USER_ROLE.TRAINER) {
+          Contact = data?.trainer?.phoneNumber;
+        } else if (data?.role === USER_ROLE.SELLER) {
+          Contact = data?.seller?.phoneNumber;
+        } else if (data?.role === USER_ROLE.STUDENT) {
+          Contact = data?.student?.phoneNumber;
+        }
         return <>{Contact}</>;
       },
     },
