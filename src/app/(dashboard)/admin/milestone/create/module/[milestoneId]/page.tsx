@@ -80,7 +80,7 @@ const CreateModule = () => {
   // if (serviceLoading) {
   //   return message.loading("Loading...");
   // }
-  const roundedNumber = Number(existModule?.data[0].module_number).toFixed(1);
+  const roundedNumber = Number(existModule?.data[0]?.module_number || 1).toFixed(1);
   // Add 0.1 to the rounded number and use toFixed again when logging
   const preModule_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
   // console.log(preModule_number);
