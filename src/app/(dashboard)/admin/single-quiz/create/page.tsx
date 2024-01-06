@@ -37,7 +37,7 @@ import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 
 const CreateSingleQuiz = () => {
   //
-  const [selectedTags, setSelectedTags] = useState<string[]>([]); //! for QUiz Types
+
   const [quizType, setQuizTypes] = useState<
     "input" | "select" | "multiple_select"
   >("select"); // !  tag selection
@@ -98,7 +98,7 @@ const CreateSingleQuiz = () => {
     }
     const singleQuizDat: {} = {
       ...values,
-      tags: selectedTags,
+
       demo_video,
       quiz: quiz?._id,
       type: quizType
@@ -115,7 +115,7 @@ const CreateSingleQuiz = () => {
         Success_model("Successfully added the Quiz");
         setVideoUrl("");
         setVideoType(null);
-        setSelectedTags([]);
+
         setAnswers([]);
       }
       // console.log(res);
@@ -338,8 +338,7 @@ const CreateSingleQuiz = () => {
                   }}
                 >
                   <TagsSelectUI
-                    selected={selectedTags}
-                    setSelected={setSelectedTags}
+              
                   />
                 </Col>
                 <Col

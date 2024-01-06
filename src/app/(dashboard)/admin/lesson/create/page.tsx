@@ -56,7 +56,7 @@ const CreateLesson = () => {
 
   // !  tag selection
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
   //! for Category options selection
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module";
@@ -81,7 +81,7 @@ const CreateLesson = () => {
     // values.vedios = [video];
     const LessonData: {} = {
       ...values,
-      tags: selectedTags,
+
       module: module?._id,
       details: textEditorValue,
     };
@@ -278,7 +278,7 @@ const CreateLesson = () => {
                   />
                 </Col>
                 {/* //! commented for refresh */}
-                {/* <Col
+                <Col
                   className="gutter-row"
                   xs={24}
                   style={{
@@ -286,11 +286,10 @@ const CreateLesson = () => {
                   }}
                 >
                   <TagsSelectUI
-                    selected={selectedTags}
-                    setSelected={setSelectedTags}
+              
                   />
              
-                </Col> */}
+                </Col>
                 <Col
                   className="gutter-row"
                   xs={24}

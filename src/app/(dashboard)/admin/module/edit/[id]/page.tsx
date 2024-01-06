@@ -36,19 +36,12 @@ const EditModulePage = ({ params }: any) => {
   const [updateModule, { isLoading: updateLoading, error }] =
     useUpdateModuleMutation();
 
-  // !  tag selection
-
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    ModuleData?.tags || []
-  );
-
   const onSubmit = async (values: any) => {
     // if (typeof values.img !== "string") {
     //   console.log(values);
     //   values.img = await uploadImgBB(values.img);
     // }
     const UpdateValues = {
-      tags: selectedTags,
       ...values,
     };
 
@@ -171,10 +164,7 @@ const EditModulePage = ({ params }: any) => {
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
                 {" "}
-                <TagsSelectUI
-                  selected={selectedTags}
-                  setSelected={setSelectedTags}
-                />
+                <TagsSelectUI defaultTags={ModuleData?.tags} />
                 {/*//! 11 */}
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>

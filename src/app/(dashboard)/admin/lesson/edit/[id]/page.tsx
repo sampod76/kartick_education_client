@@ -35,17 +35,12 @@ const EditModulePage = ({ params }: any) => {
   const [updateLesson, { isLoading: updateLoading, error }] =
     useUpdateLessonMutation();
 
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    LessonData?.tags || []
-  );
-
   const onSubmit = async (values: any) => {
     // if (typeof values.img !== "string") {
     //   console.log(values);
     //   values.img = await uploadImgBB(values.img);
     // }
     const UpdateValues = {
-      tags: selectedTags,
       ...values,
     };
 
@@ -190,10 +185,7 @@ const EditModulePage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <TagsSelectUI
-                  selected={selectedTags}
-                  setSelected={setSelectedTags}
-                />
+                <TagsSelectUI defaultTags={LessonData?.tags} />
                 {/*//! 6 */}
               </Col>
               <Col

@@ -16,6 +16,7 @@ import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagUI from "@/components/ui/dashboardUI/TagUI";
+import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
@@ -37,9 +38,6 @@ const CourseDetails = ({ params }: any) => {
   const [updateCourse, { isLoading: CourseLoading }] =
     useUpdateCourseMutation();
 
-  const tagOptions = ["course", "tech", "update", "english"];
-  const [selectedTags, setSelectedTags] = useState<string[]>(CourseData?.tags);
-
   // ! for video insert
   const [videoType, setVideoType] = useState(
     CourseData?.demo_video?.video || null
@@ -56,7 +54,6 @@ const CourseDetails = ({ params }: any) => {
 
     const updateData = {
       ...values,
-      tags: selectedTags,
       demo_video: {
         video: videoType,
         platform: videoUrl,
@@ -78,6 +75,7 @@ const CourseDetails = ({ params }: any) => {
   };
   //
 
+  console.log(CourseData?.tags, "cccccccccc");
   const defaultValues = {
     // name:,
     title: CourseData?.title || "",
@@ -296,11 +294,7 @@ const CourseDetails = ({ params }: any) => {
                     marginBottom: "10px",
                   }}
                 >
-                  <TagUI
-                    selectedTags={selectedTags}
-                    setSelectedTags={setSelectedTags}
-                    tagOptions={tagOptions}
-                  />
+                  <TagsSelectUI defaultTags={CourseData?.tags} />
                   {/*//! 11 */}
                 </Col>
                 <Col
