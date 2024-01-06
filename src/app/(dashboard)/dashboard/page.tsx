@@ -1,13 +1,6 @@
 import React from "react";
-import { FaUser } from "react-icons/fa";
-import { GiBookCover } from "react-icons/gi";
-import { MdAccountBalance } from "react-icons/md";
-import { SiSellfy } from "react-icons/si";
-import { FaUserTimes } from "react-icons/fa";
-import { FaUserNurse } from "react-icons/fa";
-import { FaUserNinja } from "react-icons/fa";
-import { Col, Row } from "antd";
 import TopDashStatistics from "@/components/dashboard/mainpage/TopDashStatistics";
+import dynamic from "next/dynamic";
 const DashboardPage = () => {
   return (
     <>
@@ -75,4 +68,10 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+// export default DashboardPage;
+
+
+export default dynamic(() =>
+        Promise.resolve(DashboardPage), {
+  ssr: false,
+})

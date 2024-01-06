@@ -30,6 +30,7 @@ import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
 } from "@/redux/api/adminApi/usersApi";
+import dynamic from "next/dynamic";
 
 const AdminPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -295,4 +296,11 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+// export default AdminPage;
+
+// export default AdminPage;
+
+export default dynamic(() =>
+        Promise.resolve(AdminPage), {
+  ssr: false,
+})

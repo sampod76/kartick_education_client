@@ -4,11 +4,11 @@ import { tagTypes } from "../../tag-types";
 
 const ADMIN_URL = "/admin";
 
-export const studentApi = baseApi.injectEndpoints({
+export const AdminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    addStudentWithFormData: build.mutation({
+    addAdminWithFormData: build.mutation({
       query: (data) => {
-        // console.log(data, "student");
+        // console.log(data, "Admin");
         return {
 
           url: "/users/create-admin",
@@ -21,7 +21,7 @@ export const studentApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.admin],
     }),
-    getAllStudents: build.query({
+    getAllAdmins: build.query({
       query: (arg: Record<string, any>) => {
         return {
           url: ADMIN_URL,
@@ -38,14 +38,14 @@ export const studentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.admin],
     }),
-    getSingleStudent: build.query({
+    getSingleAdmin: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `${ADMIN_URL}/${id}`,
         method: "GET",
       }),
       providesTags: [tagTypes.admin],
     }),
-    updateStudent: build.mutation({
+    updateAdmin: build.mutation({
       query: ({ data, id }) => {
         return {
           url: `${ADMIN_URL}/${id}`,
@@ -55,7 +55,7 @@ export const studentApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.admin],
     }),
-    deleteStudent: build.mutation({
+    deleteAdmin: build.mutation({
       query: (id) => ({
         url: `${ADMIN_URL}/${id}`,
         method: "DELETE",
@@ -66,9 +66,9 @@ export const studentApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllStudentsQuery,
-  useGetSingleStudentQuery,
-  useAddStudentWithFormDataMutation,
-  useUpdateStudentMutation,
-  useDeleteStudentMutation,
-} = studentApi;
+  useGetAllAdminsQuery,
+  useGetSingleAdminQuery,
+  useAddAdminWithFormDataMutation,
+  useUpdateAdminMutation,
+  useDeleteAdminMutation,
+} = AdminApi;

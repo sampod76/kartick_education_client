@@ -24,15 +24,14 @@ import {
 
 import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import {
-  useDeleteStudentMutation,
-  useGetAllStudentsQuery,
-} from "@/redux/api/adminApi/studentApi";
+
+import { useGetAllAdminsQuery } from "@/redux/api/adminApi/adminApi";
+import { useDeleteAdminMutation } from "@/redux/api/adminApi";
 
 const TrainerListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
-  const [deleteStudent] = useDeleteStudentMutation();
+  const [deleteAdmin] = useDeleteAdminMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -56,14 +55,14 @@ const TrainerListPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllStudentsQuery({
+  const { data = [], isLoading } = useGetAllAdminsQuery({
     ...query,
   });
 
   //@ts-ignore
-  const StudentData = data?.data;
+  const AdminData = data?.data;
 
-  console.log(StudentData, "student data");
+  // console.log(AdminData, "Admin data");
 
   //@ts-ignore
   const meta = data?.meta;
@@ -112,12 +111,12 @@ const TrainerListPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/manage-users/students/details/${data}`}>
+            <Link href={`/admin/manage-users/admin/details/${data}`}>
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/manage-users/students/edit/${data}`}>
+            <Link href={`/admin/manage-users/admin/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -129,7 +128,7 @@ const TrainerListPage = () => {
               </Button>
             </Link>
             <Button
-              onClick={() => deleteStudentHandler(data)}
+              onClick={() => deleteAdminHandler(data)}
               type="default"
               danger
             >
@@ -158,18 +157,18 @@ const TrainerListPage = () => {
     setSearchTerm("");
   };
 
-  const deleteStudentHandler = async (id: string) => {
+  const deleteAdminHandler = async (id: string) => {
     console.log(id);
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          const res = await deleteStudent(id).unwrap();
+          const res = await deleteAdmin(id).unwrap();
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Student Successfully Deleted");
+            Success_model("Admin Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
@@ -190,7 +189,7 @@ const TrainerListPage = () => {
         padding: "1rem",
       }}
     >
-      <ActionBar title="Student List">
+      <ActionBar title="Admin List">
         <Input
           size="large"
           placeholder="Search"
@@ -200,8 +199,8 @@ const TrainerListPage = () => {
           }}
         />
         <div>
-          <Link href={`/admin/manage-users/students/create`}>
-            <Button type="default">Create Student</Button>
+          <Link href={`/admin/manage-users/admin/create`}>
+            <Button type="default">Create Admin</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -218,7 +217,7 @@ const TrainerListPage = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={StudentData}
+        dataSource={AdminData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -231,7 +230,7 @@ const TrainerListPage = () => {
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteStudentHandler(adminId)}
+        handleOk={() => deleteAdminHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
