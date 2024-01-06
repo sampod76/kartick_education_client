@@ -31,6 +31,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Col, Row, message } from "antd";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import VideoSelect from "@/components/Forms/VideoSelect";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -47,12 +48,7 @@ const CreateLesson = () => {
   //
   const [textEditorValue, setTextEditorValue] = useState("");
   // ! for video insert
-  const [videoType, setVideoType] = useState(null);
-  const [videoUrl, setVideoUrl] = useState("");
-  const video = {
-    video: videoUrl,
-    platform: videoType,
-  };
+  // const [SelectVideo, setSelectVideo] = useState([]);
 
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
   const { data: existLesson, isLoading: GetLessionLoading } =
@@ -70,22 +66,26 @@ const CreateLesson = () => {
   const categoryData: any = Category?.data;
   //
   const onSubmit = async (values: any) => {
+    console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
+
     if (!module._id) {
       Error_model_hook("Please ensure your are selected Lesson");
       return;
     }
-    if (!video.video) {
-      Error_model_hook("Video link is required");
-      return;
-    }
-    values.vedios = [video];
+    // values["videos"] = SelectVideo;
+
+    // if (!values?.videos?.length) {
+    //   Error_model_hook("Video link is required");
+    //   return;
+    // }
+    // values.vedios = [video];
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
       module: module?._id,
       details: textEditorValue,
     };
-    // console.log(LessonData);
+    console.log(LessonData);
     // return;
     try {
       const res = await addLesson(LessonData).unwrap();
@@ -94,9 +94,9 @@ const CreateLesson = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
-        setVideoType(null);
-        setVideoUrl("");
-        setSelectedTags([]);
+        // setVideoType(null);
+        // setVideoUrl("");
+        // setSelectedTags([]);
       }
       // console.log(res);
     } catch (error: any) {
@@ -108,12 +108,14 @@ const CreateLesson = () => {
   if (serviceLoading) {
     return message.loading("Loading...");
   }
-  const roundedNumber = Number(existLesson?.data[0]?.lesson_number || 0).toFixed(1);
+  const roundedNumber = Number(existLesson?.data[0].lesson_number).toFixed(1);
 
   // Add 0.1 to the rounded number and use toFixed again when logging
   const prelesson_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
 
   // console.log(prelesson_number);
+
+  // console.log(SelectVideo, "select Video");
 
   return (
     <div>
@@ -259,7 +261,7 @@ const CreateLesson = () => {
                   {/*//! 2 */}
                 </Col>
                 <Col xs={24}>
-                  <DemoVideoUI
+                  {/* <DemoVideoUI
                     label="Video"
                     videoType={videoType as any}
                     setVideoType={setVideoType}
@@ -267,10 +269,16 @@ const CreateLesson = () => {
                     setVideoUrl={setVideoUrl}
                     options={["youtube", "vimeo"]}
                     required
-                  />
+                  /> */}
                   {/*//! 12*/}
+
+                  <VideoSelect
+                  // videos={SelectVideo}
+                  // setVideos={setSelectVideo as any}
+                  />
                 </Col>
-                <Col
+                {/* //! commented for refresh */}
+                {/* <Col
                   className="gutter-row"
                   xs={24}
                   style={{
@@ -281,8 +289,8 @@ const CreateLesson = () => {
                     selected={selectedTags}
                     setSelected={setSelectedTags}
                   />
-                  {/*//! 6 */}
-                </Col>
+             
+                </Col> */}
                 <Col
                   className="gutter-row"
                   xs={24}
@@ -302,10 +310,11 @@ const CreateLesson = () => {
                     />
                   </div>
                 </Col>
-                <section
+                {/* //! commented for refresh */}
+                {/* <section
                   style={{
                     borderTopWidth: "2px",
-                  }} /* className=" border-t-2" */
+                  }} 
                 >
                   <p className="text-center my-3 font-bold text-xl ">
                     Description
@@ -314,7 +323,7 @@ const CreateLesson = () => {
                     textEditorValue={textEditorValue}
                     setTextEditorValue={setTextEditorValue}
                   />
-                </section>
+                </section> */}
               </Row>
             </div>
 
