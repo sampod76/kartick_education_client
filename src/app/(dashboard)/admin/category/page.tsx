@@ -29,11 +29,12 @@ import {
 } from "@/redux/api/adminApi/categoryApi";
 import { USER_ROLE } from "@/constants/role";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import dynamic from "next/dynamic";
 
 const CategoryList = () => {
   const query: Record<string, any> = {};
 
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
+  const ADMIN = USER_ROLE.ADMIN;
 
   const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -71,11 +72,8 @@ const CategoryList = () => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          
-
           const res = await deleteCategory(id).unwrap();
 
-          
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -145,14 +143,18 @@ const CategoryList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/category/details/${record._id}`}>View</Link>
+                    <Link href={`/${ADMIN}/category/details/${record._id}`}>
+                      View
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/category/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/${ADMIN}/category/edit/${record._id}`}>
+                      Edit
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="add_milestone">
                     <Link
-                      href={`/admin/category/create/course/${record?._id}?categoryName=${record?.title}`}
+                      href={`/${ADMIN}/category/create/course/${record?._id}?categoryName=${record?.title}`}
                     >
                       Add Course
                     </Link>
@@ -176,13 +178,12 @@ const CategoryList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // 
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -194,7 +195,7 @@ const CategoryList = () => {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // 
+    //
     try {
       const res = await deleteCategory(id);
       if (res) {
@@ -272,4 +273,8 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+// export default CategoryList;
+
+export default dynamic(() => Promise.resolve(CategoryList), {
+  ssr: false,
+});
