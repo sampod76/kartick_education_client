@@ -30,7 +30,13 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Col, Row, message } from "antd";
 import React, { useState } from "react";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 const CreateLesson = () => {
   //
   const [category, setCategory] = useState({});
@@ -73,6 +79,7 @@ const CreateLesson = () => {
       ...values,
       tags: selectedTags,
       module: module?._id,
+      details:textEditorValue
     };
     // console.log(LessonData);
     // return;
@@ -89,7 +96,7 @@ const CreateLesson = () => {
       }
       // console.log(res);
     } catch (error: any) {
-      Error_model_hook(error?.message);
+      Error_model_hook(error?.data);
       console.log(error);
     }
   };
@@ -290,16 +297,15 @@ const CreateLesson = () => {
                   />
                 </div>
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                // md={12}
-                // lg={8}
-                style={{}}
-              >
-                {/*//! 3 */}
-                <FormTextArea label="Description" rows={15} name="details" />
-              </Col>
+              <section
+              style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
+            >
+              <p className="text-center my-3 font-bold text-xl ">Description</p>
+              <TextEditor
+                textEditorValue={textEditorValue}
+                setTextEditorValue={setTextEditorValue}
+              />
+            </section>
             </Row>
           </div>
 

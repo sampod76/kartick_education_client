@@ -57,7 +57,7 @@ const Login = () => {
   if (error) {
     console.log(error);
     //@ts-ignore
-    Error_model_hook(error?.message);
+    Error_model_hook(error?.data);
   }
   if (isLoginLoading) {
     return <LoadingForDataFetch />;

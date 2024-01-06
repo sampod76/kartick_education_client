@@ -41,7 +41,6 @@ export const milestoneApi = baseApi.injectEndpoints({
     addMilestone: build.mutation({
       query: (data) => {
         //
-
         return {
           url: MILESTONE_URL,
           method: "POST",

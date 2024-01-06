@@ -72,7 +72,7 @@ const CreateModule = () => {
       }
       // console.log(res);
     } catch (error: any) {
-      Error_model_hook(error?.message);
+      Error_model_hook(error?.data);
       console.log(error);
     }
   };
