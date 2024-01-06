@@ -44,7 +44,7 @@ const CreateMilestone = () => {
   //
   const [textEditorValue, setTextEditorValue] = useState("");
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([""]);
+
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
 
@@ -60,7 +60,7 @@ const CreateMilestone = () => {
 
     const MilestoneData: {} = {
       ...values,
-      tags: selectedTags,
+
       details: textEditorValue,
       course: courses._id,
     };
@@ -74,7 +74,7 @@ const CreateMilestone = () => {
       } else {
         Success_model("Successfully added Milestone");
         setTextEditorValue("");
-        setSelectedTags([]);
+
       }
       // console.log(res);
     } catch (error: any) {
@@ -161,9 +161,8 @@ const CreateMilestone = () => {
               </Col> */}
 
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <TagsSelectUI
-                      selected={selectedTags}
-                      setSelected={setSelectedTags}
+                  <TagsSelectUI
+                
                     />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>

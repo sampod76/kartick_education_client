@@ -41,10 +41,6 @@ const EditQuizPage = ({ params }: any) => {
 
   // !  tag selection
 
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    QuizData?.tags || []
-  );
-
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -60,7 +56,6 @@ const EditQuizPage = ({ params }: any) => {
     //   values.img = await uploadImgBB(values.img);
     // }
     const UpdateValues = removeUndefinedValues({
-      tags: selectedTags,
       ...values,
       demo_video,
     });
@@ -255,10 +250,7 @@ const EditQuizPage = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <TagsSelectUI
-                  selected={selectedTags}
-                  setSelected={setSelectedTags}
-                />
+                <TagsSelectUI defaultTags={QuizData?.tags} />
                 {/*//! 10--- */}
               </Col>
               <Col

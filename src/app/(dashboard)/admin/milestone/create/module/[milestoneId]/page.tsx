@@ -48,8 +48,7 @@ const CreateModule = () => {
   const [textEditorValue, setTextEditorValue] = useState("");
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
   const { data: existModule } = useGetAllModuleQuery({});
-  // !  tag selection
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
   const onSubmit = async (values: any) => {
     if (!milestone._id) {
       Error_model_hook("Please ensure your are selected quiz");
@@ -57,7 +56,7 @@ const CreateModule = () => {
     }
     const ModuleData: {} = {
       ...values,
-      tags: selectedTags,
+
       details: textEditorValue,
       milestone: milestone?._id,
     };
@@ -207,8 +206,7 @@ const CreateModule = () => {
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <TagsSelectUI
-                      selected={selectedTags}
-                      setSelected={setSelectedTags}
+                    
                     />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
