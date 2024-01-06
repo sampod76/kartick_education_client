@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import supportImage from "@/assets/SideImage/supporthero.png";
 import Image from "next/image";

@@ -1,5 +1,5 @@
-"use client";
-import dynamic from "next/dynamic";
+'use client'
+// import dynamic from "next/dynamic";
 
 
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
@@ -113,7 +113,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
   );
 };
 
-// export default MilestoneList;
-export default dynamic(() => Promise.resolve(MilestoneList), {
-   ssr: false,
- });
+export default MilestoneList;
+// export default dynamic(() => Promise.resolve(MilestoneList), {
+//    ssr: false,
+//  });

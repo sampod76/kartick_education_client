@@ -1,5 +1,6 @@
+
 import CourseStatistics from "@/components/Course/CourseStatistics";
-import MilestoneList from "@/components/Course/MilestoneList";
+// import MilestoneList from "@/components/Course/MilestoneList";
 import BannerCourses from "@/components/Home/Heros/BannerCourses";
 import SupportHero from "@/components/Home/Heros/SupportHero";
 import React from "react";
@@ -11,7 +12,10 @@ const MilestonePage = ({
 }) => {
 
   // console.log(id);
-
+  const MilestoneList = React.lazy(
+    () => import("@/components/Course/MilestoneList")
+  );
+ 
   return (
     <div>
       <MilestoneList courseId={id} />

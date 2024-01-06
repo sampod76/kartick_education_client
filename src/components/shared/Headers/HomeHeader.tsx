@@ -1,3 +1,4 @@
+'use client'
 import NavbarPublic from "./Navbar/NavbarPublic";
 import TopBar from "./TopBar";
 

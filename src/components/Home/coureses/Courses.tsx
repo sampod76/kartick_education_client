@@ -6,6 +6,7 @@ import { ENUM_SORT_ORDER, ENUM_STATUS } from "@/constants/globalEnums";
 import CardLoading from "@/components/ui/Loading/CardLoading";
 import { Error_model_hook } from "@/utils/modalHook";
 import NotFoundCourse from "@/components/ui/NotFound/NotFoundCourse";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 
 interface ICourseItemType {
   status?: string;
@@ -26,7 +27,7 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
   }
 
   const { data, isLoading, error } = useGetAllCourseQuery({ ...queryAll });
-  const courseData=data?.data || []
+  const courseData = data?.data || [];
   if (
     error ||
     //@ts-ignore
@@ -38,16 +39,15 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
         //@ts-ignore
         data?.data?.message
     );
-    console.log(
-      error,
-      data?.data
-    );
+    console.log(error, data?.data);
   }
   return (
     <>
       {isLoading ? (
-        <CardLoading />
-      ) :courseData?.length===0?<NotFoundCourse/>: (
+        <LoadingSkeleton />
+      ) : courseData?.length === 0 ? (
+        <NotFoundCourse />
+      ) : (
         <div className="mt-3 container mx-auto ">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
             {courseData?.map((item: any, index: number) => {

@@ -1,3 +1,4 @@
+'use client'
 import onlineProgramsData from "@/db/programmes";
 import React from "react";
 import SIngleProgramme from "./SinglePrograme";

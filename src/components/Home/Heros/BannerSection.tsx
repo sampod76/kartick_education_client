@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import bannerBG from "@/assets/banner/bannerBG.png";
 import treeBoy from "@/assets/banner/treeBoy.png";

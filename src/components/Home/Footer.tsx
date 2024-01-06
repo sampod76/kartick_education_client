@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import LinkGroup from "./LinkGroup";
 import NavLink from "./NavLink";
