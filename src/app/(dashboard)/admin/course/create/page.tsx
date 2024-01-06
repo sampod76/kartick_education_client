@@ -46,8 +46,6 @@ const CreateCoursePage = () => {
 
   // !  tag selection
 
-
-
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -77,7 +75,7 @@ const CreateCoursePage = () => {
         Success_model("Course created successfully");
         setVideoType(null);
         setVideoUrl("");
- 
+
         setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
@@ -220,15 +218,13 @@ const CreateCoursePage = () => {
                       setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
                     />
-                    {/*//! 12*/}
+
+                   
                   </Col>
 
                   {/* tag selections */}
                   <Col xs={24} md={24} lg={24} style={{}}>
-                 
-                    <TagsSelectUI
-                  
-                    />
+                    <TagsSelectUI />
 
                     {/*//! 11 */}
                   </Col>
@@ -279,4 +275,7 @@ const CreateCoursePage = () => {
   );
 };
 
-export default CreateCoursePage;
+// export default CreateCoursePage;
+export default dynamic(() => Promise.resolve(CreateCoursePage), {
+  ssr: false,
+});

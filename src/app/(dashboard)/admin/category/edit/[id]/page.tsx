@@ -1,27 +1,19 @@
 "use client";
 
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField, {
-  SelectOptions,
-} from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import {
   useGetSingleCategoryQuery,
   useUpdateCategoryMutation,
 } from "@/redux/api/adminApi/categoryApi";
 
-import { ICategory } from "@/types";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Row, message } from "antd";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 
 const EditCategoryPage = ({ params }: any) => {
@@ -109,10 +101,8 @@ const EditCategoryPage = ({ params }: any) => {
                 />
               </Col>
 
-              <Col className="gutter-row" xs={24}>
-                <div className="">
-                  <UploadImage name="img" defaultImage={categoryData.img} />
-                </div>
+              <Col className="gutter-row" xs={24} style={{ marginTop: "18px" }}>
+                <UploadImage name="img" defaultImage={categoryData.img} />
               </Col>
             </Row>
           </div>
@@ -133,4 +123,8 @@ const EditCategoryPage = ({ params }: any) => {
   );
 };
 
-export default EditCategoryPage;
+// export default EditCategoryPage;
+
+export default dynamic(() => Promise.resolve(EditCategoryPage), {
+  ssr: false,
+});

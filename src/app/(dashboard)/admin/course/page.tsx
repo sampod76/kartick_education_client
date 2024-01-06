@@ -27,6 +27,7 @@ import {
 } from "@/redux/api/adminApi/courseApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterCategorySelect from "@/components/dashboard/Filter/FilterCategory";
+import dynamic from "next/dynamic";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
@@ -328,4 +329,8 @@ const CourseList = () => {
   );
 };
 
-export default CourseList;
+// export default CourseList;
+
+export default dynamic(() => Promise.resolve(CourseList), {
+  ssr: false,
+});
