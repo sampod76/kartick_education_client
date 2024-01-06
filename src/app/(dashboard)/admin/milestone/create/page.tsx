@@ -25,6 +25,8 @@ import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 //!
 import SelectStatusCategoryFIeld from "@/components/Forms/GeneralField/SelectStatusCategoryFIeld";
 import SelectStatusCoursesFIeld from "@/components/Forms/GeneralField/SelectStatusCoursesFIeld";
+import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
+import FormTextArea from "@/components/Forms/FormTextArea";
 //
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -133,14 +135,14 @@ const CreateMilestone = () => {
                   required={true}
                 />
               </Col>
-              <Col className="gutter-row" xs={24} style={{}}>
+              <Col className="gutter-row" xs={4} style={{}}>
                 <FormInput
-                  type="text"
+                  type="number"
                   name="milestone_number"
                   size="large"
                   label="Milestone No"
                   placeholder="Please enter a milestone No"
-                  required={true}
+                  // required={true}
                 />
               </Col>
 
@@ -155,8 +157,18 @@ const CreateMilestone = () => {
                 />
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
-                <UploadImage name="img" />
+                <UploadMultipalImage name="imgs" />
               </Col>
+              <Col className="gutter-row" xs={24} style={{}}>
+                  <div>
+                    <FormTextArea
+                      name="short_description"
+                      label="Short description"
+                      rows={5}
+                      placeholder="Please enter short description"
+                    />
+                  </div>
+                </Col>
               <Col
                 className="gutter-row"
                 xs={24}

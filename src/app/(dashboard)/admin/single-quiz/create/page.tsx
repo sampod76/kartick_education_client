@@ -33,6 +33,7 @@ import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
+import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 
 const CreateSingleQuiz = () => {
   //
@@ -47,7 +48,7 @@ const CreateSingleQuiz = () => {
     {
       title: "Option A",
       correct: true,
-      img: "",
+      imgs: [""],
       serialNumber: 1,
       status: "active",
     },
@@ -93,7 +94,7 @@ const CreateSingleQuiz = () => {
       Error_model_hook("Please select an answer");
       return;
     }
-    values["status"] = status;
+
     if (values?.time_duration) {
       values.time_duration = timeDurationToMilliseconds(values.time_duration);
     }
@@ -126,86 +127,96 @@ const CreateSingleQuiz = () => {
   };
 
   return (
-    <div
-      style={{
-        boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
-      }}
-    >
-      <HeadingUI>Create A Single Quiz</HeadingUI>
-      <div className="border-2 rounded-lg my-3 p-5 border-blue-500">
-        <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 animate-bounce">
-          At fast Filter
-        </h1>
-        <Row gutter={[16, 16]}>
-          <Col xs={24} md={6}>
-            <SelectCategoryChildren
-              lableText="Select category"
-              setState={setCategory}
-              isLoading={isLoading}
-              categoryData={categoryData}
-            />
-          </Col>
-          <Col xs={24} md={6}>
-            <SelectCategoryChildren
-              lableText="Select courses"
-              setState={setCourses}
-              categoryData={
-                //@ts-ignore
-                category?.courses || []
-              }
-            />
-          </Col>
-          <Col xs={24} lg={12}>
-            <SelectCategoryChildren
-              lableText="Select milestones"
-              setState={setmilestone}
-              categoryData={
-                //@ts-ignore
-                courses?.milestones || []
-              }
-            />
-          </Col>
-          <Col xs={24} lg={12}>
-            <SelectCategoryChildren
-              lableText="Select module"
-              setState={setmodule}
-              categoryData={
-                //@ts-ignore
-                milestone?.modules || []
-              }
-            />
-          </Col>
-          <Col xs={24} lg={12}>
-            <SelectCategoryChildren
-              lableText="Select lesson"
-              setState={setlesson}
-              categoryData={
-                //@ts-ignore
-                module?.lessons || []
-              }
-            />
-          </Col>
-          <Col xs={24} lg={12}>
-            <SelectCategoryChildren
-              lableText="Select quiz"
-              setState={setquiz}
-              categoryData={
-                //@ts-ignore
-                lesson?.quizzes || []
-              }
-            />
-          </Col>
-        </Row>
+    <div>
+      <div
+        style={{
+          boxShadow:
+            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+          borderRadius: "1rem",
+          backgroundColor: "white",
+          padding: "1rem",
+          marginBottom: "1rem",
+        }}
+      >
+        <div className="border-2 rounded-lg my-3 p-5 border-blue-500">
+          <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 animate-bounce">
+            At fast Filter
+          </h1>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={6}>
+              <SelectCategoryChildren
+                lableText="Select category"
+                setState={setCategory}
+                isLoading={isLoading}
+                categoryData={categoryData}
+              />
+            </Col>
+            <Col xs={24} md={6}>
+              <SelectCategoryChildren
+                lableText="Select courses"
+                setState={setCourses}
+                categoryData={
+                  //@ts-ignore
+                  category?.courses || []
+                }
+              />
+            </Col>
+            <Col xs={24} lg={12}>
+              <SelectCategoryChildren
+                lableText="Select milestones"
+                setState={setmilestone}
+                categoryData={
+                  //@ts-ignore
+                  courses?.milestones || []
+                }
+              />
+            </Col>
+            <Col xs={24} lg={12}>
+              <SelectCategoryChildren
+                lableText="Select module"
+                setState={setmodule}
+                categoryData={
+                  //@ts-ignore
+                  milestone?.modules || []
+                }
+              />
+            </Col>
+            <Col xs={24} lg={12}>
+              <SelectCategoryChildren
+                lableText="Select lesson"
+                setState={setlesson}
+                categoryData={
+                  //@ts-ignore
+                  module?.lessons || []
+                }
+              />
+            </Col>
+            <Col xs={24} lg={12}>
+              <SelectCategoryChildren
+                lableText="Select quiz"
+                setState={setquiz}
+                categoryData={
+                  //@ts-ignore
+                  lesson?.quizzes || []
+                }
+              />
+            </Col>
+          </Row>
+        </div>
       </div>
       {quiz._id ? (
-        <div>
+        <div
+          style={{
+            boxShadow:
+              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            borderRadius: "1rem",
+            backgroundColor: "white",
+            padding: "1rem",
+          }}
+        >
           <Form submitHandler={onSubmit}>
             <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 ">
-              Single Quiz
+              Create A Single Quiz
             </h1>
             <div
               style={{
@@ -233,9 +244,7 @@ const CreateSingleQuiz = () => {
                 </Col>
                 <Col
                   className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={8}
+                  xs={4}
                   style={{
                     marginBottom: "10px",
                   }}
@@ -244,15 +253,13 @@ const CreateSingleQuiz = () => {
                     type="number"
                     name="serialNumber"
                     size="large"
-                    label="serialNumber "
-                    required={true}
+                    label="Serial number"
+                    // required={true}
                   />
                 </Col>
                 <Col
                   className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={8}
+                  xs={4}
                   style={
                     {
                       // background:"r ed"
@@ -261,37 +268,38 @@ const CreateSingleQuiz = () => {
                 >
                   <FormTimePicker name="time_duration" label="Time Duration" />
                 </Col>
-
-                {/*     <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <SelectModuleField />
-                
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <SelectLessonField />
-                
-              </Col>  */}
+                <Col
+                  className="gutter-row"
+                  xs={12}
+                  md={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <LabelUi>
+                    Please select quiz type{" "}
+                    <span className="text-red-500">*</span>
+                  </LabelUi>
+                  <Select
+                    placeholder="Select Quiz Types"
+                    style={{ width: "100%" }}
+                    onChange={(value) => setQuizTypes(value)}
+                    size="large"
+                  >
+                    {singleQuizTypes.map((item: any, i: number) => {
+                      return (
+                        <Select.Option value={item} key={i}>
+                          {item}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </Col>
 
                 <Col
                   className="gutter-row"
-                  xs={24}
-                  md={12}
-                  lg={8}
+                  xs={12}
+                  md={8}
                   style={{
                     marginBottom: "10px",
                   }}
@@ -351,7 +359,7 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormTextArea label="Description" name="details" />
+                <FormTextArea label="Description" name="short_description" />
               </Col>
               <Col
                 className="gutter-row"
@@ -385,27 +393,6 @@ const CreateSingleQuiz = () => {
                   marginBlock: "2em",
                 }}
               >
-                <Col
-                  className="gutter-row"
-                  xs={24}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <Select
-                    placeholder="Select Quiz Types"
-                    style={{ width: "100%" }}
-                    onChange={(value) => setQuizTypes(value)}
-                  >
-                    {singleQuizTypes.map((item: any, i: number) => {
-                      return (
-                        <Select.Option value={item} key={i}>
-                          {item}
-                        </Select.Option>
-                      );
-                    })}
-                  </Select>
-                </Col>
                 <Col
                   className="gutter-row"
                   xs={24}

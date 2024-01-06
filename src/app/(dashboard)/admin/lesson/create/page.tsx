@@ -6,11 +6,13 @@ import FormInput from "@/components/Forms/FormInput";
 
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import UploadImage from "@/components/ui/UploadImage";
+import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 
@@ -22,6 +24,7 @@ import {
   useAddLessonMutation,
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -29,6 +32,13 @@ import { Col, Row, message } from "antd";
 import React, { useState } from "react";
 
 const CreateLesson = () => {
+  //
+  const [category, setCategory] = useState({});
+  const [courses, setCourses] = useState({});
+  const [milestone, setmilestone] = useState({});
+
+  const[module, setmodule] = useState<{ _id?: string; title?: string }>({});
+  //
   const [textEditorValue, setTextEditorValue] = useState("");
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -39,22 +49,30 @@ const CreateLesson = () => {
   };
 
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
-  const { data: existLesson, isLoading } = useGetAllLessonQuery({});
+  const { data: existLesson, isLoading: GetLessionLoading } =
+    useGetAllLessonQuery({});
 
   // !  tag selection
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
+  //! for Category options selection
+  const query: Record<string, any> = {};
+  query["children"] = "course-milestone-module-lessons-quiz";
+  const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
+    ...query,
+  });
+  const categoryData: any = Category?.data;
+  //
   const onSubmit = async (values: any) => {
-    // console.log(values);
-
-    // const imgUrl = await uploadImgBB(values.img);
-
-    // values.img = imgUrl;
+    if (!module._id) {
+      Error_model_hook("Please ensure your are selected Lesson");
+      return;
+    }
     values.vedios = [video];
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
+      module: module?._id,
     };
     // console.log(LessonData);
     // return;
@@ -88,6 +106,65 @@ const CreateLesson = () => {
 
   return (
     <div>
+      <div>
+        <div
+          style={{
+            boxShadow:
+              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            borderRadius: "1rem",
+            backgroundColor: "white",
+            padding: "1rem",
+            marginBottom: "1rem",
+          }}
+        >
+          <div className="border-2 rounded-lg my-3 p-5 border-blue-500">
+            <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 animate-bounce">
+              At fast Filter
+            </h1>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} md={6}>
+                <SelectCategoryChildren
+                  lableText="Select category"
+                  setState={setCategory}
+                  isLoading={isLoading}
+                  categoryData={categoryData}
+                />
+              </Col>
+              <Col xs={24} md={6}>
+                <SelectCategoryChildren
+                  lableText="Select courses"
+                  setState={setCourses}
+                  categoryData={
+                    //@ts-ignore
+                    category?.courses || []
+                  }
+                />
+              </Col>
+              <Col xs={24} lg={12}>
+                <SelectCategoryChildren
+                  lableText="Select milestones"
+                  setState={setmilestone}
+                  categoryData={
+                    //@ts-ignore
+                    courses?.milestones || []
+                  }
+                />
+              </Col>
+              <Col xs={24} lg={12}>
+                <SelectCategoryChildren
+                  lableText="Select module"
+                  setState={setmodule}
+                  categoryData={
+                    //@ts-ignore
+                    milestone?.modules || []
+                  }
+                />
+              </Col>
+              
+            </Row>
+          </div>
+        </div>
+      </div>
       <div className="shadow-xl rounded-lg bg-white">
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
@@ -134,17 +211,7 @@ const CreateLesson = () => {
               >
                 <SelectAuthorField />
               </Col> */}
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <SelectModuleField />
-              </Col>
+             
               <Col
                 className="gutter-row"
                 xs={24}
@@ -211,7 +278,7 @@ const CreateLesson = () => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="img" />
+                <UploadMultipalImage name="imgs" />
               </Col>
               <Col className="gutter-row" xs={24} style={{}}>
                 <div>

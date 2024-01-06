@@ -13,7 +13,7 @@ import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 interface Answer {
   title: string;
   correct: boolean;
-  img: string | [];
+  imgs: string[];
   serialNumber: number;
   status: string;
 }
@@ -27,12 +27,16 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
   answers,
   setAnswers,
 }) => {
-  //  // console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answers:", answers);
-
   const handleAdd = () => {
     setAnswers([
       ...answers,
-      { title: "", correct: false, img: "", serialNumber: 0, status: "active" },
+      {
+        title: "",
+        correct: false,
+        imgs: [],
+        serialNumber: 0,
+        status: "active",
+      },
     ]);
   };
 
@@ -137,7 +141,8 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                 // }
                 handleChange(index, {
                   ...answer,
-                  img: imgUrl as string,
+                  // imgs: [...answer.imgs,imgUrl],
+                  imgs: [imgUrl],
                 });
                 return false; // Prevent default upload behavior
               }}

@@ -13,7 +13,7 @@ import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 interface Answer {
   title: string;
   correct: boolean;
-  img: string | [];
+  imgs: string[];
   serialNumber: number;
   status: string;
 }
@@ -32,7 +32,7 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
   const handleAdd = () => {
     setAnswersMultiple([
       ...answersMultiple,
-      { title: "", correct: false, img: "", serialNumber: 0, status: "active" },
+      { title: "", correct: false, imgs:[], serialNumber: 0, status: "active" },
     ]);
   };
 
@@ -128,7 +128,7 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
                 // }
                 handleChange(index, {
                   ...answer,
-                  img: imgUrl as string,
+                  imgs:[ imgUrl],
                 });
                 return false; // Prevent default upload behavior
               }}
