@@ -83,8 +83,9 @@ const VideoSelect = () => {
   };
 
   return (
-    <div className="">
-      <SubHeadingUI>Add Video </SubHeadingUI>
+    <div className="text-start border-y-2">
+      <h1 className="text-md text-slate-600 font-[550]">Add Video</h1>
+
       {videos?.map((video, index) => (
         <Space
           key={index}
