@@ -37,17 +37,34 @@ instance.interceptors.response.use(
     };
     return responseObject;
   },
- 
+
   async function (error) {
     if (error?.response?.status === 403) {
     } else {
-      const responseObject: any = {
+      console.log(error);
+
+      let responseObject: any = {
         statusCode: error?.response?.status || 500,
-        message: error?.response?.data?.message || "Something went wrong",
-        errorMessages: error?.response?.data?.errorMessage,
+        message: "Something went wrong",
+        success: false,
+        errorMessages: [],
       };
-      // return Promise.reject(responseObject);
-      return error.response;
+
+      // Check if the error response has the expected structure
+      if (error?.response?.data) {
+        responseObject.message =
+          error?.response?.data?.message || responseObject.message;
+        responseObject.success =
+          error?.response?.data?.success || responseObject.success;
+
+        if (error?.response?.data?.errorMessage) {
+          responseObject.errorMessages.push(
+            error?.response?.data?.errorMessage
+          );
+        }
+      }
+      return Promise.reject(responseObject);
+      // return responseObject;
     }
 
     // return Promise.reject(error);

@@ -21,7 +21,6 @@ const CreateCategory = () => {
     // console.log(values);
     const status = "active";
     // const imgUrl = await uploadImgCloudinary(values.img);
-    // console.log("🚀 ~ file: page.tsx:33 ~ onSubmit ~ imgUrl:", imgUrl)
 
     const categoryData: {
       title: string;
@@ -44,7 +43,7 @@ const CreateCategory = () => {
       }
       // console.log(res);
     } catch (error: any) {
-      Error_model_hook(error?.message);
+      Error_model_hook(error?.data);
       console.log(error);
     }
   };
@@ -55,15 +54,16 @@ const CreateCategory = () => {
 
   return (
     <div>
-      <div>
+      <div className="flex justify-center ">
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} >
           <div
             style={{
               padding: "0.75rem",
               borderRadius: "0.75rem",
               width: "fit-content",
+              backgroundColor: "white",
               boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
             }}
             // className="w-fit p-3 rounded-xl mx-auto shadow-2xl"

@@ -1,9 +1,10 @@
 "use client";
-import { useGetAllFaqQuery } from "@/redux/api/faqApi";
+
 import React from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
+import { useGetAllFaqQuery } from "@/redux/api/faqApi";
 const FaqList = () => {
   const { data = [], isLoading } = useGetAllFaqQuery({});
   const text = `

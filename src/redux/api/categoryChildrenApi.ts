@@ -1,17 +1,17 @@
 import { tagTypes } from "@/redux/tag-types";
 import { IMeta } from "@/types";
 import { baseApi } from "./baseApi";
-import { IFaq } from "@/schemas/faq";
 
-const FAQ_URL = "/category/category-children";
 
-export const faqApi = baseApi.injectEndpoints({
+const CATEGORY_URL = "/category/category-children";
+
+export const categoryChildrenApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // get all academic departments
     getAllCategoryChildren: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: FAQ_URL,
+          url: CATEGORY_URL,
           method: "GET",
           params: arg,
         };
@@ -22,9 +22,9 @@ export const faqApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.faq],
+      providesTags: [tagTypes.categoryChildren],
     }),
   }),
 });
 
-export const { useGetAllCategoryChildrenQuery } = faqApi;
+export const { useGetAllCategoryChildrenQuery } = categoryChildrenApi;

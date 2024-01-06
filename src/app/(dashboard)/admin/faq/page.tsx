@@ -26,8 +26,9 @@ import {
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
+
 import { USER_ROLE } from "@/constants/role";
+import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
 
 const FaqList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;

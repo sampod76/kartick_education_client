@@ -50,7 +50,7 @@ export const QuizApi = baseApi.injectEndpoints({
           data,
         };
       },
-      invalidatesTags: [tagTypes.quiz],
+      invalidatesTags: [tagTypes.quiz,tagTypes.categoryChildren],
     }),
     // update ac department
     updateQuiz: build.mutation({
@@ -63,7 +63,7 @@ export const QuizApi = baseApi.injectEndpoints({
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.quiz],
+      invalidatesTags: [tagTypes.quiz,tagTypes.categoryChildren],
     }),
 
     // delete ac department
@@ -72,7 +72,7 @@ export const QuizApi = baseApi.injectEndpoints({
         url: `${QUIZ_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.quiz],
+      invalidatesTags: [tagTypes.quiz,tagTypes.categoryChildren],
     }),
   }),
 });

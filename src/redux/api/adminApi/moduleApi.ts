@@ -21,7 +21,7 @@ export const moduleApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.module],
+      providesTags: [tagTypes.module,],
     }),
     // get single academic department
     getSingleModule: build.query({
@@ -29,9 +29,8 @@ export const moduleApi = baseApi.injectEndpoints({
       query: (id: string | string[] | undefined) => {
 
         return {
-          url: `${MODULE_URL}/${arg.id}`,
+          url: `${MODULE_URL}/${id}`,
           method: "GET",
-          params: arg,
         };
       },
 
@@ -47,7 +46,7 @@ export const moduleApi = baseApi.injectEndpoints({
           data,
         };
       },
-      invalidatesTags: [tagTypes.module],
+      invalidatesTags: [tagTypes.module,tagTypes.categoryChildren],
     }),
     // update ac department
     updateModule: build.mutation({
@@ -58,7 +57,7 @@ export const moduleApi = baseApi.injectEndpoints({
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.module],
+      invalidatesTags: [tagTypes.module,tagTypes.categoryChildren],
     }),
 
     // delete ac department
@@ -67,7 +66,7 @@ export const moduleApi = baseApi.injectEndpoints({
         url: `${MODULE_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.module],
+      invalidatesTags: [tagTypes.module,tagTypes.categoryChildren],
     }),
   }),
 });

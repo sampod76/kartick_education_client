@@ -28,3 +28,10 @@ export enum ENUM_VIDEO_PLATFORM {
   FACEBOOK = 'facebook',
 }
 
+export enum ENUM_CATEGORY_CHILDREN {
+ COURSE="course",
+ COURSE_MILESTONE="course-milestone",
+ COURSE_MILESTONE_MODULE = "course-milestone-module",
+ COURSE_MILESTONE_MODULE_LESSONS = "course-milestone-module-lessons"
+}
+

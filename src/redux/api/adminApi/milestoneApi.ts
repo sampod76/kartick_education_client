@@ -41,14 +41,13 @@ export const milestoneApi = baseApi.injectEndpoints({
     addMilestone: build.mutation({
       query: (data) => {
         //
-
         return {
           url: MILESTONE_URL,
           method: "POST",
           data,
         };
       },
-      invalidatesTags: [tagTypes.milestone],
+      invalidatesTags: [tagTypes.milestone,tagTypes.categoryChildren],
     }),
     // update ac department
     updateMilestone: build.mutation({
@@ -60,7 +59,7 @@ export const milestoneApi = baseApi.injectEndpoints({
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.milestone],
+      invalidatesTags: [tagTypes.milestone, tagTypes.categoryChildren],
     }),
 
     // delete ac department
@@ -69,7 +68,7 @@ export const milestoneApi = baseApi.injectEndpoints({
         url: `${MILESTONE_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.milestone],
+      invalidatesTags: [tagTypes.milestone, tagTypes.categoryChildren],
     }),
   }),
 });

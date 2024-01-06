@@ -6,11 +6,13 @@ import FormInput from "@/components/Forms/FormInput";
 
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import UploadImage from "@/components/ui/UploadImage";
+import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 
@@ -22,13 +24,27 @@ import {
   useAddLessonMutation,
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Col, Row, message } from "antd";
 import React, { useState } from "react";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 const CreateLesson = () => {
+  //
+  const [category, setCategory] = useState({});
+  const [courses, setCourses] = useState({});
+  const [milestone, setmilestone] = useState({});
+
+  const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
+  //
   const [textEditorValue, setTextEditorValue] = useState("");
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -39,22 +55,35 @@ const CreateLesson = () => {
   };
 
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
-  const { data: existLesson, isLoading } = useGetAllLessonQuery({});
+  const { data: existLesson, isLoading: GetLessionLoading } =
+    useGetAllLessonQuery({});
 
   // !  tag selection
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
+  //! for Category options selection
+  const query: Record<string, any> = {};
+  query["children"] = "course-milestone-module";
+  const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
+    ...query,
+  });
+  const categoryData: any = Category?.data;
+  //
   const onSubmit = async (values: any) => {
-    // console.log(values);
-
-    // const imgUrl = await uploadImgBB(values.img);
-
-    // values.img = imgUrl;
+    if (!module._id) {
+      Error_model_hook("Please ensure your are selected Lesson");
+      return;
+    }
+    if (!video.video) {
+      Error_model_hook("Video link is required");
+      return;
+    }
     values.vedios = [video];
     const LessonData: {} = {
       ...values,
       tags: selectedTags,
+      module: module?._id,
+      details: textEditorValue,
     };
     // console.log(LessonData);
     // return;
@@ -71,7 +100,7 @@ const CreateLesson = () => {
       }
       // console.log(res);
     } catch (error: any) {
-      Error_model_hook(error?.message);
+      Error_model_hook(error?.data);
       console.log(error);
     }
   };
@@ -88,42 +117,101 @@ const CreateLesson = () => {
 
   return (
     <div>
-      <div className="shadow-xl rounded-lg bg-white">
-        {/* resolver={yupResolver(adminSchema)} */}
-        {/* resolver={yupResolver(IServiceSchema)} */}
-        <SubHeadingUI>Create Lesson</SubHeadingUI>
-        <Form
-          submitHandler={onSubmit}
-          defaultValues={{ lesson_number: Number(prelesson_number) }}
+      <div>
+        <div
+          style={{
+            boxShadow:
+              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            borderRadius: "1rem",
+            backgroundColor: "white",
+            padding: "1rem",
+            marginBottom: "1rem",
+          }}
         >
-          <div
-            style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
-              marginBottom: "10px",
-            }}
-          >
-            <hr className="border-1 my-1" />
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                xs={24}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="title"
-                  size="large"
-                  label="Lesson Title"
-                  required={true}
+          <div className="border-2 rounded-lg my-3 p-5 border-blue-500">
+            <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 animate-bounce">
+              At fast Filter
+            </h1>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} md={6}>
+                <SelectCategoryChildren
+                  lableText="Select category"
+                  setState={setCategory}
+                  isLoading={isLoading}
+                  categoryData={categoryData}
                 />
-                {/*//! 1 */}
               </Col>
+              <Col xs={24} md={6}>
+                <SelectCategoryChildren
+                  lableText="Select courses"
+                  setState={setCourses}
+                  categoryData={
+                    //@ts-ignore
+                    category?.courses || []
+                  }
+                />
+              </Col>
+              <Col xs={24} lg={12}>
+                <SelectCategoryChildren
+                  lableText="Select milestones"
+                  setState={setmilestone}
+                  categoryData={
+                    //@ts-ignore
+                    courses?.milestones || []
+                  }
+                />
+              </Col>
+              <Col xs={24} lg={12}>
+                <SelectCategoryChildren
+                  lableText="Select module"
+                  setState={setmodule}
+                  categoryData={
+                    //@ts-ignore
+                    milestone?.modules || []
+                  }
+                />
+              </Col>
+            </Row>
+          </div>
+        </div>
+      </div>
+      {module?._id ? (
+        <div className="shadow-xl rounded-lg bg-white">
+          {/* resolver={yupResolver(adminSchema)} */}
+          {/* resolver={yupResolver(IServiceSchema)} */}
+          <SubHeadingUI>Create Lesson</SubHeadingUI>
+          <Form
+            submitHandler={onSubmit}
+            defaultValues={{ lesson_number: Number(prelesson_number) }}
+          >
+            <div
+              style={{
+                border: "1px solid #d9d9d9",
+                borderRadius: "5px",
+                padding: "15px",
+                marginBottom: "10px",
+              }}
+            >
+              <hr className="border-1 my-1" />
+              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormInput
+                    type="text"
+                    name="title"
+                    size="large"
+                    label="Lesson Title"
+                    required={true}
+                  />
+                  {/*//! 1 */}
+                </Col>
 
-              {/* <Col
+                {/* <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
@@ -134,111 +222,112 @@ const CreateLesson = () => {
               >
                 <SelectAuthorField />
               </Col> */}
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <SelectModuleField />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="status"
-                  options={courseStatusOptions as any}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="status"
-                  // placeholder="Select"
-                  required={true}
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={4}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="number"
-                  name="lesson_number"
-                  size="large"
-                  label="Lesson No"
-                  required={true}
-                />
-                {/*//! 2 */}
-              </Col>
-              <Col xs={24}>
-                <DemoVideoUI
-                  label="Video"
-                  videoType={videoType as any}
-                  setVideoType={setVideoType}
-                  videoUrl={videoUrl}
-                  setVideoUrl={setVideoUrl}
-                  options={["youtube", "vimeo"]}
-                />
-                {/*//! 12*/}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <TagsSelectUI
-                  selected={selectedTags}
-                  setSelected={setSelectedTags}
-                />
-                {/*//! 6 */}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <UploadImage name="img" />
-              </Col>
-              <Col className="gutter-row" xs={24} style={{}}>
-                <div>
-                  <FormTextArea
-                    name="short_description"
-                    label="Short description"
-                    rows={5}
-                    placeholder="Please enter short description"
-                  />
-                </div>
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                // md={12}
-                // lg={8}
-                style={{}}
-              >
-                {/*//! 3 */}
-                <FormTextArea label="Description" rows={15} name="details" />
-              </Col>
-            </Row>
-          </div>
 
-          <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
-        </Form>
-      </div>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  md={12}
+                  lg={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormSelectField
+                    size="large"
+                    name="status"
+                    options={courseStatusOptions as any}
+                    // defaultValue={priceTypeOptions[0]}
+                    label="status"
+                    // placeholder="Select"
+                    required={true}
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  xs={4}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormInput
+                    type="number"
+                    name="lesson_number"
+                    size="large"
+                    label="Lesson No"
+                    required={true}
+                  />
+                  {/*//! 2 */}
+                </Col>
+                <Col xs={24}>
+                  <DemoVideoUI
+                    label="Video"
+                    videoType={videoType as any}
+                    setVideoType={setVideoType}
+                    videoUrl={videoUrl}
+                    setVideoUrl={setVideoUrl}
+                    options={["youtube", "vimeo"]}
+                    required
+                  />
+                  {/*//! 12*/}
+                </Col>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <TagsSelectUI
+                    selected={selectedTags}
+                    setSelected={setSelectedTags}
+                  />
+                  {/*//! 6 */}
+                </Col>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <UploadMultipalImage name="imgs" />
+                </Col>
+                <Col className="gutter-row" xs={24} style={{}}>
+                  <div>
+                    <FormTextArea
+                      name="short_description"
+                      label="Short description"
+                      rows={5}
+                      placeholder="Please enter short description"
+                    />
+                  </div>
+                </Col>
+                <section
+                  style={{
+                    borderTopWidth: "2px",
+                  }} /* className=" border-t-2" */
+                >
+                  <p className="text-center my-3 font-bold text-xl ">
+                    Description
+                  </p>
+                  <TextEditor
+                    textEditorValue={textEditorValue}
+                    setTextEditorValue={setTextEditorValue}
+                  />
+                </section>
+              </Row>
+            </div>
+
+            <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
+          </Form>
+        </div>
+      ) : (
+        <div className="w-full  flex justify-center items-center min-h-64 animate-pulse">
+          <h1 className="text-center text-red-600 font-semibold text-2xl">
+            First select your Module by filtering{" "}
+          </h1>
+        </div>
+      )}
     </div>
   );
 };

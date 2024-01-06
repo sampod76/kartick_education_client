@@ -3,7 +3,6 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -54,14 +53,13 @@ const UploadMultipalImage = ({
     if (info.file.status === "done") {
       // Get this url from response in real world.
       const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
-      console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
-      setValue(name, imgUrl);
+      // setValue(name, imgUrl);
       setImagesUrl((c) => [...c, imgUrl]);
-      //   getBase64(info.file.originFileObj as RcFile, (url) => {
-      //     setLoading(false);
-      //     setImagesUrl(url);
-      //   });
+      getBase64(info.file.originFileObj as RcFile, (url) => {
+        setLoading(false);
+        // setImagesUrl(imgUrl);
+      });
     }
   };
 
@@ -78,27 +76,26 @@ const UploadMultipalImage = ({
         name={name}
         listType="picture-card"
         className="avatar-uploader"
-        showUploadList={false}
+        showUploadList={true}
         multiple={true}
-        maxCount={4}
+        maxCount={5}
         action="/api/file"
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >
-        {imagesUrl || defaultImage
-          ? imagesUrl.map((image, i) => (
-              <Image
-                key={i}
-                src={image}
-                alt="avatar"
-                style={{ width: "100%" }}
-                width={60}
-                height={60}
-                // fill
-              />
-            ))
-          : uploadButton}
+        {uploadButton}
       </Upload>
+      {/* {imagesUrl.map((image, i) => (
+          <Image
+            key={i}
+            src={image}
+            alt="avatar"
+            style={{ width: "100%" }}
+            width={60}
+            height={60}
+            // fill
+          />
+        ))} */}
     </>
   );
 };
