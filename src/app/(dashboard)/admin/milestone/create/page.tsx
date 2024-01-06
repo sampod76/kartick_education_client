@@ -17,7 +17,7 @@ import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Col, Row, Spin } from "antd";
+import { Col, FloatButton, Row, Spin } from "antd";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
@@ -91,6 +91,28 @@ const CreateMilestone = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
+        <HeadingUI>Create Milestone</HeadingUI>
+        <Row gutter={[12, 12]} style={{ marginBottom: "1rem" }}>
+          <Col className="gutter-row" xs={24}>
+            <div className="flex justify-start items-center gap-4 ">
+              <div className="w-5/12">
+                <SelectStatusCategoryFIeld
+                  setCategoryValue={setCategoryValue}
+                />
+              </div>
+              <div className="w-7/12">
+                <SelectStatusCoursesFIeld
+                  categoryId={category}
+                  setCourseValue={setCourseValue}
+                />
+              </div>
+            </div>
+            {/* <Col xs={24} md={12} lg={8} >
+                R</Col>
+                <Col xs={24} md={12} lg={8}>
+                </Col> */}
+          </Col>
+        </Row>
         <Form submitHandler={onSubmit}>
           <div
             style={{
@@ -99,27 +121,7 @@ const CreateMilestone = () => {
               padding: "15px",
             }}
           >
-            <HeadingUI>Create Milestone</HeadingUI>
             <Row gutter={[12, 12]}>
-              <Col className="gutter-row" xs={24}>
-                <div className="flex justify-start items-center gap-4 ">
-                  <div className="w-5/12">
-                    <SelectStatusCategoryFIeld
-                      setCategoryValue={setCategoryValue}
-                    />
-                  </div>
-                  <div className="w-7/12">
-                    <SelectStatusCoursesFIeld
-                      categoryId={category}
-                      setCourseValue={setCourseValue}
-                    />
-                  </div>
-                </div>
-                {/* <Col xs={24} md={12} lg={8} >
-                R</Col>
-                <Col xs={24} md={12} lg={8}>
-                </Col> */}
-              </Col>
               <hr className="border-2 my-2" />
               <Col className="gutter-row" xs={24} style={{}}>
                 <FormInput
@@ -178,11 +180,20 @@ const CreateMilestone = () => {
               </Col>
             </Row>
           </div>
-          {serviceLoading ? (
-            <Spin />
-          ) : (
-            <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
-          )}
+          <div>
+            {serviceLoading ? (
+              <Spin />
+            ) : (
+              <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
+            )}
+          </div>
+          {/* <FloatButton
+      shape="square"
+      type="primary"
+      style={{ right: "40%" ,width:"9rem",fontSize:"2rem"}}
+      description="Create Milestone"
+    
+    /> */}
         </Form>
       </div>
     </div>

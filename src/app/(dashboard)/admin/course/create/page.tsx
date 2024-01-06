@@ -29,11 +29,9 @@ import {
 } from "antd";
 import { useState } from "react";
 
-const { Option } = Select;
 
-import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-// import TextEditor from "@/components/shared/TextEditor/TextEditor";
-import UploadMultpalImage from "@/hooks/multipleImageUpload";
+
+
 import dynamic from "next/dynamic";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -64,10 +62,7 @@ const CreateCoursePage = () => {
 
   // console.log(demo_video);
   const onSubmit = async (values: any) => {
-    // console.log(values.img, "values of Course");
-    // let { img, ...others } = values;
-    // const imageUrl = await uploadImgBB(values.img);
-    // img = imageUrl;
+  
     const CourseData = {
       tags: selectedTags,
       demo_video,
@@ -76,8 +71,6 @@ const CreateCoursePage = () => {
     };
 
     // console.log(CourseData, "Course");
-
-    // Success_model("Customer created successfully");
 
     try {
       const res = await addCourse({ ...CourseData }).unwrap();
@@ -97,13 +90,6 @@ const CreateCoursePage = () => {
       Error_model_hook(err?.message);
     }
   };
-  // if (isLoading) {
-  //   return message.loading("Loading...");
-  // }
-
-  // const defaultValues = {
-  //   blood,
-  // };
 
   return (
     <div
