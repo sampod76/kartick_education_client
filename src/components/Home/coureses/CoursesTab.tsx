@@ -1,4 +1,6 @@
 "use client";
+import dynamic from "next/dynamic";
+
 import { Tabs, TabsProps, message } from "antd";
 import React, { useState } from "react";
 import Courses from "./Courses";
@@ -22,21 +24,22 @@ const CoursesTab = () => {
 
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
 
+const cousesData =data?.data || []
   const activeClass =
     " rounded-[5px] bg-secondary text-white text-[18px] font-bold p-1";
   const inactiveClass =
     " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[18px] font-bold p-1";
 
-  const tabsItems2: TabsProps["items"] = data?.data?.map((data, index) => ({
+  const tabsItems2: TabsProps["items"] = cousesData?.map((singleData:Record<string,any>, index:number|string) => ({
     label: (
       <button
         className={activeTabKey === String(index) ? activeClass : inactiveClass}
       >
-       <p className="px-1"> {data?.title}</p>
+       <p className="px-1"> {singleData?.title}</p>
       </button>
     ),
     key: String(index),
-    children: <Courses query={{ status: "active", category: data?._id }} />,
+    children: <Courses query={{ status: "active", category: singleData?._id }} />,
   }));
   if (
     error ||
@@ -50,9 +53,8 @@ const CoursesTab = () => {
         data?.data?.message
     );
     console.log(
-      errorType?.message ||
-        //@ts-ignore
-        data?.data?.message
+      error,
+      data?.data
     );
   };
 
@@ -74,4 +76,8 @@ const CoursesTab = () => {
   );
 };
 
-export default CoursesTab;
+// export default CoursesTab;
+export default dynamic(() => Promise.resolve(CoursesTab), {
+   ssr: false,
+ });
+

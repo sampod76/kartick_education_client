@@ -7,10 +7,11 @@ import {
 import { Avatar, Card, Rate } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
+import { AllImage } from "@/assets/AllImge";
 const { Meta, Grid } = Card;
 
-const SIngleCourse = ({ course }: { course: any }) => {
+const SIngleCourse = ({ course }: { course: Record<string, any> }) => {
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   return (
@@ -28,7 +29,7 @@ const SIngleCourse = ({ course }: { course: any }) => {
             width={300}
             // layout="responsive"
             alt="example"
-            src={course?.img}
+            src={course?.img || AllImage.noimage}
           />
         }
         hoverable
@@ -69,10 +70,8 @@ const SIngleCourse = ({ course }: { course: any }) => {
             <Rate className="h-[12px]" count={1} value={1} /> 5.0
           </h2>
         </Grid> */}
-        
 
         <Meta
-          
           style={{
             fontSize: "16px",
             fontWeight: "500",
@@ -80,13 +79,17 @@ const SIngleCourse = ({ course }: { course: any }) => {
             // margin: "24px 0",
             // padding: "0 10px",
           }}
-          title={<h2 className="text-sm md:text-base" style={{ color: "black" }}>{course?.title}</h2>}
+          title={
+            <h2 className="text-sm md:text-base" style={{ color: "black" }}>
+              {course?.title}
+            </h2>
+          }
           description={
-            <p className="text-xs md:text-sm" style={{color:"#282938",}}>
-              { course?.short_description && course?.short_description?.length < 80
+            <p className="text-xs md:text-sm" style={{ color: "#282938" }}>
+              {course?.short_description &&
+              course?.short_description?.length < 80
                 ? parse(course?.short_description)
                 : parse(course?.short_description?.slice(0, 80)) + "....."}
-
             </p>
           }
         />

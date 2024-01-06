@@ -26,6 +26,7 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
   }
 
   const { data, isLoading, error } = useGetAllCourseQuery({ ...queryAll });
+  const courseData=data?.data || []
   if (
     error ||
     //@ts-ignore
@@ -38,19 +39,18 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
         data?.data?.message
     );
     console.log(
-      errorType?.message ||
-        //@ts-ignore
-        data?.data?.message
+      error,
+      data?.data
     );
   }
   return (
     <>
       {isLoading ? (
         <CardLoading />
-      ) :data?.data?.length===0?<NotFoundCourse/>: (
+      ) :courseData?.length===0?<NotFoundCourse/>: (
         <div className="mt-3 container mx-auto ">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-            {data?.data?.map((item: any, index: number) => {
+            {courseData?.map((item: any, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}
           </div>

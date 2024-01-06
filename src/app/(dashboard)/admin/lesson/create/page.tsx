@@ -108,7 +108,7 @@ const CreateLesson = () => {
   if (serviceLoading) {
     return message.loading("Loading...");
   }
-  const roundedNumber = Number(existLesson?.data[0].lesson_number).toFixed(1);
+  const roundedNumber = Number(existLesson?.data[0]?.lesson_number || 1).toFixed(1);
 
   // Add 0.1 to the rounded number and use toFixed again when logging
   const prelesson_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
@@ -135,7 +135,7 @@ const CreateLesson = () => {
               At fast Filter
             </h1>
             <Row gutter={[16, 16]}>
-              <Col xs={24} md={6}>
+              <Col xs={24} lg={12}>
                 <SelectCategoryChildren
                   lableText="Select category"
                   setState={setCategory}
@@ -143,7 +143,7 @@ const CreateLesson = () => {
                   categoryData={categoryData}
                 />
               </Col>
-              <Col xs={24} md={6}>
+              <Col xs={24} lg={12}>
                 <SelectCategoryChildren
                   lableText="Select courses"
                   setState={setCourses}

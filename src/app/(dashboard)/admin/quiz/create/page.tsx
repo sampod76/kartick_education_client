@@ -72,6 +72,8 @@ const CreateQuiz = () => {
       tags: selectedTags,
       demo_video,
       lesson: lesson._id,
+      //@ts-ignore
+      module: module?._id,
     };
     console.log(LessonData);
 
@@ -212,7 +214,6 @@ const CreateQuiz = () => {
                     {/*//! 4 --- */}
                   </Col>
 
-             
                   <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                     <FormSelectField
                       size="large"
@@ -223,9 +224,8 @@ const CreateQuiz = () => {
                       // placeholder="Select"
                       required={true}
                     />
-             
                   </Col>
-                  <Col className="gutter-row" xs={24}  style={{}}>
+                  <Col className="gutter-row" xs={24} style={{}}>
                     <DemoVideoUI
                       videoType={videoType as any}
                       setVideoType={setVideoType}
@@ -238,7 +238,6 @@ const CreateQuiz = () => {
                   <Col
                     className="gutter-row"
                     xs={24}
-                   
                     style={{
                       marginTop: "10px",
                     }}
@@ -247,11 +246,9 @@ const CreateQuiz = () => {
                       selected={selectedTags}
                       setSelected={setSelectedTags}
                     />
-                   
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <UploadMultipalImage name="imgs" />
-                 
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>

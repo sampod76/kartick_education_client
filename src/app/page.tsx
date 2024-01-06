@@ -7,6 +7,10 @@ import CommonCourse from "@/components/Home/commonCourse/CommonCourse";
 import CoursesTab from "@/components/Home/coureses/CoursesTab";
 import Programmes from "@/components/Home/programms/Programmes";
 import HomeHeader from "@/components/shared/Headers/HomeHeader";
+import React from "react";
+// const CoursesTab = React.lazy(
+//   () => import("@/components/Home/coureses/CoursesTab")
+// );
 
 const HomePage = () => {
   return (
