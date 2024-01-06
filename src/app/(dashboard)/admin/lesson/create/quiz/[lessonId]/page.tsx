@@ -54,7 +54,6 @@ const CreateQuiz = () => {
   //
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -69,7 +68,7 @@ const CreateQuiz = () => {
   const onSubmit = async (values: any) => {
     const LessonData: {} = {
       ...values,
-      tags: selectedTags,
+
       demo_video,
       lesson: lesson._id,
     };
@@ -256,8 +255,7 @@ const CreateQuiz = () => {
                     }}
                   >
                     <TagsSelectUI
-                      selected={selectedTags}
-                      setSelected={setSelectedTags}
+                    
                     />
                     {/*//! 10--- */}
                   </Col>

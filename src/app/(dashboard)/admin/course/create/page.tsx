@@ -29,9 +29,6 @@ import {
 } from "antd";
 import { useState } from "react";
 
-
-
-
 import dynamic from "next/dynamic";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -49,7 +46,7 @@ const CreateCoursePage = () => {
 
   // !  tag selection
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -62,9 +59,8 @@ const CreateCoursePage = () => {
 
   // console.log(demo_video);
   const onSubmit = async (values: any) => {
-  
     const CourseData = {
-      tags: selectedTags,
+      // tags: selectedTags,
       demo_video,
       details: textEditorValue,
       ...values,
@@ -81,7 +77,7 @@ const CreateCoursePage = () => {
         Success_model("Course created successfully");
         setVideoType(null);
         setVideoUrl("");
-        setSelectedTags([]);
+ 
         setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
@@ -229,14 +225,9 @@ const CreateCoursePage = () => {
 
                   {/* tag selections */}
                   <Col xs={24} md={24} lg={24} style={{}}>
-                    {/* <TagUI
-                      selectedTags={selectedTags}
-                      setSelectedTags={setSelectedTags}
-                      tagOptions={tagOptions}
-                    /> */}
+                 
                     <TagsSelectUI
-                      selected={selectedTags}
-                      setSelected={setSelectedTags}
+                  
                     />
 
                     {/*//! 11 */}

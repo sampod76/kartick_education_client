@@ -13,10 +13,10 @@ import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useGetAllTrainersQuery } from "@/redux/api/adminApi/trainer";
 export default function TopDashStatistics() {
   const { data: allUserData } = useGetAllUsersQuery({});
-  console.log(
-    "🚀 ~ file: TopDashStatistics.tsx:14 ~ TopDashStatistics ~ allUserData:",
-    allUserData
-  );
+  // console.log(
+  //   "🚀 ~ file: TopDashStatistics.tsx:14 ~ TopDashStatistics ~ allUserData:",
+  //   allUserData
+  // );
 
   const { data: allCourseData } = useGetAllCourseQuery({});
   const { data: allTrainer } = useGetAllTrainersQuery({});

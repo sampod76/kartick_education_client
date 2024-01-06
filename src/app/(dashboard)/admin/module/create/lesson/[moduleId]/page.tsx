@@ -58,7 +58,6 @@ export default function CreateCourseFromCourse({
 
   // !  tag selection
 
-  const [selectedTags, setSelectedTags] = useState<string[]>(["tag1"]);
 
   const onSubmit = async (values: any) => {
     // console.log(values);
@@ -69,7 +68,7 @@ export default function CreateCourseFromCourse({
 
     const LessonData: {} = {
       ...values,
-      tags: selectedTags,
+
       module: params.moduleId,
       details: textEditorValue,
     };
@@ -197,8 +196,7 @@ export default function CreateCourseFromCourse({
                 }}
               >
                 <TagsSelectUI
-                  selected={selectedTags}
-                  setSelected={setSelectedTags}
+              
                 />
                 {/*//! 6 */}
               </Col>
