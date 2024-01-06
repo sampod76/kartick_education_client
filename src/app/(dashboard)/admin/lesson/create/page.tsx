@@ -108,7 +108,7 @@ const CreateLesson = () => {
   if (serviceLoading) {
     return message.loading("Loading...");
   }
-  const roundedNumber = Number(existLesson?.data[0].lesson_number).toFixed(1);
+  const roundedNumber = Number(existLesson?.data[0]?.lesson_number || 0).toFixed(1);
 
   // Add 0.1 to the rounded number and use toFixed again when logging
   const prelesson_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
