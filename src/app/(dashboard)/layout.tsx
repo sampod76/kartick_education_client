@@ -10,6 +10,7 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { dashboardItems } from "@/constants/dashBoardItems";
 import DashboardSidebar from "@/components/shared/DashBoard/DashboardSidebar";
 import DashboardNavBar from "@/components/shared/DashBoard/DashboardNavbar";
+import dynamic from "next/dynamic";
 
 const { Content } = Layout;
 
@@ -90,4 +91,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+// export default DashboardLayout;
+
+export default dynamic(() => Promise.resolve(DashboardLayout), {
+   ssr: false,
+ });

@@ -38,10 +38,7 @@ const TextEditor = dynamic(
 );
 const CreateCoursePage = () => {
   const [textEditorValue, setTextEditorValue] = useState("");
-  console.log(
-    "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
-    textEditorValue
-  );
+
   const [addCourse, { isLoading, error }] = useAddCourseMutation();
 
   // !  tag selection
@@ -64,7 +61,6 @@ const CreateCoursePage = () => {
       ...values,
     };
 
-    // console.log(CourseData, "Course");
 
     try {
       const res = await addCourse({ ...CourseData }).unwrap();

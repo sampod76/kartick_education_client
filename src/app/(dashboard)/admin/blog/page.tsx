@@ -28,6 +28,7 @@ import {
 } from "@/utils/modalHook";
 import { useDeleteBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
 import { USER_ROLE } from "@/constants/role";
+import dynamic from "next/dynamic";
 
 const BlogList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -233,4 +234,8 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+// export default BlogList;
+export default dynamic(() => Promise.resolve(BlogList), {
+   ssr: false,
+ });
+
