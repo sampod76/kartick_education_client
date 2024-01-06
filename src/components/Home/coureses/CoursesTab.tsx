@@ -76,8 +76,8 @@ const cousesData =data?.data || []
   );
 };
 
-// export default CoursesTab;
-export default dynamic(() => Promise.resolve(CoursesTab), {
-   ssr: false,
- });
+export default CoursesTab;
+// export default dynamic(() => Promise.resolve(CoursesTab), {
+//    ssr: false,
+//  });
 

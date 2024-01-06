@@ -96,19 +96,18 @@ const AdminPage = () => {
       render: function (data: any) {
         let fullName = "";
         if (data?.role === USER_ROLE.ADMIN) {
-          fullName = data?.admin?.name?.firstName + data?.admin?.name?.lastName;
+          fullName = data?.admin?.name?.firstName + " " + data?.admin?.name?.lastName;
         } else if (data?.role === USER_ROLE.TRAINER) {
           fullName =
-            data?.trainer?.name?.firstName + data?.trainer?.name?.lastName;
+            data?.trainer?.name?.firstName + " " + data?.trainer?.name?.lastName;
         } else if (data?.role === USER_ROLE.SELLER) {
           fullName =
-            data?.seller?.name?.firstName + data?.seller?.name?.lastName;
+            data?.seller?.name?.firstName + " " + data?.seller?.name?.lastName;
         } else if (data?.role === USER_ROLE.STUDENT) {
           fullName =
-            data?.student?.name?.firstName + data?.student?.name?.lastName;
+            data?.student?.name?.firstName + " " + data?.student?.name?.lastName;
         }
-
-        return <p className="capitalize">{fullName}</p>;
+        return <p className="">{fullName}</p>;
       },
     },
     {
