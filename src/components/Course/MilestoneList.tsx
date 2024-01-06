@@ -1,4 +1,7 @@
 "use client";
+import dynamic from "next/dynamic";
+
+
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
 import { Divider } from "antd";
@@ -6,26 +9,33 @@ import Link from "next/link";
 import React from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 
-const MilestoneList = ({ courseId }: { courseId: any }) => {
-  console.log(courseId);
+const MilestoneList = ({ courseId }: { courseId: string }) => {
+  const {
+    data: courseData = {},
+    isLoading: courseLoading,
+    error,
+  } = useGetSingleCourseQuery(courseId);
 
-  const { data: courseData, isLoading: courseLoadin } =
-    useGetSingleCourseQuery(courseId);
-  console.log(courseData, "courseDat");
-
-  const { data, isLoading } = useGetAllMilestoneQuery({
+  const {
+    data,
+    isLoading,
+    error: milestonError,
+  } = useGetAllMilestoneQuery({
     course: courseId,
     module: "yes",
   });
 
   // console.log(data,"courseId");
-  const milestoneData = data?.data;
+  const milestoneData = data?.data || [];
 
-  console.log(milestoneData, "milestoneData");
+  if (error || milestonError) {
+    console.log(error, milestonError);
+  }
+
 
   return (
     <>
-      {isLoading || courseLoadin ? (
+      {isLoading || courseLoading ? (
         <LoadingForDataFetch />
       ) : (
         <div
@@ -62,7 +72,6 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
                     className="text-start text-gray-800 text-[20px] font-semibold font-['Inter'] leading-1 "
                   >
                     💥 {milestone?.title}
-
                     {/* //! Milestone Title */}
                   </Link>
                   <ul className="py-3 list-[circle] mx-5">
@@ -104,4 +113,7 @@ const MilestoneList = ({ courseId }: { courseId: any }) => {
   );
 };
 
-export default MilestoneList;
+// export default MilestoneList;
+export default dynamic(() => Promise.resolve(MilestoneList), {
+   ssr: false,
+ });
