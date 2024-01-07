@@ -237,10 +237,7 @@ const CreateQuiz = () => {
                   </Col>
                   <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                     <DemoVideoUI
-                      videoType={videoType as any}
-                      setVideoType={setVideoType}
-                      videoUrl={videoUrl}
-                      setVideoUrl={setVideoUrl}
+                     
                       options={["youtube", "vimeo"]}
                       label="Demo video"
                     />

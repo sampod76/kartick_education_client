@@ -24,7 +24,7 @@ const DemoVideoUI = ({
   required?: boolean;
   defaultValue?: Record<string, any>;
 }) => {
-  console.log(videoType,videoUrl);
+  // console.log(videoType,videoUrl);
   //   const [videoType, setVideoType] = useState(null);
   //   const [videoUrl, setVideoUrl] = useState("");
 

@@ -256,10 +256,6 @@ const EditQuiz = ({ params }: { params: { id: string } }) => {
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <DemoVideoUI
-                      videoType={videoType as any}
-                      setVideoType={setVideoType}
-                      videoUrl={videoUrl}
-                      setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
                       label="Demo video"
                       defaultValue={data?.demo_video}

@@ -218,10 +218,6 @@ const CreateCoursePage = () => {
                   <Col xs={24} md={24} lg={24} style={{}}>
                     <DemoVideoUI
                       label="Demo Video"
-                      videoType={videoType as any}
-                      setVideoType={setVideoType}
-                      videoUrl={videoUrl}
-                      setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
                     />
                     {/*//! 12*/}

@@ -56,7 +56,6 @@ const CreateCoursePage = () => {
     const CourseData = {
       // tags: selectedTags,
 
-      demo_video,
       // details: textEditorValue,
 
       ...values,
