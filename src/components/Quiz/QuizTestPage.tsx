@@ -64,19 +64,6 @@ export default function QuizTestPage({
     userResponses
   );
 
-  useEffect(() => {
-    // Restore user responses and current step from local storage
-    const storedResponses = localStorage.getItem(`quizResponses_${quizId}`);
-    const storedStep = localStorage.getItem(`quizStep_${quizId}`);
-
-    if (storedResponses) {
-      setUserResponses(JSON.parse(storedResponses));
-    }
-
-    if (storedStep) {
-      setCurrentStep(parseInt(storedStep, 10));
-    }
-  }, [quizId]);
 
   return (
     <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0">

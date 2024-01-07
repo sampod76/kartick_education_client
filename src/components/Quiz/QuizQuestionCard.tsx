@@ -24,7 +24,9 @@ export default function QuizQuestionCard({
         title: quiz?.title,
       },
     }));
+    // localStorage.setItem(`${quiz?.title}`, JSON.stringify(userResponses));
   };
+
   return (
     <div>
       <Card key={quiz?._id} className="mb-4">
