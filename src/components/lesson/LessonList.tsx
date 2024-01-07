@@ -14,6 +14,7 @@ import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
 import { CutText } from "@/utils/CutText";
 import VimeoPlayer from "@/utils/vimoPlayer";
 import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
   // console.log(moduleId, "moduleId from LessonList");
@@ -48,14 +49,16 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
   //   "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ QuizData:",
   //   QuizData
   // );
-
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
       const lessonQuizData: any = QuizData?.data?.find(
         (item: any) => item?.lesson === lesson?._id
       );
       // console.log(lesson);
-       //  // console.log("🚀 lessonQuizData", lessonQuizData);
+      //  // console.log("🚀 lessonQuizData", lessonQuizData);
       return {
         key: lesson?._id,
         label: (
@@ -66,7 +69,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               </h2>
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
-           
+
             <Link
               href={`/lesson/quiz/${lessonQuizData?._id}`}
               className="text-[14px] flex justify-between w-full mt-3"
@@ -81,11 +84,12 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
         children: (
           <div>
             <p className="text-center">
-            <div className="flex justify-center items-center my-2">
-              {lesson?.videos?.length && lesson?.videos[0]?.platform === ENUM_VIDEO_PLATFORM.VIMEO && (
-                <VimeoPlayer link={lesson?.videos[0]?.link} />
-              )}
-            </div>
+              <div className="flex justify-center items-center my-2">
+                {lesson?.videos?.length &&
+                  lesson?.videos[0]?.platform === ENUM_VIDEO_PLATFORM.VIMEO && (
+                    <VimeoPlayer link={lesson?.videos[0]?.link} />
+                  )}
+              </div>
               {lesson?.details && CutText(lesson?.details, 200)}
             </p>
           </div>

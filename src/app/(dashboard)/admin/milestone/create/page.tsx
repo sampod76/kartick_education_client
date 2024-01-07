@@ -42,16 +42,13 @@ const CreateMilestone = () => {
   const categoryData: any = Categorys?.data;
   //
   //
-  const [textEditorValue, setTextEditorValue] = useState("");
+  // const [textEditorValue, setTextEditorValue] = useState("");
 
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
 
   const onSubmit = async (values: any) => {
-    // console.log(values);
-    // const imgUrl = await uploadImgBB(values.img);
 
-    // values.img = imgUrl;
     if (!courses._id) {
       Error_model_hook("Course must be select");
       return;
@@ -60,7 +57,7 @@ const CreateMilestone = () => {
     const MilestoneData: {} = {
       ...values,
    
-      details: textEditorValue,
+      // details: textEditorValue,
       course: courses._id,
     };
     // console.log(MilestoneData);
@@ -72,7 +69,7 @@ const CreateMilestone = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Milestone");
-        setTextEditorValue("");
+        // setTextEditorValue("");
   
       }
       // console.log(res);
@@ -193,8 +190,8 @@ const CreateMilestone = () => {
                         Description
                       </p>
                       <TextEditor
-                        textEditorValue={textEditorValue}
-                        setTextEditorValue={setTextEditorValue}
+                        // textEditorValue={textEditorValue}
+                        // setTextEditorValue={setTextEditorValue}
                       />
                     </section>
                   </Col>

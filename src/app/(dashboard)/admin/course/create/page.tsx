@@ -37,7 +37,7 @@ const TextEditor = dynamic(
   }
 );
 const CreateCoursePage = () => {
-  const [textEditorValue, setTextEditorValue] = useState("");
+  // const [textEditorValue, setTextEditorValue] = useState("");
 
   const [addCourse, { isLoading, error }] = useAddCourseMutation();
 
@@ -57,10 +57,9 @@ const CreateCoursePage = () => {
     const CourseData = {
       // tags: selectedTags,
       demo_video,
-      details: textEditorValue,
+      // details: textEditorValue,
       ...values,
     };
-
 
     try {
       const res = await addCourse({ ...CourseData }).unwrap();
@@ -72,7 +71,7 @@ const CreateCoursePage = () => {
         setVideoType(null);
         setVideoUrl("");
 
-        setTextEditorValue("");
+        // setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
@@ -252,8 +251,8 @@ const CreateCoursePage = () => {
             >
               <p className="text-center my-3 font-bold text-xl">Description</p>
               <TextEditor
-                textEditorValue={textEditorValue}
-                setTextEditorValue={setTextEditorValue}
+                // textEditorValue={textEditorValue}
+                // setTextEditorValue={setTextEditorValue}
               />
             </section>
             {/* <div>

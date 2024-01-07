@@ -16,6 +16,7 @@ import { useUserLoginMutation } from "@/redux/api/auth/authApi";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { AllImage } from "@/assets/AllImge";
 
 type FormValues = {
   email: string;
@@ -48,6 +49,7 @@ const Login = () => {
         Error_model_hook(res?.message);
       }
     } catch (err: any) {
+      Error_model_hook(err?.data || err?.message);
       console.log(err);
     }
   };
@@ -70,8 +72,7 @@ const Login = () => {
         <div
           className="hidden bg-cover lg:block lg:w-2/3"
           style={{
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)",
+            backgroundImage: `url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)`,
           }}
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
@@ -88,13 +89,15 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-3/6">
-          <div className="flex-1">
+        <div className="flex items-center w-full max-w-lg px-6 mx-auto lg:w-3/6 ">
+          <div className="flex-1 shadow-lg p-5 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
             <div className="text-center">
               <div className="flex justify-center mx-auto">
-                <img
-                  className="w-auto h-7 sm:h-8"
-                  src="https://merakiui.com/images/logo.svg"
+                <Image
+                  width={500}
+                  height={500}
+                  className="w-48 "
+                  src={AllImage.siteLogo}
                   alt=""
                 />
               </div>
@@ -140,18 +143,21 @@ const Login = () => {
                     required={true}
                   />
                 </div>
+                <div className="">
+
                 <Button
                   type="primary"
                   style={{
                     width: "6rem",
                     fontWeight: "600",
-                    backgroundColor: "grey",
+                    backgroundColor: "blue",
                     height: "2.6rem",
                   }}
                   htmlType="submit"
                 >
                   {isLoading ? <ButtonLoading /> : "Login"}
                 </Button>
+                </div>
               </Form>
             </div>
           </div>

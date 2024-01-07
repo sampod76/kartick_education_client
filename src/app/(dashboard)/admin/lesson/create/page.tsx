@@ -83,7 +83,7 @@ const CreateLesson = () => {
       ...values,
 
       module: module?._id,
-      details: textEditorValue,
+      // details: textEditorValue,
     };
     console.log(LessonData);
     // return;

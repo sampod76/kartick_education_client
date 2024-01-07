@@ -24,6 +24,7 @@ import {
 } from "@/redux/api/adminApi/moduleApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterMilestone from "@/components/dashboard/Filter/FilterMilestone";
+import { AllImage } from "@/assets/AllImge";
 
 const MileStoneList = () => {
   const query: Record<string, any> = {};
@@ -98,7 +99,7 @@ const MileStoneList = () => {
           <>
             {
               <Image
-                src={data?.img}
+                src={data?.imgs[0] || AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
@@ -116,8 +117,8 @@ const MileStoneList = () => {
       ellipsis: true,
     },
     {
-      title: "details",
-      dataIndex: "details",
+      title: "Description",
+      dataIndex: "short_description",
       ellipsis: true,
     },
     {

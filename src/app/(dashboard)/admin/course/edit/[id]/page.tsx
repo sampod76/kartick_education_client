@@ -35,6 +35,7 @@ import { useState } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -49,7 +50,11 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
     isLoading,
     error,
   } = useGetSingleCourseQuery(params.id, { skip: !Boolean(params.id) });
-  const [textEditorValue, setTextEditorValue] = useState("");
+  // const [textEditorValue, setTextEditorValue] = useState("");
+  // console.log(
+  //   "🚀 ~ file: page.tsx:53 ~ UpdateCoursePage ~ textEditorValue:",
+  //   textEditorValue
+  // );
 
   console.log(getCourse);
   // ! for video insert
@@ -66,26 +71,23 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
     const CourseData = {
       // tags: selectedTags,
       demo_video,
-      details: textEditorValue,
+      // details: textEditorValue,
       ...values,
     };
-
-    console.log(CourseData, "Course");
-
 
     try {
       const res = await updateCourse({
         id: params.id,
         data: { ...CourseData },
       }).unwrap();
-      console.log(res, "response");
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Course update successfully");
         setVideoType(null);
         setVideoUrl("");
-        setTextEditorValue("");
+        // setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
@@ -113,7 +115,15 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
       <div className="">
         <Form
           submitHandler={onSubmit}
-          defaultValues={getCourse?._id ? getCourse : {}}
+          defaultValues={
+            getCourse?._id
+              ? {
+                  ...getCourse,
+                  category: getCourse?.category?._id,
+                  author: getCourse?.author?._id,
+                }
+              : {}
+          }
         >
           <section
             style={{
@@ -194,7 +204,15 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                   </Col>
 
                   <Col xs={24} md={12} lg={12} style={{}}>
-                    <FormDataRange name="duration" label="Duration" />
+                    <div className="flex flex-col justify-start ">
+                      <p className="ml:3">
+                        {" "}
+                        Start date:{" "}
+                        {formatMongoCreatedAtDate(getCourse?.duration[0])} - End
+                        : {formatMongoCreatedAtDate(getCourse?.duration[1])}
+                      </p>
+                      <FormDataRange name="duration" label="Duration" />
+                    </div>
                     {/* //!4  */}
                   </Col>
                 </Row>
@@ -271,9 +289,9 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
             >
               <p className="text-center my-3 font-bold text-xl">Description</p>
               <TextEditor
-                textEditorValue={textEditorValue}
-                setTextEditorValue={setTextEditorValue}
-                defultTextEditorValue={getCourse?.details || ""}
+                // textEditorValue={textEditorValue}
+                // setTextEditorValue={setTextEditorValue}
+                defaultTextEditorValue={getCourse?.details}
               />
             </section>
             {/* <div>

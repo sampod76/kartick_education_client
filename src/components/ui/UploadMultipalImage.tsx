@@ -1,8 +1,9 @@
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
+import { Flex, message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -26,13 +27,13 @@ const beforeUpload = (file: RcFile) => {
 
 type ImageUploadProps = {
   name: string;
-  defaultImage?: string;
+  defaultImage?: string[];
   customChange?: any;
 };
 
 const UploadMultipalImage = ({
   name,
-  defaultImage,
+  defaultImage = [],
   customChange,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
@@ -71,7 +72,19 @@ const UploadMultipalImage = ({
   );
 
   return (
-    <>
+    <div className="flex justify-center items-center border p-5 rounded-lg my-2">
+      {defaultImage.length &&
+        defaultImage?.map((image, i) => (
+          <Image
+            key={i}
+            src={image}
+            alt="avatar"
+            width={500}
+            height={500}
+            // fill
+            className="w-36"
+          />
+        ))}
       <Upload
         name={name}
         listType="picture-card"
@@ -85,18 +98,7 @@ const UploadMultipalImage = ({
       >
         {uploadButton}
       </Upload>
-      {/* {imagesUrl.map((image, i) => (
-          <Image
-            key={i}
-            src={image}
-            alt="avatar"
-            style={{ width: "100%" }}
-            width={60}
-            height={60}
-            // fill
-          />
-        ))} */}
-    </>
+    </div>
   );
 };
 

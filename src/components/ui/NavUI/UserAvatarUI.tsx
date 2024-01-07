@@ -38,7 +38,7 @@ const UserAvatarUI = () => {
       label: <Link href={"/SendFeedback"}>Send Feedback</Link>,
     },
     {
-      key: "5",
+      key: "6",
       label: (
         <Button
           onClick={() => {

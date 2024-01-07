@@ -17,7 +17,7 @@ export default function LessonPage({
   // console.log(moduleId);
   const { data: moduleData, isLoading } = useGetSingleModuleQuery(moduleId);
   //  //  // console.log("🚀 ~ file: page.tsx:12 ~ LessonPage ~ moduleData:", moduleData);
-  const milestoneId = moduleData?.milestone;
+  const milestoneId = moduleData?.milestone?._id;
   // console.log(milestoneId);
   if (isLoading) {
     return <LoadingSkeleton number={10} />;

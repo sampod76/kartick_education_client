@@ -1,20 +1,23 @@
 "use client";
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import JoditEditor from "jodit-react";
-
+import { useFormContext } from "react-hook-form";
 const TextEditor = ({
   textEditorValue,
   setTextEditorValue,
-  defultTextEditorValue = "",
+  defaultTextEditorValue: defultTextEditorValue = "",
+  name = "details",
 }: {
-  textEditorValue: string;
-  defultTextEditorValue?: string;
-  setTextEditorValue: React.Dispatch<React.SetStateAction<string>>;
+  textEditorValue?: string;
+  defaultTextEditorValue?: string;
+  name?: string;
+  setTextEditorValue?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const editor = useRef(null);
   const [content, setContent] = useState(defultTextEditorValue);
   // const [vlaue, setTextEditorValue] = useState("");
-
+  const { setValue } = useFormContext();
+ 
   const editorConfig = useMemo(
     () => ({
       readonly: false,
@@ -26,7 +29,6 @@ const TextEditor = ({
     }),
     []
   );
- 
 
   return (
     <div>
@@ -36,7 +38,7 @@ const TextEditor = ({
         value={content}
         // tabIndex={1} // tabIndex of textarea
         onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-        onChange={(newContent) => setTextEditorValue(newContent)}
+        onChange={(newContent) =>  setValue(name, newContent)}
       />
     </div>
   );
