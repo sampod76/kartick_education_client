@@ -2,7 +2,7 @@
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { USER_ROLE } from "@/constants/role";
-import { isLoggedIn } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { Drawer, Layout, Menu, Row, Space, Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,23 +15,26 @@ import dynamic from "next/dynamic";
 const { Content } = Layout;
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  // const userLoggedIn = isLoggedIn();
-  const userLoggedIn = USER_ROLE.ADMIN;
-  // console.log(userLoggedIn);
+  const userLoggedIn = isLoggedIn();
+  // const userLoggedIn = USER_ROLE.ADMIN;
+
+  const userInfo:any = getUserInfo();
+  console.log(userInfo);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [collapsed, setCollapsed] = useState(false);
 
   const screens = useBreakpoint();
 
   useEffect(() => {
-    if (!userLoggedIn) {
+    setIsLoading(true);
+    if (userInfo?.role !==USER_ROLE.ADMIN) {
       router.push("/login");
     }
-    setIsLoading(true);
-  }, [router, isLoading, userLoggedIn]);
+    setIsLoading(false);
+  }, [router, isLoading, userLoggedIn, userInfo?.role]);
 
-  if (!isLoading) {
+  if (isLoading || !userLoggedIn) {
     return (
       <Row
         justify="center"
@@ -64,7 +67,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             style={{ backgroundColor: "#ffffff" }}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={dashboardItems(userLoggedIn,setCollapsed)}
+            items={dashboardItems(userInfo?.role,setCollapsed)}
           />
         </Drawer>
       ) : (
