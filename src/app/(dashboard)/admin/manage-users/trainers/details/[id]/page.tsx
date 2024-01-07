@@ -10,6 +10,8 @@ const StudentDetailsPage = ({ params }: any) => {
   const id = params.id;
   console.log(id);
   const { data: userData, isLoading: loading } = useGetSingleStudentQuery(id);
+  console.log("🚀 ~ file: page.tsx:13 ~ StudentDetailsPage ~ userData:", userData)
+
 
   console.log(userData);
 

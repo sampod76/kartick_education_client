@@ -3,12 +3,10 @@ import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import ProfileAboutSection from "./ProfileAboutSection";
 import Courses from "../Home/coureses/Courses";
-
 export default function ProfileTabSection() {
   const onChange = (key: string) => {
     console.log(key);
   };
-
   const items: TabsProps["items"] = [
     {
       key: "1",
