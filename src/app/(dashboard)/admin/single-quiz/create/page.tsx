@@ -34,6 +34,13 @@ import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIe
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 
 const CreateSingleQuiz = () => {
   //
@@ -47,7 +54,10 @@ const CreateSingleQuiz = () => {
   const [answers, setAnswers] = useState([]);
 
   const [singleAnswer, setSingleAnswerInput] = useState<string>("");
-  console.log("🚀 ~ file: page.tsx:58 ~ CreateSingleQuiz ~ singleAnswer:", singleAnswer)
+  console.log(
+    "🚀 ~ file: page.tsx:58 ~ CreateSingleQuiz ~ singleAnswer:",
+    singleAnswer
+  );
   //
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
@@ -88,7 +98,7 @@ const CreateSingleQuiz = () => {
       return;
     }
 
-    if(!quizType){
+    if (!quizType) {
       Error_model_hook("Please select an quiz type");
       return;
     }
@@ -101,7 +111,7 @@ const CreateSingleQuiz = () => {
 
       // demo_video,
       quiz: quiz?._id,
-      type: quizType
+      type: quizType,
     };
 
     // console.log(singleQuizDat);
@@ -124,7 +134,6 @@ const CreateSingleQuiz = () => {
       console.log(error);
     }
   };
-
 
   return (
     <div>
@@ -337,9 +346,7 @@ const CreateSingleQuiz = () => {
                     marginBottom: "10px",
                   }}
                 >
-                  <TagsSelectUI
-              
-                  />
+                  <TagsSelectUI />
                 </Col>
                 <Col
                   className="gutter-row"
@@ -374,17 +381,28 @@ const CreateSingleQuiz = () => {
                 />
               </Col>
 
-              {/* <Col
+              <Col
                 className="gutter-row"
                 xs={24}
-              
-                style={{
-                  marginBottom: "10px",
-                }}
+                // md={12}
+                // lg={8}
+                style={{}}
               >
-                <SelectAuthorField />
-              
-              </Col>  */}
+                {/*//! 3 */}
+                <section
+                  style={{
+                    borderTopWidth: "2px",
+                  }} /* className=" border-t-2" */
+                >
+                  <p className="text-center my-3 font-bold text-xl">
+                    Description
+                  </p>
+                  <TextEditor
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
+                  />
+                </section>
+              </Col>
 
               <Row
                 gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}

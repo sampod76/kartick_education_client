@@ -28,17 +28,20 @@ import {
   useGetAllMilestoneQuery,
 } from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import {
-  useDeleteSingleQuizMutation,
-  useGetAllSingleQuizQuery,
-} from "@/redux/api/adminApi/singleQuiz";
 
-const SingleQuizList = () => {
+import { useDeleteSingleQuizMutation, useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
+import { AllImage } from "@/assets/AllImge";
+import { USER_ROLE } from "@/constants/role";
+
+const SingleQuizStoneList = () => {
+
   const query: Record<string, any> = {};
 
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
+  const ADMIN=USER_ROLE.ADMIN
 
-  const [deleteSingleQuiz] = useDeleteSingleQuizMutation();
+
+  const [deleteSingleQuiz,{isLoading:deleteSingleLoading}] = useDeleteSingleQuizMutation();
+
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -63,7 +66,9 @@ const SingleQuizList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllSingleQuizQuery({ ...query });
-  // console.log(data);
+
+  console.log("🚀 ~ file: page.tsx:65 ~ SingleQuizStoneList ~ data:", data)
+
 
   //@ts-ignore
   const singleQuizData = data?.data;
@@ -103,13 +108,36 @@ const SingleQuizList = () => {
 
   const columns = [
     {
+
+      title: "Image",
+      render: function (data: any) {
+        return (
+          <>
+            {
+              <Image
+              src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
+                style={{ height: "50px", width: "80px" }}
+                width={50}
+                height={50}
+                alt="dd"
+              />
+            }
+          </>
+        );
+      },
+      width: 100,
+    },
+    {
+
       title: "Name",
       dataIndex: "title",
       ellipsis: true,
     },
     {
-      title: "hints",
-      dataIndex: "hints",
+
+      title: "Description",
+      dataIndex: "short_description",
+
       ellipsis: true,
       width: 100,
     },
@@ -119,10 +147,21 @@ const SingleQuizList = () => {
       ellipsis: true,
     },
     {
-      title: "Quiz",
-      dataIndex: ["quiz", "title"],
+
+      title: "quiz",
+      // dataIndex: "showing_number",
+
       ellipsis: true,
+      render: function (data: any) {
+        return <>{data?.quiz?.q}{":"}{data?.quiz?.title}</>;
+      },
+
     },
+    // {
+    //   title: "course",
+    //   dataIndex: ["course", "title"],
+    //   ellipsis: true,
+    // },
     {
       title: "Short Details",
       dataIndex: "short_description      ",
@@ -147,14 +186,16 @@ const SingleQuizList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/admin/single-quiz/details/${record._id}`}>
+
+                    <Link href={`/${ADMIN}/single-quiz/details/${record._id}`}>
+
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/admin/single-quiz/edit/${record._id}`}>
-                      Edit
-                    </Link>
+
+                    <Link href={`/${ADMIN}/single-quiz/edit/${record._id}`}>Edit</Link>
+
                   </Menu.Item>
 
                   <Menu.Item
@@ -218,7 +259,7 @@ const SingleQuizList = () => {
         padding: "1rem",
       }}
     >
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: "admin",
@@ -229,7 +270,7 @@ const SingleQuizList = () => {
             link: "/admin/single-quiz",
           },
         ]}
-      />
+      /> */}
       <HeadingUI>SIngle Quiz List</HeadingUI>
       <ActionBar>
         <Input
@@ -280,4 +321,6 @@ const SingleQuizList = () => {
   );
 };
 
-export default SingleQuizList;
+
+export default SingleQuizStoneList;
+

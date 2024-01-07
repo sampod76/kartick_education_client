@@ -109,7 +109,7 @@ const EditServicePage = ({ params }: any) => {
                   name="title"
                   size="large"
                   label="Service Name"
-                  required={true}
+                        
                 />
               </Col>
               <div>
@@ -128,14 +128,14 @@ const EditServicePage = ({ params }: any) => {
                       name="price"
                       size="large"
                       label="Per Ticket Price"
-                      required={true}
+                            
                     />
                     <FormInput
                       type="number"
                       name="availableTickets"
                       size="large"
                       label="Available Tickets/sit"
-                      required={true}
+                            
                     />
                   </div>
                 </Col>
@@ -163,7 +163,7 @@ const EditServicePage = ({ params }: any) => {
                   name="contact"
                   size="large"
                   label="Bus Driver Number"
-                  required={true}
+                        
                 />
               </Col>
               <Col
@@ -210,7 +210,7 @@ const EditServicePage = ({ params }: any) => {
                     <FormSelectField
                       name="category"
                       label="Select Category"
-                      required={true}
+                            
                       options={
                         //@ts-ignore
                         categoryData?.data?.map((e) => ({
@@ -231,7 +231,7 @@ const EditServicePage = ({ params }: any) => {
                     <FormSelectField
                       name="status"
                       label="Select status"
-                      required={true}
+                            
                       options={[
                         {
                           value: "available",

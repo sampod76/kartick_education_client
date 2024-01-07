@@ -19,9 +19,9 @@ interface Video {
 //   setVideos: React.Dispatch<React.SetStateAction<Video[] | []>>;
 // }
 
-const VideoSelect = () => {
+const VideoSelect = ({defaultValue=[]}:{defaultValue?:Array<Video>}) => {
   const { setValue } = useFormContext();
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [videos, setVideos] = useState<Video[]|[]>(defaultValue);
   //   console.log("🚀 ~ file: VideoSelect.tsx:24 ~ videos:", videos, setVideos);
 
   if (videos?.length) {
@@ -40,18 +40,9 @@ const VideoSelect = () => {
 
   ///! for input
   const [videoType, setVideoType] = useState(null);
-  const [videoUrl, setVideoUrl] = useState("");
 
-  const handleVideoTypeChange = (value: any) => {
-    setVideoType(value);
-  };
 
   const handleVideoUrlChange = (index: number, link: any) => {
-    // console.log(
-    //   link,
-    //   "🚀 ~ file: VideoSelect.tsx:43 ~ handleVideoUrlChange ~ index:",
-    //   index
-    // );
 
     let updatedVideos = [...videos];
     updatedVideos[index] = {
@@ -66,7 +57,6 @@ const VideoSelect = () => {
   //! For handle add or remove
   const handleRemove = (index: number) => {
     const updatedVideos = [...videos];
-
     updatedVideos.splice(index, 1);
     setVideos(updatedVideos);
   };
@@ -74,11 +64,6 @@ const VideoSelect = () => {
   const handleChange = (index: number, updatedVideo: Video) => {
     let updatedVideos = [...videos];
     updatedVideos[index] = updatedVideo;
-    // console.log(
-    //   "🚀 ~ file: VideoSelect.tsx:57 ~ handleChange ~ updatedVideos:",
-    //   updatedVideos
-    // );
-
     setVideos(updatedVideos);
   };
 
@@ -145,20 +130,25 @@ const VideoSelect = () => {
                 <Select
                   className=""
                   placeholder="Select Video Platform"
+                  defaultValue={video.platform ||"vimeo"}
+                  size="large"
+                 
                   //   onChange={handleVideoTypeChange}
                   onChange={(value) =>
                     handleChange(index, { ...video, platform: value })
                   }
                 >
-                  <Select.Option value="youtube">youtube</Select.Option>
+                  <Select.Option  value="youtube">youtube</Select.Option>
                   <Select.Option value="vimeo">vimeo</Select.Option>
                 </Select>
               }
               type="URL"
               suffix=".com"
               // defaultValue="mysite"
+              defaultValue={video.link}
               placeholder={`Enter ${videoType} Video URL`}
               //   value={videoUrl}
+               style={{width: "100%",}}
               onChange={(e) =>
                 handleVideoUrlChange(index, { link: e.target.value })
               }

@@ -29,6 +29,7 @@ import {
 } from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterCourse from "@/components/dashboard/Filter/FilterCourse";
+import { AllImage } from "@/assets/AllImge";
 
 const MileStoneList = () => {
   const query: Record<string, any> = {};
@@ -64,10 +65,11 @@ const MileStoneList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
-  // console.log(data);
+  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data)
+
 
   //@ts-ignore
-  const milestoneData = data?.data;
+  const milestoneData = data?.data || [];
 
   //@ts-ignore
   const meta = data?.meta;
@@ -103,7 +105,7 @@ const MileStoneList = () => {
           <>
             {
               <Image
-                src={data?.img}
+                src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
@@ -121,13 +123,13 @@ const MileStoneList = () => {
       ellipsis: true,
     },
     {
-      title: "details",
-      dataIndex: "details",
+      title: "Description",
+      dataIndex: "short_description",
       ellipsis: true,
     },
     {
       title: "Milestone Number",
-      dataIndex: "showing_number",
+      dataIndex: "milestone_number",
       ellipsis: true,
     },
     {

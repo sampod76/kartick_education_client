@@ -29,6 +29,7 @@ import {
 } from "@/redux/api/adminApi/lessoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterModule from "@/components/dashboard/Filter/FilterModule";
+import { AllImage } from "@/assets/AllImge";
 
 const LessonList = () => {
   const query: Record<string, any> = {};
@@ -63,8 +64,8 @@ const LessonList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllLessonQuery({ ...query });
-  // console.log(data);
+  const { data , isLoading } = useGetAllLessonQuery({ ...query });
+  console.log(data);
 
   //@ts-ignore
   const LessonData = data?.data;
@@ -99,14 +100,15 @@ const LessonList = () => {
     {
       title: "Image",
       render: function (data: any) {
+        console.log(data);
         return (
           <>
             {
               <Image
-                src={data?.img}
+              src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
-                width={50}
-                height={50}
+                width={100}
+                height={100}
                 alt="dd"
               />
             }
@@ -120,30 +122,30 @@ const LessonList = () => {
       dataIndex: "title",
       ellipsis: true,
     },
-    {
-      title: "details",
-      dataIndex: "details",
-      ellipsis: true,
-    },
+    // {
+    //   title: "Description",
+    //   dataIndex: "short_description",
+    //   ellipsis: true,
+    // },
     {
       title: "Lesson Number",
       dataIndex: "lesson_number",
-      ellipsis: true,
-      width: 80,
+      // ellipsis: true,
+      width: 120,
     },
 
     {
       title: "Module",
-      dataIndex: ["module", "title"],
+      // dataIndex: ["module", "title"],
       ellipsis: true,
-      width: 100,
-      // render: function (data: any) {
-      //   return <>{data?.title}</>;
-      // },
+      render: function (data: any) {
+        return <>{data?.module?.module_number +" : "+ data?.module?.title || ""}</>;
+      },
     },
     {
       title: "Created at",
       dataIndex: "createdAt",
+      
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },

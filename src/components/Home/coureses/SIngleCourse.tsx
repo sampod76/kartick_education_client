@@ -29,7 +29,7 @@ const SIngleCourse = ({ course }: { course: Record<string, any> }) => {
             width={300}
             // layout="responsive"
             alt="example"
-            src={course?.img || AllImage.noimage}
+            src={course?.img || AllImage.notFoundImage}
           />
         }
         hoverable

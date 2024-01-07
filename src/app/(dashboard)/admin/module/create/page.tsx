@@ -45,7 +45,7 @@ const CreateModule = () => {
   });
   const categoryData: any = Category?.data;
   //
-  const [textEditorValue, setTextEditorValue] = useState("");
+  // const [textEditorValue, setTextEditorValue] = useState("");
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
   const { data: existModule } = useGetAllModuleQuery({});
 
@@ -57,7 +57,7 @@ const CreateModule = () => {
     const ModuleData: {} = {
       ...values,
 
-      details: textEditorValue,
+      // details: textEditorValue,
       milestone: milestone?._id,
     };
 
@@ -239,8 +239,8 @@ const CreateModule = () => {
                         Description
                       </p>
                       <TextEditor
-                        textEditorValue={textEditorValue}
-                        setTextEditorValue={setTextEditorValue}
+                        // textEditorValue={textEditorValue}
+                        // setTextEditorValue={setTextEditorValue}
                       />
                     </section>
                   </Col>

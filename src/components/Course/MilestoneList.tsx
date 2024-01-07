@@ -66,7 +66,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
           <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3 max-w-[80%] mx-auto mt-5">
             {milestoneData?.map((milestone: any, index: number) => {
               return (
-                <div key={index} className="border-2 shadow-xl p-2 rounded-xl">
+                <div key={milestone?._id} className="border-2 shadow-xl p-2 rounded-xl">
                   <Link
                     href={`/module/${milestone?._id}`}
                     className="text-start text-gray-800 text-[20px] font-semibold font-['Inter'] leading-1 "
@@ -77,7 +77,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
                   <ul className="py-3 list-[circle] mx-5">
                     {milestone?.modules?.map((module: any, index: number) => {
                       return (
-                        <li key={index} className="px-2  text-start">
+                        <li key={module._id || index} className="px-2  text-start">
                           <Link
                             href={`/lesson/${module?._id}`}
                             className="text-secondary"

@@ -64,7 +64,7 @@ const Success = () => {
               key={index + 1}
             >
               <p className="h-10 w-10 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-2 text-white">
-                {index + 1}
+                {index + 11}
               </p>
               <h2 className="font-[500] text-2xl text-[#282938] ">
                 {item?.name}
