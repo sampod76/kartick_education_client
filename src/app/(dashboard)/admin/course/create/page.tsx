@@ -45,7 +45,6 @@ const CreateCoursePage = () => {
 
   // ! for video insert
 
-
   // const demo_video = {
   //   video: videoUrl,
   //   platform: videoType,
@@ -56,7 +55,7 @@ const CreateCoursePage = () => {
     const CourseData = {
       // tags: selectedTags,
 
-      demo_video,
+      // demo_video,
       // details: textEditorValue,
 
       ...values,
@@ -207,15 +206,13 @@ const CreateCoursePage = () => {
 
                   <Col xs={24} md={24} lg={24} style={{}}>
                     <DemoVideoUI
-                      label="Demo Video"
+                      label="Preview Video"
                       // videoType={videoType as any}
                       // setVideoType={setVideoType}
                       // videoUrl={videoUrl}
                       // setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
                     />
-
-                   
                   </Col>
 
                   {/* tag selections */}
@@ -252,8 +249,8 @@ const CreateCoursePage = () => {
             >
               <p className="text-center my-3 font-bold text-xl">Description</p>
               <TextEditor
-                // textEditorValue={textEditorValue}
-                // setTextEditorValue={setTextEditorValue}
+              // textEditorValue={textEditorValue}
+              // setTextEditorValue={setTextEditorValue}
               />
             </section>
             {/* <div>

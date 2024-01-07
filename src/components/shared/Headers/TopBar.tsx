@@ -15,14 +15,20 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { USER_ROLE } from "@/constants/role";
 import { userInfo } from "os";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
+import { getUserInfo } from "@/services/auth.service";
 
 const TopBar = () => {
   const screens = useBreakpoint();
-  const userLoggedIn = {
-    name: "",
-    role: "admin",
-    email: "sarwarasik@gmail.com",
-  };
+  // const userLoggedIn = {
+  //   name: "",
+  //   role: "admin",
+  //   email: "sarwarasik@gmail.com",
+  // };
+  const userLoggedIn = getUserInfo() as any
+  console.log(
+    "🚀 ~ file: TopBar.tsx:28 ~ TopBar ~ userLoggedIn:",
+    userLoggedIn
+  );
 
   return (
     <div
@@ -76,7 +82,7 @@ const TopBar = () => {
           <div className="flex gap-3 font-[700]">
             <Link
               className="py-3 px-5 lg:px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
-              href="/"
+              href="/signup"
             >
               Register
             </Link>

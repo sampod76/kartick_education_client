@@ -77,7 +77,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
   console.log("🚀 ~ file: page.tsx:74 ~ EditSingleQuiz ~ data:", data);
   useEffect(() => {
     setAnswers(data?.answers || []);
-    setQuizTypes(data?.type)
+    setQuizTypes(data?.type);
   }, [data]);
 
   const query: Record<string, any> = {};
@@ -117,9 +117,9 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
     } else {
       values["quiz"] = data?.quiz?._id;
     }
-    if(module?._id) {
+    if (module?._id) {
       values["module"] = module?._id;
-    }else{
+    } else {
       values["module"] = data?.module?._id;
     }
     const singleQuizDat: {} = {
@@ -135,7 +135,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
     try {
       const res = await updateSingleQuiz({
         id: params.id,
-        data: {  ...singleQuizDat },
+        data: { ...singleQuizDat },
       }).unwrap();
 
       if (res.success == false) {
@@ -377,7 +377,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
                     videoUrl={videoUrl}
                     setVideoUrl={setVideoUrl}
                     options={["youtube", "vimeo"]}
-                    label="Demo video"
+                    label="Preview Video"
                     defaultValue={data.demo_video}
                   />
                 </Col> */}
@@ -462,7 +462,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
                     marginBottom: "10px",
                   }}
                 >
-                  {quizType === "select"  && (
+                  {quizType === "select" && (
                     <AnswerSInlge
                       answers={answers}
                       setAnswers={setAnswers as any}
@@ -474,7 +474,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
                       setAnswersMultiple={setAnswers as any}
                     />
                   )}
-                  {quizType === "input"  && (
+                  {quizType === "input" && (
                     <>
                       <LabelUi>
                         Answer <span className="text-red-700">*</span>

@@ -336,7 +336,7 @@ const CreateSingleQuiz = () => {
                     // videoUrl={videoUrl}
                     // setVideoUrl={setVideoUrl}
                     options={["youtube", "vimeo"]}
-                    label="Demo video"
+                    label="Preview Video"
                   />
                 </Col>
                 <Col
@@ -398,8 +398,8 @@ const CreateSingleQuiz = () => {
                     Description
                   </p>
                   <TextEditor
-                    // textEditorValue={textEditorValue}
-                    // setTextEditorValue={setTextEditorValue}
+                  // textEditorValue={textEditorValue}
+                  // setTextEditorValue={setTextEditorValue}
                   />
                 </section>
               </Col>

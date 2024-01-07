@@ -454,6 +454,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
     },
   ];
 
+  console.log(role);
   if (role === USER_ROLE.TRAINER) return trainerSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.STUDENT) return studentSidebarItems;

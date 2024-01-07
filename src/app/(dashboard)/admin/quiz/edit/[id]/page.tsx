@@ -261,7 +261,7 @@ const EditQuiz = ({ params }: { params: { id: string } }) => {
                       videoUrl={videoUrl}
                       setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
-                      label="Demo video"
+                      label="Preview Video"
                       defaultValue={data?.demo_video}
                     />
                   </Col>

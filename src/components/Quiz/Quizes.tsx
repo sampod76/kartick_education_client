@@ -8,6 +8,10 @@ import UMBreadCrumb from "../ui/UMBreadCrumb";
 import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { usePathname, useSearchParams } from "next/navigation";
+// import QuizTestPage from "./QuizTestPage";
+const QuizTestPage = React.lazy(
+  () => import("./QuizTestPage")
+)
 
 const { Option } = Select;
 
@@ -110,6 +114,10 @@ export default function QuizeSinglePage({
   const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
     ...quiz_query,
   });
+  console.log(
+    "🚀 ~ file: Quizes.tsx:113 ~ allSingleQuizeData:",
+    allSingleQuizeData
+  );
 
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
@@ -146,7 +154,8 @@ export default function QuizeSinglePage({
           questionLength={allSingleQuizeData?.data?.length}
         />
         <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0 ">
-          <div className="flex flex-col gap-3">
+          <QuizTestPage quizData={allSingleQuizeData?.data || []} quizId={quizeId} />
+          {/* <div className="flex flex-col gap-3">
             {allSingleQuizeData?.data?.map((quiz: any, index: number) => (
               
               <Card key={quiz?._id} className="mb-4">
@@ -164,11 +173,13 @@ export default function QuizeSinglePage({
                     {quiz?.answers.map((option: any) => (
                       <Radio key={option?.title} value={option?.title}>
                         {option?.title}
+                       
                       </Radio>
                     ))}
+             
                   </Radio.Group>
                 )}
-                {quiz?.type === "radio" && (
+                {quiz?.type === "multiple_select" && (
                   <Select placeholder="Select an option" className="w-full">
                     {quiz?.answers?.map((option: any) => (
                       <Option key={option?.title} value={option?.title}>
@@ -180,7 +191,7 @@ export default function QuizeSinglePage({
                 {quiz?.type === "input" && (
                   <div>
                     <p className="text-lg font-[550] mb-2">
-                      Question {index + 1} : {quiz?.title} dddddddd
+                      Question {index + 1} : {quiz?.title} 
                     </p>
                     <Input
                       style={{ minHeight: "1rem", width: "12rem" }}
@@ -188,7 +199,7 @@ export default function QuizeSinglePage({
                     />
                   </div>
                 )}
-                {quiz?.type === "textArea" && (
+                {quiz?.type === "text" && (
                   <Input.TextArea
                     style={{ minHeight: "6rem" }}
                     placeholder="Type your answer"
@@ -205,7 +216,7 @@ export default function QuizeSinglePage({
                 Finish Quiz
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

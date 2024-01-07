@@ -2,7 +2,7 @@
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { USER_ROLE } from "@/constants/role";
-import { isLoggedIn } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { Drawer, Layout, Menu, Row, Space, Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,8 +16,8 @@ const { Content } = Layout;
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   // const userLoggedIn = isLoggedIn();
-  const userLoggedIn = USER_ROLE.ADMIN;
-  // console.log(userLoggedIn);
+  const userLoggedIn =  getUserInfo() as any
+  console.log(userLoggedIn);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -54,7 +54,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     >
       {!screens.sm ? (
         <Drawer
-          title={`${userLoggedIn} Dash`}
+          title={`${userLoggedIn.role} Dash`}
           placement="left"
           onClose={() => setCollapsed(false)}
           open={collapsed}
@@ -64,7 +64,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             style={{ backgroundColor: "#ffffff" }}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={dashboardItems(userLoggedIn,setCollapsed)}
+            items={dashboardItems(userLoggedIn.role,setCollapsed)}
           />
         </Drawer>
       ) : (

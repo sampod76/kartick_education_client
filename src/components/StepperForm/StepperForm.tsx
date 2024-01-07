@@ -80,7 +80,7 @@ const StepperForm = ({
           <div>{steps[current].content}</div>
           <div style={{ marginTop: 30 }}>
             {current < steps.length - 1 && (
-              <Button type="primary" onClick={() => next()}>
+              <Button type="default" onClick={() => next()}>
                 Next
               </Button>
             )}
@@ -91,7 +91,7 @@ const StepperForm = ({
             )}
             {current === steps.length - 1 && (
               <Button
-                type="primary"
+                type="default"
                 htmlType="submit"
                 style={{
                   minWidth: "8rem",

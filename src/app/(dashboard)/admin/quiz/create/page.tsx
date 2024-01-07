@@ -7,15 +7,12 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 
-
-
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
-
 
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 
@@ -51,7 +48,6 @@ const CreateQuiz = () => {
   //
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
-
   // // ! for video insert
   // const [videoType, setVideoType] = useState(null);
   // const [videoUrl, setVideoUrl] = useState("");
@@ -79,9 +75,7 @@ const CreateQuiz = () => {
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
-
         Success_model("Successfully added Quiz");
-
       }
       // console.log(res);
     } catch (error: any) {
@@ -230,7 +224,7 @@ const CreateQuiz = () => {
                       // videoUrl={videoUrl}
                       // setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
-                      label="Demo video"
+                      label="Preview Video"
                     />
                   </Col>
                   <Col
@@ -240,9 +234,7 @@ const CreateQuiz = () => {
                       marginTop: "10px",
                     }}
                   >
-                    <TagsSelectUI
-                   
-                    />
+                    <TagsSelectUI />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <UploadMultipalImage name="imgs" />

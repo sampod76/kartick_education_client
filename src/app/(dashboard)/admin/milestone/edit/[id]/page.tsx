@@ -178,8 +178,9 @@ const MilestoneEditePage = ({ params }: { params: { id: string } }) => {
                   <Col className="gutter-row" xs={24} style={{}}>
                     <UploadMultipalImage
                       defaultImage={data?.imgs || []}
-                      name="imgs"
+                      name="img"
                     />
+                    
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>
