@@ -17,7 +17,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 
 const EditCategoryPage = ({ params }: any) => {
-  const { data: categoryData, isLoading } = useGetSingleCategoryQuery(
+  const { data: categoryData={}, isLoading } = useGetSingleCategoryQuery(
     params?.id,
     {
       skip: !Boolean(params?.id),
@@ -55,22 +55,13 @@ const EditCategoryPage = ({ params }: any) => {
     console.log(error);
   }
 
-  const defaultValues = {
-    title: categoryData?.title || "",
-
-    img: categoryData?.img || "",
-
-    status: categoryData?.status || "",
-
-    // managementDepartment: CategoryData?.managementDepartment?.id || "",
-  };
 
   return (
     <div>
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(ICategorySchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form submitHandler={onSubmit} defaultValues={categoryData}>
           <div
             style={{
               border: "1px solid #d9d9d9",

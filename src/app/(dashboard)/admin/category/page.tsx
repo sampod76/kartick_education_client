@@ -30,6 +30,7 @@ import {
 import { USER_ROLE } from "@/constants/role";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import dynamic from "next/dynamic";
+import { AllImage } from "@/assets/AllImge";
 
 const CategoryList = () => {
   const query: Record<string, any> = {};
@@ -96,7 +97,7 @@ const CategoryList = () => {
           <>
             {
               <Image
-                src={data?.img}
+                src={data?.img || AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}

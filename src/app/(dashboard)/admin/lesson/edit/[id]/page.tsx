@@ -65,10 +65,12 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
   console.log(data);
   const [updateLesson, { isLoading: UpdateLesson }] = useUpdateLessonMutation();
   const onSubmit = async (values: any) => {
-    console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
+ 
+    if (module?._id) {
+      values["module"] = module?._id;
+    }
     const LessonData: {} = {
       ...values,
-      module: module?._id,
     };
     console.log(LessonData);
 
@@ -97,14 +99,10 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
   return (
     <div>
       <div>
-        <div
-         
-        >
-          <div className="border-2 rounded-lg my-3 p-5 border-blue-500 bg-white shadow-md">
-    
-            <SubHeadingUI>Update Lesson</SubHeadingUI>
-           
-            <div className="text-xl font-bold space-x-2 mb-2 text-start my-2">
+        <div className="border-2 rounded-lg my-3 p-5 border-blue-500 bg-white shadow-md">
+          <SubHeadingUI>Update Lesson</SubHeadingUI>
+
+          <div className="text-xl font-bold space-x-2 mb-2 text-start my-2">
             <span className=" p-3  text-base md:text-lg border rounded-lg hover:bg-blue-600 hover:text-white">
               {" "}
               Category:➡{data?.module?.milestone?.course?.category?.title}
@@ -128,54 +126,54 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
               {data?.module?.milestone?.title}
             </h1> */}
           </div>
-          </div>
         </div>
       </div>
+
       {data?._id ? (
         <div className="shadow-xl rounded-lg bg-white p-3">
           {/* resolver={yupResolver(adminSchema)} */}
           {/* resolver={yupResolver(IServiceSchema)} */}
-          <Row gutter={[16, 16]} style={{marginBottom:"1rem"}}>
-              <Col xs={24} lg={12}>
-                <SelectCategoryChildren
-                  lableText="Select category"
-                  setState={setCategory}
-                  isLoading={isLoading}
-                  categoryData={categoryData}
-                />
-              </Col>
-              <Col xs={24} lg={12}>
-                <SelectCategoryChildren
-                  lableText="Select courses"
-                  setState={setCourses}
-                  categoryData={
-                    //@ts-ignore
-                    category?.courses || []
-                  }
-                />
-              </Col>
-              <Col xs={24} lg={12}>
-                <SelectCategoryChildren
-                  lableText="Select milestones"
-                  setState={setmilestone}
-                  categoryData={
-                    //@ts-ignore
-                    courses?.milestones || []
-                  }
-                />
-              </Col>
-              <Col xs={24} lg={12}>
-                <SelectCategoryChildren
-                  lableText="Select module"
-                  setState={setmodule}
-                  categoryData={
-                    //@ts-ignore
-                    milestone?.modules || []
-                  }
-                />
-              </Col>
-            </Row>
-          <Form submitHandler={onSubmit} defaultValues={{...data}}>
+          <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
+            <Col xs={24} lg={12}>
+              <SelectCategoryChildren
+                lableText="Select category"
+                setState={setCategory}
+                isLoading={isLoading}
+                categoryData={categoryData}
+              />
+            </Col>
+            <Col xs={24} lg={12}>
+              <SelectCategoryChildren
+                lableText="Select courses"
+                setState={setCourses}
+                categoryData={
+                  //@ts-ignore
+                  category?.courses || []
+                }
+              />
+            </Col>
+            <Col xs={24} lg={12}>
+              <SelectCategoryChildren
+                lableText="Select milestones"
+                setState={setmilestone}
+                categoryData={
+                  //@ts-ignore
+                  courses?.milestones || []
+                }
+              />
+            </Col>
+            <Col xs={24} lg={12}>
+              <SelectCategoryChildren
+                lableText="Select module"
+                setState={setmodule}
+                categoryData={
+                  //@ts-ignore
+                  milestone?.modules || []
+                }
+              />
+            </Col>
+          </Row>
+          <Form submitHandler={onSubmit} defaultValues={{ ...data }}>
             <div
               style={{
                 border: "1px solid #d9d9d9",
@@ -198,7 +196,6 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
                     name="title"
                     size="large"
                     label="Lesson Title"
-                  
                   />
                   {/*//! 1 */}
                 </Col>
@@ -231,7 +228,6 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
                     // defaultValue={priceTypeOptions[0]}
                     label="status"
                     // placeholder="Select"
-                  
                   />
                 </Col>
                 <Col
@@ -246,7 +242,6 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
                     name="lesson_number"
                     size="large"
                     label="Lesson No"
-                    
                   />
                   {/*//! 2 */}
                 </Col>
@@ -263,9 +258,9 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
                   {/*//! 12*/}
 
                   <VideoSelect
-                  defaultValue={data?.videos || []}
-                  // videos={SelectVideo}
-                  // setVideos={setSelectVideo as any}
+                    defaultValue={data?.videos || []}
+                    // videos={SelectVideo}
+                    // setVideos={setSelectVideo as any}
                   />
                 </Col>
                 {/* //! commented for refresh */}
@@ -276,7 +271,7 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
                     marginBottom: "10px",
                   }}
                 >
-                  <TagsSelectUI defaultTags={data?.tags}/>
+                  <TagsSelectUI defaultTags={data?.tags} />
                 </Col>
                 <Col
                   className="gutter-row"
@@ -285,7 +280,10 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
                     marginBottom: "10px",
                   }}
                 >
-                  <UploadMultipalImage defaultImage={data?.imgs || []} name="imgs" />
+                  <UploadMultipalImage
+                    defaultImage={data?.imgs || []}
+                    name="imgs"
+                  />
                 </Col>
                 <Col className="gutter-row" xs={24} style={{}}>
                   <div>

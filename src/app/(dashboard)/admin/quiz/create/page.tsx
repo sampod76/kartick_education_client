@@ -82,7 +82,7 @@ const CreateQuiz = () => {
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Lesson");
+        Success_model("Successfully added Quiz");
       }
       // console.log(res);
     } catch (error: any) {
@@ -197,7 +197,7 @@ const CreateQuiz = () => {
                       type="text"
                       name="title"
                       size="large"
-                      label="Lesson Title"
+                      label="Quiz Title"
                       required={true}
                     />
                     {/*//! 1-- */}
@@ -208,7 +208,7 @@ const CreateQuiz = () => {
                       name="passingGrade"
                       size="large"
                       label="passingGrade "
-                      required={true}
+                      // required={true}
                     />
                     {/*//! 4 --- */}
                   </Col>

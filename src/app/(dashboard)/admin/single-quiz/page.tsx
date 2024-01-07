@@ -28,13 +28,16 @@ import {
   useGetAllMilestoneQuery,
 } from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import { useDeleteSingleQuizMutation, useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
+import { AllImage } from "@/assets/AllImge";
+import { USER_ROLE } from "@/constants/role";
 
-const MileStoneList = () => {
+const SingleQuizStoneList = () => {
   const query: Record<string, any> = {};
 
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
+  const ADMIN=USER_ROLE.ADMIN
 
-  const [deleteMilestone] = useDeleteMilestoneMutation();
+  const [deleteSingleQuiz,{isLoading:deleteSingleLoading}] = useDeleteSingleQuizMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -58,8 +61,8 @@ const MileStoneList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
-  console.log(data);
+  const { data = [], isLoading } = useGetAllSingleQuizQuery({ ...query });
+
 
   //@ts-ignore
   const milestoneData = data?.data;
@@ -73,7 +76,7 @@ const MileStoneList = () => {
         try {
           console.log(id);
 
-          const res = await deleteMilestone(id).unwrap();
+          const res = await deleteSingleQuiz(id).unwrap();
 
           console.log(res, "response for delete Milestone");
           if (res.success == false) {
@@ -98,7 +101,7 @@ const MileStoneList = () => {
           <>
             {
               <Image
-                src={data?.img}
+              src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
@@ -116,8 +119,8 @@ const MileStoneList = () => {
       ellipsis: true,
     },
     {
-      title: "details",
-      dataIndex: "details",
+      title: "Description",
+      dataIndex: "short_description",
       ellipsis: true,
     },
     {
@@ -126,10 +129,19 @@ const MileStoneList = () => {
       ellipsis: true,
     },
     {
-      title: "course",
-      dataIndex: ["course", "title"],
+      title: "quiz",
+      // dataIndex: "showing_number",
       ellipsis: true,
+      render: function (data: any) {
+        return <>{data?.quiz?.q}{":"}{data?.quiz?.title}</>;
+      },
+
     },
+    // {
+    //   title: "course",
+    //   dataIndex: ["course", "title"],
+    //   ellipsis: true,
+    // },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -148,12 +160,12 @@ const MileStoneList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/single-quiz/details/${record._id}`}>
+                    <Link href={`/${ADMIN}/single-quiz/details/${record._id}`}>
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/single-quiz/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/${ADMIN}/single-quiz/edit/${record._id}`}>Edit</Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -195,7 +207,7 @@ const MileStoneList = () => {
   const deleteAdminHandler = async (id: string) => {
     // console.log(id);
     try {
-      const res = await deleteMilestone(id);
+      const res = await deleteSingleQuiz(id);
       if (res) {
         message.success("Milstone Successfully Deleted!");
         setOpen(false);
@@ -215,7 +227,7 @@ const MileStoneList = () => {
         padding: "1rem",
       }}
     >
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: "admin",
@@ -226,7 +238,7 @@ const MileStoneList = () => {
             link: "/admin/single-quiz",
           },
         ]}
-      />
+      /> */}
       <HeadingUI>SIngle Quiz List</HeadingUI>
       <ActionBar>
         <Input
@@ -277,4 +289,4 @@ const MileStoneList = () => {
   );
 };
 
-export default MileStoneList;
+export default SingleQuizStoneList;

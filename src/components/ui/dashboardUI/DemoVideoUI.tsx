@@ -12,7 +12,7 @@ const DemoVideoUI = ({
   options,
   label,
   required,
-  defaultValue: defaultValue = {}, // {video:"",platform:""}
+  defaultValue = {}, // {video:"",platform:""}
 }: {
   videoType: string | null;
   setVideoType: React.Dispatch<React.SetStateAction<any>>;
@@ -23,6 +23,7 @@ const DemoVideoUI = ({
   required?: boolean;
   defaultValue?: Record<string, any>;
 }) => {
+  console.log(videoType,videoUrl);
   //   const [videoType, setVideoType] = useState(null);
   //   const [videoUrl, setVideoUrl] = useState("");
   const handleVideoTypeChange = (value: any) => {
@@ -45,7 +46,7 @@ const DemoVideoUI = ({
             className=""
             placeholder="Select Video Platform"
             onChange={handleVideoTypeChange}
-            defaultValue={defaultValue?.platform}
+            defaultValue={defaultValue?.platform || "vimeo"}
           >
             {options?.map((option: string) => (
               <Option key={option} value={option}>

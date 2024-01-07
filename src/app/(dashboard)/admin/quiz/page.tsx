@@ -30,6 +30,7 @@ import {
 } from "@/redux/api/adminApi/quizApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterLesson from "@/components/dashboard/Filter/FilterLesson";
+import { AllImage } from "@/assets/AllImge";
 
 const QuizList = () => {
   const query: Record<string, any> = {};
@@ -105,10 +106,10 @@ const QuizList = () => {
           <>
             {
               <Image
-                src={data?.img}
+              src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
-                width={50}
-                height={50}
+                width={100}
+                height={100}
                 alt="dd"
               />
             }
@@ -123,14 +124,14 @@ const QuizList = () => {
       ellipsis: true,
     },
     {
-      title: "details",
-      dataIndex: "details",
+      title: "Description",
+      dataIndex: "short_description",
       ellipsis: true,
     },
     {
       title: "passingGrade",
       dataIndex: "passingGrade",
-      ellipsis: true,
+      width:100
     },
     {
       title: "module",

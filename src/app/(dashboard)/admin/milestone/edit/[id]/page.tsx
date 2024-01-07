@@ -56,13 +56,12 @@ const MilestoneEditePage = ({ params }: { params: { id: string } }) => {
     useUpdateMilestoneMutation();
 
   const onSubmit = async (values: any) => {
-  
-
+    if (courses._id) {
+      values["course"] = courses._id;
+    }
     const MilestoneData: {} = {
       ...values,
-
       // details: textEditorValue,
-      course: courses._id,
     };
     // console.log(MilestoneData);
 
@@ -157,7 +156,6 @@ const MilestoneEditePage = ({ params }: { params: { id: string } }) => {
                       size="large"
                       label="Milestone Title"
                       placeholder="Please enter a milestone title"
-                      required={true}
                     />
                   </Col>
                   <Col className="gutter-row" xs={4} style={{}}>
@@ -167,7 +165,6 @@ const MilestoneEditePage = ({ params }: { params: { id: string } }) => {
                       size="large"
                       label="Milestone No"
                       placeholder="Please enter a milestone No"
-                      required={true}
                     />
                   </Col>
 
@@ -176,10 +173,13 @@ const MilestoneEditePage = ({ params }: { params: { id: string } }) => {
               </Col> */}
 
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <TagsSelectUI defaultTags={data?.tags}/>
+                    <TagsSelectUI defaultTags={data?.tags} />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage defaultImage={data?.imgs||[]} name="imgs" />
+                    <UploadMultipalImage
+                      defaultImage={data?.imgs || []}
+                      name="imgs"
+                    />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>

@@ -57,11 +57,13 @@ const EditModule = ({ params }: { params: { id: string } }) => {
   console.log("🚀 ~ file: page.tsx:57 ~ EditModule ~ data:", data);
 
   const onSubmit = async (values: any) => {
+    if (milestone?._id) {
+      values["milestone"] = milestone?._id;
+    }
     const ModuleData: {} = {
       ...values,
 
       // details: textEditorValue,
-      milestone: milestone?._id,
     };
 
     try {
@@ -162,7 +164,7 @@ const EditModule = ({ params }: { params: { id: string } }) => {
                     marginBottom: "10px",
                   }}
                 >
-                  Create Module
+                  Update Module
                 </p>
                 <hr className="border-1.5 mb-2" />
                 <Row gutter={[16, 16]}>
@@ -178,7 +180,6 @@ const EditModule = ({ params }: { params: { id: string } }) => {
                       name="title"
                       size="large"
                       label="Module Title"
-                      required={true}
                     />
                   </Col>
                   <Col className="gutter-row" xs={4} style={{}}>
@@ -187,7 +188,6 @@ const EditModule = ({ params }: { params: { id: string } }) => {
                       name="module_number"
                       size="large"
                       label="Module No"
-                      required={true}
                     />
                   </Col>
 
@@ -203,14 +203,16 @@ const EditModule = ({ params }: { params: { id: string } }) => {
                       defaultValue={{ label: "Select", value: "" }}
                       label="status"
                       // placeholder="Select"
-                      required={true}
                     />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <TagsSelectUI defaultTags={data?.tags}/>
+                    <TagsSelectUI defaultTags={data?.tags} />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage defaultImage={data?.imgs} name="imgs" />
+                    <UploadMultipalImage
+                      defaultImage={data?.imgs}
+                      name="imgs"
+                    />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>

@@ -65,6 +65,7 @@ const MileStoneList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
+  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data)
 
 
   //@ts-ignore

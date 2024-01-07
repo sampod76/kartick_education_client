@@ -146,7 +146,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       name="title"
                       size="large"
                       label="Title"
-                      required={true}
+                         
                     />
                     {/*//! 1 */}
                   </Col>
@@ -165,7 +165,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       name="price"
                       size="large"
                       label="Price"
-                      required={true}
+                         
                     />
                     {/* //! 7 */}
                   </Col>
@@ -177,7 +177,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       // defaultValue={priceTypeOptions[0]}
                       label="Price Type"
                       // placeholder="Select"
-                      required={true}
+                         
                     />
                     {/* //! price type 8 */}
                   </Col>
@@ -188,7 +188,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       name="level"
                       size="large"
                       label="Level"
-                      // required={true}
+                      //    
                     />
                     {/*//! 5. */}
                   </Col>
@@ -198,7 +198,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       name="showing_number"
                       size="large"
                       label="Showing Number"
-                      // required={true}
+                      //    
                     />
                     {/* //!6. Showing Number */}
                   </Col>
@@ -238,7 +238,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       // defaultValue={priceTypeOptions[0]}
                       label="status"
                       // placeholder="Select"
-                      required={true}
+                         
                     />
                     {/* //! status 9 */}
                   </Col>
