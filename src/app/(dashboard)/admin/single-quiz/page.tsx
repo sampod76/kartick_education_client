@@ -62,6 +62,7 @@ const SingleQuizStoneList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllSingleQuizQuery({ ...query });
+  console.log("🚀 ~ file: page.tsx:65 ~ SingleQuizStoneList ~ data:", data)
 
 
   //@ts-ignore

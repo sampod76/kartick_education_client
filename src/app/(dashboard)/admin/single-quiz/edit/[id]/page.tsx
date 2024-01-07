@@ -62,8 +62,8 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
   const [milestone, setmilestone] = useState({});
-  const [module, setmodule] = useState({});
-  const [lesson, setlesson] = useState({});
+  const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
+  const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
   const [quiz, setquiz] = useState<{ _id?: string; title?: string }>({});
 
   //
@@ -76,7 +76,8 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
   );
   console.log("🚀 ~ file: page.tsx:74 ~ EditSingleQuiz ~ data:", data);
   useEffect(() => {
-    setAnswers(data.answers || []);
+    setAnswers(data?.answers || []);
+    setQuizTypes(data?.type)
   }, [data]);
 
   const query: Record<string, any> = {};
@@ -94,7 +95,6 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
   };
 
   const onSubmit = async (values: any) => {
-   
     if (answers.length) {
       values["answers"] = answers;
     } else if (singleAnswer) {
@@ -112,16 +112,21 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
     if (values?.time_duration) {
       // values.time_duration = timeDurationToMilliseconds(values.time_duration);
     }
-    if(quiz?._id){
-      values["quiz"]=quiz?._id
+    if (quiz?._id) {
+      values["quiz"] = quiz?._id;
+    } else {
+      values["quiz"] = data?.quiz?._id;
+    }
+    if(module?._id) {
+      values["module"] = module?._id;
     }else{
-      values["quiz"]=data?.quiz?._id
+      values["module"] = data?.module?._id;
     }
     const singleQuizDat: {} = {
       ...values,
 
       demo_video,
-      
+
       type: quizType,
     };
 
@@ -130,7 +135,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
     try {
       const res = await updateSingleQuiz({
         id: params.id,
-        data: singleQuizDat,
+        data: {  ...singleQuizDat },
       }).unwrap();
 
       if (res.success == false) {
@@ -284,7 +289,6 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
                     name="title"
                     size="large"
                     label="Quiz Title"
-                          
                   />
                 </Col>
                 <Col
@@ -299,7 +303,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                    //       
+                    //
                   />
                 </Col>
                 <Col
@@ -311,7 +315,6 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
                     }
                   }
                 >
-                 
                   <FormTimePicker name="time_duration" label="Time Duration" />
                 </Col>
                 <Col
@@ -459,7 +462,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
                     marginBottom: "10px",
                   }}
                 >
-                  {quizType === "select" && (
+                  {quizType === "select"  && (
                     <AnswerSInlge
                       answers={answers}
                       setAnswers={setAnswers as any}
@@ -471,7 +474,7 @@ const EditSingleQuiz = ({ params }: { params: { id: string } }) => {
                       setAnswersMultiple={setAnswers as any}
                     />
                   )}
-                  {quizType === "input" && (
+                  {quizType === "input"  && (
                     <>
                       <LabelUi>
                         Answer <span className="text-red-700">*</span>
