@@ -52,26 +52,17 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
   const [textEditorValue, setTextEditorValue] = useState("");
 
   console.log(getCourse);
-  // ! for video insert
-  const [videoType, setVideoType] = useState(null);
-  const [videoUrl, setVideoUrl] = useState("");
-
-  const demo_video = {
-    video: videoUrl,
-    platform: videoType,
-  };
 
   // console.log(demo_video);
   const onSubmit = async (values: any) => {
     const CourseData = {
       // tags: selectedTags,
-      demo_video,
+
       details: textEditorValue,
       ...values,
     };
 
     console.log(CourseData, "Course");
-
 
     try {
       const res = await updateCourse({
@@ -83,8 +74,8 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Course update successfully");
-        setVideoType(null);
-        setVideoUrl("");
+        // setVideoType(null);
+        // setVideoUrl("");
         setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
@@ -228,10 +219,10 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                   <Col xs={24} md={24} lg={24} style={{}}>
                     <DemoVideoUI
                       label="Demo Video"
-                      videoType={videoType as any}
-                      setVideoType={setVideoType}
-                      videoUrl={videoUrl}
-                      setVideoUrl={setVideoUrl}
+                      // videoType={videoType as any}
+                      // setVideoType={setVideoType}
+                      // videoUrl={videoUrl}
+                      // setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
                       defaultValue={getCourse?.demo_video || {}}
                     />
@@ -251,7 +242,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       textAlign: "start",
                     }}
                   >
-                    <UploadImage name="img" />
+                    <UploadImage defaultImage={getCourse?.img} name="img" />
                     {/*//!  2 */}
                   </Col>
                 </Row>

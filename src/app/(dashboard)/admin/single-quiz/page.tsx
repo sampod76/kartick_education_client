@@ -28,13 +28,17 @@ import {
   useGetAllMilestoneQuery,
 } from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import {
+  useDeleteSingleQuizMutation,
+  useGetAllSingleQuizQuery,
+} from "@/redux/api/adminApi/singleQuiz";
 
-const MileStoneList = () => {
+const SingleQuizList = () => {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
 
-  const [deleteMilestone] = useDeleteMilestoneMutation();
+  const [deleteSingleQuiz] = useDeleteSingleQuizMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -58,30 +62,37 @@ const MileStoneList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
-  console.log(data);
+  const { data = [], isLoading } = useGetAllSingleQuizQuery({ ...query });
+  // console.log(data);
 
   //@ts-ignore
-  const milestoneData = data?.data;
+  const singleQuizData = data?.data;
+  // console.log(
+  //   "🚀 ~ file: page.tsx:67 ~ SingleQuizList ~ singleQuizData:",
+  //   singleQuizData
+  // );
 
   //@ts-ignore
   const meta = data?.meta;
 
   const handleDelete = (id: string) => {
+  console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id)
+
+
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
-          const res = await deleteMilestone(id).unwrap();
+          const res = await deleteSingleQuiz(id).unwrap();
 
-          console.log(res, "response for delete Milestone");
+          console.log(res, "response for delete SIngle QUiz");
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Milestone Successfully Deleted");
+            Success_model("SIngle QUiz Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
@@ -92,43 +103,31 @@ const MileStoneList = () => {
 
   const columns = [
     {
-      title: "Image",
-      render: function (data: any) {
-        return (
-          <>
-            {
-              <Image
-                src={data?.img}
-                style={{ height: "50px", width: "80px" }}
-                width={50}
-                height={50}
-                alt="dd"
-              />
-            }
-          </>
-        );
-      },
-      width: 100,
-    },
-    {
       title: "Name",
       dataIndex: "title",
       ellipsis: true,
     },
     {
-      title: "details",
-      dataIndex: "details",
+      title: "hints",
+      dataIndex: "hints",
+      ellipsis: true,
+      width: 100,
+    },
+    {
+      title: "single_answer",
+      dataIndex: "single_answer",
       ellipsis: true,
     },
     {
-      title: "showing_number",
-      dataIndex: "showing_number",
+      title: "Quiz",
+      dataIndex: ["quiz", "title"],
       ellipsis: true,
     },
     {
-      title: "course",
-      dataIndex: ["course", "title"],
+      title: "Short Details",
+      dataIndex: "short_description      ",
       ellipsis: true,
+      width: 100,
     },
     {
       title: "Created at",
@@ -148,12 +147,14 @@ const MileStoneList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/single-quiz/details/${record._id}`}>
+                    <Link href={`/admin/single-quiz/details/${record._id}`}>
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/single-quiz/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/admin/single-quiz/edit/${record._id}`}>
+                      Edit
+                    </Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -192,10 +193,12 @@ const MileStoneList = () => {
     setSearchTerm("");
   };
 
-  const deleteAdminHandler = async (id: string) => {
+  const deleteSIngleQuizHandler = async (id: string) => {
+    console.log("🚀 ~ file: page.tsx:194 ~ deleteSIngleQuizHandler ~ id:", id)
+
     // console.log(id);
     try {
-      const res = await deleteMilestone(id);
+      const res = await deleteSingleQuiz(id);
       if (res) {
         message.success("Milstone Successfully Deleted!");
         setOpen(false);
@@ -238,8 +241,8 @@ const MileStoneList = () => {
           }}
         />
         <div>
-          <Link href={`/admin/milestone/create`}>
-            <Button type="default">Create Milestone</Button>
+          <Link href={`/admin/single-quiz/create`}>
+            <Button type="default">Create Single Quiz</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -256,7 +259,7 @@ const MileStoneList = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={milestoneData}
+        dataSource={singleQuizData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -266,15 +269,15 @@ const MileStoneList = () => {
       />
 
       <UMModal
-        title="Remove admin"
+        title="Remove singleQuized"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteAdminHandler(adminId)}
+        handleOk={() => deleteSIngleQuizHandler(singleQuizData?._id)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this single Quize?</p>
       </UMModal>
     </div>
   );
 };
 
-export default MileStoneList;
+export default SingleQuizList;

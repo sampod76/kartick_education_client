@@ -7,18 +7,15 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 
-import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
-import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
+
 
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
-import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
+
 
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 
@@ -55,34 +52,34 @@ const CreateQuiz = () => {
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
 
-  // ! for video insert
-  const [videoType, setVideoType] = useState(null);
-  const [videoUrl, setVideoUrl] = useState("");
+  // // ! for video insert
+  // const [videoType, setVideoType] = useState(null);
+  // const [videoUrl, setVideoUrl] = useState("");
   const [textEditorValue, setTextEditorValue] = useState("");
 
-  const demo_video = {
-    video: videoType,
-    platform: videoUrl,
-  };
+  // const demo_video = {
+  //   video: videoType,
+  //   platform: videoUrl,
+  // };
 
   const onSubmit = async (values: any) => {
-    const LessonData: {} = {
+    const createQuizeData: {} = {
       ...values,
 
-      demo_video,
+      // demo_video,
       lesson: lesson._id,
       //@ts-ignore
       module: module?._id,
     };
-    console.log(LessonData);
+    // console.log(LessonData);
 
     try {
-      const res = await addQuiz(LessonData).unwrap();
+      const res = await addQuiz(createQuizeData).unwrap();
       console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Lesson");
+        Success_model("Successfully added QUiz");
       }
       // console.log(res);
     } catch (error: any) {
@@ -197,7 +194,7 @@ const CreateQuiz = () => {
                       type="text"
                       name="title"
                       size="large"
-                      label="Lesson Title"
+                      label="Quiz Title"
                       required={true}
                     />
                     {/*//! 1-- */}
@@ -226,10 +223,10 @@ const CreateQuiz = () => {
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <DemoVideoUI
-                      videoType={videoType as any}
-                      setVideoType={setVideoType}
-                      videoUrl={videoUrl}
-                      setVideoUrl={setVideoUrl}
+                      // videoType={videoType as any}
+                      // setVideoType={setVideoType}
+                      // videoUrl={videoUrl}
+                      // setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
                       label="Demo video"
                     />
