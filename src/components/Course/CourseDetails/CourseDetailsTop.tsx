@@ -65,7 +65,7 @@ const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
           }}
         >
   
-          {courseData?.details && CutText(parse(courseData?.details) as string, 90)}
+          {courseData?.details && CutText(courseData?.short_description, 90)}
         </p>
 
         <p

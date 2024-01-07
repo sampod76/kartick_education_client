@@ -28,16 +28,20 @@ import {
   useGetAllMilestoneQuery,
 } from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+
 import { useDeleteSingleQuizMutation, useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
 import { AllImage } from "@/assets/AllImge";
 import { USER_ROLE } from "@/constants/role";
 
 const SingleQuizStoneList = () => {
+
   const query: Record<string, any> = {};
 
   const ADMIN=USER_ROLE.ADMIN
 
+
   const [deleteSingleQuiz,{isLoading:deleteSingleLoading}] = useDeleteSingleQuizMutation();
+
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -62,30 +66,38 @@ const SingleQuizStoneList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllSingleQuizQuery({ ...query });
+
   console.log("🚀 ~ file: page.tsx:65 ~ SingleQuizStoneList ~ data:", data)
 
 
   //@ts-ignore
-  const milestoneData = data?.data;
+  const singleQuizData = data?.data;
+  // console.log(
+  //   "🚀 ~ file: page.tsx:67 ~ SingleQuizList ~ singleQuizData:",
+  //   singleQuizData
+  // );
 
   //@ts-ignore
   const meta = data?.meta;
 
   const handleDelete = (id: string) => {
+  console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id)
+
+
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deleteSingleQuiz(id).unwrap();
 
-          console.log(res, "response for delete Milestone");
+          console.log(res, "response for delete SIngle QUiz");
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Milestone Successfully Deleted");
+            Success_model("SIngle QUiz Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
@@ -96,6 +108,7 @@ const SingleQuizStoneList = () => {
 
   const columns = [
     {
+
       title: "Image",
       render: function (data: any) {
         return (
@@ -115,23 +128,29 @@ const SingleQuizStoneList = () => {
       width: 100,
     },
     {
+
       title: "Name",
       dataIndex: "title",
       ellipsis: true,
     },
     {
+
       title: "Description",
       dataIndex: "short_description",
+
+      ellipsis: true,
+      width: 100,
+    },
+    {
+      title: "single_answer",
+      dataIndex: "single_answer",
       ellipsis: true,
     },
     {
-      title: "showing_number",
-      dataIndex: "showing_number",
-      ellipsis: true,
-    },
-    {
+
       title: "quiz",
       // dataIndex: "showing_number",
+
       ellipsis: true,
       render: function (data: any) {
         return <>{data?.quiz?.q}{":"}{data?.quiz?.title}</>;
@@ -143,6 +162,12 @@ const SingleQuizStoneList = () => {
     //   dataIndex: ["course", "title"],
     //   ellipsis: true,
     // },
+    {
+      title: "Short Details",
+      dataIndex: "short_description      ",
+      ellipsis: true,
+      width: 100,
+    },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -161,12 +186,16 @@ const SingleQuizStoneList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
+
                     <Link href={`/${ADMIN}/single-quiz/details/${record._id}`}>
+
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
+
                     <Link href={`/${ADMIN}/single-quiz/edit/${record._id}`}>Edit</Link>
+
                   </Menu.Item>
 
                   <Menu.Item
@@ -205,7 +234,9 @@ const SingleQuizStoneList = () => {
     setSearchTerm("");
   };
 
-  const deleteAdminHandler = async (id: string) => {
+  const deleteSIngleQuizHandler = async (id: string) => {
+    console.log("🚀 ~ file: page.tsx:194 ~ deleteSIngleQuizHandler ~ id:", id)
+
     // console.log(id);
     try {
       const res = await deleteSingleQuiz(id);
@@ -251,8 +282,8 @@ const SingleQuizStoneList = () => {
           }}
         />
         <div>
-          <Link href={`/admin/milestone/create`}>
-            <Button type="default">Create Milestone</Button>
+          <Link href={`/admin/single-quiz/create`}>
+            <Button type="default">Create Single Quiz</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -269,7 +300,7 @@ const SingleQuizStoneList = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={milestoneData}
+        dataSource={singleQuizData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -279,15 +310,17 @@ const SingleQuizStoneList = () => {
       />
 
       <UMModal
-        title="Remove admin"
+        title="Remove singleQuized"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteAdminHandler(adminId)}
+        handleOk={() => deleteSIngleQuizHandler(singleQuizData?._id)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this single Quize?</p>
       </UMModal>
     </div>
   );
 };
 
+
 export default SingleQuizStoneList;
+

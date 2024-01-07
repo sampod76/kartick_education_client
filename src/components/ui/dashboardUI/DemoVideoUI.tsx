@@ -2,22 +2,23 @@ import { Input, Select, Typography } from "antd";
 
 const { Title } = Typography;
 import React, { useState } from "react";
+import { useFormContext } from "react-hook-form";
 const { Option } = Select;
 
 const DemoVideoUI = ({
-  videoType,
-  setVideoType,
-  videoUrl,
-  setVideoUrl,
+  // videoType,
+  // setVideoType,
+  // videoUrl,
+  // setVideoUrl,
   options,
   label,
   required,
   defaultValue = {}, // {video:"",platform:""}
 }: {
-  videoType: string | null;
-  setVideoType: React.Dispatch<React.SetStateAction<any>>;
-  videoUrl: any;
-  setVideoUrl: React.Dispatch<React.SetStateAction<any>>;
+  // videoType: string | null;
+  // setVideoType: React.Dispatch<React.SetStateAction<any>>;
+  // videoUrl: any;
+  // setVideoUrl: React.Dispatch<React.SetStateAction<any>>;
   options: string[];
   label?: string;
   required?: boolean;
@@ -26,6 +27,20 @@ const DemoVideoUI = ({
   console.log(videoType,videoUrl);
   //   const [videoType, setVideoType] = useState(null);
   //   const [videoUrl, setVideoUrl] = useState("");
+
+  const { setValue } = useFormContext();
+
+  const [videoType, setVideoType] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
+
+  const demo_video = {
+    video: videoUrl,
+    platform: videoType,
+  };
+
+  if (demo_video?.platform && demo_video.video) {
+    setValue("demo_video", demo_video);
+  }
   const handleVideoTypeChange = (value: any) => {
     setVideoType(value);
   };
