@@ -22,7 +22,7 @@ import {
 import Logo from "../Logo";
 import { USER_ROLE } from "@/constants/role";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
-import { removeUserInfo } from "@/services/auth.service";
+import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { authKey } from "@/constants/storageKey";
 
@@ -46,7 +46,7 @@ const DashboardNavBar = ({
 }) => {
   const router = useRouter();
   //   const userInfo = getUserInfo() as any;
-  const userLoggedIn = USER_ROLE.ADMIN;
+  const userLoggedIn = getUserInfo() as any
   // console.log(userLoggedIn);
   /* 
   const [isNavbarFixed, setNavbarFixed] = useState(false);

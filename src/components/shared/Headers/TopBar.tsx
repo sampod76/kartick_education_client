@@ -82,7 +82,7 @@ const TopBar = () => {
           <div className="flex gap-3 font-[700]">
             <Link
               className="py-3 px-5 lg:px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
-              href="/"
+              href="/signup"
             >
               Register
             </Link>

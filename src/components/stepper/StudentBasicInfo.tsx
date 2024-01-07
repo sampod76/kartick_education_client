@@ -25,6 +25,7 @@ export default function StudentBasicInfo() {
             name="name.firstName"
             label="First Name "
             size="large"
+            required={true}
           />
         </Col>
         <Col span={12} style={{ margin: "10px 0" }}>
@@ -44,10 +45,10 @@ export default function StudentBasicInfo() {
           />
         </Col>
         <Col span={24} style={{ margin: "10px auto" }}>
-          <UploadImage name="img" />
+          <UploadImage name="img"  />
         </Col>
         <Col span={24} style={{ margin: "10px 0" }}>
-          <FormInput type="email" name="Email" label="Email" size="large" />
+          <FormInput type="email" name="email" label="Email" size="large" />
         </Col>
         <Col span={24} style={{ margin: "10px 0" }}>
           <FormInput
@@ -55,6 +56,7 @@ export default function StudentBasicInfo() {
             name="password"
             label="Password"
             size="large"
+            required={true}
           />
         </Col>
       </Row>
