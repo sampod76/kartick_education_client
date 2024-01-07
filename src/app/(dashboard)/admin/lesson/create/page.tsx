@@ -32,6 +32,7 @@ import { Col, Row, message } from "antd";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import VideoSelect from "@/components/Forms/VideoSelect";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -39,24 +40,11 @@ const TextEditor = dynamic(
   }
 );
 const CreateLesson = () => {
-  //
+  //----------------------------------------------------------------
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
   const [milestone, setmilestone] = useState({});
-
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
-  //
-  const [textEditorValue, setTextEditorValue] = useState("");
-  // ! for video insert
-  // const [SelectVideo, setSelectVideo] = useState([]);
-
-  const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
-  const { data: existLesson, isLoading: GetLessionLoading } =
-    useGetAllLessonQuery({});
-
-  // !  tag selection
-
-
   //! for Category options selection
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module";
@@ -64,58 +52,47 @@ const CreateLesson = () => {
     ...query,
   });
   const categoryData: any = Category?.data;
-  //
+  //----------------------------------------------------------------
+
+  const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
+  const { data: existLesson, isLoading: GetLessionLoading } =
+    useGetAllLessonQuery(
+      { module: module?._id },
+      { skip: !Boolean(module?._id) }
+    );
   const onSubmit = async (values: any) => {
     console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
-
     if (!module._id) {
       Error_model_hook("Please ensure your are selected Lesson");
       return;
     }
-    // values["videos"] = SelectVideo;
-
-    // if (!values?.videos?.length) {
-    //   Error_model_hook("Video link is required");
-    //   return;
-    // }
-    // values.vedios = [video];
     const LessonData: {} = {
       ...values,
-
       module: module?._id,
-      // details: textEditorValue,
     };
     console.log(LessonData);
     // return;
     try {
       const res = await addLesson(LessonData).unwrap();
-      // console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
-        // setVideoType(null);
-        // setVideoUrl("");
-        // setSelectedTags([]);
       }
-      // console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.data);
       console.log(error);
     }
   };
 
-  if (serviceLoading) {
-    return message.loading("Loading...");
+  if (serviceLoading || GetLessionLoading) {
+    return <LoadingSkeleton></LoadingSkeleton>;
   }
-  const roundedNumber = Number(existLesson?.data[0]?.lesson_number || 1).toFixed(1);
-
+  const roundedNumber = Number(
+    existLesson?.data[0]?.lesson_number || 1
+  ).toFixed(1);
   // Add 0.1 to the rounded number and use toFixed again when logging
   const prelesson_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
-
-  // console.log(prelesson_number);
-
-  // console.log(SelectVideo, "select Video");
 
   return (
     <div>
@@ -285,10 +262,7 @@ const CreateLesson = () => {
                     marginBottom: "10px",
                   }}
                 >
-                  <TagsSelectUI
-              
-                  />
-             
+                  <TagsSelectUI />
                 </Col>
                 <Col
                   className="gutter-row"
@@ -310,19 +284,14 @@ const CreateLesson = () => {
                   </div>
                 </Col>
                 {/* //! commented for refresh */}
-                {/* <section
-                  style={{
-                    borderTopWidth: "2px",
-                  }} 
+                <Col className="gutter-row" xs={24} style={{}}
+                 
                 >
                   <p className="text-center my-3 font-bold text-xl ">
                     Description
                   </p>
-                  <TextEditor
-                    textEditorValue={textEditorValue}
-                    setTextEditorValue={setTextEditorValue}
-                  />
-                </section> */}
+                  <TextEditor />
+                </Col>
               </Row>
             </div>
 

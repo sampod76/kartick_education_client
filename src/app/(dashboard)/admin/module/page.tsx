@@ -99,7 +99,7 @@ const MileStoneList = () => {
           <>
             {
               <Image
-                src={data?.imgs[0] || AllImage.notFoundImage}
+                src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
