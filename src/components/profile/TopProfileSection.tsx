@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 
-type IDetailsTop = {
+export type IProfileDetailsTop = {
   headings: string;
   sub_headings: string;
   total_student: number;
@@ -29,24 +29,26 @@ type IDetailsTop = {
 export default function TopProfileSection({
   topDetails,
 }: {
-  topDetails: IDetailsTop;
+  topDetails: IProfileDetailsTop;
 }) {
+  console.log("🚀 ~ file: TopProfileSection.tsx:34 ~ topDetails:", topDetails)
+
   const statisticsInfo: { title: string; number: number }[] = [
     {
       title: "Student ",
-      number: 612,
+      number: topDetails.total_student || 0,
     },
     {
       title: "Course ",
-      number: 8,
+      number: topDetails.total_course || 0,
     },
     {
       title: "Reviews ",
-      number: 11,
+      number: topDetails?.total_review || 0,
     },
     {
       title: "Subscription ",
-      number: 452,
+      number: topDetails.total_subscription || 0,
     },
   ];
 

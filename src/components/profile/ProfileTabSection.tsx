@@ -16,7 +16,7 @@ export default function ProfileTabSection() {
     {
       key: "2",
       label: "Courses",
-      children: <Courses query={{}} />,
+      children: <Courses query={{ status: "active" }} />,
     },
     {
       key: "3",
@@ -25,17 +25,17 @@ export default function ProfileTabSection() {
     },
     {
       key: "4",
-      label: "Discussion",
-      children: "Content of Discussion",
+      label: "Reviews",
+      children: "Content of Reviews",
     },
-    {
-      key: "5",
-      label: "Subscription",
-      children: "Content of Subscription",
-    },
-  ]
+    // {
+    //   key: "5",
+    //   label: "Subscription",
+    //   children: "Content of Subscription",
+    // },
+  ];
   return (
-    <div>
+    <div className="w-full mx-auto">
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </div>
   );
