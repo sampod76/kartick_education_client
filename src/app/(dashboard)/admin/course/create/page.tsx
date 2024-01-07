@@ -44,20 +44,21 @@ const CreateCoursePage = () => {
   // !  tag selection
 
   // ! for video insert
-  const [videoType, setVideoType] = useState(null);
-  const [videoUrl, setVideoUrl] = useState("");
 
-  const demo_video = {
-    video: videoUrl,
-    platform: videoType,
-  };
+
+  // const demo_video = {
+  //   video: videoUrl,
+  //   platform: videoType,
+  // };
 
   // console.log(demo_video);
   const onSubmit = async (values: any) => {
     const CourseData = {
       // tags: selectedTags,
+
       demo_video,
       // details: textEditorValue,
+
       ...values,
     };
 
@@ -68,8 +69,8 @@ const CreateCoursePage = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Course created successfully");
-        setVideoType(null);
-        setVideoUrl("");
+        // setVideoType(null);
+        // setVideoUrl("");
 
         // setTextEditorValue("");
       }
@@ -207,10 +208,10 @@ const CreateCoursePage = () => {
                   <Col xs={24} md={24} lg={24} style={{}}>
                     <DemoVideoUI
                       label="Demo Video"
-                      videoType={videoType as any}
-                      setVideoType={setVideoType}
-                      videoUrl={videoUrl}
-                      setVideoUrl={setVideoUrl}
+                      // videoType={videoType as any}
+                      // setVideoType={setVideoType}
+                      // videoUrl={videoUrl}
+                      // setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
                     />
 

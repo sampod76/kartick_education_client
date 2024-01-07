@@ -16,7 +16,6 @@ export const SingleQuizApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-
         // console.log(response);
 
         return {
@@ -29,7 +28,6 @@ export const SingleQuizApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleOneQuiz: build.query({
       query: (id: string | string[] | undefined) => {
-
         // console.log(id);
 
         return {
@@ -42,7 +40,7 @@ export const SingleQuizApi = baseApi.injectEndpoints({
     // create a new academic department
     addSingleQuiz: build.mutation({
       query: (data) => {
-        // 
+        //
 
         return {
           url: SINGLE_QUIZ_URL,
@@ -55,7 +53,6 @@ export const SingleQuizApi = baseApi.injectEndpoints({
     // update ac department
     updateSingleQuiz: build.mutation({
       query: ({ data, id }) => {
-
         // console.log(data, "Quiz data");
 
         return {
@@ -69,12 +66,17 @@ export const SingleQuizApi = baseApi.injectEndpoints({
 
     // delete ac department
     deleteSingleQuiz: build.mutation({
-      query: (id) => ({
-        url: `${SINGLE_QUIZ_URL}/${id}`,
-        method: "DELETE",
-      }),
+      query: (id) => {
+        
+        console.log("🚀 ~ file: singleQuiz.ts:78 ~ id:", id)
+        return {
+          url: `${SINGLE_QUIZ_URL}/${id}`,
+          method: "DELETE",
+        }
+      },
       invalidatesTags: [tagTypes.quiz],
     }),
+
   }),
 });
 

@@ -79,10 +79,10 @@ const CreateSingleQuiz = () => {
   const categoryData: any = Category?.data;
   //
 
-  const demo_video = {
-    video: videoType,
-    platform: videoUrl,
-  };
+  // const demo_video = {
+  //   video: videoType,
+  //   platform: videoUrl,
+  // };
 
   const onSubmit = async (values: any) => {
     if (!quiz._id) {
@@ -109,7 +109,7 @@ const CreateSingleQuiz = () => {
     const singleQuizDat: {} = {
       ...values,
 
-      demo_video,
+      // demo_video,
       quiz: quiz?._id,
       type: quizType,
     };
@@ -123,8 +123,8 @@ const CreateSingleQuiz = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added the Quiz");
-        setVideoUrl("");
-        setVideoType(null);
+        // setVideoUrl("");
+        // setVideoType(null);
 
         setAnswers([]);
       }
@@ -331,10 +331,10 @@ const CreateSingleQuiz = () => {
                   }}
                 >
                   <DemoVideoUI
-                    videoType={videoType as any}
-                    setVideoType={setVideoType}
-                    videoUrl={videoUrl}
-                    setVideoUrl={setVideoUrl}
+                    // videoType={videoType as any}
+                    // setVideoType={setVideoType}
+                    // videoUrl={videoUrl}
+                    // setVideoUrl={setVideoUrl}
                     options={["youtube", "vimeo"]}
                     label="Demo video"
                   />

@@ -1,7 +1,7 @@
-export const CutText = (text: string, maxLength: number) => {
-  if (text.length <= maxLength) {
-    return text;
+export const CutText = (text: string | undefined, maxLength: number) => {
+  if (!text || text.length <= maxLength) {
+    return text || "";
   } else {
-    return text.substring(0, maxLength) + "...";
+    return text?.substring(0, maxLength) + "...";
   }
 };

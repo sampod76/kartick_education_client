@@ -41,6 +41,7 @@ const cousesData =data?.data || []
     key: String(index),
     children: <Courses query={{ status: "active", category: singleData?._id }} />,
   }));
+  
   if (
     error ||
     //@ts-ignore
