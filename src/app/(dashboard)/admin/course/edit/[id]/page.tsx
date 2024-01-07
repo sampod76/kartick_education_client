@@ -68,7 +68,6 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
       ...values,
     };
 
-
     try {
       const res = await updateCourse({
         id: params.id,
@@ -83,7 +82,6 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
         setVideoType(null);
         setVideoUrl("");
         // setTextEditorValue("");
-
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
@@ -142,7 +140,6 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       name="title"
                       size="large"
                       label="Title"
-                         
                     />
                     {/*//! 1 */}
                   </Col>
@@ -161,7 +158,6 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       name="price"
                       size="large"
                       label="Price"
-                         
                     />
                     {/* //! 7 */}
                   </Col>
@@ -173,7 +169,6 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       // defaultValue={priceTypeOptions[0]}
                       label="Price Type"
                       // placeholder="Select"
-                         
                     />
                     {/* //! price type 8 */}
                   </Col>
@@ -184,7 +179,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       name="level"
                       size="large"
                       label="Level"
-                      //    
+                      //
                     />
                     {/*//! 5. */}
                   </Col>
@@ -194,7 +189,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       name="showing_number"
                       size="large"
                       label="Showing Number"
-                      //    
+                      //
                     />
                     {/* //!6. Showing Number */}
                   </Col>
@@ -234,14 +229,13 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       // defaultValue={priceTypeOptions[0]}
                       label="status"
                       // placeholder="Select"
-                         
                     />
                     {/* //! status 9 */}
                   </Col>
 
                   <Col xs={24} md={24} lg={24} style={{}}>
                     <DemoVideoUI
-                      label="Demo Video"
+                      label="Preview Video"
                       // videoType={videoType as any}
                       // setVideoType={setVideoType}
                       // videoUrl={videoUrl}
