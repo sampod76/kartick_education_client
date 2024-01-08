@@ -57,7 +57,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     >
       {!screens.sm ? (
         <Drawer
-          title={`${userLoggedIn} Dash`}
+          title={`${userInfo?.role} Dash`}
           placement="left"
           onClose={() => setCollapsed(false)}
           open={collapsed}

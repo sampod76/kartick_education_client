@@ -53,6 +53,7 @@ export default function StudentPersonalInfo() {
             name="dateOfBirth"
             label="Date of birth"
             size="large"
+            required={true}
           />
         </Col>
 

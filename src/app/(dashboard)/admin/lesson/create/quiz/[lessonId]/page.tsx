@@ -54,7 +54,6 @@ const CreateQuiz = () => {
   //
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
-
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -239,7 +238,7 @@ const CreateQuiz = () => {
                     <DemoVideoUI
                      
                       options={["youtube", "vimeo"]}
-                      label="Demo video"
+                      label="Preview Video"
                     />
                   </Col>
                   <Col
@@ -251,9 +250,7 @@ const CreateQuiz = () => {
                       marginTop: "10px",
                     }}
                   >
-                    <TagsSelectUI
-                    
-                    />
+                    <TagsSelectUI />
                     {/*//! 10--- */}
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>

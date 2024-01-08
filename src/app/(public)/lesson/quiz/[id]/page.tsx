@@ -7,7 +7,10 @@ import { Spin } from "antd";
 import React from "react";
 
 export default function LessonQUizPage({ params }: { params: { id: string } }) {
+
+  
   const { data: quizData, isLoading } = useGetSingleQuizQuery(params?.id);
+  // console.log("🚀 ~ file: page.tsx:13 ~ LessonQUizPage ~ quizData:", quizData)
 
 
   if (isLoading) {
