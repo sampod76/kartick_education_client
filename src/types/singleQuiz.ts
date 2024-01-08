@@ -1,8 +1,8 @@
-export IAnswer={
+export type  IAnswer={
     title: string;
     serialNumber?: number;
     correct?: boolean;
-    imgs?: Array<string>;
+    imgs?: string[];
     status: 'active' | 'deactivate' | 'save';
   }
 
