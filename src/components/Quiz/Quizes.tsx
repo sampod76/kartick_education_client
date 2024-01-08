@@ -15,87 +15,87 @@ const QuizTestPage = React.lazy(
 
 const { Option } = Select;
 
-const quizData: {
-  _id: number;
-  title: string;
-  type: string;
-  answer: {
-    title: string;
-  }[];
-}[] = [
-  {
-    _id: 1,
-    title: "What is the capital of France?",
-    type: "radio",
-    // ", "Berlin", "London", "Rome"
-    answer: [
-      {
-        title: "Paris",
-      },
-      {
-        title: "Berlin",
-      },
-      {
-        title: "London",
-      },
-      {
-        title: "Rome",
-      },
-    ],
-  },
+// const quizData: {
+//   _id: number;
+//   title: string;
+//   type: string;
+//   answer: {
+//     title: string;
+//   }[];
+// }[] = [
+//   {
+//     _id: 1,
+//     title: "What is the capital of France?",
+//     type: "radio",
+//     // ", "Berlin", "London", "Rome"
+//     answer: [
+//       {
+//         title: "Paris",
+//       },
+//       {
+//         title: "Berlin",
+//       },
+//       {
+//         title: "London",
+//       },
+//       {
+//         title: "Rome",
+//       },
+//     ],
+//   },
 
-  {
-    _id: 2,
-    title: "How many continents are there?",
-    type: "select",
-    answer: [
-      {
-        title: "5",
-      },
-      {
-        title: "4",
-      },
-      {
-        title: "5",
-      },
-      {
-        title: "9",
-      },
-    ],
-  },
-  {
-    _id: 3,
-    title: "2 + 2 equals?",
-    type: "text",
-    answer: [],
-  },
-  {
-    _id: 4,
-    title: "What is JavaScript primarily used for in web development?",
-    type: "textArea",
-    answer: [],
-  },
-  {
-    _id: 5,
-    title: "Which is not language of Programming?",
-    type: "radio",
-    //answer: ["Javascript", "C++", "Python", "English"],
-    answer: [
-      {
-        title: "Javascript",
-      },
-      {
-        title: "C++",
-      },
-      {
-        title: "Python",
-      },
-      {
-        title: "English",
-      },
-    ],
-  },
-];
+//   {
+//     _id: 2,
+//     title: "How many continents are there?",
+//     type: "select",
+//     answer: [
+//       {
+//         title: "5",
+//       },
+//       {
+//         title: "4",
+//       },
+//       {
+//         title: "5",
+//       },
+//       {
+//         title: "9",
+//       },
+//     ],
+//   },
+//   {
+//     _id: 3,
+//     title: "2 + 2 equals?",
+//     type: "text",
+//     answer: [],
+//   },
+//   {
+//     _id: 4,
+//     title: "What is JavaScript primarily used for in web development?",
+//     type: "textArea",
+//     answer: [],
+//   },
+//   {
+//     _id: 5,
+//     title: "Which is not language of Programming?",
+//     type: "radio",
+//     //answer: ["Javascript", "C++", "Python", "English"],
+//     answer: [
+//       {
+//         title: "Javascript",
+//       },
+//       {
+//         title: "C++",
+//       },
+//       {
+//         title: "Python",
+//       },
+//       {
+//         title: "English",
+//       },
+//     ],
+//   },
+// ];
 
 export default function QuizeSinglePage({
   quizeId,
@@ -114,10 +114,7 @@ export default function QuizeSinglePage({
   const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
     ...quiz_query,
   });
-  console.log(
-    "🚀 ~ file: Quizes.tsx:113 ~ allSingleQuizeData:",
-    allSingleQuizeData
-  );
+
 
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here

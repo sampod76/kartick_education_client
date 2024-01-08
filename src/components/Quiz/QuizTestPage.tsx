@@ -55,14 +55,14 @@ export default function QuizTestPage({
     // router.push(`/quiz/${quizId}/summary`);
   };
 
-  console.log(
-    "currentSteps",
-    currentStep,
-    "quizLenght",
-    quizData.length,
-    "test answer",
-    userResponses
-  );
+  // console.log(
+  //   "currentSteps",
+  //   currentStep,
+  //   "quizLenght",
+  //   quizData.length,
+  //   "test answer",
+  //   userResponses
+  // );
 
 
   return (
