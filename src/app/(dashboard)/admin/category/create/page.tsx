@@ -106,16 +106,7 @@ const CreateCategory = () => {
                   required={true}
                 />
               </Col>
-              <Col xs={24} md={24} lg={24} style={{}}>
-                    <DemoVideoUI
-                      label="Preview Video"
-                      // videoType={videoType as any}
-                      // setVideoType={setVideoType}
-                      // videoUrl={videoUrl}
-                      // setVideoUrl={setVideoUrl}
-                      options={["youtube", "vimeo"]}
-                    />
-                  </Col>
+           
               <Col
                 className="gutter-row"
                 xs={24}
