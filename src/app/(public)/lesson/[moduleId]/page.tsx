@@ -31,7 +31,7 @@ export default function LessonPage({
           <SideModuleList milestoneId={milestoneId} moduleId={moduleId} />
         </div>
         <div className="w-full lg:max-w-[70%]">
-          <ModuleTab moduleId={moduleId} />
+          <ModuleTab moduleId={moduleId} moduleData={moduleData}/>
         </div>
       </div>
     </div>
