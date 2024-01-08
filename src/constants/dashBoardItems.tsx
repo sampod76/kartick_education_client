@@ -14,6 +14,11 @@ import {
   BookOutlined,
   DatabaseOutlined,
   AlignCenterOutlined,
+  CalendarOutlined,
+  UsergroupDeleteOutlined,
+  ContainerOutlined,
+  
+  
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -386,6 +391,42 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
       ),
       icon: <ThunderboltOutlined />,
       key: `/${role}/booking`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/activeCourse`}
+        >
+      Active Courses
+        </Link>
+      ),
+      icon:<CalendarOutlined />,
+      key: `/${role}/activeCourse`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/trainers`}
+        >
+        Trainers
+        </Link>
+      ),
+      icon:<UsergroupDeleteOutlined />,
+      key: `/${role}/trainers`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/assignment`}
+        >
+        Assignment
+        </Link>
+      ),
+      icon:<ContainerOutlined />,
+      key: `/${role}/assignment`,
     },
     {
       label: (

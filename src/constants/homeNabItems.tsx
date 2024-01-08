@@ -10,14 +10,6 @@ export const homeNavItems: MenuProps["items"] = [
     key: "2",
   },
   {
-    label: <Link href="/course">Web Development</Link>,
-    key: "services/web-development",
-  },
-  {
-    label: <Link href="/course">Contact</Link>,
-    key: "/contact",
-  },
-  {
     label: <Link href="/course">About</Link>,
     key: "/About",
   },

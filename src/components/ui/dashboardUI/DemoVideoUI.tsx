@@ -29,17 +29,21 @@ const DemoVideoUI = ({
   //   const [videoUrl, setVideoUrl] = useState("");
 
   const { setValue } = useFormContext();
+  
 
   const [videoType, setVideoType] = useState(null);
   const [videoUrl, setVideoUrl] = useState("");
 
-  const demo_video = {
-    video: videoUrl,
-    platform: videoType,
-  };
+  // const demo_video = {
+  //   video: videoUrl,
+  //   platform: videoType,
+  // };
 
-  if (demo_video?.platform && demo_video.video) {
-    setValue("demo_video", demo_video);
+  if (videoUrl && videoUrl) {
+    setValue("demo_video", {
+      video: videoUrl,
+      platform: videoType,
+    })
   }
   const handleVideoTypeChange = (value: any) => {
     setVideoType(value);
