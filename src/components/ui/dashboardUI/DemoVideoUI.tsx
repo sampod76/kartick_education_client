@@ -21,6 +21,8 @@ const DemoVideoUI = ({
     platform: defaultValue?.platform || "vimeo",
   });
 
+
+
   useEffect(() => {
     register("demo_video", { required: required });
   }, [register, required]); // Register the field with react-hook-form only once
