@@ -22,6 +22,7 @@ export default function QuizQuestionCard({
         answer: answer,
         _id: quiz?._id,
         title: quiz?.title,
+        
       },
     }));
     // localStorage.setItem(`${quiz?.title}`, JSON.stringify(userResponses));
@@ -40,7 +41,8 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
-            onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
+            onChange={(e) => handleAnswerChange(index + 1, e.target.value)} 
+            
           >
             {quiz?.answers.map((option: any) => (
               <Radio key={option?.title} value={option?.title}>
@@ -48,6 +50,7 @@ export default function QuizQuestionCard({
               </Radio>
             ))}
           </Radio.Group>
+
         )}
         {quiz?.type === "multiple_select" && (
           <Checkbox.Group
