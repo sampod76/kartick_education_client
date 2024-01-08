@@ -69,8 +69,8 @@ const VideoSelect = ({defaultValue=[]}:{defaultValue?:Array<Video>}) => {
 
   return (
 
-    <div className="border-y-2 text-start border-spacing-2 p-2">
-      <SubHeadingUI>Add Video </SubHeadingUI>
+    <div className="text-start  p-2 my-10">
+      <SubHeadingUI>Add Video <span className="text-red-500">*</span></SubHeadingUI>
 
       {videos?.map((video, index) => (
         <Space

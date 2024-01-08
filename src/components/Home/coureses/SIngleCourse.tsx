@@ -9,15 +9,17 @@ import Image from "next/image";
 import Link from "next/link";
 import parse from "html-react-parser";
 import { AllImage } from "@/assets/AllImge";
+import { CutText } from "@/utils/CutText";
 const { Meta, Grid } = Card;
 
 const SIngleCourse = ({ course }: { course: Record<string, any> }) => {
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
+  console.log(course);
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className="max-w-xs mx-auto  shadow-md "
+      className="w-full h-full  shadow-md "
     >
       <Card
         // className="w-96 bg-red-500"
@@ -87,9 +89,9 @@ const SIngleCourse = ({ course }: { course: Record<string, any> }) => {
           description={
             <p className="text-xs md:text-sm" style={{ color: "#282938" }}>
               {course?.short_description &&
-              course?.short_description?.length < 80
-                ? parse(course?.short_description)
-                : parse(course?.short_description?.slice(0, 80)) + "....."}
+              course?.short_description?.length < 95
+                ? course?.short_description
+                : CutText(course?.short_description,103)}
             </p>
           }
         />

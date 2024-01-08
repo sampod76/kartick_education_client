@@ -26,15 +26,13 @@ type FormValues = {
 const Login = () => {
   const router = useRouter();
   const [userLogin, { error, isLoading }] = useUserLoginMutation();
-  const [isLoginLoading, setSetisloading] = useState(true);
+
   const login = isLoggedIn();
 
   useEffect(() => {
-    setSetisloading(true);
     if (login) {
       router.push("/dashboard");
     }
-    setSetisloading(false);
   }, [login, router]);
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
@@ -62,9 +60,7 @@ const Login = () => {
     //@ts-ignore
     Error_model_hook(error?.data);
   }
-  if (isLoginLoading) {
-    return <LoadingForDataFetch />;
-  }
+
 
   return (
     <div className="bg-white ">
@@ -144,19 +140,18 @@ const Login = () => {
                   />
                 </div>
                 <div className="">
-
-                <Button
-                  type="primary"
-                  style={{
-                    width: "6rem",
-                    fontWeight: "600",
-                    backgroundColor: "blue",
-                    height: "2.6rem",
-                  }}
-                  htmlType="submit"
-                >
-                  {isLoading ? <ButtonLoading /> : "Login"}
-                </Button>
+                  <Button
+                    type="primary"
+                    style={{
+                      width: "6rem",
+                      fontWeight: "600",
+                      backgroundColor: "blue",
+                      height: "2.6rem",
+                    }}
+                    htmlType="submit"
+                  >
+                    {isLoading ? <ButtonLoading /> : "Login"}
+                  </Button>
                 </div>
               </Form>
             </div>

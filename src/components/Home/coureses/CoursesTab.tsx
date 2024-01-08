@@ -12,7 +12,7 @@ import TopBarLoading from "@/components/ui/Loading/TopBarLoading";
 import { Error_model_hook } from "@/utils/modalHook";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 const CoursesTab = () => {
-  const [activeTabKey, setActiveTabKey] = useState("1");
+  const [activeTabKey, setActiveTabKey] = useState("0");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
     // console.log(key);

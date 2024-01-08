@@ -11,7 +11,7 @@ type FormDataRangeProps = {
   index?: number;
 };
 export default function FormDataRange({ name, label }: FormDataRangeProps) {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, } = useFormContext();
 
   return (
     <>

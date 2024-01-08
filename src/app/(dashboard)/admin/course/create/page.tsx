@@ -30,6 +30,7 @@ import {
 import { useState } from "react";
 
 import dynamic from "next/dynamic";
+import { FormProps, useForm, useFormContext } from "react-hook-form";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -37,6 +38,7 @@ const TextEditor = dynamic(
   }
 );
 const CreateCoursePage = () => {
+
   // const [textEditorValue, setTextEditorValue] = useState("");
 
   const [addCourse, { isLoading, error }] = useAddCourseMutation();
