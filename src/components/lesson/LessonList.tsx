@@ -45,20 +45,21 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     module: moduleId,
     ...quiz_query,
   });
-  // console.log(
-  //   "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ QuizData:",
-  //   QuizData
-  // );
+  console.log(
+    "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ QuizData:",
+    QuizData
+  );
   if (isLoading) {
     return <LoadingSkeleton />;
   }
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
+      
       const lessonQuizData: any = QuizData?.data?.find(
-        (item: any) => item?.lesson === lesson?._id
+        (item: any) => item?.lesson?._id === lesson?._id
       );
       // console.log(lesson);
-      //  // console.log("🚀 lessonQuizData", lessonQuizData);
+      //  console.log("🚀 lessonQuizData", lessonQuizData);
       return {
         key: lesson?._id,
         label: (
@@ -70,15 +71,18 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
 
+       {lessonQuizData &&
             <Link
-              href={`/lesson/quiz/${lessonQuizData?._id}`}
-              className="text-[14px] flex justify-between w-full mt-3"
-            >
-              <h2>
-                Quiz {index + 1} : <span>{lessonQuizData?.title} </span>
-              </h2>
-              <LockOutlined style={{ fontSize: "18px" }} />
-            </Link>
+            href={`/lesson/quiz/${lessonQuizData?._id}`}
+            className="text-[14px] flex justify-between w-full mt-3"
+          >
+            <h2>
+              Quiz {index + 1} : <span>{lessonQuizData?.title} </span>
+            </h2>
+            <LockOutlined style={{ fontSize: "18px" }} />
+          </Link>
+
+       }
           </div>
         ),
         children: (

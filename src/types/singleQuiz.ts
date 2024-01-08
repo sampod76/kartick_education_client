@@ -1,4 +1,5 @@
 export type  IAnswer={
+  _id?:string,
     title: string;
     serialNumber?: number;
     correct?: boolean;
