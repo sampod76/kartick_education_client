@@ -8,7 +8,7 @@ export const getCloudinaryEnv = (): {
 } => {
   
   return {
-    upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET || "",
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "",
+    upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET || "mvfmecoi",
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "duyfxtcdd",
   };
 };

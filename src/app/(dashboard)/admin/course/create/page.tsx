@@ -1,5 +1,5 @@
 "use client";
-import Form from "@/components/Forms/Form";
+// import Form from "@/components/Forms/Form";
 import FormDataRange from "@/components/Forms/FormDataRange";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
@@ -16,10 +16,16 @@ import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { InboxOutlined } from "@ant-design/icons";
+import type { UploadProps } from "antd";
+
 import {
   Button,
   Col,
+  DatePicker,
+  Form,
   Input,
+  InputNumber,
   Row,
   Select,
   Spin,
@@ -31,246 +37,375 @@ import { useState } from "react";
 
 import dynamic from "next/dynamic";
 import { FormProps, useForm, useFormContext } from "react-hook-form";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import { ENUM_STATUS } from "@/constants/globalEnums";
+import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
+import TagsSelectNotSetFormUI from "@/components/ui/dashboardUI/TagsSelectNotSetForm";
+import Dragger from "antd/es/upload/Dragger";
+import { getCloudinaryEnv } from "@/helpers/config/envConfig";
+import UploadMultipalDragAndDropImge from "@/components/ui/UploadMultipalDragAndDropImge";
 const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
+  () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
   {
     ssr: false,
   }
 );
+
 const CreateCoursePage = () => {
-
-  // const [textEditorValue, setTextEditorValue] = useState("");
-
+  const [textEditorValue, setTextEditorValue] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>([]);
+  const [url, setUrl] = useState("");
   const [addCourse, { isLoading, error }] = useAddCourseMutation();
 
-  // !  tag selection
+  const validateUrl = (_: any, value: string) => {
+    // Basic URL validation using a regular expression
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+    if (!value || urlRegex.test(value)) {
+      return Promise.resolve();
+    }
+    return Promise.reject(new Error("Please enter a valid URL"));
+  };
 
-  // ! for video insert
-
-  // const demo_video = {
-  //   video: videoUrl,
-  //   platform: videoType,
-  // };
-
-  // console.log(demo_video);
-  const onSubmit = async (values: any) => {
-    const CourseData = {
-      // tags: selectedTags,
-
-      // demo_video,
+  const [form] = Form.useForm();
+  const onFinish = async (values: any) => {
+    const courseData = {
+      tags: selectedTags,
+      short_description: shortDescription,
       // details: textEditorValue,
-
       ...values,
     };
-
+   
     try {
-      const res = await addCourse({ ...CourseData }).unwrap();
-      console.log(res, "response");
+      const res = await addCourse({
+        ...courseData,
+        details: textEditorValue,
+        imgs: images.length ? images[0] : "",
+      }).unwrap();
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Course created successfully");
         // setVideoType(null);
         // setVideoUrl("");
-
-        // setTextEditorValue("");
+        setShortDescription("");
+        setTextEditorValue("");
+        setSelectedTags([]);
+        setUrl("");
+        setImages([]);
+        form.resetFields();
       }
-      // message.success("Admin created successfully!");
     } catch (err: any) {
-      console.error(err.message);
-      Error_model_hook(err?.message);
+      console.error(err);
+      Error_model_hook(err?.data);
     }
   };
+  const categoryQuery: Record<string, any> = {};
+  categoryQuery["status"] = ENUM_STATUS.ACTIVE;
+  categoryQuery["limit"] = 99999;
+  categoryQuery["sortBy"] = "title";
+  categoryQuery["sortOrder"] = "asc";
+
+  const { data: Category, isLoading: categoryLoading } = useGetAllCategoryQuery(
+    { ...categoryQuery }
+  );
+  const CategoryData = Category?.data;
+  // console.log(CategoryData)
+  const CategoryOptions = CategoryData?.map((item: any) => {
+    return {
+      label: item?.title,
+      value: item?._id,
+    };
+  });
+
+  const query: Record<string, any> = {};
+  query["status"] = ENUM_STATUS.ACTIVE;
+  query["limit"] = 99999;
+  query["multipleRole"] = "admin,trainer";
+  query["sortBy"] = "title";
+  query["sortOrder"] = "asc";
+  const { data: usersData, isLoading: AuthorLoading } = useGetAllUsersQuery({
+    ...query,
+  });
+
+  const AuthorOptions = usersData?.data?.map((item: any) => {
+    return {
+      label: item?.email,
+      value: item?._id,
+    };
+  });
 
   return (
-    <div
-      style={{
-        boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
-      }}
-    >
-      <HeadingUI>Create Course</HeadingUI>
-      {/* resolver={yupResolver(adminSchema)} */}
-      <div className="">
-        <Form submitHandler={onSubmit}>
-          <section
-            style={{
-              padding: "0.5rem",
-              borderWidth: "2px",
-            }} /* className="border-2 p-2 rounded-2" */
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
-              <div
-                style={{
-                  paddingRight: "0.5rem",
-                  borderRightWidth: "2px",
-                }} /* className="border-r-2 pr-2" */
-              >
-                <SubHeadingUI>Basic Information</SubHeadingUI>
-                <Row gutter={[8, 8]}>
-                  <Col xs={24} md={24} lg={24} style={{}}>
-                    <FormInput
-                      type="text"
-                      name="title"
-                      size="large"
-                      label="Title"
-                      required={true}
-                    />
-                    {/*//! 1 */}
-                  </Col>
-                  <Col
-                    xs={24}
-                    md={12}
-                    lg={12}
-                    style={
-                      {
-                        // background:"red"
-                      }
-                    }
-                  >
-                    <FormInput
-                      type="number"
-                      name="price"
-                      size="large"
-                      label="Price"
-                      required={true}
-                    />
-                    {/* //! 7 */}
-                  </Col>
-                  <Col xs={24} md={12} lg={12}>
-                    <FormSelectField
-                      size="large"
-                      name="price_type"
-                      options={priceTypeOptions}
-                      // defaultValue={priceTypeOptions[0]}
-                      label="Price Type"
-                      // placeholder="Select"
-                      required={true}
-                    />
-                    {/* //! price type 8 */}
-                  </Col>
+    <div className="shadow-lg rounded-lg p-2 md:p-5 bg-white">
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        form={form}
+        style={{ padding: "0.5rem" }}
+      >
+        <Typography.Title style={{ textDecoration: "underline" }} level={5}>
+          Basic Information
+        </Typography.Title>
 
-                  <Col xs={24} md={12} lg={12} style={{}}>
-                    <FormInput
-                      type="text"
-                      name="level"
-                      size="large"
-                      label="Level"
-                      // required={true}
-                    />
-                    {/*//! 5. */}
-                  </Col>
-                  <Col xs={24} md={12} lg={12} style={{}}>
-                    <FormInput
-                      type="number"
-                      name="showing_number"
-                      size="large"
-                      label="Showing Number"
-                      // required={true}
-                    />
-                    {/* //!6. Showing Number */}
-                  </Col>
-
-                  <Col xs={24} md={12} lg={12} style={{}}>
-                    <FormDataRange name="duration" label="Duration" />
-                    {/* //!4  */}
-                  </Col>
-                </Row>
-              </div>
-
-              {/* basic info */}
-              <div className="    ">
-                <SubHeadingUI>Other Information</SubHeadingUI>
-                <Row gutter={[12, 12]}>
-                  <Col xs={24} md={12} lg={12} style={{}}>
-                    <SelectCategoryField />
-                    {/* //! category 10 */}
-                  </Col>
-                  <Col xs={24} md={12} lg={12} style={{}}>
-                    <SelectAuthorField />
-                    {/* //! price type 8 */}
-                  </Col>
-                  <Col xs={24} md={12} lg={12} style={{}}>
-                    <FormSelectField
-                      size="large"
-                      name="status"
-                      options={courseStatusOptions as any}
-                      // defaultValue={priceTypeOptions[0]}
-                      label="status"
-                      // placeholder="Select"
-                      required={true}
-                    />
-                    {/* //! status 9 */}
-                  </Col>
-
-                  <Col xs={24} md={24} lg={24} style={{}}>
-                    <DemoVideoUI
-                      label="Preview Video"
-                      // videoType={videoType as any}
-                      // setVideoType={setVideoType}
-                      // videoUrl={videoUrl}
-                      // setVideoUrl={setVideoUrl}
-                      options={["youtube", "vimeo"]}
-                    />
-                  </Col>
-
-                  {/* tag selections */}
-                  <Col xs={24} md={24} lg={24} style={{}}>
-                    <TagsSelectUI />
-
-                    {/*//! 11 */}
-                  </Col>
-
-                  <Col
-                    xs={24}
-                    style={{
-                      margin: "10px 0",
-                      textAlign: "start",
-                    }}
-                  >
-                    <UploadImage name="img" />
-                    {/*//!  2 */}
-                  </Col>
-                </Row>
-              </div>
-            </div>
-            <div>
-              <FormTextArea
-                name="short_description"
-                label="Short description"
-                rows={5}
-                placeholder="Please enter short description"
-                required
-              />
-            </div>
-            <section
-              style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
+        <section
+          style={{
+            padding: "0.5rem",
+            borderWidth: "2px",
+          }} /* className="border-2 p-2 rounded-2" */
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
+            <div
+              style={{
+                paddingRight: "0.5rem",
+                borderRightWidth: "2px",
+              }} /* className="border-r-2 pr-2" */
             >
-              <p className="text-center my-3 font-bold text-xl">Description</p>
-              <TextEditor
-              // textEditorValue={textEditorValue}
-              // setTextEditorValue={setTextEditorValue}
+              <SubHeadingUI>Basic Information</SubHeadingUI>
+              <Row gutter={[8, 8]}>
+                <Col xs={24} md={24} lg={24} style={{}}>
+                  <Form.Item
+                    label="Course title"
+                    name="title"
+                    rules={[
+                      // {
+                      //   pattern: /^[\u0980-\u09FF\s]*$/,
+                      //   message: "বাংলায় শুধুমাত্র অক্ষর ব্যবহার করুন",
+                      // },
+                      { required: true, message: "Title is required" },
+                    ]}
+                  >
+                    <Input size="large" placeholder="Course title" />
+                  </Form.Item>
+                </Col>
+                <Col
+                  xs={24}
+                  md={12}
+                  lg={12}
+                  style={
+                    {
+                      // background:"red"
+                    }
+                  }
+                >
+                  <Form.Item
+                    style={{ width: "100%" }}
+                    label={"Price"}
+                    name="price"
+                    rules={[
+                      // {
+                      //   pattern: /^[\u0980-\u09FF\s]*$/,
+                      //   message: "বাংলায় শুধুমাত্র অক্ষর ব্যবহার করুন",
+                      // },
+                      { required: true, message: "Price is required" },
+                    ]}
+                  >
+                    <InputNumber
+                      type="number"
+                      style={{ width: "100%" }}
+                      size="large"
+                      placeholder="Please type price"
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12} lg={12}>
+                  <Form.Item label="Price type" name="price_type">
+                    <Select size="large" style={{ width: "100%" }}>
+                      {priceTypeOptions?.map((type: any, index: any) => (
+                        <Select.Option value={type.value} key={index}>
+                          {type.label}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+
+                <Col xs={24} md={12} lg={12} style={{}}>
+                  <Form.Item label="Course level" name="level">
+                    <Input size="large" placeholder="Course level" />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12} lg={12} style={{}}>
+                  <Form.Item label="Showing Number" name="showing_number">
+                    <InputNumber
+                      type="number"
+                      size="large"
+                      style={{ width: "100%" }}
+                      placeholder="Please type price"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col xs={24} md={12} lg={12} style={{}}>
+                  <Form.Item label="Duration" name="duration">
+                    <DatePicker.RangePicker />
+                  </Form.Item>
+                  {/* <FormDataRange name="duration" label="Duration" /> */}
+                </Col>
+              </Row>
+            </div>
+
+            {/* basic info */}
+            <div className="    ">
+              <SubHeadingUI>Other Information</SubHeadingUI>
+              <Row gutter={[12, 12]}>
+                <Col xs={24} md={12} lg={12} style={{}}>
+                  <Form.Item
+                    label="Select course category"
+                    name="category"
+                    rules={[
+                      { required: true, message: "Category is required" },
+                    ]}
+                  >
+                    <Select
+                      size="large"
+                      loading={categoryLoading}
+                      placeholder="Select your category"
+                    >
+                      {CategoryOptions?.map((data: any) => (
+                        <Select.Option value={data.value} key={data.value}>
+                          {data.label}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  {/* //! category 10 */}
+                </Col>
+                <Col xs={24} md={12} lg={12} style={{}}>
+                  {/* <SelectAuthorField /> */}
+                  <Form.Item
+                    label="Author/trainer"
+                    name="author"
+                    rules={[
+                      { required: true, message: "Author/trainer is required" },
+                    ]}
+                  >
+                    <Select
+                      size="large"
+                      loading={AuthorLoading}
+                      placeholder="Select course trainer"
+                    >
+                      {/* <Select.Option value="" key={0}>
+                        Select author
+                      </Select.Option> */}
+                      {AuthorOptions?.map((data: any) => (
+                        <Select.Option value={data.value} key={data.value}>
+                          {data.label}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12} lg={12}>
+                  <Form.Item
+                    label="Select coruse status"
+                    name="type"
+                    style={{ width: "100%" }}
+                  >
+                    <Select
+                      size="large"
+                      style={{ width: "100%" }}
+                      placeholder="Select coruse status"
+                    >
+                      {courseStatusOptions?.map((data: any) => (
+                        <Select.Option
+                          style={{ width: "100%" }}
+                          value={data.value}
+                          key={data.value}
+                        >
+                          {data.label}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+
+                <Col xs={24} md={24} lg={24} style={{}}>
+                  <Form.Item
+                    name="demo_video.video"
+                    label="Preview Video url from vimeo"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter a URL",
+                      },
+                      {
+                        validator: validateUrl,
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter URL"
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col xs={24} md={24} lg={24} style={{}}>
+                  <TagsSelectNotSetFormUI setSelectedTags={setSelectedTags} />
+                </Col>
+
+                <Col
+                  xs={24}
+                  style={{
+                    margin: "10px 0",
+                    textAlign: "start",
+                  }}
+                >
+                  <UploadMultipalDragAndDropImge
+                  multiple={false}
+                    images={images}
+                    setImages={setImages}
+                  />
+                </Col>
+              </Row>
+            </div>
+          </div>
+          <div>
+            <Form.Item
+              style={{ width: "100%" }}
+              label="Short description"
+              // rules={[
+              //   { required: true, message: "short description is required" },
+              // ]}
+              name="short_description"
+            >
+              <Input.TextArea
+                showCount
+                maxLength={3000}
+                rows={12}
+                onBlur={(e) => setShortDescription(e.target.value)}
               />
-            </section>
-            {/* <div>
+            </Form.Item>
+          </div>
+          <section
+            style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
+          >
+            <p className="text-center my-3 font-bold text-xl">Description</p>
+            <TextEditor
+              textEditorValue={textEditorValue}
+              setTextEditorValue={setTextEditorValue}
+            />
+          </section>
+          {/* <div>
               <UploadMultpalImage />
             </div> */}
-            {isLoading ? (
-              <Spin />
-            ) : (
-              <ButtonSubmitUI>Create Course</ButtonSubmitUI>
-            )}
-          </section>
-        </Form>
-      </div>
+          {isLoading ? (
+            <Spin />
+          ) : (
+            <Button type="default" htmlType="submit">
+              Create Course
+            </Button>
+          )}
+        </section>
+      </Form>
     </div>
   );
 };
 
-// export default CreateCoursePage;
-export default dynamic(() => Promise.resolve(CreateCoursePage), {
-  ssr: false,
-});
+export default CreateCoursePage;
+// export default dynamic(() => Promise.resolve(CreateCoursePage), {
+//   ssr: false,
+// });
