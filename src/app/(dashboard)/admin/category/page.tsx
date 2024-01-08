@@ -31,11 +31,14 @@ import { USER_ROLE } from "@/constants/role";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
+import { getUserInfo } from "@/services/auth.service";
 
 const CategoryList = () => {
   const query: Record<string, any> = {};
 
-  const ADMIN = USER_ROLE.ADMIN;
+  // const ADMIN = USER_ROLE.ADMIN;
+  const { role } = getUserInfo() as any;
+  console.log("🚀 ~ file: page.tsx:41 ~ CategoryList ~ role:", role);
 
   const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -83,6 +86,7 @@ const CategoryList = () => {
             Success_model("Category Successfully Deleted");
           }
         } catch (error: any) {
+          Error_model_hook(error.data);
           message.error(error.message);
         }
       }
@@ -144,18 +148,18 @@ const CategoryList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${ADMIN}/category/details/${record._id}`}>
+                    <Link href={`/${role}/category/details/${record._id}`}>
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${ADMIN}/category/edit/${record._id}`}>
+                    <Link href={`/${role}/category/edit/${record._id}`}>
                       Edit
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="add_milestone">
                     <Link
-                      href={`/${ADMIN}/category/create/course/${record?._id}?categoryName=${record?.title}`}
+                      href={`/${role}/category/create/course/${record?._id}?categoryName=${record?.title}`}
                     >
                       Add Course
                     </Link>

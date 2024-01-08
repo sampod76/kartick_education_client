@@ -61,10 +61,6 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
   // console.log(demo_video);
   const onSubmit = async (values: any) => {
     const CourseData = {
-      // tags: selectedTags,
-
-      demo_video,
-      // details: textEditorValue,
       ...values,
     };
 
@@ -79,8 +75,7 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
       } else {
         Success_model("Course update successfully");
 
-        setVideoType(null);
-        setVideoUrl("");
+     
         // setTextEditorValue("");
       }
       // message.success("Admin created successfully!");

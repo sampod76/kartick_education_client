@@ -31,6 +31,7 @@ import { USER_ROLE } from "@/constants/role";
 import dynamic from "next/dynamic";
 
 const BlogList = () => {
+  // const SUPER_ADMIN = USER_ROLE.ADMIN;
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
   const [deleteBlog] = useDeleteBlogMutation();
