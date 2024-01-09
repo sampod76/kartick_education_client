@@ -1,10 +1,17 @@
 import React from "react";
-import TextEditor from "../shared/TextEditor/TextEditor";
+// import TextEditor from "../shared/TextEditor/TextEditor";
 import Form from "../Forms/Form";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { useAddResourceMutation } from "@/redux/api/adminApi/resource";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import ButtonSubmitUI from "../ui/ButtonSubmitUI";
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("../shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 
 export default function ResourceCreate({ setOpen, moduleId }: any) {
   const [addResource, { isLoading }] = useAddResourceMutation();

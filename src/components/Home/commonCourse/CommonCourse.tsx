@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
 
-import coursesData from "@/db/courses";
-import SIngleCommonCourse from "./SIngleCommonCourse";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { ENUM_YN } from "@/constants/globalEnums";
 import CardLoading from "@/components/ui/Loading/CardLoading";
 import SIngleCourse from "../coureses/SIngleCourse";
 import type { PaginationProps } from "antd";
 import { Pagination } from "antd";
+
+
 
 const CommonCourse = () => {
   const [current, setCurrent] = useState(1);

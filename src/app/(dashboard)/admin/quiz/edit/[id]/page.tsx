@@ -208,7 +208,7 @@ const EditQuiz = ({ params }: { params: { id: string } }) => {
             </Row>
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}
-            <Form submitHandler={onSubmit} defaultValues={data}>
+            <Form submitHandler={onSubmit} defaultValues={{...data,lesson:data?.lesson?._id}}>
               <div
                 style={{
                   border: "1px solid #d9d9d9",

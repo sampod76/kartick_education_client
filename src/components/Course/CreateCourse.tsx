@@ -64,13 +64,14 @@ const CreateCourse = ({setOpen}:any) => {
       short_description: shortDescription,
       // details: textEditorValue,
       ...values,
+      img: images.length ? images[0] : "",
     };
 
     try {
       const res = await addCourse({
         ...courseData,
         details: textEditorValue,
-        imgs: images.length ? images[0] : "",
+       
       }).unwrap();
 
       if (res?.success == false) {
@@ -312,7 +313,7 @@ const CreateCourse = ({setOpen}:any) => {
                 </Col>
                 <Col xs={24} md={12} lg={12}>
                   <Form.Item
-                    label="Featcher status"
+                    label="Feature status"
                     name="favorite"
                     style={{ width: "100%" }}
                   >
@@ -342,10 +343,7 @@ const CreateCourse = ({setOpen}:any) => {
                     name="demo_video.video"
                     label="Preview Video url from vimeo"
                     rules={[
-                      {
-                        required: true,
-                        message: "Please enter a URL",
-                      },
+                     
                       {
                         validator: validateUrl,
                       },

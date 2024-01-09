@@ -7,6 +7,7 @@ import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
+import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import UploadImage from "@/components/ui/UploadImage";
 import { useAddBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
 
@@ -82,6 +83,20 @@ const CreateBlog = () => {
                   required={true}
                 />
               </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <SelectAuthorField
+                 
+                />
+              </Col>
+
              
 
               <Col

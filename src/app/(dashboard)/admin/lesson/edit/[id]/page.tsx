@@ -36,6 +36,7 @@ import dynamic from "next/dynamic";
 import VideoSelect from "@/components/Forms/VideoSelect";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import module from "next/dist/server/future/route-modules/app-page/module";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -173,7 +174,7 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
               />
             </Col>
           </Row>
-          <Form submitHandler={onSubmit} defaultValues={{ ...data }}>
+          <Form submitHandler={onSubmit} defaultValues={{ ...data,module:data.module._id }}>
             <div
               style={{
                 border: "1px solid #d9d9d9",

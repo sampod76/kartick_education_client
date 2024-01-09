@@ -1,12 +1,18 @@
 import React from "react";
-import TextEditor from "../shared/TextEditor/TextEditor";
+
 import Form from "../Forms/Form";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import ButtonSubmitUI from "../ui/ButtonSubmitUI";
 import { useAddGlossaryMutation } from "@/redux/api/adminApi/glossary";
-
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(
+  () => import("../shared/TextEditor/TextEditor"),
+  {
+    ssr: false,
+  }
+);
 export default function GlossaryCreate({setOpen,moduleId}:any) {
   const [addGlossary, { isLoading }] = useAddGlossaryMutation();
   const onSubmit = async (values: any) => {

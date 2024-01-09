@@ -51,7 +51,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
     useAddMilestoneMutation();
 
   const onSubmit = async (values: any) => {
-    if (!courses._id || !courseId) {
+    if (!courses._id && !courseId) {
       Error_model_hook("Course must be select");
       return;
     }
