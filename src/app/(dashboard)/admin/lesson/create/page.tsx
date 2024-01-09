@@ -294,11 +294,14 @@ const CreateLesson = () => {
                 </Col>
               </Row>
             </div>
+            <div className="w-fit mx-auto">
+
             {serviceLoading ? (
               <ButtonLoading />
             ) : (
               <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
             )}
+            </div>
           </Form>
         </div>
       ) : (

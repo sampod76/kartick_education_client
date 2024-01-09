@@ -26,6 +26,7 @@ const TextEditor = ({
       // sanitize: false,
       defaultMode: 1, // Set default alignment to left
       toolbarAdaptive: false,
+    
     }),
     []
   );
@@ -35,6 +36,7 @@ const TextEditor = ({
       <JoditEditor
         ref={editor}
         config={editorConfig}
+      
         value={content}
         // tabIndex={1} // tabIndex of textarea
         onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons

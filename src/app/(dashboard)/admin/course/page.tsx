@@ -30,6 +30,7 @@ import FilterCategorySelect from "@/components/dashboard/Filter/FilterCategory";
 import dynamic from "next/dynamic";
 import ModalComponent from "@/components/Modal/ModalComponents";
 import Test from "@/components/Utlis/Test";
+import CreateCourse from "@/components/Course/CreateCourse";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
@@ -65,7 +66,7 @@ const CourseList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  
+
   const { data = [], isLoading } = useGetAllCourseQuery({ ...query });
 
   //@ts-ignore
@@ -78,11 +79,8 @@ const CourseList = () => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          
-
           const res = await deleteCourse(id).unwrap();
 
-          
           if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -158,7 +156,6 @@ const CourseList = () => {
       title: "category",
       dataIndex: "category",
       render: function (data: any) {
-        
         return data.title;
       },
       ellipsis: true,
@@ -226,7 +223,6 @@ const CourseList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-
     setPage(page);
     setSize(pageSize);
   };
@@ -270,7 +266,6 @@ const CourseList = () => {
           },
         ]}
       /> */}
-   
 
       <HeadingUI>Course List</HeadingUI>
 
@@ -291,9 +286,9 @@ const CourseList = () => {
         </div>
 
         <div>
-          <Link href={`/admin/course/create`}>
-            <Button type="default">Create Course</Button>
-          </Link>
+          <ModalComponent buttonText="Create Course">
+            <CreateCourse />
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
