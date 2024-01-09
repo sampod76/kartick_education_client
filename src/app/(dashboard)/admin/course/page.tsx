@@ -258,7 +258,7 @@ const CourseList = () => {
 
   return (
     <div>
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: "admin",
@@ -269,10 +269,8 @@ const CourseList = () => {
             link: "/admin/course",
           },
         ]}
-      />
-      <ModalComponent buttonText="sanoid">
-        <Test/>
-      </ModalComponent>
+      /> */}
+   
 
       <HeadingUI>Course List</HeadingUI>
 

@@ -47,7 +47,8 @@ const EditServicePage = ({ params }: any) => {
         Success_model("successfully updated data");
       }
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (isLoading || updateLoading) {

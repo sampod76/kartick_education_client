@@ -38,7 +38,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { FormProps, useForm, useFormContext } from "react-hook-form";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
-import { ENUM_STATUS } from "@/constants/globalEnums";
+import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 import TagsSelectNotSetFormUI from "@/components/ui/dashboardUI/TagsSelectNotSetForm";
 import Dragger from "antd/es/upload/Dragger";
@@ -76,7 +76,7 @@ const CreateCoursePage = () => {
       // details: textEditorValue,
       ...values,
     };
-   
+
     try {
       const res = await addCourse({
         ...courseData,
@@ -320,6 +320,32 @@ const CreateCoursePage = () => {
                     </Select>
                   </Form.Item>
                 </Col>
+                <Col xs={24} md={12} lg={12}>
+                  <Form.Item
+                    label="Featcher status"
+                    name="favorite"
+                    style={{ width: "100%" }}
+                  >
+                    <Select
+                      size="large"
+                      style={{ width: "100%" }}
+                      placeholder="Select Featcher status"
+                    >
+                      {[
+                        { label: "Yes", value: ENUM_YN.YES },
+                        { label: "No", value: ENUM_YN.NO },
+                      ]?.map((data: any) => (
+                        <Select.Option
+                          style={{ width: "100%" }}
+                          value={data.value}
+                          key={data.value}
+                        >
+                          {data.label}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
 
                 <Col xs={24} md={24} lg={24} style={{}}>
                   <Form.Item
@@ -355,7 +381,7 @@ const CreateCoursePage = () => {
                   }}
                 >
                   <UploadMultipalDragAndDropImge
-                  multiple={false}
+                    multiple={false}
                     images={images}
                     setImages={setImages}
                   />

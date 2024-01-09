@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
 import { authKey } from "@/constants/storageKey";
 import { removeUserInfo } from "@/services/auth.service";
@@ -92,4 +93,9 @@ const UserAvatarUI = () => {
   );
 };
 
-export default UserAvatarUI;
+// export default UserAvatarUI;
+
+
+export default dynamic(() => Promise.resolve(UserAvatarUI), {
+  ssr: false,
+});

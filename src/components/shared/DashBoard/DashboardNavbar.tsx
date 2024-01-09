@@ -21,11 +21,13 @@ import {
 } from "@ant-design/icons";
 import Logo from "../Logo";
 import { USER_ROLE } from "@/constants/role";
-import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
+// import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { authKey } from "@/constants/storageKey";
-
+const UserAvatarUI = React.lazy(
+  () => import("@/components/ui/NavUI/UserAvatarUI")
+);
 const { Header } = Layout;
 const styles = {
   main: {

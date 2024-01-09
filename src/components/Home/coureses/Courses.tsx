@@ -7,6 +7,7 @@ import CardLoading from "@/components/ui/Loading/CardLoading";
 import { Error_model_hook } from "@/utils/modalHook";
 import NotFoundCourse from "@/components/ui/NotFound/NotFoundCourse";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import InternelError from "@/components/shared/Error/InternelError";
 
 interface ICourseItemType {
   status?: string;
@@ -28,18 +29,18 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
 
   const { data, isLoading, error } = useGetAllCourseQuery({ ...queryAll });
   const courseData = data?.data || [];
-  if (
-    error ||
-    //@ts-ignore
-    data?.data?.success === false
-  ) {
-    const errorType: any = error;
-    Error_model_hook(
-      errorType?.message ||
-        //@ts-ignore
-        data?.data?.message
+  console.log("🚀 ~ file: Courses.tsx:32 ~ Courses ~ courseData:", courseData)
+  if (error) {
+    return (
+      <InternelError
+        message={
+          //@ts-ignore
+          error?.data ||
+          //@ts-ignore
+          data?.data?.message
+        }
+      />
     );
-    console.log(error, data?.data);
   }
   return (
     <>
