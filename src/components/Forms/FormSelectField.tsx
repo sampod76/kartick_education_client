@@ -59,6 +59,7 @@ const FormSelectField = ({
               onChange(val);
             }}
             disabled={disabled}
+            
             size={size}
             // defaultActiveFirstOption
             defaultValue={defaultValue ? defaultValue : ""}

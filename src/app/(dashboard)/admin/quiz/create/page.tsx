@@ -84,9 +84,9 @@ const CreateQuiz = () => {
     }
   };
 
-  if (serviceLoading) {
-    message.loading("Loading...");
-  }
+  // if (serviceLoading) {
+  //   message.loading("Loading...");
+  // }
 
   return (
     <>

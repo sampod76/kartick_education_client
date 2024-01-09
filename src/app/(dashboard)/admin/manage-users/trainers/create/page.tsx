@@ -53,6 +53,7 @@ const CreateTrainerPage = () => {
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err.message);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (isLoading) {

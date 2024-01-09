@@ -33,6 +33,8 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import VideoSelect from "@/components/Forms/VideoSelect";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import ButtonGroup from "antd/es/button/button-group";
+import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -85,9 +87,9 @@ const CreateLesson = () => {
     }
   };
 
-  if (serviceLoading || GetLessionLoading) {
-    return <LoadingSkeleton></LoadingSkeleton>;
-  }
+  // if (GetLessionLoading) {
+  //   return <LoadingSkeleton></LoadingSkeleton>;
+  // }
   const roundedNumber = Number(
     existLesson?.data[0]?.lesson_number || 1
   ).toFixed(1);
@@ -235,9 +237,9 @@ const CreateLesson = () => {
                     label="Lesson No"
                     required={true}
                   />
-                  {/*//! 2 */}
+                
                 </Col>
-                <Col xs={24}>
+                <Col xs={24} style={{marginTop:"2rem" , marginBottom:"2rem"}}>
                   {/* <DemoVideoUI
                     label="Video"
                     videoType={videoType as any}
@@ -247,14 +249,14 @@ const CreateLesson = () => {
                     options={["youtube", "vimeo"]}
                     required
                   /> */}
-                  {/*//! 12*/}
+              
 
                   <VideoSelect
                   // videos={SelectVideo}
                   // setVideos={setSelectVideo as any}
                   />
                 </Col>
-                {/* //! commented for refresh */}
+                
                 <Col
                   className="gutter-row"
                   xs={24}
@@ -284,9 +286,7 @@ const CreateLesson = () => {
                   </div>
                 </Col>
                 {/* //! commented for refresh */}
-                <Col className="gutter-row" xs={24} style={{}}
-                 
-                >
+                <Col className="gutter-row" xs={24} style={{}}>
                   <p className="text-center my-3 font-bold text-xl ">
                     Description
                   </p>
@@ -294,8 +294,11 @@ const CreateLesson = () => {
                 </Col>
               </Row>
             </div>
-
-            <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
+            {serviceLoading ? (
+              <ButtonLoading />
+            ) : (
+              <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
+            )}
           </Form>
         </div>
       ) : (
