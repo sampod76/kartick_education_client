@@ -29,6 +29,10 @@ const Login = () => {
 
   const login = isLoggedIn();
 
+  // console.log("🚀 ~ Login ~ login:", login)
+
+
+
   useEffect(() => {
     if (login) {
       router.push("/dashboard");

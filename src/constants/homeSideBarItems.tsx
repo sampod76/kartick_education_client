@@ -227,7 +227,7 @@ const homeSideItems = (onClose?: any) => {
       ],
     },
     {
-      label: <Link onClick={onClose} href="/">Contact</Link>,
+      label: <Link onClick={onClose} href="/contact">Contact</Link>,
       key: "/contact",
       icon: <ContactsFilled />,
     },

@@ -5,19 +5,22 @@ import ModuleList from "./ModuleList";
 import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
 import Courses from "../Home/coureses/Courses";
 import LessonList from "../lesson/LessonList";
+// import GlosseryPage from "../"
 import {
   BookOutlined,
   QuestionOutlined,
   CommentOutlined,
   BlockOutlined,
+  
 } from "@ant-design/icons";
 import Quizes from "../Quiz/Quizes";
+import GlosseryPage from "../glossery/Glossery";
 
 export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,moduleData:any[] }) {
   
   // console.log(moduleData)
 
-  // const {data:QuizData} = useA
+  // const {data:QuizData} = useGetQui
 
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
@@ -40,6 +43,7 @@ export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,mo
       key: "1",
       children: <LessonList moduleId={moduleId} />,
     },
+  
     {
       label: (
         <button className="text-xl font-bold ">
@@ -58,6 +62,21 @@ export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,mo
     {
       label: (
         <button className="text-xl font-bold ">
+          <BookOutlined
+            style={{
+              fontSize: "1.5rem",
+            }}
+          />
+          <h1>Glossery</h1>
+        </button>
+      ),
+      key: "3",
+      children: <GlosseryPage moduleId={moduleId}/>
+    },
+
+    {
+      label: (
+        <button className="text-xl font-bold ">
           {" "}
           <CommentOutlined
             style={{
@@ -67,7 +86,7 @@ export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,mo
           <h1> Reviews</h1>
         </button>
       ),
-      key: "3",
+      key: "4",
       children: <ReviewsPage />,
     },
   ];
