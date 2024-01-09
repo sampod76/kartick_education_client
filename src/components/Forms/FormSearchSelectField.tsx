@@ -71,7 +71,7 @@ const FormSearchSelectField = ({
             // defaultActiveFirstOption
             defaultValue={defaultValue ? defaultValue : ""}
             options={options}
-            value={selectedValue || value}
+            value={value}
             style={{ width: "100%" }}
             showSearch
             onSearch={onSearch}

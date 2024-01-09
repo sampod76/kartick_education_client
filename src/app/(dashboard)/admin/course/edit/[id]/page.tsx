@@ -36,6 +36,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
+import { ENUM_YN } from "@/constants/globalEnums";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -75,13 +76,12 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
       } else {
         Success_model("Course update successfully");
 
-     
         // setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
-      console.error(err.message);
-      Error_model_hook(err?.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data);
     }
   };
 
@@ -225,11 +225,23 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       label="status"
                       // placeholder="Select"
                     />
-                    {/* //! status 9 */}
+                  </Col>
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <FormSelectField
+                      size="large"
+                      name="favorite"
+                      options={[
+                        { label: "Yes", value: ENUM_YN.YES },
+                        { label: "No", value: ENUM_YN.NO },
+                      ]}
+                      // defaultValue={priceTypeOptions[0]}
+                      label="Featcher"
+                      // placeholder="Select"
+                    />
                   </Col>
 
                   <Col xs={24} md={24} lg={24} style={{}}>
-                    <DemoVideoUI
+                    {/* <DemoVideoUI
                       label="Preview Video"
                       // videoType={videoType as any}
                       // setVideoType={setVideoType}
@@ -237,6 +249,14 @@ const UpdateCoursePage = ({ params }: { params: { id: string } }) => {
                       // setVideoUrl={setVideoUrl}
                       options={["youtube", "vimeo"]}
                       defaultValue={getCourse?.demo_video || {}}
+                    /> */}
+                    <FormInput
+                      type="text"
+                      name="demo_video.video"
+                      size="large"
+                      label="Preview Video"
+                      // videoType={videoT"
+                      //
                     />
                   </Col>
 

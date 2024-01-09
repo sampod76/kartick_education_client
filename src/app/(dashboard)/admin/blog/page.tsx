@@ -29,6 +29,7 @@ import {
 import { useDeleteBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
 import { USER_ROLE } from "@/constants/role";
 import dynamic from "next/dynamic";
+import { AllImage } from "@/assets/AllImge";
 
 const BlogList = () => {
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -160,6 +161,7 @@ const BlogList = () => {
     setSortOrder("");
     setSearchTerm("");
   };
+  
 
   const deleteAdminHandler = async (id: string) => {
     // console.log(id);

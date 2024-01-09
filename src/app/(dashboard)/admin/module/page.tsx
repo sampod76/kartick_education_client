@@ -25,6 +25,10 @@ import {
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterMilestone from "@/components/dashboard/Filter/FilterMilestone";
 import { AllImage } from "@/assets/AllImge";
+import ModalComponent from "@/components/Modal/ModalComponents";
+
+import GlossaryCreate from "@/components/Glossary/Glossary";
+import ResourceCreate from "@/components/Resource/Resource";
 
 const MileStoneList = () => {
   const query: Record<string, any> = {};
@@ -99,7 +103,9 @@ const MileStoneList = () => {
           <>
             {
               <Image
-                src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
+                src={
+                  data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
+                }
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
@@ -173,6 +179,16 @@ const MileStoneList = () => {
                   >
                     Delete
                   </Menu.Item>
+                  <div className="flex flex-col justify-center items-center gap-1">
+
+                  <ModalComponent buttonText="Add Resource">
+                    <ResourceCreate moduleId={record._id} />
+                  </ModalComponent>
+              
+                  <ModalComponent buttonText="Add Glossary">
+                    <GlossaryCreate moduleId={record._id} />
+                  </ModalComponent>
+                  </div>
                 </Menu>
               }
             >

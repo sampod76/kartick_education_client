@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 import React from "react";
 import {
   FacebookFilled,
@@ -99,4 +100,7 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+// export default TopBar;
+export default dynamic(() => Promise.resolve(TopBar), {
+   ssr: false,
+ });
