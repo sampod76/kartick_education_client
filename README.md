@@ -87,3 +87,11 @@ password : 11223344
 1. registration from for student
 2. update in dashboard
 3. 
+
+
+## 9 January 
+
+1. Answer input fixed
+2. collapse of lesson 
+3. dashboard of role based
+4. 

@@ -97,7 +97,8 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
             <Input
               placeholder="Option Title"
               style={{
-                width: "20rem",
+                width: "70vw",
+                height:"2.7rem"
               }}
               // width={500}
               value={answer.title}

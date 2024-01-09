@@ -19,7 +19,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   // const userLoggedIn = USER_ROLE.ADMIN;
 
   const userInfo:any = getUserInfo();
-  console.log(userInfo);
+  // console.log(userInfo);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [collapsed, setCollapsed] = useState(false);
@@ -27,7 +27,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const screens = useBreakpoint();
 
   useEffect(() => {
-    if (userInfo?.role !==USER_ROLE.ADMIN) {
+    if (!userInfo?.role) {
       router.push("/login");
     }
     setIsLoading(false);

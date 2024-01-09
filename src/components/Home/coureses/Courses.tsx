@@ -1,9 +1,10 @@
+'use client';
 import { Col, Row, Tabs } from "antd";
 import React from "react";
 import SIngleCourse from "./SIngleCourse";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { ENUM_SORT_ORDER, ENUM_STATUS } from "@/constants/globalEnums";
-import CardLoading from "@/components/ui/Loading/CardLoading";
+
 import { Error_model_hook } from "@/utils/modalHook";
 import NotFoundCourse from "@/components/ui/NotFound/NotFoundCourse";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
@@ -20,6 +21,7 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
   queryAll["status"] = ENUM_STATUS.ACTIVE;
   queryAll["limit"] = 99999;
   queryAll["sortOrder"] = ENUM_SORT_ORDER.ASC;
+  
   for (const key in query) {
     if (Object.prototype.hasOwnProperty.call(query, key)) {
       queryAll[key] = query[key];
