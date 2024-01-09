@@ -106,6 +106,7 @@ const CreateCategory = () => {
                   required={true}
                 />
               </Col>
+           
               <Col
                 className="gutter-row"
                 xs={24}

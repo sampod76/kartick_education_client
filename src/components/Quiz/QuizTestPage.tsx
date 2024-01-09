@@ -11,6 +11,7 @@ import {
   Space,
 } from "antd";
 import QuizQuestionCard from "./QuizQuestionCard";
+import { useAppSelector } from "@/redux/hooks";
 export default function QuizTestPage({
   quizData,
   quizId,
@@ -19,34 +20,37 @@ export default function QuizTestPage({
   quizId: string;
 }) {
   ///! state of quiz card
-  const [currentStep, setCurrentStep] = useState(1);
-  const [userResponses, setUserResponses] = useState<any>({});
-  const [timer, setTimer] = useState<number>(0);
+  const [currentStep, setCurrentStep] = useState(0);
+  // const [userResponses, setUserResponses] = useState<any[]>([]);
 
-  useEffect(() => {
-    // Handle timer logic
-    const timerInterval = setInterval(() => {
-      if (timer > 0) {
-        setTimer((prevTimer) => prevTimer - 1);
-      } else {
-        // Auto-submit when the timer reaches 0
-        // handleFinishQuiz();
-        clearInterval(timerInterval);
-      }
-    }, 1000);
+  const {userAnswers} = useAppSelector((state)=>state.quiz)
+  // const [timer, setTimer] = useState<number>(1000);
 
-    // Clean up timer interval when component unmounts or quiz is finished
-    // return () => clearInterval(timerInterval);
-  }, [timer]);
+  // useEffect(() => {
+  //   // Handle timer logic
+  //   const timerInterval = setInterval(() => {
+  //     if (timer > 0) {
+  //       setTimer((prevTimer) => prevTimer - 1);
+  //     } else {
+  //       // Auto-submit when the timer reaches 0
+  //       // handleFinishQuiz();
+  //       clearInterval(timerInterval);
+  //     }
+  //   }, 1000);
+
+  //   // Clean up timer interval when component unmounts or quiz is finished
+  //   // return () => clearInterval(timerInterval);
+  // }, [timer]);
 
   const handleNext = () => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
+  // console.log(currentStep + 1,'anddd',userAnswers);
   const handleFinishQuiz = () => {
     // Save user responses to localStorage or API
     // saveQuizResponse(quizId, userResponses);
-    console.log(userResponses);
+    console.log(userAnswers);
 
     // Display a success message
     message.success("Quiz submitted successfully!");
@@ -55,35 +59,29 @@ export default function QuizTestPage({
     // router.push(`/quiz/${quizId}/summary`);
   };
 
-  console.log(
-    "currentSteps",
-    currentStep,
-    "quizLenght",
-    quizData.length,
-    "test answer",
-    userResponses
-  );
+  // console.log(
+  //   "currentSteps",
+  //   currentStep,
+  //   "quizLenght",
+  //   quizData.length,
+  //   "test answer",
+  //   userResponses
+  // );
 
 
   return (
     <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0">
-      <Steps
-        current={currentStep}
-        items={quizData?.map((quiz: any, index: number) => ({
-          key: quiz?.title,
-          title: `${quiz?.type} Quiz`,
-        }))}
-      ></Steps>
+     
       <div className="flex flex-col gap-3 mt-4">
         {/* Render quiz based on the current step */}
         {quizData.length > 0 && (
-          // renderQuizQuestion(quizData[currentStep], currentStep)
-
+          // renderQuizQuestion(quizData[currentStep], currentStep);
           <QuizQuestionCard
             quiz={quizData[currentStep]}
             index={currentStep}
-            setUserResponses={setUserResponses}
-            userResponses={userResponses}
+            userAnswers={userAnswers}
+            // setUserResponses={setUserResponses}
+            // userResponses={userResponses}
           />
         )}
 
@@ -98,7 +96,8 @@ export default function QuizTestPage({
             <Button
               type="default"
               onClick={handleNext}
-              disabled={!userResponses.hasOwnProperty(currentStep+1)}
+              // disabled={!userResponses.hasOwnProperty(currentStep+1)}
+              disabled={!userAnswers.find((answer) => answer?.index === currentStep + 1)}
             >
               Next
             </Button>
@@ -108,11 +107,20 @@ export default function QuizTestPage({
             </Button>
           )}
         </div>
+        
+{/*         
+        <Steps
+        current={currentStep}
+        items={quizData?.map((quiz: any, index: number) => ({
+          key: quiz?.title,
+          title: `Quiz${index} `,
+        }))}
+      ></Steps> */}
 
         {/* Display timer */}
-        <div className="text-center mt-4">
+        {/* <div className="text-center mt-4">
           <p>Time Remaining: {timer} seconds</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

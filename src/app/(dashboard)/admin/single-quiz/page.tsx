@@ -153,7 +153,7 @@ const SingleQuizStoneList = () => {
 
       ellipsis: true,
       render: function (data: any) {
-        return <>{data?.quiz?.q}{":"}{data?.quiz?.title}</>;
+        return <>{data?.quiz?.title}</>;
       },
 
     },

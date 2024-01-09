@@ -13,7 +13,11 @@ import {
 } from "@ant-design/icons";
 import Quizes from "../Quiz/Quizes";
 
-export default function ModuleTab({ moduleId }: { moduleId: string }) {
+export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,moduleData:any[] }) {
+  
+  // console.log(moduleData)
+
+  // const {data:QuizData} = useA
 
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
@@ -43,7 +47,7 @@ export default function ModuleTab({ moduleId }: { moduleId: string }) {
             style={{
               fontSize: "1.5rem",
             }}
-          />{" "}
+          />
           <h1>Quiz</h1>
         </button>
       ),

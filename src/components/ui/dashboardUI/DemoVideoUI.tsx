@@ -1,53 +1,45 @@
 import { Input, Select, Typography } from "antd";
-
 const { Title } = Typography;
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 const { Option } = Select;
 
 const DemoVideoUI = ({
-  // videoType,
-  // setVideoType,
-  // videoUrl,
-  // setVideoUrl,
   options,
   label,
   required,
-  defaultValue = {}, // {video:"",platform:""}
+  defaultValue = { video: "", platform: "" },
 }: {
-  // videoType: string | null;
-  // setVideoType: React.Dispatch<React.SetStateAction<any>>;
-  // videoUrl: any;
-  // setVideoUrl: React.Dispatch<React.SetStateAction<any>>;
   options: string[];
   label?: string;
   required?: boolean;
   defaultValue?: Record<string, any>;
 }) => {
-  // console.log(videoType,videoUrl);
-  //   const [videoType, setVideoType] = useState(null);
-  //   const [videoUrl, setVideoUrl] = useState("");
+  const { setValue, register } = useFormContext();
+  const [videoData, setVideoData] = useState({
+    video: defaultValue?.video || "",
+    platform: defaultValue?.platform || "vimeo",
+  });
 
-  const { setValue } = useFormContext();
 
-  const [videoType, setVideoType] = useState(null);
-  const [videoUrl, setVideoUrl] = useState("");
 
-  const demo_video = {
-    video: videoUrl,
-    platform: videoType,
+  useEffect(() => {
+    register("demo_video", { required: required });
+  }, [register, required]); // Register the field with react-hook-form only once
+
+  useEffect(() => {
+    setValue("demo_video", videoData);
+  }, [setValue, videoData]); // Update the value in react-hook-form when videoData changes
+
+  const handleVideoTypeChange = (value: string) => {
+    setVideoData((prevData) => ({ ...prevData, platform: value }));
   };
 
-  if (demo_video?.platform && demo_video.video) {
-    setValue("demo_video", demo_video);
-  }
-  const handleVideoTypeChange = (value: any) => {
-    setVideoType(value);
+  const handleVideoUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setVideoData((prevData) => ({ ...prevData, video: value }));
   };
 
-  const handleVideoUrlChange = (e: any) => {
-    setVideoUrl(e.target.value);
-  };
   return (
     <div className="">
       <Title level={5} style={{ textAlign: "start" }}>
@@ -73,8 +65,7 @@ const DemoVideoUI = ({
         type="URL"
         suffix=".com"
         defaultValue={defaultValue?.video}
-        placeholder={`Enter ${videoType} Video URL`}
-        // value={videoUrl}
+        placeholder={`Enter ${videoData.platform} Video URL`}
         onChange={handleVideoUrlChange}
       />
     </div>

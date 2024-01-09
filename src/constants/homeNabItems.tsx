@@ -8,11 +8,13 @@ export const homeNavItems: MenuProps["items"] = [
  
 
   {
+
     label: <Link className="text-base font-thin font-serif"   href="/course">Contact</Link>,
     key: "/contact",
   },
   {
     label: <Link  className="text-base font-thin font-serif" href="/course">About</Link>,
+
     key: "/About",
   },
   {
