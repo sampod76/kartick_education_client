@@ -1,3 +1,4 @@
+'use client';
 import { Col, Row, Tabs } from "antd";
 import React from "react";
 import SIngleCourse from "./SIngleCourse";

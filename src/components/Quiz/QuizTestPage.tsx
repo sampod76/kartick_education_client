@@ -69,6 +69,8 @@ export default function QuizTestPage({
   // );
 
 
+  console.log(userAnswers,"quizANswer")
+
   return (
     <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0">
      

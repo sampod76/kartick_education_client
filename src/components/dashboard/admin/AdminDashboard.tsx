@@ -1,7 +1,6 @@
-import React from 'react'
-import TopDashStatistics from './TopDashStatistics'
-
-
+'use client';
+import React from 'react';
+import TopDashStatistics from './TopDashStatistics';
 import dynamic from "next/dynamic";
 import Courses from '@/components/Home/coureses/Courses';
 // import Courses from '@/components/Home/coureses/Courses';
@@ -14,7 +13,6 @@ const EnrollStatistics = dynamic(() => import('@/components/dashboard/admin/Enro
 export default function AdminDashboard() {
   return (
     <div>
-
 
       <TopDashStatistics/>
       <EnrollStatistics/>

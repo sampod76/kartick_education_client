@@ -90,8 +90,8 @@ const isDefaultValue = userAnswers?.find((answer)=>answer?._id === quiz?._id);
     {quiz?.answers.map((option: any) => (
       <Radio 
         key={option?.title} 
-        value={option?.title}
-        defaultChecked={isDefaultValue?.answer === option?.title} // Check if the default value matches
+        value={option?._id}
+        defaultChecked={isDefaultValue?.answer === option?._id} // Check if the default value matches
       >
         {option?.title}
       </Radio>
@@ -112,8 +112,8 @@ const isDefaultValue = userAnswers?.find((answer)=>answer?._id === quiz?._id);
     {quiz?.answers?.map((option: any) => (
       <Checkbox 
         key={option?.title} 
-        value={option?.title}
-        defaultChecked={isDefaultValue?.answer === option?.title} // Check if the default value matches
+        value={option?._id}
+        defaultChecked={isDefaultValue?.answer === option?._id} // Check if the default value matches
       >
         {option?.title}
       </Checkbox>
