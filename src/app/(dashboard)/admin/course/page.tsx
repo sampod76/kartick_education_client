@@ -28,6 +28,8 @@ import {
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterCategorySelect from "@/components/dashboard/Filter/FilterCategory";
 import dynamic from "next/dynamic";
+import ModalComponent from "@/components/Modal/ModalComponents";
+import Test from "@/components/Utlis/Test";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
@@ -268,6 +270,9 @@ const CourseList = () => {
           },
         ]}
       />
+      <ModalComponent buttonText="sanoid">
+        <Test/>
+      </ModalComponent>
 
       <HeadingUI>Course List</HeadingUI>
 

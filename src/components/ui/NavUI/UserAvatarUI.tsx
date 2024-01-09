@@ -1,4 +1,5 @@
 "use client";
+import { AllImage } from "@/assets/AllImge";
 import { authKey } from "@/constants/storageKey";
 import { removeUserInfo } from "@/services/auth.service";
 import {
@@ -9,6 +10,7 @@ import {
   NotificationOutlined,
 } from "@ant-design/icons";
 import { Avatar, Badge, Button, Dropdown, MenuProps, message } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -61,55 +63,6 @@ const UserAvatarUI = () => {
         marginLeft: "24px",
       }}
     >
-      <Badge count={3}>
-        {/* <Avatar
-          style={{
-            fontSize: "",
-            color: "black",
-          }}
-          shape="circle"
-          size={35}
-          icon={}
-        /> */}
-        <ShopOutlined
-          style={{
-            fontSize: "1.7rem",
-            background: "white",
-            color: "black",
-            borderRadius: "50%",
-          }}
-        />
-      </Badge>
-      <Badge count={3} style={{ opacity: "0px" }}>
-        {/* <Avatar
-          style={{
-            fontSize: "",
-            color:"black"
-          }}
-          shape="circle"
-          size={35}
-          icon={<MessageOutlined style={{ fontSize: "1.7rem" ,background:"white",color:"black",borderRadius:"50%"}} />}
-        /> */}
-
-        <MessageOutlined
-          style={{
-            fontSize: "1.7rem",
-            background: "white",
-            color: "black",
-            borderRadius: "50%",
-          }}
-        />
-      </Badge>
-      <Badge count={5} style={{ opacity: "0px" }}>
-        <NotificationOutlined
-          style={{
-            fontSize: "1.7rem",
-            background: "white",
-            color: "black",
-            borderRadius: "50%",
-          }}
-        />
-      </Badge>
       <Dropdown
         menu={{ items }}
         overlayStyle={{
@@ -126,13 +79,12 @@ const UserAvatarUI = () => {
             size={50}
             icon={}
           /> */}
-          <UserOutlined
-            style={{
-              fontSize: "2.7rem",
-              background: "white",
-              color: "black",
-              borderRadius: "50%",
-            }}
+          <Image
+            src={AllImage.profileAvater || ""}
+            width={300}
+            height={300}
+            className="w-12  h-12 rounded-full"
+            alt=""
           />
         </button>
       </Dropdown>

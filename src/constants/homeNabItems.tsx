@@ -2,27 +2,21 @@ import type { MenuProps } from "antd";
 import Link from "next/link";
 export const homeNavItems: MenuProps["items"] = [
   {
-    label: <Link href="/">Home</Link>,
+    label: <Link className="text-base font-thin font-serif" href="/">Home</Link>,
     key: "1",
   },
+ 
+
   {
-    label: <Link href="/contact">Contact</Link>,
-    key: "2",
-  },
-  {
-    label: <Link href="/course">Web Development</Link>,
-    key: "services/web-development",
-  },
-  {
-    label: <Link href="/course">Contact</Link>,
+    label: <Link className="text-base font-thin font-serif"   href="/course">Contact</Link>,
     key: "/contact",
   },
   {
-    label: <Link href="/course">About</Link>,
+    label: <Link  className="text-base font-thin font-serif" href="/course">About</Link>,
     key: "/About",
   },
   {
-    label: <Link href="/dashboard">Dashboard</Link>,
+    label: <Link className="text-base font-thin font-serif"  href="/dashboard">Dashboard</Link>,
     key: "/dashboard",
   },
 ];
