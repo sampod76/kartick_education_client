@@ -42,7 +42,7 @@ const HomePage = () => {
     
       <HomeHeader />
       <main >
-        <BannerSection />
+        
         <CommonCourse />
         <CoursesTab />
         <SupportHero />
