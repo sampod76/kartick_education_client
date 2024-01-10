@@ -19,7 +19,7 @@ const DashboardCourseDetailsPublicPage = ({ params }: any) => {
     <div className="container mx-auto">
       {/* <h2>The Web Developer Boot Camp</h2> */}
 
-      <CourseStatistics />
+      <CourseStatistics courseId={id} />
       <CourseDetailsMain courseId={id} />
     </div>
   );
