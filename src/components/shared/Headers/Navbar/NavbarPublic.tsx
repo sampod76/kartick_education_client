@@ -14,7 +14,7 @@ const NavbarPublic = () => {
   return (
     <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
       <nav
-        className=" text-black py-[1em] px-[2em] 
+        className=" text-black py-[3px] md:py-[1em] px-[2em] 
     flex align-center justify-between gap-[5rem] "
       >
         <Logo />

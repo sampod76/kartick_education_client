@@ -9,11 +9,10 @@ const TopBar = React.lazy(
 
 const HomeHeader = () => {
   return (
-    <div  className="sticky md:-top-[4.3rem] top-0 z-40">
+    <div  className="sticky -top-[5.2rem] top z-40">
       <TopBar />
         <NavbarPublic />
-      <section className="">
-      </section>
+   
   
     </div>
   );

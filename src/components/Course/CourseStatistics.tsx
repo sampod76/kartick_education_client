@@ -12,7 +12,7 @@ const CourseStatistics = ({courseId}:{courseId:any}) => {
     { name: "Gems", icon: lessonIcon, No: 100 },
   ];
   return (
-    <div className="bg-white grid grid-cols-2 lg:grid-cols-4 w-[60%] mx-auto gap-2 py-5">
+    <div className="bg-white grid grid-cols-2 lg:grid-cols-4 w-full lg:w-[60%] mx-auto gap-2 py-5">
       {overViews?.map((item: any, index: number) => {
         return (
           <div

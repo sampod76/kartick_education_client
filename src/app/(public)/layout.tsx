@@ -20,8 +20,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="">
       
+      <div className="sticky -top-[5.2rem] top z-40">
       <TopBar />
       <NavbarPublic />
+      </div>
 
       {/* <BannerCourses /> */}
       {/* <BannerCourses /> */}
