@@ -32,8 +32,8 @@ const CreateModule = () => {
   //
 
   const [category, setCategory] = useState({});
-  const [courses, setCourses] = useState({});
-  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
+  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+  const [milestone, setMilestone] = useState<{ _id?: string; title?: string }>(
     {}
   );
 
@@ -50,13 +50,13 @@ const CreateModule = () => {
   const { data: existModule } = useGetAllModuleQuery({});
 
   const onSubmit = async (values: any) => {
-    if (!milestone._id) {
-      Error_model_hook("Please ensure your are selected quiz");
+    if (!milestone._id && !course._id) {
+      Error_model_hook("Please ensure your are selected milestone,course");
       return;
     }
     const ModuleData: {} = {
       ...values,
-
+      course: course?._id,
       // details: textEditorValue,
       milestone: milestone?._id,
     };
@@ -79,7 +79,9 @@ const CreateModule = () => {
   // if (serviceLoading) {
   //   return message.loading("Loading...");
   // }
-  const roundedNumber = Number(existModule?.data[0]?.module_number || 1).toFixed(1);
+  const roundedNumber = Number(
+    existModule?.data[0]?.module_number || 1
+  ).toFixed(1);
   // Add 0.1 to the rounded number and use toFixed again when logging
   const preModule_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
   // console.log(preModule_number);
@@ -112,7 +114,7 @@ const CreateModule = () => {
             <Col xs={24} md={6}>
               <SelectCategoryChildren
                 lableText="Select courses"
-                setState={setCourses}
+                setState={setCourse}
                 categoryData={
                   //@ts-ignore
                   category?.courses || []
@@ -122,10 +124,10 @@ const CreateModule = () => {
             <Col xs={24} lg={12}>
               <SelectCategoryChildren
                 lableText="Select milestones"
-                setState={setmilestone}
+                setState={setMilestone}
                 categoryData={
                   //@ts-ignore
-                  courses?.milestones || []
+                  course?.milestones || []
                 }
               />
             </Col>
@@ -205,9 +207,7 @@ const CreateModule = () => {
                     />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <TagsSelectUI
-              
-                    />
+                    <TagsSelectUI />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <UploadMultipalImage name="imgs" />
@@ -239,8 +239,8 @@ const CreateModule = () => {
                         Description
                       </p>
                       <TextEditor
-                        // textEditorValue={textEditorValue}
-                        // setTextEditorValue={setTextEditorValue}
+                      // textEditorValue={textEditorValue}
+                      // setTextEditorValue={setTextEditorValue}
                       />
                     </section>
                   </Col>

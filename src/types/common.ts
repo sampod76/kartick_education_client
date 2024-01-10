@@ -9,6 +9,7 @@ export type ResponseSuccessType = {
   message?: string;
   data: any;
   meta?: IMeta;
+  statusCode?:string;
 };
 
 export type IGenericErrorResponse = {

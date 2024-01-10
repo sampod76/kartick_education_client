@@ -41,7 +41,6 @@ const Login = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      console.log(res);
       if (res?.accessToken) {
         // router.push("/profile");
         message.success("User logged in successfully!");
@@ -62,7 +61,7 @@ const Login = () => {
   if (error) {
     console.log(error);
     //@ts-ignore
-    Error_model_hook(error?.data);
+    Error_model_hook(error?.message);
   }
 
 

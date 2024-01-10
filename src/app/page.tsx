@@ -39,8 +39,9 @@ import React from "react";
 const HomePage = () => {
   return (
     <div>
+    
       <HomeHeader />
-      <main style={{ textAlign: "center" }}>
+      <main >
         <BannerSection />
         <CommonCourse />
         <CoursesTab />

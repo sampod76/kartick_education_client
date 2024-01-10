@@ -35,6 +35,7 @@ import VideoSelect from "@/components/Forms/VideoSelect";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import ButtonGroup from "antd/es/button/button-group";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
+import { FormProps, useForm } from "react-hook-form";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -42,10 +43,11 @@ const TextEditor = dynamic(
   }
 );
 const CreateLesson = () => {
+
   //----------------------------------------------------------------
-  const [category, setCategory] = useState({});
-  const [courses, setCourses] = useState({});
-  const [milestone, setmilestone] = useState({});
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>({});
+  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>({});
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   //! for Category options selection
   const query: Record<string, any> = {};
@@ -64,12 +66,15 @@ const CreateLesson = () => {
     );
   const onSubmit = async (values: any) => {
     console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
-    if (!module._id) {
-      Error_model_hook("Please ensure your are selected Lesson");
+    if (!module._id || !milestone._id || !course._id || !category._id ) {
+      Error_model_hook("Please ensure your are selected Lesson/milestone/course/category");
       return;
     }
     const LessonData: {} = {
       ...values,
+      category: category._id,
+      course:course._id,
+      milestone:milestone._id,
       module: module?._id,
     };
     console.log(LessonData);
@@ -80,9 +85,10 @@ const CreateLesson = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
+ 
       }
     } catch (error: any) {
-      Error_model_hook(error?.data);
+      Error_model_hook(error?.message);
       console.log(error);
     }
   };
@@ -125,7 +131,7 @@ const CreateLesson = () => {
               <Col xs={24} lg={12}>
                 <SelectCategoryChildren
                   lableText="Select courses"
-                  setState={setCourses}
+                  setState={setCourse}
                   categoryData={
                     //@ts-ignore
                     category?.courses || []
@@ -138,7 +144,7 @@ const CreateLesson = () => {
                   setState={setmilestone}
                   categoryData={
                     //@ts-ignore
-                    courses?.milestones || []
+                    course?.milestones || []
                   }
                 />
               </Col>

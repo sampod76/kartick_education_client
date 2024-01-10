@@ -20,6 +20,7 @@ import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
+import { ENUM_STATUS } from "@/constants/globalEnums";
 //
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -27,26 +28,25 @@ const TextEditor = dynamic(
     ssr: false,
   }
 );
+// courseId -->For update
 const CreateMilestone = ({ setOpen, courseId, title }: any) => {
   //
 
-  const [category, setCategory] = useState({});
+  const [category, setCategory] = useState<{ _id?: string }>({});
   const [courses, setCourses] = useState<{ _id?: string }>({});
 
   const query: Record<string, any> = {};
   query["children"] = "course";
-  //! for Category options selection
-  const { data: Categorys, isLoading } = useGetAllCategoryChildrenQuery(
+  query["status"] = ENUM_STATUS.ACTIVE;
+  //! for Category options selection for filtering
+  const { data: Category, isLoading } = useGetAllCategoryChildrenQuery(
     {
       ...query,
     },
     { skip: Boolean(courseId) }
   );
-  const categoryData: any = Categorys?.data;
-  //
-  //
-  // const [textEditorValue, setTextEditorValue] = useState("");
-
+  const categoryData: any = Category?.data;
+ 
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
 
@@ -58,8 +58,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
 
     const MilestoneData: {} = {
       ...values,
-
-      // details: textEditorValue,
+      category: category?._id,
       course: courses._id || courseId,
     };
     // console.log(MilestoneData);
@@ -76,7 +75,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
       }
       // console.log(res);
     } catch (error: any) {
-      Error_model_hook(error?.data);
+      Error_model_hook(error?.message);
       console.log(error);
     }
   };

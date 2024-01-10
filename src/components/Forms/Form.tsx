@@ -11,6 +11,7 @@ type FormConfig = {
 type FormProps = {
   children?: ReactElement | ReactNode;
   submitHandler: SubmitHandler<any>;
+  isReset?:boolean
 } & FormConfig;
 
 const Form = ({
@@ -18,6 +19,7 @@ const Form = ({
   submitHandler,
   defaultValues,
   resolver,
+  isReset
 }: FormProps) => {
   const formConfig: FormConfig = {};
 
