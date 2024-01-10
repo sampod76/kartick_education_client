@@ -38,10 +38,16 @@ import React from "react";
   );
 const HomePage = () => {
   return (
-    <div className="bg-[#A2B0F321]">
+    <div className="">
     
       <HomeHeader />
-      <main >
+
+      <section className="-mt-[6rem] bg-[#BEDDF9]">
+        <div className="w-full min-h-[7rem]"></div>
+        <BannerSection/>
+      </section>
+      <main  className="bg-[#A2B0F321]">
+
         
         <CommonCourse />
         <CoursesTab />
