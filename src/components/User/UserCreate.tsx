@@ -83,7 +83,7 @@ const UserCreateComponent = ({
         Error_model_hook(res?.message);
       } else {
         Success_model("Customar created successfully");
-        setIsReset(false)
+        setIsReset(true)
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {

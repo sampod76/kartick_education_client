@@ -3,6 +3,8 @@ import React from 'react'
 
 export default function CreateAdminSIngleCoursePage() {
   return (
+
     <div><CreateSingleQuiz/></div>
   )
 }
+

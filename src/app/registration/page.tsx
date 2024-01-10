@@ -37,7 +37,7 @@ const Registration = () => {
       } else {
         Success_model("Registration  successfully");
 
-        setIsReset(false)
+        setIsReset(true)
 
         const res = await userLogin({
           email: values?.email,

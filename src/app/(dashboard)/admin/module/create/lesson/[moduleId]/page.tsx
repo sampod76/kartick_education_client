@@ -11,7 +11,9 @@ export default function CreateAdminLessonByModule({
 
   const searchParams = useSearchParams();
 
+
   const moduleName = searchParams.get("moduleName")  as string
+
 
  return (<>
  <CreateLessonByModule moduleId={params?.moduleId} moduleName={moduleName}/>

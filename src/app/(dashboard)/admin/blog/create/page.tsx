@@ -21,20 +21,16 @@ import React, { useState } from "react";
 const CreateBlog = () => {
   const [isReset, setIsReset] = useState(false);
 
-
   const [addBlog, { isLoading: blogLoading }] = useAddBlogMutation();
   const onSubmit = async (values: any) => {
-
-
     try {
       const res = await addBlog(values).unwrap();
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
-        setIsReset(true)
+        setIsReset(true);
       }
-     
     } catch (error: any) {
       Error_model_hook(error?.message);
       console.log(error);
@@ -50,8 +46,12 @@ const CreateBlog = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}  isReset={isReset}
-            defaultValues={{ status: ENUM_STATUS.ACTIVE }}>
+        <Form
+          submitHandler={onSubmit}
+          
+          isReset={isReset}
+          defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -95,17 +95,12 @@ const CreateBlog = () => {
                   marginBottom: "10px",
                 }}
               >
-                <SelectAuthorField
-                 
-                />
+                <SelectAuthorField />
               </Col>
-
-             
 
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -137,6 +132,5 @@ const CreateBlog = () => {
 
 // export default CreateBlog;
 export default dynamic(() => Promise.resolve(CreateBlog), {
-   ssr: false,
- });
-
+  ssr: false,
+});

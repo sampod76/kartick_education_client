@@ -41,6 +41,7 @@ export default function GlossaryPage({moduleId}:{moduleId:string}) {
 // 
 
 
+
   return (
     <div>
          {glossaryData?.details && parse(glossaryData?.details)}
