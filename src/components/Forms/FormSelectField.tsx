@@ -55,7 +55,6 @@ const FormSelectField = ({
           <Select
             // onChange={handleChange ? handleChange : onChange}
             onChange={(val) => {
-              
               onChange(val);
             }}
             disabled={disabled}
