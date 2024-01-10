@@ -40,16 +40,18 @@ const CommonCourse = () => {
     return <CardLoading />;
   }
   return (
-    <div className="mt-5  container mx-auto">
-      <div className="">
-        <div className="mt-[5rem] container mx-auto ">
+    <div className="mt-7  mx-auto bg-white">
+
+<h1 className=" text-center text-gray-800 text-3xl font-medium leading-9 tracking-wider">BUILD A HEALTHIER FOUNDATION FOR LIFELONG LEARNING</h1>
+      <div className="bg-[#A2B0F321] mt-[5rem] py-7 px-1 lg:px-3">
+        <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {courseData?.map((item: any, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}
           </div>
         </div>
-        <div className="mt-4 flex justify-center items-center">
+        <div className="flex justify-center items-center mt-3">
           <Pagination
             showSizeChanger
             current={current}
@@ -58,7 +60,7 @@ const CommonCourse = () => {
             defaultCurrent={1}
             total={data?.meta?.total}
           />
-          ;
+
         </div>
       </div>
     </div>

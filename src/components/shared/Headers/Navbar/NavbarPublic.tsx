@@ -1,11 +1,12 @@
 "use client";
-import { Menu } from "antd";
+import { Button, Menu } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import Logo from "../../Logo";
 import React from "react";
 import SideBarHome from "./SideBarHome";
 import { homeNavItems } from "@/constants/homeNabItems";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
+import Link from "next/link";
 
 const NavbarPublic = () => {
   // const screens = useBreakpoint();
@@ -13,7 +14,7 @@ const NavbarPublic = () => {
   return (
     <div className="">
       <nav
-        className=" bg-transparent backdrop-blur shadow-xl text-black py-[1em] px-[2em] 
+        className="bg-transparent backdrop-blu shadow-xl text-black py-[1em] px-[2em] 
     flex align-center justify-between  gap-2 "
       >
         <Logo />
@@ -29,7 +30,7 @@ const NavbarPublic = () => {
             // backdropBlur:"blur(8px)"
             // display:`${screens.sm ? "flex":"none"}`
             background: "none",
-            backdropFilter: "blur(8px)",
+            // backdropFilter: "blur(8px)",
           }}
           disabledOverflow
           // items={sidebarItems("homeNav")}
@@ -43,6 +44,8 @@ const NavbarPublic = () => {
         >
           <SideBarHome></SideBarHome>
         </div>
+
+        <Link href="/" className="hidden lg:flex p-4 font-[600] border border-white rounded-md hover:bg-secondary hover:text-white">Membership</Link>
       </nav>
     </div>
   );
