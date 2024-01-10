@@ -22,9 +22,11 @@ const BannerCourses = () => {
 
 
 
-const firstId=categoryData.length ? categoryData[0]._id : ""
-  const {data:courseData,isLoading:courseDataLoading} = useGetSingleCourseQuery(firstId,{skip:!Boolean(firstId)})
-console.log(courseData)
+// const firstId=categoryData.length ? categoryData[0]._id : ""
+//   const {data:courseData,isLoading:courseDataLoading} = useGetSingleCourseQuery(firstId,{skip:!Boolean(firstId)})
+// console.log(courseData)
+
+
   if (error) {
     return (
       <InternelError

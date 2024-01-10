@@ -4,7 +4,7 @@ import lessonIcon from "@/assets/Icon/lesson.png";
 import videoIcon from "@/assets/Icon/video.png";
 import Image from "next/image";
 
-const CourseStatistics = () => {
+const CourseStatistics = ({courseId}:{courseId:any}) => {
   const overViews = [
     { name: "skills", icon: skillIcon, No: 353 },
     { name: "Lesson", icon: lessonIcon, No: 50 },
