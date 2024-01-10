@@ -33,6 +33,7 @@ const CreateModule = () => {
 
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
+  const [isReset, setIsReset] = useState(false);
   const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
     {}
   );
@@ -49,6 +50,7 @@ const CreateModule = () => {
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
   const { data: existModule } = useGetAllModuleQuery({});
 
+  
   const onSubmit = async (values: any) => {
     if (!milestone._id) {
       Error_model_hook("Please ensure your are selected quiz");
@@ -68,6 +70,7 @@ const CreateModule = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Module");
+        setIsReset(false)
       }
       // console.log(res);
     } catch (error: any) {
@@ -144,6 +147,7 @@ const CreateModule = () => {
         >
           <div>
             <Form
+            isReset={isReset}
               submitHandler={onSubmit}
               defaultValues={{ module_number: Number(preModule_number) }}
             >

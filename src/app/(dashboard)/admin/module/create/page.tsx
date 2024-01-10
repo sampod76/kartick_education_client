@@ -32,6 +32,7 @@ const CreateModule = () => {
   //
 
   const [category, setCategory] = useState({});
+  const [isReset, setIsReset] = useState(false);
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
   const [milestone, setMilestone] = useState<{ _id?: string; title?: string }>(
     {}
@@ -68,6 +69,7 @@ const CreateModule = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Module");
+        setIsReset(false)
       }
       // console.log(res);
     } catch (error: any) {
@@ -146,6 +148,7 @@ const CreateModule = () => {
         >
           <div>
             <Form
+            isReset={isReset}
               submitHandler={onSubmit}
               defaultValues={{ module_number: Number(preModule_number) }}
             >

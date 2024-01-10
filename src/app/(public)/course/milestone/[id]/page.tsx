@@ -18,6 +18,11 @@ const MilestonePage = ({
  
   return (
     <div>
+       <section className="-mt-[5.8rem] ">
+        <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
+      <BannerCourses/>
+      </section>
+      <CourseStatistics />
       <MilestoneList courseId={id} />
     </div>
   );

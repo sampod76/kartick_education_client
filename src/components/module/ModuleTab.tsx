@@ -5,7 +5,7 @@ import ModuleList from "./ModuleList";
 import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
 import Courses from "../Home/coureses/Courses";
 import LessonList from "../lesson/LessonList";
-// import GlosseryPage from "../"
+// import GlossaryPage from "../"
 import {
   BookOutlined,
   QuestionOutlined,
@@ -14,7 +14,7 @@ import {
   
 } from "@ant-design/icons";
 import Quizes from "../Quiz/Quizes";
-import GlosseryPage from "../glossery/Glossery";
+import GlossaryPage from "../Glossary/Glossary";
 
 export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,moduleData:any[] }) {
   
@@ -67,11 +67,11 @@ export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,mo
               fontSize: "1.5rem",
             }}
           />
-          <h1>Glossery</h1>
+          <h1>Glossary</h1>
         </button>
       ),
       key: "3",
-      children: <GlosseryPage moduleId={moduleId}/>
+      children: <GlossaryPage moduleId={moduleId}/>
     },
 
     {

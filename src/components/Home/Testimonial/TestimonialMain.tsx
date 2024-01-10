@@ -81,8 +81,9 @@ export default function TestimonialMain() {
   };
 
   return (
-    <div className="container mx-auto my-16 py-3 px-2">
-      <h2 className="text-2xl  lg:text-3xl text-[#282938] font-[600] mb-7">
+    <div className="bg-white my-16 py-[7rem] px-2">
+   <div className="w-full lg:max-w-[80%] mx-auto ">
+   <h2 className="text-2xl  lg:text-3xl text-center text-[#282938] font-[600] mb-[5rem]">
         Explore how <span className="text-secondary">iBlossomLearn </span>{" "}
         supports students and be inspired <br /> by their success stories.
       </h2>
@@ -124,6 +125,7 @@ export default function TestimonialMain() {
           </div>
         ))}
       </Slider>
+   </div>
     </div>
   );
 }

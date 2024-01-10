@@ -14,7 +14,7 @@ const NavbarPublic = () => {
   return (
     <div className="">
       <nav
-        className="bg-transparent backdrop-blur shadow-xl text-black py-[1em] px-[2em] 
+        className="bg-transparent backdrop-blur  text-black py-[1em] px-[2em] 
     flex align-center justify-between  gap-2 "
       >
         <Logo />
@@ -31,6 +31,7 @@ const NavbarPublic = () => {
             // display:`${screens.sm ? "flex":"none"}`
             background: "none",
             // backdropFilter: "blur(8px)",
+            boxShadow:"none"
           }}
           disabledOverflow
           // items={sidebarItems("homeNav")}
@@ -45,7 +46,10 @@ const NavbarPublic = () => {
           <SideBarHome></SideBarHome>
         </div>
 
-        <Link href="/" className="hidden lg:flex p-4 font-[600] border border-white rounded-md hover:bg-secondary hover:text-white">Membership</Link>
+        <div className="hidden lg:flex ">
+        <Link href="/" className="h-[48px] w-[130px] text-slate-700 px-3 py-3 font-[600] border border-white rounded-md hover:bg-secondary hover:text-white uppercase">Membership</Link>
+        </div>
+
       </nav>
     </div>
   );

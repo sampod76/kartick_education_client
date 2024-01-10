@@ -27,7 +27,7 @@ import FilterMilestone from "@/components/dashboard/Filter/FilterMilestone";
 import { AllImage } from "@/assets/AllImge";
 import ModalComponent from "@/components/Modal/ModalComponents";
 
-import GlossaryCreate from "@/components/Glossary/Glossary";
+import GlossaryCreate from "@/components/Glossary/GlossaryCreate";
 import ResourceCreate from "@/components/Resource/Resource";
 
 const MileStoneList = () => {

@@ -1,11 +1,9 @@
-import Image from "next/image";
 import React from "react";
-import Wave from "../../../../public/banner/wave.png";
 import Link from "next/link";
 
 const BannerCourses = () => {
   return (
-    <div className="relative">
+    <div className="-mt-[5px] ">
       <div
         // className="wrapper"
         style={{
@@ -15,18 +13,21 @@ const BannerCourses = () => {
           backgroundSize: "cover",
           // minHeight: "50vh",
           // position: "relative",
-          height: "42rem",
+          height: "43rem",
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "flex-start",
+          margin:"0",
+          // backgroundColor:"white",
+          marginTop:"0px"
         }}
       >
-        <div className="flex   uppercase justify-between items-center gap-5  font-[550] mb-[3rem] pl-4">
+        <div className="flex   uppercase justify-between items-center gap-5  font-[550] mb-[3rem] pl-4 overflow-x-auto">
           <Link
             className="py-3 px-7 rounded-tl-[20px] rounded-br-[20px] bg-green-500 text-white"
             href="/login"
           >
-            {" "}
+            
             Arts Language
           </Link>
           <Link
