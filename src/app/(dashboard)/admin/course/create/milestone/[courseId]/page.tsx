@@ -32,6 +32,7 @@ const CreateMilestone = () => {
 
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState<{ _id?: string }>({});
+  const [isReset, setIsReset] = useState(false);
 
   const query: Record<string, any> = {};
   query["children"] = "course";
@@ -71,9 +72,11 @@ const CreateMilestone = () => {
       console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
+        
       } else {
         Success_model("Successfully added Milestone");
         setTextEditorValue("");
+        setIsReset(true)
 
       }
       // console.log(res);
@@ -125,7 +128,7 @@ const CreateMilestone = () => {
             {/* resolver={yupResolver(IServiceSchema)} */}
             <h1 className="text-xl font-bold my-2">Create Milestone</h1>
 
-            <Form submitHandler={onSubmit}>
+            <Form submitHandler={onSubmit}  isReset={isReset}>
               <div
                 style={{
                   border: "1px solid #d9d9d9",

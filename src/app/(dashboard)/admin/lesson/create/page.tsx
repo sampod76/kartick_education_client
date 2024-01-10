@@ -45,6 +45,7 @@ const TextEditor = dynamic(
 const CreateLesson = () => {
 
   //----------------------------------------------------------------
+  const [isReset, setIsReset] = useState(false);
   const [category, setCategory] = useState<{ _id?: string; title?: string }>({});
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
   const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>({});
@@ -59,6 +60,7 @@ const CreateLesson = () => {
   //----------------------------------------------------------------
 
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
+  
   const { data: existLesson, isLoading: GetLessionLoading } =
     useGetAllLessonQuery(
       { module: module?._id },
@@ -85,6 +87,7 @@ const CreateLesson = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
+        setIsReset(false)
  
       }
     } catch (error: any) {
@@ -168,6 +171,7 @@ const CreateLesson = () => {
           {/* resolver={yupResolver(IServiceSchema)} */}
           <SubHeadingUI>Create Lesson</SubHeadingUI>
           <Form
+          isReset={isReset}
             submitHandler={onSubmit}
             defaultValues={{ lesson_number: Number(prelesson_number) }}
           >

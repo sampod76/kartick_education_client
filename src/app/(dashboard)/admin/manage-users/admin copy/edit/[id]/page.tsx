@@ -31,6 +31,7 @@ const EditStudentPage = ({ params }: any) => {
   const studentData = singleStudent
 
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
+  
   // console.log(studentData, "student data");
 
   const [updateStudent, { isLoading: updateLoading, error }] =

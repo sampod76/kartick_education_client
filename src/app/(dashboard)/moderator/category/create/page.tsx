@@ -22,6 +22,7 @@ import React, { useState } from "react";
 
 const CreateCategory = () => {
   const [addCategory, { isLoading: serviceLoading }] = useAddCategoryMutation();
+  const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
     console.log(values);
 
@@ -31,6 +32,7 @@ const CreateCategory = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Category");
+        setIsReset(false)
       }
       console.log(res);
     } catch (error: any) {
@@ -48,7 +50,7 @@ const CreateCategory = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

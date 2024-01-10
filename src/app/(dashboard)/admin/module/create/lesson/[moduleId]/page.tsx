@@ -53,6 +53,7 @@ export default function CreateCourseFromCourse({
 
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
   const [textEditorValue, setTextEditorValue] = useState("");
+  const [isReset, setIsReset] = useState(false);
 
   const { data: existLesson, isLoading } = useGetAllLessonQuery({});
 
@@ -81,6 +82,7 @@ export default function CreateCourseFromCourse({
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
+        setIsReset(false)
       }
       // console.log(res);
     } catch (error: any) {
@@ -107,6 +109,7 @@ export default function CreateCourseFromCourse({
         <SubHeadingUI>Create Lesson</SubHeadingUI>
         <Form
           submitHandler={onSubmit}
+          isReset={isReset}
           defaultValues={{ lesson_number: Number(prelesson_number) }}
         >
           <h2 className="text-start font-bold tex-3xl">Module :{moduleName}</h2>

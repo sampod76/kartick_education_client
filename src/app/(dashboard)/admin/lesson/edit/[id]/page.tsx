@@ -48,6 +48,7 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
   const [milestone, setmilestone] = useState({});
+  const [isReset, setIsReset] = useState(false);
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   //! for Category options selection
   const query: Record<string, any> = {};
@@ -65,6 +66,8 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
   );
   console.log(data);
   const [updateLesson, { isLoading: UpdateLesson }] = useUpdateLessonMutation();
+
+  
   const onSubmit = async (values: any) => {
  
     if (module?._id) {
@@ -83,6 +86,7 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
       // console.log(res);
       if (res.success == false) {
         Error_model_hook(res?.message);
+        setIsReset(true)
       } else {
         Success_model("Successfully Update Lesson");
       }
@@ -174,7 +178,7 @@ const UpdateLesson = ({ params }: { params: { id: string } }) => {
               />
             </Col>
           </Row>
-          <Form submitHandler={onSubmit} defaultValues={{ ...data,module:data.module._id }}>
+          <Form submitHandler={onSubmit} defaultValues={{ ...data,module:data.module._id }} isReset={isReset}>
             <div
               style={{
                 border: "1px solid #d9d9d9",

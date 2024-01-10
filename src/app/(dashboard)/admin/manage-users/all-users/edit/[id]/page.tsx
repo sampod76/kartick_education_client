@@ -75,7 +75,7 @@ const EditUserData = ({ params }: any) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form submitHandler={onSubmit} defaultValues={defaultValues} >
           <div
             style={{
               border: "1px solid #d9d9d9",

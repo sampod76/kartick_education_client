@@ -36,6 +36,7 @@ const CreateQuiz = () => {
   const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>({});
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
+  const [isReset, setIsReset] = useState(false);
 
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module-lessons";
@@ -76,6 +77,7 @@ const CreateQuiz = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Quiz");
+        setIsReset(false)
       }
       // console.log(res);
     } catch (error: any) {
@@ -169,7 +171,7 @@ const CreateQuiz = () => {
           <div>
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}
-            <Form submitHandler={onSubmit}>
+            <Form submitHandler={onSubmit} isReset={isReset}>
               <div
                 style={{
                   border: "1px solid #d9d9d9",

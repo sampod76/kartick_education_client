@@ -19,6 +19,7 @@ import React, { useState } from "react";
 
 const CreateFaq = () => {
   const [addFaq, { isLoading: blogLoading }] = useAddFaqMutation();
+  const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
     console.log(values);
 
@@ -28,6 +29,7 @@ const CreateFaq = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
+        setIsReset(false)
       }
       console.log(res);
     } catch (error: any) {
@@ -45,7 +47,7 @@ const CreateFaq = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

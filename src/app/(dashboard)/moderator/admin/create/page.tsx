@@ -5,19 +5,21 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import {  genderOptions } from "@/constants/global";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 
 
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
+
 
 import { Button, Col, Row, message } from "antd";
+import { useState } from "react";
 
 const CreateAdminPage = () => {
+
+  const [isReset, setIsReset] = useState(false);
   const [addAdminWithFormData, { isLoading }] =
     useAddAdminWithFormDataMutation();
 
@@ -29,6 +31,7 @@ const CreateAdminPage = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Admin created successfully");
+        setIsReset(false)
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
@@ -45,7 +48,7 @@ const CreateAdminPage = () => {
       <h1>Create Admin</h1>
       {/*  */}
       <div>
-        <Form submitHandler={onSubmit} >
+        <Form submitHandler={onSubmit}  isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

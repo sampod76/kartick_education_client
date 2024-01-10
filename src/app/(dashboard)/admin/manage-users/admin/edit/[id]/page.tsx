@@ -20,12 +20,14 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
+import { useState } from "react";
 
 const EditAdminPage = ({ params }: any) => {
   const { data: singleAdmin, isLoading } = useGetSingleAdminQuery(params?.id);
   const AdminData = singleAdmin;
 
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
+  const [isReset, setIsReset] = useState(false);
   // console.log(AdminData, "Admin data");
 
   const [updateAdmin, { isLoading: updateLoading, error }] =
@@ -46,6 +48,7 @@ const EditAdminPage = ({ params }: any) => {
         Error_model_hook(res?.message);
       } else {
         Success_model("successfully updated data");
+        setIsReset(true)
       }
     } catch (err: any) {
       console.error(err);
@@ -83,7 +86,7 @@ const EditAdminPage = ({ params }: any) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form submitHandler={onSubmit} defaultValues={defaultValues} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",
