@@ -50,17 +50,17 @@ const Success = () => {
     },
   ];
   return (
-    <div className="bg-[#A2B0F321] mt-5 py-[100px] container mx-auto">
-      <h1 className="text-3xl text-[#282938] font-[600]">
+    <div className="bg-[#A2B0F321] mt-5 py-[100px] container mx-auto flex flex-col ">
+      <h1 className="text-3xl text-center text-[#282938] font-[600]">
         Discover how <span className="text-secondary">iBlossomLearn </span>{" "}
-        success for every learner with personalized and interactive lessons.
+        success for every learner with <br /> personalized and interactive lessons.
       </h1>
 
-      <section className="my-[6rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-7">
+      <section className="my-[6rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-7 w-full lg:max-w-[90%] mx-auto">
         {successHistoryData?.map((item: any, index: any) => {
           return (
             <div
-              className="w-full lg:w-[406px] max-h-[316px] bg-white rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
+              className="w-full lg:max-w-[406px] max-h-[316px] bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
               key={index + 1}
             >
               <p className="h-10 w-10 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-2 text-white">
@@ -79,7 +79,7 @@ const Success = () => {
 
       <Link
         href="/"
-        className="text-primary uppercase p-2 w-[164px] h-[44px] font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white"
+        className="text-primary uppercase p-2 w-[164px] h-[44px] text-center mx-auto font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white"
       >
         Join Now
       </Link>

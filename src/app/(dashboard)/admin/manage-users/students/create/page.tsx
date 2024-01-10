@@ -5,24 +5,19 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
-// import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
-
 import { IStudentCreate } from "@/types/userTypes";
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, Col, Row, Upload, message } from "antd";
+import { Button, Col, Row, message } from "antd";
+import { useState } from "react";
 
 const CreateStudentPage = () => {
+  const [isReset, setIsReset] = useState(false);
   const [addStudentWithFormData, { isLoading }] =
     useAddStudentWithFormDataMutation();
-
   const onSubmit = async (values: IStudentCreate & { img: any }) => {
     // console.log(values.img, "values of student");
 
@@ -42,6 +37,7 @@ const CreateStudentPage = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Customer created successfully");
+        setIsReset(false)
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
@@ -72,6 +68,8 @@ const CreateStudentPage = () => {
       <div>
         <Form
           submitHandler={onSubmit}
+          isReset={isReset}
+          
           // resolver={yupResolver(createStudentSchema)}
           defaultValues={{
             bloodGroup: bloodGroupOptions[0].value,

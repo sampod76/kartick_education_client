@@ -20,12 +20,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, Space, Spin, message } from "antd";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Registration = () => {
   const [addGeneralUserWithFormData, { isLoading }] =
     useAddGeneralUserWithFormDataMutation();
   const [userLogin, { isLoading: userLoginLoading }] = useUserLoginMutation();
   const router = useRouter();
+  const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
     console.log(values);
     try {
@@ -34,6 +36,8 @@ const Registration = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Registration  successfully");
+
+        setIsReset(false)
 
         const res = await userLogin({
           email: values?.email,
@@ -64,7 +68,7 @@ const Registration = () => {
 
       {/* resolver={yupResolver(adminSchema)} */}
       <div className="container mx-auto p-5">
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

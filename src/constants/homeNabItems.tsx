@@ -7,7 +7,7 @@ export const homeNavItems: MenuProps["items"] = [
   },
   {
 
-    label: <Link className="text-base font-thin font-serif"   href="/">Learning</Link>,
+    label: <Link className="text-base font-thin font-serif"   href="/learning">Learning</Link>,
     key: "/learning",
   },
   {

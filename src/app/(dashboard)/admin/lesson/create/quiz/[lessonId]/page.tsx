@@ -58,6 +58,7 @@ const CreateQuiz = () => {
   const [videoType, setVideoType] = useState(null);
   const [videoUrl, setVideoUrl] = useState("");
   const [textEditorValue, setTextEditorValue] = useState("");
+  const [isReset, setIsReset] = useState(false);
 
   const demo_video = {
     video: videoType,
@@ -80,6 +81,7 @@ const CreateQuiz = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
+        setIsReset(false)
       }
       // console.log(res);
     } catch (error: any) {
@@ -173,7 +175,7 @@ const CreateQuiz = () => {
           <div>
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}
-            <Form submitHandler={onSubmit}>
+            <Form submitHandler={onSubmit} isReset={isReset}>
               <div
                 style={{
                   border: "1px solid #d9d9d9",

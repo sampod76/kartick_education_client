@@ -17,6 +17,22 @@ const homeSideItems = (onClose?: any) => {
       icon: <HomeOutlined />,
     },
     {
+
+      label: <Link className="text-base font-thin font-serif"   href="/learning">Learning</Link>,
+      key: "/learning",
+      icon: <TabletOutlined />,
+    },
+    {
+      label: <Link className="text-base font-thin font-serif"   href="/">Assessment</Link>,
+      key: "/assessment",
+      icon: <ControlOutlined />,
+    },
+    {
+      label: <Link className="text-base font-thin font-serif"   href="/">Analysis</Link>,
+      key: "/analysis",
+      icon: <EuroOutlined />,
+    },
+    {
       label: <Link className=" text-4xl" onClick={onClose} href="/services/web-development">Web Development</Link>,
       key: "1/services/web-development",
       icon: <TabletOutlined />,

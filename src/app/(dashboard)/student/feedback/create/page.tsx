@@ -17,9 +17,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
-const CreateService = () => {
+const CreateStudentFeedback = () => {
   const [addService, { isLoading: serviceLoading }] =
     useAddServiceWithFormDataMutation();
+    const [isReset, setIsReset] = useState(false);
   const { data = [], isLoading } = useGetAllCategoryQuery({});
   const onSubmit = async (values: any) => {
     console.log(values);
@@ -29,7 +30,8 @@ const CreateService = () => {
       if (res.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added service");
+        Success_model("Successfully added feedback");
+        setIsReset(false)
       }
       console.log(res);
     } catch (error: any) {
@@ -47,7 +49,7 @@ const CreateService = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -248,4 +250,4 @@ const CreateService = () => {
   );
 };
 
-export default CreateService;
+export default CreateStudentFeedback;

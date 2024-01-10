@@ -66,7 +66,7 @@ const EditCategoryPage = ({ params }: any) => {
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(ICategorySchema)} */}
         <Form  isReset={isReset}
-          submitHandler={onSubmit} defaultValues={categoryData}>
+          submitHandler={onSubmit} defaultValues={categoryData} >
           <div
             style={{
               border: "1px solid #d9d9d9",

@@ -8,7 +8,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import {
-  bloodGroupOptions,
+
   genderOptions,
   roleOptions,
 } from "@/constants/global";
@@ -16,13 +16,13 @@ import { USER_ROLE } from "@/constants/role";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/seller";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
-import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
+
 
 import { Button, Col, Row, message } from "antd";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
+import { useState } from "react";
 
 const UserCreateComponent = ({
   role = { label: "Please select role", value: "" },
@@ -32,6 +32,7 @@ const UserCreateComponent = ({
     value: string;
   };
 }) => {
+  const [isReset, setIsReset] = useState(false);
   const [addAdminUserWithFormData, { isLoading: AdminLoading }] =
     useAddAdminWithFormDataMutation();
   const [addStudentUserWithFormData, { isLoading: StudentLoading }] =
@@ -82,6 +83,7 @@ const UserCreateComponent = ({
         Error_model_hook(res?.message);
       } else {
         Success_model("Customar created successfully");
+        setIsReset(false)
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
@@ -106,7 +108,7 @@ const UserCreateComponent = ({
     >
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

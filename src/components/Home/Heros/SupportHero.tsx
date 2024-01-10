@@ -5,9 +5,9 @@ import Image from "next/image";
 
 const SupportHero = () => {
   return (
-    <div className="block lg:flex justify-between text-start my-[5rem] gap-5 container mx-auto px-3 lg:px-0">
+    <div className="block lg:flex justify-between text-start my-[5rem] gap-5 container mx-auto px-2 lg:px-7 py-7 lg:py-12 rounded shadow bg-white ">
       <section>
-        <h2 className="text-[#31576A]  text-[5vw] md:text-[4vw] font-[800] uppercase">
+        <h2 className="text-[#31576A]  text-[4vw] md:text-[3vw] font-[800] uppercase">
           Literacy suppot in <span className="text-secondary">Math</span>
           <br />& <span className="text-secondary">languages arts</span>
         </h2>
@@ -43,7 +43,7 @@ const SupportHero = () => {
         </ul>
       </section>
       <section className="mt-5 lg:mt-0">
-        <h1 className="text-[#31576A] text-[4vw] md:text-[3vw] font-[500]">
+        <h1 className="text-[#31576A] text-[3vw] md:text-[2vw] font-[500]">
           FIND YOU SKILLS PLAN
         </h1>
 

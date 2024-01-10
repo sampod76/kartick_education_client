@@ -18,6 +18,7 @@ import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
 const CreateService = () => {
+  const [isReset, setIsReset] = useState(false);
   const [addService, { isLoading: serviceLoading }] =
     useAddServiceWithFormDataMutation();
   const { data = [], isLoading } = useGetAllCategoryQuery({});
@@ -31,6 +32,7 @@ const CreateService = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added service");
+        setIsReset(false)
       }
       console.log(res);
     } catch (error: any) {
@@ -53,7 +55,7 @@ const CreateService = () => {
     }}>
       <div>
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

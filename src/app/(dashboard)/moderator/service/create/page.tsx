@@ -20,6 +20,7 @@ import React, { useState } from "react";
 const CreateService = () => {
   const [addService, { isLoading: serviceLoading }] =
     useAddServiceWithFormDataMutation();
+    const [isReset, setIsReset] = useState(false);
   const { data = [], isLoading } = useGetAllCategoryQuery({});
 
   const onSubmit = async (values: any) => {
@@ -31,6 +32,7 @@ const CreateService = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added service");
+        setIsReset(false)
       }
       console.log(res);
     } catch (error: any) {
@@ -47,7 +49,7 @@ const CreateService = () => {
     <div>
       <div>
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

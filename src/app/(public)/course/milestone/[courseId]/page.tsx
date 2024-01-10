@@ -1,24 +1,24 @@
 
+import CourseMilestoneDetails from "@/components/Course/CourseDetails/CourseMilestoneDetails";
 import CourseStatistics from "@/components/Course/CourseStatistics";
 // import MilestoneList from "@/components/Course/MilestoneList";
 import BannerCourses from "@/components/Home/Heros/BannerCourses";
 import SupportHero from "@/components/Home/Heros/SupportHero";
 import React from "react";
-
+const MilestoneList = React.lazy(
+  () => import("@/components/Course/MilestoneList")
+);
 const MilestonePage = ({
-  params: { id },
+  params: { courseId },
 }: {
-  params: { id: string };
+  params: { courseId: string };
 }) => {
 
-  // console.log(id);
-  const MilestoneList = React.lazy(
-    () => import("@/components/Course/MilestoneList")
-  );
+  // console.log(courseId);
  
   return (
     <div>
-      <MilestoneList courseId={id} />
+    <CourseMilestoneDetails courseId={courseId}/>
     </div>
   );
 };
