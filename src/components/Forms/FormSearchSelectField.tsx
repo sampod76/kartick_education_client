@@ -38,7 +38,7 @@ const FormSearchSelectField = ({
   loading = false,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
-  const [selectedValue, setSelectedValue] = useState("");
+
   // Filter `option.label` match the user type `input`
   const filterOption = (
     input: string,
@@ -63,7 +63,7 @@ const FormSearchSelectField = ({
           <Select
             // onChange={handleChange ? handleChange : onChange}
             onChange={(val) => {
-              setSelectedValue(val);
+         
               onChange(val);
             }}
             disabled={disabled}

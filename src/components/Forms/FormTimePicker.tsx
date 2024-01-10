@@ -27,7 +27,6 @@ export default function FormTimePicker({ name, label }: FormTimePickerProps) {
               defaultValue={dayjs(field.value ? field.value : "00:00", "HH:mm")}
               format={"HH:mm"}
               onChange={(el, value) => {
-                console.log(value)
                 setValue(name, value);
               }}
               style={{ width: "100%" }}

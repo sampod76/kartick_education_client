@@ -31,9 +31,11 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
+    console.log("🚀 ~ response:", response)
     const responseObject: ResponseSuccessType = {
       data: response?.data?.data,
       meta: response?.data?.meta,
+      // success:response?.data?.success,
     };
     return responseObject;
   },
@@ -49,7 +51,6 @@ instance.interceptors.response.use(
         success: false,
         errorMessages: [],
       };
-
       // Check if the error response has the expected structure
       if (error?.response?.data) {
         responseObject.message =
@@ -60,9 +61,11 @@ instance.interceptors.response.use(
         if (error?.response?.data?.errorMessage) {
           responseObject.errorMessages.push(
             error?.response?.data?.errorMessage
-          );
+            );
+          }
         }
-      }
+        console.log("🚀 ~ responseObject:", responseObject)
+      
       return Promise.reject(responseObject);
       // return responseObject;
     }

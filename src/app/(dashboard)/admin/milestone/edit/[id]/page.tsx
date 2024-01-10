@@ -79,7 +79,7 @@ const MilestoneEditePage = ({ params }: { params: { id: string } }) => {
       }
       // console.log(res);
     } catch (error: any) {
-      Error_model_hook(error?.data);
+      Error_model_hook(error?.message);
       console.log(error);
     }
   };
