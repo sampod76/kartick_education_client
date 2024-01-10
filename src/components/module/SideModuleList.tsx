@@ -41,7 +41,7 @@ const SideModuleList = ({
         marginTop: "1.35rem",
       }}
     >
-      <h2 className="text-[18px] lg:text-[20px] font-[550] ">
+      <h2 className="text-[18px] lg:text-[20px] font-[550] uppercase ">
         {milestoneData?.title}
       </h2>
       {/* <Divider
@@ -52,23 +52,25 @@ const SideModuleList = ({
         }}
       /> */}
 
-      <div className="flex flex-col gap-3 max-w-[80%] mx-auto mt-5 ">
+      <ul className="flex flex-col gap-3 max-w-[8 mx-auto mt-5  list-[circle]">
         {modulesData?.map((module: any, index: number) => {
           return (
-            <Link
+           <li  key={index} className={` text-[black]  py-2 px-3 rounded ${
+            module?._id === moduleId
+              ? "underline"
+              : ""
+          }`}>
+             <Link
               href={`/lesson/${module?._id}`}
-              key={index}
-              className={`shadow-md p-3 rounded text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2 ${
-                module?._id === moduleId
-                  ? "bg-primary text-white"
-                  : "bg-slate-50  text-gray-900"
-              }`}
+             
+              className={` rounded text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2  `}
             >
               {module?.title}
             </Link>
+           </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 };

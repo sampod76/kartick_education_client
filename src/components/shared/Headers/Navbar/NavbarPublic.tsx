@@ -12,10 +12,10 @@ const NavbarPublic = () => {
   // const screens = useBreakpoint();
 
   return (
-    <div className="">
+    <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
       <nav
-        className="bg-transparent backdrop-blur  text-black py-[1em] px-[2em] 
-    flex align-center justify-between  gap-2 "
+        className=" text-black py-[1em] px-[2em] 
+    flex align-center justify-between gap-[5rem] "
       >
         <Logo />
 
@@ -30,13 +30,15 @@ const NavbarPublic = () => {
             // backdropBlur:"blur(8px)"
             // display:`${screens.sm ? "flex":"none"}`
             background: "none",
-            // backdropFilter: "blur(8px)",
+            backdropFilter: "blur(8px)",
             boxShadow:"none"
           }}
           disabledOverflow
           // items={sidebarItems("homeNav")}
           items={homeNavItems}
         />
+
+
         <div
           className="flex lg:hidden"
           // style={{
@@ -46,11 +48,11 @@ const NavbarPublic = () => {
           <SideBarHome></SideBarHome>
         </div>
 
-        <div className="hidden lg:flex ">
+      </nav>
+
+      <div className="hidden lg:flex mr-2">
         <Link href="/" className="h-[48px] w-[130px] text-slate-700 px-3 py-3 font-[600] border border-white rounded-md hover:bg-secondary hover:text-white uppercase">Membership</Link>
         </div>
-
-      </nav>
     </div>
   );
 };

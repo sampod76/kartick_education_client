@@ -26,10 +26,10 @@ const TopBar = () => {
   //   email: "sarwarasik@gmail.com",
   // };
   const userLoggedIn = getUserInfo() as any
-  console.log(
-    "🚀 ~ file: TopBar.tsx:28 ~ TopBar ~ userLoggedIn:",
-    userLoggedIn
-  );
+  // console.log(
+  //   "🚀 ~ file: TopBar.tsx:28 ~ TopBar ~ userLoggedIn:",
+  //   userLoggedIn
+  // );
 
   return (
     <div

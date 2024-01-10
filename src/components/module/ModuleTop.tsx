@@ -6,12 +6,13 @@ import {
 } from "@/redux/api/adminApi/moduleApi";
 import React from "react";
 
-export default function ModuleTop({ moduleId }: { moduleId: any }) {
-  const { data } = useGetSingleModuleQuery(moduleId);
+export default function ModuleTop({ moduleData }: { moduleData: any }) {
+  // const { data } = useGetSingleModuleQuery(moduleId);
   // console.log(data, "");
 
   return (
     <div
+    className="rounded-tl-[20px] rounded-br-[20px]"
       style={{
         background: "#5371FF",
         // minHeight: "3rem",
@@ -24,7 +25,7 @@ export default function ModuleTop({ moduleId }: { moduleId: any }) {
         // fontSize: "2rem",
       }}
     >
-      <h2 className="text-xl lg:text-2xl">{data?.title}</h2>
+      <h2 className="text-xl lg:text-2xl">{moduleData?.title}</h2>
     </div>
   );
 }
