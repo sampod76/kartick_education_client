@@ -32,7 +32,7 @@ const CreateService = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added service");
-        setIsReset(false)
+        setIsReset(true)
       }
       console.log(res);
     } catch (error: any) {

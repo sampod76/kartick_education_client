@@ -8,14 +8,11 @@ import ButtonSubmitUI from "../ui/ButtonSubmitUI";
 import { useAddGlossaryMutation } from "@/redux/api/adminApi/glossaryApi";
 import dynamic from "next/dynamic";
 import SelectModuleField from "../Forms/SelectData/SelectModuleField";
-const TextEditor = dynamic(
-  () => import("../shared/TextEditor/TextEditor"),
-  {
-    ssr: false,
-  }
-);
-export default function GlossaryCreate({setOpen,moduleId}:any) {
-
+import { Button } from "antd";
+const TextEditor = dynamic(() => import("../shared/TextEditor/TextEditor"), {
+  ssr: false,
+});
+export default function GlossaryCreate({ setOpen, moduleId }: any) {
   const [isReset, setIsReset] = useState(false);
 
   const [addGlossary, { isLoading }] = useAddGlossaryMutation();
@@ -29,7 +26,7 @@ export default function GlossaryCreate({setOpen,moduleId}:any) {
       ...values,
       module: moduleId,
     };
-    // return;
+
     try {
       const res = await addGlossary(glossaryData).unwrap();
       if (res.success == false) {
@@ -37,7 +34,7 @@ export default function GlossaryCreate({setOpen,moduleId}:any) {
       } else {
         Success_model("Successfully Added Glossary");
         setOpen(false);
-        setIsReset(false)
+        setIsReset(true);
       }
     } catch (error: any) {
       Error_model_hook(error?.message);
@@ -46,18 +43,16 @@ export default function GlossaryCreate({setOpen,moduleId}:any) {
   };
   return (
     <Form submitHandler={onSubmit} isReset={isReset}>
- 
- <div className="">
-              <SelectModuleField />
-             </div>
+      {/* <div className="">
+        <SelectModuleField />
+      </div> */}
 
-          
-             <TextEditor />
+      <TextEditor />
       <div className="w-fit mx-auto">
         {isLoading ? (
           <ButtonLoading />
         ) : (
-          <ButtonSubmitUI>Create Glossary</ButtonSubmitUI>
+          <Button type="default" style={{margin:"1rem"}} htmlType="submit">Create Glossary</Button>
         )}
       </div>
     </Form>
