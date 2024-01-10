@@ -21,6 +21,8 @@ export default function GlossaryCreate({setOpen,moduleId}:any) {
       Error_model_hook("Please ensure your are selected moduleId");
       return;
     }
+    console.log(values);
+    return
     const resourceData: {} = {
       ...values,
       module: moduleId,
