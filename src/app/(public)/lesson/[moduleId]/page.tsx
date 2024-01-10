@@ -1,11 +1,14 @@
 "use client";
+import { AllImage } from "@/assets/AllImge";
 import BannerModule from "@/components/Home/Heros/BannerModule";
 import ModuleList from "@/components/module/ModuleList";
 import ModuleTab from "@/components/module/ModuleTab";
 import ModuleTop from "@/components/module/ModuleTop";
 import SideModuleList from "@/components/module/SideModuleList";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { useGetSingleModuleQuery } from "@/redux/api/adminApi/moduleApi";
+import Image from "next/image";
 import React from "react";
 
 export default function LessonPage({
@@ -25,14 +28,47 @@ export default function LessonPage({
   return (
  <div className="">
   <BannerModule/>
-     <div className="mt-5 container mx-auto">
-      <ModuleTop moduleId={moduleId} />
-      <div className="block lg:flex justify-center ">
-        <div className="w-full lg:max-w-[30%]">
+<div className="text-primary">
+<UMBreadCrumb
+        items={[
+          {
+            label: "Milestone",
+            link: "/",
+          },
+          {
+            label: "module",
+            link: "/",
+          },
+          {
+            label: "lesson",
+            link: `/lesson/${moduleId}`,
+          },
+        ]}
+      />
+</div>
+     <div className="mt-5 px-2 lg:px-4 containe mx-auto">
+
+      <div className="block lg:flex justify-center gap-5 items-">
+        {/* //! Side  */}
+        <div className="w-full lg:max-w-[30%] px-2">
           {/* <ModuleList milestoneId={milestoneId}></ModuleList> */}
           <SideModuleList milestoneId={milestoneId} moduleId={moduleId} />
         </div>
+        
+        {/* main */}
         <div className="w-full lg:max-w-[70%]">
+          {/* //! top user sections */}
+       <div className="flex flex-col justify-center items-center mb-5">
+          <Image
+            src={AllImage.profileAvater || ""}
+            width={300}
+            height={300}
+            className="w-[7rem]  h-[7rem] rounded-full"
+            alt=""
+          />
+          <h3 className="text-[#AAA4A4] font-semibold"> David</h3>
+       </div>
+        <ModuleTop moduleData={moduleData} />
           <ModuleTab moduleId={moduleId} moduleData={moduleData}/>
         </div>
       </div>
