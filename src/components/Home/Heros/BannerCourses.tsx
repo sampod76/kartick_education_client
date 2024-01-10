@@ -5,17 +5,16 @@ import InternelError from "@/components/shared/Error/InternelError";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import CategoryButtonSKeletton from "@/components/ui/Loading/CategoryButtonSKeletton";
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import { ENUM_STATUS } from "@/constants/globalEnums";
 
 const BannerCourses = () => {
 
 
   const query: Record<string, any> = {};
-  query["children"] = "course";
-  query["status"] = ENUM_STATUS.ACTIVE;
+  query["limit"] = 999999
+  query["sortOrder"] = "asc";
+  query["status"] = "active";
 
-  const { data, isLoading, error } = useGetAllCategoryChildrenQuery({ ...query });
+  const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
   
   const categoryData = data?.data || [];
 
@@ -24,16 +23,8 @@ const BannerCourses = () => {
 
 
 const firstId=categoryData.length ? categoryData[0]._id : ""
-
-console.log("🚀 ~ BannerCourses ~ firstId:", firstId)
-
-
-  const {data:courseData,isLoading:courseDataLoading} = useGetSingleCourseQuery('657e0686cf50ca51e691ce96',{skip:!Boolean(firstId)})
-
+  const {data:courseData,isLoading:courseDataLoading} = useGetSingleCourseQuery(firstId,{skip:!Boolean(firstId)})
 console.log(courseData)
-
-
-
   if (error) {
     return (
       <InternelError
