@@ -14,7 +14,7 @@ const NavbarPublic = () => {
   return (
     <div className="">
       <nav
-        className="bg-transparent backdrop-blu shadow-xl text-black py-[1em] px-[2em] 
+        className="bg-transparent backdrop-blur shadow-xl text-black py-[1em] px-[2em] 
     flex align-center justify-between  gap-2 "
       >
         <Logo />

@@ -40,17 +40,17 @@ const CommonCourse = () => {
     return <CardLoading />;
   }
   return (
-    <div className="mt-7  mx-auto bg-white">
-
-<h1 className=" text-center text-gray-800 text-3xl font-medium leading-9 tracking-wider">BUILD A HEALTHIER FOUNDATION FOR LIFELONG LEARNING</h1>
-      <div className="bg-[#A2B0F321] mt-[5rem] py-7 px-1 lg:px-3">
-        <div className="">
+    <div className="mt-[6rem]  mx-auto bg-white">
+<h1 className=" text-center text-gray-800 text-[1.8vw] font-medium leading-9 tracking-wider">BUILD A HEALTHIER FOUNDATION FOR LIFELONG LEARNING</h1>
+      <div className="bg-[#A2B0F321] mt-[1rem] pt-12 px-1 lg:px-3">
+        <div className="max-w-[90%] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {courseData?.map((item: any, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}
           </div>
         </div>
+
         <div className="flex justify-center items-center mt-3">
           <Pagination
             showSizeChanger

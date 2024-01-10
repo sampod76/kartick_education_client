@@ -38,7 +38,7 @@ import React from "react";
   );
 const HomePage = () => {
   return (
-    <div>
+    <div className="bg-[#A2B0F321">
     
       <HomeHeader />
       <main >
