@@ -45,10 +45,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     module: moduleId,
     ...quiz_query,
   });
-  console.log(
-    "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ QuizData:",
-    QuizData
-  );
+
   if (isLoading) {
     return <LoadingSkeleton />;
   }

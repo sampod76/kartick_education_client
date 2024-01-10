@@ -1,5 +1,5 @@
 "use client";
-
+import BannerModule from "@/components/Home/Heros/BannerModule";
 import ModuleList from "@/components/module/ModuleList";
 import ModuleTab from "@/components/module/ModuleTab";
 import ModuleTop from "@/components/module/ModuleTop";
@@ -23,7 +23,9 @@ export default function LessonPage({
     return <LoadingSkeleton number={10} />;
   }
   return (
-    <div className="mt-5 container mx-auto">
+ <div className="">
+  <BannerModule/>
+     <div className="mt-5 container mx-auto">
       <ModuleTop moduleId={moduleId} />
       <div className="block lg:flex justify-center ">
         <div className="w-full lg:max-w-[30%]">
@@ -35,5 +37,6 @@ export default function LessonPage({
         </div>
       </div>
     </div>
+ </div>
   );
 }
