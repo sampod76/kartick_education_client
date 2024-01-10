@@ -30,6 +30,7 @@ import {
 import { useState } from "react";
 
 import dynamic from "next/dynamic";
+import { ENUM_STATUS } from "@/constants/globalEnums";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -37,6 +38,7 @@ const TextEditor = dynamic(
   }
 );
 const CreateCoursePage = () => {
+  const [isReset, setIsReset] = useState(false);
   const [textEditorValue, setTextEditorValue] = useState("");
   console.log(
     "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
@@ -74,7 +76,7 @@ const CreateCoursePage = () => {
         Success_model("Course created successfully");
         setVideoType(null);
         setVideoUrl("");
-
+        setIsReset(true)
         setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
@@ -97,7 +99,8 @@ const CreateCoursePage = () => {
       <HeadingUI>Create Course</HeadingUI>
       {/* resolver={yupResolver(adminSchema)} */}
       <div className="">
-        <Form submitHandler={onSubmit}>
+        <Form  isReset={isReset}
+            defaultValues={{ status: ENUM_STATUS.ACTIVE }} submitHandler={onSubmit}>
           <section
             style={{
               padding: "0.5rem",

@@ -5,6 +5,7 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 
 import UploadImage from "@/components/ui/UploadImage";
+import { ENUM_STATUS } from "@/constants/globalEnums";
 
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 
@@ -15,6 +16,7 @@ import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
 const CreateCategory = () => {
+  const [isReset, setIsReset] = useState(false);
   const [addCategory, { isLoading: serviceLoading }] = useAddCategoryMutation();
 
   const onSubmit = async (values: any) => {
@@ -40,6 +42,7 @@ const CreateCategory = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Category");
+        setIsReset(true)
       }
       // console.log(res);
     } catch (error: any) {
@@ -57,7 +60,8 @@ const CreateCategory = () => {
       <div className="flex justify-center ">
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} >
+        <Form  isReset={isReset}
+            defaultValues={{ status: ENUM_STATUS.ACTIVE }} submitHandler={onSubmit} >
           <div
             style={{
               padding: "0.75rem",

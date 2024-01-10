@@ -31,10 +31,10 @@ const TextEditor = dynamic(
   }
 );
 const CreateQuiz = () => {
-  const [category, setCategory] = useState({});
-  const [courses, setCourses] = useState({});
-  const [milestone, setmilestone] = useState({});
-  const [module, setmodule] = useState({});
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>({});
+  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>({});
+  const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
 
   const query: Record<string, any> = {};
@@ -61,11 +61,11 @@ const CreateQuiz = () => {
   const onSubmit = async (values: any) => {
     const createQuizeData: {} = {
       ...values,
-
-      // demo_video,
-      lesson: lesson._id,
-      //@ts-ignore
+      category: category._id,
+      course:course._id,
+      milestone:milestone._id,
       module: module?._id,
+      lesson: lesson._id,
     };
     // console.log(LessonData);
 
@@ -116,7 +116,7 @@ const CreateQuiz = () => {
             <Col xs={24} md={6}>
               <SelectCategoryChildren
                 lableText="Select courses"
-                setState={setCourses}
+                setState={setCourse}
                 categoryData={
                   //@ts-ignore
                   category?.courses || []
@@ -129,7 +129,7 @@ const CreateQuiz = () => {
                 setState={setmilestone}
                 categoryData={
                   //@ts-ignore
-                  courses?.milestones || []
+                  course?.milestones || []
                 }
               />
             </Col>
