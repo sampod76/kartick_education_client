@@ -35,6 +35,7 @@ import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCatego
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import dynamic from "next/dynamic";
+import { ENUM_STATUS } from "@/constants/globalEnums";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -48,22 +49,22 @@ const CreateSingleQuiz = () => {
   const [quizType, setQuizTypes] = useState<
     "input" | "select" | "multiple_select"
   >("select"); // !  tag selection
-  const [videoType, setVideoType] = useState(null); // ! for video insert
-  const [videoUrl, setVideoUrl] = useState("");
+
   // ! For quiz Answer
   const [answers, setAnswers] = useState([]);
+  const [isReset, setIsReset] = useState(false);
 
   const [singleAnswer, setSingleAnswerInput] = useState<string>("");
-  console.log(
-    "🚀 ~ file: page.tsx:58 ~ CreateSingleQuiz ~ singleAnswer:",
-    singleAnswer
-  );
   //
-  const [category, setCategory] = useState({});
-  const [courses, setCourses] = useState({});
-  const [milestone, setmilestone] = useState({});
-  const [module, setmodule] = useState({});
-  const [lesson, setlesson] = useState({});
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
+  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
+  const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
+  const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
   const [quiz, setquiz] = useState<{ _id?: string; title?: string }>({});
 
   //
@@ -109,7 +110,11 @@ const CreateSingleQuiz = () => {
     const singleQuizDat: {} = {
       ...values,
 
-      // demo_video,
+      category: category._id,
+      course: course._id,
+      milestone: milestone._id,
+      module: module?._id,
+      lesson: lesson._id,
       quiz: quiz?._id,
       type: quizType,
     };
@@ -123,9 +128,7 @@ const CreateSingleQuiz = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added the Quiz");
-        // setVideoUrl("");
-        // setVideoType(null);
-
+        setIsReset(true);
         setAnswers([]);
       }
       // console.log(res);
@@ -163,7 +166,7 @@ const CreateSingleQuiz = () => {
             <Col xs={24} md={6}>
               <SelectCategoryChildren
                 lableText="Select courses"
-                setState={setCourses}
+                setState={setCourse}
                 categoryData={
                   //@ts-ignore
                   category?.courses || []
@@ -176,7 +179,7 @@ const CreateSingleQuiz = () => {
                 setState={setmilestone}
                 categoryData={
                   //@ts-ignore
-                  courses?.milestones || []
+                  course?.milestones || []
                 }
               />
             </Col>
@@ -223,7 +226,11 @@ const CreateSingleQuiz = () => {
             padding: "1rem",
           }}
         >
-          <Form submitHandler={onSubmit}>
+          <Form
+            submitHandler={onSubmit}
+            isReset={isReset}
+            defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+          >
             <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 ">
               Create A Single Quiz
             </h1>

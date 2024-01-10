@@ -15,8 +15,10 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Button, Col, Row, message } from "antd";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useState } from "react";
 
 const EditCategoryPage = ({ params }: any) => {
+  const [isReset, setIsReset] = useState(false);
   const { data: categoryData={}, isLoading } = useGetSingleCategoryQuery(
     params?.id,
     {
@@ -43,6 +45,7 @@ const EditCategoryPage = ({ params }: any) => {
         Error_model_hook(res?.message);
       } else {
         Success_model("successfully updated data");
+        setIsReset(true)
       }
     } catch (err: any) {
       console.error(err);
@@ -62,7 +65,8 @@ const EditCategoryPage = ({ params }: any) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(ICategorySchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={categoryData}>
+        <Form  isReset={isReset}
+          submitHandler={onSubmit} defaultValues={categoryData}>
           <div
             style={{
               border: "1px solid #d9d9d9",

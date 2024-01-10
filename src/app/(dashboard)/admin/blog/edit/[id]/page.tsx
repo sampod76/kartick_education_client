@@ -23,6 +23,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 const EditBlog = ({params}:{params:any}) => {
+  const [isReset, setIsReset] = useState(false);
   const {data={},isLoading}=useGetSingleBlogQuery(params.id,{
     skip:!Boolean(params.id)
   })
@@ -60,7 +61,8 @@ const EditBlog = ({params}:{params:any}) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form  isReset={isReset}
+            submitHandler={onSubmit} defaultValues={defaultValues}>
           <div
             style={{
               border: "1px solid #d9d9d9",

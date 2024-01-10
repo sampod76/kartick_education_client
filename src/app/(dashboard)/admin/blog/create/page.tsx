@@ -9,6 +9,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import UploadImage from "@/components/ui/UploadImage";
+import { ENUM_STATUS } from "@/constants/globalEnums";
 import { useAddBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -18,7 +19,7 @@ import dynamic from "next/dynamic";
 import React, { useState } from "react";
 
 const CreateBlog = () => {
- 
+  const [isReset, setIsReset] = useState(false);
 
 
   const [addBlog, { isLoading: blogLoading }] = useAddBlogMutation();
@@ -31,6 +32,7 @@ const CreateBlog = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
+        setIsReset(true)
       }
      
     } catch (error: any) {
@@ -48,7 +50,8 @@ const CreateBlog = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit}  isReset={isReset}
+            defaultValues={{ status: ENUM_STATUS.ACTIVE }}>
           <div
             style={{
               border: "1px solid #d9d9d9",
