@@ -31,8 +31,8 @@ const TextEditor = dynamic(
 const CreateModule = () => {
   //
 
-  const [category, setCategory] = useState({});
-  const [isReset, setIsReset] = useState(false);
+  const [isReset, setIsReset] = useState<boolean>(false);
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>({});
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
   const [milestone, setMilestone] = useState<{ _id?: string; title?: string }>(
     {}
@@ -57,6 +57,7 @@ const CreateModule = () => {
     }
     const ModuleData: {} = {
       ...values,
+      category: category?._id,
       course: course?._id,
       // details: textEditorValue,
       milestone: milestone?._id,
@@ -69,7 +70,7 @@ const CreateModule = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Module");
-        setIsReset(false)
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -148,7 +149,7 @@ const CreateModule = () => {
         >
           <div>
             <Form
-            isReset={isReset}
+              isReset={isReset}
               submitHandler={onSubmit}
               defaultValues={{ module_number: Number(preModule_number) }}
             >
