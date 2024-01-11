@@ -41,10 +41,10 @@ const CommonCourse = () => {
   }
   return (
     <div className="mt-[6rem]  mx-auto bg-[#A2B0F321] pt-7">
-<h1 className=" text-center text-gray-800 text-[1.8vw] font-medium leading-9 tracking-wider">BUILD A HEALTHIER FOUNDATION FOR LIFELONG LEARNING</h1>
+<h1 className=" text-center text-gray-800 text-[1.8vw] xl:text-5xl font-medium leading-9 tracking-wider">BUILD A HEALTHIER FOUNDATION FOR LIFELONG LEARNING</h1>
       <div className=" mt-[1rem] pt-12 px-1 lg:px-3">
         <div className="max-w-[90% container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 ">
             {courseData?.map((item: any, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}

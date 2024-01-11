@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 // import TextEditor from "../shared/TextEditor/TextEditor";
 import Form from "../Forms/Form";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -14,6 +15,7 @@ const TextEditor = dynamic(
 );
 
 export default function ResourceCreate({ setOpen, moduleId }: any) {
+  const [isReset, setIsReset] = useState(false);
   const [addResource, { isLoading }] = useAddResourceMutation();
   const onSubmit = async (values: any) => {
     console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
@@ -34,6 +36,7 @@ export default function ResourceCreate({ setOpen, moduleId }: any) {
       } else {
         Success_model("Successfully added Resource");
         setOpen(true);
+        setIsReset(true);
       }
     } catch (error: any) {
       Error_model_hook(error?.message);
@@ -42,7 +45,8 @@ export default function ResourceCreate({ setOpen, moduleId }: any) {
   };
   return (
     <Form submitHandler={onSubmit}>
-      <TextEditor />
+      <TextEditor isReset={isReset}
+          />
       <div className="w-fit mx-auto">
         {isLoading ? (
           <ButtonLoading />

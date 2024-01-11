@@ -67,10 +67,6 @@ const CreateSingleQuiz = () => {
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
   const [quiz, setquiz] = useState<{ _id?: string; title?: string }>({});
 
-  //
-  const [addSingleQuiz, { isLoading: serviceLoading }] =
-    useAddSingleQuizMutation();
-
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module-lessons-quiz";
   //! for Category options selection
@@ -78,12 +74,10 @@ const CreateSingleQuiz = () => {
     ...query,
   });
   const categoryData: any = Category?.data;
-  //
+   //
 
-  // const demo_video = {
-  //   video: videoType,
-  //   platform: videoUrl,
-  // };
+  const [addSingleQuiz, { isLoading: serviceLoading }] =
+  useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
     if (!quiz._id) {
@@ -151,7 +145,7 @@ const CreateSingleQuiz = () => {
         }}
       >
         <div className="border-2 rounded-lg my-3 p-5 border-blue-500">
-          <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 animate-bounce">
+          <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
             At fast Filter
           </h1>
           <Row gutter={[16, 16]}>

@@ -26,7 +26,7 @@ const SIngleCourse = ({ course }: { course: Record<string, any> }) => {
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className="max-w-sm min-w-full mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-1 hover:scale-110 duration-300"
+      className="max-w-sm  mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-1 hover:scale-110 duration-300"
     >
       <div className="overflow-hidden">
         <div className="relative">

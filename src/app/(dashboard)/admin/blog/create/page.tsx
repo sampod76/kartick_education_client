@@ -46,8 +46,7 @@ const CreateBlog = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form
-          submitHandler={onSubmit}
+        <Form submitHandler={onSubmit}
           
           isReset={isReset}
           defaultValues={{ status: ENUM_STATUS.ACTIVE }}

@@ -31,7 +31,7 @@ const TextEditor = dynamic(
 // courseId -->For update
 const CreateMilestone = ({ setOpen, courseId, title }: any) => {
   //
-
+  const [isReset, setIsReset] = useState(false);
   const [category, setCategory] = useState<{ _id?: string }>({});
   const [courses, setCourses] = useState<{ _id?: string }>({});
 
@@ -72,6 +72,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
         Success_model("Successfully added Milestone");
         // setTextEditorValue("");
         setOpen(false);
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -84,7 +85,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
     <>
       {!courseId ? (
         <div className="bg-white shadow-lg border-2 rounded-lg my-3 p-5 border-blue-300">
-          <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 animate-bounce">
+          <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
             At fast Filter
           </h1>
           <Row gutter={[16, 16]}>
@@ -126,7 +127,8 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
             {/* resolver={yupResolver(IServiceSchema)} */}
             <h1 className="text-xl font-bold my-2">Create Milestone</h1>
 
-            <Form submitHandler={onSubmit}>
+            <Form submitHandler={onSubmit} isReset={isReset}
+          defaultValues={{ status: ENUM_STATUS.ACTIVE }}>
               <div
                 style={{
                   border: "1px solid #d9d9d9",
