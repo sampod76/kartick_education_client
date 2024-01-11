@@ -32,9 +32,7 @@ export default function QuizeSinglePage({
     ...quiz_query,
   });
 
-  const handleFinishQuiz = () => {
-    // Handle quiz submission logic here
-  };
+
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
   }
