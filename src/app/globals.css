@@ -68,21 +68,37 @@
 .jodit-wysiwyg h1 {
   @apply text-2xl font-bold;
 }
+h1 {
+  @apply text-2xl font-bold;
+}
 
 .jodit-wysiwyg h2 {
+  @apply text-xl font-bold;
+}
+h2 {
   @apply text-xl font-bold;
 }
 
 .jodit-wysiwyg h3 {
   @apply text-lg font-semibold;
 }
+h3 {
+  @apply text-lg font-semibold;
+}
 
 .jodit-wysiwyg h4 {
+  @apply text-base font-medium;
+}
+h4 {
   @apply text-base font-medium;
 }
 
 /* Quotes */
 .jodit-wysiwyg blockquote {
+  @apply p-4 bg-gray-100 border border-gray-200 rounded-lg;
+}
+
+blockquote {
   @apply p-4 bg-gray-100 border border-gray-200 rounded-lg;
 }
 
@@ -92,14 +108,54 @@
   @apply bg-gray-900 text-white px-4 py-2 rounded-lg font-mono;
 }
 
+code {
+  @apply bg-gray-900 text-white px-4 py-2 rounded-lg font-mono;
+}
+pre {
+  @apply bg-gray-900 text-white px-4 py-2 rounded-lg font-mono;
+}
+
 /* Unordered lists */
 .jodit-wysiwyg ul {
+  @apply list-disc list-inside pl-8;
+}
+ul {
   @apply list-disc list-inside pl-8;
 }
 .jodit-wysiwyg ol {
   @apply list-decimal list-inside pl-8;
 }
+ol {
+  @apply list-decimal list-inside pl-8;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd; /* Add border for the table */
+}
 
+td {
+  width: 16.6667%;
+  padding: 8px; /* Add padding for better spacing */
+  border: 1px solid #ddd; /* Add border for the table cells */
+}
 
+.enabled {
+  color: #333; /* Default text color for enabled state */
+}
 
+.disabled {
+  color: #999; /* Text color for disabled state */
+}
 
+.activated {
+  color: #007bff; /* Text color for active state */
+}
+
+.warning {
+  color: #ffc107; /* Text color for warning state */
+}
+
+.error {
+  color: #dc3545; /* Text color for error state */
+}

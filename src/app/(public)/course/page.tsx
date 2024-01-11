@@ -12,7 +12,7 @@ const CoursesPage = () => {
     <div className="mt-7">
       {/* <TopBar />
       <NavbarPublic /> */}
-     <h1>Courses Page</h1>
+     <h1 className="text-base font-normal">Courses Page</h1>
     </div>
   );
 };

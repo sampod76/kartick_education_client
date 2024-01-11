@@ -110,7 +110,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
           </Row>
         </div>
       ) : (
-        <h1>Course: {title}</h1>
+        <h1 className="text-base font-normal">Course: {title}</h1>
       )}
       <div
         style={{

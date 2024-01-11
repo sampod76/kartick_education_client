@@ -186,7 +186,7 @@ const GeneralUserBooking = () => {
       title: "Payment",
       dataIndex: "payment",
       render: function (data: any) {
-        return <>{data ? <h1>Done</h1> : <h1>Not payment</h1>}</>;
+        return <>{data ? <h1 className="text-base font-normal">Done</h1> : <h1 className="text-base font-normal">Not payment</h1>}</>;
       },
     },
     {

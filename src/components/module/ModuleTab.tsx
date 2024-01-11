@@ -56,7 +56,7 @@ export default function ModuleTab({
     //           fontSize: "1.5rem",
     //         }}
     //       />
-    //       <h1>Quiz</h1>
+    //       <h1 className="text-base font-normal">Quiz</h1>
     //     </button>
     //   ),
     //   key: "2",

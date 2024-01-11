@@ -7,7 +7,6 @@ import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-
 import {
   Button,
   Col,
@@ -33,6 +32,7 @@ import TagsSelectNotSetFormUI from "@/components/ui/dashboardUI/TagsSelectNotSet
 import Dragger from "antd/es/upload/Dragger";
 import { getCloudinaryEnv } from "@/helpers/config/envConfig";
 import UploadMultipalDragAndDropImge from "@/components/ui/UploadMultipalDragAndDropImge";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeFalseyValue";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
   {
@@ -40,7 +40,7 @@ const TextEditor = dynamic(
   }
 );
 
-const CreateCourse = ({setOpen}:any) => {
+const CreateCourse = ({ setOpen }: any) => {
   const [textEditorValue, setTextEditorValue] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -66,40 +66,12 @@ const CreateCourse = ({setOpen}:any) => {
       ...values,
       img: images.length ? images[0] : "",
     };
-
-    
-    function removeNullUndefinedAndFalsey(obj: { [x: string]: any; }) {
-      for (let key in obj) {
-  if(!Boolean(obj[key])){
-        if (obj[key] === null || obj[key] === undefined) {
-          delete obj[key];
-        } else if (typeof obj[key] === "object") {
-          // Recursively remove null, undefined, and falsey values from nested objects
-          removeNullUndefinedAndFalsey(obj[key]);
-          // After recursion, check if the current object is empty
-          if (Object.keys(obj[key]).length === 0) {
-            delete obj[key];
-          }
-        } else if (Array.isArray(obj[key])) {
-          // Remove null, undefined, and falsey values from arrays
-          obj[key] = obj[key].filter(
-            (item: boolean | null | undefined) => item !== null && item !== undefined && item !== false
-          );
-  
-          // After filtering, check if the array is empty
-          if (obj[key].length === 0) {
-            delete obj[key];
-          }
-        }
-      }
-    }}
-
+    removeNullUndefinedAndFalsey(courseData); //
 
     try {
       const res = await addCourse({
         ...courseData,
         details: textEditorValue,
-       
       }).unwrap();
 
       if (res?.success == false) {
@@ -371,7 +343,6 @@ const CreateCourse = ({setOpen}:any) => {
                     name="demo_video.video"
                     label="Preview Video url from vimeo"
                     rules={[
-                     
                       {
                         validator: validateUrl,
                       },
@@ -434,15 +405,18 @@ const CreateCourse = ({setOpen}:any) => {
           {/* <div>
               <UploadMultpalImage />
             </div> */}
-             <div className="w-fit mx-auto">
-          {isLoading ? (
-            <Spin />
-          ) : (
-           
-                <Button type="default" style={{marginTop:"1rem"}} htmlType="submit">
-              Create Course
-            </Button>
-          )}
+          <div className="w-fit mx-auto">
+            {isLoading ? (
+              <Spin />
+            ) : (
+              <Button
+                type="default"
+                style={{ marginTop: "1rem" }}
+                htmlType="submit"
+              >
+                Create Course
+              </Button>
+            )}
           </div>
         </section>
       </Form>

@@ -7,7 +7,7 @@ const AdminPage = () => {
       backgroundColor: "white",
       padding: "1rem",
     }}>
-      <h1>Welcome To Admin Profile</h1>
+      <h1 className="text-base font-normal">Welcome To Admin Profile</h1>
     </div>
   );
 };

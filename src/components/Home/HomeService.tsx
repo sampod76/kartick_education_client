@@ -104,7 +104,7 @@ const UpComingService = ({
         </h1>
         <div className="flex items-center gap-2">
           <div>
-            <h1>Search</h1>
+            <h1 className="text-base font-normal">Search</h1>
             <Search
               placeholder="input search text"
               onSearch={onSearch}
@@ -112,7 +112,7 @@ const UpComingService = ({
             />
           </div>
           <div>
-            <h1>Category</h1>
+            <h1 className="text-base font-normal">Category</h1>
             <Select
               placeholder={"Select category"}
               style={{ width: 120 }}

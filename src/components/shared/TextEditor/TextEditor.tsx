@@ -17,6 +17,7 @@ const TextEditor = ({
 }) => {
   const editor = useRef(null);
   const [content, setContent] = useState(defultTextEditorValue);
+  console.log("🚀 ~ content:", content);
   // const [vlaue, setTextEditorValue] = useState("");
   const { setValue } = useFormContext();
 
@@ -45,8 +46,14 @@ const TextEditor = ({
         config={editorConfig}
         value={content}
         // tabIndex={1} // tabIndex of textarea
-        onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-        onChange={(newContent) => setValue(name, newContent)}
+        onBlur={(newContent) => {
+          setValue(name, newContent);
+          setContent(newContent);
+        }} // preferred to use only this option to update the content for performance reasons
+        // onChange={(newContent) => {
+
+        //   setValue(name, newContent);
+        // }}
       />
     </div>
   );

@@ -11,18 +11,16 @@ console.log("🚀 ~ file: Glossary.tsx:8 ~ GlossaryPage ~ moduleId:", moduleId)
 
 
 // console.log(moduleId)
-   const {data:glossaryData,isLoading}= useGetSingleGlossaryQuery(moduleId)
+   const {data:glossaryData,isLoading}= useGetSingleGlossaryQuery("659f72a40be3552ff0eb4217")
 
-  //  console.log("🚀 ~ GlossaryPage ~ glossaryData:", glossaryData)
+   console.log("🚀 ~ GlossaryPage ~ glossaryData:", glossaryData)
 
    if(isLoading){
     return <LoadingSkeleton/>
    }
 
   return (
-    <div>
-
-
+    <div className='jodit-wysiwyg'>
 
          {glossaryData?.details && parse(glossaryData?.details)}
     </div>
