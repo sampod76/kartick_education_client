@@ -21,7 +21,7 @@ export default function QuizQuestionCard({
   // userResponses: any;
   userAnswers: any[];
 }) {
-  console.log(quiz)
+  // console.log(quiz)
   // const [timer, setTimer] = useState<number>(60 * 1);
 
   // useEffect(() => {
@@ -63,18 +63,25 @@ export default function QuizQuestionCard({
     (answer) => answer?._id === quiz?._id
   );
 
-  // console.log(isDefaultValue);
+  console.log(isDefaultValue);
 
-  // console.log(userResponses)
+  console.log(userAnswers);
 
   // console.log(userAnswers,"userAnswers from card")
 
   return (
     <div>
       <Card key={quiz?._id} className="mb-4">
+
         <div className="text-center mt-4 flex justify-center items-center">
+
           {/* <p>Time Remaining: {timer} seconds</p> */}
-          <QuizTimer time_duration={quiz?.time_duration}/>
+          <QuizTimer
+            quiz={quiz}
+            time_duration={quiz?.time_duration}
+            userAnswers={userAnswers}
+            index={index}
+          />
         </div>
         <p className="text-lg font-[550] mb-2">
           <TextToSpeech text={quiz?.title} />
@@ -87,6 +94,7 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
+            disabled={isDefaultValue?.is_time_up ? true : false}
             defaultValue={isDefaultValue?.answer} // Set the default value based on isDefaultValue
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
           >
@@ -105,6 +113,7 @@ export default function QuizQuestionCard({
         {quiz?.type === "multiple_select" && (
           <Checkbox.Group
             defaultValue={isDefaultValue?.answer} // Set the default value based on isDefaultValue
+            disabled={isDefaultValue?.is_time_up ? true : false}
             onChange={(value) => handleAnswerChange(index + 1, value)}
             style={{
               display: "flex",
