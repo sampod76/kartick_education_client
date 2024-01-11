@@ -43,7 +43,7 @@ const HomePage = () => {
       <HomeHeader />
 
       <section className="-mt-[6rem] bg-[#BEDDF9]">
-        <div className="w-full min-h-[7rem]"></div>
+        <div className="w-full min-h-[5rem]"></div>
         <BannerSection/>
       </section>
       <main  className="bg-[#A2B0F321]">

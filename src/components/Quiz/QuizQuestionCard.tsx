@@ -72,7 +72,9 @@ export default function QuizQuestionCard({
   return (
     <div>
       <Card key={quiz?._id} className="mb-4">
-        <div className="text-center mt-4  flex justify-center">
+
+        <div className="text-center mt-4 flex justify-center items-center">
+
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
             quiz={quiz}

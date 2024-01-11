@@ -36,12 +36,16 @@ export default function QuizeSinglePage({
   console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData)
 
 
+  const handleFinishQuiz = () => {
+    // Handle quiz submission logic here
+  };
+
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
   }
   return (
     <div className="container mx-auto rounded-xl mt-3 shadow-2xl">
-      <h1 className="text-sm lg:text-[1.206vw]  font-bold p-5">
+      <h1 className="text-sm  lg:text-2xl  font-bold p-5">
         <TextToSpeech text={quiz_title} />
         {quiz_title}
       </h1>
@@ -65,7 +69,7 @@ export default function QuizeSinglePage({
         /> 
         */}
       </div>
-      <div className="block lg:flex gap-2 items-start  ">
+      <div className="block lg:flex justify-center gap-2 items-center p-5  ">
         <QuizAside
           time_duration={2000}
           questionLength={allSingleQuizeData?.data?.length}
