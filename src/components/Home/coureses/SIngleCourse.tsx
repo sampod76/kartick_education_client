@@ -41,6 +41,9 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               src={course?.img || AllImage?.notFoundImage}
               // onLoadingComplete={(img) => console.log(img.naturalWidth)}
               alt="Sunset in the mountains"
+              // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
+              
+              // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
             />
           </div>
           <div className="hover:bg-transparent transition  rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>

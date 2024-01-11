@@ -30,10 +30,8 @@ export default function QuizTestPage({
     // Save user responses to localStorage or API
     // saveQuizResponse(quizId, userResponses);
     console.log(userAnswers);
-
     // Display a success message
     message.success("Quiz submitted successfully!");
-
     // Redirect to a summary page or any other page as needed
     // router.push(`/quiz/${quizId}/summary`);
   };

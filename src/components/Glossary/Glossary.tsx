@@ -13,7 +13,7 @@ console.log("🚀 ~ file: Glossary.tsx:8 ~ GlossaryPage ~ moduleId:", moduleId)
 // console.log(moduleId)
    const {data:glossaryData,isLoading}= useGetSingleGlossaryQuery(moduleId)
 
-  //  console.log("🚀 ~ GlossaryPage ~ glossaryData:", glossaryData)
+   console.log("🚀 ~ GlossaryPage ~ glossaryData:", glossaryData)
 
    if(isLoading){
     return <LoadingSkeleton/>
@@ -21,9 +21,6 @@ console.log("🚀 ~ file: Glossary.tsx:8 ~ GlossaryPage ~ moduleId:", moduleId)
 
   return (
     <div>
-
-
-
          {glossaryData?.details && parse(glossaryData?.details)}
     </div>
   )
