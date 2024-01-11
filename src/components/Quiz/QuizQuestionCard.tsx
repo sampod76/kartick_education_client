@@ -2,9 +2,10 @@ import { addAnswer } from "@/redux/features/quizSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { IAnswer } from "@/types/singleQuiz";
 import TextToSpeech from "@/utils/TextToSpeech";
-import { Card, Checkbox, Input, Radio, Select, Space } from "antd";
+import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 
 import React, { useEffect, useState } from "react";
+import QuizTimer from "./QuizTimer";
 
 const { Option } = Select;
 export default function QuizQuestionCard({
@@ -20,24 +21,27 @@ export default function QuizQuestionCard({
   // userResponses: any;
   userAnswers: any[];
 }) {
-  // console.log(quiz)
-  const [timer, setTimer] = useState<number>(1000);
+  console.log(quiz)
+  // const [timer, setTimer] = useState<number>(60 * 1);
 
-  useEffect(() => {
-    // Handle timer logic
-    const timerInterval = setInterval(() => {
-      if (timer > 0) {
-        setTimer((prevTimer) => prevTimer - 1);
-      } else {
-        // Auto-submit when the timer reaches 0
-        // handleFinishQuiz();
-        clearInterval(timerInterval);
-      }
-    }, 1000);
+  // useEffect(() => {
+  //   const timerInterval = setInterval(() => {
+  //     if (timer > 0) {
+  //       setTimer((prevTimer) => prevTimer - 1);
+  //     } else {
+  //       showModal();
+  //       clearInterval(timerInterval);
+  //     }
+  //   }, 1000);
 
-    // Clean up timer interval when component unmounts or quiz is finished
-    // return () => clearInterval(timerInterval);
-  }, [timer]);
+  //   // Clean up timer interval when component unmounts or quiz is finished
+  //   return () => clearInterval(timerInterval);
+  // }, [timer]);
+
+  // const showModal = () => {
+  //   // Implement your modal display logic here
+  //   console.log("Time is up! Show the modal.");
+  // };
 
   const dispatch = useAppDispatch();
 
@@ -69,7 +73,8 @@ export default function QuizQuestionCard({
     <div>
       <Card key={quiz?._id} className="mb-4">
         <div className="text-center mt-4">
-          <p>Time Remaining: {timer} seconds</p>
+          {/* <p>Time Remaining: {timer} seconds</p> */}
+          <QuizTimer time_duration={quiz?.time_duration}/>
         </div>
         <p className="text-lg font-[550] mb-2">
           <TextToSpeech text={quiz?.title} />

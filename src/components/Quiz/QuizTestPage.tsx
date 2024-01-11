@@ -1,14 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import {
-  Card,
-  Radio,
-  Select,
-  Input,
   Button,
-  Steps,
+
   message,
-  Space,
+
 } from "antd";
 import QuizQuestionCard from "./QuizQuestionCard";
 import { useAppSelector } from "@/redux/hooks";

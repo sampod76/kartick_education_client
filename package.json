@@ -36,6 +36,7 @@
     "owl.carousel": "^2.3.4",
     "rc-tween-one": "^3.0.6",
     "react": "^18.2.0",
+    "react-countdown-circle-timer": "^3.2.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.2",
     "react-icons": "^4.12.0",
