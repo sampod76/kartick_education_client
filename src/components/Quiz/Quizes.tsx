@@ -35,9 +35,7 @@ export default function QuizeSinglePage({
   });
   console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData)
 
-  const handleFinishQuiz = () => {
-    // Handle quiz submission logic here
-  };
+
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
   }
