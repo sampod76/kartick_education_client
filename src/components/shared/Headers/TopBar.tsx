@@ -33,7 +33,7 @@ const TopBar = () => {
 
   return (
     <div
-      className="py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5"
+      className="py-1 lg:py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5"
       // style={{
       // fontSize:"36px",
       //   background: "#5371FF",
@@ -43,7 +43,7 @@ const TopBar = () => {
       //   color: "white",
       // }}
     >
-      <section>
+      <section className="hidden lg:flex lg:flex-col">
         <h2 className="font-[800] text-md lg:text-[17px]">
           ATTEND ORIENTATION! IBL SCHOOL STORE!{" "}
         </h2>

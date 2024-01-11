@@ -9,6 +9,7 @@ import { Error_model_hook } from "@/utils/modalHook";
 import NotFoundCourse from "@/components/ui/NotFound/NotFoundCourse";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import InternelError from "@/components/shared/Error/InternelError";
+import { ICourseData } from "@/types/courseType";
 
 interface ICourseItemType {
   status?: string;
@@ -67,7 +68,7 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
       ) : (
         <div className="mt-3 container mx-auto ">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {courseData?.map((item: any, index: number) => {
+            {courseData?.map((item: ICourseData, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}
           </div>

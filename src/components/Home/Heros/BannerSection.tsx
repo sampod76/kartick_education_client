@@ -17,10 +17,10 @@ const BannerSection = () => {
       }}
     >
       <section className="w-full lg:w-[60%]  px-[59px] py-[3rem]">
-        <div className="text-[5vw] lg:text-[4vw] xl:text-8xl font-[800] text-black uppercase">
+        <div className="text-[2rem]  lg:text-[4vw] xl:text-8xl font-[800] text-black uppercase">
           <h1>Feel bored or anxious</h1>
-          <h1 className="whitespace-nowrap">
-            About <span className="text-secondary">Math or English</span> ?
+          <h1 className="">
+            About <span className="text-secondary whitespace-nowrap">Math or English ?</span> 
           </h1>
         </div>
         <p className="mt-[2rem] text-[1.5rem]  lg:text-5xl leading-[2rem]">

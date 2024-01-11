@@ -32,4 +32,5 @@ export type ICategory = {
 export type IBookingStatusType = 'pending' | 'accept' | 'reject' | 'complete';
 
 export type ICategoryStatus = 'active' | 'deactivate' | 'disabled' | 'block'|"save";
+export type IPriceTypes = "free" | "paid" | "closed" | "recurring"
 

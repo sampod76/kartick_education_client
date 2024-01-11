@@ -21,7 +21,7 @@ const SideModuleList = ({
 
   const { data: milestoneData, isLoading } =
   useGetSingleMilestoneQuery(milestoneId);
-  console.log("🚀 ~ milestoneData:", milestoneData)
+  // console.log("🚀 ~ milestoneData:", milestoneData)
   // console.log(milestoneData);
 
   const { data, isLoading: moduleLoading } = useGetAllModuleQuery({
@@ -32,7 +32,7 @@ const SideModuleList = ({
 
   // console.log(data,"milestoneId");
   const modulesData = data?.data;
-  console.log("🚀 ~ modulesData:", modulesData)
+  // console.log("🚀 ~ modulesData:", modulesData)
 
   if (isLoading || moduleLoading) {
     return <LoadingSkeleton />;
