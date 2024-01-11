@@ -21,6 +21,7 @@ export default function QuizeSinglePage({
   quizeId: string;
   quiz_title: string;
 }) {
+  console.log("🚀 ~ quizeId:", quizeId)
   const searchParams = useSearchParams();
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
@@ -30,7 +31,9 @@ export default function QuizeSinglePage({
 
   const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
     ...quiz_query,
+    quiz:quizeId
   });
+  console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData)
 
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
