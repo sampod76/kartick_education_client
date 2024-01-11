@@ -95,3 +95,14 @@ password : 11223344
 2. collapse of lesson 
 3. dashboard of role based
 4. 
+
+
+### 11 January
+
+1. fixed dashboard seller course
+2. create seller dashboard items
+3. fixed course statistics responsive
+4. create ICourse and IUser
+5. logo size fixed in navbar
+6. fixed learning course MilestoneList
+7. fixed dashboard statistics
