@@ -26,10 +26,10 @@ export default function LessonPage({
     return <LoadingSkeleton number={10} />;
   }
   return (
- <div className="">
-  <BannerModule/>
-<div className="text-primary">
-<UMBreadCrumb
+    <div className="mb-5">
+      <BannerModule className={"h-[15vh] md:h-[20vh] lg:h-[30vh]"} />
+      <div className="text-primary">
+        {/* <UMBreadCrumb
         items={[
           {
             label: "Milestone",
@@ -44,35 +44,35 @@ export default function LessonPage({
             link: `/lesson/${moduleId}`,
           },
         ]}
-      />
-</div>
-     <div className="mt-5 px-2 lg:px-4 containe mx-auto">
+      /> */}
+      </div>
+      <div className="mt-5 px-2 lg:px-4 containe mx-auto">
+        <div className="block lg:flex justify-center gap-5 items-">
+          {/* //! Side  */}
+          <div className="w-full lg:max-w-[30%] px-5">
+            {/* <ModuleList milestoneId={milestoneId}></ModuleList> */}
+            <SideModuleList milestoneId={milestoneId} moduleId={moduleId} />
+            <hr className=" border-[#eec699] lg:border-none -mx-7 overflow-hidden"/>
+          </div>
 
-      <div className="block lg:flex justify-center gap-5 items-">
-        {/* //! Side  */}
-        <div className="w-full lg:max-w-[30%] px-2">
-          {/* <ModuleList milestoneId={milestoneId}></ModuleList> */}
-          <SideModuleList milestoneId={milestoneId} moduleId={moduleId} />
-        </div>
-        
-        {/* main */}
-        <div className="w-full lg:max-w-[70%]">
-          {/* //! top user sections */}
-       <div className="flex flex-col justify-center items-center mb-5">
-          <Image
-            src={AllImage.profileAvater || ""}
-            width={300}
-            height={300}
-            className="w-[7rem]  h-[7rem] rounded-full"
-            alt=""
-          />
-          <h3 className="text-[#AAA4A4] font-semibold"> David</h3>
-       </div>
-        <ModuleTop moduleData={moduleData} />
-          <ModuleTab moduleId={moduleId} moduleData={moduleData}/>
+          {/* main */}
+          <div className="w-full lg:max-w-[70%]">
+            {/* //! top user sections */}
+            <div className="flex flex-col justify-center items-center mb-5">
+              <Image
+                src={AllImage.profileAvater || ""}
+                width={300}
+                height={300}
+                className="w-[7rem]  h-[7rem] rounded-full"
+                alt=""
+              />
+              <h3 className="text-[#AAA4A4] font-semibold"> David</h3>
+            </div>
+            <ModuleTop moduleData={moduleData} />
+            <ModuleTab moduleId={moduleId} moduleData={moduleData} />
+          </div>
         </div>
       </div>
     </div>
- </div>
   );
 }

@@ -1,6 +1,5 @@
-'use client'
+"use client";
 // import dynamic from "next/dynamic";
-
 
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
@@ -8,6 +7,7 @@ import { Divider } from "antd";
 import Link from "next/link";
 import React from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 
 const MilestoneList = ({ courseId }: { courseId: string }) => {
   const {
@@ -32,11 +32,10 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
     console.log(error, milestonError);
   }
 
-
   return (
     <>
       {isLoading || courseLoading ? (
-        <LoadingForDataFetch />
+        <LoadingSkeleton number={20} />
       ) : (
         <div
           style={{
@@ -63,10 +62,13 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
               background: "red",
             }}
           />
-          <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3 max-w-[80%] mx-auto mt-5">
+          <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3 max-w-[98%] lg:max-w-[90%] mx-auto my-5">
             {milestoneData?.map((milestone: any, index: number) => {
               return (
-                <div key={milestone?._id} className="border-2 shadow-xl p-2 rounded-xl">
+                <div
+                  key={milestone?._id}
+                  className="border-2 shadow-xl p-2 rounded-xl"
+                >
                   <Link
                     href={`/module/${milestone?._id}`}
                     className="text-start text-gray-800 text-[20px] font-semibold font-['Inter'] leading-1 "
@@ -77,7 +79,10 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
                   <ul className="py-3 list-[circle] mx-5">
                     {milestone?.modules?.map((module: any, index: number) => {
                       return (
-                        <li key={module._id || index} className="px-2  text-start">
+                        <li
+                          key={module._id || index}
+                          className="px-2  text-start"
+                        >
                           <Link
                             href={`/lesson/${module?._id}`}
                             className="text-secondary"

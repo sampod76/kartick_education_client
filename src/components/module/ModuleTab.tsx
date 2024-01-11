@@ -11,13 +11,17 @@ import {
   QuestionOutlined,
   CommentOutlined,
   BlockOutlined,
-  
 } from "@ant-design/icons";
 import Quizes from "../Quiz/Quizes";
 import GlossaryPage from "../Glossary/Glossary";
 
-export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,moduleData:any[] }) {
-  
+export default function ModuleTab({
+  moduleId,
+  moduleData,
+}: {
+  moduleId: string;
+  moduleData: any[];
+}) {
   // console.log(moduleData)
 
   // const {data:QuizData} = useGetQui
@@ -37,27 +41,27 @@ export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,mo
               fontSize: "1.5rem",
             }}
           />{" "}
-          <h1>Lesson Summery</h1>
+          <h1 className=" text-[1rem] md:text-[1.5rem]">Lesson Summery</h1>
         </button>
       ),
       key: "1",
       children: <LessonList moduleId={moduleId} />,
     },
-  
-    {
-      label: (
-        <button className="text-xl font-bold ">
-          <QuestionOutlined
-            style={{
-              fontSize: "1.5rem",
-            }}
-          />
-          <h1>Quiz</h1>
-        </button>
-      ),
-      key: "2",
-      // children: <Quizes quizeId=""/>,
-    },
+
+    // {
+    //   label: (
+    //     <button className="text-xl font-bold ">
+    //       <QuestionOutlined
+    //         style={{
+    //           fontSize: "1.5rem",
+    //         }}
+    //       />
+    //       <h1>Quiz</h1>
+    //     </button>
+    //   ),
+    //   key: "2",
+    //   // children: <Quizes quizeId=""/>,
+    // },
 
     {
       label: (
@@ -67,11 +71,11 @@ export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,mo
               fontSize: "1.5rem",
             }}
           />
-          <h1>Glossary</h1>
+          <h1 className=" text-[1rem] md:text-[1.5rem]">Glossary</h1>
         </button>
       ),
       key: "3",
-      children: <GlossaryPage moduleId={moduleId}/>
+      children: <GlossaryPage moduleId={moduleId} />,
     },
 
     {
@@ -83,7 +87,7 @@ export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,mo
               fontSize: "1.5rem",
             }}
           />
-          <h1> Reviews</h1>
+          <h1 className=" text-[1rem] md:text-[1.5rem]"> Resources</h1>
         </button>
       ),
       key: "4",
@@ -92,7 +96,6 @@ export default function ModuleTab({ moduleId ,moduleData}: { moduleId: string,mo
   ];
   return (
     <div className="mt-5">
-      
       <Tabs
         defaultActiveKey="1"
         centered

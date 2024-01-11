@@ -71,7 +71,7 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}
           </div>
-          <div className="mt-4  flex justify-center items-center">
+          <div className="mt-10 mb-2  flex justify-center items-center">
             <Pagination
               showSizeChanger
               current={currentPage}

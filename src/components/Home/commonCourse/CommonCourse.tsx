@@ -51,7 +51,7 @@ const CommonCourse = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-center mt-3">
+        <div className="flex justify-center items-center mt-10 mb-2">
           <Pagination
             showSizeChanger
             current={current}

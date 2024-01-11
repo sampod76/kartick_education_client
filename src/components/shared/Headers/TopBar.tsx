@@ -19,7 +19,7 @@ import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 import { getUserInfo } from "@/services/auth.service";
 
 const TopBar = () => {
-  const screens = useBreakpoint();
+  // const screens = useBreakpoint();
   // const userLoggedIn = {
   //   name: "",
   //   role: "admin",

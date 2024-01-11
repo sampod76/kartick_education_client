@@ -15,6 +15,7 @@ import { CutText } from "@/utils/CutText";
 import VimeoPlayer from "@/utils/vimoPlayer";
 import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
+import { EllipsisMiddle } from "@/utils/CutTextElliples";
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
   // console.log(moduleId, "moduleId from LessonList");
@@ -51,7 +52,6 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
   }
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
-      
       const lessonQuizData: any = QuizData?.data?.find(
         (item: any) => item?.lesson?._id === lesson?._id
       );
@@ -60,7 +60,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
       return {
         key: lesson?._id,
         label: (
-          <div className="text-[18px]  px-1 font-semibold   py-2 shadow-1 ">
+          <div className="text-[18px]  md:px-1 font-semibold   py-2 shadow-1 ">
             <button className="flex justify-between w-full">
               <h2>
                 <span>Lesson {index + 1}: </span> {lesson?.title}
@@ -68,18 +68,17 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
 
-       {lessonQuizData &&
-            <Link
-            href={`/lesson/quiz/${lessonQuizData?._id}`}
-            className="text-[14px] flex justify-between w-full mt-3"
-          >
-            <h2>
-              Quiz {index + 1} : <span>{lessonQuizData?.title} </span>
-            </h2>
-            <LockOutlined style={{ fontSize: "18px" }} />
-          </Link>
-
-       }
+            {lessonQuizData && (
+              <Link
+                href={`/lesson/quiz/${lessonQuizData?._id}`}
+                className="text-[14px] flex justify-between w-full mt-3"
+              >
+                <h2>
+                  Quiz {index + 1} : <span>{lessonQuizData?.title} </span>
+                </h2>
+                <LockOutlined style={{ fontSize: "18px" }} />
+              </Link>
+            )}
           </div>
         ),
         children: (
@@ -91,7 +90,10 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
                     <VimeoPlayer link={lesson?.videos[0]?.link} />
                   )}
               </div>
-              {lesson?.details && CutText(lesson?.details, 200)}
+              {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+              <EllipsisMiddle suffixCount={3} maxLength={300}>
+                {lesson?.short_description}
+              </EllipsisMiddle>
             </p>
           </div>
         ),
@@ -116,7 +118,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
           <RightCircleOutlined
             style={{
               fontSize: "24px",
-              padding: "8px",
+              
               fontWeight: 600,
               marginTop: "24px",
             }}

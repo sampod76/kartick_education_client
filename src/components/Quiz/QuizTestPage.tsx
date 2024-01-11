@@ -23,24 +23,7 @@ export default function QuizTestPage({
   const [currentStep, setCurrentStep] = useState(0);
   // const [userResponses, setUserResponses] = useState<any[]>([]);
 
-  const {userAnswers} = useAppSelector((state)=>state.quiz)
-  // const [timer, setTimer] = useState<number>(1000);
-
-  // useEffect(() => {
-  //   // Handle timer logic
-  //   const timerInterval = setInterval(() => {
-  //     if (timer > 0) {
-  //       setTimer((prevTimer) => prevTimer - 1);
-  //     } else {
-  //       // Auto-submit when the timer reaches 0
-  //       // handleFinishQuiz();
-  //       clearInterval(timerInterval);
-  //     }
-  //   }, 1000);
-
-  //   // Clean up timer interval when component unmounts or quiz is finished
-  //   // return () => clearInterval(timerInterval);
-  // }, [timer]);
+  const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   const handleNext = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -59,21 +42,8 @@ export default function QuizTestPage({
     // router.push(`/quiz/${quizId}/summary`);
   };
 
-  // console.log(
-  //   "currentSteps",
-  //   currentStep,
-  //   "quizLenght",
-  //   quizData.length,
-  //   "test answer",
-  //   userResponses
-  // );
-
-
-  console.log(userAnswers,"quizANswer")
-
   return (
     <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0">
-     
       <div className="flex flex-col gap-3 mt-4">
         {/* Render quiz based on the current step */}
         {quizData.length > 0 && (
@@ -99,7 +69,9 @@ export default function QuizTestPage({
               type="default"
               onClick={handleNext}
               // disabled={!userResponses.hasOwnProperty(currentStep+1)}
-              disabled={!userAnswers.find((answer) => answer?.index === currentStep + 1)}
+              disabled={
+                !userAnswers.find((answer:any) => answer?.index === currentStep + 1)
+              }
             >
               Next
             </Button>
@@ -109,8 +81,8 @@ export default function QuizTestPage({
             </Button>
           )}
         </div>
-        
-{/*         
+
+        {/*         
         <Steps
         current={currentStep}
         items={quizData?.map((quiz: any, index: number) => ({

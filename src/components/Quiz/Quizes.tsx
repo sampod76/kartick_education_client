@@ -8,94 +8,11 @@ import UMBreadCrumb from "../ui/UMBreadCrumb";
 import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { usePathname, useSearchParams } from "next/navigation";
+import TextToSpeech from "@/utils/TextToSpeech";
 // import QuizTestPage from "./QuizTestPage";
-const QuizTestPage = React.lazy(
-  () => import("./QuizTestPage")
-)
+const QuizTestPage = React.lazy(() => import("./QuizTestPage"));
 
 const { Option } = Select;
-
-// const quizData: {
-//   _id: number;
-//   title: string;
-//   type: string;
-//   answer: {
-//     title: string;
-//   }[];
-// }[] = [
-//   {
-//     _id: 1,
-//     title: "What is the capital of France?",
-//     type: "radio",
-//     // ", "Berlin", "London", "Rome"
-//     answer: [
-//       {
-//         title: "Paris",
-//       },
-//       {
-//         title: "Berlin",
-//       },
-//       {
-//         title: "London",
-//       },
-//       {
-//         title: "Rome",
-//       },
-//     ],
-//   },
-
-//   {
-//     _id: 2,
-//     title: "How many continents are there?",
-//     type: "select",
-//     answer: [
-//       {
-//         title: "5",
-//       },
-//       {
-//         title: "4",
-//       },
-//       {
-//         title: "5",
-//       },
-//       {
-//         title: "9",
-//       },
-//     ],
-//   },
-//   {
-//     _id: 3,
-//     title: "2 + 2 equals?",
-//     type: "text",
-//     answer: [],
-//   },
-//   {
-//     _id: 4,
-//     title: "What is JavaScript primarily used for in web development?",
-//     type: "textArea",
-//     answer: [],
-//   },
-//   {
-//     _id: 5,
-//     title: "Which is not language of Programming?",
-//     type: "radio",
-//     //answer: ["Javascript", "C++", "Python", "English"],
-//     answer: [
-//       {
-//         title: "Javascript",
-//       },
-//       {
-//         title: "C++",
-//       },
-//       {
-//         title: "Python",
-//       },
-//       {
-//         title: "English",
-//       },
-//     ],
-//   },
-// ];
 
 export default function QuizeSinglePage({
   quizeId,
@@ -115,7 +32,6 @@ export default function QuizeSinglePage({
     ...quiz_query,
   });
 
-
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
   };
@@ -124,7 +40,10 @@ export default function QuizeSinglePage({
   }
   return (
     <div className="container mx-auto rounded-xl mt-3 shadow-2xl">
-      <h1 className=" text-[1.206vw]  font-bold p-5">➿{quiz_title}</h1>
+      <h1 className="text-sm lg:text-[1.206vw]  font-bold p-5">
+        <TextToSpeech text={quiz_title} />
+        {quiz_title}
+      </h1>
       <div className=" py-2 m2-2 px-3">
         {/*
          <UMBreadCrumb
@@ -151,7 +70,10 @@ export default function QuizeSinglePage({
           questionLength={allSingleQuizeData?.data?.length}
         />
         <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0 ">
-          <QuizTestPage quizData={allSingleQuizeData?.data || []} quizId={quizeId} />
+          <QuizTestPage
+            quizData={allSingleQuizeData?.data || []}
+            quizId={quizeId}
+          />
           {/* <div className="flex flex-col gap-3">
             {allSingleQuizeData?.data?.map((quiz: any, index: number) => (
               
