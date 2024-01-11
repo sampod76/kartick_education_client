@@ -37,6 +37,7 @@ const EditBlog = ({params}:{params:any}) => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
+        setIsReset(true);
       }
       
     } catch (error: any) {

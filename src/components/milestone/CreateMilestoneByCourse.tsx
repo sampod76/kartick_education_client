@@ -92,7 +92,7 @@ const onSubmit = async (values: any) => {
 return (
   <>
     <div className="bg-white shadow-lg border-2 rounded-lg my-3 p-5 border-blue-300">
-      <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 animate-bounce">
+      <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
         At fast Filter
       </h1>
       <Row gutter={[16, 16]}>

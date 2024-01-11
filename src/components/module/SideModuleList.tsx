@@ -20,17 +20,19 @@ const SideModuleList = ({
   // console.log(milestoneId);
 
   const { data: milestoneData, isLoading } =
-    useGetSingleMilestoneQuery(milestoneId);
+  useGetSingleMilestoneQuery(milestoneId);
+  console.log("🚀 ~ milestoneData:", milestoneData)
   // console.log(milestoneData);
 
   const { data, isLoading: moduleLoading } = useGetAllModuleQuery({
-    course: milestoneId,
+    milestone: milestoneId,
     // lesson: "yes",
     status: "active",
   });
 
   // console.log(data,"milestoneId");
   const modulesData = data?.data;
+  console.log("🚀 ~ modulesData:", modulesData)
 
   if (isLoading || moduleLoading) {
     return <LoadingSkeleton />;
@@ -40,9 +42,10 @@ const SideModuleList = ({
       style={{
         marginTop: "1.35rem",
       }}
+      className=" lg:border-r-2 border-r-slate-500 h-full"
     >
-      <h2 className="text-[18px] lg:text-[20px] font-[550] uppercase ">
-        {milestoneData?.title}
+      <h2 className="text-[18px] lg:text-[20px] font-[550] ">
+        💥{milestoneData?.title}
       </h2>
       {/* <Divider
         style={{
@@ -52,10 +55,10 @@ const SideModuleList = ({
         }}
       /> */}
 
-      <ul className="flex flex-col gap-3 max-w-[8 mx-auto mt-5  list-[circle]">
+      <ul className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2]">
         {modulesData?.map((module: any, index: number) => {
           return (
-           <li  key={index} className={` text-[black]  py-2 px-3 rounded ${
+           <li  key={index} className={` text-[#1c1a1a]  py-1 px-1 md:px-3 rounded ${
             module?._id === moduleId
               ? "underline"
               : ""
@@ -65,7 +68,7 @@ const SideModuleList = ({
              
               className={` rounded text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2  `}
             >
-              {module?.title}
+               <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>{module?.title}
             </Link>
            </li>
           );

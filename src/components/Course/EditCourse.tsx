@@ -100,7 +100,7 @@ return (
       padding: "1rem",
     }}
   >
-    <HeadingUI>Create Course</HeadingUI>
+    <HeadingUI>Update Course</HeadingUI>
     {/* resolver={yupResolver(adminSchema)} */}
     <div className="">
       <Form

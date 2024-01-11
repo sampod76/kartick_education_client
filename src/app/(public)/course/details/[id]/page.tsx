@@ -46,7 +46,7 @@ const CourseDetailsPublicPage = ({ params }: any) => {
     <div className="container mx-auto">
       {/* <h2>The Web Developer Boot Camp</h2> */}
       <BannerCourses />
-      <CourseStatistics />
+      {/* <CourseStatistics /> */}
  <CourseDetailsMain courseId={id}/>
       <SupportHero />
     </div>

@@ -151,7 +151,7 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
   return (
     <div>
       <div>
-        <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 animate-bounce">
+        <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
           Update single quiz
         </h1>
         <div className="text-xl font-bold space-x-2 mb-2 text-start my-2 shadow-lg p-3 bg-white rounded-lg">

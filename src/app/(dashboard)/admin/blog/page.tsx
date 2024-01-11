@@ -30,6 +30,7 @@ import { useDeleteBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
 import { USER_ROLE } from "@/constants/role";
 import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
+import { ENUM_STATUS } from "@/constants/globalEnums";
 
 const BlogList = () => {
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -49,6 +50,7 @@ const BlogList = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["status"] = ENUM_STATUS.ACTIVE;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,

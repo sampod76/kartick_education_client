@@ -26,19 +26,20 @@ const SIngleCourse = ({ course }: { course: Record<string, any> }) => {
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className="max-w-sm min-w-full mx-auto h-full  shadow-md bg-white"
+      className="max-w-sm  mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-1 hover:scale-110 duration-300"
     >
-      <div className="rounded overflow-hidden ">
-        <div>
-          <div className="relative">
+      <div className="overflow-hidden">
+        <div className="relative">
+          <div>
             <Image
               height={350}
               width={350}
-              className="w-full h-[230px] object-cover"
+              className="w-full h-[230px] object-cover rounded-md" // Add the rounded-md class here
               src={course?.img || AllImage?.notFoundImage}
               alt="Sunset in the mountains"
             />
-            <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+          </div>
+            <div className="hover:bg-transparent transition  rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
             <div>
               <div className="absolute bottom-0 left-0 bg-primary px-4 py-2 text-white text-sm hover:bg-white hover:text-primary transition duration-500 ease-in-out">
                 {course?.price} $
@@ -78,7 +79,7 @@ const SIngleCourse = ({ course }: { course: Record<string, any> }) => {
             </span> */}
           </span>
         </div>
-      </div>
+     
     </Link>
   );
 };

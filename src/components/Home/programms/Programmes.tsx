@@ -15,7 +15,7 @@ const Programmes = () => {
         </button>
       </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 first-letter:">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 first-letter:">
         {onlineProgramsData?.map((item: any, index: number) => {
           return <SIngleProgramme programme={item} key={index + 1} />;
         })}
