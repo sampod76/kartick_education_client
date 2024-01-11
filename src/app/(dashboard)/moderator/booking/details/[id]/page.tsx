@@ -240,7 +240,7 @@ const BookingDetails = ({ params }: any) => {
             placeholder="Please provide authorityNote"
           />
           <div className="my-2 flex justify-center items-center">
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit"   type="default">
               Submit
             </Button>
           </div>

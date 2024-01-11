@@ -271,7 +271,7 @@ const UpdateProfile = () => {
             {isLoading ? (
               <Spin></Spin>
             ) : (
-              <Button size="large" htmlType="submit" type="primary">
+              <Button size="large" htmlType="submit"   type="default">
                 Update
               </Button>
             )}

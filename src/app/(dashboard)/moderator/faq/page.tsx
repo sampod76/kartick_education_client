@@ -125,7 +125,7 @@ const FaqList = () => {
         return (
           <>
             <Link href={`/${SUPER_ADMIN}/faq/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button onClick={() => console.log(data)}   type="default">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -135,12 +135,12 @@ const FaqList = () => {
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                  type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button onClick={() => handleDelete(data)}   type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -200,12 +200,12 @@ const FaqList = () => {
         />
         <div>
           <Link href={`/${SUPER_ADMIN}/faq/create`}>
-            <Button type="primary">Create Faq</Button>
+            <Button   type="default">Create Faq</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+                type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

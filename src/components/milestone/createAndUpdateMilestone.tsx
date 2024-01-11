@@ -212,7 +212,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
               </div>
               {/* <FloatButton
       shape="square"
-      type="primary"
+        type="default"
       style={{ right: "40%" ,width:"9rem",fontSize:"2rem"}}
       description="Create Milestone"
     

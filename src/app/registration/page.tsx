@@ -242,7 +242,7 @@ const Registration = () => {
             {isLoading || userLoginLoading ? (
               <Spin></Spin>
             ) : (
-              <Button size="large" htmlType="submit" type="primary">
+              <Button size="large" htmlType="submit"   type="default">
                 Create
               </Button>
             )}

@@ -144,7 +144,7 @@ const Login = () => {
                 </div>
                 <div className="">
                   <Button
-                    type="primary"
+                      type="default"
                     style={{
                       width: "6rem",
                       fontWeight: "600",

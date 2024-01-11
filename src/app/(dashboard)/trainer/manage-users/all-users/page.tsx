@@ -184,7 +184,7 @@ const AdminPage = () => {
             </Link>
             <Button
               onClick={() => deleteUserHandler(data)}
-              type="primary"
+                type="default"
               danger
             >
               <DeleteOutlined />
@@ -257,7 +257,7 @@ const AdminPage = () => {
         />
         <div>
           <Link href={`/${SUPER_ADMIN}/manage-users/all-users/create`}>
-            <Button type="primary">Create Customer</Button>
+            <Button   type="default">Create Customer</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button

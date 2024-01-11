@@ -275,12 +275,12 @@ const GeneralUserBooking = () => {
         />
         <div>
           {/* <Link href={`/${ROLE}/service/create`}>
-            <Button type="primary">Create service</Button>
+            <Button   type="default">Create service</Button>
           </Link> */}
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+                type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

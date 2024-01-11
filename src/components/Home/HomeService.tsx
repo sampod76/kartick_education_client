@@ -172,7 +172,7 @@ const UpComingService = ({
                       style={{ width: "100%" }}
                       //  className=" text-white p-1 mx-1 rounded-xl"
                     >
-                      <Button style={{ width: "100%" }} type="primary">
+                      <Button style={{ width: "100%" }}   type="default">
                         View
                       </Button>
                     </Link>
@@ -183,7 +183,7 @@ const UpComingService = ({
                         setBookMarkData(single);
                         showModal();
                       }}
-                      type="primary"
+                        type="default"
                     >
                       Booking +
                     </Button>
@@ -264,7 +264,7 @@ const UpComingService = ({
               placeholder="Please provide your phone number"
             />
             <div className="my-2 flex justify-center items-center">
-              <Button htmlType="submit" type="primary">
+              <Button htmlType="submit"   type="default">
                 Submit
               </Button>
             </div>

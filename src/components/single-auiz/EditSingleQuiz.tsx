@@ -121,7 +121,7 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
       type: quizType,
     };
 
-    console.log(singleQuizDat);
+
 
     try {
       const res = await updateSingleQuiz({

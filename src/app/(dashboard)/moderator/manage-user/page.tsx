@@ -92,7 +92,7 @@ const AdminPage = () => {
         return (
           <>
             <Link href={`/super_admin/manage-users/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button onClick={() => console.log(data)}   type="default">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -102,14 +102,14 @@ const AdminPage = () => {
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                  type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
             <Button
               onClick={() => deleteGeneralUserHandler(data)}
-              type="primary"
+                type="default"
               danger
             >
               <DeleteOutlined />
@@ -173,12 +173,12 @@ const AdminPage = () => {
         />
         <div>
           <Link href="/super_admin/manage-users/create">
-            <Button type="primary">Create Customer</Button>
+            <Button   type="default">Create Customer</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+                type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

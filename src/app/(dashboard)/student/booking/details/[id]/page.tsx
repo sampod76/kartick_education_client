@@ -264,7 +264,7 @@ const BookingDetails = ({ params }: any) => {
               <div className="border-2 p-3 flex flex-col justify-center items-center">
                 <h1 className="text-base font-normal">Status</h1>
                 <Button
-                  type="primary"
+                    type="default"
                   danger={defaultValues?.status === "reject"}
                 >
                   {defaultValues?.status}
@@ -286,14 +286,14 @@ const BookingDetails = ({ params }: any) => {
               bookingData?.payment == false && (
                 <Button
                   onClick={() => handlePayment(params?.id)}
-                  type="primary"
+                    type="default"
                 >
                   Payment
                 </Button>
               )}
           </div>
           {/* <div className="my-2 flex justify-center items-center">
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit"   type="default">
               Submit
             </Button>
           </div> */}
@@ -350,7 +350,7 @@ const BookingDetails = ({ params }: any) => {
                       alignItems: "center",
                     }}
                   >
-                    <Button type="primary" htmlType="submit">
+                    <Button   type="default" htmlType="submit">
                       Submit
                     </Button>
                   </Form.Item>
