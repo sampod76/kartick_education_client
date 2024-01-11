@@ -58,7 +58,7 @@ export default function CreateModuleByMilestone() {
       const ModuleData: {} = {
         ...values,
   
-        details: textEditorValue,
+        // details: textEditorValue,
         milestone: milestone?._id,
       };
   
@@ -242,8 +242,9 @@ export default function CreateModuleByMilestone() {
                           Description
                         </p>
                         <TextEditor
-                          textEditorValue={textEditorValue}
-                          setTextEditorValue={setTextEditorValue}
+                        isReset={isReset}
+                          // textEditorValue={textEditorValue}
+                          // setTextEditorValue={setTextEditorValue}
                         />
                       </section>
                     </Col>

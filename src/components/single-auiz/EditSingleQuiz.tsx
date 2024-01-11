@@ -50,6 +50,8 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
     singleAnswer
   );
   //
+  const [isReset, setIsReset] = useState(false);
+  //
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
   const [milestone, setmilestone] = useState({});
@@ -65,7 +67,7 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
     singleQuizId,
     { skip: !Boolean(singleQuizId) }
   );
-  console.log("🚀 ~ file: page.tsx:74 ~ EditSingleQuiz ~ data:", data);
+
   useEffect(() => {
     setAnswers(data?.answers || []);
     setQuizTypes(data?.type);
@@ -115,9 +117,7 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
     }
     const singleQuizDat: {} = {
       ...values,
-
       demo_video,
-
       type: quizType,
     };
 
@@ -136,6 +136,7 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
         setVideoUrl("");
         setVideoType(null);
         setAnswers([]);
+        setIsReset(true)
       }
       // console.log(res);
     } catch (error: any) {
@@ -258,7 +259,7 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
               </Col>
             </Row>
           </div>
-          <Form submitHandler={onSubmit} defaultValues={data}>
+          <Form isReset={isReset} submitHandler={onSubmit} defaultValues={data}>
             <div
               style={{
                 border: "1px solid #d9d9d9",
@@ -434,6 +435,7 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
                     Description
                   </p>
                   <TextEditor
+                  isReset={isReset}
                   // textEditorValue={textEditorValue}
                   // setTextEditorValue={setTextEditorValue}
                   />

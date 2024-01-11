@@ -252,8 +252,7 @@ export default function CreateCourseByCategory() {
               >
                 <p className="text-center my-3 font-bold text-xl">Description</p>
                 <TextEditor
-                  textEditorValue={textEditorValue}
-                  setTextEditorValue={setTextEditorValue}
+                 isReset={isReset}
                 />
               </section>
               {/* <div>

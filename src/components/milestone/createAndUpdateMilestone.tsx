@@ -195,6 +195,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                         Description
                       </p>
                       <TextEditor
+                      isReset={isReset}
                       // textEditorValue={textEditorValue}
                       // setTextEditorValue={setTextEditorValue}
                       />

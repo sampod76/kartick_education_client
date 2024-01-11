@@ -268,8 +268,9 @@ const CreateQuiz = () => {
                         Description
                       </p>
                       <TextEditor
-                        textEditorValue={textEditorValue}
-                        setTextEditorValue={setTextEditorValue}
+                      isReset={isReset}
+                        // textEditorValue={textEditorValue}
+                        // setTextEditorValue={setTextEditorValue}
                       />
                     </section>
                   </Col>

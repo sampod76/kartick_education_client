@@ -399,6 +399,7 @@ const CreateSingleQuiz = () => {
                     Description
                   </p>
                   <TextEditor
+                  isReset={isReset}
                   // textEditorValue={textEditorValue}
                   // setTextEditorValue={setTextEditorValue}
                   />

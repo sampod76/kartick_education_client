@@ -53,7 +53,7 @@ export default function CreateLessonByModule({moduleId,moduleName}:{moduleId:str
         ...values,
   
         module: moduleId,
-        details: textEditorValue,
+        // details: textEditorValue,
       };
       // console.log(LessonData);
   
@@ -213,8 +213,9 @@ export default function CreateLessonByModule({moduleId,moduleName}:{moduleId:str
                       Description
                     </p>
                     <TextEditor
-                      textEditorValue={textEditorValue}
-                      setTextEditorValue={setTextEditorValue}
+                    isReset={isReset}
+                      // textEditorValue={textEditorValue}
+                      // setTextEditorValue={setTextEditorValue}
                     />
                   </section>
                 </Col>

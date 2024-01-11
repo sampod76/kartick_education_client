@@ -33,7 +33,7 @@ import Dragger from "antd/es/upload/Dragger";
 import { getCloudinaryEnv } from "@/helpers/config/envConfig";
 import UploadMultipalDragAndDropImge from "@/components/ui/UploadMultipalDragAndDropImge";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeFalseyValue";
-const TextEditor = dynamic(
+const TextEditorNotSetForm = dynamic(
   () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
   {
     ssr: false,
@@ -397,7 +397,7 @@ const CreateCourse = ({ setOpen }: any) => {
             style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
           >
             <p className="text-center my-3 font-bold text-xl">Description</p>
-            <TextEditor
+            <TextEditorNotSetForm
               textEditorValue={textEditorValue}
               setTextEditorValue={setTextEditorValue}
             />
