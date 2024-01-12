@@ -68,15 +68,15 @@ const CreateLesson = () => {
     );
   const onSubmit = async (values: any) => {
     console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
-    if (!module._id || !milestone._id || !course._id || !category._id ) {
+    if (!module?._id || !milestone?._id || !course?._id || !category?._id ) {
       Error_model_hook("Please ensure your are selected Lesson/milestone/course/category");
       return;
     }
     const LessonData: {} = {
       ...values,
-      category: category._id,
-      course:course._id,
-      milestone:milestone._id,
+      category: category?._id,
+      course:course?._id,
+      milestone:milestone?._id,
       module: module?._id,
     };
     console.log(LessonData);

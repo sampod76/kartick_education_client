@@ -53,7 +53,7 @@ export default function CreateModule() {
    const { data: existModule } = useGetAllModuleQuery({});
  
    const onSubmit = async (values: any) => {
-     if (!milestone._id && !course._id) {
+     if (!milestone?._id && !course?._id) {
        Error_model_hook("Please ensure your are selected milestone,course");
        return;
      }

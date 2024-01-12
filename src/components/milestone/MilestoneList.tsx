@@ -1,7 +1,16 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Dropdown, Input, Menu, Space, message } from "antd";
+import {
+  Button,
+  Drawer,
+  DrawerProps,
+  Dropdown,
+  Input,
+  Menu,
+  Space,
+  message,
+} from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -30,8 +39,30 @@ import {
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterCourse from "@/components/dashboard/Filter/FilterCourse";
 import { AllImage } from "@/assets/AllImge";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
+import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 
 const MileStoneList = () => {
+  //
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
+  //
+  //----------------------------------------------------------------
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
+  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+
+  const queryCategory: Record<string, any> = {};
+  queryCategory["children"] = "course";
+  //! for Category options selection
+  const { data: Category, isLoading: categoryLoading } =
+    useGetAllCategoryChildrenQuery({
+      ...queryCategory,
+    });
+  const categoryData: any = Category?.data;
+  //----------------------------------------------------------------
+
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
@@ -52,6 +83,10 @@ const MileStoneList = () => {
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
+  //
+  query["category"] = category?._id;
+  query["course"] = course?._id;
+  //
   if (filterValue) {
     query["course"] = filterValue;
   }
@@ -65,8 +100,7 @@ const MileStoneList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
-  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data)
-
+  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
   //@ts-ignore
   const milestoneData = data?.data || [];
@@ -105,7 +139,9 @@ const MileStoneList = () => {
           <>
             {
               <Image
-                src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
+                src={
+                  data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
+                }
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
@@ -224,6 +260,16 @@ const MileStoneList = () => {
     }
   };
 
+  //---------------------------------
+  const showDrawer = () => {
+    setOpenDrawer(true);
+  };
+  const onClose = () => {
+    setOpenDrawer(false);
+  };
+
+  //--------------------------------
+
   return (
     <div
       style={{
@@ -263,6 +309,14 @@ const MileStoneList = () => {
           />
         </div>
         <div>
+          <Button
+            type="default"
+            style={{ marginRight: "5px" }}
+            onClick={showDrawer}
+          >
+            Filter
+          </Button>
+
           <Link href={`/admin/milestone/create`}>
             <Button type="default">Create Milestone</Button>
           </Link>
@@ -277,7 +331,6 @@ const MileStoneList = () => {
           )}
         </div>
       </ActionBar>
-
       <UMTable
         loading={isLoading}
         columns={columns}
@@ -289,7 +342,6 @@ const MileStoneList = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
       <UMModal
         title="Remove admin"
         isOpen={open}
@@ -298,6 +350,42 @@ const MileStoneList = () => {
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
+      <Drawer
+        title={
+          <div className="flex justify-between items-center ">
+            <p>Filter</p>{" "}
+            <button
+              onClick={onClose}
+              className="text-lg text-red-500 rounded hover:text-white px-5  hover:bg-red-600"
+            >
+              X
+            </button>
+          </div>
+        }
+        placement={placement}
+        closable={false}
+        onClose={onClose}
+        open={openDrawer}
+        key={placement}
+        size="large"
+      >
+        <SelectCategoryChildren
+          lableText="Select category"
+          setState={setCategory}
+          isLoading={categoryLoading}
+          categoryData={categoryData}
+        />
+
+        <SelectCategoryChildren
+          lableText="Select courses"
+          setState={setCourse}
+          categoryData={
+            //@ts-ignore
+            category?.courses || []
+          }
+        />
+      </Drawer>
+      ;
     </div>
   );
 };

@@ -174,7 +174,7 @@ export default function EditLesson({lessonId}:{lessonId:string}) {
                 />
               </Col>
             </Row>
-            <Form submitHandler={onSubmit} defaultValues={{ ...data,module:data.module._id }} isReset={isReset}>
+            <Form submitHandler={onSubmit} defaultValues={{ ...data,module:data.module?._id }} isReset={isReset}>
               <div
                 style={{
                   border: "1px solid #d9d9d9",
