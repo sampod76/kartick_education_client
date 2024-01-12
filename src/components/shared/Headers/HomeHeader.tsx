@@ -12,7 +12,7 @@ const HomeHeader = () => {
     <div  className="sticky  -top-16 z-40">
       <TopBar />
         <NavbarPublic />
-   
+   <h1>sampod</h1>
   
     </div>
   );
