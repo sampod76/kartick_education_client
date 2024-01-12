@@ -1,7 +1,16 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Dropdown, Input, Menu, Space, message } from "antd";
+import {
+  Button,
+  Drawer,
+  DrawerProps,
+  Dropdown,
+  Input,
+  Menu,
+  Space,
+  message,
+} from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -31,9 +40,35 @@ import {
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterLesson from "@/components/dashboard/Filter/FilterLesson";
 import { AllImage } from "@/assets/AllImge";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
+import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 
 const QuizDashList = () => {
-  const query: Record<string, any> = {};
+  //----------------------------------------------------------------
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
+  //----------------------------------------------------------------
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
+  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
+  const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
+  const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
+  const [isReset, setIsReset] = useState(false);
+
+  const categoryQuery: Record<string, any> = {};
+  categoryQuery["children"] = "course-milestone-module-lessons";
+  //! for Category options selection
+  const { data: Category, isLoading: categoryLoading } =
+    useGetAllCategoryChildrenQuery({
+      ...categoryQuery,
+    });
+
+  const categoryData: any = Category?.data;
+  //---------------------------------------------------------
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
 
@@ -48,11 +83,17 @@ const QuizDashList = () => {
   const [adminId, setAdminId] = useState<string>("");
   const [filterValue, setFilterValue] = useState<string>("");
 
+  const query: Record<string, any> = {};
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
+  query["category"] = category?._id;
+  query["course"] = course?._id;
+  query["milestone"] = milestone?._id;
+  query["module"] = module?._id;
+  query["lesson"] = lesson?._id;
 
   if (filterValue) {
     query["lesson"] = filterValue;
@@ -106,7 +147,9 @@ const QuizDashList = () => {
           <>
             {
               <Image
-              src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
+                src={
+                  data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
+                }
                 style={{ height: "50px", width: "80px" }}
                 width={100}
                 height={100}
@@ -131,7 +174,7 @@ const QuizDashList = () => {
     {
       title: "passingGrade",
       dataIndex: "passingGrade",
-      width:100
+      width: 100,
     },
     {
       title: "module",
@@ -211,7 +254,14 @@ const QuizDashList = () => {
       message.error(error.message);
     }
   };
-
+  //----------------------------------------------------------------
+  const showDrawer = () => {
+    setOpenDrawer(true);
+  };
+  const onClose = () => {
+    setOpenDrawer(false);
+  };
+  //----------------------------------------------------------------
   return (
     <div
       style={{
@@ -251,6 +301,13 @@ const QuizDashList = () => {
           />
         </div>
         <div>
+          <Button
+            type="default"
+            style={{ marginRight: "5px" }}
+            onClick={showDrawer}
+          >
+            Filter
+          </Button>
           <Link href={`/admin/quiz/create`}>
             <Button>Create Quiz</Button>
           </Link>
@@ -286,6 +343,68 @@ const QuizDashList = () => {
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
+      <Drawer
+        title={
+          <div className="flex justify-between items-center ">
+            <p>Filter</p>{" "}
+            <button
+              onClick={onClose}
+              className="text-lg text-red-500 rounded hover:text-white px-5  hover:bg-red-600"
+            >
+              X
+            </button>
+          </div>
+        }
+        placement={placement}
+        closable={false}
+        onClose={onClose}
+        open={openDrawer}
+        key={placement}
+        size="large"
+      >
+        <SelectCategoryChildren
+          lableText="Select category"
+          setState={setCategory}
+          isLoading={categoryLoading}
+          categoryData={categoryData}
+        />
+
+        <SelectCategoryChildren
+          lableText="Select courses"
+          setState={setCourse}
+          categoryData={
+            //@ts-ignore
+            category?.courses || []
+          }
+        />
+
+        <SelectCategoryChildren
+          lableText="Select milestones"
+          setState={setmilestone}
+          categoryData={
+            //@ts-ignore
+            course?.milestones || []
+          }
+        />
+
+        <SelectCategoryChildren
+          lableText="Select module"
+          setState={setmodule}
+          categoryData={
+            //@ts-ignore
+            milestone?.modules || []
+          }
+        />
+
+        <SelectCategoryChildren
+          lableText="Select lesson"
+          setState={setlesson}
+          categoryData={
+            //@ts-ignore
+            module?.lessons || []
+          }
+        />
+      </Drawer>
     </div>
   );
 };

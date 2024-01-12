@@ -60,7 +60,7 @@ const SelectCategoryChildren = ({
         size="large"
         // onChange={handleChange ? handleChange : onChange}
         onChange={(val, fullValue: any) => {
-          setState(fullValue.data);
+          setState(fullValue?.data);
         }}
         disabled={disable}
         // defaultActiveFirstOption
@@ -72,7 +72,7 @@ const SelectCategoryChildren = ({
         filterOption={filterOption}
         optionFilterProp="children"
         loading={isLoading}
-        
+        allowClear
 
         // placeholder={placeholder}
       />

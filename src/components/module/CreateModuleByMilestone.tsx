@@ -51,7 +51,7 @@ export default function CreateModuleByMilestone() {
   
     
     const onSubmit = async (values: any) => {
-      if (!milestone._id) {
+      if (!milestone?._id) {
         Error_model_hook("Please ensure your are selected quiz");
         return;
       }

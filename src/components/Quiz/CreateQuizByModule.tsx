@@ -70,7 +70,7 @@ const CreateQuizByLesson = () => {
       ...values,
 
       demo_video,
-      lesson: lesson._id,
+      lesson: lesson?._id,
     };
     console.log(LessonData);
 
@@ -162,7 +162,7 @@ const CreateQuizByLesson = () => {
           </Row>
         </div>
       </div>
-      {lesson._id ? (
+      {lesson?._id ? (
         <div
           style={{
             boxShadow:

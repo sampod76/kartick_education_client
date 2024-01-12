@@ -78,8 +78,8 @@ export default function EditQuiz({quizId}:{quizId:string}) {
     };
   
     const onSubmit = async (values: any) => {
-      if (lesson._id) {
-        values["lesson"] = lesson._id;
+      if (lesson?._id) {
+        values["lesson"] = lesson?._id;
       }
       const QuizData: {} = {
         ...values,

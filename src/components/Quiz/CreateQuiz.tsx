@@ -62,11 +62,11 @@ const CreateQuiz = () => {
   const onSubmit = async (values: any) => {
     const createQuizeData: {} = {
       ...values,
-      category: category._id,
-      course:course._id,
-      milestone:milestone._id,
+      category: category?._id,
+      course:course?._id,
+      milestone:milestone?._id,
       module: module?._id,
-      lesson: lesson._id,
+      lesson: lesson?._id,
     };
     // console.log(LessonData);
 
@@ -158,7 +158,7 @@ const CreateQuiz = () => {
           </Row>
         </div>
       </div>
-      {lesson._id ? (
+      {lesson?._id ? (
         <div
           style={{
             boxShadow:

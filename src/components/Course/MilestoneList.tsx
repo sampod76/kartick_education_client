@@ -80,7 +80,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
                     {milestone?.modules?.map((module: any, index: number) => {
                       return (
                         <li
-                          key={module._id || index}
+                          key={module?._id || index}
                           className="px-2  text-start"
                         >
                           

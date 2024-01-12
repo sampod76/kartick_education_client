@@ -81,7 +81,7 @@ const CreateSingleQuiz = () => {
 
   const onSubmit = async (values: any) => {
     console.log("🚀 ~ onSubmit ~ values:", values)
-    if (!quiz._id) {
+    if (!quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");
       return;
     }
@@ -104,17 +104,17 @@ const CreateSingleQuiz = () => {
     }
     const singleQuizDat: {} = {
       ...values,
-      category: category._id,
-      course: course._id,
-      milestone: milestone._id,
+      category: category?._id,
+      course: course?._id,
+      milestone: milestone?._id,
       module: module?._id,
-      lesson: lesson._id,
+      lesson: lesson?._id,
       quiz: quiz?._id,
       type: quizType,
     };
 
     console.log(singleQuizDat);
-    return
+
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
@@ -211,7 +211,7 @@ const CreateSingleQuiz = () => {
           </Row>
         </div>
       </div>
-      {quiz._id ? (
+      {quiz?._id ? (
         <div
           style={{
             boxShadow:
