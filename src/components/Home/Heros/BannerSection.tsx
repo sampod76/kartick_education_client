@@ -9,17 +9,17 @@ import Link from "next/link";
 const BannerSection = () => {
   return (
     <div
-      className="block lg:flex justify-between place-items-end bg-blue-20 min-h-[45rem] text-left pt-[3rem] "
+      className="block lg:flex justify-between place-items-end bg-blue-20 min-h-[39rem] lg:min-h-[45rem] text-left pt-[1rem] md:pt-[3rem] "
       style={{
         backgroundImage: `url('/banner/bannerBG.png')`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
     >
-      <section className="w-full lg:w-[60%]  px-[59px] py-[3rem]">
-        <div className="text-[2rem]  lg:text-[4vw] xl:text-7xl font-[800] text-black uppercase">
-          <h1 className="text-base font-normal">Feel bored or anxious</h1>
-          <h1 className="">
+      <section className="w-full lg:w-[60%] px-5 lg:px-[59px] py-[3rem]">
+        <div className=" font-[800] text-black uppercase">
+          <h1 className="text-[2rem]  lg:text-[4vw] xl:text-7xl font-normal">Feel bored or anxious</h1>
+          <h1 className="text-[2rem]  lg:text-[4vw] xl:text-7xl">
             About <span className="text-secondary whitespace-nowrap">Math or English ?</span> 
           </h1>
         </div>
@@ -28,7 +28,7 @@ const BannerSection = () => {
           <span className="text-secondary"> iBlossomLearn </span> classes. Your
           adventure in learning awaits!
         </p>
-        <div className="mt-[3rem] max-h-[3.8rem] flex">
+        <div className="mt-2 md:mt-[3rem] max-h-[3.8rem] flex">
           <input
             type="text"
             placeholder="Search here"
@@ -46,7 +46,7 @@ const BannerSection = () => {
           </h3>
         </div>
 
-        <div className="mt-[5rem] flex flex-col lg:flex-row xl:flex-row gap-3 text-[1.2rem] text-white font-[700] uppercase">
+        <div className="mt-2 md:mt-[3rem] lg:mt-[5rem] flex flex-col lg:flex-row xl:flex-row gap-3 text-[1.2rem] text-white font-[700] uppercase">
           <Link
             className="w-full lg:w-[13rem] xl:w-[13rem] bg-primary  p-3 rounded-[8px]"
             href="/"

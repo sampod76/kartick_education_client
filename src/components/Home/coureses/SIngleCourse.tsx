@@ -28,7 +28,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className="max-w-sm  mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-1 hover:scale-110 duration-300"
+      className=" w-full mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-1 hover:scale-110 duration-300"
     >
       <div className="overflow-hidden">
         <div className="relative">
@@ -42,7 +42,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               // onLoadingComplete={(img) => console.log(img.naturalWidth)}
               alt="Sunset in the mountains"
               // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
-              
+
               // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
             />
           </div>
