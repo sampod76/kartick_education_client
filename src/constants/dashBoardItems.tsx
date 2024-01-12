@@ -481,6 +481,18 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
       icon: <AccountBookFilled />,
       key: `/${role}/review`,
     },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/order`}
+        >
+          Order Historuy
+        </Link>
+      ),
+      icon: <AccountBookFilled />,
+      key: `/${role}/order`,
+    },
 
     {
       label: (
