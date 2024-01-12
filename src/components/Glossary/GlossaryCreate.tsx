@@ -47,7 +47,7 @@ export default function GlossaryCreate({ setOpen, moduleId }: any) {
         <SelectModuleField />
       </div> */}
 
-      <TextEditor />
+      <TextEditor isReset={isReset} />
       <div className="w-fit mx-auto">
         {isLoading ? (
           <ButtonLoading />

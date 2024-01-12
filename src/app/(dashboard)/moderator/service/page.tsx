@@ -130,7 +130,7 @@ const ServiceList = () => {
         return (
           <>
             <Link href={`/super_admin/service/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button onClick={() => console.log(data)}   type="default">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -140,12 +140,12 @@ const ServiceList = () => {
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                  type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button onClick={() => handleDelete(data)}   type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -205,12 +205,12 @@ const ServiceList = () => {
         />
         <div>
           <Link href="/super_admin/service/create">
-            <Button type="primary">Create service</Button>
+            <Button   type="default">Create service</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+                type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

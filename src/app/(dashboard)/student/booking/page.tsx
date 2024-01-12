@@ -186,7 +186,7 @@ const GeneralUserBooking = () => {
       title: "Payment",
       dataIndex: "payment",
       render: function (data: any) {
-        return <>{data ? <h1>Done</h1> : <h1>Not payment</h1>}</>;
+        return <>{data ? <h1 className="text-base font-normal">Done</h1> : <h1 className="text-base font-normal">Not payment</h1>}</>;
       },
     },
     {
@@ -275,12 +275,12 @@ const GeneralUserBooking = () => {
         />
         <div>
           {/* <Link href={`/${ROLE}/service/create`}>
-            <Button type="primary">Create service</Button>
+            <Button   type="default">Create service</Button>
           </Link> */}
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+                type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

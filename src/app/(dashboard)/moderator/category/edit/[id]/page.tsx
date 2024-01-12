@@ -284,7 +284,7 @@ const EditServicePage = ({ params }: any) => {
               alignItems: "center",
             }}
           >
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit"   type="default">
               Update
             </Button>
           </div>

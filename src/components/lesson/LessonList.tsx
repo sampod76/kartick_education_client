@@ -62,7 +62,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
         label: (
           <div className="text-[18px]  md:px-1 font-semibold   py-2 shadow-1 ">
             <button className="flex justify-between w-full">
-              <h2>
+              <h2 className="text-base font-normal">
                 <span>Lesson {index + 1}: </span> {lesson?.title}
               </h2>
               <EyeOutlined style={{ fontSize: "18px" }} />
@@ -73,7 +73,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
                 href={`/lesson/quiz/${lessonQuizData?._id}`}
                 className="text-[14px] flex justify-between w-full mt-3"
               >
-                <h2>
+                <h2 className="text-base font-normal">
                   Quiz {index + 1} : <span>{lessonQuizData?.title} </span>
                 </h2>
                 <LockOutlined style={{ fontSize: "18px" }} />

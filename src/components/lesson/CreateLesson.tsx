@@ -300,7 +300,7 @@ const CreateLesson = () => {
                   <p className="text-center my-3 font-bold text-xl ">
                     Description
                   </p>
-                  <TextEditor />
+                  <TextEditor  isReset={isReset}/>
                 </Col>
               </Row>
             </div>

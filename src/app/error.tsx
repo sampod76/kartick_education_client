@@ -12,7 +12,7 @@ const ErrorPage = () => {
         color: "red",
       }}
     >
-      <h1>Something Went Wrong!</h1>
+      <h1 className="text-base font-normal">Something Went Wrong!</h1>
     </Row>
   );
 };

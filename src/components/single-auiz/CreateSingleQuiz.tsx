@@ -80,6 +80,7 @@ const CreateSingleQuiz = () => {
   useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
+    console.log("🚀 ~ onSubmit ~ values:", values)
     if (!quiz._id) {
       Error_model_hook("Please ensure your are selected quiz");
       return;
@@ -103,7 +104,6 @@ const CreateSingleQuiz = () => {
     }
     const singleQuizDat: {} = {
       ...values,
-
       category: category._id,
       course: course._id,
       milestone: milestone._id,
@@ -113,7 +113,8 @@ const CreateSingleQuiz = () => {
       type: quizType,
     };
 
-    // console.log(singleQuizDat);
+    console.log(singleQuizDat);
+    return
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
@@ -276,7 +277,7 @@ const CreateSingleQuiz = () => {
                     }
                   }
                 >
-                  <FormTimePicker name="time_duration" label="Time Duration" />
+                  <FormTimePicker  name="time_duration" label="Time Duration" />
                 </Col>
                 <Col
                   className="gutter-row"
@@ -399,6 +400,7 @@ const CreateSingleQuiz = () => {
                     Description
                   </p>
                   <TextEditor
+                  isReset={isReset}
                   // textEditorValue={textEditorValue}
                   // setTextEditorValue={setTextEditorValue}
                   />

@@ -60,7 +60,7 @@ const CreateTrainer = ({open,setOpen}:any) => {
         padding: "1rem",
       }}
     >
-      <h1>Create Trainer</h1>
+      <h1 className="text-base font-normal">Create Trainer</h1>
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
         <Form

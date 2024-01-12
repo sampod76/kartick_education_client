@@ -133,7 +133,7 @@ export default function QuizeSinglePage({
             ))}
             <div className="mt-4">
               <Button
-                type="primary"
+                  type="default"
                 style={{ padding: "8px", height: "3rem", fontWeight: "600" }}
                 onClick={handleFinishQuiz}
               >

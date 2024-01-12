@@ -244,6 +244,7 @@ export default function CreateModule() {
                          Description
                        </p>
                        <TextEditor
+                       isReset={isReset}
                        // textEditorValue={textEditorValue}
                        // setTextEditorValue={setTextEditorValue}
                        />

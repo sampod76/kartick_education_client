@@ -9,7 +9,7 @@ const EventsByCategory = () => {
         padding: "60px 0",
       }}
     >
-      <h1>Events by Category</h1>
+      <h1 className="text-base font-normal">Events by Category</h1>
     </div>
   );
 };

@@ -104,7 +104,7 @@ const UpComingService = ({
         </h1>
         <div className="flex items-center gap-2">
           <div>
-            <h1>Search</h1>
+            <h1 className="text-base font-normal">Search</h1>
             <Search
               placeholder="input search text"
               onSearch={onSearch}
@@ -112,7 +112,7 @@ const UpComingService = ({
             />
           </div>
           <div>
-            <h1>Category</h1>
+            <h1 className="text-base font-normal">Category</h1>
             <Select
               placeholder={"Select category"}
               style={{ width: 120 }}
@@ -172,7 +172,7 @@ const UpComingService = ({
                       style={{ width: "100%" }}
                       //  className=" text-white p-1 mx-1 rounded-xl"
                     >
-                      <Button style={{ width: "100%" }} type="primary">
+                      <Button style={{ width: "100%" }}   type="default">
                         View
                       </Button>
                     </Link>
@@ -183,7 +183,7 @@ const UpComingService = ({
                         setBookMarkData(single);
                         showModal();
                       }}
-                      type="primary"
+                        type="default"
                     >
                       Booking +
                     </Button>
@@ -264,7 +264,7 @@ const UpComingService = ({
               placeholder="Please provide your phone number"
             />
             <div className="my-2 flex justify-center items-center">
-              <Button htmlType="submit" type="primary">
+              <Button htmlType="submit"   type="default">
                 Submit
               </Button>
             </div>

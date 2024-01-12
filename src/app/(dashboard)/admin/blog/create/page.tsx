@@ -120,7 +120,7 @@ const CreateBlog = () => {
             </Row>
           </div>
 
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit"   type="default">
             Create
           </Button>
         </Form>

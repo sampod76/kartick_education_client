@@ -132,7 +132,7 @@ const EditFaq = ({params}:{params:any}) => {
             </Row>
           </div>
 
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit"   type="default">
             Update
           </Button>
         </Form>

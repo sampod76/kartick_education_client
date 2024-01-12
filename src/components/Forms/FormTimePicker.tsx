@@ -20,16 +20,18 @@ export default function FormTimePicker({ name, label }: FormTimePickerProps) {
         control={control}
         render={({ field }) => (
           <div className="flex flex-col items-start capitalize">
-            <h1>{label ? <LabelUi>{label}</LabelUi> : null}</h1>
+            <h1 className="text-base font-normal">{label ? <LabelUi>{label}</LabelUi> : null}</h1>
             <TimePicker
               size="large"
-            
+          
               defaultValue={dayjs(field.value ? field.value : "00:00", "HH:mm")}
               format={"HH:mm"}
               onChange={(el, value) => {
+               
                 setValue(name, value);
               }}
               style={{ width: "100%" }}
+             
             />
           </div>
         )}
