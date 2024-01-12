@@ -2,8 +2,10 @@ import React from "react";
 
 import TopProfileSection, { IProfileDetailsTop } from "./TopProfileSection";
 import ProfileMainSection from "./ProfileTabSection";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const ProfileInstructorPage = ({ userData }: { userData: any }) => {
+  const userInfo = getUserInfo() as IDecodedInfo;
   const img = userData?.img || userData[userData.role]["img"];
   // console.log(img);
   const gender = userData?.gender || userData[userData.role]["gender"];
@@ -27,8 +29,8 @@ const ProfileInstructorPage = ({ userData }: { userData: any }) => {
     twitter: "",
     linkedin: "",
     instagram: "",
-    edit_link: `/admin/manage-users/all-users/edit/${userData?._id}`,
-    detail_link: `/admin/manage-users/all-users/details/${userData?._id}`,
+    edit_link: `/${userInfo?.role}/manage-users/all-users/edit/${userData?._id}`,
+    detail_link: `/${userInfo?.role}/manage-users/all-users/details/${userData?._id}`,
   };
 
   return (

@@ -30,12 +30,13 @@ import ModalComponent from "@/components/Modal/ModalComponents";
 import GlossaryCreate from "@/components/Glossary/GlossaryCreate";
 import ResourceCreate from "@/components/Resource/Resource";
 import React from 'react'
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 export default function ModuleDashList() {
     const query: Record<string, any> = {};
 
     // const SUPER_ADMIN=USER_ROLE.ADMIN
-  
+    const userInfo =getUserInfo() as IDecodedInfo
     const [deleteModule] = useDeleteModuleMutation();
   
     const [page, setPage] = useState<number>(1);
@@ -164,12 +165,12 @@ export default function ModuleDashList() {
                 overlay={
                   <Menu>
                     <Menu.Item key="view">
-                      <Link href={`/admin/module/details/${record._id}`}>
+                      <Link href={`/${userInfo?.role}/module/details/${record._id}`}>
                         View
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="edit">
-                      <Link href={`/admin/module/edit/${record._id}`}>Edit</Link>
+                      <Link href={`/${userInfo?.role}/module/edit/${record._id}`}>Edit</Link>
                     </Menu.Item>
   
                     <Menu.Item
@@ -244,12 +245,12 @@ export default function ModuleDashList() {
         <UMBreadCrumb
           items={[
             {
-              label: "admin",
-              link: "/admin",
+              label: `${userInfo?.role}`,
+              link: `/${userInfo?.role}`,
             },
             {
-              label: "Module",
-              link: "/admin/module",
+              label: `Module`,
+              link: `/${userInfo?.role}/module`,
             },
           ]}
         />
@@ -270,7 +271,7 @@ export default function ModuleDashList() {
             />
           </div>
           <div>
-            <Link href={`/admin/module/create`}>
+            <Link href={`/${userInfo?.role}/module/create`}>
               <Button type="default">Create Module</Button>
             </Link>
             {(!!sortBy || !!sortOrder || !!searchTerm) && (

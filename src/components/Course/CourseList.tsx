@@ -31,12 +31,13 @@ import dynamic from "next/dynamic";
 import ModalComponent from "@/components/Modal/ModalComponents";
 import Test from "@/components/Utlis/Test";
 import CreateCourse from "@/components/Course/CreateCourse";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
-
+  const userInfo = getUserInfo() as IDecodedInfo;
   const [deleteCourse] = useDeleteCourseMutation();
 
   const [page, setPage] = useState<number>(1);
@@ -188,12 +189,16 @@ const CourseList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="details">
-                    <Link href={`/admin/course/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/course/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/admin/course/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/${userInfo?.role}/course/edit/${record._id}`}>
+                      Edit
+                    </Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -207,7 +212,7 @@ const CourseList = () => {
 
                   <Menu.Item key="add_milestone">
                     <Link
-                      href={`/admin/course/create/milestone/${record?._id}?courseName=${record?.title}`}
+                      href={`/${userInfo?.role}/course/create/milestone/${record?._id}?courseName=${record?.title}`}
                     >
                       Add Milestone
                     </Link>

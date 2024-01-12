@@ -29,10 +29,12 @@ import {
 } from "@/redux/api/bookingApi";
 import { USER_ROLE } from "@/constants/role";
 import { ENUM_BOOKING_STATUS } from "../../../../constants/globalEnums";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const BookignList = () => {
   //
-  const ROLE = USER_ROLE.SUPER_ADMIN;
+  // const ROLE = USER_ROLE.SUPER_ADMIN;
+  const userInfo = getUserInfo() as IDecodedInfo;
   //
   const query: Record<string, any> = {};
   const [deleteService] = useDeleteServiceMutation();
@@ -185,7 +187,9 @@ const BookignList = () => {
                     // Handle view logic here
                   }}
                 >
-                  <Link href={`/${ROLE}/booking/details/${_id}`}>View</Link>
+                  <Link href={`/${userInfo?.role}/booking/details/${_id}`}>
+                    View
+                  </Link>
                 </Menu.Item>
                 <Menu.Item
                   key="edit"
@@ -193,7 +197,9 @@ const BookignList = () => {
                     // Handle edit logic here
                   }}
                 >
-                  <Link href={`/${ROLE}/booking/edit/${_id}`}>Edit</Link>
+                  <Link href={`/${userInfo?.role}/booking/edit/${_id}`}>
+                    Edit
+                  </Link>
                 </Menu.Item>
 
                 <Menu.Item
@@ -236,8 +242,8 @@ const BookignList = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${ROLE}",
-            link: "/${ROLE}",
+            label: "${userInfo?.role}",
+            link: "/${userInfo?.role}",
           },
         ]}
       /> */}
@@ -251,7 +257,7 @@ const BookignList = () => {
           }}
         />
         <div>
-          {/* <Link href={`/${ROLE}/service/create`}>
+          {/* <Link href={`/${userInfo?.role}/service/create`}>
             <Button type="primary">Create service</Button>
           </Link> */}
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

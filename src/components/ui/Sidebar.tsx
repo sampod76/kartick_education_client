@@ -5,7 +5,7 @@ import { Layout, Menu } from "antd";
 
 // import { sidebarItems } from "@/constants/dashBoardItems";
 import { USER_ROLE } from "@/constants/role";
-import { getUserInfo } from "@/services/auth.service";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const { Sider } = Layout;
 
@@ -13,7 +13,7 @@ const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   // const role = USER_ROLE.ADMIN;
-  const { role } = getUserInfo() as any;
+  const userInfo =getUserInfo() as IDecodedInfo
   // console.log(role);
 
   // Function to handle sidebar collapsing based on screen width
@@ -67,7 +67,7 @@ const SideBar = () => {
         theme="dark"
         defaultSelectedKeys={["1"]}
         mode="inline"
-        // items={sidebarItems(role)}
+        // items={sidebarItems(userInfo?.role)}
       />
     </Sider>
   );

@@ -30,12 +30,18 @@ import {
 } from "@/redux/api/adminApi/studentApi";
 import ModalComponent from "@/components/Modal/ModalComponents";
 import CreateTrainer from "@/components/registionfrom/trainer";
-import { useDeleteTrainerMutation, useGetAllTrainersQuery } from "@/redux/api/adminApi/trainer";
+import {
+  useDeleteTrainerMutation,
+  useGetAllTrainersQuery,
+} from "@/redux/api/adminApi/trainer";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const TrainerListPage = () => {
+  const userInfo = getUserInfo() as IDecodedInfo;
 
   const query: Record<string, any> = {};
-  const [deleteTrainer,{isLoading:trainerDeleteLoading}] = useDeleteTrainerMutation();
+  const [deleteTrainer, { isLoading: trainerDeleteLoading }] =
+    useDeleteTrainerMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -65,8 +71,10 @@ const TrainerListPage = () => {
 
   //@ts-ignore
   const TrainerData = data?.data;
-  console.log("🚀 ~ file: page.tsx:68 ~ TrainerListPage ~ TrainerData:", TrainerData)
-
+  console.log(
+    "🚀 ~ file: page.tsx:68 ~ TrainerListPage ~ TrainerData:",
+    TrainerData
+  );
 
   //@ts-ignore
   const meta = data?.meta;
@@ -115,12 +123,16 @@ const TrainerListPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/manage-users/trainers/details/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/trainers/details/${data}`}
+            >
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/manage-users/trainers/edit/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/trainers/edit/${data}`}
+            >
               <Button
                 style={{
                   margin: "0px 5px",
@@ -203,9 +215,9 @@ const TrainerListPage = () => {
           }}
         />
         <div>
-         <ModalComponent buttonText="Create trainer">
-          <CreateTrainer/>
-         </ModalComponent>
+          <ModalComponent buttonText="Create trainer">
+            <CreateTrainer />
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}

@@ -31,10 +31,11 @@ import { USER_ROLE } from "@/constants/role";
 import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
 import { ENUM_STATUS } from "@/constants/globalEnums";
+import { getUserInfo } from "@/services/auth.service";
 
 const BlogList = () => {
-  // const SUPER_ADMIN = USER_ROLE.ADMIN;
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  // const userInfo?.role = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as any
   const query: Record<string, any> = {};
   const [deleteBlog] = useDeleteBlogMutation();
 
@@ -122,12 +123,12 @@ const BlogList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/blog/details/${data}`}>
+            <Link href={`/${userInfo?.role}/blog/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/blog/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/blog/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -183,8 +184,8 @@ const BlogList = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${SUPER_ADMIN}",
-            link: "/${SUPER_ADMIN}",
+            label: "${userInfo?.role}",
+            link: "/${userInfo?.role}",
           },
         ]}
       /> */}
@@ -198,7 +199,7 @@ const BlogList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/blog/create`}>
+          <Link href={`/${userInfo?.role}/blog/create`}>
             <Button type="primary">Create blog</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

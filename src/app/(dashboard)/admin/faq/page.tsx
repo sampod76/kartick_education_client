@@ -29,9 +29,10 @@ import {
 
 import { USER_ROLE } from "@/constants/role";
 import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
+import { getUserInfo } from "@/services/auth.service";
 
 const FaqList = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const userInfo =getUserInfo() as any
 
   const query: Record<string, any> = {};
   const [deleteFaq] = useDeleteFaqMutation();
@@ -124,12 +125,12 @@ const FaqList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/faq/details/${data}`}>
+            <Link href={`/${userInfo?.role}/faq/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/faq/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/faq/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -184,8 +185,8 @@ const FaqList = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "super_admin",
-            link: "/super_admin",
+            label: "userInfo?.role",
+            link: "/userInfo?.role",
           },
         ]}
       /> */}
@@ -199,7 +200,7 @@ const FaqList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/faq/create`}>
+          <Link href={`/${userInfo?.role}/faq/create`}>
             <Button type="primary">Create Faq</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

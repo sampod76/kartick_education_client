@@ -30,11 +30,13 @@ import {
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterCourse from "@/components/dashboard/Filter/FilterCourse";
 import { AllImage } from "@/assets/AllImge";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const MileStoneList = () => {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
+  const userInfo =getUserInfo() as IDecodedInfo
 
   const [deleteMilestone] = useDeleteMilestoneMutation();
 
@@ -159,18 +161,18 @@ const MileStoneList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/admin/milestone/details/${record._id}`}>
+                    <Link href={`/${userInfo?.role}/milestone/details/${record._id}`}>
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/admin/milestone/edit/${record._id}`}>
+                    <Link href={`/${userInfo?.role}/milestone/edit/${record._id}`}>
                       Edit
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="add_milestone">
                     <Link
-                      href={`/admin/milestone/create/module/${record?._id}?milestoneName=${record?.title}`}
+                      href={`/${userInfo?.role}/milestone/create/module/${record?._id}?milestoneName=${record?.title}`}
                     >
                       Add Module
                     </Link>
@@ -237,12 +239,12 @@ const MileStoneList = () => {
       <UMBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: `${userInfo?.role}`,
+            link: `/${userInfo?.role}`,
           },
           {
-            label: "Milestone",
-            link: "/admin/milestones",
+            label: `Milestone`,
+            link: `/${userInfo?.role}/milestones`,
           },
         ]}
       />
@@ -263,7 +265,7 @@ const MileStoneList = () => {
           />
         </div>
         <div>
-          <Link href={`/admin/milestone/create`}>
+          <Link href={`/${userInfo?.role}/milestone/create`}>
             <Button type="default">Create Milestone</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -291,7 +293,7 @@ const MileStoneList = () => {
       />
 
       <UMModal
-        title="Remove admin"
+        title="Remove Milestone"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteAdminHandler(adminId)}

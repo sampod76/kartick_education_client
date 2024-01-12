@@ -21,7 +21,7 @@ import {
 } from "@/redux/api/adminApi/userManageApi";
 
 
-import { getUserInfo, storeUserInfo } from "@/services/auth.service";
+import { IDecodedInfo, getUserInfo, storeUserInfo } from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -36,6 +36,7 @@ import { useUpdateSuperAdminMutation } from "@/redux/api/superAdminApi";
 const UpdateProfile = () => {
   const [user, setUserData] = useState<any>({});
   const [userLoading, setUserLoading] = useState<boolean>(true);
+  const userInfo =getUserInfo() as IDecodedInfo
   useEffect(() => {
     setUserData(getUserInfo() as any);
     setUserLoading(false);

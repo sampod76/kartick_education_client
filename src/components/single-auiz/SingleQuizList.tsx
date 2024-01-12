@@ -1,21 +1,14 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+
 import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
-
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
-
 import Image from "next/image";
 import {
   Error_model_hook,
@@ -23,25 +16,24 @@ import {
   confirm_modal,
 } from "@/utils/modalHook";
 
-import {
-  useDeleteMilestoneMutation,
-  useGetAllMilestoneQuery,
-} from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
-import { useDeleteSingleQuizMutation, useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
+import {
+  useDeleteSingleQuizMutation,
+  useGetAllSingleQuizQuery,
+} from "@/redux/api/adminApi/singleQuiz";
 import { AllImage } from "@/assets/AllImge";
-import { USER_ROLE } from "@/constants/role";
+
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const SingleQuizList = () => {
-
   const query: Record<string, any> = {};
 
-  const ADMIN=USER_ROLE.ADMIN
+  // const ADMIN=USER_ROLE.ADMIN
+  const userInfo = getUserInfo() as IDecodedInfo;
 
-
-  const [deleteSingleQuiz,{isLoading:deleteSingleLoading}] = useDeleteSingleQuizMutation();
-
+  const [deleteSingleQuiz, { isLoading: deleteSingleLoading }] =
+    useDeleteSingleQuizMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -67,8 +59,7 @@ const SingleQuizList = () => {
   }
   const { data = [], isLoading } = useGetAllSingleQuizQuery({ ...query });
 
-  console.log("🚀 ~ file: page.tsx:65 ~ SingleQuizStoneList ~ data:", data)
-
+  console.log("🚀 ~ file: page.tsx:65 ~ SingleQuizStoneList ~ data:", data);
 
   //@ts-ignore
   const singleQuizData = data?.data;
@@ -81,8 +72,7 @@ const SingleQuizList = () => {
   const meta = data?.meta;
 
   const handleDelete = (id: string) => {
-  console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id)
-
+    console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id);
 
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
@@ -108,14 +98,15 @@ const SingleQuizList = () => {
 
   const columns = [
     {
-
       title: "Image",
       render: function (data: any) {
         return (
           <>
             {
               <Image
-              src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
+                src={
+                  data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
+                }
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
@@ -128,13 +119,11 @@ const SingleQuizList = () => {
       width: 100,
     },
     {
-
       title: "Name",
       dataIndex: "title",
       ellipsis: true,
     },
     {
-
       title: "Description",
       dataIndex: "short_description",
 
@@ -147,7 +136,6 @@ const SingleQuizList = () => {
       ellipsis: true,
     },
     {
-
       title: "quiz",
       // dataIndex: "showing_number",
 
@@ -155,7 +143,6 @@ const SingleQuizList = () => {
       render: function (data: any) {
         return <>{data?.quiz?.title}</>;
       },
-
     },
     // {
     //   title: "course",
@@ -186,16 +173,18 @@ const SingleQuizList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-
-                    <Link href={`/${ADMIN}/single-quiz/details/${record._id}`}>
-
+                    <Link
+                      href={`/${userInfo?.role}/single-quiz/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-
-                    <Link href={`/${ADMIN}/single-quiz/edit/${record._id}`}>Edit</Link>
-
+                    <Link
+                      href={`/${userInfo?.role}/single-quiz/edit/${record._id}`}
+                    >
+                      Edit
+                    </Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -235,7 +224,7 @@ const SingleQuizList = () => {
   };
 
   const deleteSIngleQuizHandler = async (id: string) => {
-    console.log("🚀 ~ file: page.tsx:194 ~ deleteSIngleQuizHandler ~ id:", id)
+    console.log("🚀 ~ file: page.tsx:194 ~ deleteSIngleQuizHandler ~ id:", id);
 
     // console.log(id);
     try {
@@ -282,7 +271,7 @@ const SingleQuizList = () => {
           }}
         />
         <div>
-          <Link href={`/admin/single-quiz/create`}>
+          <Link href={`/${userInfo?.role}/single-quiz/create`}>
             <Button type="default">Create Single Quiz</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -321,6 +310,4 @@ const SingleQuizList = () => {
   );
 };
 
-
 export default SingleQuizList;
-

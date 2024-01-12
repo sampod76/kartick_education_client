@@ -28,9 +28,11 @@ import {
 } from "@/utils/modalHook";
 import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const ServiceList = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  // const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as IDecodedInfo;
   const query: Record<string, any> = {};
   const [deleteService] = useDeleteServiceMutation();
 
@@ -132,12 +134,12 @@ const ServiceList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/service/details/${data}`}>
+            <Link href={`/${userInfo?.role}/service/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/service/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/service/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -196,8 +198,8 @@ const ServiceList = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${SUPER_ADMIN}",
-            link: "/${SUPER_ADMIN}",
+            label: "${userInfo?.role}",
+            link: "/${userInfo?.role}",
           },
         ]}
       /> */}
@@ -211,7 +213,7 @@ const ServiceList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/service/create`}>
+          <Link href={`/${userInfo?.role}/service/create`}>
             <Button type="primary">Create service</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

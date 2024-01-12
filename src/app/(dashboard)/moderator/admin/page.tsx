@@ -28,10 +28,12 @@ import {
 import Image from "next/image";
 import { NO_IMAGE } from "@/constants/filePatch";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const AdminPage = () => {
   const query: Record<string, any> = {};
   const [deleteAdmin] = useDeleteAdminMutation();
+  const userInfo = getUserInfo() as IDecodedInfo;
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -121,12 +123,12 @@ const AdminPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/super_admin/admin/details/${data}`}>
+            <Link href={`/${userInfo?.role}/admin/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/super_admin/admin/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/admin/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",

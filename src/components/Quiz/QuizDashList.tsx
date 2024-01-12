@@ -31,11 +31,13 @@ import {
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterLesson from "@/components/dashboard/Filter/FilterLesson";
 import { AllImage } from "@/assets/AllImge";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const QuizDashList = () => {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
+  const userInfo = getUserInfo() as IDecodedInfo;
 
   const [deleteQuiz] = useDeleteQuizMutation();
 
@@ -106,7 +108,9 @@ const QuizDashList = () => {
           <>
             {
               <Image
-              src={data?.imgs?.length ?  data?.imgs[0] : AllImage.notFoundImage}
+                src={
+                  data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
+                }
                 style={{ height: "50px", width: "80px" }}
                 width={100}
                 height={100}
@@ -131,7 +135,7 @@ const QuizDashList = () => {
     {
       title: "passingGrade",
       dataIndex: "passingGrade",
-      width:100
+      width: 100,
     },
     {
       title: "module",
@@ -157,10 +161,16 @@ const QuizDashList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/admin/quiz/details/${record._id}`}>View</Link>
+                    <Link
+                      href={`/${userInfo?.role}/quiz/details/${record._id}`}
+                    >
+                      View
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/admin/quiz/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/${userInfo?.role}/quiz/edit/${record._id}`}>
+                      Edit
+                    </Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -225,12 +235,12 @@ const QuizDashList = () => {
       <UMBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: `${userInfo?.role}`,
+            link: `/${userInfo?.role}`,
           },
           {
-            label: "Quiz",
-            link: "/admin/quiz",
+            label: `Quiz`,
+            link: `/${userInfo?.role}/quiz`,
           },
         ]}
       />
@@ -251,7 +261,7 @@ const QuizDashList = () => {
           />
         </div>
         <div>
-          <Link href={`/admin/quiz/create`}>
+          <Link href={`/${userInfo?.role}/quiz/create`}>
             <Button>Create Quiz</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

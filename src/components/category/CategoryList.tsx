@@ -3,7 +3,7 @@ import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 import Link from "next/link";
-import {ReloadOutlined} from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
@@ -24,14 +24,14 @@ import {
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
-import { getUserInfo } from "@/services/auth.service";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const CategoryList = () => {
   const query: Record<string, any> = {};
 
   // const ADMIN = USER_ROLE.ADMIN;
-  const { role } = getUserInfo() as any;
-  console.log("🚀 ~ file: page.tsx:41 ~ CategoryList ~ role:", role);
+  const userInfo = getUserInfo() as IDecodedInfo;
+  // console.log("🚀 ~ file: page.tsx:41 ~ CategoryList ~ role:", role);
 
   const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -141,18 +141,22 @@ const CategoryList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${role}/category/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/category/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${role}/category/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/category/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="add_milestone">
                     <Link
-                      href={`/${role}/category/create/course/${record?._id}?categoryName=${record?.title}`}
+                      href={`/${userInfo?.role}/category/create/course/${record?._id}?categoryName=${record?.title}`}
                     >
                       Add Course
                     </Link>
@@ -210,12 +214,12 @@ const CategoryList = () => {
       <UMBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: `${userInfo?.role}`,
+            link: `/${userInfo?.role}`,
           },
           {
-            label: "Category",
-            link: "/admin/category",
+            label: `Category`,
+            link: `/${userInfo?.role}/category`,
           },
         ]}
       />
@@ -230,7 +234,7 @@ const CategoryList = () => {
           }}
         />
         <div>
-          <Link href={`/admin/category/create`}>
+          <Link href={`/${userInfo?.role}/category/create`}>
             <Button type="default">Create Category</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
