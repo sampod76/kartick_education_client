@@ -23,6 +23,7 @@ import {
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
+  console.log("🚀 ~ dashboardItems ~ role:", role)
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: "Profile",

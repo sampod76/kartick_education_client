@@ -1,14 +1,31 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Dropdown, Input, Menu, Space, message } from "antd";
+import {
+  Button,
+  Drawer,
+  DrawerProps,
+  Dropdown,
+  Input,
+  Menu,
+  RadioChangeEvent,
+  Space,
+  message,
+} from "antd";
 import Link from "next/link";
-import { ReloadOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ReloadOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
+
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
+
 import Image from "next/image";
 import {
   Error_model_hook,
@@ -16,6 +33,10 @@ import {
   confirm_modal,
 } from "@/utils/modalHook";
 
+import {
+  useDeleteMilestoneMutation,
+  useGetAllMilestoneQuery,
+} from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
 import {
@@ -24,17 +45,39 @@ import {
 } from "@/redux/api/adminApi/singleQuiz";
 import { AllImage } from "@/assets/AllImge";
 import { USER_ROLE } from "@/constants/role";
-
+import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
+import { ENUM_STATUS } from "@/constants/globalEnums";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 const SingleQuizList = () => {
+  const userInfo = getUserInfo() as IDecodedInfo;
+  //
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
+  //
+  //----------------------------------------------------------------
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
+  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
+  const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
+  const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
+  const [quiz, setquiz] = useState<{ _id?: string; title?: string }>({});
 
-  const query: Record<string, any> = {};
-
-  const ADMIN=USER_ROLE.ADMIN
-
-
-  const [deleteSingleQuiz,{isLoading:deleteSingleLoading}] = useDeleteSingleQuizMutation();
-
-
+  const queryCategory: Record<string, any> = {};
+  queryCategory["children"] = "course-milestone-module-lessons-quiz";
+  //! for Category options selection
+  const { data: Category, isLoading: categoryLoading } =
+    useGetAllCategoryChildrenQuery({
+      ...queryCategory,
+    });
+  const categoryData: any = Category?.data;
+  //----------------------------------------------------------------
+  const [deleteSingleQuiz, { isLoading: deleteSingleLoading }] =
+    useDeleteSingleQuizMutation();
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -66,9 +109,6 @@ const SingleQuizList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllSingleQuizQuery({ ...query });
-
-  console.log("🚀 ~ file: page.tsx:65 ~ SingleQuizStoneList ~ data:", data)
-
 
   //@ts-ignore
   const singleQuizData = data?.data;
@@ -125,19 +165,7 @@ const SingleQuizList = () => {
       dataIndex: "title",
       ellipsis: true,
     },
-    {
 
-      title: "Description",
-      dataIndex: "short_description",
-
-      ellipsis: true,
-      width: 100,
-    },
-    {
-      title: "single_answer",
-      dataIndex: "single_answer",
-      ellipsis: true,
-    },
     {
       title: "quiz",
       // dataIndex: "showing_number",
@@ -152,7 +180,7 @@ const SingleQuizList = () => {
     //   dataIndex: ["course", "title"],
     //   ellipsis: true,
     // },
-   
+
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -171,16 +199,18 @@ const SingleQuizList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-
-                    <Link href={`/${ADMIN}/single-quiz/details/${record._id}`}>
-
+                    <Link
+                      href={`/${userInfo?.role}/single-quiz/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-
-                    <Link href={`/${ADMIN}/single-quiz/edit/${record._id}`}>Edit</Link>
-
+                    <Link
+                      href={`/${userInfo?.role}/single-quiz/edit/${record._id}`}
+                    >
+                      Edit
+                    </Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -274,7 +304,14 @@ const SingleQuizList = () => {
           }}
         />
         <div>
-          <Link href={`/admin/single-quiz/create`}>
+          <Button
+            type="default"
+            style={{ marginRight: "5px" }}
+            onClick={showDrawer}
+          >
+            Filter
+          </Button>
+          <Link href={`/${userInfo?.role}/single-quiz/create`}>
             <Button type="default">Create Single Quiz</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -310,14 +347,23 @@ const SingleQuizList = () => {
         <p className="my-5">Do you want to remove this single Quize?</p>
       </UMModal>
       <Drawer
-        title={<div className="flex justify-between items-center "><p>Filter</p> <button onClick={onClose} className="text-lg text-red-500 rounded hover:text-white px-5  hover:bg-red-600">X</button></div>}
+        title={
+          <div className="flex justify-between items-center ">
+            <p>Filter</p>{" "}
+            <button
+              onClick={onClose}
+              className="text-lg text-red-500 rounded hover:text-white px-5  hover:bg-red-600"
+            >
+              X
+            </button>
+          </div>
+        }
         placement={placement}
         closable={false}
         onClose={onClose}
         open={openDrawer}
         key={placement}
         size="large"
-        
       >
         <SelectCategoryChildren
           lableText="Select category"

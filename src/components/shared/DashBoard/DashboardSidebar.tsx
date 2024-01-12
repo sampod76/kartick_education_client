@@ -73,8 +73,8 @@ const DashboardSidebar = ({
           overflowY: "auto",
         }}
         mode="inline"
-        // items={dashboardItems(userInfo?.role)}
-        items={dashboardItems(USER_ROLE.SELLER)}
+        items={dashboardItems(userInfo?.role)}
+        // items={dashboardItems(USER_ROLE.SELLER)}
       />
     </Sider>
   );
