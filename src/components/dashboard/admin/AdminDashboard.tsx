@@ -80,7 +80,7 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
-      Cc</div>
+      </div>
     </div>
   )
 }
