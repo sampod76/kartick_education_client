@@ -5,7 +5,7 @@ import React from "react";
 
 export default function ModulePage({ params }: { params: { id: string } }) {
   const milestoneId = params?.id;
-  console.log(milestoneId);
+
   return (
     <div>
       <ModuleList milestoneId={milestoneId}></ModuleList>

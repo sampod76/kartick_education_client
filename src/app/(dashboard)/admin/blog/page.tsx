@@ -14,17 +14,27 @@ import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 
-
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
-import { useDeleteServiceMutation, useGetMultipalServicesQuery } from "@/redux/api/serviceApi";
+import {
+  useDeleteServiceMutation,
+  useGetMultipalServicesQuery,
+} from "@/redux/api/serviceApi";
 import Image from "next/image";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
 import { useDeleteBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
 import { USER_ROLE } from "@/constants/role";
+import dynamic from "next/dynamic";
+import { AllImage } from "@/assets/AllImge";
+import { ENUM_STATUS } from "@/constants/globalEnums";
 
 const BlogList = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN
+  // const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
   const [deleteBlog] = useDeleteBlogMutation();
 
@@ -40,6 +50,7 @@ const BlogList = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["status"] = ENUM_STATUS.ACTIVE;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -53,44 +64,45 @@ const BlogList = () => {
 
   //@ts-ignore
   const blogData = data?.data;
-  console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", blogData)
+
   //@ts-ignore
   const meta = data?.meta;
 
-  const handleDelete=(id:string)=>{
-    confirm_modal(`Are you sure you want to delete`).then(async(res) => {
+  const handleDelete = (id: string) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
           const res = await deleteBlog(id).unwrap();
-          if (res.success ==false) {
+          if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
-            Error_model_hook(res?.message)
-          }else{
-            Success_model("Service Successfully Deleted")
+            Error_model_hook(res?.message);
+          } else {
+            Success_model("Service Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
         }
       }
     });
-  }
+  };
 
   const columns = [
     {
       title: "",
-      render: function (data:any) {
-        return <>{<Image src={data?.image} width={80} height={50} alt="dd"/>}</>;
+      render: function (data: any) {
+        return (
+          <>{<Image src={data?.image} width={80} height={50} alt="dd" />}</>
+        );
       },
-      width:100
+      width: 100,
     },
     {
       title: "Title",
       dataIndex: "title",
       ellipsis: true,
     },
-  
-   
+
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -99,7 +111,7 @@ const BlogList = () => {
       },
       sorter: true,
     },
-    
+
     {
       title: "Status",
       dataIndex: "status",
@@ -135,7 +147,7 @@ const BlogList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    //  //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -151,6 +163,7 @@ const BlogList = () => {
     setSortOrder("");
     setSearchTerm("");
   };
+  
 
   const deleteAdminHandler = async (id: string) => {
     // console.log(id);
@@ -167,7 +180,6 @@ const BlogList = () => {
 
   return (
     <div>
-     
       {/* <UMBreadCrumb
         items={[
           {
@@ -219,10 +231,16 @@ const BlogList = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deleteAdminHandler(adminId)}
       >
-        <p style={{"marginTop":"1.25rem","marginBottom":"1.25rem"}}>Do you want to remove this admin?</p>
+        <p style={{ marginTop: "1.25rem", marginBottom: "1.25rem" }}>
+          Do you want to remove this admin?
+        </p>
       </UMModal>
     </div>
   );
 };
 
-export default BlogList;
+// export default BlogList;
+export default dynamic(() => Promise.resolve(BlogList), {
+   ssr: false,
+ });
+

@@ -26,9 +26,10 @@ const EditFaq = ({params}:{params:any}) => {
   const {data={},isLoading}=useGetSingleBlogQuery(params.id,{
     skip:!Boolean(params.id)
   })
+
+  const [isReset, setIsReset] = useState(false);
   const [updateBlog, { isLoading: blogLoading }] = useUpdateBlogMutation();
   const onSubmit = async (values: any) => {
-    console.log(values);
 
     try {
       const res = await updateBlog({id:params.id,body:values}).unwrap();
@@ -36,6 +37,7 @@ const EditFaq = ({params}:{params:any}) => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
+        setIsReset(true)
       }
       console.log(res);
     } catch (error: any) {
@@ -60,7 +62,7 @@ const EditFaq = ({params}:{params:any}) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form submitHandler={onSubmit} defaultValues={defaultValues} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

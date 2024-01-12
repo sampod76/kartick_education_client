@@ -1,6 +1,7 @@
 import React from "react";
 import FormSelectField from "../FormSelectField";
 import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
+import FormSearchSelectField from "../FormSearchSelectField";
 
 const SelectModuleField = () => {
   const query: Record<string, any> = {};
@@ -9,7 +10,7 @@ const SelectModuleField = () => {
   query["sortBy"] = "title";
   query["sortOrder"] = "asc";
   //! for Module options selection
-  const { data } = useGetAllModuleQuery({ ...query });
+  const { data ,isLoading} = useGetAllModuleQuery({ ...query });
   const moduleData = data?.data;
   // console.log(moduleData)
   const ModuleOptions = moduleData?.map((item: any) => {
@@ -18,15 +19,15 @@ const SelectModuleField = () => {
       value: item?._id,
     };
   });
-  console.log(ModuleOptions);
+  // console.log(ModuleOptions);
   return (
-    <FormSelectField
+    <FormSearchSelectField
       size="large"
       name="module"
       options={ModuleOptions as any}
       defaultValue={{ label: "Select Module", value: "" }}
       label="module"
-      // placeholder="Select"
+      loading={isLoading}
       required={true}
     />
   );

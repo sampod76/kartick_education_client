@@ -23,12 +23,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 const EditBlog = ({params}:{params:any}) => {
+  const [isReset, setIsReset] = useState(false);
   const {data={},isLoading}=useGetSingleBlogQuery(params.id,{
     skip:!Boolean(params.id)
   })
   const [updateBlog, { isLoading: blogLoading }] = useUpdateBlogMutation();
   const onSubmit = async (values: any) => {
-    console.log(values);
+    
 
     try {
       const res = await updateBlog({id:params.id,body:values}).unwrap();
@@ -36,8 +37,9 @@ const EditBlog = ({params}:{params:any}) => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
+        setIsReset(true);
       }
-      console.log(res);
+      
     } catch (error: any) {
       Error_model_hook(error?.message);
       console.log(error);
@@ -60,7 +62,8 @@ const EditBlog = ({params}:{params:any}) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form  isReset={isReset}
+            submitHandler={onSubmit} defaultValues={defaultValues}>
           <div
             style={{
               border: "1px solid #d9d9d9",

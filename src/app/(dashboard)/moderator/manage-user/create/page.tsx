@@ -16,10 +16,13 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
+import { useState } from "react";
 
 const CreateGeneralUserPage = () => {
   const [addGeneralUserWithFormData, { isLoading }] =
     useAddGeneralUserWithFormDataMutation();
+
+    const [isReset, setIsReset] = useState(false);
 
   const onSubmit = async (values: any) => {
     console.log(values);
@@ -29,10 +32,12 @@ const CreateGeneralUserPage = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Customar created successfully");
+        setIsReset(true)
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (isLoading) {
@@ -44,7 +49,7 @@ const CreateGeneralUserPage = () => {
       <h1>Create Customer/normal user</h1>
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
-        <Form submitHandler={onSubmit} >
+        <Form submitHandler={onSubmit}  isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

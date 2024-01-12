@@ -1,96 +1,88 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   FieldTimeOutlined,
   UsergroupDeleteOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Avatar, Card, Rate } from "antd";
+import { Avatar, Card, Rate, TooltipProps } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
+import { AllImage } from "@/assets/AllImge";
+import { CutText } from "@/utils/CutText";
 const { Meta, Grid } = Card;
+// import { AllImage } from "@/assets/AllImge";
 
-const SIngleCourse = ({ course }: { course: any }) => {
+import { Space, Typography } from "antd";
+import { EllipsisMiddle } from "@/utils/CutTextElliples";
+import dayjs from "dayjs";
+import LoaderNextImage from "@/components/ui/Loading/LoaderNextImage";
+import { ICourseData } from "@/types/courseType";
+
+const { Text } = Typography;
+
+const SIngleCourse = ({ course }: { course: ICourseData }) => {
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
+  // console.log(course);
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className="max-w-xs mx-auto  shadow-md "
+      className="max-w-sm  mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-1 hover:scale-110 duration-300"
     >
-      <Card
-        // className="w-96 bg-red-500"
-        bodyStyle={{ borderRadius: "10px, 10px, 0px, 0px" }}
-        cover={
-          <Image
-            className="h-44 w-full object-cover"
-            height={300}
-            width={300}
-            // layout="responsive"
-            alt="example"
-            src={course?.img}
-          />
-        }
-        hoverable
-        headStyle={{
-          // color:"red"
-          position: "relative",
-        }}
-        actions={[
-          <button key="demo_video">
-            <VideoCameraOutlined />{" "}
-            <span>{course?.demo_video?.length} Video</span>
-          </button>,
-          <button key="time">
-            <FieldTimeOutlined /> <span>{course?.tags?.length} Jam</span>
-          </button>,
-          <button key="users">
-            <UsergroupDeleteOutlined />
-            <span> 34 students</span>
-          </button>,
-        ]}
-      >
-        {/* <Grid
-          // className="bg-primary height-[30px] text-[16px] width-[36px] rounded-2xl text-white font-semibold py-2"
-          style={{
-            position: "absolute",
-            right: 16,
-            bottom: 164,
-            padding: 0,
-            // borderRadius: "10px",
-            paddingTop: "0.5rem",
-            paddingBottom: "0.5rem",
-            borderRadius: "1rem",
-            fontWeight: 600,
-            color: "ffffff",
-          }}
-        >
-          <h2>
-            <Rate className="h-[12px]" count={1} value={1} /> 5.0
-          </h2>
-        </Grid> */}
-        
-
-        <Meta
-          
-          style={{
-            fontSize: "16px",
-            fontWeight: "500",
-            textAlign: "start",
-            // margin: "24px 0",
-            // padding: "0 10px",
-          }}
-          title={<h2 className="text-sm md:text-base" style={{ color: "black" }}>{course?.title}</h2>}
-          description={
-            <p className="text-xs md:text-sm" style={{color:"#282938",}}>
-              {course?.short_description?.length < 80
-                ? parse(course?.short_description)
-                : parse(course?.short_description?.slice(0, 80)) + "....."}
-
-            </p>
-          }
-        />
-      </Card>
+      <div className="overflow-hidden">
+        <div className="relative">
+          <div>
+            <Image
+              height={350}
+              width={350}
+              // loader={LoaderNextImage}
+              className="w-full h-[230px] object-cover rounded-md" // Add the rounded-md class here
+              src={course?.img || AllImage?.notFoundImage}
+              // onLoadingComplete={(img) => console.log(img.naturalWidth)}
+              alt="Sunset in the mountains"
+            />
+          </div>
+          <div className="hover:bg-transparent transition  rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+          <div>
+            <div className="absolute bottom-0 left-0 bg-primary px-4 py-2 text-white text-sm hover:bg-white hover:text-primary transition duration-500 ease-in-out">
+              {course?.price} $
+            </div>
+          </div>
+          <div>
+            <h2 className="text-sm absolute top-0 right-0 bg-slate-200 px-4 text-black rounded-full h-12 w-12 flex flex-col items-center justify-center mt-3 mr-3 hover:bg-primary hover:text-white transition duration-500 ease-in-out capitalized">
+              {/* <span className="font-bold">27</span> */}
+              <small>$ {course?.price_type}</small>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div className="px-6 py-4 h-full">
+        <Typography.Title level={4}>
+          <EllipsisMiddle suffixCount={3} maxLength={90}>
+            {course?.title}
+          </EllipsisMiddle>
+        </Typography.Title>
+        {/* <div  className="font-semibold text-lg inline-block hover:text-primary transition duration-500 ease-in-out text-start">
+    {CutText(course?.title,30)}
+    T</div> */}
+        {/* <p className="text-start text-gray-500 text-sm">
+   {CutText(course?.short_description,120)}
+    </p> */}
+        <p className="text-black">
+          <EllipsisMiddle suffixCount={3} maxLength={230}>
+            {course?.short_description}
+          </EllipsisMiddle>
+        </p>
+      </div>
+      <div className="px-6 py-2 flex flex-row items-center ">
+        <span className="py-1 text-sm font-regular text-gray-900 mr-1 flex flex-row items-center">
+          {/* <span className="ml-1">
+              {course?.duration?.length &&
+                dayjs(course?.duration[1]).format("MMM D, YYYY")}
+            </span> */}
+        </span>
+      </div>
     </Link>
   );
 };

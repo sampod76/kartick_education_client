@@ -4,6 +4,7 @@ import { Tabs, TabsProps } from "antd";
 import React, { useState } from "react";
 import MilestoneList from "../MilestoneList";
 import ReviewsPage from "./ReviewsPage";
+import CourseAbout from "./CourseAbout";
 
 const CourseDetailsTab = ({ courseId }: { courseId: string }) => {
   const [activeTabKey, setActiveTabKey] = useState("1");
@@ -21,7 +22,7 @@ const CourseDetailsTab = ({ courseId }: { courseId: string }) => {
     {
       label: <button>About</button>,
       key: "1",
-      children: <Courses query={{ status: "active" }} />,
+      children: <CourseAbout courseId={courseId} />,
     },
     {
       label: <button>Course Content</button>,

@@ -10,54 +10,91 @@ import type { CollapseProps } from "antd";
 import { Collapse, theme } from "antd";
 import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
 import Link from "next/link";
+import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
+import { CutText } from "@/utils/CutText";
+import VimeoPlayer from "@/utils/vimoPlayer";
+import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
+import { EllipsisMiddle } from "@/utils/CutTextElliples";
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
-  console.log(moduleId, "moduleId from LessonList");
-  const { token } = theme.useToken();
+  // console.log(moduleId, "moduleId from LessonList");
 
-  const { data: lessonData } = useGetAllLessonQuery({
-    status: "active",
+  //! for Course options selection
+  const lesson_query: Record<string, any> = {};
+  lesson_query["limit"] = 999999;
+  lesson_query["sortBy"] = "lesson_number";
+  lesson_query["sortOrder"] = "asc";
+  lesson_query["status"] = "active";
+
+  const { data: lessonData, isLoading } = useGetAllLessonQuery({
     module: moduleId,
+    ...lesson_query,
   });
+
   // console.log(
-  //   "🚀 ~ file: LessonList.tsx:45 ~ LessonList ~ lessonData:",
+  //   "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
   //   lessonData
   // );
 
-  const panelStyle: React.CSSProperties = {
-    marginBottom: 24,
-    background: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    border: "none",
-  };
+  const quiz_query: Record<string, any> = {};
+  //! for Course options selection
+  quiz_query["limit"] = 999999;
 
+  const { data: QuizData } = useGetAllQuizQuery({
+    status: "active",
+    module: moduleId,
+    ...quiz_query,
+  });
+
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
-      console.log("🚀 ~ file: LessonList.tsx:58 ", lesson);
+      const lessonQuizData: any = QuizData?.data?.find(
+        (item: any) => item?.lesson?._id === lesson?._id
+      );
+      // console.log(lesson);
+      //  console.log("🚀 lessonQuizData", lessonQuizData);
       return {
         key: lesson?._id,
         label: (
-          <div className="text-[18px]  px-1 font-semibold   py-2 shadow-1 ">
+          <div className="text-[18px]  md:px-1 font-semibold   py-2 shadow-1 ">
             <button className="flex justify-between w-full">
               <h2>
                 <span>Lesson {index + 1}: </span> {lesson?.title}
               </h2>
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
-            <Link
-              href={`/quiz/${lesson?._id}`}
-              className="text-[14px] flex justify-between w-full mt-3"
-            >
-              <h2>
-                Quiz {index + 1} : <span>smart quiz </span>
-              </h2>
-              <LockOutlined style={{ fontSize: "18px" }} />
-            </Link>
+
+            {lessonQuizData && (
+              <Link
+                href={`/lesson/quiz/${lessonQuizData?._id}`}
+                className="text-[14px] flex justify-between w-full mt-3"
+              >
+                <h2>
+                  Quiz {index + 1} : <span>{lessonQuizData?.title} </span>
+                </h2>
+                <LockOutlined style={{ fontSize: "18px" }} />
+              </Link>
+            )}
           </div>
         ),
         children: (
           <div>
-            <p>{lesson?.details?.slice(0, 220)}</p>
+            <p className="text-center">
+              <div className="flex justify-center items-center my-2">
+                {lesson?.videos?.length &&
+                  lesson?.videos[0]?.platform === ENUM_VIDEO_PLATFORM.VIMEO && (
+                    <VimeoPlayer link={lesson?.videos[0]?.link} />
+                  )}
+              </div>
+              {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+              <EllipsisMiddle suffixCount={3} maxLength={300}>
+                {lesson?.short_description}
+              </EllipsisMiddle>
+            </p>
           </div>
         ),
         // style: panelStyle,
@@ -69,7 +106,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
 
   return (
     <div
-      className="w-full  lg:w-[60vw] mx-auto"
+      className="w-full  lg:w-[60vw] mx-auto "
       style={{
         padding: "10px 5vw",
       }}
@@ -81,14 +118,14 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
           <RightCircleOutlined
             style={{
               fontSize: "24px",
-              padding: "8px",
+              
               fontWeight: 600,
               marginTop: "24px",
             }}
             rotate={isActive ? 90 : 0}
           />
         )}
-        style={{ background: token.colorBgContainer }}
+        // style={{ background: token.colorBgContainer }}
         items={collapseLessonData}
       />
     </div>

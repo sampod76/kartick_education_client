@@ -14,17 +14,24 @@ import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 
-
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
-import { useDeleteServiceMutation, useGetMultipalServicesQuery } from "@/redux/api/serviceApi";
+import {
+  useDeleteServiceMutation,
+  useGetMultipalServicesQuery,
+} from "@/redux/api/serviceApi";
 import Image from "next/image";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
-import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
+
 import { USER_ROLE } from "@/constants/role";
+import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
 
 const FaqList = () => {
-  const SUPER_ADMIN = USER_ROLE.SUPER_ADMIN
+  const SUPER_ADMIN = USER_ROLE.SUPER_ADMIN;
 
   const query: Record<string, any> = {};
   const [deleteFaq] = useDeleteFaqMutation();
@@ -54,36 +61,38 @@ const FaqList = () => {
 
   //@ts-ignore
   const faqData = data?.data;
-  console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", faqData)
+  //  // console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", faqData)
   //@ts-ignore
   const meta = data?.meta;
 
-  const handleDelete=(id:string)=>{
-    confirm_modal(`Are you sure you want to delete`).then(async(res) => {
+  const handleDelete = (id: string) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
           const res = await deleteFaq(id).unwrap();
-          if (res.success ==false) {
+          if (res.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
-            Error_model_hook(res?.message)
-          }else{
-            Success_model("Service Successfully Deleted")
+            Error_model_hook(res?.message);
+          } else {
+            Success_model("Service Successfully Deleted");
           }
         } catch (error: any) {
           message.error(error.message);
         }
       }
     });
-  }
+  };
 
   const columns = [
     {
       title: "",
-      render: function (data:any) {
-        return <>{<Image src={data?.image} width={80} height={50} alt="dd"/>}</>;
+      render: function (data: any) {
+        return (
+          <>{<Image src={data?.image} width={80} height={50} alt="dd" />}</>
+        );
       },
-      width:100
+      width: 100,
     },
     {
       title: "Title",
@@ -95,7 +104,7 @@ const FaqList = () => {
       dataIndex: "content",
       ellipsis: true,
     },
-  
+
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -104,7 +113,7 @@ const FaqList = () => {
       },
       sorter: true,
     },
-    
+
     {
       title: "Status",
       dataIndex: "status",
@@ -140,7 +149,7 @@ const FaqList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -172,7 +181,6 @@ const FaqList = () => {
 
   return (
     <div>
-     
       {/* <UMBreadCrumb
         items={[
           {

@@ -1,9 +1,10 @@
 "use client";
-import { useGetAllFaqQuery } from "@/redux/api/faqApi";
+
 import React from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
+import { useGetAllFaqQuery } from "@/redux/api/faqApi";
 const FaqList = () => {
   const { data = [], isLoading } = useGetAllFaqQuery({});
   const text = `
@@ -17,7 +18,7 @@ const items: CollapseProps['items'] = data?.data?.map((item:any,key:string)=>({
   label: item.title,
   children: <p>{item?.content}</p>,
 }));
-  console.log("🚀 ~ file: Faq.tsx:7 ~ FaqList ~ data:", data);
+   //  // console.log("🚀 ~ file: Faq.tsx:7 ~ FaqList ~ data:", data);
   if (isLoading) {
     return <LoadingForDataFetch />;
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import FormSelectField from "../FormSelectField";
 import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
+import FormSearchSelectField from "../FormSearchSelectField";
 
 const SelectMilestoneField = () => {
   const query: Record<string, any> = {};
@@ -9,7 +10,7 @@ const SelectMilestoneField = () => {
   query["sortBy"] = "title";
   query["sortOrder"] = "asc";
   //! for Milestone options selection
-  const { data } = useGetAllMilestoneQuery({ ...query });
+  const { data,isLoading } = useGetAllMilestoneQuery({ ...query });
   const milestoneData = data?.data;
   // console.log(milestoneData)
   const MilestoneOptions = milestoneData?.map((item: any) => {
@@ -20,13 +21,14 @@ const SelectMilestoneField = () => {
   });
   //   console.log(MilestoneOptions);
   return (
-    <FormSelectField
+    <FormSearchSelectField
       size="large"
       name="milestone"
       options={MilestoneOptions as any}
       defaultValue={{ label: "Select Milestone", value: "" }}
       label="milestone"
       // placeholder="Select"
+      loading={isLoading}
       required={true}
     />
   );

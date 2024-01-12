@@ -10,10 +10,10 @@ import Image from "next/image";
 const { Meta, Grid } = Card;
 
 const SIngleProgramme = ({ programme }: { programme: any }) => {
-  console.log(programme);
+  // console.log(programme);
   // const { title, details, img, demo_video, tags} = programme;
   return (
-    <div className="w-[23rem] mx-auto  shadow-md p-2  text-start">
+    <div className="max-w-sm min-w-full mx-auto h-full  shadow-md p-2  text-start">
       <Image
         src={programme?.img}
         className="h-[15rem] w-full"

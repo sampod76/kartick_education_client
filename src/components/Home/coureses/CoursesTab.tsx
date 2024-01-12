@@ -1,4 +1,6 @@
 "use client";
+import dynamic from "next/dynamic";
+
 import { Tabs, TabsProps, message } from "antd";
 import React, { useState } from "react";
 import Courses from "./Courses";
@@ -10,7 +12,7 @@ import TopBarLoading from "@/components/ui/Loading/TopBarLoading";
 import { Error_model_hook } from "@/utils/modalHook";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 const CoursesTab = () => {
-  const [activeTabKey, setActiveTabKey] = useState("1");
+  const [activeTabKey, setActiveTabKey] = useState("0");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
     // console.log(key);
@@ -22,22 +24,40 @@ const CoursesTab = () => {
 
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
 
+  const cousesData = data?.data || [];
   const activeClass =
-    " rounded-[5px] bg-secondary text-white text-[18px] font-bold p-1";
+    " rounded-[5px] bg-blue-600 text-white text-[18px] font-bold p-1";
   const inactiveClass =
     " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[18px] font-bold p-1";
 
-  const tabsItems2: TabsProps["items"] = data?.data?.map((data, index) => ({
+  const tabsItems2: TabsProps["items"] = cousesData?.map(
+    (singleData: Record<string, any>, index: number | string) => ({
+      label: (
+        <button
+          className={
+            activeTabKey === String(index) ? activeClass : inactiveClass
+          }
+        >
+          <p className="px-1"> {singleData?.title}</p>
+        </button>
+      ),
+      key: String(index),
+      children: (
+        <Courses query={{ status: "active", category: singleData?._id }} />
+      ),
+    })
+  );
+  tabsItems2.unshift({
     label: (
       <button
-        className={activeTabKey === String(index) ? activeClass : inactiveClass}
+        className={activeTabKey === String("011") ? activeClass : inactiveClass}
       >
-       <p className="px-1"> {data?.title}</p>
+        <p className="px-1"> {"All"}</p>
       </button>
     ),
-    key: String(index),
-    children: <Courses query={{ status: "active", category: data?._id }} />,
-  }));
+    key: String("011"),
+    children: <Courses query={{ status: "active" }} />,
+  });
   if (
     error ||
     //@ts-ignore
@@ -49,22 +69,16 @@ const CoursesTab = () => {
         //@ts-ignore
         data?.data?.message
     );
-    console.log(
-      errorType?.message ||
-        //@ts-ignore
-        data?.data?.message
-    );
-  };
+    console.log(error, data?.data);
+  }
 
-
-  
   return (
     <div className="mt-5 bg-slate-100 p-3">
       {isLoading ? (
         <TopBarLoading />
       ) : (
         <Tabs
-          defaultActiveKey="0"
+          defaultActiveKey="011"
           centered
           onChange={handleTabClick}
           items={tabsItems2}
@@ -75,3 +89,6 @@ const CoursesTab = () => {
 };
 
 export default CoursesTab;
+// export default dynamic(() => Promise.resolve(CoursesTab), {
+//    ssr: false,
+//  });

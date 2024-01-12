@@ -2,6 +2,7 @@
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "@/redux/tag-types";
+import { ICourseData } from "@/types/courseType";
 
 const COURSE_URL = "/course";
 
@@ -16,11 +17,12 @@ export const courseApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any[], meta: IMeta) => {
-        console.log(response);
+      transformResponse: (response: ICourseData[], meta: IMeta) => {
+        // console.log(response);
         return {
           data: response,
           meta,
+          seccess:true,
         };
       },
       providesTags: [tagTypes.course],
@@ -40,7 +42,7 @@ export const courseApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
-      invalidatesTags: [tagTypes.course],
+      invalidatesTags: [tagTypes.course, tagTypes.categoryChildren],
     }),
     // update ac department
     updateCourse: build.mutation({

@@ -46,7 +46,7 @@ const BookingDetails = ({ params }: any) => {
       skip: !Boolean(params?.id),
     }
   );
-  console.log(bookingData);
+  
   const ratingFeedBack = bookingData?.ratingFeedback;
 
   const [updateBooking, { isLoading: bookingLoading }] =
@@ -71,7 +71,7 @@ const BookingDetails = ({ params }: any) => {
     perSitPrice: bookingData?.service?.price || 0,
   };
   const onFinish = async (values: any) => {
-    console.log("Received values:", values);
+
     try {
       const res = await addRating({
         ...values,
@@ -85,13 +85,13 @@ const BookingDetails = ({ params }: any) => {
         Error_model_hook(res?.message);
       } else {
         // Success_model("Review Successfully add!");
-        console.log(res);
+        
         //@ts-ignore
         const resBooking = await updateBooking({
           id: params?.id,
           body: { ratingFeedback: res?._id, status: "complete" },
         }).unwrap();
-        console.log(resBooking);
+        
         if (resBooking.success == false) {
           Error_model_hook(resBooking?.message + "");
         } else {
@@ -118,7 +118,7 @@ const BookingDetails = ({ params }: any) => {
               Success_model("Successfully update booking");
             }
           } catch (error) {
-            console.log(error);
+            
           }
         }
       }

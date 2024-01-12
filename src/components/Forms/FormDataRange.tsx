@@ -11,7 +11,8 @@ type FormDataRangeProps = {
   index?: number;
 };
 export default function FormDataRange({ name, label }: FormDataRangeProps) {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, } = useFormContext();
+
   return (
     <>
       {/* {label ? label : null} */}
@@ -26,6 +27,7 @@ export default function FormDataRange({ name, label }: FormDataRangeProps) {
               onChange={(el, value) => {
                 setValue(name, value);
               }}
+    
               style={{ width: "100%" }}
             />
             {/* <TimePicker

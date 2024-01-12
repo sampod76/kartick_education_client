@@ -38,14 +38,14 @@ const FormSearchSelectField = ({
   loading = false,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
-  const [selectedValue, setSelectedValue] = useState("");
+
   // Filter `option.label` match the user type `input`
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-    console.log("search:", value);
+     //  // console.log("search:", value);
   };
 
   return (
@@ -63,7 +63,7 @@ const FormSearchSelectField = ({
           <Select
             // onChange={handleChange ? handleChange : onChange}
             onChange={(val) => {
-              setSelectedValue(val);
+         
               onChange(val);
             }}
             disabled={disabled}
@@ -71,7 +71,7 @@ const FormSearchSelectField = ({
             // defaultActiveFirstOption
             defaultValue={defaultValue ? defaultValue : ""}
             options={options}
-            value={selectedValue || value}
+            value={value}
             style={{ width: "100%" }}
             showSearch
             onSearch={onSearch}

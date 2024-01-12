@@ -17,7 +17,7 @@ import React, { useState } from "react";
 
 const CreateBlog = () => {
  
-
+  const [isReset, setIsReset] = useState(false);
 
   const [addBlog, { isLoading: blogLoading }] = useAddBlogMutation();
   const onSubmit = async (values: any) => {
@@ -29,6 +29,7 @@ const CreateBlog = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
+        setIsReset(true)
       }
       console.log(res);
     } catch (error: any) {
@@ -46,7 +47,7 @@ const CreateBlog = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",

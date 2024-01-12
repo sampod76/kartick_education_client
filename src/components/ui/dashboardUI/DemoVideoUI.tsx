@@ -1,35 +1,45 @@
 import { Input, Select, Typography } from "antd";
-
 const { Title } = Typography;
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useFormContext } from "react-hook-form";
 const { Option } = Select;
 
 const DemoVideoUI = ({
-  videoType,
-  setVideoType,
-  videoUrl,
-  setVideoUrl,
   options,
   label,
   required,
+  defaultValue = { video: "", platform: "" },
 }: {
-  videoType: string | null;
-  setVideoType: React.Dispatch<React.SetStateAction<any>>;
-  videoUrl: any;
-  setVideoUrl: React.Dispatch<React.SetStateAction<any>>;
   options: string[];
   label?: string;
   required?: boolean;
+  defaultValue?: Record<string, any>;
 }) => {
-  //   const [videoType, setVideoType] = useState(null);
-  //   const [videoUrl, setVideoUrl] = useState("");
-  const handleVideoTypeChange = (value: any) => {
-    setVideoType(value);
+  const { setValue, register } = useFormContext();
+  const [videoData, setVideoData] = useState({
+    video: defaultValue?.video || "",
+    platform: defaultValue?.platform || "vimeo",
+  });
+
+
+
+  useEffect(() => {
+    register("demo_video", { required: required });
+  }, [register, required]); // Register the field with react-hook-form only once
+
+  useEffect(() => {
+    setValue("demo_video", videoData);
+  }, [setValue, videoData]); // Update the value in react-hook-form when videoData changes
+
+  const handleVideoTypeChange = (value: string) => {
+    setVideoData((prevData) => ({ ...prevData, platform: value }));
   };
 
-  const handleVideoUrlChange = (e: any) => {
-    setVideoUrl(e.target.value);
+  const handleVideoUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setVideoData((prevData) => ({ ...prevData, video: value }));
   };
+
   return (
     <div className="">
       <Title level={5} style={{ textAlign: "start" }}>
@@ -43,6 +53,7 @@ const DemoVideoUI = ({
             className=""
             placeholder="Select Video Platform"
             onChange={handleVideoTypeChange}
+            defaultValue={defaultValue?.platform || "vimeo"}
           >
             {options?.map((option: string) => (
               <Option key={option} value={option}>
@@ -53,9 +64,8 @@ const DemoVideoUI = ({
         }
         type="URL"
         suffix=".com"
-        // defaultValue="mysite"
-        placeholder={`Enter ${videoType} Video URL`}
-        value={videoUrl}
+        defaultValue={defaultValue?.video}
+        placeholder={`Enter ${videoData.platform} Video URL`}
         onChange={handleVideoUrlChange}
       />
     </div>

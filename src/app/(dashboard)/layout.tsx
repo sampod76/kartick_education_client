@@ -2,7 +2,7 @@
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { USER_ROLE } from "@/constants/role";
-import { isLoggedIn } from "@/services/auth.service";
+import { getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { Drawer, Layout, Menu, Row, Space, Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,27 +10,30 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { dashboardItems } from "@/constants/dashBoardItems";
 import DashboardSidebar from "@/components/shared/DashBoard/DashboardSidebar";
 import DashboardNavBar from "@/components/shared/DashBoard/DashboardNavbar";
+import dynamic from "next/dynamic";
 
 const { Content } = Layout;
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  // const userLoggedIn = isLoggedIn();
-  const userLoggedIn = USER_ROLE.ADMIN;
-  // console.log(userLoggedIn);
+  const userLoggedIn = isLoggedIn();
+  // const userLoggedIn = USER_ROLE.ADMIN;
+
+  const userInfo:any = getUserInfo();
+  // console.log(userInfo);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [collapsed, setCollapsed] = useState(false);
 
   const screens = useBreakpoint();
 
   useEffect(() => {
-    if (!userLoggedIn) {
+    if (!userInfo?.role) {
       router.push("/login");
     }
-    setIsLoading(true);
-  }, [router, isLoading]);
+    setIsLoading(false);
+  }, [router, isLoading, userLoggedIn, userInfo?.role]);
 
-  if (!isLoading) {
+  if (isLoading || !userLoggedIn) {
     return (
       <Row
         justify="center"
@@ -40,7 +43,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         }}
       >
         <Space>
-          <Spin tip="Loading" size="large"></Spin>
+          <Spin  size="large"></Spin>
         </Space>
       </Row>
     );
@@ -53,7 +56,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     >
       {!screens.sm ? (
         <Drawer
-          title={`${userLoggedIn} Dash`}
+          title={`${userInfo?.role} Dash`}
           placement="left"
           onClose={() => setCollapsed(false)}
           open={collapsed}
@@ -63,7 +66,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             style={{ backgroundColor: "#ffffff" }}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={dashboardItems(userLoggedIn)}
+            items={dashboardItems(userInfo?.role,setCollapsed)}
           />
         </Drawer>
       ) : (
@@ -90,4 +93,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+// export default DashboardLayout;
+
+export default dynamic(() => Promise.resolve(DashboardLayout), {
+   ssr: false,
+ });

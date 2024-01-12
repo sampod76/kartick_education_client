@@ -1,8 +1,17 @@
 import { Rate } from "antd";
 import React from "react";
 import { MessageOutlined, EuroCircleOutlined } from "@ant-design/icons";
+import parse from "html-react-parser";
+import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
+import { CutText } from "@/utils/CutText";
+import VimeoPlayer from "@/utils/vimoPlayer";
+import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
+const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
+  console.log(
+    "🚀 ~ file: CourseDetailsTop.tsx:6 ~ CourseDetailsTop ~ courseData:",
+    courseData
+  );
 
-const CourseDetailsTop = () => {
   return (
     <div className="bg-[#333333] block lg:flex gap-3">
       <section className="w-full lg:w-[40%]">
@@ -17,6 +26,13 @@ const CourseDetailsTop = () => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           //   allowfullscreen
         ></iframe>
+        {/* demo_video: { video: 'https://vimeo.com/892901931', platform: 'vimeo' }, */}
+        {/* {courseData?.demo_video?.platform === ENUM_VIDEO_PLATFORM.VIMEO && (
+          <VimeoPlayer link={courseData?.demo_video.vido} />
+        )} */}
+        {/* {lesson?.videos?.length && lesson?.videos[0]?.platform === ENUM_VIDEO_PLATFORM.VIMEO && (
+                <VimeoPlayer link={lesson?.videos[0]?.link} />
+              )} */}
       </section>
       <aside
         className="w-full lg:w-[60%]"
@@ -38,7 +54,7 @@ const CourseDetailsTop = () => {
             color: "white",
           }}
         >
-          The Web Developer Boot camp
+          {courseData?.title}
         </h1>
         <p
           //   className="text-[#d8d5d5]"
@@ -48,8 +64,8 @@ const CourseDetailsTop = () => {
             fontWeight: "400",
           }}
         >
-          The only course you need to learn web development - HTML, CSS, JS,
-          Node, and More!
+  
+          {courseData?.details && CutText(courseData?.short_description, 90)}
         </p>
 
         <p
@@ -109,7 +125,7 @@ const CourseDetailsTop = () => {
             <span>12 more...</span>
           </button>
         </div>
-        <p>Last updated 1/2020</p>
+        <p>Last updated {formatMongoCreatedAtDate(courseData?.updatedAt)}</p>
 
         <section style={{ display: "flex ", gap: "1em" }}>
           <button

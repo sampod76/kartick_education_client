@@ -7,6 +7,7 @@ import { USER_ROLE } from "@/constants/role";
 
 import { ProfileOutlined, UserOutlined } from "@ant-design/icons";
 import Logo from "../Logo";
+import { getUserInfo } from "@/services/auth.service";
 
 const { Sider } = Layout;
 
@@ -17,6 +18,7 @@ const DashboardSidebar = ({
   collapsed: boolean;
   setCollapsed: any;
 }) => {
+  const userLoggedIn = getUserInfo() as any;
   return (
     <Sider
       // collapsible
@@ -71,7 +73,7 @@ const DashboardSidebar = ({
           overflowY: "auto",
         }}
         mode="inline"
-        items={dashboardItems(USER_ROLE.ADMIN)}
+        items={dashboardItems(userLoggedIn?.role)}
       />
     </Sider>
   );

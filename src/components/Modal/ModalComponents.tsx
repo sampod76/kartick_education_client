@@ -7,27 +7,22 @@ const ModalComponent = ({
   children,
   buttonText,
   loading = false,
-  setSetModel,
-  showModel,
+  
 }: {
   children: React.ReactElement;
   buttonText?: string;
   loading?: boolean;
-  showModel?: any;
-  setSetModel?: any;
+  
 }) => {
   const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Content of the modal");
+
 
   const showModal = () => {
     setOpen(true);
   };
 
-  const handleOk = () => {
-    // setModalText("The modal will be closed after two seconds");
-    setOpen(false);
-  };
+
 
   const handleCancel = () => {
     setOpen(false);
@@ -35,7 +30,7 @@ const ModalComponent = ({
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button type="default" onClick={showModal}>
         {buttonText || "Open Modal"}
       </Button>
       <Modal
@@ -53,7 +48,7 @@ const ModalComponent = ({
         )}
         width={1000}
       >
-        {children}
+       {React.cloneElement(children, { open, setOpen })}
       </Modal>
     </>
   );

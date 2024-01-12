@@ -12,12 +12,17 @@ import {
   BorderOuterOutlined,
   UserOutlined,
   BookOutlined,
-  DatabaseOutlined ,
-  AlignCenterOutlined 
+  DatabaseOutlined,
+  AlignCenterOutlined,
+  CalendarOutlined,
+  UsergroupDeleteOutlined,
+  ContainerOutlined,
+  
+  
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
-export const dashboardItems = (role: USER_ROLE) => {
+export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: "Profile",
@@ -25,16 +30,259 @@ export const dashboardItems = (role: USER_ROLE) => {
       icon: <ProfileOutlined />,
       children: [
         {
-          label: <Link href={`/profile`}>Your Profile</Link>,
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/profile`}
+            >
+              Your Profile
+            </Link>
+          ),
           key: `/${role}/profile`,
         },
       ],
     },
   ];
+  const trainerSidebarItems: MenuProps["items"] = [
+    {
+      label: "Manage category",
+      key: "manage-category",
+      icon: <CreditCardOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/category/create`}
+            >
+              Create Category
+            </Link>
+          ),
+          key: `/${role}/category/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/category`}
+            >
+              Category List
+            </Link>
+          ),
+          key: `/${role}/category`,
+        },
+      ],
+    },
+    {
+      label: "Manage Course",
+      key: "manage-Course",
+      icon: <FileTextOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/course/create`}
+            >
+              Create course
+            </Link>
+          ),
+          key: `/${role}/Course/create`,
+        },
 
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/course`}
+            >
+              Course List
+            </Link>
+          ),
+          key: `/${role}/Course`,
+        },
+      ],
+    },
+    {
+      label: "Manage Milestone",
+      key: "manage-Milestone",
+      icon: <BookOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/milestone/create`}
+            >
+              Create Milestone
+            </Link>
+          ),
+          key: `/${role}/milestone/create`,
+        },
+
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/milestone`}
+            >
+              Milestone List
+            </Link>
+          ),
+          key: `/${role}/milestone`,
+        },
+      ],
+    },
+    {
+      label: "Manage Module",
+      key: "manage-Module",
+      icon: <DatabaseOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/module/create`}
+            >
+              Create modules
+            </Link>
+          ),
+          key: `/${role}/module/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/module`}
+            >
+              Modules List
+            </Link>
+          ),
+          key: `/${role}/module`,
+        },
+      ],
+    },
+    {
+      label: "Manage Lesson",
+      key: "manage-lesson",
+      icon: <AlignCenterOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/lesson/create`}
+            >
+              Create Lesson
+            </Link>
+          ),
+          key: `/${role}/lesson/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/lesson`}
+            >
+              lesson List
+            </Link>
+          ),
+          key: `/${role}/lesson`,
+        },
+      ],
+    },
+    {
+      label: "Manage Quiz",
+      key: "manage-quiz",
+      icon: <ThunderboltOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/quiz/create`}
+            >
+              Create Quiz
+            </Link>
+          ),
+          key: `/${role}/quiz/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/quiz`}
+            >
+              Quiz List
+            </Link>
+          ),
+          key: `/${role}/quiz`,
+        },
+      ],
+    },
+   
+    {
+      label: "Manage Single Quiz",
+      key: "manage-single-quiz",
+      icon: <ThunderboltOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/single-quiz/create`}
+            >
+              Create Single Quiz
+            </Link>
+          ),
+          key: `/${role}/single-quiz/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/single-quiz`}
+            >
+              Single Quiz List
+            </Link>
+          ),
+          key: `/${role}/single-quiz`,
+        },
+      ],
+    },
+    // {
+    //   label: "Manage Glossary",
+    //   key: "manage-glossary",
+    //   icon: <ThunderboltOutlined />,
+    //   children: [
+    //     {
+    //       label: (
+    //         <Link
+    //           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+    //           href={`/${role}/glossary/create`}
+    //         >
+    //           Create Glossary
+    //         </Link>
+    //       ),
+    //       key: `/${role}/glossary/create`,
+    //     },
+    //     {
+    //       label: (
+    //         <Link
+    //           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+    //           href={`/${role}/glossary`}
+    //         >
+    //           Glossary List
+    //         </Link>
+    //       ),
+    //       key: `/${role}/glossary`,
+    //     },
+    //   ],
+    // },
+  ];
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-
+    ...trainerSidebarItems,
     {
       label: "Manage Users",
       key: "manage-user",
@@ -47,19 +295,26 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/all-users/create`}>
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/manage-users/all-users/create`}
+                >
                   Create user{" "}
                 </Link>
               ),
-              key: `/admin/manage-users/create`,
+              key: `/${role}/manage-users/create`,
             },
             {
               label: (
-                <Link href={`/admin/manage-users/all-users`}>Users List</Link>
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/manage-users/all-users`}
+                >
+                  Users List
+                </Link>
               ),
-              key: `/admin/user/all-users-list`,
+              key: `/${role}/user/all-users-list`,
             },
-           
           ],
         },
         {
@@ -69,19 +324,26 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/students/create`}>
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/manage-users/students/create`}
+                >
                   Create Student
                 </Link>
               ),
-              key: `/admin/manage-users/students/create`,
+              key: `/${role}/manage-users/students/create`,
             },
             {
               label: (
-                <Link href={`/admin/manage-users/students`}>Students List</Link>
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/manage-users/students`}
+                >
+                  Students List
+                </Link>
               ),
-              key: `admin/manage-users/students`,
+              key: `${role}/manage-users/students`,
             },
-            
           ],
         },
         {
@@ -91,19 +353,26 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/trainers/create`}>
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/manage-users/trainers/create`}
+                >
                   Create Trainer
                 </Link>
               ),
-              key: `//admin/manage-users/trainers/create`,
+              key: `//${role}/manage-users/trainers/create`,
             },
             {
               label: (
-                <Link href={`/admin/manage-users/trainers`}>Trainers List</Link>
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/manage-users/trainers`}
+                >
+                  Trainers List
+                </Link>
               ),
-              key: `/admin/manage-users/trainers`,
+              key: `/${role}/manage-users/trainers`,
             },
-           
           ],
         },
         {
@@ -113,171 +382,152 @@ export const dashboardItems = (role: USER_ROLE) => {
           children: [
             {
               label: (
-                <Link href={`/admin/manage-users/admin/create`}>
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/manage-users/admin/create`}
+                >
                   Create Admin
                 </Link>
               ),
-              key: `/admin/manage-users/admin/create`,
+              key: `/${role}/manage-users/admin/create`,
             },
             {
               label: (
-                <Link href={`/admin/manage-users/admin`}>Admin List</Link>
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/manage-users/admin`}
+                >
+                  Admin List
+                </Link>
               ),
-              key: `/admin/manage-users/admin`,
+              key: `/${role}/manage-users/admin`,
             },
-            
           ],
         },
-      
       ],
-    },
-    {
-      label: "Manage category",
-      key: "manage-category",
-      icon: <CreditCardOutlined />,
-      children: [
-        {
-          label: <Link href={`/admin/category/create`}>Create Category</Link>,
-          key: `/admin/category/create`,
-        },
-        {
-          label: <Link href={`/admin/category`}>Category List</Link>,
-          key: `/admin/category`,
-        },
-       
-       
-      ],
-    },
-    {
-      label: "Manage Course",
-      key: "manage-Course",
-      icon: <FileTextOutlined />,
-      children: [
-        {
-          label: <Link href={`/admin/course/create`}>Create course</Link>,
-          key: `/admin/Course/create`,
-        },
-        
-        {
-          label: <Link href={`/admin/course`}>Course List</Link>,
-          key: `/admin/Course`,
-        },
-       
-      ],
-    },
-    {
-      label: "Manage Milestone",
-      key: "manage-Milestone",
-      icon: <BookOutlined />,
-      children: [
-        {
-          label: <Link href={`/admin/milestone/create`}>Create Milestone</Link>,
-          key: `/admin/milestone/create`,
-        },
-        
-        {
-          label: <Link href={`/admin/milestone`}>Milestone List</Link>,
-          key: `/admin/milestone`,
-        },
-       
-      ],
-    },
-    {
-      label: "Manage Module",
-      key: "manage-Module",
-      icon: <DatabaseOutlined />,
-      children: [
-        {
-          label: <Link href={`/admin/module/create`}>Create modules</Link>,
-          key: `/admin/module/create`,
-        },
-        {
-          label: <Link href={`/admin/module`}>Modules List</Link>,
-          key: `/admin/module`,
-        },
-        
-      ],
-    },
-    {
-      label: "Manage Lesson",
-      key: "manage-lesson",
-      icon: <AlignCenterOutlined  />,
-      children: [
-        {
-          label: <Link href={`/admin/lesson/create`}>Create Lesson</Link>,
-          key: `/admin/lesson/create`,
-        },
-        {
-          label: <Link href={`/admin/lesson`}>lesson List</Link>,
-          key: `/admin/lesson`,
-        },
-       
-      ],
-    },
-    {
-      label: "Manage Quiz",
-      key: "manage-quiz",
-      icon: <ThunderboltOutlined />,
-      children: [
-        {
-          label: <Link href={`/admin/quiz/create`}>Create Quiz</Link>,
-          key: `/admin/quiz/create`,
-        },
-        {
-          label: <Link href={`/admin/quiz`}>Quiz List</Link>,
-          key: `/admin/quiz`,
-        },
-        
-      ],
-    },
-    {
-      label: "Manage Single Quiz",
-      key: "manage-single-quiz",
-      icon: <ThunderboltOutlined />,
-      children: [
-        {
-          label: <Link href={`/admin/single-quiz/create`}>Create Single Quiz</Link>,
-          key: `/admin/single-quiz/create`,
-        },
-        {
-          label: <Link href={`/admin/single-quiz`}>Single Quiz List</Link>,
-          key: `/admin/single-quiz`,
-        },
-       
-      ],
-    },
-  ];
-
-  const moderatorSidebarItems: MenuProps["items"] = [
-    ...adminSidebarItems,
-    {
-      label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
-      icon: <AlipayCircleFilled />,
-      key: `/${role}/admin`,
     },
   ];
 
   const studentSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
-      label: <Link href={`/${role}/booking`}>Booking History</Link>,
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/booking`}
+        >
+          Booking History
+        </Link>
+      ),
       icon: <ThunderboltOutlined />,
-      key: `/${role}/Service`,
+      key: `/${role}/booking`,
     },
     {
-      label: <Link href={`/${role}/review`}>Review/Feedback History</Link>,
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/activeCourse`}
+        >
+      Active Courses
+        </Link>
+      ),
+      icon:<CalendarOutlined />,
+      key: `/${role}/activeCourse`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/trainers`}
+        >
+        Trainers
+        </Link>
+      ),
+      icon:<UsergroupDeleteOutlined />,
+      key: `/${role}/trainers`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/assignment`}
+        >
+        Assignment
+        </Link>
+      ),
+      icon:<ContainerOutlined />,
+      key: `/${role}/assignment`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/review`}
+        >
+          Review/Feedback History
+        </Link>
+      ),
       icon: <AccountBookFilled />,
       key: `/${role}/review`,
     },
 
     {
-      label: <Link href={`/${role}/support`}>Support and Help</Link>,
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/support`}
+        >
+          Support and Help
+        </Link>
+      ),
+      icon: <BorderOuterOutlined />,
+      key: `/${role}/support`,
+    },
+  ];
+  const sellerSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/course_sell`}
+        >
+          Course sell
+        </Link>
+      ),
+      icon: <ThunderboltOutlined />,
+      key: `/${role}/course_sell`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/review`}
+        >
+          Sells History
+        </Link>
+      ),
+      icon: <AccountBookFilled />,
+      key: `/${role}/review`,
+    },
+
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/support`}
+        >
+          Support and Help
+        </Link>
+      ),
       icon: <BorderOuterOutlined />,
       key: `/${role}/support`,
     },
   ];
 
-  if (role === USER_ROLE.ADMIN) return moderatorSidebarItems;
-  else if (role === USER_ROLE.MODERATOR) return adminSidebarItems;
+  console.log(role);
+  if (role === USER_ROLE.TRAINER) return trainerSidebarItems;
+  else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.STUDENT) return studentSidebarItems;
+  else if (role === USER_ROLE.SELLER) return sellerSidebarItems;
 };

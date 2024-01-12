@@ -1,34 +1,25 @@
 "use client";
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import JoditEditor from "jodit-react";
-
+import { useFormContext } from "react-hook-form";
 const TextEditor = ({
   textEditorValue,
   setTextEditorValue,
-  defultTextEditorValue = "",
+  defaultTextEditorValue: defultTextEditorValue = "",
+  name = "details",
+  isReset = false,
 }: {
-  textEditorValue: string;
-  defultTextEditorValue?: string;
-  setTextEditorValue: React.Dispatch<React.SetStateAction<string>>;
+  textEditorValue?: string;
+  defaultTextEditorValue?: string;
+  name?: string;
+  isReset?: boolean;
+  setTextEditorValue?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const editor = useRef(null);
   const [content, setContent] = useState(defultTextEditorValue);
   // const [vlaue, setTextEditorValue] = useState("");
-  // useEffect(() => {
-  //   // Load MathJax
-  //   const script = document.createElement("script");
-  //   script.src = "https://polyfill.io/v3/polyfill.min.js?features=es6";
-  //   script.async = true;
-  //   document.head.appendChild(script);
+  const { setValue } = useFormContext();
 
-  //   script.onload = () => {
-  //     const mathJaxScript = document.createElement("script");
-  //     mathJaxScript.src =
-  //       "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML";
-  //     mathJaxScript.async = true;
-  //     document.head.appendChild(mathJaxScript);
-  //   };
-  // }, []);
   const editorConfig = useMemo(
     () => ({
       readonly: false,
@@ -41,6 +32,12 @@ const TextEditor = ({
     []
   );
 
+  useEffect(() => {
+    if (isReset) {
+      setContent("");
+    }
+  }, [isReset]);
+
   return (
     <div>
       <JoditEditor
@@ -49,7 +46,7 @@ const TextEditor = ({
         value={content}
         // tabIndex={1} // tabIndex of textarea
         onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-        onChange={(newContent) => setTextEditorValue(newContent)}
+        onChange={(newContent) => setValue(name, newContent)}
       />
     </div>
   );

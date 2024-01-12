@@ -21,8 +21,13 @@ import {
 } from "@ant-design/icons";
 import Logo from "../Logo";
 import { USER_ROLE } from "@/constants/role";
-import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
-
+// import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
+import { getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
+import { authKey } from "@/constants/storageKey";
+const UserAvatarUI = React.lazy(
+  () => import("@/components/ui/NavUI/UserAvatarUI")
+);
 const { Header } = Layout;
 const styles = {
   main: {
@@ -41,8 +46,9 @@ const DashboardNavBar = ({
   collapsed: boolean;
   setCollapsed: any;
 }) => {
+  const router = useRouter();
   //   const userInfo = getUserInfo() as any;
-  const userLoggedIn = USER_ROLE.ADMIN;
+  const userLoggedIn = getUserInfo() as any
   // console.log(userLoggedIn);
   /* 
   const [isNavbarFixed, setNavbarFixed] = useState(false);
@@ -60,6 +66,30 @@ const DashboardNavBar = ({
     };
   }, []); 
   */
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: <Link href={"/profile"}> Profile</Link>,
+    },
+    {
+      key: "2",
+      label: <Link href={"/dashboard"}>Dashboard</Link>,
+    },
+    {
+      key: "3",
+      label: (
+        <Button
+          onClick={() => {
+            removeUserInfo(authKey);
+            router.push("/login");
+          }}
+          type="dashed"
+        >
+          Log out
+        </Button>
+      ),
+    },
+  ];
   return (
     <nav>
       <Header
@@ -76,11 +106,6 @@ const DashboardNavBar = ({
           marginRight: "0.5rem",
 
           borderRadius: "0 0.5rem 0.5rem",
-
-          // position:"absolute",
-          // top:0,
-          // width:"100%",
-          // zIndex:100,
         }}
       >
         <section style={{ display: "flex", alignItems: "center" }}>
@@ -99,11 +124,12 @@ const DashboardNavBar = ({
         </section>
 
         <section
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "5px",
-          }}
+
+        // style={{
+        //   display: "flex",
+        //   alignItems: "center",
+        //   gap: "5px",
+        // }}
         >
           <UserAvatarUI />
         </section>

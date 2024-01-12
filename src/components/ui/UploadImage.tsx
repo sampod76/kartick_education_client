@@ -1,3 +1,4 @@
+import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
@@ -17,9 +18,9 @@ const beforeUpload = (file: RcFile) => {
   if (!isJpgOrPng) {
     message.error("You can only upload JPG/PNG file!");
   }
-  const isLt2M = file.size / 1024 / 1024 < 2;
+  const isLt2M = file.size / 1024 / 1024 < 5;
   if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
+    message.error("Image must smaller than 5MB!");
   }
   return isJpgOrPng && isLt2M;
 };
@@ -39,7 +40,7 @@ const UploadImage = ({
   const [imageUrl, setImageUrl] = useState<string>();
   const { setValue } = useFormContext();
 
-  const handleChange: UploadProps["onChange"] = (
+  const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
   ) => {
     if (info.file.status === "uploading") {
@@ -48,7 +49,10 @@ const UploadImage = ({
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      setValue(name, info.file.originFileObj);
+      const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
+      console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
+
+      setValue(name, imgUrl);
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
         setImageUrl(url);
@@ -70,6 +74,7 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
+    
         action="/api/file"
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
@@ -78,7 +83,7 @@ const UploadImage = ({
           <Image
             src={imageUrl ? imageUrl : (defaultImage as string)}
             alt="avatar"
-            style={{ width: "100%" }}
+            style={{ width: "100px" }}
             width={60}
             height={60}
             // fill

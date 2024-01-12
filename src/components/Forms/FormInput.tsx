@@ -63,6 +63,7 @@ const FormInput = ({
           type === "password" ? (
             <Input.Password
               disabled={disabled}
+              required={required}
               type={type}
               size={size}
               readOnly={readOnly}
@@ -88,7 +89,7 @@ const FormInput = ({
                 </LabelUi>
               </h1>
               <InputNumber
-                // type={type}
+                type={type}
                 style={{ width: "100%", marginRight: "2px" }}
                 readOnly={readOnly}
                 disabled={disabled}
@@ -97,6 +98,7 @@ const FormInput = ({
                 placeholder={placeholder}
                 {...field}
                 value={value ? value : field.value}
+                required={required}
               />
             </div>
           ) : (
@@ -105,6 +107,7 @@ const FormInput = ({
               disabled={disabled}
               type={type}
               size={size}
+  
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}

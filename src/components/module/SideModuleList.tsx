@@ -8,6 +8,7 @@ import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
 import { Divider } from "antd";
 import Link from "next/link";
 import React from "react";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 
 const SideModuleList = ({
   milestoneId,
@@ -18,27 +19,34 @@ const SideModuleList = ({
 }) => {
   // console.log(milestoneId);
 
-  const { data: milestoneData } = useGetSingleMilestoneQuery(milestoneId);
+  const { data: milestoneData, isLoading } =
+  useGetSingleMilestoneQuery(milestoneId);
+  // console.log("🚀 ~ milestoneData:", milestoneData)
   // console.log(milestoneData);
 
-  const { data } = useGetAllModuleQuery({
-    course: milestoneId,
+  const { data, isLoading: moduleLoading } = useGetAllModuleQuery({
+    milestone: milestoneId,
     // lesson: "yes",
     status: "active",
   });
 
   // console.log(data,"milestoneId");
   const modulesData = data?.data;
+  // console.log("🚀 ~ modulesData:", modulesData)
 
-  console.log(moduleId, "and", modulesData, "module Data");
-
+  if (isLoading || moduleLoading) {
+    return <LoadingSkeleton />;
+  }
   return (
     <div
       style={{
         marginTop: "1.35rem",
       }}
+      className=" lg:border-r-2 border-r-slate-500 h-full"
     >
-      <h2 className="text-[1.4rem] font-[550] ">{milestoneData?.title}</h2>
+      <h2 className="text-[18px] lg:text-[20px] font-[550] ">
+        💥{milestoneData?.title}
+      </h2>
       {/* <Divider
         style={{
           color: "red",
@@ -47,23 +55,25 @@ const SideModuleList = ({
         }}
       /> */}
 
-      <div className="flex flex-col gap-3 max-w-[80%] mx-auto mt-5 ">
+      <ul className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2]">
         {modulesData?.map((module: any, index: number) => {
           return (
-            <Link
+           <li  key={index} className={` text-[#1c1a1a]  py-1 px-1 md:px-3 rounded ${
+            module?._id === moduleId
+              ? "underline"
+              : ""
+          }`}>
+             <Link
               href={`/lesson/${module?._id}`}
-              key={index}
-              className={`shadow-md p-3 rounded text-start  text-[16px] font-[550] font-['Inter'] leading-2 ${
-                module?._id === moduleId
-                  ? "bg-primary text-white"
-                  : "bg-slate-50  text-gray-900"
-              }`}
+             
+              className={` rounded text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2  `}
             >
-              {module?.title}
+               <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>{module?.title}
             </Link>
+           </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 };

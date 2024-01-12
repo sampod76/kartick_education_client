@@ -8,16 +8,21 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import {
-  bloodGroupOptions,
+
   genderOptions,
   roleOptions,
 } from "@/constants/global";
-import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
+import { USER_ROLE } from "@/constants/role";
+import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
+import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/seller";
+import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
+
 
 import { Button, Col, Row, message } from "antd";
+import ButtonLoading from "../ui/Loading/ButtonLoading";
+import { useState } from "react";
 
 const UserCreateComponent = ({
   role = { label: "Please select role", value: "" },
@@ -27,26 +32,69 @@ const UserCreateComponent = ({
     value: string;
   };
 }) => {
-  const [addGeneralUserWithFormData, { isLoading, error }] =
-    useAddGeneralUserWithFormDataMutation();
-  console.log(role);
+  const [isReset, setIsReset] = useState(false);
+  const [addAdminUserWithFormData, { isLoading: AdminLoading }] =
+    useAddAdminWithFormDataMutation();
+  const [addStudentUserWithFormData, { isLoading: StudentLoading }] =
+    useAddStudentWithFormDataMutation();
+  const [addSellerUserWithFormData, { isLoading: SellerLoading }] =
+    useAddSellerWithFormDataMutation();
+
   const onSubmit = async (values: any) => {
-    console.log(values);
     try {
-      const res = await addGeneralUserWithFormData({ ...values }).unwrap();
+      let res;
+      if (role.value === USER_ROLE.ADMIN) {
+        const { password, ...allValue } = values;
+        const modifyValue = {
+          password: password,
+          [USER_ROLE.ADMIN]: { ...allValue },
+        };
+
+        res = await addAdminUserWithFormData({ ...modifyValue }).unwrap();
+      } else if (role.value === USER_ROLE.STUDENT) {
+        const { password, ...allValue } = values;
+        const modifyValue = {
+          password: password,
+          [USER_ROLE.STUDENT]: { ...allValue },
+        };
+        res = await addStudentUserWithFormData({ ...modifyValue }).unwrap();
+      } else if (role.value === USER_ROLE.SELLER) {
+        const { password, ...allValue } = values;
+        const modifyValue = {
+          password: password,
+          [USER_ROLE.SELLER]: { ...allValue },
+        };
+        res = await addSellerUserWithFormData({ ...allValue }).unwrap();
+      } else if (role.value === USER_ROLE.TRAINER) {
+        const { password, ...allValue } = values;
+        const modifyValue = {
+          password: password,
+          [USER_ROLE.TRAINER]: { ...allValue },
+        };
+        res = await addSellerUserWithFormData({ ...modifyValue }).unwrap();
+      } else {
+        res = {
+          success: false,
+          message: "not found",
+        };
+      }
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Customar created successfully");
+        setIsReset(true)
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
-  if (isLoading) {
-    return message.loading("Loading...");
-  }
+  // if (AdminLoading || StudentLoading || SellerLoading) {
+  //   message.loading("Loading...");
+  //   return
+  // }
 
   return (
     <div
@@ -60,7 +108,7 @@ const UserCreateComponent = ({
     >
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -75,7 +123,7 @@ const UserCreateComponent = ({
               }}
               className="font-semibold text-2xl text-center"
             >
-              Create User
+              Create User ({role.value})
             </p>
             <hr className="border my-2" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -90,9 +138,27 @@ const UserCreateComponent = ({
               >
                 <FormInput
                   type="text"
-                  name="name"
+                  name="name.firstName"
                   size="large"
-                  label="Full Name"
+                  label="First Name"
+                  placeholder="Please enter a full name"
+                  required={true}
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="text"
+                  name="name.lastName"
+                  size="large"
+                  label="Last Name"
                   placeholder="Please enter a full name"
                   required={true}
                 />
@@ -256,9 +322,13 @@ const UserCreateComponent = ({
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="default">
-            Create
-          </Button>
+          {AdminLoading || StudentLoading || SellerLoading ? (
+            <ButtonLoading />
+          ) : (
+            <Button htmlType="submit" type="default">
+              Create
+            </Button>
+          )}
         </Form>
       </div>
     </div>

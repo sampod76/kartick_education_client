@@ -31,24 +31,43 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
+    // console.log("🚀 ~ response:", response)
     const responseObject: ResponseSuccessType = {
-      success: response?.data?.success,
-      message: response?.data?.message,
       data: response?.data?.data,
       meta: response?.data?.meta,
+      // success:response?.data?.success,
     };
     return responseObject;
   },
+
   async function (error) {
     if (error?.response?.status === 403) {
     } else {
-      const responseObject: any = {
+      console.log(error);
+
+      let responseObject: any = {
         statusCode: error?.response?.status || 500,
-        message: error?.response?.data?.message || "Something went wrong",
-        errorMessages: error?.response?.data?.errorMessage,
+        message: "Something went wrong",
+        success: false,
+        errorMessages: [],
       };
-      // return Promise.reject(responseObject);
-      return error.response;
+      // Check if the error response has the expected structure
+      if (error?.response?.data) {
+        responseObject.message =
+          error?.response?.data?.message || responseObject.message;
+        responseObject.success =
+          error?.response?.data?.success || responseObject.success;
+
+        if (error?.response?.data?.errorMessage) {
+          responseObject.errorMessages.push(
+            error?.response?.data?.errorMessage
+            );
+          }
+        }
+        console.log("🚀 ~ responseObject:", responseObject)
+      
+      return Promise.reject(responseObject);
+      // return responseObject;
     }
 
     // return Promise.reject(error);

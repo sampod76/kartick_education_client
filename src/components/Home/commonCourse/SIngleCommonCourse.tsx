@@ -10,7 +10,7 @@ import Image from "next/image";
 const { Meta, Grid } = Card;
 
 const SIngleCommonCourse = ({ course }: { course: any }) => {
-  console.log(course);
+  // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   return (
     <div className="w-[23rem] mx-auto  shadow-md text-center">

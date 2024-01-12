@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import bannerBG from "@/assets/banner/bannerBG.png";
 import treeBoy from "@/assets/banner/treeBoy.png";
@@ -8,7 +9,7 @@ import Link from "next/link";
 const BannerSection = () => {
   return (
     <div
-      className="mt-5 block lg:flex justify-between place-items-end bg-blue-20 min-h-[45rem] text-left "
+      className="block lg:flex justify-between place-items-end bg-blue-20 min-h-[45rem] text-left pt-[3rem] "
       style={{
         backgroundImage: `url('/banner/bannerBG.png')`,
         backgroundRepeat: "no-repeat",
@@ -16,10 +17,10 @@ const BannerSection = () => {
       }}
     >
       <section className="w-full lg:w-[60%]  px-[59px] py-[3rem]">
-        <div className="text-4xl lg:text-7xl font-[800] text-black uppercase">
+        <div className="text-[2rem]  lg:text-[4vw] xl:text-7xl font-[800] text-black uppercase">
           <h1>Feel bored or anxious</h1>
-          <h1>
-            About <span className="text-secondary">Math or English</span> ?
+          <h1 className="">
+            About <span className="text-secondary whitespace-nowrap">Math or English ?</span> 
           </h1>
         </div>
         <p className="mt-[2rem] text-[1.5rem]  lg:text-5xl leading-[2rem]">
