@@ -1,19 +1,10 @@
 "use client";
 import React from "react";
-import {
-  Form,
-  Button,
-  Input,
-  Select,
-  DatePicker,
-  message,
-  Divider,
-  Space,
-} from "antd";
+import { Form, Button, Input, Select, message, Space } from "antd";
 import { UserOutlined, FormOutlined, HomeOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
-import formBg from "@/assets/BG/fomrBg.png";
+// import formBg from "@/assets/BG/fomrBg.png";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 
 export default function SUbscriptionForm() {
@@ -36,6 +27,7 @@ export default function SUbscriptionForm() {
       "🚀 ~ file: SUbscriptionForm.tsx:10 ~ onFinish ~ value:",
       value
     );
+    message.success("Joined SuccessFully");
     return {};
   };
 
@@ -91,7 +83,7 @@ export default function SUbscriptionForm() {
             rules={[{ required: true, message: "Please enter email" }]}
           >
             {/* <label className="text-xl font-[500] ">Your Email</label> */}
-            <Input />
+            <Input type="email" />
           </Form.Item>
           <Form.Item
             style={{}}
@@ -134,6 +126,7 @@ export default function SUbscriptionForm() {
             {/* <label className="text-xl font-[500] ">Select Country</label> */}
             <Select>
               <Option value="Female">Bangladesh</Option>
+              <Option value="Male">India</Option>
               <Option value="Male">USA</Option>
             </Select>
           </Form.Item>
@@ -170,8 +163,8 @@ export default function SUbscriptionForm() {
           <Form.Item
             style={{}}
             label={<span>Please select License</span>}
-            name="position"
-            rules={[{ required: true, message: "Please select your Position" }]}
+            name="license"
+            rules={[{ required: true, message: "Please select your license" }]}
           >
             {/* <label className="text-xl font-[500] ">Select position</label> */}
             <Select>
@@ -194,6 +187,7 @@ export default function SUbscriptionForm() {
               placeholder="select one category"
               //   defaultValue={["china"]}
               //   onChange={handleChange}
+              loading={isLoading}
               optionLabelProp="label"
               options={CategoryOptions}
               optionRender={(option) => (
@@ -204,6 +198,40 @@ export default function SUbscriptionForm() {
                 </Space>
               )}
             />
+          </Form.Item>
+
+          <Form.Item
+            style={{}}
+            label="Enter Levels"
+            name="levels"
+            rules={[{ required: true, message: "Please enter levels" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            style={{}}
+            label="Number of Students"
+            name="students"
+            rules={[{ required: true, message: "Please enter Students" }]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            style={{}}
+            label="Number of Teacher"
+            name="teacher"
+            rules={[{ required: true, message: "Please enter Teacher" }]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            style={{}}
+            label="Share your Plan Please (optional)"
+            name="plan"
+            // rules={[{ required: false, message: "Please enter Teacher" }]}
+          >
+            <Input.TextArea />
           </Form.Item>
 
           <Form.Item style={{}}>
