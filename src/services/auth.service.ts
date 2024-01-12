@@ -8,11 +8,16 @@ export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {
   return setToLocalStorage(authKey, accessToken as string);
 };
 
-export const getUserInfo = () => {
+export interface IDecodedInfo {
+  role:string,
+  email:string
+}
+
+export const getUserInfo = ():IDecodedInfo | '' => {
   const authToken = getFromLocalStorage(authKey);
 
   if (authToken) {
-    const decodedData = decodedToken(authToken);
+    const decodedData = decodedToken(authToken) as IDecodedInfo
     return decodedData;
   } else {
     return "";

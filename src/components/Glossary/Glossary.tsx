@@ -20,8 +20,7 @@ console.log("🚀 ~ file: Glossary.tsx:8 ~ GlossaryPage ~ moduleId:", moduleId)
    }
 
   return (
-    <div className='jodit-wysiwyg'>
-
+    <div>
          {glossaryData?.details && parse(glossaryData?.details)}
     </div>
   )

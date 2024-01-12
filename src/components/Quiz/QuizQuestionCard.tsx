@@ -63,9 +63,9 @@ export default function QuizQuestionCard({
     (answer) => answer?._id === quiz?._id
   );
 
-  console.log(isDefaultValue);
+  // console.log(isDefaultValue);
 
-  console.log(userAnswers);
+  // console.log(userAnswers);
 
   // console.log(userAnswers,"userAnswers from card")
 

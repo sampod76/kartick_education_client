@@ -27,9 +27,11 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 import { useGetAllAdminsQuery } from "@/redux/api/adminApi/adminApi";
 import { useDeleteAdminMutation } from "@/redux/api/adminApi";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const TrainerListPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  // const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as IDecodedInfo;
   const query: Record<string, any> = {};
   const [deleteAdmin] = useDeleteAdminMutation();
 
@@ -111,12 +113,14 @@ const TrainerListPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/manage-users/admin/details/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/admin/details/${data}`}
+            >
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/manage-users/admin/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/manage-users/admin/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -199,7 +203,7 @@ const TrainerListPage = () => {
           }}
         />
         <div>
-          <Link href={`/admin/manage-users/admin/create`}>
+          <Link href={`/${userInfo?.role}/manage-users/admin/create`}>
             <Button type="default">Create Admin</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

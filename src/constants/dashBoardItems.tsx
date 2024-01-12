@@ -250,35 +250,6 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         },
       ],
     },
-    // {
-    //   label: "Manage Glossary",
-    //   key: "manage-glossary",
-    //   icon: <ThunderboltOutlined />,
-    //   children: [
-    //     {
-    //       label: (
-    //         <Link
-    //           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-    //           href={`/${role}/glossary/create`}
-    //         >
-    //           Create Glossary
-    //         </Link>
-    //       ),
-    //       key: `/${role}/glossary/create`,
-    //     },
-    //     {
-    //       label: (
-    //         <Link
-    //           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-    //           href={`/${role}/glossary`}
-    //         >
-    //           Glossary List
-    //         </Link>
-    //       ),
-    //       key: `/${role}/glossary`,
-    //     },
-    //   ],
-    // },
   ];
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,

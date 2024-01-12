@@ -28,9 +28,11 @@ import {
   useDeleteStudentMutation,
   useGetAllStudentsQuery,
 } from "@/redux/api/adminApi/studentApi";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const TrainerListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as IDecodedInfo;
   const query: Record<string, any> = {};
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -112,12 +114,16 @@ const TrainerListPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/manage-users/students/details/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/students/details/${data}`}
+            >
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/manage-users/students/edit/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/students/edit/${data}`}
+            >
               <Button
                 style={{
                   margin: "0px 5px",
@@ -181,13 +187,15 @@ const TrainerListPage = () => {
   //   return <LoadingForDataFetch />;
   // }
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <ActionBar title="Student List">
         <Input
           size="large"
@@ -198,7 +206,7 @@ const TrainerListPage = () => {
           }}
         />
         <div>
-          <Link href={`/admin/manage-users/students/create`}>
+          <Link href={`/${userInfo?.role}/manage-users/students/create`}>
             <Button type="default">Create Student</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

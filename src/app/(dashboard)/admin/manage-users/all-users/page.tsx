@@ -31,9 +31,11 @@ import {
   useGetAllUsersQuery,
 } from "@/redux/api/adminApi/usersApi";
 import dynamic from "next/dynamic";
+import { getUserInfo } from "@/services/auth.service";
 
 const AdminPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  // const userInfo?.role = USER_ROLE.ADMIN;
+  const userInfo =getUserInfo() as any
   const query: Record<string, any> = {};
   const [deleteUser] = useDeleteUserMutation();
 
@@ -165,13 +167,13 @@ const AdminPage = () => {
         return (
           <>
             <Link
-              href={`/${SUPER_ADMIN}/manage-users/all-users/details/${data}`}
+              href={`/${userInfo?.role}/manage-users/all-users/details/${data}`}
             >
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/manage-users/all-users/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/manage-users/all-users/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -256,8 +258,8 @@ const AdminPage = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/manage-users/all-users/create`}>
-            <Button   type="default">Create Customer</Button>
+          <Link href={`/${userInfo.role}/manage-users/all-users/create`}>
+            <Button type="primary">Create Customer</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
