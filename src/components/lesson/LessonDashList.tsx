@@ -44,6 +44,8 @@ import React from "react";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+
 export default function LessonDashList() {
   //
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -68,8 +70,9 @@ export default function LessonDashList() {
   const categoryData: any = Category?.data;
   //!----------------------------------------------------------------
 
-  const query: Record<string, any> = {};
 
+  const query: Record<string, any> = {};
+  const userInfo = getUserInfo() as IDecodedInfo;
   // const SUPER_ADMIN=USER_ROLE.ADMIN
 
   const [deleteLesson] = useDeleteLessonMutation();
@@ -209,16 +212,20 @@ export default function LessonDashList() {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/admin/lesson/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/lesson/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/admin/lesson/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/${userInfo?.role}/lesson/edit/${record._id}`}>
+                      Edit
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="add_milestone">
                     <Link
-                      href={`/admin/lesson/create/quiz/${record?._id}?lessonName=${record?.title}`}
+                      href={`/${userInfo?.role}/lesson/create/quiz/${record?._id}?lessonName=${record?.title}`}
                     >
                       Add Quiz
                     </Link>
@@ -286,12 +293,12 @@ export default function LessonDashList() {
       <UMBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: `${userInfo?.role}`,
+            link: `/${userInfo?.role}`,
           },
           {
-            label: "Lesson",
-            link: "/admin/lesson",
+            label: `Lesson`,
+            link: `/${userInfo?.role}/lesson`,
           },
         ]}
       />
@@ -321,7 +328,8 @@ export default function LessonDashList() {
             Filter
           </Button>
 
-          <Link href={`/admin/lesson/create`}>
+     
+          <Link href={`/${userInfo?.role}/lesson/create`}>
             <Button type="default">Create Lesson</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

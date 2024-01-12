@@ -31,9 +31,10 @@ import {
 import ModalComponent from "@/components/Modal/ModalComponents";
 import CreateTrainer from "@/components/registionfrom/trainer";
 import { useDeleteTrainerMutation, useGetAllTrainersQuery } from "@/redux/api/adminApi/trainer";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const TrainerListPage = () => {
-
+  const userInfo =getUserInfo() as IDecodedInfo
   const query: Record<string, any> = {};
   const [deleteTrainer,{isLoading:trainerDeleteLoading}] = useDeleteTrainerMutation();
 
@@ -115,12 +116,12 @@ const TrainerListPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/manage-users/trainers/details/${data}`}>
+            <Link href={`/${userInfo?.role}/manage-users/trainers/details/${data}`}>
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/manage-users/trainers/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/manage-users/trainers/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",

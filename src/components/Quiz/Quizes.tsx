@@ -21,7 +21,7 @@ export default function QuizeSinglePage({
   quizeId: string;
   quiz_title: string;
 }) {
-  console.log("🚀 ~ quizeId:", quizeId)
+  // console.log("🚀 ~ quizeId:", quizeId)
   const searchParams = useSearchParams();
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
@@ -33,7 +33,7 @@ export default function QuizeSinglePage({
     ...quiz_query,
     quiz:quizeId
   });
-  console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData)
+  // console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData)
 
 
   const handleFinishQuiz = () => {

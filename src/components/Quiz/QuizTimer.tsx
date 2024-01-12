@@ -17,7 +17,7 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
   userAnswers,
   index,
 }) => {
-  console.log(time_duration, "ttttttttttttt");
+//   console.log(time_duration, "ttttttttttttt");
 
   const dispatch = useAppDispatch();
 
