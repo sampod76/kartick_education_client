@@ -13,7 +13,7 @@ echo "Installation Dependencies .."
 
 yarn install
 
-echo "Chreating Production build.."
+echo "Chreating Production  build.."
 
 yarn run build
 
