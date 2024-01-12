@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import CreateMilestone from '@/components/milestone/CreateAndUpdateMilestone';
+import CreateMilestone from '@/components/milestone/createAndUpdateMilestoned';
 
 export default function CreateMilestonePage() {
   const [open, setOpen] = useState(false);
