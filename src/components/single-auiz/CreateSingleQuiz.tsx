@@ -277,7 +277,7 @@ const CreateSingleQuiz = () => {
                     }
                   }
                 >
-                  <FormTimePicker name="time_duration" label="Time Duration" />
+                  <FormTimePicker  name="time_duration" label="Time Duration" />
                 </Col>
                 <Col
                   className="gutter-row"
