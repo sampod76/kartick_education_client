@@ -27,7 +27,7 @@ export default function LessonPage({
   }
   return (
     <div className="mb-5">
-      <BannerModule className={"h-[15vh] md:h-[20vh] lg:h-[30vh]"} />
+      <BannerModule className={"h-[40vh]"} />
       <div className="text-primary">
         {/* <UMBreadCrumb
         items={[
