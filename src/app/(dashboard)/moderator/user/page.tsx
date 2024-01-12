@@ -11,7 +11,7 @@ const ManageUsersPage = () => {
           },
         ]}
       />
-      <h1>User List</h1>
+      <h1 className="text-base font-normal">User List</h1>
     </div>
   );
 };

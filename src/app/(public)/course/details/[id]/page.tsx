@@ -44,7 +44,7 @@ const CourseDetailsPublicPage = ({ params }: any) => {
   console.log(CourseData, "courseData");
   return (
     <div className="container mx-auto">
-      {/* <h2>The Web Developer Boot Camp</h2> */}
+      {/* <h2 className="text-base font-normal">The Web Developer Boot Camp</h2> */}
       <BannerCourses />
       {/* <CourseStatistics /> */}
  <CourseDetailsMain courseId={id}/>

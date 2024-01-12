@@ -46,7 +46,7 @@ const CreateGeneralUserPage = () => {
 
   return (
     <div>
-      <h1>Create Customer/normal user</h1>
+      <h1 className="text-base font-normal">Create Customer/normal user</h1>
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
         <Form submitHandler={onSubmit}  isReset={isReset}>
@@ -210,7 +210,7 @@ const CreateGeneralUserPage = () => {
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit"   type="default">
             Create
           </Button>
         </Form>

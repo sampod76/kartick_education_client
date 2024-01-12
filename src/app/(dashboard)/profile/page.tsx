@@ -24,7 +24,7 @@ console.log(data);
   return (
     <section>
       <div className="flex justify-end items-end">
-        <Button onClick={() => setUpdate(!update)} type="primary">
+        <Button onClick={() => setUpdate(!update)}   type="default">
           {update ? "profile" : "Update/edit profile"}
         </Button>
       </div>

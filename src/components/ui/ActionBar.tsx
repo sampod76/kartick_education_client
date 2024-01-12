@@ -6,7 +6,7 @@ type ActionBarProps = {
 const ActionBar = ({ title, children }: ActionBarProps) => {
   return (
     <div>
-      <h1>{title}</h1>
+      <h1 className="text-base font-normal">{title}</h1>
       <div
         style={{
           display: "flex",

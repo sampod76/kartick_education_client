@@ -110,7 +110,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
           </Row>
         </div>
       ) : (
-        <h1>Course: {title}</h1>
+        <h1 className="text-base font-normal">Course: {title}</h1>
       )}
       <div
         style={{
@@ -195,6 +195,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                         Description
                       </p>
                       <TextEditor
+                      isReset={isReset}
                       // textEditorValue={textEditorValue}
                       // setTextEditorValue={setTextEditorValue}
                       />
@@ -211,7 +212,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
               </div>
               {/* <FloatButton
       shape="square"
-      type="primary"
+        type="default"
       style={{ right: "40%" ,width:"9rem",fontSize:"2rem"}}
       description="Create Milestone"
     

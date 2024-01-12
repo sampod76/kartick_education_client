@@ -7,7 +7,11 @@ const AdminPage = () => {
       backgroundColor: "white",
       padding: "1rem",
     }}>
-      <h1>Welcome To Admin Profile</h1>
+      <h1 className="text-base font-normal">Welcome To Admin Profile</h1>
+      {/* <iframe src="https://player.vimeo.com/video/76979871?autoplay=1&loop=1&autopause=0" width="640" height="360"  allow="autoplay; fullscreen" ></iframe> */}
+      <iframe width="420" height="315"
+src="https://www.youtube.com/embed/tgbNymZ7vqY">
+</iframe>
     </div>
   );
 };

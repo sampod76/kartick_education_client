@@ -297,6 +297,7 @@ return (
             <TextEditor
               // textEditorValue={textEditorValue}
               // setTextEditorValue={setTextEditorValue}
+              
               defaultTextEditorValue={getCourse?.details}
             />
           </section>

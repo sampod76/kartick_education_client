@@ -153,7 +153,7 @@ const BookingDetails = ({ params }: any) => {
                 name="bookingTickets"
               /> */}
               <div>
-                <h1>Booking Sit</h1>
+                <h1 className="text-base font-normal">Booking Sit</h1>
                 <InputNumber
                   type="number"
                   defaultValue={defaultValues.bookingTickets}
@@ -169,7 +169,7 @@ const BookingDetails = ({ params }: any) => {
                 readOnly={true}
               />
               <div>
-                <h1>Total price</h1>
+                <h1 className="text-base font-normal">Total price</h1>
                 <Input
                   type="text"
                   value={
@@ -240,7 +240,7 @@ const BookingDetails = ({ params }: any) => {
             placeholder="Please provide authorityNote"
           />
           <div className="my-2 flex justify-center items-center">
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit"   type="default">
               Submit
             </Button>
           </div>

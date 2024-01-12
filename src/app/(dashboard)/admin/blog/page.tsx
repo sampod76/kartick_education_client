@@ -123,7 +123,7 @@ const BlogList = () => {
         return (
           <>
             <Link href={`/${SUPER_ADMIN}/blog/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button onClick={() => console.log(data)}   type="default">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -133,12 +133,12 @@ const BlogList = () => {
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                  type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button onClick={() => handleDelete(data)}   type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -199,12 +199,12 @@ const BlogList = () => {
         />
         <div>
           <Link href={`/${SUPER_ADMIN}/blog/create`}>
-            <Button type="primary">Create blog</Button>
+            <Button   type="default">Create blog</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+                type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

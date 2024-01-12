@@ -31,7 +31,7 @@ const Review = () => {
         {ratingData?.data?.map((data: any, key: number) => (
           <div key={key} className="border-2 rounded-xl p-2">
             <div className="flex justify-between items-center font-extrabold">
-                <h1>Service Name : {data?.service?.title}</h1>
+                <h1 className="text-base font-normal">Service Name : {data?.service?.title}</h1>
                 <Image width={150} height={150} className="w-[75px] h-[50px]" src={data?.service?.image} alt=""/>
             </div>
             <div>

@@ -45,7 +45,7 @@ const CreateAdminPage = () => {
 
   return (
     <div>
-      <h1>Create Admin</h1>
+      <h1 className="text-base font-normal">Create Admin</h1>
       {/*  */}
       <div>
         <Form submitHandler={onSubmit}  isReset={isReset}>
@@ -210,7 +210,7 @@ const CreateAdminPage = () => {
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit"   type="default">
             Create
           </Button>
         </Form>

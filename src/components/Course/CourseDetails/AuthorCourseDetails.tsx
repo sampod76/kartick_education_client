@@ -79,7 +79,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         >
           <EyeOutlined />
-          <h1>1453</h1>
+          <h1 className="text-base font-normal">1453</h1>
         </button>
         <button
           style={{
@@ -90,7 +90,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         >
           <LikeOutlined />
-          <h1>1453</h1>
+          <h1 className="text-base font-normal">1453</h1>
         </button>
         <button
           style={{
@@ -101,7 +101,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         >
           <DislikeOutlined />
-          <h1>1453</h1>
+          <h1 className="text-base font-normal">1453</h1>
         </button>
         <button
           style={{
@@ -112,7 +112,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         >
           <ShareAltOutlined />
-          <h1>1453</h1>
+          <h1 className="text-base font-normal">1453</h1>
         </button>
       </section>
     </div>

@@ -77,13 +77,13 @@ const StepperForm = ({
           <div>{steps[current].content}</div>
           <div style={{ marginTop: 24 }}>
             {current < steps.length - 1 && (
-              <Button type="primary" onClick={() => next()}>
+              <Button   type="default" onClick={() => next()}>
                 Next
               </Button>
             )}
             {current === steps.length - 1 && (
               <Button
-                type="primary"
+                  type="default"
                 htmlType="submit"
                 onClick={() => message.success("Processing complete!")}
               >

@@ -51,14 +51,14 @@ export default function CreateModuleByMilestone() {
   
     
     const onSubmit = async (values: any) => {
-      if (!milestone._id) {
+      if (!milestone?._id) {
         Error_model_hook("Please ensure your are selected quiz");
         return;
       }
       const ModuleData: {} = {
         ...values,
   
-        details: textEditorValue,
+        // details: textEditorValue,
         milestone: milestone?._id,
       };
   
@@ -242,8 +242,9 @@ export default function CreateModuleByMilestone() {
                           Description
                         </p>
                         <TextEditor
-                          textEditorValue={textEditorValue}
-                          setTextEditorValue={setTextEditorValue}
+                        isReset={isReset}
+                          // textEditorValue={textEditorValue}
+                          // setTextEditorValue={setTextEditorValue}
                         />
                       </section>
                     </Col>

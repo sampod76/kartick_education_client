@@ -49,7 +49,7 @@ const TopBar = () => {
         </h2>
         <div className="font-[700] flex gap-2 text-[15px]">
           <h4 className=" "> 1866 303121 231</h4>
-          <h4>info.iblossomelearn@gmail.com</h4>
+          <h4 className="text-base font-normal">info.iblossomelearn@gmail.com</h4>
         </div>
       </section>
       <section className="flex justify-between gap-3 mt-5 lg:mt-0 ">
