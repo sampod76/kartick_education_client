@@ -12,11 +12,11 @@ const CourseStatistics = ({courseId}:{courseId:any}) => {
     { name: "Quiz", icon: lessonIcon, No: 100 },
   ];
   return (
-    <div className="bg-white grid grid-cols-2 lg:grid-cols-4 w-full lg:w-[60%] mx-auto gap-2 py-5">
+    <div className="bg-white grid grid-cols-2 lg:grid-cols-4 w-full lg:w-[60%] mx-auto gap-5 p-4">
       {overViews?.map((item: any, index: number) => {
         return (
           <div
-            className="flex flex-col justify-center items-center gap-2 p-5  rounded-md  shadow w-[9rem] mx-auto"
+            className="flex flex-col justify-between items-center gap-2 p-5  rounded-md  shadow w-[7rem] md:w-[9rem] mx-auto"
             key={index}
           >
             <Image
@@ -26,7 +26,7 @@ const CourseStatistics = ({courseId}:{courseId:any}) => {
               className="h-[2rem] w-[2rem]"
               alt="overviews"
             />
-            <h1 className="font-[500] ">
+            <h1 className="font-[500] text-base md:text-lg whitespace-nowrap">
               {item?.No} {item?.name}
             </h1>
           </div>

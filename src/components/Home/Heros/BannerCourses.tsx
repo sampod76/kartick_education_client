@@ -5,7 +5,7 @@ import InternelError from "@/components/shared/Error/InternelError";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import CategoryButtonSKeletton from "@/components/ui/Loading/CategoryButtonSKeletton";
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
-import CoverSvg from "@/components/svg/CoverBackground";
+import CoverSvg from "@/assets/svg/CoverBackground";
 
 const BannerCourses = () => {
   const query: Record<string, any> = {};
@@ -46,7 +46,7 @@ const BannerCourses = () => {
           backgroundSize: "cover",
           // minHeight: "50vh",
           // position: "relative",
-          height: "40rem",
+          
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "flex-start",
@@ -55,8 +55,9 @@ const BannerCourses = () => {
           // backgroundColor:"white",
           marginTop: "0px",
         }}
+        className="h-36 md:h-[40rem]"
       >
-        <div className="flex   uppercase justify-between items-center gap-5  font-[550] mb-[8rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap">
+        <div className="flex   uppercase justify-between items-center gap-5  font-[550] mb-9 md:mb-[8rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap">
           {isLoading ? (
             <CategoryButtonSKeletton />
           ) : (
