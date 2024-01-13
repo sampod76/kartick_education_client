@@ -6,9 +6,9 @@ import "./payment.css";
 export default function PaymentCard() {
   return (
     <div>
-      <div className="bg-gray-200 flex items-center justify-center mt-5">
+      <div className="flex items-center justify-start mt-12">
         <div
-          className="max-w-[600px] rounded-lg bg-white shadow-lg p-5 text-gray-700"
+          className="w-full lg:max-w-[650px] rounded-lg bg-white shadow-lg p-5 text-gray-700 "
           style={
             {
               // maxWidth: "600px",
@@ -17,7 +17,7 @@ export default function PaymentCard() {
         >
           <div className="w-full pt-1 pb-5">
             <div className="bg-indigo-500 text-white overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg flex justify-center items-center">
-              <i className="mdi mdi-credit-card-outline text-3xl"></i>
+              <i className="mdi mdi-credit-card-outline text-3xl">Pay</i>
             </div>
           </div>
           <div className="mb-10">
