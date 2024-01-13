@@ -56,7 +56,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
         (item: any) => item?.lesson?._id === lesson?._id
       );
       // console.log(lesson);
-      //  console.log("🚀 lessonQuizData", lessonQuizData);
+      console.log("🚀 lessonQuizData", lessonQuizData);
       return {
         key: lesson?._id,
         label: (
@@ -118,7 +118,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
           <RightCircleOutlined
             style={{
               fontSize: "24px",
-              
+
               fontWeight: 600,
               marginTop: "24px",
             }}
