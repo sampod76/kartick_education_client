@@ -7,7 +7,7 @@ export default function SubscriptJoinPage({
   params: { id: string };
 }) {
   return (
-    <div>
+    <div className="bg-[#F3FFFE] min-h-screen">
       Subscript Join MonthlyPage{params?.id}
       <JoinMain />
     </div>
