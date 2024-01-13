@@ -1,42 +1,128 @@
 import { AllImage } from "@/assets/AllImge";
+import { message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
-const packageData = [
+interface ICourse {
+  title: string;
+  img: string;
+  monthly_price?: number | null;
+  yearly_price: number;
+}
+
+interface IPackage {
+  title: string;
+  img: string;
+  courses: ICourse[];
+}
+
+const packageData: IPackage[] = [
   {
-    _id: "1",
-    title: "Standard Plan",
-    enroll_time: "2024-01-15T10:30:00Z",
-    price: 29.99,
-    time_duration: "3 months",
-    img: AllImage.subscription.subFamily,
+    title: "Core Subjects",
+    img: "core_subjects_image_url",
+    courses: [
+      {
+        title: "Math (Pre-K to 12)",
+        img: "math_image_url",
+        monthly_price: 28,
+        yearly_price: 159,
+      },
+      {
+        title: "Language Arts (Pre-K to 12)",
+        img: "language_arts_image_url",
+        monthly_price: 42,
+        yearly_price: 159,
+      },
+      {
+        title: "Science (Grades K to 8)",
+        img: "science_image_url",
+        monthly_price: 20,
+        yearly_price: 159,
+      },
+      {
+        title: "Social Studies (Grades K to 8)",
+        img: "social_studies_image_url",
+        monthly_price: 20,
+        yearly_price: 159,
+      },
+    ],
   },
   {
-    _id: "2",
-    title: "Premium Plan",
-    enroll_time: "2024-01-20T12:45:00Z",
-    price: 39.99,
-    time_duration: "6 months",
-    img: AllImage.subscription.subTeacher,
+    title: "Combo Package",
+    img: "combo_package_image_url",
+    courses: [
+      {
+        title: "Math (Pre-K to 12)",
+        img: "math_image_url",
+        monthly_price: 24,
+        yearly_price: 129,
+      },
+      {
+        title: "Language Arts (Pre-K to 12)",
+        img: "language_arts_image_url",
+        monthly_price: 25,
+        yearly_price: 129,
+      },
+    ],
   },
   {
-    _id: "3",
-    title: "Basic Plan",
-    enroll_time: "2024-01-10T08:00:00Z",
-    price: 19.99,
-    time_duration: "1 month",
-    img: AllImage.subscription.subAdmin,
+    title: "Single Subject",
+    img: "single_subject_image_url",
+    courses: [
+      {
+        title: "Math (Pre-K to 12)",
+        img: "math_image_url",
+        monthly_price: 20,
+        yearly_price: 79,
+      },
+      {
+        title: "Language Arts (Pre-K to 12)",
+        img: "language_arts_image_url",
+        monthly_price: 40,
+        yearly_price: 79,
+      },
+    ],
   },
 ];
-export default function JoinPackage() {
+
+export default function JoinPackage({
+  plan,
+  setPlan,
+  quantity,
+  setQuantity,
+}: {
+  plan: string;
+  setPlan: React.Dispatch<React.SetStateAction<"monthly" | "yearly">>;
+  quantity: number;
+  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  const calculateTotalPrice = (courses: ICourse[], plan: string) => {
+    return (
+      courses.reduce((total, course) => {
+        const price =
+          plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
+        return total + price;
+      }, 0) * quantity
+    );
+  };
+
+  ///! For select package
+
+  const [selectPackage, setSelectPackage] = useState<IPackage>(packageData[0]);
+  const selectPackageHandler = (value: IPackage) => {
+    setSelectPackage(value);
+    message.success(`Selected ${value?.title}`);
+  };
+
   return (
     <div className="mt-[5rem]">
       <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
         Choose a package
       </h2>
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
-        {packageData?.map((packages, index: number) => {
+        {packageData?.map((packages: IPackage, index: number) => {
+          const totalPackagePrice = calculateTotalPrice(packages.courses, plan);
           return (
             <div
               key={index + 1}
@@ -52,27 +138,22 @@ export default function JoinPackage() {
                 {/* //! course section */}
                 <div className="py-3">
                   {/* single */}
-                  {[
-                    "Math",
-                    "Language Art",
-                    "science",
-                    "Global Studies",
-                    "Physics",
-                  ]?.map((item: any) => {
+                  {packages?.courses?.map((course: ICourse) => {
                     return (
                       <div
                         className="flex justify- items-center gap-2 px-5 py-2"
-                        key={item}
+                        key={course?.title}
                       >
-                        <Image
+                        {/* <Image
                           height={20}
                           width={20}
                           src={packages?.img}
                           alt="package"
-                        />
+                        /> */}
                         <h5 className="text-primary text-md ">
-                          {packages?.title} {item}
+                          {course?.title}
                         </h5>
+
                         <span className="text-[12px] text-slate-600 ">
                           (Pre-k t 12)
                         </span>
@@ -80,13 +161,21 @@ export default function JoinPackage() {
                     );
                   })}
                 </div>
+
+                <h2 className="text-4xl font-bold text-center text-slate-700 ">
+                  ${totalPackagePrice}
+                  <span className="text-2xl text-slate-500"> /{plan}</span>
+                </h2>
                 {/*//! select button */}
-                <Link
-                  href={`/packages/join/${packages?._id}`}
-                  className="w-[90%] mx-auto bg-white h-[48px] border border-primary  text-center px-7 py-3 text-primary hover:bg-primary hover:text-white font-semibold  rounded-xl my-3"
+                <button
+                  onClick={() => selectPackageHandler(packages)}
+                  className={`w-[90%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
+                    selectPackage?.title === packages?.title ?
+                    "bg-primary text-white":"bg-white text-primary"
+                  }`}
                 >
                   Select
-                </Link>
+                </button>
               </div>
             </div>
           );

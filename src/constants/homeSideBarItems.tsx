@@ -6,6 +6,9 @@ import {
   ContactsFilled,
   ControlOutlined,
   EuroOutlined,
+  EditOutlined,
+  FundOutlined,
+  PicCenterOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 
@@ -18,7 +21,7 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "1",
-      icon: <HomeOutlined />,
+      icon: <HomeOutlined onClick={onClose} />,
     },
     {
       label: (
@@ -27,17 +30,9 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/learning",
-      icon: <TabletOutlined />,
+      icon: <EditOutlined onClick={onClose} />,
     },
-    {
-      label: (
-        <Link className="text-base font-thin font-serif" href="/subscription">
-          Subscription
-        </Link>
-      ),
-      key: "/subscription",
-      icon: <TabletOutlined />,
-    },
+
     {
       label: (
         <Link className="text-base font-thin font-serif" href="/">
@@ -45,7 +40,7 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/assessment",
-      icon: <ControlOutlined />,
+      icon: <ControlOutlined onClick={onClose} />,
     },
     {
       label: (
@@ -54,7 +49,16 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/analysis",
-      icon: <EuroOutlined />,
+      icon: <FundOutlined onClick={onClose} />,
+    },
+    {
+      label: (
+        <Link className="text-base font-thin font-serif" href="/subscription">
+          Subscription
+        </Link>
+      ),
+      key: "/subscription",
+      icon: <EuroOutlined onClick={onClose} />,
     },
     {
       label: (
@@ -63,7 +67,7 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/contact",
-      icon: <ContactsFilled />,
+      icon: <ContactsFilled onClick={onClose} />,
     },
     {
       label: (
@@ -72,7 +76,7 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/About",
-      icon: <UserOutlined />,
+      icon: <UserOutlined onClick={onClose} />,
     },
     {
       label: (
@@ -81,6 +85,7 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/dashboard",
+      icon: <PicCenterOutlined onClick={onClose} />,
     },
   ];
 

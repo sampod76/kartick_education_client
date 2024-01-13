@@ -51,6 +51,7 @@ const NavbarPublic = () => {
       </nav>
 
       <div className="hidden lg:flex mr-2">
+
         <Link href="/subscription" className="h-[48px] w-[130px] text-slate-700 px-3 py-3 font-[600] border border-secondary rounded-md hover:bg-secondary hover:text-white uppercase">Membership</Link>
         </div>
     </div>

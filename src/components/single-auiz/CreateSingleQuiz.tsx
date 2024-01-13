@@ -114,7 +114,7 @@ const CreateSingleQuiz = () => {
     };
 
     console.log(singleQuizDat);
-return 
+
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
 

@@ -5,7 +5,7 @@ import JoinPackage from "./JoinPackage";
 import PaymentCard from "./PaymentCard";
 
 export default function JoinMain() {
-  const [plan, setPlan] = useState<string>("Monthly");
+  const [plan, setPlan] = useState<"monthly" | "yearly">("monthly");
   const [quantity, setQuantity] = useState<number>(1);
 
   return (
@@ -16,7 +16,12 @@ export default function JoinMain() {
         quantity={quantity}
         setQuantity={setQuantity}
       />
-      <JoinPackage />
+      <JoinPackage
+        plan={plan}
+        setPlan={setPlan}
+        quantity={quantity}
+        setQuantity={setQuantity}
+      />
       <PaymentCard />
     </div>
   );
