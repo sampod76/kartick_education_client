@@ -21,13 +21,13 @@ const Footer = () => {
                   className="w-[65%]"
                 />
 
-                <h1 className="mt-4 max-w-xs text-gray-500 space-y-1">
+                <h5 className="mt-4 max-w-xs text-gray-500 space-y-1">
                   <p> 📞 1-866-952-7392 Ext 1</p>
 
                   <p> 📧 hello@iblossomlearn.com</p>
 
                   <p> 375 Rockbridge Rd. NW #126, Lilburn, GA 30047s</p>
-                </h1>
+                </h5>
 
                 <ul className="mt-8 flex gap-6">
                   <li>

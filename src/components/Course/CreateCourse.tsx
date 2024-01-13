@@ -42,6 +42,7 @@ const TextEditorNotSetForm = dynamic(
 
 const CreateCourse = ({ setOpen }: any) => {
   const [textEditorValue, setTextEditorValue] = useState("");
+  const [imageUploadLoading, setImageLoading] = useState(false);
   const [shortDescription, setShortDescription] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
@@ -367,10 +368,12 @@ const CreateCourse = ({ setOpen }: any) => {
                     textAlign: "start",
                   }}
                 >
+                  <h4>Select course cover image</h4>
                   <UploadMultipalDragAndDropImge
                     multiple={false}
                     images={images}
                     setImages={setImages}
+                    setImageLoading={setImageLoading}
                   />
                 </Col>
               </Row>
@@ -410,6 +413,7 @@ const CreateCourse = ({ setOpen }: any) => {
               <Spin />
             ) : (
               <Button
+                disabled={imageUploadLoading}
                 type="default"
                 style={{ marginTop: "1rem" }}
                 htmlType="submit"

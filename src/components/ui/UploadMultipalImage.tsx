@@ -73,7 +73,7 @@ const UploadMultipalImage = ({
 
   return (
     <div className="flex justify-center items-center border p-5 rounded-lg my-2">
-      {defaultImage.length &&
+      {defaultImage.length ?
         defaultImage?.map((image, i) => (
           <Image
             key={i}
@@ -84,7 +84,7 @@ const UploadMultipalImage = ({
             // fill
             className="w-36"
           />
-        ))}
+        )):null}
       <Upload
         name={name}
         listType="picture-card"

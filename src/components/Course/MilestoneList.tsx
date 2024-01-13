@@ -76,12 +76,12 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
                     💥 {milestone?.title}
                     {/* //! Milestone Title */}
                   </Link>
-                  <ul className="py-3  mx-5">
+                  <ul className="py-3 ">
                     {milestone?.modules?.map((module: any, index: number) => {
                       return (
                         <li
                           key={module?._id || index}
-                          className="px-2  text-start"
+                          className="px-1  text-start"
                         >
                           
                           <Link

@@ -83,7 +83,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             padding: "1em",
             minHeight: "100vh",
             overflowY: "initial",
-            textAlign: "center",
+            // textAlign: "center",
           }}
         >
           {children}
