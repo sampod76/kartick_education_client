@@ -42,6 +42,8 @@ const TextEditorNotSetForm = dynamic(
 
 const CreateCourse = ({ setOpen }: any) => {
   const [textEditorValue, setTextEditorValue] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const [imageUploadLoading, setImageLoading] = useState(false);
   const [shortDescription, setShortDescription] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -137,8 +139,8 @@ const CreateCourse = ({ setOpen }: any) => {
         form={form}
         style={{ padding: "0.5rem" }}
       >
-        <Typography.Title style={{ textDecoration: "underline" }} level={5}>
-          Basic Information
+        <Typography.Title style={{ textDecoration: "underline",fontSize:"2rem",textAlign:"center" }} level={5}>
+          Create a new course
         </Typography.Title>
 
         <section
@@ -374,6 +376,9 @@ const CreateCourse = ({ setOpen }: any) => {
                     images={images}
                     setImages={setImages}
                     setImageLoading={setImageLoading}
+                    formSubmitted={formSubmitted}
+                    setFormSubmitted={setFormSubmitted}
+
                   />
                 </Col>
               </Row>

@@ -9,14 +9,14 @@ import Link from "next/link";
 const BannerSection = () => {
   return (
     <div
-      className="block md:-ml-5 lg:flex justify-between place-items-end bg-blue-20 min-h-[35rem] lg:min-h-[45rem] text-left pt-[1rem] md:pt-[3rem] "
+      className="block  lg:flex justify-between place-items-end bg-blue-20 min-h-[35rem] lg:min-h-[45rem] text-left pt-[1rem] md:pt-[3rem] "
       style={{
         backgroundImage: `url('/banner/bannerBG.png')`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
     >
-      <section className="w-full lg:w-[60%] px-5 lg:px-[59px] py-[3rem]">
+      <section className="w-full lg:w-[60%] px-5 py-[3rem]">
         <div className=" font-[800] text-black uppercase">
           <h1 className="text-[1.7rem]  lg:text-[4vw] xl:text-7xl font-normal">Feel bored or anxious</h1>
           <h1 className="text-[1.6rem]  lg:text-[4vw] xl:text-7xl">
@@ -25,7 +25,7 @@ const BannerSection = () => {
         </div>
         <p className="mt-[2rem] text-[1.3rem]  lg:text-5xl leading-[2rem]">
           Overcome challenges with
-          <span className="text-secondary text-[1.3rem]"> iBlossomLearn </span> classes. Your
+          <span className="text-secondary  text-[1.3rem]  lg:text-5xl"> iBlossomLearn </span> classes. Your
           adventure in learning awaits!
         </p>
         <div className="mt-2 md:mt-[3rem] max-h-[3.8rem] flex">
