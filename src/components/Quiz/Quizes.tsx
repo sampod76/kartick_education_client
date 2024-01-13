@@ -33,7 +33,7 @@ export default function QuizeSinglePage({
     ...quiz_query,
     quiz:quizeId
   });
-  // console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData)
+  console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData)
 
 
   const handleFinishQuiz = () => {

@@ -79,23 +79,20 @@ password : 11223344
 1. category in courses list in dashboard;
 2. course action with add new milestone .
 3. details course with skelton in dashboard.
-4. 
-
+4.
 
 ### 3 January
 
 1. registration from for student
 2. update in dashboard
-3. 
+3.
 
-
-## 9 January 
+## 9 January
 
 1. Answer input fixed
-2. collapse of lesson 
+2. collapse of lesson
 3. dashboard of role based
-4. 
-
+4.
 
 ### 11 January
 
@@ -107,8 +104,10 @@ password : 11223344
 6. fixed learning course MilestoneList
 7. fixed dashboard statistics
 
-
 ### 13 January
+
 1. solved multiple Image in create answer
 2. fixed list item black boll
-3. 
+3. time_duration fixed in update
+4. collapse quiz in lesson (discusss)
+5. !!!!!!!! Quiz Test data is not find
