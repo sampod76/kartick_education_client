@@ -110,4 +110,6 @@ password : 11223344
 2. fixed list item black boll
 3. time_duration fixed in update
 4. collapse quiz in lesson (discusss)
-5. !!!!!!!! Quiz Test data is not find
+5. !!!!!!!! Quiz Test data is not find (discuss)
+6. Package select and card designed . but should be dynamic
+7. Topbar Social icon updated

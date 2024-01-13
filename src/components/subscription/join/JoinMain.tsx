@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import JoinSelect from "./JoinSelect";
 import JoinPackage from "./JoinPackage";
+import PaymentCard from "./PaymentCard";
 
 export default function JoinMain() {
   const [plan, setPlan] = useState<string>("Monthly");
@@ -16,6 +17,7 @@ export default function JoinMain() {
         setQuantity={setQuantity}
       />
       <JoinPackage />
+      <PaymentCard />
     </div>
   );
 }
