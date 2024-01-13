@@ -28,7 +28,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className="w-[90%]  md:w-full mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-0.5 hover:scale-100 duration-300"
+      className="w-[90%]  md:w-full mx-auto h-full rounded-md shadow-md bg-white transition"
     >
       <div className="overflow-hidden">
         <div className="relative">
@@ -46,7 +46,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
             />
           </div>
-          <div className="hover:bg-transparent transition  rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+          <div className="hover:bg-transparent   rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
           <div>
             <div className="absolute bottom-0 left-0 bg-primary px-4 py-2 text-white text-sm hover:bg-white hover:text-primary transition duration-500 ease-in-out">
               {course?.price} $
