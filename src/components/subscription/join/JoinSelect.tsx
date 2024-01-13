@@ -9,11 +9,18 @@ export default function JoinSelect({
   setQuantity,
 }: {
   plan: string;
-  setPlan: React.Dispatch<React.SetStateAction<string>>;
+  setPlan: React.Dispatch<React.SetStateAction<"monthly" | "yearly">>;
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const increasePlanHandler = (value: "increase" | "decrease") => {
+  const planHandler = (value: "monthly" | "yearly") => {
+    if (value === "monthly") {
+      setPlan("yearly");
+    } else if (value === "yearly") {
+      setPlan("monthly");
+    }
+  };
+  const quantityHandler = (value: "increase" | "decrease") => {
     if (value === "increase") {
       setQuantity((q) => q + 1);
     } else if (value === "decrease" && quantity > 1) {
@@ -22,18 +29,32 @@ export default function JoinSelect({
       message.error("Please chose at least 1 plan ");
     }
   };
+
+  const activePlan = `w-[9rem] bg-white text-primary h-[48px] border-2 border-primary text-center px-7 py-3  font-semibold `;
+
+  const deActivePlane = `w-[9rem] bg-primary h-[48px] border border-2 border-primary  text-center px-7 py-3 text-white font-semibold `;
   return (
-    <div className="flex justify-start gap-7">
+    <div className="block lg:flex justify-start gap-7 items-center">
       {/* Select section */}
       <aside className="">
         <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
           Choose a Plan
         </h2>
         <div className="flex items-center gap-0 ">
-          <button className="w-[9rem] bg-primary h-[48px] border  hover:bg-white hover:text-primary  border-y-2 hover:border-l-2 border-primary  text-center px-7 py-3 text-white font-semibold  rounded-l-[8px]">
+          <button
+            onClick={() => planHandler("monthly")}
+            className={`rounded-l-md ${
+              plan === "monthly" ? activePlan : deActivePlane
+            }`}
+          >
             Monthly
           </button>
-          <button className="w-[9rem] bg-white text-primary hover:bg-primary h-[48px] border-y-2 border-r-2 border-primary text-center px-7 py-3 hover:text-white font-semibold  rounded-r-[8px]">
+          <button
+            onClick={() => planHandler("yearly")}
+            className={`rounded-r-md ${
+              plan === "yearly" ? activePlan : deActivePlane
+            }`}
+          >
             Yearly
           </button>
         </div>
@@ -48,7 +69,7 @@ export default function JoinSelect({
 
         <div className="flex items-center">
           <button
-            onClick={() => increasePlanHandler("increase")}
+            onClick={() => quantityHandler("increase")}
             className="min-w-[4rem] h-[3rem] border border-slate-700 hover:bg-primary hover:text-white font-bold text-2xl hover:border-white rounded-sm"
           >
             +
@@ -57,7 +78,7 @@ export default function JoinSelect({
             {quantity}
           </button>
           <button
-            onClick={() => increasePlanHandler("decrease")}
+            onClick={() => quantityHandler("decrease")}
             className="min-w-[4rem] h-[3rem] border border-slate-700 hover:bg-primary hover:text-white font-bold text-2xl hover:border-white rounded-sm"
           >
             -
