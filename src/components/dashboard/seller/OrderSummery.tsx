@@ -2,7 +2,7 @@ import React from "react";
 
 export default function OrderSummery() {
   return (
-    <div className=" bg-slate-200 my-3 pt-5">
+    <div className=" bg-slate-200 my-3 p-5">
       <div className="flex justify-start item-start space-y-2 flex-col">
         <h1 className="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
           Order #13432
@@ -106,7 +106,7 @@ export default function OrderSummery() {
               </div>
             </div>
           </div>
-          <div className="flex justify-center flex-col md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
+          <div className="flex justify-center  md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
             <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-30 bg-gray-300 space-y-6">
               <h3 className="text-xl  font-semibold leading-5 text-gray-800">
                 Summary

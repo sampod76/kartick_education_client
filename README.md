@@ -106,3 +106,9 @@ password : 11223344
 5. logo size fixed in navbar
 6. fixed learning course MilestoneList
 7. fixed dashboard statistics
+
+
+### 13 January
+1. solved multiple Image in create answer
+2. fixed list item black boll
+3. 
