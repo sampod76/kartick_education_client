@@ -11,6 +11,14 @@ export const homeNavItems: MenuProps["items"] = [
   },
   {
     label: (
+      <Link className="text-base font-thin font-serif" href="/subscription">
+        subscription
+      </Link>
+    ),
+    key: "/subscription",
+  },
+  {
+    label: (
       <Link className="text-base font-thin font-serif" href="/learning">
         Learning
       </Link>
@@ -33,14 +41,7 @@ export const homeNavItems: MenuProps["items"] = [
     ),
     key: "/analysis",
   },
-  {
-    label: (
-      <Link className="text-base font-thin font-serif" href="/subscription">
-        subscription
-      </Link>
-    ),
-    key: "/subscription",
-  },
+  
   {
     label: (
       <Link className="text-base font-thin font-serif" href="/contact">
