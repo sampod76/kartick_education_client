@@ -42,7 +42,7 @@ export default function SUbscriptionForm() {
       }}
     >
       <h2 className="text-2xl font-bold text-center  ">Join Now</h2>
-      <div className="w-full  lg:max-w-4xl  shadow mx-auto">
+      <div className="w-full  lg:max-w-4xl   mx-auto">
         <Form
           name="form"
           labelCol={{ span: 8 }}

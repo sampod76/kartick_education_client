@@ -14,7 +14,7 @@ const NavbarPublic = () => {
   return (
     <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
       <nav
-        className=" text-black py-[3px] md:py-[1em] px-[2em] 
+        className=" text-black py-[3px] md:py-[1em] px-[1em] 
     flex align-center justify-between gap-[5rem] "
       >
         <Logo />
@@ -51,7 +51,8 @@ const NavbarPublic = () => {
       </nav>
 
       <div className="hidden lg:flex mr-2">
-        <Link href="/subscription" className="h-[48px] w-[130px] text-slate-700 px-3 py-3 font-[600] border border-se rounded-md hover:bg-secondary hover:text-white uppercase">Membership</Link>
+
+        <Link href="/subscription" className="h-[48px] w-[130px] text-slate-700 px-3 py-3 font-[600] border border-secondary rounded-md hover:bg-secondary hover:text-white uppercase">Membership</Link>
         </div>
     </div>
   );
