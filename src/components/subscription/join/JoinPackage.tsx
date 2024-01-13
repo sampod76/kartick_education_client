@@ -1,4 +1,5 @@
 import { AllImage } from "@/assets/AllImge";
+import { message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -106,14 +107,13 @@ export default function JoinPackage({
     );
   };
 
-  // const calculateTotalPrice = (courses: ICourse[], plan: string) => {
-  //   return courses.reduce((total, course) => {
-  //     // Use nullish coalescing operator to default to 0 if monthly_price is null or undefined
-  //     const price = plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
+  ///! For select package
 
-  //     return total + price;
-  //   }, 0);
-  // };
+  const [selectPackage, setSelectPackage] = useState<IPackage>(packageData[0]);
+  const selectPackageHandler = (value: IPackage) => {
+    setSelectPackage(value);
+    message.success(`Selected ${value?.title}`);
+  };
 
   return (
     <div className="mt-[5rem]">
@@ -167,7 +167,13 @@ export default function JoinPackage({
                   <span className="text-2xl text-slate-500"> /{plan}</span>
                 </h2>
                 {/*//! select button */}
-                <button className="w-[90%] mx-auto bg-white h-[48px] border border-primary  text-center px-7 py-3 text-primary hover:bg-primary hover:text-white font-semibold  rounded-xl my-3">
+                <button
+                  onClick={() => selectPackageHandler(packages)}
+                  className={`w-[90%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
+                    selectPackage?.title === packages?.title ?
+                    "bg-primary text-white":"bg-white text-primary"
+                  }`}
+                >
                   Select
                 </button>
               </div>
