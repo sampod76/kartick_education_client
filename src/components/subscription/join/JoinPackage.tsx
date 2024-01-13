@@ -96,20 +96,11 @@ export default function JoinPackage({
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const [selectedPackage, setSelectedPackage] = useState<IPackage | null>(null);
-
-  const handleSelectPackage = (selectedPlan: "monthly" | "yearly") => {
-    setPlan(selectedPlan);
-  };
-
-  const handleQuantityChange = (newQuantity: number) => {
-    setQuantity(newQuantity);
-  };
-
   const calculateTotalPrice = (courses: ICourse[], plan: string) => {
     return (
       courses.reduce((total, course) => {
-        const price = plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
+        const price =
+          plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
         return total + price;
       }, 0) * quantity
     );
@@ -119,7 +110,7 @@ export default function JoinPackage({
   //   return courses.reduce((total, course) => {
   //     // Use nullish coalescing operator to default to 0 if monthly_price is null or undefined
   //     const price = plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
-  
+
   //     return total + price;
   //   }, 0);
   // };
@@ -171,7 +162,10 @@ export default function JoinPackage({
                   })}
                 </div>
 
-                <h2 className="text-4xl font-bold">${totalPackagePrice}</h2>
+                <h2 className="text-4xl font-bold text-center text-slate-700 ">
+                  ${totalPackagePrice}
+                  <span className="text-2xl text-slate-500"> /{plan}</span>
+                </h2>
                 {/*//! select button */}
                 <button className="w-[90%] mx-auto bg-white h-[48px] border border-primary  text-center px-7 py-3 text-primary hover:bg-primary hover:text-white font-semibold  rounded-xl my-3">
                   Select
