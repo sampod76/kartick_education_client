@@ -79,6 +79,7 @@ export default function QuizeSinglePage({
             quizData={allSingleQuizeData?.data || []}
             quizId={quizeId}
           />
+
           {/* <div className="flex flex-col gap-3">
             {allSingleQuizeData?.data?.map((quiz: any, index: number) => (
               

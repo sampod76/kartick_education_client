@@ -21,7 +21,7 @@ export default function QuizQuestionCard({
   // userResponses: any;
   userAnswers: any[];
 }) {
-  // console.log(quiz)
+  console.log(quiz)
   // const [timer, setTimer] = useState<number>(60 * 1);
 
   // useEffect(() => {
