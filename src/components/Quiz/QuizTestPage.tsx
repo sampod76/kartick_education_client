@@ -51,7 +51,7 @@ export default function QuizTestPage({
           />
         )}
 
-        <div className="flex justify-between mb-3 px-3">
+        <div className="flex justify-between  gap-5 mb-3 px-3">
           <Button
             onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
             disabled={currentStep === 0}

@@ -73,7 +73,7 @@ const CoursesTab = () => {
   }
 
   return (
-    <div className="mt-5 bg-slate-100 p-3">
+    <div className="mt-10 bg-slate-100 p-3">
       {isLoading ? (
         <TopBarLoading />
       ) : (
@@ -82,6 +82,7 @@ const CoursesTab = () => {
           centered
           onChange={handleTabClick}
           items={tabsItems2}
+          style={{marginTop:"50px"}}
         />
       )}
     </div>
