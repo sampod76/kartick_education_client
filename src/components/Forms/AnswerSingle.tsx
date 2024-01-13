@@ -48,6 +48,10 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
   };
 
   const handleChange = (index: number, updatedAnswer: Answer) => {
+
+    // console.log(updatedAnswer,"🚀 ~ file: AnswerSingle.tsx:51 ~ handleChange ~ index:", index)
+
+    
     let updatedAnswers = [...answers];
     updatedAnswers[index] = updatedAnswer;
     // If the selected answer is correct, set other answers to incorrect
@@ -98,7 +102,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               placeholder="Option Title"
               style={{
                 width: "70vw",
-                height:"2.7rem"
+                height: "2.7rem",
               }}
               // width={500}
               value={answer.title}
@@ -126,24 +130,23 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               multiple={true}
               // multiple
               beforeUpload={async (file) => {
-                console.log(
-                  "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
-                  file
-                );
+                // console.log(
+                //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
+                //   file
+                // );
                 // You can add custom logic before uploading, e.g., checking file type or size
+                const images = answer?.imgs
                 const imgUrl = await uploadImgCloudinary(file);
-                console.log(imgUrl);
-
-                // if (answer?.img) {
-                //   // handleChange(index, {
-                //   //   ...answer,
-                //   //   img:
-                //   // });
-                // }
+                
+                if(imgUrl){
+                  images.push(imgUrl);
+                }
+                // console.log(images,imgUrl, answer);
+            
                 handleChange(index, {
                   ...answer,
                   // imgs: [...answer.imgs,imgUrl],
-                  imgs: [imgUrl],
+                  imgs:images,
                 });
                 return false; // Prevent default upload behavior
               }}
@@ -156,7 +159,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               <Input
                 placeholder="Serial Number"
                 type="number"
-                value={answer.serialNumber}
+                value={answer?.serialNumber?answer?.serialNumber: index+1}
                 defaultValue={index + 1}
                 onChange={(e) =>
                   handleChange(index, {
@@ -164,6 +167,8 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                     serialNumber: +e.target.value,
                   })
                 }
+                onWheel={(e) => e.preventDefault()}
+
               />
             </div>
 

@@ -76,39 +76,35 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
                     💥 {milestone?.title}
                     {/* //! Milestone Title */}
                   </Link>
-                  <ul className="py-3 ">
+                  <div className="py-3 ">
                     {milestone?.modules?.map((module: any, index: number) => {
                       return (
-                        <li
+                        <Link
+                          href={`/lesson/${module?._id}`}
                           key={module?._id || index}
-                          className="px-1  text-start"
+                          className="text-secondary text-start"
+                          // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
+                          style={{
+                            display: "flex",
+                            gap: "0.5rem",
+                            alignItems: "center",
+                            fontWeight: 500,
+                            // color: "grey",
+                            fontSize: "18px",
+                            fontFamily: "Inter",
+                            marginBlock: "1rem",
+                            textDecoration: "uppercase",
+                            // padding: "2px 16px",
+                          }}
                         >
-                          
-                          <Link
-                            href={`/lesson/${module?._id}`}
-                            className="text-secondary"
-                            // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
-                            style={{
-                              display: "flex",
-                              gap: "0.5rem",
-                              alignItems: "center",
-                              fontWeight: 500,
-                              // color: "grey",
-                              fontSize: "18px",
-                              fontFamily: "Inter",
-                              marginBlock: "1rem",
-                              textDecoration: "uppercase",
-                              // padding: "2px 16px",
-                            }}
-                          >
-                            {/* //! Modules List  */}
-                            {/* <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div> */}
-                            <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>  {module?.title}
-                          </Link>
-                        </li>
+                          {/* //! Modules List  */}
+                          {/* <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div> */}
+                          <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>{" "}
+                          {module?.title}
+                        </Link>
                       );
                     })}
-                  </ul>
+                  </div>
                 </div>
               );
             })}

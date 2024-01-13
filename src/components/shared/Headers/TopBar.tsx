@@ -17,17 +17,17 @@ import { USER_ROLE } from "@/constants/role";
 import { userInfo } from "os";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import SocialGroup from "../socialIcon/SocialGroup";
 
 const TopBar = () => {
-
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
   // const screens = useBreakpoint();
   // const userLoggedIn = {
   //   name: "",
   //   role: "admin",
   //   email: "sarwarasik@gmail.com",
   // };
-  const userLoggedIn = getUserInfo() as any
+  const userLoggedIn = getUserInfo() as any;
   // console.log(
   //   "🚀 ~ file: TopBar.tsx:28 ~ TopBar ~ userLoggedIn:",
   //   userLoggedIn
@@ -51,11 +51,13 @@ const TopBar = () => {
         </h2>
         <div className="font-[700] flex gap-2 text-[15px]">
           <h4 className=" "> 1866 303121 231</h4>
-          <h4 className="text-base font-normal">info.iblossomelearn@gmail.com</h4>
+          <h4 className="text-base font-normal">
+            info.iblossomelearn@gmail.com
+          </h4>
         </div>
       </section>
       <section className="flex justify-between gap-3 lg:mt-0 ">
-        <div className="flex gap-2 text-2xl">
+        {/* <div className="flex gap-2 text-2xl">
           <FacebookFilled
             style={{
               fontSize: "36px",
@@ -71,14 +73,15 @@ const TopBar = () => {
               fontSize: "36px",
             }}
           />
-          {/* <LinkedinOutlined /> */}
+       
           <YoutubeOutlined
             style={{
               fontSize: "40px",
               color: "red",
             }}
           />
-        </div>
+        </div> */}
+        <SocialGroup />
         {userLoggedIn?.email ? (
           <UserAvatarUI />
         ) : (
@@ -104,5 +107,5 @@ const TopBar = () => {
 
 // export default TopBar;
 export default dynamic(() => Promise.resolve(TopBar), {
-   ssr: false,
- });
+  ssr: false,
+});

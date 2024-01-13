@@ -8,9 +8,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { courseStatusOptions, singleQuizTypes } from "@/constants/global";
 
-
 import {
-
   useGetSingleOneQuizQuery,
   useUpdateSingleQuizMutation,
 } from "@/redux/api/adminApi/singleQuiz";
@@ -32,11 +30,16 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import timeDurationToMilliseconds, {
+  convertTimeDurationMillisecondsToTime,
+} from "@/hooks/stringToMiliSecend";
 
-
-export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
- 
-    const [quizType, setQuizTypes] = useState<
+export default function EditSingleQuiz({
+  singleQuizId,
+}: {
+  singleQuizId: string;
+}) {
+  const [quizType, setQuizTypes] = useState<
     "input" | "select" | "multiple_select"
   >("select"); // !  tag selection
   const [videoType, setVideoType] = useState(null); // ! for video insert
@@ -45,10 +48,10 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
   const [answers, setAnswers] = useState([]);
 
   const [singleAnswer, setSingleAnswerInput] = useState<string>("");
-  console.log(
-    "🚀 ~ file: page.tsx:58 ~ CreateSingleQuiz ~ singleAnswer:",
-    singleAnswer
-  );
+  // console.log(
+  //   "🚀 ~ file: page.tsx:58 ~ CreateSingleQuiz ~ singleAnswer:",
+  //   singleAnswer
+  // );
   //
   const [isReset, setIsReset] = useState(false);
   //
@@ -101,9 +104,9 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
       Error_model_hook("Please select an quiz type");
       return;
     }
-
-    if (values?.time_duration) {
-      // values.time_duration = timeDurationToMilliseconds(values.time_duration);
+    // console.log(values, "ttttttttttttttttttttttt");
+    if (typeof values?.time_duration === "string") {
+      values.time_duration = timeDurationToMilliseconds(values.time_duration);
     }
     if (quiz?._id) {
       values["quiz"] = quiz?._id;
@@ -121,8 +124,6 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
       type: quizType,
     };
 
-
-
     try {
       const res = await updateSingleQuiz({
         id: singleQuizId,
@@ -136,7 +137,7 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
         setVideoUrl("");
         setVideoType(null);
         setAnswers([]);
-        setIsReset(true)
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -435,9 +436,9 @@ export default function EditSingleQuiz({singleQuizId}:{singleQuizId:string}) {
                     Description
                   </p>
                   <TextEditor
-                  isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    isReset={isReset}
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
                   />
                 </section>
               </Col>

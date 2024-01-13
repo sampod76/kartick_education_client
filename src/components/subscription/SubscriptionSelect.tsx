@@ -65,7 +65,7 @@ export default function SubscriptionSelect() {
                 Join Now
               </Link>
               <Link
-                href={`/subscription/join/${subscription?._id}`}
+                href={`/subscription/trial/${subscription?._id}`}
                 className="w-[80%] mx-auto bg-white text-primary hover:bg-primary h-[48px] border border-primary text-center px-7 py-3 hover:text-white font-semibold  rounded"
               >
                 Learn more

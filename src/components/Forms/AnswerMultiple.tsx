@@ -113,23 +113,23 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
               multiple={true}
               // multiple
               beforeUpload={async (file) => {
-                console.log(
-                  "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
-                  file
-                );
+                // console.log(
+                //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
+                //   file
+                // );
                 // You can add custom logic before uploading, e.g., checking file type or size
+                const images = answer?.imgs
                 const imgUrl = await uploadImgCloudinary(file);
-                console.log(imgUrl);
-
-                // if (answer?.img) {
-                //   // handleChange(index, {
-                //   //   ...answer,
-                //   //   img:
-                //   // });
-                // }
+                
+                if(imgUrl){
+                  images.push(imgUrl);
+                }
+                // console.log(images,imgUrl, answer);
+            
                 handleChange(index, {
                   ...answer,
-                  imgs:[ imgUrl],
+                  // imgs: [...answer.imgs,imgUrl],
+                  imgs:images,
                 });
                 return false; // Prevent default upload behavior
               }}

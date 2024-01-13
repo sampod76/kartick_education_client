@@ -20,7 +20,7 @@ const SideModuleList = ({
   // console.log(milestoneId);
 
   const { data: milestoneData, isLoading } =
-  useGetSingleMilestoneQuery(milestoneId);
+    useGetSingleMilestoneQuery(milestoneId);
   // console.log("🚀 ~ milestoneData:", milestoneData)
   // console.log(milestoneData);
 
@@ -55,25 +55,22 @@ const SideModuleList = ({
         }}
       /> */}
 
-      <ul className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2]">
+      <div className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2]">
         {modulesData?.map((module: any, index: number) => {
           return (
-           <li  key={index} className={` text-[#1c1a1a]  py-1 px-1 md:px-3 rounded ${
-            module?._id === moduleId
-              ? "underline"
-              : ""
-          }`}>
-             <Link
+            <Link
+              key={index}
               href={`/lesson/${module?._id}`}
-             
-              className={` rounded text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2  `}
+              className={`  text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2 text-[#1c1a1a]  py-1 px-1 md:px-3 rounded ${
+                module?._id === moduleId ? "underline" : ""
+              } `}
             >
-               <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>{module?.title}
+              <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>
+              {module?.title}
             </Link>
-           </li>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 };
