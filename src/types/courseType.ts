@@ -32,4 +32,8 @@ export type ICourseData = {
   tags: string[];
   createdAt: string;
   updatedAt: string;
+  //
+  videos_count?:number,
+  total_time_duration?:number
+  total_enroll_student?:number
 };

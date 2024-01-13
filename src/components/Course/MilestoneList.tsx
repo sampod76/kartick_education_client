@@ -8,6 +8,7 @@ import Link from "next/link";
 import React from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
+import { SVGYelloDot } from "@/assets/svg/Icon";
 
 const MilestoneList = ({ courseId }: { courseId: string }) => {
   const {
@@ -87,19 +88,19 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
                           style={{
                             display: "flex",
                             gap: "0.5rem",
-                            alignItems: "center",
+                            alignItems: "start",
                             fontWeight: 500,
                             // color: "grey",
                             fontSize: "18px",
                             fontFamily: "Inter",
-                            marginBlock: "1rem",
+                            // marginBlock: "1rem",
                             textDecoration: "uppercase",
                             // padding: "2px 16px",
                           }}
                         >
                           {/* //! Modules List  */}
                           {/* <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div> */}
-                          <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>{" "}
+                         <p className="mt-2"> <SVGYelloDot /></p>
                           {module?.title}
                         </Link>
                       );
