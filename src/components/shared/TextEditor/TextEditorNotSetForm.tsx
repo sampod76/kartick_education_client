@@ -47,9 +47,9 @@ const TextEditorNotSetValue = ({
         }} // preferred to use only this option to update the content for performance reasons
         // onChange={(newContent) =>  setTextEditorValue(newContent)}
       />
-      <div>
+      {/* <div>
         <div>{content && parse(content)}</div>
-      </div>
+      </div> */}
     </>
   );
 };

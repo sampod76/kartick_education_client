@@ -129,8 +129,8 @@ export default function JoinPackage({
               className="w-full bg-white rounded-[10px] border mx-auto  items-center  shadow-xl  min-h-[24rem] flex flex-col justify-between"
             >
               {/* //! banner section */}
-              <div className="bg-primary h-[4rem] w-full mt-0 py-3">
-                <h1 className="text-center font-bold text-white">
+              <div className="bg-primary h-[4rem] w-full mt-0 py-3 rounded-t-lg">
+                <h1 className="text-center font-bold text-white ">
                   {packages?.title}
                 </h1>
               </div>

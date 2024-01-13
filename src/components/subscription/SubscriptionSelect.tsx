@@ -42,7 +42,7 @@ const subscriptionData: ISubscription[] = [
 ];
 export default function SubscriptionSelect() {
   return (
-    <div className="max-w-full lg:max-w-[70%] mx-auto bg-slate-50 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-7">
+    <div className="max-w-full lg:max-w-[70%] mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-7">
       {subscriptionData?.map((subscription: ISubscription, index: number) => {
         return (
           <div
