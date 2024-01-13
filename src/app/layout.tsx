@@ -26,13 +26,7 @@ export default function RootLayout({
         <body
           // className="container mx-auto "
           className={inter.className}
-          style={{
-            boxShadow:
-              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-            maxWidth: "1990px",
-            marginInline: "auto",
-            padding: "5px",
-          }}
+          
         >
           <Providers>{children}</Providers>
         </body>

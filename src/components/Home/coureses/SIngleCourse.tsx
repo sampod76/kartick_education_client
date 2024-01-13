@@ -28,7 +28,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className=" w-full mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-1 hover:scale-110 duration-300"
+      className="w-[90%]  md:w-full mx-auto h-full rounded-md shadow-md bg-white transition ease-in-out delay-150 0 hover:-translate-y-0.5 hover:scale-100 duration-300"
     >
       <div className="overflow-hidden">
         <div className="relative">

@@ -7,9 +7,11 @@ export default function UploadMultipalDragAndDropImge({
   images = [],
   setImages,
   multiple = false,
+  setImageLoading,
 }: {
   images?: string[];
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
+  setImageLoading: React.Dispatch<React.SetStateAction<boolean>>;
   multiple?: boolean;
 }) {
   const envcloudinary = getCloudinaryEnv(); // Replace YOUR_CLOUD_NAME with your Cloudinary cloud name
@@ -41,11 +43,12 @@ export default function UploadMultipalDragAndDropImge({
     onChange(info) {
       const { status } = info.file;
       if (status !== "uploading") {
+        setImageLoading(true);
         console.log(info.file, info.fileList);
       }
       if (status === "done") {
         message.success(`${info.file.name} file uploaded successfully.`);
-
+        setImageLoading(false);
         setImages((c) => [...c, info?.file?.response?.url]);
       } else if (status === "error") {
         message.error(`${info.file.name} file upload failed.`);

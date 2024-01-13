@@ -74,13 +74,13 @@ const CreateSingleQuiz = () => {
     ...query,
   });
   const categoryData: any = Category?.data;
-   //
+  //
 
   const [addSingleQuiz, { isLoading: serviceLoading }] =
-  useAddSingleQuizMutation();
+    useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
-    console.log("🚀 ~ onSubmit ~ values:", values)
+    console.log("🚀 ~ onSubmit ~ values:", values);
     if (!quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");
       return;
@@ -114,7 +114,6 @@ const CreateSingleQuiz = () => {
     };
 
     console.log(singleQuizDat);
-
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
@@ -277,7 +276,7 @@ const CreateSingleQuiz = () => {
                     }
                   }
                 >
-                  <FormTimePicker  name="time_duration" label="Time Duration" />
+                  <FormTimePicker name="time_duration" label="Time Duration" />
                 </Col>
                 <Col
                   className="gutter-row"
@@ -354,9 +353,10 @@ const CreateSingleQuiz = () => {
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    margin: "20px 0",
                   }}
                 >
+                  <LabelUi>Select Quiz Question images (optional)</LabelUi>
                   <UploadMultipalImage name="imgs" />
                 </Col>
               </Row>
@@ -367,7 +367,7 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormTextArea label="Description" name="short_description" />
+                <FormTextArea label="Short Description" name="short_description" />
               </Col>
               <Col
                 className="gutter-row"
@@ -400,9 +400,9 @@ const CreateSingleQuiz = () => {
                     Description
                   </p>
                   <TextEditor
-                  isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    isReset={isReset}
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
                   />
                 </section>
               </Col>
@@ -448,13 +448,15 @@ const CreateSingleQuiz = () => {
                 </Col>
               </Row>
             </div>
-            {serviceLoading ? (
+           <div className="flex justify-center items-center">
+           {serviceLoading ? (
               <ButtonLoading />
             ) : (
-              <Button htmlType="submit" type="default">
+              <Button htmlType="submit" size="large" style={{width:"10rem"}} type="default">
                 Create
               </Button>
             )}
+           </div>
           </Form>
         </div>
       ) : (

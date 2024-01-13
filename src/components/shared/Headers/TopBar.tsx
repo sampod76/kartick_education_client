@@ -54,7 +54,7 @@ const TopBar = () => {
           <h4 className="text-base font-normal">info.iblossomelearn@gmail.com</h4>
         </div>
       </section>
-      <section className="flex justify-between gap-3 mt-5 lg:mt-0 ">
+      <section className="flex justify-between gap-3 lg:mt-0 ">
         <div className="flex gap-2 text-2xl">
           <FacebookFilled
             style={{
@@ -74,7 +74,7 @@ const TopBar = () => {
           {/* <LinkedinOutlined /> */}
           <YoutubeOutlined
             style={{
-              fontSize: "36px",
+              fontSize: "40px",
               color: "red",
             }}
           />
