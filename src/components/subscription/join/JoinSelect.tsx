@@ -15,9 +15,9 @@ export default function JoinSelect({
 }) {
   const planHandler = (value: "monthly" | "yearly") => {
     if (value === "monthly") {
-      setPlan("yearly");
-    } else if (value === "yearly") {
       setPlan("monthly");
+    } else if (value === "yearly") {
+      setPlan("yearly");
     }
   };
   const quantityHandler = (value: "increase" | "decrease") => {
@@ -30,9 +30,11 @@ export default function JoinSelect({
     }
   };
 
-  const activePlan = `w-[9rem] bg-white text-primary h-[48px] border-2 border-primary text-center px-7 py-3  font-semibold `;
+  const activePlan = `w-[9rem] bg-primary h-[48px] border border-2 border-primary  text-center px-7 py-3 text-white font-semibold `;
 
-  const deActivePlane = `w-[9rem] bg-primary h-[48px] border border-2 border-primary  text-center px-7 py-3 text-white font-semibold `;
+  const deActivePlane = `w-[9rem] bg-white text-primary h-[48px] border-2 border-primary text-center px-7 py-3  font-semibold `;
+
+  console.log(plan);
   return (
     <div className="block lg:flex justify-start gap-7 items-center">
       {/* Select section */}
