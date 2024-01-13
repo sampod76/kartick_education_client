@@ -82,7 +82,7 @@ export default function JoinPackage() {
                 </div>
                 {/*//! select button */}
                 <Link
-                  href={`/packages/join/${packages?._id}`}
+                  href={`/subscription/join/${packages?._id}`}
                   className="w-[90%] mx-auto bg-white h-[48px] border border-primary  text-center px-7 py-3 text-primary hover:bg-primary hover:text-white font-semibold  rounded-xl my-3"
                 >
                   Select
