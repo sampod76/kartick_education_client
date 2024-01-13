@@ -8,10 +8,14 @@ export default function UploadMultipalDragAndDropImge({
   setImages,
   multiple = false,
   setImageLoading,
+  formSubmitted,
+  setFormSubmitted
 }: {
   images?: string[];
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
   setImageLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setFormSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
+  formSubmitted?: boolean;
   multiple?: boolean;
 }) {
   const envcloudinary = getCloudinaryEnv(); // Replace YOUR_CLOUD_NAME with your Cloudinary cloud name
@@ -42,7 +46,7 @@ export default function UploadMultipalDragAndDropImge({
     },
     onChange(info) {
       const { status } = info.file;
-      if (status !== "uploading") {
+      if (status === "uploading") {
         setImageLoading(true);
         console.log(info.file, info.fileList);
       }
@@ -51,18 +55,35 @@ export default function UploadMultipalDragAndDropImge({
         setImageLoading(false);
         setImages((c) => [...c, info?.file?.response?.url]);
       } else if (status === "error") {
+        setImageLoading(false);
         message.error(`${info.file.name} file upload failed.`);
       }
     },
     onDrop(e) {
       console.log("Dropped files", e.dataTransfer.files);
     },
+    onRemove(file) {
+      if (formSubmitted) {
+        const updatedImages = images.filter((image) => image !== file.url);
+        setImages(updatedImages);
+      }
+    },
   };
+  React.useEffect(() => {
+    let timeout: string | number | NodeJS.Timeout | undefined;
+    if (formSubmitted) {
+      timeout = setTimeout(() => {
+        setFormSubmitted(false);
+      }, 500); // Adjust the delay as needed
+    }
+
+    return () => clearTimeout(timeout);
+  }, [formSubmitted]);
 
   return (
     <div>
       {" "}
-      <Dragger {...props}>
+      <Dragger  {...props}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>

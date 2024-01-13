@@ -25,8 +25,8 @@ export default function RootLayout({
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <body
           // className="container mx-auto "
-          className={inter.className}
-          
+          className={`${inter.className} max-w-[1990px] mx-auto`}
+          // style={{maxWidth: '1990px',margin:"auto"}}
         >
           <Providers>{children}</Providers>
         </body>
