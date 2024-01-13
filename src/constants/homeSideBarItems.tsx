@@ -32,7 +32,15 @@ const homeSideItems = (onClose?: any) => {
       key: "/learning",
       icon: <EditOutlined onClick={onClose} />,
     },
-
+    {
+      label: (
+        <Link className="text-base font-thin font-serif" href="/subscription">
+          Subscription
+        </Link>
+      ),
+      key: "/subscription",
+      icon: <EuroOutlined onClick={onClose} />,
+    },
     {
       label: (
         <Link className="text-base font-thin font-serif" href="/">
@@ -51,15 +59,7 @@ const homeSideItems = (onClose?: any) => {
       key: "/analysis",
       icon: <FundOutlined onClick={onClose} />,
     },
-    {
-      label: (
-        <Link className="text-base font-thin font-serif" href="/subscription">
-          Subscription
-        </Link>
-      ),
-      key: "/subscription",
-      icon: <EuroOutlined onClick={onClose} />,
-    },
+
     {
       label: (
         <Link onClick={onClose} href="/contact">
