@@ -122,6 +122,7 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
+            
             disabled={isDefaultValue?.is_time_up ? true : false}
             defaultValue={isDefaultValue?.answer} // Set the default value based on isDefaultValue
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}

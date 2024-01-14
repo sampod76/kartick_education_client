@@ -1,11 +1,11 @@
 import { AllImage } from "@/assets/AllImge";
-import { message } from "antd";
+
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { IPlan } from "./JoinMain";
-
-interface ICourse {
+import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
+interface ICaterory {
   _id: string;
   title: string;
   img: string;
@@ -28,10 +28,10 @@ interface IPackage {
   _id: string;
   title: string;
   img?: string;
-  type: string;
+  type: "combo" | "select" | "multiple";
   price_time?: string;
   date_range?: [string];
-  categories: ICourse[];
+  categories: ICaterory[];
 
   monthly?: {
     price: number;
@@ -206,17 +206,17 @@ export default function JoinPackage({
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  // const calculateTotalPrice = (categories: ICourse[], plan: string) => {
+  // const calculateTotalPrice = (categories: ICaterory[], plan: string) => {
   //   return (
-  //     categories.reduce((total, course) => {
+  //     categories.reduce((total, caterory) => {
   //       const price =
-  //         plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
+  //         plan === "monthly" ? caterory.monthly_price ?? 0 : caterory.yearly_price;
   //       return total + price;
   //     }, 0) * quantity
   //   );
   // }
   const calculatePackage2 = (packages: IPackage): number | undefined => {
-    console.log(packages);
+    // console.log(packages);
 
     let newPrice = 0;
 
@@ -236,12 +236,24 @@ export default function JoinPackage({
 
     return newPrice;
   };
-  ///! For select package
+  // ! For select package
 
   const [selectPackage, setSelectPackage] = useState<IPackage>(packageData[0]);
+  const [singleSelect, setSingleSelect] = useState("");
+
+// console.log(singleSelect,'ppppppppppp')
+
   const selectPackageHandler = (value: IPackage) => {
     setSelectPackage(value);
     message.success(`Selected ${value?.title}`);
+    console.log(value)
+   if (value?.type=== 'select' ){
+
+    }
+    const selectedPackageData ={
+
+    }
+
   };
 
   return (
@@ -264,31 +276,69 @@ export default function JoinPackage({
                 </h1>
               </div>
               <div className="py-3 flex flex-col justify-between   w-full">
-                {/* //! course section */}
+                {/* //! caterory section */}
                 <div className="py-3">
                   {/* single */}
-                  {packages?.categories?.map((course: ICourse) => {
-                    return (
-                      <div
-                        className="flex justify- items-center gap-2 px-5 py-2"
-                        key={course?.title}
-                      >
-                        {/* <Image
+                  {packages?.type !== "select" &&
+                    packages?.categories?.map((caterory: ICaterory) => {
+                      return (
+                        <div
+                          className="flex justify- items-center gap-2 px-5 py-2"
+                          key={caterory?.title}
+                        >
+                          {/* <Image
                           height={20}
                           width={20}
                           src={packages?.img}
                           alt="package"
                         /> */}
-                        <h5 className="text-primary text-md ">
-                          {course?.title}
-                        </h5>
 
-                        <span className="text-[12px] text-slate-600 ">
-                          (Pre-k t 12)
-                        </span>
-                      </div>
-                    );
-                  })}
+                          <h5 className="text-primary text-md ">
+                            {caterory?.title}
+                          </h5>
+
+                          <span className="text-[12px] text-slate-600 ">
+                            (Pre-k t 12)
+                          </span>
+                        </div>
+                      );
+                    })}
+                  {packages?.type === "select" && (
+                    <div>
+                      <Radio.Group
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "1rem",
+                        }}
+                        onChange={(e) => setSingleSelect(e.target.value)}
+                      >
+                        {packages?.categories?.map((option: any) => (
+                          <Radio
+                            key={option?.title}
+                            value={option?._id}
+                            style={{
+                              display: "flex",
+                              paddingTop: "0.5rem",
+                              paddingBottom: "0.5rem",
+                              paddingLeft: "1.25rem",
+                              paddingRight: "1.25rem",
+                              gap: "0.5rem",
+                              alignItems: "center",
+                            }}
+                          >
+                            <h5 className="text-primary text-md ">
+                              {option?.title}
+                            </h5>
+
+                            <span className="text-[12px] text-slate-600 ">
+                              (Pre-k t 12)
+                            </span>
+                          </Radio>
+                        ))}
+                      </Radio.Group>
+                    </div>
+                  )}
                 </div>
 
                 <h2 className="text-4xl font-bold text-center text-slate-700 ">

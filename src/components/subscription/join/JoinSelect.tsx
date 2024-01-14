@@ -57,9 +57,9 @@ export default function JoinSelect({
           </button>
           <button
             onClick={() => planHandler("biannual")}
-            className={`rounded-r-md ${
+            className={` ${
               plan === "biannual" ? activePlan : deActivePlane
-            }`}
+            } border-x-none`}
           >
             Biannual
           </button>
