@@ -28,11 +28,15 @@ export default function QuizTestPage({
 
   const { data: quizAnswerData } = useGetSubmitUserQuizQuery(quizId);
 
-  const userSubmitData = quizAnswerData?.data;
+  const userSubmitData = quizAnswerData
 
-  const submittedDefaultData= userSubmitData?.find(
+  console.log("🚀 ~ file: QuizTestPage.tsx:32 ~ userSubmitData:", userSubmitData)
+
+
+  const submittedDefaultData= userSubmitData?.userSubmitQuizzes?.find(
     (answer:any) => answer?._id === currentAnswer?.userSubmitQuizzes[0]?.singleQuizId
   );
+  // const submittedDefaultData= userSubmitData
 
   console.log("🚀 ~ file: QuizTestPage.tsx:36 ~ submittedDefaultData:", submittedDefaultData)
 
