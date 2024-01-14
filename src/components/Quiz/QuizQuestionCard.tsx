@@ -107,7 +107,7 @@ export default function QuizQuestionCard({
           <QuizTimer
             quiz={quiz}
             time_duration={quiz?.time_duration}
-            userAnswers={userAnswers}
+           
             index={index}
             submittedDefaultData={submittedDefaultData}
           />
