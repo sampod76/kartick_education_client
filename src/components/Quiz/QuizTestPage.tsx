@@ -3,6 +3,11 @@ import { useState } from "react";
 import { Button, message } from "antd";
 import QuizQuestionCard from "./QuizQuestionCard";
 import { useAppSelector } from "@/redux/hooks";
+import {
+  useGetSubmitUserQuizQuery,
+  useSubmitQuizMutation,
+} from "@/redux/api/quizSubmitApi";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
 export default function QuizTestPage({
   quizData,
   quizId,
@@ -12,13 +17,48 @@ export default function QuizTestPage({
 }) {
   ///! state of quiz card
   const [currentStep, setCurrentStep] = useState(0);
+  const [currentAnswer, setCurrentAnswer] = useState<any>(null);
   // const [userResponses, setUserResponses] = useState<any[]>([]);
 
+  const [submitQuiz] = useSubmitQuizMutation();
+  ///! for submit quiz
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
-  const handleNext = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+  //! for getQUiz
+
+  const { data: quizAnswerData } = useGetSubmitUserQuizQuery(quizId);
+
+  const userSubmitData = quizAnswerData?.data;
+
+  const submittedDefaultData= userSubmitData?.find(
+    (answer:any) => answer?._id === currentAnswer?.userSubmitQuizzes[0]?.singleQuizId
+  );
+
+  console.log("🚀 ~ file: QuizTestPage.tsx:36 ~ submittedDefaultData:", submittedDefaultData)
+
+
+  const handleNext = async () => {
+    // console.log(currentAnswer);
+
+    try {
+      const res = await submitQuiz(currentAnswer).unwrap();
+      console.log(res, "response");
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Answer submitted");
+        // setCurrentStep((prevStep) => prevStep + 1);
+      }
+      // message.success("Admin created successfully!");
+    } catch (err: any) {
+      console.error(err);
+      Error_model_hook(err?.message || err?.data);
+    }
+
+    return setCurrentStep((prevStep) => prevStep + 1);
   };
+
+  console.log(currentAnswer, "cccccccccccccccc");
 
   // console.log(currentStep + 1,'anddd',userAnswers);
   const handleFinishQuiz = () => {
@@ -41,6 +81,9 @@ export default function QuizTestPage({
             quiz={quizData[currentStep]}
             index={currentStep}
             userAnswers={userAnswers}
+            currentAnswer={currentAnswer}
+            setCurrentAnswer={setCurrentAnswer}
+            submittedDefaultData={submittedDefaultData}
             // setUserResponses={setUserResponses}
             // userResponses={userResponses}
           />

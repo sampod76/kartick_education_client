@@ -28,12 +28,14 @@ export default function QuizeSinglePage({
   quiz_query["limit"] = 999999;
   quiz_query["sortBy"] = "serialNumber";
   quiz_query["sortOrder"] = "asc";
-
+  quiz_query["quiz"] = quizeId;
   const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
     ...quiz_query,
+
     quiz: quizeId,
   });
   console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData);
+
 
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here

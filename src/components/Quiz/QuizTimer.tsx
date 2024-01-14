@@ -1,23 +1,25 @@
 "use client";
 import { addAnswer } from "@/redux/features/quizSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import React, { useEffect, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 interface QuizTimerProps {
   time_duration: number;
   quiz: any;
-  userAnswers: any[];
+
   index: number;
+  submittedDefaultData: any;
 }
 
 const QuizTimer: React.FC<QuizTimerProps> = ({
   time_duration = 10000,
   quiz,
-  userAnswers,
+
   index,
+  submittedDefaultData,
 }) => {
-//   console.log(time_duration, "ttttttttttttt");
+  //   console.log(time_duration, "ttttttttttttt");
 
   const dispatch = useAppDispatch();
 
@@ -27,7 +29,11 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  const currentData = userAnswers?.find((answer) => answer?._id === quiz?._id);
+  const { userAnswers } = useAppSelector((state: any) => state.quiz);
+
+  const currentData = userAnswers?.find(
+    (answer: any) => answer?._id === quiz?._id
+  );
 
   //   const [isTimeUp,setIsTimeUp] = useState(false)
 

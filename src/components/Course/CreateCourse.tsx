@@ -96,6 +96,7 @@ const CreateCourse = ({ setOpen }: any) => {
       Error_model_hook(err?.data);
     }
   };
+  
   const categoryQuery: Record<string, any> = {};
   categoryQuery["status"] = ENUM_STATUS.ACTIVE;
   categoryQuery["limit"] = 99999;
