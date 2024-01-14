@@ -72,7 +72,7 @@ export default function QuizTestPage({
   };
 
   return (
-    <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0">
+    <div className="w-full  mx-auto my-5 lg:my-0">
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
         {/* Render quiz based on the current step */}
         {quizData.length > 0 && (

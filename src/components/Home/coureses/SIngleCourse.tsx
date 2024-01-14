@@ -22,6 +22,7 @@ import LoaderNextImage from "@/components/ui/Loading/LoaderNextImage";
 import { ICourseData } from "@/types/courseType";
 import CoverSvg from "@/assets/svg/CoverBackground";
 import {SVGstudentIcom} from "@/assets/svg/Icon";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const { Text } = Typography;
 
@@ -29,6 +30,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   // console.log(course);
+  const screens = useBreakpoint();
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
@@ -41,7 +43,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               height={350}
               width={350}
               // loader={LoaderNextImage}
-              className="w-full h-[230px] object-cover rounded-md" // Add the rounded-md class here
+              className="w-full h-[200px] xl:h-[220px] object-cover rounded-md" // Add the rounded-md class here
               src={course?.img || AllImage?.notFoundImage}
               // onLoadingComplete={(img) => console.log(img.naturalWidth)}
               alt="Sunset in the mountains"
@@ -73,12 +75,12 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
           </Typography.Title>
 
           <p className="text-black text-sm md:text-base">
-            <EllipsisMiddle suffixCount={3} maxLength={230}>
+            <EllipsisMiddle suffixCount={3} maxLength={screens.xl? 150 :220}>
               {course?.short_description}
             </EllipsisMiddle>
           </p>
         </div>
-        <div className=" py-2 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900">
+        <div className=" py-2 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900 mb-3">
           <span className="py-1  font-regular whitespace-nowrap text-gray-900 flex flex-row items-center">
             {/* <span className="ml-1">
               {course?.duration?.length &&

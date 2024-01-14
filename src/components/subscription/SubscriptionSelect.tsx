@@ -47,13 +47,13 @@ export default function SubscriptionSelect() {
         return (
           <div
             key={index + 1}
-            className="w-full lg:max-w-[400px]   bg-white rounded-[10px] border mx-auto flex flex-col justify-center gap-3 items-center  shadow-xl py-5"
+            className="w-[80%] lg:max-w-[400px]   bg-white rounded-[10px] border mx-auto flex flex-col justify-center gap-3 items-center  shadow-xl py-5"
           >
             <h1 className="text-2xl capitalize ">{subscription?.title}</h1>
             <Image
               height={200}
               width={200}
-              className="h-[200px] w-[200px]"
+              className="bg-cover bg-no-repeat"
               src={subscription?.img}
               alt="subscription"
             />

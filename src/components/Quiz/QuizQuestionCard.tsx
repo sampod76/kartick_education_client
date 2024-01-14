@@ -6,6 +6,7 @@ import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 
 import React, { useEffect, useState } from "react";
 import QuizTimer from "./QuizTimer";
+import Image from "next/image";
 
 const { Option } = Select;
 export default function QuizQuestionCard({
@@ -28,6 +29,7 @@ export default function QuizQuestionCard({
   submittedDefaultData: any;
 }) {
   console.log(quiz);
+
 
   const dispatch = useAppDispatch();
 
@@ -101,7 +103,9 @@ export default function QuizQuestionCard({
 
   return (
     <div>
-      <Card key={quiz?._id} className="mb-4">
+
+      <div key={quiz?._id} className="m-4 w-full">
+
         <div className="text-center mt-4 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
@@ -111,10 +115,22 @@ export default function QuizQuestionCard({
             submittedDefaultData={submittedDefaultData}
           />
         </div>
-        <p className="text-lg font-[550] mb-2">
+        <p className="lg:text-lg font-[550] mb-2 text-base mx-2">
           <TextToSpeech text={quiz?.title} />
           Question {index + 1} : {quiz?.title}
         </p>
+        <div className="flex flex-wrap">
+          {quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
+            <Image
+              key={key}
+              src={img}
+              width={700}
+              height={700}
+              className={"w-32 lg:w-96 max-h-44"}
+              alt=""
+            ></Image>
+          ))}
+        </div>
         {quiz?.type === "select" && (
           <Radio.Group
             style={{
@@ -132,7 +148,23 @@ export default function QuizQuestionCard({
                 value={option?._id}
                 defaultChecked={isDefaultValue?.answer === option?._id} // Check if the default value matches
               >
-                {option?.title}
+                <div className="border-2 rounded-xl p-3 w-full">
+                  <p>{option?.title}</p>
+                  <div className="flex flex-wrap w-full">
+                    {option?.imgs?.map(
+                      (img: string, key: number, allimages: any[]) => (
+                        <Image
+                          key={key}
+                          src={img}
+                          width={700}
+                          height={700}
+                          className={`w-32 lg:w-96 max-h-24 lg:max-h-44`}
+                          alt=""
+                        ></Image>
+                      )
+                    )}
+                  </div>
+                </div>
               </Radio>
             ))}
           </Radio.Group>
@@ -155,12 +187,49 @@ export default function QuizQuestionCard({
                 value={option?._id}
                 defaultChecked={isDefaultValue?.answer === option?._id} // Check if the default value matches
               >
-                {option?.title}
+                <div className="border-2 rounded-xl p-3 w-full">
+                  <p>{option?.title}</p>
+                  <div className="flex flex-wrap w-full">
+                    {option?.imgs?.map(
+                      (img: string, key: number, allimages: any[]) => (
+                        <Image
+                          key={key}
+                          src={img}
+                          width={700}
+                          height={700}
+                          className={`w-32 lg:w-96 max-h-24 lg:max-h-44`}
+                          alt=""
+                        ></Image>
+                      )
+                    )}
+                  </div>
+                </div>
               </Checkbox>
             ))}
           </Checkbox.Group>
         )}
-      </Card>
+
+        {/* {quiz?.type === "input" && (
+          <div>
+            <p className="text-lg font-[550] mb-2">
+              Question {index + 1} : {quiz?.title}
+            </p>
+            <Input
+              onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
+              style={{ minHeight: "1rem", width: "12rem" }}
+              placeholder="Type your answer"
+            />
+          </div>
+        )}
+        {quiz?.type === "text" && (
+          <Input.TextArea
+            onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
+            style={{ minHeight: "6rem" }}
+            placeholder="Type your answer"
+          />
+        )} */}
+      </div>
+
     </div>
   );
 }
