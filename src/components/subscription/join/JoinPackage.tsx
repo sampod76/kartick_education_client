@@ -9,8 +9,19 @@ interface ICourse {
   _id: string;
   title: string;
   img: string;
-  monthly_price?: number | null;
-  yearly_price?: number;
+
+  monthly?: {
+    price: number;
+    each_student_increment: number;
+  };
+  biannual?: {
+    price: number;
+    each_student_increment: number;
+  };
+  yearly?: {
+    price: number;
+    each_student_increment: number;
+  };
 }
 
 interface IPackage {
@@ -20,18 +31,19 @@ interface IPackage {
   type: string;
   price_time?: string;
   date_range?: [string];
-  courses: ICourse[];
-  biannual?: {
-    price: number;
-    increment: number;
-  };
+  categories: ICourse[];
+
   monthly?: {
     price: number;
-    increment: number;
+    each_student_increment: number;
+  };
+  biannual?: {
+    price: number;
+    each_student_increment: number;
   };
   yearly?: {
     price: number;
-    increment: number;
+    each_student_increment: number;
   };
 }
 
@@ -43,19 +55,19 @@ const packageData: IPackage[] = [
     type: "combo",
     monthly: {
       price: 100,
-      increment: 4,
+      each_student_increment: 4,
     },
     yearly: {
       price: 100,
-      increment: 40,
+      each_student_increment: 40,
     },
     biannual: {
       price: 100,
-      increment: 20,
+      each_student_increment: 20,
     },
 
     price_time: "monthly",
-    courses: [
+    categories: [
       {
         _id: "11",
         title: "Math (Pre-K to 12)",
@@ -92,18 +104,18 @@ const packageData: IPackage[] = [
     type: "combo",
     monthly: {
       price: 120,
-      increment: 4,
+      each_student_increment: 4,
     },
     biannual: {
       price: 500,
-      increment: 20,
+      each_student_increment: 20,
     },
     yearly: {
       price: 920,
-      increment: 40,
+      each_student_increment: 40,
     },
 
-    courses: [
+    categories: [
       {
         title: "Math (Pre-K to 12)",
         img: "math_image_url",
@@ -123,23 +135,21 @@ const packageData: IPackage[] = [
     type: "select",
     monthly: {
       price: 220,
-      increment: 4,
+      each_student_increment: 4,
     },
     biannual: {
       price: 600,
-      increment: 20,
+      each_student_increment: 20,
     },
     yearly: {
       price: 1020,
-      increment: 40,
+      each_student_increment: 40,
     },
-    courses: [
+    categories: [
       {
         _id: "31",
         title: "Math (Pre-K to 12)",
         img: "math_image_url",
-        monthly_price: 20,
-        yearly_price: 79,
       },
       {
         title: "Language Arts (Pre-K to 12)",
@@ -156,17 +166,17 @@ const packageData: IPackage[] = [
 
     monthly: {
       price: 420,
-      increment: 4,
+      each_student_increment: 4,
     },
     biannual: {
       price: 550,
-      increment: 20,
+      each_student_increment: 20,
     },
     yearly: {
       price: 820,
-      increment: 40,
+      each_student_increment: 40,
     },
-    courses: [
+    categories: [
       {
         _id: "41",
         title: "Math (Pre-K to 12)",
@@ -191,30 +201,40 @@ export default function JoinPackage({
   quantity,
   setQuantity,
 }: {
-  plan: string;
+  plan: IPlan;
   setPlan: React.Dispatch<React.SetStateAction<IPlan>>;
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  // const calculateTotalPrice = (courses: ICourse[], plan: string) => {
+  // const calculateTotalPrice = (categories: ICourse[], plan: string) => {
   //   return (
-  //     courses.reduce((total, course) => {
+  //     categories.reduce((total, course) => {
   //       const price =
   //         plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
   //       return total + price;
   //     }, 0) * quantity
   //   );
   // }
-
-  const calculatePackage2 = (packages: IPackage): number => {
+  const calculatePackage2 = (packages: IPackage): number | undefined => {
     console.log(packages);
-    if (packages?.type) {
+
+    let newPrice = 0;
+
+    if (plan === "monthly" && packages?.monthly) {
+      newPrice =
+        packages.monthly.price +
+        packages.monthly.each_student_increment * quantity;
+    } else if (plan === "biannual" && packages?.biannual) {
+      newPrice =
+        packages.biannual.price +
+        packages.biannual.each_student_increment * quantity;
+    } else if (plan === "yearly" && packages?.yearly) {
+      newPrice =
+        packages.yearly.price +
+        packages.yearly.each_student_increment * quantity;
     }
 
-    return 0;
-    // if (packages.type === "combo") {
-    //   return packages.price;
-    // }
+    return newPrice;
   };
   ///! For select package
 
@@ -247,7 +267,7 @@ export default function JoinPackage({
                 {/* //! course section */}
                 <div className="py-3">
                   {/* single */}
-                  {packages?.courses?.map((course: ICourse) => {
+                  {packages?.categories?.map((course: ICourse) => {
                     return (
                       <div
                         className="flex justify- items-center gap-2 px-5 py-2"

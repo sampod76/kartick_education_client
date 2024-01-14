@@ -9,7 +9,7 @@ export default function JoinSelect({
   quantity,
   setQuantity,
 }: {
-  plan: string;
+  plan: IPlan;
   setPlan: React.Dispatch<React.SetStateAction<IPlan>>;
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
@@ -19,6 +19,9 @@ export default function JoinSelect({
       setPlan("monthly");
     } else if (value === "yearly") {
       setPlan("yearly");
+    }
+    else{
+    setPlan("biannual")
     }
   };
   const quantityHandler = (value: "increase" | "decrease") => {
@@ -51,6 +54,14 @@ export default function JoinSelect({
             }`}
           >
             Monthly
+          </button>
+          <button
+            onClick={() => planHandler("biannual")}
+            className={`rounded-r-md ${
+              plan === "biannual" ? activePlan : deActivePlane
+            }`}
+          >
+            Biannual
           </button>
           <button
             onClick={() => planHandler("yearly")}
