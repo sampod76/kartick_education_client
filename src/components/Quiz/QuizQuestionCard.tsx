@@ -27,11 +27,11 @@ export default function QuizQuestionCard({
   setCurrentAnswer: any;
   submittedDefaultData: any;
 }) {
-  console.log(quiz);
-
+  // console.log(quiz);
+  // console.log(currentAnswer);
   const dispatch = useAppDispatch();
 
-  if (!currentAnswer) {
+  if (!currentAnswer|| quiz?._id !== currentAnswer?.userSubmitQuizzes[0]?.singleQuizId) {
     const beforeANswer = {
       lesson: quiz?.lesson,
       module: quiz?.module?._id,

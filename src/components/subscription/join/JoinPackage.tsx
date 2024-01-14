@@ -8,67 +8,92 @@ interface ICourse {
   title: string;
   img: string;
   monthly_price?: number | null;
-  yearly_price: number;
+  yearly_price?: number;
 }
 
 interface IPackage {
   title: string;
-  img: string;
+  img?: string;
+  type: string;
+  price_time?: string;
+  date_range?: [string];
   courses: ICourse[];
+  monthly_price?: number | null;
+  yearly_price?: number;
+  monthly_increment_price?: number;
+  yearly_increment_price?: number;
+  biannual_price?: number;
+  biannual_increment_price?: number;
 }
 
 const packageData: IPackage[] = [
   {
     title: "Core Subjects",
     img: "core_subjects_image_url",
+    type: "combo",
+    monthly_price: 800,
+    yearly_price: 1000,
+    monthly_increment_price: 4,
+    yearly_increment_price: 40,
+    price_time: "monthly",
     courses: [
       {
         title: "Math (Pre-K to 12)",
         img: "math_image_url",
-        monthly_price: 28,
-        yearly_price: 159,
+        // monthly_price: 28,
+        // yearly_price: 159,
       },
       {
         title: "Language Arts (Pre-K to 12)",
         img: "language_arts_image_url",
-        monthly_price: 42,
-        yearly_price: 159,
+        // monthly_price: 42,
+        // yearly_price: 159,
       },
       {
         title: "Science (Grades K to 8)",
         img: "science_image_url",
-        monthly_price: 20,
-        yearly_price: 159,
+        // monthly_price: 20,
+        // yearly_price: 159,
       },
       {
         title: "Social Studies (Grades K to 8)",
         img: "social_studies_image_url",
-        monthly_price: 20,
-        yearly_price: 159,
+        // monthly_price: 20,
+        // yearly_price: 159,
       },
     ],
   },
   {
     title: "Combo Package",
     img: "combo_package_image_url",
+    type: "combo",
+    monthly_price: 120,
+    yearly_price: 920,
+    monthly_increment_price: 4,
+    yearly_increment_price: 40,
     courses: [
       {
         title: "Math (Pre-K to 12)",
         img: "math_image_url",
-        monthly_price: 24,
-        yearly_price: 129,
+        // monthly_price: 24,
+        // yearly_price: 129,
       },
       {
         title: "Language Arts (Pre-K to 12)",
         img: "language_arts_image_url",
-        monthly_price: 25,
-        yearly_price: 129,
+        // monthly_price: 25,
+        // yearly_price: 129,
       },
     ],
   },
   {
     title: "Single Subject",
     img: "single_subject_image_url",
+    type: "select",
+    monthly_price: 200,
+    yearly_price: 1200,
+    monthly_increment_price: 4,
+    yearly_increment_price: 40,
     courses: [
       {
         title: "Math (Pre-K to 12)",
@@ -81,6 +106,29 @@ const packageData: IPackage[] = [
         img: "language_arts_image_url",
         monthly_price: 40,
         yearly_price: 79,
+      },
+    ],
+  },
+  {
+    title: "Multiple Subject",
+    img: "Multiple_image_url",
+    type: "multiple",
+    monthly_price: 800,
+    yearly_price: 1000,
+    monthly_increment_price: 4,
+    yearly_increment_price: 40,
+    courses: [
+      {
+        title: "Math (Pre-K to 12)",
+        img: "math_image_url",
+        // monthly_price: 20,
+        // yearly_price: 79,
+      },
+      {
+        title: "Language Arts (Pre-K to 12)",
+        img: "language_arts_image_url",
+        // monthly_price: 40,
+        // yearly_price: 79,
       },
     ],
   },
@@ -97,16 +145,24 @@ export default function JoinPackage({
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const calculateTotalPrice = (courses: ICourse[], plan: string) => {
-    return (
-      courses.reduce((total, course) => {
-        const price =
-          plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
-        return total + price;
-      }, 0) * quantity
-    );
-  };
+  // const calculateTotalPrice = (courses: ICourse[], plan: string) => {
+  //   return (
+  //     courses.reduce((total, course) => {
+  //       const price =
+  //         plan === "monthly" ? course.monthly_price ?? 0 : course.yearly_price;
+  //       return total + price;
+  //     }, 0) * quantity
+  //   );
+  // }
 
+  const packageControl = (packages: IPackage): number => {
+    console.log(packages);
+    if (packages) {
+    }
+    // if (packages.type === "combo") {
+    //   return packages.price;
+    // }
+  };
   ///! For select package
 
   const [selectPackage, setSelectPackage] = useState<IPackage>(packageData[0]);
@@ -122,7 +178,7 @@ export default function JoinPackage({
       </h2>
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
         {packageData?.map((packages: IPackage, index: number) => {
-          const totalPackagePrice = calculateTotalPrice(packages.courses, plan);
+          const totalPackagePrice = packageControl(packages);
           return (
             <div
               key={index + 1}
@@ -170,8 +226,9 @@ export default function JoinPackage({
                 <button
                   onClick={() => selectPackageHandler(packages)}
                   className={`w-[90%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
-                    selectPackage?.title === packages?.title ?
-                    "bg-primary text-white":"bg-white text-primary"
+                    selectPackage?.title === packages?.title
+                      ? "bg-primary text-white"
+                      : "bg-white text-primary"
                   }`}
                 >
                   Select
