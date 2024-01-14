@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface IQuizAnswer {
   userAnswers: {
     serialNumber: number;
-    answer: string | null;
+    answer: string | string[];
     _id: string;
     title: string;
     index: number;

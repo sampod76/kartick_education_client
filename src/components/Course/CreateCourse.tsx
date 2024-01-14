@@ -139,8 +139,16 @@ const CreateCourse = ({ setOpen }: any) => {
         onFinish={onFinish}
         form={form}
         style={{ padding: "0.5rem" }}
+        initialValues={{ status: ENUM_STATUS.ACTIVE }}
       >
-        <Typography.Title style={{ textDecoration: "underline",fontSize:"2rem",textAlign:"center" }} level={5}>
+        <Typography.Title
+          style={{
+            textDecoration: "underline",
+            fontSize: "2rem",
+            textAlign: "center",
+          }}
+          level={5}
+        >
           Create a new course
         </Typography.Title>
 
@@ -295,7 +303,7 @@ const CreateCourse = ({ setOpen }: any) => {
                 <Col xs={24} md={12} lg={12}>
                   <Form.Item
                     label="Select coruse status"
-                    name="type"
+                    name="status"
                     style={{ width: "100%" }}
                   >
                     <Select
@@ -309,7 +317,7 @@ const CreateCourse = ({ setOpen }: any) => {
                           value={data.value}
                           key={data.value}
                         >
-                          {data.label}
+                          <p className="capitalize"> {data.label}</p>
                         </Select.Option>
                       ))}
                     </Select>
@@ -379,7 +387,6 @@ const CreateCourse = ({ setOpen }: any) => {
                     setImageLoading={setImageLoading}
                     formSubmitted={formSubmitted}
                     setFormSubmitted={setFormSubmitted}
-
                   />
                 </Col>
               </Row>
