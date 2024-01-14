@@ -9,6 +9,7 @@ export const SingleQuizApi = baseApi.injectEndpoints({
     // get all academic departments
     getAllSingleQuiz: build.query({
       query: (arg: Record<string, any>) => {
+        // console.log(arg,'aa')
         return {
           url: SINGLE_QUIZ_URL,
           method: "GET",

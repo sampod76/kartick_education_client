@@ -14,40 +14,70 @@ export default function QuizQuestionCard({
   // setUserResponses,
   // userResponses,
   userAnswers,
+  currentAnswer,
+  setCurrentAnswer,
+  submittedDefaultData,
 }: {
   quiz: any;
   index: number;
   // setUserResponses: any;
   // userResponses: any;
   userAnswers: any[];
+  currentAnswer: any;
+  setCurrentAnswer: any;
+  submittedDefaultData: any;
 }) {
-  console.log(quiz)
-  // const [timer, setTimer] = useState<number>(60 * 1);
-
-  // useEffect(() => {
-  //   const timerInterval = setInterval(() => {
-  //     if (timer > 0) {
-  //       setTimer((prevTimer) => prevTimer - 1);
-  //     } else {
-  //       showModal();
-  //       clearInterval(timerInterval);
-  //     }
-  //   }, 1000);
-
-  //   // Clean up timer interval when component unmounts or quiz is finished
-  //   return () => clearInterval(timerInterval);
-  // }, [timer]);
-
-  // const showModal = () => {
-  //   // Implement your modal display logic here
-  //   console.log("Time is up! Show the modal.");
-  // };
+  console.log(quiz);
 
   const dispatch = useAppDispatch();
 
-  const handleAnswerChange = (questionIndex: number, answer: any) => {
-    // console.log(userResponses,"answer",answer,questionIndex)
+  if (!currentAnswer) {
+    const beforeANswer = {
+      lesson: quiz?.lesson,
+      module: quiz?.module?._id,
+      milestone: quiz?.milestone,
+      course: quiz?.course,
+      category: quiz?.category,
+      quiz: quiz?.quiz?._id,
+      userSubmitQuizzes: [
+        {
+          singleQuizId: quiz?._id,
+          submitAnswers: [quiz?.milestone],
+        },
+      ],
+    };
 
+    setCurrentAnswer(beforeANswer);
+  }
+
+  const handleAnswerChange = (questionIndex: number, answer: any) => {
+    let changedAnswer = [];
+    if (Array.isArray(answer)) {
+      changedAnswer = answer;
+    } else if (typeof answer === "string") {
+      changedAnswer.push(answer);
+    }
+
+    // console.log(changedAnswer)
+
+    const newANswer = {
+      lesson: quiz?.lesson,
+      module: quiz?.module?._id,
+      milestone: quiz?.milestone,
+      course: quiz?.course,
+      category: quiz?.category,
+      quiz: quiz?.quiz?._id,
+      userSubmitQuizzes: [
+        {
+          singleQuizId: quiz?._id,
+          submitAnswers: changedAnswer,
+        },
+      ],
+    };
+
+    setCurrentAnswer(newANswer);
+
+    // console.log(newANswer,"answer",answer,questionIndex)
     const answerData = {
       index: questionIndex,
       answer: answer,
@@ -72,15 +102,13 @@ export default function QuizQuestionCard({
   return (
     <div>
       <Card key={quiz?._id} className="mb-4">
-
         <div className="text-center mt-4 flex justify-center items-center">
-
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
             quiz={quiz}
             time_duration={quiz?.time_duration}
-            userAnswers={userAnswers}
             index={index}
+            submittedDefaultData={submittedDefaultData}
           />
         </div>
         <p className="text-lg font-[550] mb-2">
@@ -132,25 +160,6 @@ export default function QuizQuestionCard({
             ))}
           </Checkbox.Group>
         )}
-        {/* {quiz?.type === "input" && (
-          <div>
-            <p className="text-lg font-[550] mb-2">
-              Question {index + 1} : {quiz?.title}
-            </p>
-            <Input
-              onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
-              style={{ minHeight: "1rem", width: "12rem" }}
-              placeholder="Type your answer"
-            />
-          </div>
-        )}
-        {quiz?.type === "text" && (
-          <Input.TextArea
-            onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
-            style={{ minHeight: "6rem" }}
-            placeholder="Type your answer"
-          />
-        )} */}
       </Card>
     </div>
   );
