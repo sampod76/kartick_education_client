@@ -23,22 +23,22 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.quiz],
+      providesTags: [tagTypes.submitQuiz],
     }),
     // get single academic department
-    getSingleQuiz: build.query({
+    getSubmitUserQuiz: build.query({
       query: (id: string | string[] | undefined) => {
         // console.log(id);
 
         return {
-          url: `${SUBMIT_QUIZ_URL}/${id}`,
+          url: `${SUBMIT_QUIZ_URL}/verify/quizId/${id}`,
           method: "GET",
         };
       },
-      providesTags: [tagTypes.quiz],
+      providesTags: [tagTypes.submitQuiz],
     }),
     // create a new academic department
-    addQuiz: build.mutation({
+    submitQuiz: build.mutation({
       query: (data) => {
         //
 
@@ -48,35 +48,13 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
           data,
         };
       },
-      invalidatesTags: [tagTypes.quiz, tagTypes.categoryChildren],
-    }),
-    // update ac department
-    updateQuiz: build.mutation({
-      query: ({ data, id }) => {
-        return {
-          url: `${SUBMIT_QUIZ_URL}/${id}`,
-          method: "PATCH",
-          data: data,
-        };
-      },
-      invalidatesTags: [tagTypes.quiz, tagTypes.categoryChildren],
-    }),
-
-    // delete ac department
-    deleteQuiz: build.mutation({
-      query: (id) => ({
-        url: `${SUBMIT_QUIZ_URL}/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: [tagTypes.quiz, tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.submitQuiz],
     }),
   }),
 });
 
 export const {
-  useAddQuizMutation,
-  useDeleteQuizMutation,
-  useGetAllQuizQuery,
-  useGetSingleQuizQuery,
-  useUpdateQuizMutation,
+  useSubmitQuizMutation,
+  useGetSubmitAllQuizQuery,
+  useGetSubmitUserQuizQuery,
 } = SubmitQuizApi;
