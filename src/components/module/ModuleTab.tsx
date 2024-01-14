@@ -22,6 +22,7 @@ export default function ModuleTab({
   moduleId: string;
   moduleData: any[];
 }) {
+  console.log("🚀 ~ moduleData:", moduleData);
   // console.log(moduleData)
 
   // const {data:QuizData} = useGetQui

@@ -19,7 +19,7 @@ export default function LessonPage({
   const moduleId = params.moduleId;
   // console.log(moduleId);
   const { data: moduleData, isLoading } = useGetSingleModuleQuery(moduleId);
-  //  //  // console.log("🚀 ~ file: page.tsx:12 ~ LessonPage ~ moduleData:", moduleData);
+  console.log("🚀 ~ file: page.tsx:12 ~ LessonPage ~ moduleData:", moduleData);
   const milestoneId = moduleData?.milestone?._id;
   // console.log(milestoneId);
   if (isLoading) {
@@ -52,7 +52,7 @@ export default function LessonPage({
           <div className="w-full lg:max-w-[30%] px-5">
             {/* <ModuleList milestoneId={milestoneId}></ModuleList> */}
             <SideModuleList milestoneId={milestoneId} moduleId={moduleId} />
-            <hr className=" border-[#eec699] lg:border-none -mx-7 overflow-hidden"/>
+            <hr className=" border-[#eec699] lg:border-none -mx-7 overflow-hidden" />
           </div>
 
           {/* main */}

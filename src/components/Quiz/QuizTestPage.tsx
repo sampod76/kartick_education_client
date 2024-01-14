@@ -1,11 +1,6 @@
 "use client";
-import { useState,  } from "react";
-import {
-  Button,
-
-  message,
-
-} from "antd";
+import { useState } from "react";
+import { Button, message } from "antd";
 import QuizQuestionCard from "./QuizQuestionCard";
 import { useAppSelector } from "@/redux/hooks";
 export default function QuizTestPage({
@@ -37,7 +32,7 @@ export default function QuizTestPage({
   };
 
   return (
-    <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0">
+    <div className="w-full  mx-auto my-5 lg:my-0">
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
         {/* Render quiz based on the current step */}
         {quizData.length > 0 && (
@@ -64,7 +59,9 @@ export default function QuizTestPage({
               onClick={handleNext}
               // disabled={!userResponses.hasOwnProperty(currentStep+1)}
               disabled={
-                !userAnswers.find((answer:any) => answer?.index === currentStep + 1)
+                !userAnswers.find(
+                  (answer: any) => answer?.index === currentStep + 1
+                )
               }
             >
               Next

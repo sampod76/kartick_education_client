@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import "./payment.css";
+import "./payment.module.css";
 
 export default function PaymentCard() {
   return (

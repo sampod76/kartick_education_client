@@ -31,10 +31,9 @@ export default function QuizeSinglePage({
 
   const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
     ...quiz_query,
-    quiz:quizeId
+    quiz: quizeId,
   });
-  console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData)
-
+  console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData);
 
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
@@ -69,12 +68,8 @@ export default function QuizeSinglePage({
         /> 
         */}
       </div>
-      <div className="block lg:flex justify-center gap-2 items-center p-5  ">
-        <QuizAside
-          time_duration={2000}
-          questionLength={allSingleQuizeData?.data?.length}
-        />
-        <div className="w-full lg:w-[70%] mx-auto my-5 lg:my-0 ">
+      
+        <div className="w-full  mx-auto my-5 lg:my-0 ">
           <QuizTestPage
             quizData={allSingleQuizeData?.data || []}
             quizId={quizeId}
@@ -142,7 +137,7 @@ export default function QuizeSinglePage({
               </Button>
             </div>
           </div> */}
-        </div>
+    
       </div>
     </div>
   );

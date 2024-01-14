@@ -16,6 +16,7 @@ import VimeoPlayer from "@/utils/vimoPlayer";
 import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
+import vimeoUrlChack from "@/utils/vimeoUrlChecker";
 
 export default function LessonList({ moduleId }: { moduleId: string }) {
   // console.log(moduleId, "moduleId from LessonList");
@@ -31,6 +32,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     module: moduleId,
     ...lesson_query,
   });
+  console.log("🚀 ~ LessonList ~ lessonData:", lessonData);
 
   // console.log(
   //   "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
@@ -50,6 +52,18 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
   if (isLoading) {
     return <LoadingSkeleton />;
   }
+  const playerVideoFunc = (lesson: any) => {
+    if (lesson?.videos?.length && lesson?.videos[0]?.link) {
+      const check = vimeoUrlChack(lesson?.videos[0]?.link);
+      if (check) {
+        return <VimeoPlayer link={lesson?.videos[0]?.link} />;
+      } else {
+        return <div>Not video found</div>;
+      }
+    } else {
+      return <div>Not video found</div>;
+    }
+  };
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
       const lessonQuizData: any = QuizData?.data?.filter(
@@ -90,10 +104,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
           <div>
             <p className="text-center">
               <div className="flex justify-center items-center my-2">
-                {lesson?.videos?.length &&
-                  lesson?.videos[0]?.platform === ENUM_VIDEO_PLATFORM.VIMEO && (
-                    <VimeoPlayer link={lesson?.videos[0]?.link} />
-                  )}
+                {playerVideoFunc(lesson)}
               </div>
               {/* {lesson?.details && CutText(lesson?.details, 200)} */}
               <EllipsisMiddle suffixCount={3} maxLength={300}>
