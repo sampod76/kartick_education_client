@@ -28,12 +28,14 @@ export default function QuizQuestionCard({
   setCurrentAnswer: any;
   submittedDefaultData: any;
 }) {
+
   console.log(quiz);
+
 
 
   const dispatch = useAppDispatch();
 
-  if (!currentAnswer) {
+  if (!currentAnswer|| quiz?._id !== currentAnswer?.userSubmitQuizzes[0]?.singleQuizId) {
     const beforeANswer = {
       lesson: quiz?.lesson,
       module: quiz?.module?._id,
@@ -138,6 +140,7 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
+            
             disabled={isDefaultValue?.is_time_up ? true : false}
             defaultValue={isDefaultValue?.answer} // Set the default value based on isDefaultValue
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}

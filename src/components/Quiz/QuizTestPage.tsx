@@ -28,31 +28,49 @@ export default function QuizTestPage({
 
   const { data: quizAnswerData } = useGetSubmitUserQuizQuery(quizId);
 
-  const userSubmitData = quizAnswerData?.data;
+  const userSubmitData = quizAnswerData;
 
-  const submittedDefaultData= userSubmitData?.find(
-    (answer:any) => answer?._id === currentAnswer?.userSubmitQuizzes[0]?.singleQuizId
+  // console.log(
+  //   "🚀 ~ file: QuizTestPage.tsx:32 ~ userSubmitData:",
+  //   userSubmitData
+  // );
+
+  const submittedDefaultData = userSubmitData?.userSubmitQuizzes?.find(
+    (answer: any) =>
+      answer?.singleQuizId?._id ===
+      currentAnswer?.userSubmitQuizzes[0]?.singleQuizId
+  )?.singleQuizId;
+  // const submittedDefaultData= userSubmitData
+
+  // console.log("🚀", submittedDefaultData);
+  // console.log(currentAnswer, "cccccccccccccccc");
+
+  console.log(
+    currentAnswer?.userSubmitQuizzes[0]?.singleQuizId,
+    "and",
+    submittedDefaultData?._id
   );
-
-  console.log("🚀 ~ file: QuizTestPage.tsx:36 ~ submittedDefaultData:", submittedDefaultData)
-
 
   const handleNext = async () => {
     // console.log(currentAnswer);
-
-    try {
-      const res = await submitQuiz(currentAnswer).unwrap();
-      console.log(res, "response");
-      if (res?.success == false) {
-        Error_model_hook(res?.message);
-      } else {
-        Success_model("Answer submitted");
-        // setCurrentStep((prevStep) => prevStep + 1);
+    if (
+      currentAnswer?.userSubmitQuizzes[0]?.singleQuizId !==
+      submittedDefaultData?.singleQuizId?._id
+    ) {
+      try {
+        const res = await submitQuiz(currentAnswer).unwrap();
+        console.log(res, "response");
+        if (res?.success == false) {
+          Error_model_hook(res?.message);
+        } else {
+          Success_model("Answer submitted");
+          // setCurrentStep((prevStep) => prevStep + 1);
+        }
+        // message.success("Admin created successfully!");
+      } catch (err: any) {
+        console.error(err);
+        Error_model_hook(err?.message || err?.data);
       }
-      // message.success("Admin created successfully!");
-    } catch (err: any) {
-      console.error(err);
-      Error_model_hook(err?.message || err?.data);
     }
 
     return setCurrentStep((prevStep) => prevStep + 1);
@@ -102,9 +120,11 @@ export default function QuizTestPage({
               onClick={handleNext}
               // disabled={!userResponses.hasOwnProperty(currentStep+1)}
               disabled={
-                !userAnswers.find(
+              (  currentAnswer?.userSubmitQuizzes[0]?.singleQuizId !==
+                  submittedDefaultData?.singleQuizId?._id)&&true  ||
+               ( !userAnswers.find(
                   (answer: any) => answer?.index === currentStep + 1
-                )
+                ))
               }
             >
               Next
