@@ -4,9 +4,12 @@ import JoinSelect from "./JoinSelect";
 import JoinPackage from "./JoinPackage";
 import PaymentCard from "./PaymentCard";
 
+export type IPlan = "monthly" | "yearly" |'biannual';
+
 export default function JoinMain() {
-  const [plan, setPlan] = useState<"monthly" | "yearly">("monthly");
+  const [plan, setPlan] = useState<IPlan>("monthly");
   const [quantity, setQuantity] = useState<number>(1);
+
 
   return (
     <div className="w-full lg:max-w-7xl mx-auto p-3">

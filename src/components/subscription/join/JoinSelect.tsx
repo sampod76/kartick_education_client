@@ -1,6 +1,7 @@
 "use client";
 import { message } from "antd";
 import React from "react";
+import { IPlan } from "./JoinMain";
 
 export default function JoinSelect({
   plan,
@@ -9,11 +10,11 @@ export default function JoinSelect({
   setQuantity,
 }: {
   plan: string;
-  setPlan: React.Dispatch<React.SetStateAction<"monthly" | "yearly">>;
+  setPlan: React.Dispatch<React.SetStateAction<IPlan>>;
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const planHandler = (value: "monthly" | "yearly") => {
+  const planHandler = (value: IPlan) => {
     if (value === "monthly") {
       setPlan("monthly");
     } else if (value === "yearly") {

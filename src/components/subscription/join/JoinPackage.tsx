@@ -3,8 +3,10 @@ import { message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { IPlan } from "./JoinMain";
 
 interface ICourse {
+  _id: string;
   title: string;
   img: string;
   monthly_price?: number | null;
@@ -12,38 +14,56 @@ interface ICourse {
 }
 
 interface IPackage {
+  _id: string;
   title: string;
   img?: string;
   type: string;
   price_time?: string;
   date_range?: [string];
   courses: ICourse[];
-  monthly_price?: number | null;
-  yearly_price?: number;
-  monthly_increment_price?: number;
-  yearly_increment_price?: number;
-  biannual_price?: number;
-  biannual_increment_price?: number;
+  biannual?: {
+    price: number;
+    increment: number;
+  };
+  monthly?: {
+    price: number;
+    increment: number;
+  };
+  yearly?: {
+    price: number;
+    increment: number;
+  };
 }
 
 const packageData: IPackage[] = [
   {
+    _id: "1",
     title: "Core Subjects",
     img: "core_subjects_image_url",
     type: "combo",
-    monthly_price: 800,
-    yearly_price: 1000,
-    monthly_increment_price: 4,
-    yearly_increment_price: 40,
+    monthly: {
+      price: 100,
+      increment: 4,
+    },
+    yearly: {
+      price: 100,
+      increment: 40,
+    },
+    biannual: {
+      price: 100,
+      increment: 20,
+    },
+
     price_time: "monthly",
     courses: [
       {
+        _id: "11",
         title: "Math (Pre-K to 12)",
         img: "math_image_url",
-        // monthly_price: 28,
-        // yearly_price: 159,
       },
       {
+        _id: "12",
+
         title: "Language Arts (Pre-K to 12)",
         img: "language_arts_image_url",
         // monthly_price: 42,
@@ -54,48 +74,68 @@ const packageData: IPackage[] = [
         img: "science_image_url",
         // monthly_price: 20,
         // yearly_price: 159,
+        _id: "13",
       },
       {
         title: "Social Studies (Grades K to 8)",
         img: "social_studies_image_url",
         // monthly_price: 20,
         // yearly_price: 159,
+        _id: "14",
       },
     ],
   },
   {
+    _id: "2",
     title: "Combo Package",
     img: "combo_package_image_url",
     type: "combo",
-    monthly_price: 120,
-    yearly_price: 920,
-    monthly_increment_price: 4,
-    yearly_increment_price: 40,
+    monthly: {
+      price: 120,
+      increment: 4,
+    },
+    biannual: {
+      price: 500,
+      increment: 20,
+    },
+    yearly: {
+      price: 920,
+      increment: 40,
+    },
+
     courses: [
       {
         title: "Math (Pre-K to 12)",
         img: "math_image_url",
-        // monthly_price: 24,
-        // yearly_price: 129,
+        _id: "21",
       },
       {
         title: "Language Arts (Pre-K to 12)",
         img: "language_arts_image_url",
-        // monthly_price: 25,
-        // yearly_price: 129,
+        _id: "22",
       },
     ],
   },
   {
+    _id: "3",
     title: "Single Subject",
     img: "single_subject_image_url",
     type: "select",
-    monthly_price: 200,
-    yearly_price: 1200,
-    monthly_increment_price: 4,
-    yearly_increment_price: 40,
+    monthly: {
+      price: 220,
+      increment: 4,
+    },
+    biannual: {
+      price: 600,
+      increment: 20,
+    },
+    yearly: {
+      price: 1020,
+      increment: 40,
+    },
     courses: [
       {
+        _id: "31",
         title: "Math (Pre-K to 12)",
         img: "math_image_url",
         monthly_price: 20,
@@ -104,27 +144,38 @@ const packageData: IPackage[] = [
       {
         title: "Language Arts (Pre-K to 12)",
         img: "language_arts_image_url",
-        monthly_price: 40,
-        yearly_price: 79,
+        _id: "32",
       },
     ],
   },
   {
+    _id: "4",
     title: "Multiple Subject",
     img: "Multiple_image_url",
     type: "multiple",
-    monthly_price: 800,
-    yearly_price: 1000,
-    monthly_increment_price: 4,
-    yearly_increment_price: 40,
+
+    monthly: {
+      price: 420,
+      increment: 4,
+    },
+    biannual: {
+      price: 550,
+      increment: 20,
+    },
+    yearly: {
+      price: 820,
+      increment: 40,
+    },
     courses: [
       {
+        _id: "41",
         title: "Math (Pre-K to 12)",
         img: "math_image_url",
         // monthly_price: 20,
         // yearly_price: 79,
       },
       {
+        _id: "42",
         title: "Language Arts (Pre-K to 12)",
         img: "language_arts_image_url",
         // monthly_price: 40,
@@ -141,7 +192,7 @@ export default function JoinPackage({
   setQuantity,
 }: {
   plan: string;
-  setPlan: React.Dispatch<React.SetStateAction<"monthly" | "yearly">>;
+  setPlan: React.Dispatch<React.SetStateAction<IPlan>>;
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
@@ -155,10 +206,12 @@ export default function JoinPackage({
   //   );
   // }
 
-  const packageControl = (packages: IPackage): number => {
+  const calculatePackage2 = (packages: IPackage): number => {
     console.log(packages);
-    if (packages) {
+    if (packages?.type) {
     }
+
+    return 0;
     // if (packages.type === "combo") {
     //   return packages.price;
     // }
@@ -178,7 +231,7 @@ export default function JoinPackage({
       </h2>
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
         {packageData?.map((packages: IPackage, index: number) => {
-          const totalPackagePrice = packageControl(packages);
+          const totalPackagePrice = calculatePackage2(packages);
           return (
             <div
               key={index + 1}
