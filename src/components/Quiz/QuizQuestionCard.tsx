@@ -14,46 +14,48 @@ export default function QuizQuestionCard({
   // setUserResponses,
   // userResponses,
   userAnswers,
-  currentAnswer, setCurrentAnswer
+  currentAnswer,
+  setCurrentAnswer,
+  submittedDefaultData,
 }: {
   quiz: any;
   index: number;
   // setUserResponses: any;
   // userResponses: any;
   userAnswers: any[];
-  currentAnswer:any, setCurrentAnswer:any
+  currentAnswer: any;
+  setCurrentAnswer: any;
+  submittedDefaultData: any;
 }) {
   console.log(quiz);
 
   const dispatch = useAppDispatch();
 
- if(!currentAnswer){
-  const beforeANswer = {
-    lesson: quiz?.lesson,
-    module: quiz?.module?._id,
-    milestone: quiz?.milestone,
-    course: quiz?.course,
-    category: quiz?.category,
-    quiz: quiz?.quiz?._id,
-    userSubmitQuizzes: [
-      {
-        singleQuizId: quiz?._id,
-        submitAnswers: [quiz?.milestone],
-      },
-    ],
-  };
+  if (!currentAnswer) {
+    const beforeANswer = {
+      lesson: quiz?.lesson,
+      module: quiz?.module?._id,
+      milestone: quiz?.milestone,
+      course: quiz?.course,
+      category: quiz?.category,
+      quiz: quiz?.quiz?._id,
+      userSubmitQuizzes: [
+        {
+          singleQuizId: quiz?._id,
+          submitAnswers: [quiz?.milestone],
+        },
+      ],
+    };
 
-  setCurrentAnswer(beforeANswer)
- }
+    setCurrentAnswer(beforeANswer);
+  }
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
-
     let changedAnswer = [];
-    if(Array.isArray(answer)){
-      changedAnswer = answer
-    }
-    else if(typeof answer === "string"){
-      changedAnswer.push(answer)
+    if (Array.isArray(answer)) {
+      changedAnswer = answer;
+    } else if (typeof answer === "string") {
+      changedAnswer.push(answer);
     }
 
     // console.log(changedAnswer)
@@ -73,7 +75,7 @@ export default function QuizQuestionCard({
       ],
     };
 
-    setCurrentAnswer(newANswer)
+    setCurrentAnswer(newANswer);
 
     // console.log(newANswer,"answer",answer,questionIndex)
     const answerData = {
@@ -107,6 +109,7 @@ export default function QuizQuestionCard({
             time_duration={quiz?.time_duration}
             userAnswers={userAnswers}
             index={index}
+            submittedDefaultData={submittedDefaultData}
           />
         </div>
         <p className="text-lg font-[550] mb-2">

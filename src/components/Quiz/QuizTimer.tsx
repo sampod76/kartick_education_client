@@ -9,6 +9,7 @@ interface QuizTimerProps {
   quiz: any;
   userAnswers: any[];
   index: number;
+  submittedDefaultData:any
 }
 
 const QuizTimer: React.FC<QuizTimerProps> = ({
@@ -16,6 +17,7 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
   quiz,
   userAnswers,
   index,
+  submittedDefaultData
 }) => {
 //   console.log(time_duration, "ttttttttttttt");
 

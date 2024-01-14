@@ -17,23 +17,24 @@ export default function QuizTestPage({
 }) {
   ///! state of quiz card
   const [currentStep, setCurrentStep] = useState(0);
-  const [currentAnswer, setCurrentAnswer] = useState(null);
+  const [currentAnswer, setCurrentAnswer] = useState<any>(null);
   // const [userResponses, setUserResponses] = useState<any[]>([]);
 
   const [submitQuiz] = useSubmitQuizMutation();
   ///! for submit quiz
-  // const { userAnswers } = useAppSelector((state: any) => state.quiz);
-
-
-
+  const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   //! for getQUiz
 
   const { data: quizAnswerData } = useGetSubmitUserQuizQuery(quizId);
 
+  const userSubmitData = quizAnswerData?.data;
 
-  const userAnswers = quizAnswerData?.data
+  const submittedDefaultData= userSubmitData?.find(
+    (answer:any) => answer?._id === currentAnswer?.userSubmitQuizzes[0]?.singleQuizId
+  );
 
+  console.log("🚀 ~ file: QuizTestPage.tsx:36 ~ submittedDefaultData:", submittedDefaultData)
 
 
   const handleNext = async () => {
@@ -82,6 +83,7 @@ export default function QuizTestPage({
             userAnswers={userAnswers}
             currentAnswer={currentAnswer}
             setCurrentAnswer={setCurrentAnswer}
+            submittedDefaultData={submittedDefaultData}
             // setUserResponses={setUserResponses}
             // userResponses={userResponses}
           />
