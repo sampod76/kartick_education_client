@@ -235,9 +235,12 @@ export default function JoinPackage({
     packageData[0] || null
   );
 
-  const [singleSelect, setSingleSelect] = useState("");
+  ///! for the multiple and single select package
 
-  // console.log(singleSelect,'ppppppppppp')
+  const [singleSelect, setSingleSelect] = useState("");
+  const [multipleSelect, setMultipleSelect] = useState("");
+
+  console.log(singleSelect, "ppppppppppp", multipleSelect);
   const calculatePackage2 = (packages: IPackageData): number | undefined => {
     // console.log(packages);
 
@@ -304,7 +307,7 @@ export default function JoinPackage({
                 </h1>
               </div>
               <div className="py-3 flex flex-col justify-between   w-full">
-                {/* //! caterory section */}
+                {/* //! category section */}
                 <div className="py-3">
                   {/* single */}
                   {packages?.type !== "bundle" &&
@@ -380,7 +383,7 @@ export default function JoinPackage({
                           flexDirection: "column",
                           gap: "1rem",
                         }}
-                        onChange={(value: any) => setSingleSelect(value)}
+                        onChange={(value: any) => setMultipleSelect(value)}
                       >
                         {packages?.categories?.map(
                           (option?: IPackageCategory) => (
