@@ -6,7 +6,7 @@ import NotFoundCourse from "@/components/ui/NotFound/NotFoundCourse";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { AllImage } from "@/assets/AllImge";
 import Image from "next/image";
-import { Rate } from "antd";
+import { Progress, Rate } from "antd";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import { ICourseData } from "@/types/courseType";
 import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
@@ -14,7 +14,7 @@ import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
 export default function StudentActiveCourse() {
   const { data, isLoading, error } = useGetAllCourseQuery({
     status: "active",
-    limit: 9999,
+    limit: 5,
   });
   const courseData = data?.data || [];
   if (
@@ -38,6 +38,9 @@ export default function StudentActiveCourse() {
         <NotFoundCourse />
       ) : (
         <div className="mt-3   ">
+          <h2 className="mt-5 text-2xl font-bold text-slate-800 mb-2">
+            Your Enrolled Courses
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2  gap-2 ">
             {courseData?.map((course: ICourseData, index: number) => {
               return (
@@ -49,7 +52,7 @@ export default function StudentActiveCourse() {
                         width={350}
                         src={course?.img || AllImage?.notFoundImage}
                         alt="seller_course"
-                        className="rounded h-[13rem] w-full lg:w-[11rem]"
+                        className="rounded h-[10rem] w-full lg:w-[11rem]"
                       />
                     </div>
                     <div className="w-full md:w-2/3 text-start bg-white flex flex-col space-y-2 p-3">
@@ -72,20 +75,27 @@ export default function StudentActiveCourse() {
                           {course?.price_type}
                         </div>
                       </div>
-                      <h3 className="font-black text-gray-800 md:text-3xl text-xl">
+                      <h3 className="font-black text-gray-800 md:text-2xl text-xl">
                         {course?.title}
                       </h3>
-                      <p className="md:text-[] text-gray-500 text-base">
-                        {EllipsisMiddle({
-                          suffixCount: 3,
-                          children: course?.short_description,
-                          maxLength: 180,
-                        })}
-                      </p>
+
                       <p className="text-xl font-black text-gray-800">
-                        ${course?.price}
-                        <span className="font-normal text-gray-600 text-base"></span>
+                        <span className="font-normal text-gray-600 text-base">
+                          ${course?.price}
+                        </span>
                       </p>
+                      <Progress
+                        // steps={1}
+                        strokeColor={
+                          {
+                            // "0%": "5371FF",
+                            // "100%": "#FB8500",
+                          }
+                        }
+                        type="line"
+                        percent={80}
+                        size={[300, 40]}
+                      />
                     </div>
                   </div>
                 </div>
