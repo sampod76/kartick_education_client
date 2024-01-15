@@ -56,6 +56,7 @@ export default function QuizQuestionCard({
     });
 
     return allCorrect;
+    
   };
 
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
@@ -196,8 +197,11 @@ export default function QuizQuestionCard({
                   key={option?.title}
                   value={option?._id}
                   defaultChecked={
-                    submittedDefaultData?.submitAnswers[0] === option?._id
-                  } // Check if the default value matches
+                    submittedDefaultData?.submitAnswers[0] === option?._id &&
+                    true
+                  }
+
+                  // Check if the default value matches
                   // checked={
                   //   submittedDefaultData?.submitAnswers[0] === option?._id
                   // } // Set the checked state based on the match// Check if the default value matches
@@ -249,7 +253,9 @@ export default function QuizQuestionCard({
                 key={option?.title}
                 value={option?._id}
                 defaultChecked={
-                  submittedDefaultData?.submitAnswers === option?._id
+                  !submittedDefaultData?.submitAnswers.find(
+                    (item: string) => item === option?._id
+                  )
                 } // Check if the default value matches
               >
                 <div className="border-2 rounded-xl p-3 w-full">
