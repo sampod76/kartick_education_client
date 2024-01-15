@@ -119,7 +119,7 @@ const MileStoneList = () => {
           const res = await deleteMilestone(id).unwrap();
 
           console.log(res, "response for delete Milestone");
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);

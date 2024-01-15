@@ -70,7 +70,7 @@ const UpComingService = ({
         status: ENUM_BOOKING_STATUS.PENDING,
         totalBalance: Number(data.bookingTickets) * Number(bookMarkData?.price),
       }).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message + "");
       } else {
         setOpen(false);

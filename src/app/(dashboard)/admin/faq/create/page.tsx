@@ -24,7 +24,7 @@ const CreateFaq = () => {
 
     try {
       const res = await addFaq(values).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");

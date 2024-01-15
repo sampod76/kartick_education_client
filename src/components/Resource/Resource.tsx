@@ -31,7 +31,7 @@ export default function ResourceCreate({ setOpen, moduleId }: any) {
     // return;
     try {
       const res = await addResource(resourceData).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Resource");

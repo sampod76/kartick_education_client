@@ -29,7 +29,7 @@ export default function GlossaryCreate({ setOpen, moduleId }: any) {
 
     try {
       const res = await addGlossary(glossaryData).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully Added Glossary");

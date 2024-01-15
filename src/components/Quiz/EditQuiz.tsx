@@ -92,7 +92,7 @@ export default function EditQuiz({quizId}:{quizId:string}) {
       try {
         const res = await updateQuiz({ id: quizId, data: QuizData }).unwrap();
   
-        if (res.success == false) {
+        if (res?.success == false) {
           Error_model_hook(res?.message);
         } else {
           Success_model("Successfully Update quiz");

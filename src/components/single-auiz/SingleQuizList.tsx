@@ -125,7 +125,7 @@ const SingleQuizList = () => {
           const res = await deleteSingleQuiz(id).unwrap();
 
           console.log(res, "response for delete SIngle QUiz");
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);

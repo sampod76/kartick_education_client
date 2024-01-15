@@ -53,7 +53,7 @@ const BookingDetails = ({ params }: any) => {
         id: params?.id,
         body: updateData,
       }).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message + "");
       } else {
         Success_model("Successfully update booking");
@@ -84,7 +84,7 @@ const BookingDetails = ({ params }: any) => {
     //  // console.log("Received values:", values);
     try {
       const res = await addRating({ ...values }).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         // message.success("Admin Successfully Deleted!");
         // setOpen(false);
         Error_model_hook(res?.message);
@@ -105,7 +105,7 @@ const BookingDetails = ({ params }: any) => {
             id: params?.id,
             body: { payment: true },
           }).unwrap();
-          if (res.success == false) {
+          if (res?.success == false) {
             Error_model_hook(res?.message + "");
           } else {
             Success_model("Successfully update booking");

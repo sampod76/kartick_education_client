@@ -83,7 +83,7 @@ const CreateLesson = () => {
     // return;
     try {
       const res = await addLesson(LessonData).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");

@@ -17,7 +17,7 @@ export enum tagTypes {
   rating = "rating",
   resource = "resource",
   categoryChildren = "categoryChildren",
-  submitQuiz='submitQuiz'
+  submitQuiz='submitQuiz',
   package='package'
   
 }
@@ -41,6 +41,6 @@ export const tagTypesList = [
   tagTypes.resource,
   tagTypes.glossary,
   tagTypes.categoryChildren,
-  tagTypes.submitQuiz
+  tagTypes.submitQuiz,
   tagTypes.package
 ];

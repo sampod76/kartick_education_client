@@ -14,7 +14,7 @@ export default function ContactForm() {
 
     // try {
     //   const res = await addCategory(values).unwrap();
-    //   if (res.success == false) {
+    //   if (res?.success == false) {
     //     Error_model_hook(res?.message);
     //   } else {
     //     Success_model("Successfully added Category");

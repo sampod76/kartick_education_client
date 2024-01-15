@@ -28,7 +28,7 @@ const CreateService = () => {
     console.log(changeValues);
     try {
       const res = await addService({ ...changeValues }).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added service");

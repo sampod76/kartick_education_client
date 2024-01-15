@@ -34,7 +34,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   return (
     <Link
       href={`/course/milestone/${course?._id}`}
-      className="w-[98%] sm:w-[90%]  md:w-full mx-auto  rounded-md shadow-md bg-white relative"
+      className="min-w-xs max-w-xs sm:min-w-sm sm:max-w-sm md:w-full mx-auto  rounded-md shadow-md bg-white relative"
     >
       <div className="overflow-hidden">
         <div className="relative">

@@ -34,11 +34,11 @@ const CreateCategory = () => {
     try {
       const res = await addCategory(categoryData).unwrap();
       // console.log(res);
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Category");
-        setIsReset(true)
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -56,8 +56,11 @@ const CreateCategory = () => {
       <div className="flex justify-center ">
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form  isReset={isReset}
-            defaultValues={{ status: ENUM_STATUS.ACTIVE }} submitHandler={onSubmit} >
+        <Form
+          isReset={isReset}
+          defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+          submitHandler={onSubmit}
+        >
           <div
             style={{
               padding: "0.75rem",
@@ -106,22 +109,29 @@ const CreateCategory = () => {
                   required={true}
                 />
               </Col>
-           
+
               <Col
                 className="gutter-row"
                 xs={24}
                 style={{
                   marginBottom: "10px",
                   marginTop: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <UploadImage name="img" />
+                <div className="flex justify-center items-center">
+                  <UploadImage name="img" />
+                </div>
               </Col>
             </Row>
 
-            <Button htmlType="submit" type="default">
-              Create Category
-            </Button>
+            <div className="flex justify-center items-center">
+              <Button htmlType="submit" type="default">
+                Create Category
+              </Button>
+            </div>
           </div>
         </Form>
       </div>
