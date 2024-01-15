@@ -1,12 +1,11 @@
-
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "@/redux/tag-types";
-
+import { IPackageData } from "@/types/packageType";
 
 const PACKAGE_URL = "/packages";
 
-export const PpackageApi = baseApi.injectEndpoints({
+export const packageApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // get all academic departments
     getAllPackage: build.query({
@@ -22,7 +21,7 @@ export const PpackageApi = baseApi.injectEndpoints({
         return {
           data: response,
           meta,
-          seccess:true,
+          success: true,
         };
       },
       providesTags: [tagTypes.package],
@@ -71,4 +70,4 @@ export const {
   useGetAllPackageQuery,
   useGetSinglePackageQuery,
   useUpdatePackageMutation,
-} = PpackageApi;
+} = packageApi;
