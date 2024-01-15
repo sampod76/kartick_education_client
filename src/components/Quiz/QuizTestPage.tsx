@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button, message } from "antd";
 import QuizQuestionCard from "./QuizQuestionCard";
 import { useAppSelector } from "@/redux/hooks";
@@ -30,64 +30,86 @@ export default function QuizTestPage({
 
   const userSubmitData = quizAnswerData;
 
-  // console.log(
-  //   "🚀 ~ file: QuizTestPage.tsx:32 ~ userSubmitData:",
-  //   userSubmitData
-  // );
-
-  const submittedDefaultData = userSubmitData?.userSubmitQuizzes?.find(
-    (answer: any) =>
-      answer?.singleQuizId?._id ===
-      currentAnswer?.userSubmitQuizzes[0]?.singleQuizId
-  )?.singleQuizId;
-  // const submittedDefaultData= userSubmitData
-
-  // console.log("🚀", submittedDefaultData);
-  // console.log(currentAnswer, "cccccccccccccccc");
-
-  console.log(
-    currentAnswer?.userSubmitQuizzes[0]?.singleQuizId,
-    "and",
-    submittedDefaultData?._id
+  const submittedDefaultData = userSubmitData?.find(
+    (answer: any) => answer?.singleQuiz?._id === currentAnswer?.singleQuiz
   );
 
+  // ! For Test is submitted Answer is CorrectAnswer;
+
+  const checkAnswers = (responseData: any) => {
+    const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
+      const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+        (answer: any) => answer.id === answerId
+      );
+      return submittedAnswer && submittedAnswer.correct;
+    });
+
+    return allCorrect;
+  };
+
+  // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+
+  // console.log(submittedDefaultData, "ccccccccccccccccc", isCorrectAnswer);
+  // if (submittedDefaultData?.submitAnswers) {
+  //   setIsCorrectAnswer(checkAnswers(submittedDefaultData));
+  // }
+  // ! For Next quiz and submit Quiz
   const handleNext = async () => {
-    // console.log(currentAnswer);
-    if (
-      currentAnswer?.userSubmitQuizzes[0]?.singleQuizId !==
-      submittedDefaultData?.singleQuizId?._id
-    ) {
+    if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
       try {
         const res = await submitQuiz(currentAnswer).unwrap();
         console.log(res, "response");
-        if (res?.success == false) {
+        if (res?.success === false) {
           Error_model_hook(res?.message);
         } else {
-          Success_model("Answer submitted");
-          // setCurrentStep((prevStep) => prevStep + 1);
+          // Check if submitted answers are correct
+          const isCorrect = checkAnswers(res);
+
+          if (isCorrect) {
+            Success_model("Answer is Correct");
+          } else {
+            Error_model_hook("Incorrect answers submitted");
+          }
         }
-        // message.success("Admin created successfully!");
       } catch (err: any) {
         console.error(err);
         Error_model_hook(err?.message || err?.data);
       }
+    } else {
+      message.error("Already submitted the answer");
     }
 
     return setCurrentStep((prevStep) => prevStep + 1);
   };
 
-  console.log(currentAnswer, "cccccccccccccccc");
-
-  // console.log(currentStep + 1,'anddd',userAnswers);
   const handleFinishQuiz = () => {
-    // Save user responses to localStorage or API
-    // saveQuizResponse(quizId, userResponses);
     console.log(userAnswers);
-    // Display a success message
+
     message.success("Quiz submitted successfully!");
-    // Redirect to a summary page or any other page as needed
-    // router.push(`/quiz/${quizId}/summary`);
   };
+
+  // ! For disabled Next Button
+  const isDisabledNext = useMemo(() => {
+    const isSelected = userAnswers.find(
+      (answer: any) => answer?.index === currentStep + 1
+    );
+
+    let disabled = false;
+
+    if (currentAnswer?.singleQuiz === submittedDefaultData?.singleQuiz?._id) {
+      // console.log("false ..........");
+      disabled = false;
+    } else if (isSelected) {
+      disabled = false;
+    } else {
+      disabled = true;
+    }
+
+    return disabled;
+  }, [currentAnswer, currentStep, submittedDefaultData, userAnswers]);
+
+
+  
 
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
@@ -118,14 +140,7 @@ export default function QuizTestPage({
             <Button
               type="default"
               onClick={handleNext}
-              // disabled={!userResponses.hasOwnProperty(currentStep+1)}
-              disabled={
-              (  currentAnswer?.userSubmitQuizzes[0]?.singleQuizId !==
-                  submittedDefaultData?.singleQuizId?._id)&&true  ||
-               ( !userAnswers.find(
-                  (answer: any) => answer?.index === currentStep + 1
-                ))
-              }
+              disabled={isDisabledNext}
             >
               Next
             </Button>

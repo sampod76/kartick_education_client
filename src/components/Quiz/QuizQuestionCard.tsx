@@ -28,14 +28,11 @@ export default function QuizQuestionCard({
   setCurrentAnswer: any;
   submittedDefaultData: any;
 }) {
-
-  console.log(quiz);
-
-
+  // console.log(quiz);
 
   const dispatch = useAppDispatch();
 
-  if (!currentAnswer|| quiz?._id !== currentAnswer?.userSubmitQuizzes[0]?.singleQuizId) {
+  if (!currentAnswer || quiz?._id !== currentAnswer?.singleQuiz) {
     const beforeANswer = {
       lesson: quiz?.lesson,
       module: quiz?.module?._id,
@@ -43,16 +40,57 @@ export default function QuizQuestionCard({
       course: quiz?.course,
       category: quiz?.category,
       quiz: quiz?.quiz?._id,
-      userSubmitQuizzes: [
-        {
-          singleQuizId: quiz?._id,
-          submitAnswers: [quiz?.milestone],
-        },
-      ],
+      singleQuiz: quiz?._id,
+      submitAnswers: [quiz?.milestone],
     };
 
     setCurrentAnswer(beforeANswer);
   }
+
+  const checkAnswers = (responseData: any) => {
+    const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
+      const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+        (answer: any) => answer.id === answerId
+      );
+      return submittedAnswer && submittedAnswer.correct;
+    });
+
+    return allCorrect;
+  };
+
+  // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+
+  const isCorrectAnswer = checkAnswers(submittedDefaultData);
+
+  const getCorrectAnswerIds = (responseData: any): string[] => {
+    const correctAnswerIds: string[] = responseData?.submitAnswers.reduce(
+      (acc: string[], answerId: string) => {
+        const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+          (answer: any) => answer.id === answerId
+        );
+        if (submittedAnswer && submittedAnswer.correct) {
+          acc.push(answerId);
+        }
+        return acc;
+      },
+      []
+    );
+
+    return correctAnswerIds;
+  };
+
+  const correctId = getCorrectAnswerIds(submittedDefaultData);
+  // console.log(
+  //   isCorrectAnswer,
+  //   "correctId",
+  //   correctId,
+  //   submittedDefaultData?.singleQuiz?.type,
+  //   "yyyyyyyyyyyyyyyyy",
+  //   submittedDefaultData,
+  //   submittedDefaultData?.submitAnswers[0]
+  // );
+
+  console.log(submittedDefaultData, "sssssssssssss");
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
     let changedAnswer = [];
@@ -71,12 +109,8 @@ export default function QuizQuestionCard({
       course: quiz?.course,
       category: quiz?.category,
       quiz: quiz?.quiz?._id,
-      userSubmitQuizzes: [
-        {
-          singleQuizId: quiz?._id,
-          submitAnswers: changedAnswer,
-        },
-      ],
+      singleQuiz: quiz?._id,
+      submitAnswers: changedAnswer,
     };
 
     setCurrentAnswer(newANswer);
@@ -97,17 +131,9 @@ export default function QuizQuestionCard({
     (answer) => answer?._id === quiz?._id
   );
 
-  // console.log(isDefaultValue);
-
-  // console.log(userAnswers);
-
-  // console.log(userAnswers,"userAnswers from card")
-
   return (
     <div>
-
-      <div key={quiz?._id} className="m-4 w-full">
-
+      <div key={quiz?._id} className={`m-4 w-full`}>
         <div className="text-center mt-4 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
@@ -117,10 +143,21 @@ export default function QuizQuestionCard({
             submittedDefaultData={submittedDefaultData}
           />
         </div>
-        <p className="lg:text-lg font-[550] mb-2 text-base mx-2">
-          <TextToSpeech text={quiz?.title} />
-          Question {index + 1} : {quiz?.title}
-        </p>
+        <div className="flex justify-between items-center my-2">
+          <p className={`lg:text-lg font-[550] mb-2 text-base mx-2`}>
+            <TextToSpeech text={quiz?.title} />
+            Question {index + 1} : {quiz?.title}
+          </p>
+          {submittedDefaultData?.singleQuiz ? isCorrectAnswer ? (
+            <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
+              Correct
+            </button>
+          ) : (
+            <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#ff000091] via-[#a01212] to-[#690303]">
+              Incorrect
+            </button>
+          ):""}
+        </div>
         <div className="flex flex-wrap">
           {quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
             <Image
@@ -140,42 +177,70 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
-            
-            disabled={isDefaultValue?.is_time_up ? true : false}
-            defaultValue={isDefaultValue?.answer} // Set the default value based on isDefaultValue
+            disabled={
+              isDefaultValue?.is_time_up ||
+              currentAnswer?.singleQuiz ===
+                submittedDefaultData?.singleQuiz?._id
+                ? true
+                : false
+            }
+            defaultValue={submittedDefaultData?.submitAnswers[0]} // Set the default value based on isDefaultValue
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
           >
-            {quiz?.answers.map((option: any) => (
-              <Radio
-                key={option?.title}
-                value={option?._id}
-                defaultChecked={isDefaultValue?.answer === option?._id} // Check if the default value matches
-              >
-                <div className="border-2 rounded-xl p-3 w-full">
-                  <p>{option?.title}</p>
-                  <div className="flex flex-wrap w-full">
-                    {option?.imgs?.map(
-                      (img: string, key: number, allimages: any[]) => (
-                        <Image
-                          key={key}
-                          src={img}
-                          width={700}
-                          height={700}
-                          className={`w-32 lg:w-96 max-h-24 lg:max-h-44`}
-                          alt=""
-                        ></Image>
-                      )
-                    )}
+            {quiz?.answers?.map((option: any) => {
+              // console.log(
+              //   option?._id,
+              //   "ooooooooooooooooooooooo",
+              //   submittedDefaultData?.submitAnswers[0]
+              // );
+              return (
+                <Radio
+                  key={option?.title}
+                  value={option?._id}
+                  defaultChecked={
+                    submittedDefaultData?.submitAnswers[0] === option?._id &&
+                    true
+                  }
+
+                  // Check if the default value matches
+                  // checked={
+                  //   submittedDefaultData?.submitAnswers[0] === option?._id
+                  // } // Set the checked state based on the match// Check if the default value matches
+                >
+                  <div
+                    className={`border-2 rounded-xl p-3 w-full 
+                  ${
+                    submittedDefaultData?.submitAnswers[0] === option?._id
+                      ? "bg-slate-700 text-white"
+                      : ""
+                  }
+                  `}
+                  >
+                    <p>{option?.title}</p>
+                    <div className="flex flex-wrap w-full">
+                      {option?.imgs?.map(
+                        (img: string, key: number, allimages: any[]) => (
+                          <Image
+                            key={key}
+                            src={img}
+                            width={700}
+                            height={700}
+                            className={`w-32 lg:w-96 max-h-24 lg:max-h-44`}
+                            alt=""
+                          ></Image>
+                        )
+                      )}
+                    </div>
                   </div>
-                </div>
-              </Radio>
-            ))}
+                </Radio>
+              );
+            })}
           </Radio.Group>
         )}
 
         {quiz?.type === "multiple_select" && (
           <Checkbox.Group
-            defaultValue={isDefaultValue?.answer} // Set the default value based on isDefaultValue
+            defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
             disabled={isDefaultValue?.is_time_up ? true : false}
             onChange={(value) => handleAnswerChange(index + 1, value)}
             style={{
@@ -188,7 +253,11 @@ export default function QuizQuestionCard({
               <Checkbox
                 key={option?.title}
                 value={option?._id}
-                defaultChecked={isDefaultValue?.answer === option?._id} // Check if the default value matches
+                defaultChecked={
+                  !submittedDefaultData?.submitAnswers.find(
+                    (item: string) => item === option?._id
+                  )
+                } // Check if the default value matches
               >
                 <div className="border-2 rounded-xl p-3 w-full">
                   <p>{option?.title}</p>
@@ -232,7 +301,6 @@ export default function QuizQuestionCard({
           />
         )} */}
       </div>
-
     </div>
   );
 }
