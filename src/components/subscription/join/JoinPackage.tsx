@@ -221,8 +221,18 @@ export default function JoinPackage({
 
   const { data, isLoading } = useGetAllPackageQuery({ status: "active" });
 
-  const packageData = data?.data;
+  const packageData = data?.data ?? [];
 
+  // ! For select package
+
+  // For select package
+  const [selectPackage, setSelectPackage] = useState<IPackageData | null>(
+    packageData[0] || null
+  );
+
+  const [singleSelect, setSingleSelect] = useState("");
+
+  // console.log(singleSelect,'ppppppppppp')
   const calculatePackage2 = (packages: IPackageData): number | undefined => {
     // console.log(packages);
 
@@ -244,15 +254,6 @@ export default function JoinPackage({
 
     return newPrice;
   };
-  // ! For select package
-
-  const [selectPackage, setSelectPackage] = useState<
-    IPackageData | undefined | null
-  >(packageData[0] || null);
-
-  const [singleSelect, setSingleSelect] = useState("");
-
-  // console.log(singleSelect,'ppppppppppp')
 
   const selectPackageHandler = (value: IPackageData) => {
     setSelectPackage(value);
@@ -287,31 +288,32 @@ export default function JoinPackage({
                 <div className="py-3">
                   {/* single */}
                   {packages?.type !== "select" &&
-                    packages?.categories?.map((categoryData: IPackageCategory) => {
-
-                      const category =categoryData?.category
-                      return (
-                        <div
-                          className="flex justify- items-center gap-2 px-5 py-2"
-                          key={category?.title}
-                        >
-                          {/* <Image
+                    packages?.categories?.map(
+                      (categoryData: IPackageCategory) => {
+                        const category = categoryData?.category;
+                        return (
+                          <div
+                            className="flex justify- items-center gap-2 px-5 py-2"
+                            key={category?.title}
+                          >
+                            {/* <Image
                           height={20}
                           width={20}
                           src={packages?.img}
                           alt="package"
                         /> */}
 
-                          <h5 className="text-primary text-md ">
-                            {category?.title}
-                          </h5>
+                            <h5 className="text-primary text-md ">
+                              {category?.title}
+                            </h5>
 
-                          <span className="text-[12px] text-slate-600 ">
-                            (Pre-k t 12)
-                          </span>
-                        </div>
-                      );
-                    })}
+                            <span className="text-[12px] text-slate-600 ">
+                              (Pre-k t 12)
+                            </span>
+                          </div>
+                        );
+                      }
+                    )}
                   {packages?.type === "select" && (
                     <div>
                       <Radio.Group
@@ -322,29 +324,31 @@ export default function JoinPackage({
                         }}
                         onChange={(e) => setSingleSelect(e.target.value)}
                       >
-                        {packages?.categories?.map((option?.category: any) => (
-                          <Radio
-                            key={option?.category?.title}
-                            value={option?.category?._id}
-                            style={{
-                              display: "flex",
-                              paddingTop: "0.5rem",
-                              paddingBottom: "0.5rem",
-                              paddingLeft: "1.25rem",
-                              paddingRight: "1.25rem",
-                              gap: "0.5rem",
-                              alignItems: "center",
-                            }}
-                          >
-                            <h5 className="text-primary text-md ">
-                              {option?.category?.title}
-                            </h5>
+                        {packages?.categories?.map(
+                          (option?: IPackageCategory) => (
+                            <Radio
+                              key={option?.category?.title}
+                              value={option?._id}
+                              style={{
+                                display: "flex",
+                                paddingTop: "0.5rem",
+                                paddingBottom: "0.5rem",
+                                paddingLeft: "1.25rem",
+                                paddingRight: "1.25rem",
+                                gap: "0.5rem",
+                                alignItems: "center",
+                              }}
+                            >
+                              <h5 className="text-primary text-md ">
+                                {option?.category?.title}
+                              </h5>
 
-                            <span className="text-[12px] text-slate-600 ">
-                              (Pre-k t 12)
-                            </span>
-                          </Radio>
-                        ))}
+                              <span className="text-[12px] text-slate-600 ">
+                                {option?.label}
+                              </span>
+                            </Radio>
+                          )
+                        )}
                       </Radio.Group>
                     </div>
                   )}
