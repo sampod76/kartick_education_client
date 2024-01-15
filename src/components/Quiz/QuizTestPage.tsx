@@ -8,6 +8,7 @@ import {
   useSubmitQuizMutation,
 } from "@/redux/api/quizSubmitApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import TopBarLoading from "../ui/Loading/TopBarLoading";
 export default function QuizTestPage({
   quizData,
   quizId,
@@ -26,7 +27,7 @@ export default function QuizTestPage({
 
   //! for getQUiz
 
-  const { data: quizAnswerData } = useGetSubmitUserQuizQuery(quizId);
+  const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
   const userSubmitData = quizAnswerData;
 
@@ -53,8 +54,8 @@ export default function QuizTestPage({
   // if (submittedDefaultData?.submitAnswers) {
   //   setIsCorrectAnswer(checkAnswers(submittedDefaultData));
   // }
-  // ! For Next quiz and submit Quiz
-  const handleNext = async () => {
+
+  const submitAnswer = async () => {
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
       try {
         const res = await submitQuiz(currentAnswer).unwrap();
@@ -78,14 +79,18 @@ export default function QuizTestPage({
     } else {
       // message.error("Already submitted the answer");
     }
+  };
 
+  // ! For Next quiz and submit Quiz
+  const handleNext = () => {
+    submitAnswer();
     return setCurrentStep((prevStep) => prevStep + 1);
   };
 
   const handleFinishQuiz = () => {
-    console.log(userAnswers);
-
-    message.success("Quiz submitted successfully!");
+    // console.log(userAnswers);
+    // submitAnswer();
+    message.success("Quiz Finished successfully!");
   };
 
   // ! For disabled Next Button
@@ -108,13 +113,12 @@ export default function QuizTestPage({
     return disabled;
   }, [currentAnswer, currentStep, submittedDefaultData, userAnswers]);
 
-
-  
-
+  // console.log(quizData?.length, "and", quizAnswerData?.length);
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
         {/* Render quiz based on the current step */}
+        {isLoading && <TopBarLoading />}
         {quizData.length > 0 && (
           // renderQuizQuestion(quizData[currentStep], currentStep);
           <QuizQuestionCard
@@ -145,9 +149,21 @@ export default function QuizTestPage({
               Next
             </Button>
           ) : (
-            <Button type="default" onClick={handleFinishQuiz}>
-              Finish Quiz
-            </Button>
+            <div>
+              {quizData?.length !== quizAnswerData?.length ? (
+                <Button
+                  type="default"
+                  disabled={isDisabledNext}
+                  onClick={handleNext}
+                >
+                  Finish Quiz
+                </Button>
+              ) : (
+                <Button type="default" onClick={handleFinishQuiz}>
+                  Finished Already
+                </Button>
+              )}
+            </div>
           )}
         </div>
 

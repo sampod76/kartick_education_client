@@ -319,7 +319,10 @@ export default function QuizQuestionCard({
               const isCorrect = correctId?.find(
                 (id: string) => id === option?._id
               );
-              // console.log(isCorrect, ".............", option, correctId);
+              const isSubmitted = submittedDefaultData?.submitAnswers?.find(
+                (item: string) => item === option?._id
+              );
+              // console.log(isCorrect, ".............", option,isSubmitted);
               return (
                 <Checkbox
                   key={option?.title}
@@ -332,9 +335,11 @@ export default function QuizQuestionCard({
                 >
                   <div
                     className={`border-2 rounded-xl p-3 w-full  ${
-                      isCorrect
-                        ? " border-2 border-green-600"
-                        : "border-2 border-red-500 "
+                      isSubmitted === option?._id
+                        ? isCorrect
+                          ? " border-2 border-green-600"
+                          : "border-2 border-red-500 "
+                        : ""
                     } `}
                   >
                     <p>{option?.title}</p>
