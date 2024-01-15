@@ -1,3 +1,4 @@
+"use client";
 import { AllImage } from "@/assets/AllImge";
 
 import Image from "next/image";
@@ -6,194 +7,196 @@ import React, { useState } from "react";
 import { IPlan } from "./JoinMain";
 import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 import { IPackageData } from "@/types/packageType";
-interface ICaterory {
-  _id: string;
-  title: string;
-  img: string;
+import { useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
+import { IPackageCategory } from "../../../types/packageType";
+// interface ICaterory {
+//   _id: string;
+//   title: string;
+//   img: string;
 
-  monthly?: {
-    price: number;
-    each_student_increment: number;
-  };
-  biannual?: {
-    price: number;
-    each_student_increment: number;
-  };
-  yearly?: {
-    price: number;
-    each_student_increment: number;
-  };
-}
+//   monthly?: {
+//     price: number;
+//     each_student_increment: number;
+//   };
+//   biannual?: {
+//     price: number;
+//     each_student_increment: number;
+//   };
+//   yearly?: {
+//     price: number;
+//     each_student_increment: number;
+//   };
+// }
 
-interface IPackage {
-  _id: string;
-  title: string;
-  img?: string;
-  type: "combo" | "select" | "multiple";
-  price_time?: string;
-  date_range?: [string];
-  categories: ICaterory[];
-  monthly?: {
-    price: number;
-    each_student_increment: number;
-  };
-  biannual?: {
-    price: number;
-    each_student_increment: number;
-  };
-  yearly?: {
-    price: number;
-    each_student_increment: number;
-  };
-}
+// interface IPackage {
+//   _id: string;
+//   title: string;
+//   img?: string;
+//   type: "combo" | "select" | "multiple";
+//   price_time?: string;
+//   date_range?: [string];
+//   categories: ICaterory[];
+//   monthly?: {
+//     price: number;
+//     each_student_increment: number;
+//   };
+//   biannual?: {
+//     price: number;
+//     each_student_increment: number;
+//   };
+//   yearly?: {
+//     price: number;
+//     each_student_increment: number;
+//   };
+// }
 
-const packageData: IPackageData[] = [
-  {
-    _id: "1",
-    title: "Core Subjects",
-    img: "core_subjects_image_url",
-    type: "combo",
-    monthly: {
-      price: 100,
-      each_student_increment: 4,
-    },
-    yearly: {
-      price: 100,
-      each_student_increment: 40,
-    },
-    biannual: {
-      price: 100,
-      each_student_increment: 20,
-    },
+// const packageData: IPackage[] = [
+//   {
+//     _id: "1",
+//     title: "Core Subjects",
+//     img: "core_subjects_image_url",
+//     type: "combo",
+//     monthly: {
+//       price: 100,
+//       each_student_increment: 4,
+//     },
+//     yearly: {
+//       price: 100,
+//       each_student_increment: 40,
+//     },
+//     biannual: {
+//       price: 100,
+//       each_student_increment: 20,
+//     },
 
-    price_time: "monthly",
-    categories: [
-      {
-        _id: "11",
-        title: "Math (Pre-K to 12)",
-        img: "math_image_url",
-      },
-      {
-        _id: "12",
+//     price_time: "monthly",
+//     categories: [
+//       {
+//         _id: "11",
+//         title: "Math (Pre-K to 12)",
+//         img: "math_image_url",
+//       },
+//       {
+//         _id: "12",
 
-        title: "Language Arts (Pre-K to 12)",
-        img: "language_arts_image_url",
-        // monthly_price: 42,
-        // yearly_price: 159,
-      },
-      {
-        title: "Science (Grades K to 8)",
-        img: "science_image_url",
-        // monthly_price: 20,
-        // yearly_price: 159,
-        _id: "13",
-      },
-      {
-        title: "Social Studies (Grades K to 8)",
-        img: "social_studies_image_url",
-        // monthly_price: 20,
-        // yearly_price: 159,
-        _id: "14",
-      },
-    ],
-  },
-  {
-    _id: "2",
-    title: "Combo Package",
-    img: "combo_package_image_url",
-    type: "combo",
-    monthly: {
-      price: 120,
-      each_student_increment: 4,
-    },
-    biannual: {
-      price: 500,
-      each_student_increment: 20,
-    },
-    yearly: {
-      price: 920,
-      each_student_increment: 40,
-    },
+//         title: "Language Arts (Pre-K to 12)",
+//         img: "language_arts_image_url",
+//         // monthly_price: 42,
+//         // yearly_price: 159,
+//       },
+//       {
+//         title: "Science (Grades K to 8)",
+//         img: "science_image_url",
+//         // monthly_price: 20,
+//         // yearly_price: 159,
+//         _id: "13",
+//       },
+//       {
+//         title: "Social Studies (Grades K to 8)",
+//         img: "social_studies_image_url",
+//         // monthly_price: 20,
+//         // yearly_price: 159,
+//         _id: "14",
+//       },
+//     ],
+//   },
+//   {
+//     _id: "2",
+//     title: "Combo Package",
+//     img: "combo_package_image_url",
+//     type: "combo",
+//     monthly: {
+//       price: 120,
+//       each_student_increment: 4,
+//     },
+//     biannual: {
+//       price: 500,
+//       each_student_increment: 20,
+//     },
+//     yearly: {
+//       price: 920,
+//       each_student_increment: 40,
+//     },
 
-    categories: [
-      {
-        title: "Math (Pre-K to 12)",
-        img: "math_image_url",
-        _id: "21",
-      },
-      {
-        title: "Language Arts (Pre-K to 12)",
-        img: "language_arts_image_url",
-        _id: "22",
-      },
-    ],
-  },
-  {
-    _id: "3",
-    title: "Single Subject",
-    img: "single_subject_image_url",
-    type: "select",
-    monthly: {
-      price: 220,
-      each_student_increment: 4,
-    },
-    biannual: {
-      price: 600,
-      each_student_increment: 20,
-    },
-    yearly: {
-      price: 1020,
-      each_student_increment: 40,
-    },
-    categories: [
-      {
-        _id: "31",
-        title: "Math (Pre-K to 12)",
-        img: "math_image_url",
-      },
-      {
-        title: "Language Arts (Pre-K to 12)",
-        img: "language_arts_image_url",
-        _id: "32",
-      },
-    ],
-  },
-  {
-    _id: "4",
-    title: "Multiple Subject",
-    img: "Multiple_image_url",
-    type: "multiple",
+//     categories: [
+//       {
+//         title: "Math (Pre-K to 12)",
+//         img: "math_image_url",
+//         _id: "21",
+//       },
+//       {
+//         title: "Language Arts (Pre-K to 12)",
+//         img: "language_arts_image_url",
+//         _id: "22",
+//       },
+//     ],
+//   },
+//   {
+//     _id: "3",
+//     title: "Single Subject",
+//     img: "single_subject_image_url",
+//     type: "select",
+//     monthly: {
+//       price: 220,
+//       each_student_increment: 4,
+//     },
+//     biannual: {
+//       price: 600,
+//       each_student_increment: 20,
+//     },
+//     yearly: {
+//       price: 1020,
+//       each_student_increment: 40,
+//     },
+//     categories: [
+//       {
+//         _id: "31",
+//         title: "Math (Pre-K to 12)",
+//         img: "math_image_url",
+//       },
+//       {
+//         title: "Language Arts (Pre-K to 12)",
+//         img: "language_arts_image_url",
+//         _id: "32",
+//       },
+//     ],
+//   },
+//   {
+//     _id: "4",
+//     title: "Multiple Subject",
+//     img: "Multiple_image_url",
+//     type: "multiple",
 
-    monthly: {
-      price: 420,
-      each_student_increment: 4,
-    },
-    biannual: {
-      price: 550,
-      each_student_increment: 20,
-    },
-    yearly: {
-      price: 820,
-      each_student_increment: 40,
-    },
-    categories: [
-      {
-        _id: "41",
-        title: "Math (Pre-K to 12)",
-        img: "math_image_url",
-        // monthly_price: 20,
-        // yearly_price: 79,
-      },
-      {
-        _id: "42",
-        title: "Language Arts (Pre-K to 12)",
-        img: "language_arts_image_url",
-        // monthly_price: 40,
-        // yearly_price: 79,
-      },
-    ],
-  },
-];
+//     monthly: {
+//       price: 420,
+//       each_student_increment: 4,
+//     },
+//     biannual: {
+//       price: 550,
+//       each_student_increment: 20,
+//     },
+//     yearly: {
+//       price: 820,
+//       each_student_increment: 40,
+//     },
+//     categories: [
+//       {
+//         _id: "41",
+//         title: "Math (Pre-K to 12)",
+//         img: "math_image_url",
+//         // monthly_price: 20,
+//         // yearly_price: 79,
+//       },
+//       {
+//         _id: "42",
+//         title: "Language Arts (Pre-K to 12)",
+//         img: "language_arts_image_url",
+//         // monthly_price: 40,
+//         // yearly_price: 79,
+//       },
+//     ],
+//   },
+// ];
 
 export default function JoinPackage({
   plan,
@@ -215,7 +218,12 @@ export default function JoinPackage({
   //     }, 0) * quantity
   //   );
   // }
-  const calculatePackage2 = (packages: IPackage): number | undefined => {
+
+  const { data, isLoading } = useGetAllPackageQuery({ status: "active" });
+
+  const packageData = data?.data;
+
+  const calculatePackage2 = (packages: IPackageData): number | undefined => {
     // console.log(packages);
 
     let newPrice = 0;
@@ -238,22 +246,21 @@ export default function JoinPackage({
   };
   // ! For select package
 
-  const [selectPackage, setSelectPackage] = useState<IPackage>(packageData[0]);
+  const [selectPackage, setSelectPackage] = useState<
+    IPackageData | undefined | null
+  >(packageData[0] || null);
+
   const [singleSelect, setSingleSelect] = useState("");
 
-// console.log(singleSelect,'ppppppppppp')
+  // console.log(singleSelect,'ppppppppppp')
 
-  const selectPackageHandler = (value: IPackage) => {
+  const selectPackageHandler = (value: IPackageData) => {
     setSelectPackage(value);
     message.success(`Selected ${value?.title}`);
-    console.log(value)
-   if (value?.type=== 'select' ){
-
+    console.log(value);
+    if (value?.type === "select") {
     }
-    const selectedPackageData ={
-
-    }
-
+    const selectedPackageData = {};
   };
 
   return (
@@ -262,7 +269,7 @@ export default function JoinPackage({
         Choose a package
       </h2>
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
-        {packageData?.map((packages: IPackage, index: number) => {
+        {packageData?.map((packages: IPackageData, index: number) => {
           const totalPackagePrice = calculatePackage2(packages);
           return (
             <div
@@ -280,11 +287,13 @@ export default function JoinPackage({
                 <div className="py-3">
                   {/* single */}
                   {packages?.type !== "select" &&
-                    packages?.categories?.map((caterory: ICaterory) => {
+                    packages?.categories?.map((categoryData: IPackageCategory) => {
+
+                      const category =categoryData?.category
                       return (
                         <div
                           className="flex justify- items-center gap-2 px-5 py-2"
-                          key={caterory?.title}
+                          key={category?.title}
                         >
                           {/* <Image
                           height={20}
@@ -294,7 +303,7 @@ export default function JoinPackage({
                         /> */}
 
                           <h5 className="text-primary text-md ">
-                            {caterory?.title}
+                            {category?.title}
                           </h5>
 
                           <span className="text-[12px] text-slate-600 ">
@@ -313,10 +322,10 @@ export default function JoinPackage({
                         }}
                         onChange={(e) => setSingleSelect(e.target.value)}
                       >
-                        {packages?.categories?.map((option: any) => (
+                        {packages?.categories?.map((option?.category: any) => (
                           <Radio
-                            key={option?.title}
-                            value={option?._id}
+                            key={option?.category?.title}
+                            value={option?.category?._id}
                             style={{
                               display: "flex",
                               paddingTop: "0.5rem",
@@ -328,7 +337,7 @@ export default function JoinPackage({
                             }}
                           >
                             <h5 className="text-primary text-md ">
-                              {option?.title}
+                              {option?.category?.title}
                             </h5>
 
                             <span className="text-[12px] text-slate-600 ">
