@@ -17,7 +17,7 @@ const BannerCourses = () => {
 
   const categoryData = data?.data || [];
 
-  console.log("🚀 ~ BannerCourses ~ categoryData:", categoryData);
+  // console.log("🚀 ~ BannerCourses ~ categoryData:", categoryData);
 
   // const firstId=categoryData.length ? categoryData[0]._id : ""
   //   const {data:courseData,isLoading:courseDataLoading} = useGetSingleCourseQuery(firstId,{skip:!Boolean(firstId)})
@@ -46,7 +46,7 @@ const BannerCourses = () => {
           backgroundSize: "cover",
           // minHeight: "50vh",
           // position: "relative",
-          
+
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "flex-start",
@@ -75,8 +75,6 @@ const BannerCourses = () => {
               );
             })
           )}
-
-        
         </div>
       </div>
       {/* <div className="">

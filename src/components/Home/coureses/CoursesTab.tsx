@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { Tabs, TabsProps, message } from "antd";
 import React, { useState } from "react";
 import Courses from "./Courses";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { ENUM_SORT_ORDER, ENUM_STATUS } from "@/constants/globalEnums";
 
@@ -12,6 +13,7 @@ import { Error_model_hook } from "@/utils/modalHook";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 const { TabPane } = Tabs;
 const CoursesTab = () => {
+  const screens = useBreakpoint();
   const [activeTabKey, setActiveTabKey] = useState("0");
 
   const handleTabClick = (key: any) => {
@@ -92,7 +94,7 @@ const CoursesTab = () => {
           animated
           onChange={handleTabClick}
           items={tabsItems2}
-          style={{ marginTop: "50px" }}
+          style={{ width: screens.sm ? "80%" : "auto", margin: "50px auto" }}
           onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       )}
