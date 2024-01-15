@@ -170,7 +170,7 @@ const TrainerListPage = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteStudent(id).unwrap();
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);

@@ -31,7 +31,7 @@ const TextEditor = dynamic(
 export default function CreateMilestoneByCourse() {
   //
 
-  const [category, setCategory] = useState({});
+  const [category, setCategory] = useState<{_id?:string}>({});
   const [courses, setCourses] = useState<{ _id?: string }>({});
   const [isReset, setIsReset] = useState(false);
 
@@ -118,7 +118,7 @@ export default function CreateMilestoneByCourse() {
           padding: "1rem",
         }}
       >
-        {courses._id ? (
+        {category?._id && courses?._id ? (
           <div>
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}

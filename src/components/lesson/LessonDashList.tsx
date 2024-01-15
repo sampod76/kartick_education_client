@@ -127,7 +127,7 @@ export default function LessonDashList() {
           const res = await deleteLesson(id).unwrap();
 
           console.log(res, "response for delete Lesson");
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);

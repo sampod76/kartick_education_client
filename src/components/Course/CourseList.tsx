@@ -81,8 +81,9 @@ const CourseList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteCourse(id).unwrap();
+         
 
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
@@ -90,6 +91,7 @@ const CourseList = () => {
             Success_model("Course Successfully Deleted");
           }
         } catch (error: any) {
+          console.log("🚀 ~ confirm_modal ~ error:", error)
           message.error(error.message);
         }
       }
@@ -245,14 +247,16 @@ const CourseList = () => {
   };
 
   const deleteCourseHandler = async (id: string) => {
-    // console.log(id);
+    console.log(id);
     try {
-      const res = await deleteCourse(id);
-      if (res) {
+      const res:any = await deleteCourse(id);
+      console.log("🚀 ~ deleteCourseHandler ~ res:", res)
+      if (res._id) {
         message.success("Admin Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
+      console.log("🚀 ~ deleteCourseHandler ~ error:", error)
       message.error(error.message);
     }
   };

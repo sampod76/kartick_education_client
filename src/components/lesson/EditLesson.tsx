@@ -80,7 +80,7 @@ export default function EditLesson({lessonId}:{lessonId:string}) {
           data: LessonData,
         }).unwrap();
         // console.log(res);
-        if (res.success == false) {
+        if (res?.success == false) {
           Error_model_hook(res?.message);
           setIsReset(true)
         } else {

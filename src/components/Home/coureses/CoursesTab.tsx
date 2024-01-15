@@ -84,7 +84,7 @@ const CoursesTab = () => {
   };
 
   return (
-    <div className="mt-10 bg-slate-100 p-3">
+    <div className=" bg-slate-100 p-3">
       {isLoading ? (
         <TopBarLoading />
       ) : (

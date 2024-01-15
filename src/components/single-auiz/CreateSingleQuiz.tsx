@@ -118,7 +118,7 @@ const CreateSingleQuiz = () => {
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
 
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added the Quiz");

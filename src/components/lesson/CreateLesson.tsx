@@ -36,6 +36,7 @@ import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import ButtonGroup from "antd/es/button/button-group";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import { FormProps, useForm } from "react-hook-form";
+import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -43,12 +44,15 @@ const TextEditor = dynamic(
   }
 );
 const CreateLesson = () => {
-
   //----------------------------------------------------------------
   const [isReset, setIsReset] = useState(false);
-  const [category, setCategory] = useState<{ _id?: string; title?: string }>({});
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
-  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>({});
+  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   //! for Category options selection
   const query: Record<string, any> = {};
@@ -60,35 +64,36 @@ const CreateLesson = () => {
   //----------------------------------------------------------------
 
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
-  
+
   const { data: existLesson, isLoading: GetLessionLoading } =
     useGetAllLessonQuery(
-      { module: module?._id },
+      { module: module?._id, isDelete: ENUM_YN.NO, status: ENUM_STATUS.ACTIVE },
       { skip: !Boolean(module?._id) }
     );
   const onSubmit = async (values: any) => {
     console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
-    if (!module?._id || !milestone?._id || !course?._id || !category?._id ) {
-      Error_model_hook("Please ensure your are selected Lesson/milestone/course/category");
+    if (!module?._id || !milestone?._id || !course?._id || !category?._id) {
+      Error_model_hook(
+        "Please ensure your are selected Lesson/milestone/course/category"
+      );
       return;
     }
     const LessonData: {} = {
       ...values,
       category: category?._id,
-      course:course?._id,
-      milestone:milestone?._id,
+      course: course?._id,
+      milestone: milestone?._id,
       module: module?._id,
     };
     console.log(LessonData);
     // return;
     try {
       const res = await addLesson(LessonData).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
-        setIsReset(false)
- 
+        setIsReset(false);
       }
     } catch (error: any) {
       Error_model_hook(error?.message);
@@ -169,9 +174,11 @@ const CreateLesson = () => {
         <div className="shadow-xl rounded-lg bg-white">
           {/* resolver={yupResolver(adminSchema)} */}
           {/* resolver={yupResolver(IServiceSchema)} */}
-          <SubHeadingUI>Create Lesson</SubHeadingUI>
+          <div className="flex justify-center items-center p-3">
+            <SubHeadingUI>Create Lesson</SubHeadingUI>
+          </div>
           <Form
-          isReset={isReset}
+            isReset={isReset}
             submitHandler={onSubmit}
             defaultValues={{ lesson_number: Number(prelesson_number) }}
           >
@@ -183,7 +190,6 @@ const CreateLesson = () => {
                 marginBottom: "10px",
               }}
             >
-              <hr className="border-1 my-1" />
               <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                 <Col
                   className="gutter-row"
@@ -247,9 +253,11 @@ const CreateLesson = () => {
                     label="Lesson No"
                     required={true}
                   />
-                
                 </Col>
-                <Col xs={24} style={{marginTop:"2rem" , marginBottom:"2rem"}}>
+                <Col
+                  xs={24}
+                  style={{ marginTop: "2rem", marginBottom: "2rem" }}
+                >
                   {/* <DemoVideoUI
                     label="Video"
                     videoType={videoType as any}
@@ -259,14 +267,14 @@ const CreateLesson = () => {
                     options={["youtube", "vimeo"]}
                     required
                   /> */}
-              
 
                   <VideoSelect
+
                   // videos={SelectVideo}
                   // setVideos={setSelectVideo as any}
                   />
                 </Col>
-                
+
                 <Col
                   className="gutter-row"
                   xs={24}
@@ -300,17 +308,16 @@ const CreateLesson = () => {
                   <p className="text-center my-3 font-bold text-xl ">
                     Description
                   </p>
-                  <TextEditor  isReset={isReset}/>
+                  <TextEditor isReset={isReset} />
                 </Col>
               </Row>
             </div>
             <div className="w-fit mx-auto">
-
-            {serviceLoading ? (
-              <ButtonLoading />
-            ) : (
-              <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
-            )}
+              {serviceLoading ? (
+                <ButtonLoading />
+              ) : (
+                <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
+              )}
             </div>
           </Form>
         </div>

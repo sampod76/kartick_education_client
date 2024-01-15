@@ -33,7 +33,7 @@ const EditFaq = ({params}:{params:any}) => {
 
     try {
       const res = await updateBlog({id:params.id,body:values}).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");

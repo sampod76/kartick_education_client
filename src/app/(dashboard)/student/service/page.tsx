@@ -65,7 +65,7 @@ const ServiceList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteService(id).unwrap();
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);

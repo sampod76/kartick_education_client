@@ -73,7 +73,7 @@ export default function EditModule({moduleId}:{moduleId:string}) {
           data: ModuleData,
         }).unwrap();
         console.log(res);
-        if (res.success == false) {
+        if (res?.success == false) {
           Error_model_hook(res?.message);
         } else {
           Success_model("Successfully Update Module");

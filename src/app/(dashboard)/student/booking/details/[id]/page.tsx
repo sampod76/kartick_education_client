@@ -79,7 +79,7 @@ const BookingDetails = ({ params }: any) => {
         service: bookingData?.service?._id,
       }).unwrap();
 
-      if (res.success == false) {
+      if (res?.success == false) {
         // message.success("Admin Successfully Deleted!");
         // setOpen(false);
         Error_model_hook(res?.message);
@@ -112,7 +112,7 @@ const BookingDetails = ({ params }: any) => {
               id: params?.id,
               body: { payment: true },
             }).unwrap();
-            if (res.success == false) {
+            if (res?.success == false) {
               Error_model_hook(res?.message + "");
             } else {
               Success_model("Successfully update booking");

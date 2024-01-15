@@ -121,7 +121,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
           padding: "1rem",
         }}
       >
-        {courses._id ? (
+        {courses?._id ? (
           <div>
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}

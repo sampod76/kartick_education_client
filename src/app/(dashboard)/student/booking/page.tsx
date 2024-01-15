@@ -93,7 +93,7 @@ const GeneralUserBooking = () => {
               id,
               body: { status: ENUM_BOOKING_STATUS.REJECT },
             }).unwrap();
-            if (res.success == false) {
+            if (res?.success == false) {
               // message.success("Admin Successfully Deleted!");
               // setOpen(false);
               Error_model_hook(res?.message);

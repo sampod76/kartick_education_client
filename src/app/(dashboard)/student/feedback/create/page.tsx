@@ -27,7 +27,7 @@ const CreateStudentFeedback = () => {
 
     try {
       const res = await addService(values).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added feedback");

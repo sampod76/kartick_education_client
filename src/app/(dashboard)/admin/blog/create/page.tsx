@@ -25,7 +25,7 @@ const CreateBlog = () => {
   const onSubmit = async (values: any) => {
     try {
       const res = await addBlog(values).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");

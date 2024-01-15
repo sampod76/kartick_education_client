@@ -130,7 +130,7 @@ export default function EditSingleQuiz({
         data: { ...singleQuizDat },
       }).unwrap();
 
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully Update the Quiz");

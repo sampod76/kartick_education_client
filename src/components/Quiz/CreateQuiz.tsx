@@ -49,16 +49,6 @@ const CreateQuiz = () => {
   //
   const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
 
-  // // ! for video insert
-  // const [videoType, setVideoType] = useState(null);
-  // const [videoUrl, setVideoUrl] = useState("");
-  const [textEditorValue, setTextEditorValue] = useState("");
-
-  // const demo_video = {
-  //   video: videoType,
-  //   platform: videoUrl,
-  // };
-
   const onSubmit = async (values: any) => {
     const createQuizeData: {} = {
       ...values,
@@ -73,7 +63,7 @@ const CreateQuiz = () => {
     try {
       const res = await addQuiz(createQuizeData).unwrap();
       console.log(res);
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Quiz");
