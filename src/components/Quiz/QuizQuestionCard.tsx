@@ -56,7 +56,6 @@ export default function QuizQuestionCard({
     });
 
     return allCorrect;
-    
   };
 
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
@@ -90,6 +89,8 @@ export default function QuizQuestionCard({
   //   submittedDefaultData,
   //   submittedDefaultData?.submitAnswers[0]
   // );
+
+  console.log(submittedDefaultData, "sssssssssssss");
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
     let changedAnswer = [];
@@ -147,7 +148,7 @@ export default function QuizQuestionCard({
             <TextToSpeech text={quiz?.title} />
             Question {index + 1} : {quiz?.title}
           </p>
-          {isCorrectAnswer ? (
+          {submittedDefaultData?.singleQuiz ? isCorrectAnswer ? (
             <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
               Correct
             </button>
@@ -155,7 +156,7 @@ export default function QuizQuestionCard({
             <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#ff000091] via-[#a01212] to-[#690303]">
               Incorrect
             </button>
-          )}
+          ):""}
         </div>
         <div className="flex flex-wrap">
           {quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
