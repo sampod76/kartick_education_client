@@ -30,33 +30,25 @@ export default function QuizTestPage({
 
   const userSubmitData = quizAnswerData;
 
-  // console.log(
-  //   "🚀 ~ file: QuizTestPage.tsx:32 ~ userSubmitData:",
-  //   userSubmitData
-  // );
+  console.log(
+    "🚀 ~ file: QuizTestPage.tsx:32 ~ userSubmitData:",
+    userSubmitData
+  );
 
-  const submittedDefaultData = userSubmitData?.userSubmitQuizzes?.find(
-    (answer: any) =>
-      answer?.singleQuizId?._id ===
-      currentAnswer?.userSubmitQuizzes[0]?.singleQuizId
-  )?.singleQuizId;
+  const submittedDefaultData = userSubmitData?.find(
+    (answer: any) => answer?.singleQuiz?._id === currentAnswer?.singleQuiz
+  );
+
   // const submittedDefaultData= userSubmitData
 
-  // console.log("🚀", submittedDefaultData);
+  console.log("🚀", submittedDefaultData);
   // console.log(currentAnswer, "cccccccccccccccc");
 
-  console.log(
-    currentAnswer?.userSubmitQuizzes[0]?.singleQuizId,
-    "and",
-    submittedDefaultData?._id
-  );
+  console.log(currentAnswer?.singleQuiz, "and", submittedDefaultData?._id);
 
   const handleNext = async () => {
     // console.log(currentAnswer);
-    if (
-      currentAnswer?.userSubmitQuizzes[0]?.singleQuizId !==
-      submittedDefaultData?.singleQuizId?._id
-    ) {
+    if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
       try {
         const res = await submitQuiz(currentAnswer).unwrap();
         console.log(res, "response");
@@ -71,13 +63,17 @@ export default function QuizTestPage({
         console.error(err);
         Error_model_hook(err?.message || err?.data);
       }
+    } else {
+      message.error("Already submitted the answer");
     }
 
     return setCurrentStep((prevStep) => prevStep + 1);
   };
 
-  console.log(currentAnswer, "cccccccccccccccc");
+  // console.log(currentAnswer, "cccccccccccccccc");
+  console.log(userAnswers);
 
+  console.log(currentAnswer?.singleQuiz, submittedDefaultData?.singleQuiz?._id);
   // console.log(currentStep + 1,'anddd',userAnswers);
   const handleFinishQuiz = () => {
     // Save user responses to localStorage or API
@@ -120,11 +116,12 @@ export default function QuizTestPage({
               onClick={handleNext}
               // disabled={!userResponses.hasOwnProperty(currentStep+1)}
               disabled={
-              (  currentAnswer?.userSubmitQuizzes[0]?.singleQuizId !==
-                  submittedDefaultData?.singleQuizId?._id)&&true  ||
-               ( !userAnswers.find(
+                // (currentAnswer?.singleQuiz ===
+                //   submittedDefaultData?.singleQuiz?._id &&
+                //   true) ||
+                !userAnswers.find(
                   (answer: any) => answer?.index === currentStep + 1
-                ))
+                )
               }
             >
               Next

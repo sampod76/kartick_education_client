@@ -28,14 +28,11 @@ export default function QuizQuestionCard({
   setCurrentAnswer: any;
   submittedDefaultData: any;
 }) {
-
   console.log(quiz);
-
-
 
   const dispatch = useAppDispatch();
 
-  if (!currentAnswer|| quiz?._id !== currentAnswer?.userSubmitQuizzes[0]?.singleQuizId) {
+  if (!currentAnswer || quiz?._id !== currentAnswer?.singleQuiz) {
     const beforeANswer = {
       lesson: quiz?.lesson,
       module: quiz?.module?._id,
@@ -43,12 +40,8 @@ export default function QuizQuestionCard({
       course: quiz?.course,
       category: quiz?.category,
       quiz: quiz?.quiz?._id,
-      userSubmitQuizzes: [
-        {
-          singleQuizId: quiz?._id,
-          submitAnswers: [quiz?.milestone],
-        },
-      ],
+      singleQuiz: quiz?._id,
+      submitAnswers: [quiz?.milestone],
     };
 
     setCurrentAnswer(beforeANswer);
@@ -71,12 +64,8 @@ export default function QuizQuestionCard({
       course: quiz?.course,
       category: quiz?.category,
       quiz: quiz?.quiz?._id,
-      userSubmitQuizzes: [
-        {
-          singleQuizId: quiz?._id,
-          submitAnswers: changedAnswer,
-        },
-      ],
+      singleQuiz: quiz?._id,
+      submitAnswers: changedAnswer,
     };
 
     setCurrentAnswer(newANswer);
@@ -97,7 +86,7 @@ export default function QuizQuestionCard({
     (answer) => answer?._id === quiz?._id
   );
 
-  // console.log(isDefaultValue);
+  console.log(submittedDefaultData);
 
   // console.log(userAnswers);
 
@@ -105,9 +94,7 @@ export default function QuizQuestionCard({
 
   return (
     <div>
-
       <div key={quiz?._id} className="m-4 w-full">
-
         <div className="text-center mt-4 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
@@ -140,8 +127,13 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
-            
-            disabled={isDefaultValue?.is_time_up ? true : false}
+            disabled={
+              isDefaultValue?.is_time_up ||
+              currentAnswer?.singleQuiz ===
+                submittedDefaultData?.singleQuiz?._id
+                ? true
+                : false
+            }
             defaultValue={isDefaultValue?.answer} // Set the default value based on isDefaultValue
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
           >
@@ -232,7 +224,6 @@ export default function QuizQuestionCard({
           />
         )} */}
       </div>
-
     </div>
   );
 }

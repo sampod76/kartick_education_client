@@ -32,7 +32,6 @@ interface IPackage {
   price_time?: string;
   date_range?: [string];
   categories: ICaterory[];
-
   monthly?: {
     price: number;
     each_student_increment: number;
