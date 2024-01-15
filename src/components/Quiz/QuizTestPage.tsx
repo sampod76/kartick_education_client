@@ -85,6 +85,23 @@ export default function QuizTestPage({
     // router.push(`/quiz/${quizId}/summary`);
   };
 
+  const isDisabledNext = () => {
+    const isSelected = userAnswers.find(
+      (answer: any) => answer?.index === currentStep + 1
+    );
+
+    if (currentAnswer?.singleQuiz === submittedDefaultData?.singleQuiz?._id) {
+      console.log('false ..........')
+      return false;
+    } else if (isSelected) {
+      return false;
+    } else {
+      return true;
+    }
+
+    // return true;
+  };
+
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
@@ -115,14 +132,26 @@ export default function QuizTestPage({
               type="default"
               onClick={handleNext}
               // disabled={!userResponses.hasOwnProperty(currentStep+1)}
-              disabled={
-                // (currentAnswer?.singleQuiz ===
-                //   submittedDefaultData?.singleQuiz?._id &&
-                //   true) ||
-                !userAnswers.find(
-                  (answer: any) => answer?.index === currentStep + 1
-                )
-              }
+              // disabled={
+              //   !userAnswers.find(
+              //     (answer: any) => answer?.index === currentStep + 1
+              //   ) ||
+              //   currentAnswer?.singleQuiz ===
+              //     submittedDefaultData?.singleQuiz?._id
+              //     ? false
+              //     : true
+              // }
+              // disabled={
+              //   currentAnswer?.singleQuiz !==
+              //   submittedDefaultData?.singleQuiz?._id
+              //     ? true
+              //     : userAnswers.find(
+              //         (answer: any) => answer?.index === currentStep + 1
+              //       )
+              //     ? true
+              //     : false
+              // }
+              disabled={isDisabledNext()}
             >
               Next
             </Button>
