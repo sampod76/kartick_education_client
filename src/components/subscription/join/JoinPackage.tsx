@@ -219,7 +219,10 @@ export default function JoinPackage({
   //   );
   // }
 
-  const { data, isLoading } = useGetAllPackageQuery({ status: "active" });
+  const { data, isLoading } = useGetAllPackageQuery({
+    status: "active",
+    limit: 9999,
+  });
 
   const packageData = data?.data ?? [];
 
@@ -251,9 +254,10 @@ export default function JoinPackage({
         packages.yearly.price +
         packages.yearly.each_student_increment * quantity;
     }
-
     return newPrice;
-  };
+  }
+
+
 
   const selectPackageHandler = (value: IPackageData) => {
     setSelectPackage(value);
@@ -261,9 +265,10 @@ export default function JoinPackage({
     console.log(value);
     if (value?.type === "select") {
     }
-    const selectedPackageData = {};
+    // const selectedPackageData = {};
   };
 
+  console.log(packageData);
   return (
     <div className="mt-[5rem]">
       <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
@@ -287,7 +292,7 @@ export default function JoinPackage({
                 {/* //! caterory section */}
                 <div className="py-3">
                   {/* single */}
-                  {packages?.type !== "select" &&
+                  {packages?.type !== "bundle" &&
                     packages?.categories?.map(
                       (categoryData: IPackageCategory) => {
                         const category = categoryData?.category;
@@ -315,6 +320,44 @@ export default function JoinPackage({
                       }
                     )}
                   {packages?.type === "select" && (
+                    <div>
+                      <Radio.Group
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "1rem",
+                        }}
+                        onChange={(e) => setSingleSelect(e.target.value)}
+                      >
+                        {packages?.categories?.map(
+                          (option?: IPackageCategory) => (
+                            <Radio
+                              key={option?.category?.title}
+                              value={option?._id}
+                              style={{
+                                display: "flex",
+                                paddingTop: "0.5rem",
+                                paddingBottom: "0.5rem",
+                                paddingLeft: "1.25rem",
+                                paddingRight: "1.25rem",
+                                gap: "0.5rem",
+                                alignItems: "center",
+                              }}
+                            >
+                              <h5 className="text-primary text-md ">
+                                {option?.category?.title}
+                              </h5>
+
+                              <span className="text-[12px] text-slate-600 ">
+                                {option?.label}
+                              </span>
+                            </Radio>
+                          )
+                        )}
+                      </Radio.Group>
+                    </div>
+                  )}
+                  {packages?.type === "multiple_select" && (
                     <div>
                       <Radio.Group
                         style={{
