@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button, message } from "antd";
 import QuizQuestionCard from "./QuizQuestionCard";
 import { useAppSelector } from "@/redux/hooks";
@@ -30,23 +30,31 @@ export default function QuizTestPage({
 
   const userSubmitData = quizAnswerData;
 
-
-
   const submittedDefaultData = userSubmitData?.find(
     (answer: any) => answer?.singleQuiz?._id === currentAnswer?.singleQuiz
   );
 
-  const checkAnswers = (responseData) => {
+  // ! For Test is submitted Answer is CorrectAnswer;
 
-    const allCorrect = responseData?.submitAnswers.every(answerId => {
-      const submittedAnswer = responseData?.singleQuiz?.answers?.find(answer => answer.id === answerId);
+  const checkAnswers = (responseData: any) => {
+    const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
+      const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+        (answer: any) => answer.id === answerId
+      );
       return submittedAnswer && submittedAnswer.correct;
     });
-  
+
     return allCorrect;
   };
-  const handleNext = async () => {
 
+  // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+
+  // console.log(submittedDefaultData, "ccccccccccccccccc", isCorrectAnswer);
+  // if (submittedDefaultData?.submitAnswers) {
+  //   setIsCorrectAnswer(checkAnswers(submittedDefaultData));
+  // }
+  // ! For Next quiz and submit Quiz
+  const handleNext = async () => {
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
       try {
         const res = await submitQuiz(currentAnswer).unwrap();
@@ -56,10 +64,9 @@ export default function QuizTestPage({
         } else {
           // Check if submitted answers are correct
           const isCorrect = checkAnswers(res);
-      
+
           if (isCorrect) {
             Success_model("Answer is Correct");
-
           } else {
             Error_model_hook("Incorrect answers submitted");
           }
@@ -74,30 +81,35 @@ export default function QuizTestPage({
 
     return setCurrentStep((prevStep) => prevStep + 1);
   };
-  const handleFinishQuiz = () => {
 
+  const handleFinishQuiz = () => {
     console.log(userAnswers);
 
     message.success("Quiz submitted successfully!");
- 
   };
 
-  const isDisabledNext = () => {
+  // ! For disabled Next Button
+  const isDisabledNext = useMemo(() => {
     const isSelected = userAnswers.find(
       (answer: any) => answer?.index === currentStep + 1
     );
 
+    let disabled = false;
+
     if (currentAnswer?.singleQuiz === submittedDefaultData?.singleQuiz?._id) {
-      console.log('false ..........')
-      return false;
+      // console.log("false ..........");
+      disabled = false;
     } else if (isSelected) {
-      return false;
+      disabled = false;
     } else {
-      return true;
+      disabled = true;
     }
 
-    // return true;
-  };
+    return disabled;
+  }, [currentAnswer, currentStep, submittedDefaultData, userAnswers]);
+
+
+  
 
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
@@ -128,27 +140,7 @@ export default function QuizTestPage({
             <Button
               type="default"
               onClick={handleNext}
-              // disabled={!userResponses.hasOwnProperty(currentStep+1)}
-              // disabled={
-              //   !userAnswers.find(
-              //     (answer: any) => answer?.index === currentStep + 1
-              //   ) ||
-              //   currentAnswer?.singleQuiz ===
-              //     submittedDefaultData?.singleQuiz?._id
-              //     ? false
-              //     : true
-              // }
-              // disabled={
-              //   currentAnswer?.singleQuiz !==
-              //   submittedDefaultData?.singleQuiz?._id
-              //     ? true
-              //     : userAnswers.find(
-              //         (answer: any) => answer?.index === currentStep + 1
-              //       )
-              //     ? true
-              //     : false
-              // }
-              disabled={isDisabledNext()}
+              disabled={isDisabledNext}
             >
               Next
             </Button>
