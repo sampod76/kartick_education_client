@@ -11,7 +11,7 @@ import { ENUM_SORT_ORDER, ENUM_STATUS } from "@/constants/globalEnums";
 import TopBarLoading from "@/components/ui/Loading/TopBarLoading";
 import { Error_model_hook } from "@/utils/modalHook";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
-const { TabPane } = Tabs;
+
 const CoursesTab = () => {
   const screens = useBreakpoint();
   const [activeTabKey, setActiveTabKey] = useState("0");
@@ -94,7 +94,7 @@ const CoursesTab = () => {
           animated
           onChange={handleTabClick}
           items={tabsItems2}
-          style={{ width: screens.sm ? "80%" : "auto", margin: "50px auto" }}
+          style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto" }}
           onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       )}
