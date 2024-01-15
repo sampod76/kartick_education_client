@@ -10,7 +10,7 @@ const EnrollStatistics = dynamic(() => import('@/components/dashboard/admin/Enro
 
 // import Course from "@/components/Home/coureses/Courses.tsx"
 
-export default function AdminDashboard() {
+export default function AdminDashboardMain() {
   return (
     <div>
 
