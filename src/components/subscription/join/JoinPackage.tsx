@@ -9,6 +9,7 @@ import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 import { IPackageData } from "@/types/packageType";
 import { useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
 import { IPackageCategory } from "../../../types/packageType";
+import InternelError from "@/components/shared/Error/InternelError";
 // interface ICaterory {
 //   _id: string;
 //   title: string;
@@ -219,7 +220,7 @@ export default function JoinPackage({
   //   );
   // }
 
-  const { data, isLoading } = useGetAllPackageQuery({
+  const { data, isLoading,error } = useGetAllPackageQuery({
     status: "active",
     limit: 9999,
   });
@@ -269,6 +270,20 @@ export default function JoinPackage({
   };
 
   console.log(packageData);
+
+  // For error 
+  if (error) {
+    return (
+      <InternelError
+        message={
+          //@ts-ignore
+          error?.data ||
+          //@ts-ignore
+          data?.data?.message
+        }
+      />
+    );
+  }
   return (
     <div className="mt-[5rem]">
       <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
@@ -359,17 +374,17 @@ export default function JoinPackage({
                   )}
                   {packages?.type === "multiple_select" && (
                     <div>
-                      <Radio.Group
+                      <Checkbox.Group
                         style={{
                           display: "flex",
                           flexDirection: "column",
                           gap: "1rem",
                         }}
-                        onChange={(e) => setSingleSelect(e.target.value)}
+                        onChange={(value:any) => setSingleSelect(value)}
                       >
                         {packages?.categories?.map(
                           (option?: IPackageCategory) => (
-                            <Radio
+                            <Checkbox
                               key={option?.category?.title}
                               value={option?._id}
                               style={{
@@ -389,10 +404,10 @@ export default function JoinPackage({
                               <span className="text-[12px] text-slate-600 ">
                                 {option?.label}
                               </span>
-                            </Radio>
+                            </Checkbox>
                           )
                         )}
-                      </Radio.Group>
+                      </Checkbox.Group>
                     </div>
                   )}
                 </div>
