@@ -11,7 +11,7 @@ import React from "react";
 
 const DashboardPage = () => {
   const userInfo = getUserInfo() as IDecodedInfo;
-  console.log(userInfo);
+  // console.log(userInfo);
 
   if (userInfo.role == "admin") {
     return <AdminDashboardMain />;

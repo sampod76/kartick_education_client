@@ -12,7 +12,10 @@ import { ICourseData } from "@/types/courseType";
 import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
 
 export default function SellerCourse() {
-  const { data, isLoading, error } = useGetAllCourseQuery({});
+  const { data, isLoading, error } = useGetAllCourseQuery({
+    status: "active",
+    limit: 9999,
+  });
   const courseData = data?.data || [];
   if (
     error ||
@@ -38,10 +41,7 @@ export default function SellerCourse() {
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2  gap-2 ">
             {courseData?.map((course: ICourseData, index: number) => {
               return (
-                <div
-                  key={index + 1}
-                  className="flex flex-col justify-center "
-                >
+                <div key={index + 1} className="flex flex-col justify-center ">
                   <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 min-w-full  max-w-xs md:max-w-3xl mx-auto border border-white bg-white">
                     <div className="w-full md:w-1/3 bg-white grid place-items-center">
                       <Image

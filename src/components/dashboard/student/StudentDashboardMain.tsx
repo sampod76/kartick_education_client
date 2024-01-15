@@ -1,7 +1,11 @@
-import React from 'react'
+import React from "react";
+import TopDashStatistics from "../admin/TopDashStatistics";
 
 export default function StudentDashboardMain() {
   return (
-    <div>StudentDashboardMain</div>
-  )
+    <div>
+      <TopDashStatistics />
+      
+    </div>
+  );
 }
