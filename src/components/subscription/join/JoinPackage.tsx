@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { IPlan } from "./JoinMain";
 import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
+import { IPackageData } from "@/types/packageType";
 interface ICaterory {
   _id: string;
   title: string;
@@ -46,7 +47,7 @@ interface IPackage {
   };
 }
 
-const packageData: IPackage[] = [
+const packageData: IPackageData[] = [
   {
     _id: "1",
     title: "Core Subjects",

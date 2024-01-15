@@ -1,22 +1,26 @@
 export type IPackageData = {
+  _id: string;
   membership: { title: string; uid?: string };
   title: string;
   img?: string;
   categories: {
-    category: string;
-    label?: string;
+    category: {
+      _id: string;
+      category: string;
+      label?: string;
 
-    biannual?: {
-      price: number;
-      each_student_increment?: number;
-    };
-    monthly?: {
-      price: number;
-      each_student_increment?: number;
-    };
-    yearly?: {
-      price: number;
-      each_student_increment?: number;
+      biannual?: {
+        price: number;
+        each_student_increment?: number;
+      };
+      monthly?: {
+        price: number;
+        each_student_increment?: number;
+      };
+      yearly?: {
+        price: number;
+        each_student_increment?: number;
+      };
     };
   }[];
   date_range?: string[];
@@ -35,4 +39,7 @@ export type IPackageData = {
     each_student_increment: number;
   };
   isDelete: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
 };
