@@ -1,23 +1,22 @@
-// import { tagTypes.courseg-types";
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "@/redux/tag-types";
-import { ICourseData } from "@/types/courseType";
+import { IPackageData } from "@/types/packageType";
 
-const COURSE_URL = "/course";
+const PACKAGE_URL = "/packages";
 
-export const courseApi = baseApi.injectEndpoints({
+export const packageApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // get all academic departments
-    getAllCourse: build.query({
+    getAllPackage: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: COURSE_URL,
+          url: PACKAGE_URL,
           method: "GET",
           params: arg,
         };
       },
-      transformResponse: (response: ICourseData[], meta: IMeta) => {
+      transformResponse: (response: IPackageData[], meta: IMeta) => {
         // console.log(response);
         return {
           data: response,
@@ -25,50 +24,50 @@ export const courseApi = baseApi.injectEndpoints({
           success: true,
         };
       },
-      providesTags: [tagTypes.course],
+      providesTags: [tagTypes.package],
     }),
     // get single academic department
-    getSingleCourse: build.query({
+    getSinglePackage: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `${COURSE_URL}/${id}`,
+        url: `${PACKAGE_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.course],
+      providesTags: [tagTypes.package],
     }),
     // create a new academic department
-    addCourse: build.mutation({
+    addPackage: build.mutation({
       query: (data) => ({
-        url: COURSE_URL,
+        url: PACKAGE_URL,
         method: "POST",
         data,
       }),
-      invalidatesTags: [tagTypes.course, tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.package, tagTypes.categoryChildren],
     }),
     // update ac department
-    updateCourse: build.mutation({
+    updatePackage: build.mutation({
       query: ({ data, id }) => ({
-        url: `${COURSE_URL}/${id}`,
+        url: `${PACKAGE_URL}/${id}`,
         method: "PATCH",
         data: data,
       }),
-      invalidatesTags: [tagTypes.course],
+      invalidatesTags: [tagTypes.package],
     }),
 
     // delete ac department
-    deleteCourse: build.mutation({
+    deletePackage: build.mutation({
       query: (id) => ({
-        url: `${COURSE_URL}/${id}`,
+        url: `${PACKAGE_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.course],
+      invalidatesTags: [tagTypes.package],
     }),
   }),
 });
 
 export const {
-  useAddCourseMutation,
-  useDeleteCourseMutation,
-  useGetAllCourseQuery,
-  useGetSingleCourseQuery,
-  useUpdateCourseMutation,
-} = courseApi;
+  useAddPackageMutation,
+  useDeletePackageMutation,
+  useGetAllPackageQuery,
+  useGetSinglePackageQuery,
+  useUpdatePackageMutation,
+} = packageApi;

@@ -4,19 +4,23 @@ import dynamic from "next/dynamic";
 import { Tabs, TabsProps, message } from "antd";
 import React, { useState } from "react";
 import Courses from "./Courses";
-import onlineCourseServicesData from "@/db/courses";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+
 import { ENUM_SORT_ORDER, ENUM_STATUS } from "@/constants/globalEnums";
-import { Skeleton } from "antd";
+
 import TopBarLoading from "@/components/ui/Loading/TopBarLoading";
 import { Error_model_hook } from "@/utils/modalHook";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+const { TabPane } = Tabs;
 const CoursesTab = () => {
+  const screens = useBreakpoint();
   const [activeTabKey, setActiveTabKey] = useState("0");
+
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
     // console.log(key);
   };
+
   const query: Record<string, any> = {};
   query["status"] = ENUM_STATUS.ACTIVE;
   query["limit"] = 99999;
@@ -47,6 +51,7 @@ const CoursesTab = () => {
       ),
     })
   );
+
   tabsItems2.unshift({
     label: (
       <button
@@ -58,6 +63,7 @@ const CoursesTab = () => {
     key: String("011"),
     children: <Courses query={{ status: "active" }} />,
   });
+
   if (
     error ||
     //@ts-ignore
@@ -72,6 +78,11 @@ const CoursesTab = () => {
     console.log(error, data?.data);
   }
 
+  const TabClickHandler = (key: string, event: any) => {
+    // console.log(key, event);
+    /// do not need now
+  };
+
   return (
     <div className="mt-10 bg-slate-100 p-3">
       {isLoading ? (
@@ -79,10 +90,12 @@ const CoursesTab = () => {
       ) : (
         <Tabs
           defaultActiveKey="011"
-          centered
+          // centered
+          animated
           onChange={handleTabClick}
           items={tabsItems2}
-          style={{marginTop:"50px"}}
+          style={{ width: screens.sm ? "80%" : "auto", margin: "50px auto" }}
+          onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       )}
     </div>

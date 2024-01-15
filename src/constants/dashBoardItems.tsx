@@ -17,14 +17,25 @@ import {
   CalendarOutlined,
   UsergroupDeleteOutlined,
   ContainerOutlined,
-  
-  
+  HomeOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
-  console.log("🚀 ~ dashboardItems ~ role:", role)
+  console.log("🚀 ~ dashboardItems ~ role:", role);
   const defaultSidebarItems: MenuProps["items"] = [
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/`}
+        >
+          Home
+        </Link>
+      ),
+      key: `/home`,
+      icon: <HomeOutlined />,
+    },
     {
       label: "Profile",
       key: "profile",
@@ -221,7 +232,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         },
       ],
     },
-   
+
     {
       label: "Manage Single Quiz",
       key: "manage-single-quiz",
@@ -400,10 +411,10 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/activeCourse`}
         >
-      Active Courses
+          Active Courses
         </Link>
       ),
-      icon:<CalendarOutlined />,
+      icon: <CalendarOutlined />,
       key: `/${role}/activeCourse`,
     },
     {
@@ -412,10 +423,10 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/trainers`}
         >
-        Trainers
+          Trainers
         </Link>
       ),
-      icon:<UsergroupDeleteOutlined />,
+      icon: <UsergroupDeleteOutlined />,
       key: `/${role}/trainers`,
     },
     {
@@ -424,10 +435,10 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/assignment`}
         >
-        Assignment
+          Assignment
         </Link>
       ),
-      icon:<ContainerOutlined />,
+      icon: <ContainerOutlined />,
       key: `/${role}/assignment`,
     },
     {
