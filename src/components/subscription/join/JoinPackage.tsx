@@ -10,6 +10,7 @@ import { IPackageData } from "@/types/packageType";
 import { useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
 import { IPackageCategory } from "../../../types/packageType";
 import InternelError from "@/components/shared/Error/InternelError";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 // interface ICaterory {
 //   _id: string;
 //   title: string;
@@ -220,7 +221,7 @@ export default function JoinPackage({
   //   );
   // }
 
-  const { data, isLoading,error } = useGetAllPackageQuery({
+  const { data, isLoading, error } = useGetAllPackageQuery({
     status: "active",
     limit: 9999,
   });
@@ -256,9 +257,7 @@ export default function JoinPackage({
         packages.yearly.each_student_increment * quantity;
     }
     return newPrice;
-  }
-
-
+  };
 
   const selectPackageHandler = (value: IPackageData) => {
     setSelectPackage(value);
@@ -269,9 +268,9 @@ export default function JoinPackage({
     // const selectedPackageData = {};
   };
 
-  console.log(packageData);
+  // console.log(packageData);
 
-  // For error 
+  // For error
   if (error) {
     return (
       <InternelError
@@ -289,6 +288,7 @@ export default function JoinPackage({
       <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
         Choose a package
       </h2>
+      {isLoading && <LoadingSkeleton />}
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
         {packageData?.map((packages: IPackageData, index: number) => {
           const totalPackagePrice = calculatePackage2(packages);
@@ -380,7 +380,7 @@ export default function JoinPackage({
                           flexDirection: "column",
                           gap: "1rem",
                         }}
-                        onChange={(value:any) => setSingleSelect(value)}
+                        onChange={(value: any) => setSingleSelect(value)}
                       >
                         {packages?.categories?.map(
                           (option?: IPackageCategory) => (
