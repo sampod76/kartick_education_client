@@ -80,15 +80,15 @@ export default function QuizQuestionCard({
   };
 
   const correctId = getCorrectAnswerIds(submittedDefaultData);
-  console.log(
-    isCorrectAnswer,
-    "correctId",
-    correctId,
-    submittedDefaultData?.singleQuiz?.type,
-    "yyyyyyyyyyyyyyyyy",
-    submittedDefaultData,
-    submittedDefaultData?.submitAnswers[0]
-  );
+  // console.log(
+  //   isCorrectAnswer,
+  //   "correctId",
+  //   correctId,
+  //   submittedDefaultData?.singleQuiz?.type,
+  //   "yyyyyyyyyyyyyyyyy",
+  //   submittedDefaultData,
+  //   submittedDefaultData?.submitAnswers[0]
+  // );
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
     let changedAnswer = [];
@@ -186,11 +186,11 @@ export default function QuizQuestionCard({
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
           >
             {quiz?.answers?.map((option: any) => {
-              console.log(
-                option?._id,
-                "ooooooooooooooooooooooo",
-                submittedDefaultData?.submitAnswers[0]
-              );
+              // console.log(
+              //   option?._id,
+              //   "ooooooooooooooooooooooo",
+              //   submittedDefaultData?.submitAnswers[0]
+              // );
               return (
                 <Radio
                   key={option?.title}
@@ -206,7 +206,7 @@ export default function QuizQuestionCard({
                     className={`border-2 rounded-xl p-3 w-full 
                   ${
                     submittedDefaultData?.submitAnswers[0] === option?._id
-                      ? "bg-slate-400"
+                      ? "bg-slate-700 text-white"
                       : ""
                   }
                   `}
@@ -235,7 +235,7 @@ export default function QuizQuestionCard({
 
         {quiz?.type === "multiple_select" && (
           <Checkbox.Group
-            defaultValue={isDefaultValue?.answer} // Set the default value based on isDefaultValue
+            defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
             disabled={isDefaultValue?.is_time_up ? true : false}
             onChange={(value) => handleAnswerChange(index + 1, value)}
             style={{
@@ -248,7 +248,9 @@ export default function QuizQuestionCard({
               <Checkbox
                 key={option?.title}
                 value={option?._id}
-                defaultChecked={isDefaultValue?.answer === option?._id} // Check if the default value matches
+                defaultChecked={
+                  submittedDefaultData?.submitAnswers === option?._id
+                } // Check if the default value matches
               >
                 <div className="border-2 rounded-xl p-3 w-full">
                   <p>{option?.title}</p>
