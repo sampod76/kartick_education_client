@@ -20,7 +20,7 @@ import dynamic from "next/dynamic";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import { ENUM_STATUS } from "@/constants/globalEnums";
+import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -46,11 +46,12 @@ export default function CreateModuleByMilestone() {
   });
   const categoryData: any = Category?.data;
   //
-  const [textEditorValue, setTextEditorValue] = useState("");
+ 
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
   const { data: existModule } = useGetAllModuleQuery({
     status: ENUM_STATUS.ACTIVE,
-    milestone:milestone?._id
+    isDelete: ENUM_YN.NO,
+    milestone: milestone?._id,
   });
 
   const onSubmit = async (values: any) => {
