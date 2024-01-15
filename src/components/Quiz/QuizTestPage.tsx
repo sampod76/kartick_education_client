@@ -30,35 +30,40 @@ export default function QuizTestPage({
 
   const userSubmitData = quizAnswerData;
 
-  console.log(
-    "🚀 ~ file: QuizTestPage.tsx:32 ~ userSubmitData:",
-    userSubmitData
-  );
+
 
   const submittedDefaultData = userSubmitData?.find(
     (answer: any) => answer?.singleQuiz?._id === currentAnswer?.singleQuiz
   );
 
-  // const submittedDefaultData= userSubmitData
+  const checkAnswers = (responseData) => {
 
-  console.log("🚀", submittedDefaultData);
-  // console.log(currentAnswer, "cccccccccccccccc");
-
-  console.log(currentAnswer?.singleQuiz, "and", submittedDefaultData?._id);
-
+    const allCorrect = responseData?.submitAnswers.every(answerId => {
+      const submittedAnswer = responseData?.singleQuiz?.answers?.find(answer => answer.id === answerId);
+      return submittedAnswer && submittedAnswer.correct;
+    });
+  
+    return allCorrect;
+  };
   const handleNext = async () => {
-    // console.log(currentAnswer);
+
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
       try {
         const res = await submitQuiz(currentAnswer).unwrap();
         console.log(res, "response");
-        if (res?.success == false) {
+        if (res?.success === false) {
           Error_model_hook(res?.message);
         } else {
-          Success_model("Answer submitted");
-          // setCurrentStep((prevStep) => prevStep + 1);
+          // Check if submitted answers are correct
+          const isCorrect = checkAnswers(res);
+      
+          if (isCorrect) {
+            Success_model("Answer is Correct");
+
+          } else {
+            Error_model_hook("Incorrect answers submitted");
+          }
         }
-        // message.success("Admin created successfully!");
       } catch (err: any) {
         console.error(err);
         Error_model_hook(err?.message || err?.data);
@@ -69,20 +74,12 @@ export default function QuizTestPage({
 
     return setCurrentStep((prevStep) => prevStep + 1);
   };
-
-  // console.log(currentAnswer, "cccccccccccccccc");
-  console.log(userAnswers);
-
-  console.log(currentAnswer?.singleQuiz, submittedDefaultData?.singleQuiz?._id);
-  // console.log(currentStep + 1,'anddd',userAnswers);
   const handleFinishQuiz = () => {
-    // Save user responses to localStorage or API
-    // saveQuizResponse(quizId, userResponses);
+
     console.log(userAnswers);
-    // Display a success message
+
     message.success("Quiz submitted successfully!");
-    // Redirect to a summary page or any other page as needed
-    // router.push(`/quiz/${quizId}/summary`);
+ 
   };
 
   const isDisabledNext = () => {
