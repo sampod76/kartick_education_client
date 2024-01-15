@@ -50,7 +50,7 @@ export default function QuizQuestionCard({
   const checkAnswers = (responseData: any) => {
     const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
       const submittedAnswer = responseData?.singleQuiz?.answers?.find(
-        (answer: any) => answer.id === answerId
+        (answer: any) => answer.id === answerId && answer.correct
       );
       return submittedAnswer && submittedAnswer.correct;
     });
@@ -60,9 +60,12 @@ export default function QuizQuestionCard({
 
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
 
+  //// ! for getting single or select answer
   const isCorrectAnswer = checkAnswers(submittedDefaultData);
+  // console.log(submittedDefaultData);
 
   const getCorrectAnswerIds = (responseData: any): string[] => {
+    // Existing functionality for single select answer
     const correctAnswerIds: string[] = responseData?.submitAnswers.reduce(
       (acc: string[], answerId: string) => {
         const submittedAnswer = responseData?.singleQuiz?.answers?.find(
@@ -76,10 +79,60 @@ export default function QuizQuestionCard({
       []
     );
 
+    // Check if submitAnswers length is greater than 1
+    if (responseData?.submitAnswers.length > 1) {
+      // console.log(responseData?.submitAnswers);
+      // New functionality for multiple select answers
+      const allCorrect = responseData?.submitAnswers.every(
+        (answerId: string) => {
+          // console.log(answerId, "answe");
+          const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+            (answer: any) => answer.id === answerId && answer.correct
+          );
+          // console.log(submittedAnswer);
+          return submittedAnswer;
+        }
+      );
+
+      // If all answers are correct, return the array of all answer IDs
+      if (allCorrect) {
+        return (
+          responseData?.singleQuiz?.answers.map((answer: any) => answer.id) ||
+          []
+        );
+      }
+    }
+
     return correctAnswerIds;
   };
-
   const correctId = getCorrectAnswerIds(submittedDefaultData);
+  // console.log(correctId);
+  // function getCorrectMultipleAnswerIds(submitAnswers: any, answers: any) {
+  //   const correctAnswerIds = [];
+
+  //   // Iterate through each answer ID in submitAnswers
+  //   submitAnswers?.forEach((submitAnswerId: any) => {
+  //     // Find the corresponding answer object in the answers array
+  //     const correspondingAnswer = answers.find(
+  //       (answer) => answer.id === submitAnswerId
+  //     );
+
+  //     // Check if the answer exists and is correct
+  //     if (correspondingAnswer && correspondingAnswer.correct) {
+  //       // Add the answer ID to the correctAnswerIds array
+  //       correctAnswerIds.push(correspondingAnswer.id);
+  //     }
+  //   });
+
+  //   return correctAnswerIds;
+  // }
+
+  // const correctAnswerIds = getCorrectMultipleAnswerIds(
+  //   submittedDefaultData?.submitAnswers,
+  //   submittedDefaultData?.singleQuiz?.answers
+  // );
+
+  // console.log("Correct Answer IDs:", correctAnswerIds);
   // console.log(
   //   isCorrectAnswer,
   //   "correctId",
@@ -174,6 +227,7 @@ export default function QuizQuestionCard({
             ></Image>
           ))}
         </div>
+
         {quiz?.type === "select" && (
           <Radio.Group
             style={{
@@ -181,6 +235,7 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
+            name="radiogroup"
             disabled={
               isDefaultValue?.is_time_up ||
               currentAnswer?.singleQuiz ===
@@ -195,28 +250,35 @@ export default function QuizQuestionCard({
               // console.log(
               //   option?._id,
               //   "ooooooooooooooooooooooo",
-              //   submittedDefaultData?.submitAnswers[0]
+              //   submittedDefaultData?.submitAnswers[0],
+              //   "correctId",
+              //   correctId
               // );
+              const isCorrect = correctId?.find(
+                (id: string) => id === option?._id
+              );
+              // console.log(isCorrect);
+
               return (
                 <Radio
-                  key={option?.title}
+                  key={option?._id}
                   value={option?._id}
-                  defaultChecked={
-                    submittedDefaultData?.submitAnswers[0] === option?._id &&
-                    true
-                  }
-
-                  // Check if the default value matches
-                  // checked={
-                  //   submittedDefaultData?.submitAnswers[0] === option?._id
-                  // } // Set the checked state based on the match// Check if the default value matches
+                  // defaultChecked={
+                  //   submittedDefaultData?.submitAnswers[0] === option?._id &&
+                  //   true
+                  // }
                 >
                   <div
-                    className={`border-2 rounded-xl p-3 w-full 
+                    className={`border-2 rounded-xl p-2 w-full 
                   ${
                     submittedDefaultData?.submitAnswers[0] === option?._id
                       ? "bg-slate-700 text-white"
                       : ""
+                  }
+                  ${
+                    isCorrect
+                      ? " border-2 border-green-600"
+                      : "border-2 border-red-500 "
                   }
                   `}
                   >
@@ -253,35 +315,47 @@ export default function QuizQuestionCard({
               gap: "1rem",
             }}
           >
-            {quiz?.answers?.map((option: any) => (
-              <Checkbox
-                key={option?.title}
-                value={option?._id}
-                defaultChecked={
-                  !submittedDefaultData?.submitAnswers.find(
-                    (item: string) => item === option?._id
-                  )
-                } // Check if the default value matches
-              >
-                <div className="border-2 rounded-xl p-3 w-full">
-                  <p>{option?.title}</p>
-                  <div className="flex flex-wrap w-full">
-                    {option?.imgs?.map(
-                      (img: string, key: number, allimages: any[]) => (
-                        <Image
-                          key={key}
-                          src={img}
-                          width={700}
-                          height={700}
-                          className={`w-32 lg:w-96 max-h-24 lg:max-h-44`}
-                          alt=""
-                        ></Image>
-                      )
-                    )}
+            {quiz?.answers?.map((option: any) => {
+              const isCorrect = correctId?.find(
+                (id: string) => id === option?._id
+              );
+              // console.log(isCorrect, ".............", option, correctId);
+              return (
+                <Checkbox
+                  key={option?.title}
+                  value={option?._id}
+                  defaultChecked={
+                    !submittedDefaultData?.submitAnswers.find(
+                      (item: string) => item === option?._id
+                    )
+                  } // Check if the default value matches
+                >
+                  <div
+                    className={`border-2 rounded-xl p-3 w-full  ${
+                      isCorrect
+                        ? " border-2 border-green-600"
+                        : "border-2 border-red-500 "
+                    } `}
+                  >
+                    <p>{option?.title}</p>
+                    <div className="flex flex-wrap w-full">
+                      {option?.imgs?.map(
+                        (img: string, key: number, allimages: any[]) => (
+                          <Image
+                            key={key}
+                            src={img}
+                            width={700}
+                            height={700}
+                            className={`w-32 lg:w-96 max-h-24 lg:max-h-44`}
+                            alt=""
+                          ></Image>
+                        )
+                      )}
+                    </div>
                   </div>
-                </div>
-              </Checkbox>
-            ))}
+                </Checkbox>
+              );
+            })}
           </Checkbox.Group>
         )}
 

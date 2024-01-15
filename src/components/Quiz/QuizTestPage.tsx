@@ -76,7 +76,7 @@ export default function QuizTestPage({
         Error_model_hook(err?.message || err?.data);
       }
     } else {
-      message.error("Already submitted the answer");
+      // message.error("Already submitted the answer");
     }
 
     return setCurrentStep((prevStep) => prevStep + 1);
