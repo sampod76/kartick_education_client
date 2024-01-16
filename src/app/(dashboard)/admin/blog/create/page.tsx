@@ -49,7 +49,7 @@ const CreateBlog = () => {
         <Form submitHandler={onSubmit}
           
           isReset={isReset}
-          defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
         >
           <div
             style={{

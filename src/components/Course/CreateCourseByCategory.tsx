@@ -99,7 +99,8 @@ export default function CreateCourseByCategory() {
         {/* resolver={yupResolver(adminSchema)} */}
         <div className="">
           <Form  isReset={isReset}
-              defaultValues={{ status: ENUM_STATUS.ACTIVE }} submitHandler={onSubmit}>
+              // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+               submitHandler={onSubmit}>
             <section
               style={{
                 padding: "0.5rem",
