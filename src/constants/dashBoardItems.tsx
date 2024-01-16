@@ -21,6 +21,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
+import { GiJetPack } from "react-icons/gi";
 export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
   console.log("🚀 ~ dashboardItems ~ role:", role);
   const defaultSidebarItems: MenuProps["items"] = [
@@ -386,6 +387,35 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
               key: `/${role}/manage-users/admin`,
             },
           ],
+        },
+      ],
+    },
+    {
+      label: "Manage Package",
+      key: "Manage-Package",
+      icon: <GiJetPack />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/package/create`}
+            >
+              Create Package
+            </Link>
+          ),
+          key: `/${role}/package/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/package`}
+            >
+              Package List
+            </Link>
+          ),
+          key: `/${role}/package`,
         },
       ],
     },

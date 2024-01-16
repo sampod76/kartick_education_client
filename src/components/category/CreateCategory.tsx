@@ -58,7 +58,7 @@ const CreateCategory = () => {
         {/* resolver={yupResolver(IServiceSchema)} */}
         <Form
           isReset={isReset}
-          defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
           submitHandler={onSubmit}
         >
           <div

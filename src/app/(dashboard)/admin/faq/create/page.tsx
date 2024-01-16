@@ -47,7 +47,8 @@ const CreateFaq = () => {
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
         <Form submitHandler={onSubmit} isReset={isReset}
-          defaultValues={{ status: ENUM_STATUS.ACTIVE }}>
+          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+          >
           <div
             style={{
               border: "1px solid #d9d9d9",

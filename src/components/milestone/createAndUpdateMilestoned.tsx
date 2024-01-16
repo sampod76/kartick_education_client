@@ -127,8 +127,10 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
             {/* resolver={yupResolver(IServiceSchema)} */}
             <h1 className="text-xl font-bold my-2">Create Milestone</h1>
 
-            <Form submitHandler={onSubmit} isReset={isReset}
-          defaultValues={{ status: ENUM_STATUS.ACTIVE }}>
+            <Form submitHandler={onSubmit}
+             isReset={isReset}
+          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+          >
               <div
                 style={{
                   border: "1px solid #d9d9d9",

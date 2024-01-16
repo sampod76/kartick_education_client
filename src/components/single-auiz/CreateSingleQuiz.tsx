@@ -223,7 +223,7 @@ const CreateSingleQuiz = () => {
           <Form
             submitHandler={onSubmit}
             isReset={isReset}
-            defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+            // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
           >
             <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 ">
               Create A Single Quiz
@@ -237,6 +237,33 @@ const CreateSingleQuiz = () => {
               }}
             >
               <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                  <Col
+                  className="gutter-row"
+                  xs={12}
+                  md={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <LabelUi>
+                    Please select quiz type{" "}
+                    <span className="text-red-500">*</span>
+                  </LabelUi>
+                  <Select
+                    placeholder="Select Quiz Types"
+                    style={{ width: "100%" }}
+                    onChange={(value) => setQuizTypes(value)}
+                    size="large"
+                  >
+                    {singleQuizTypes.map((item: any, i: number) => {
+                      return (
+                        <Select.Option value={item} key={i}>
+                          {item}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </Col>
                 <Col
                   className="gutter-row"
                   xs={24}
@@ -278,33 +305,7 @@ const CreateSingleQuiz = () => {
                 >
                   <FormTimePicker name="time_duration" label="Time Duration" />
                 </Col>
-                <Col
-                  className="gutter-row"
-                  xs={12}
-                  md={8}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <LabelUi>
-                    Please select quiz type{" "}
-                    <span className="text-red-500">*</span>
-                  </LabelUi>
-                  <Select
-                    placeholder="Select Quiz Types"
-                    style={{ width: "100%" }}
-                    onChange={(value) => setQuizTypes(value)}
-                    size="large"
-                  >
-                    {singleQuizTypes.map((item: any, i: number) => {
-                      return (
-                        <Select.Option value={item} key={i}>
-                          {item}
-                        </Select.Option>
-                      );
-                    })}
-                  </Select>
-                </Col>
+              
 
                 <Col
                   className="gutter-row"
