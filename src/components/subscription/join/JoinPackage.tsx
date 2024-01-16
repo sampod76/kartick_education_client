@@ -325,10 +325,11 @@ export default function JoinPackage({
 
   const selectPackageHandler = (value: IPackageData) => {
     setSelectPackage(value);
+
     message.success(`Selected ${value?.title}`);
     console.log(value);
-    if (value?.type === "select") {
-    }
+    // if (value?.type === "select") {
+    // }
     // const selectedPackageData = {};
   };
 
@@ -347,6 +348,7 @@ export default function JoinPackage({
       />
     );
   }
+  console.log(filteredPackageData)
   return (
     <div className="mt-[5rem]">
       <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
@@ -356,6 +358,7 @@ export default function JoinPackage({
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
         {filteredPackageData?.map((packages: IPackageData, index: number) => {
           const totalPackagePrice = calculatePackage2(packages);
+          const incrementPrice =packages[plan]?.each_student_increment
           return (
             <div
               key={index + 1}
@@ -481,7 +484,11 @@ export default function JoinPackage({
                 <h2 className="text-4xl font-bold text-center text-slate-700 ">
                   ${totalPackagePrice}
                   <span className="text-2xl text-slate-500"> /{plan}</span>
+                  <p className="text-[12px] text-grey px-2 ">
+               Each additional child is only {incrementPrice}
+                </p>
                 </h2>
+
                 {/*//! select button */}
                 <button
                   onClick={() => selectPackageHandler(packages)}
@@ -494,7 +501,6 @@ export default function JoinPackage({
                   Select
                 </button>
                 </div>
-
               </div>
             </div>
           );

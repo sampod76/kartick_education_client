@@ -39,7 +39,7 @@ export default function JoinSelect({
   const deActivePlane = `w-[9rem] bg-white text-primary h-[48px] border-2 border-primary text-center px-7 py-3  font-semibold `;
 
   console.log(plan);
-  
+
   return (
     <div className="block lg:flex justify-start gap-7 items-center">
       {/* Select section */}
@@ -99,7 +99,7 @@ export default function JoinSelect({
             -
           </button>
           <p className="text-[12px] text-grey px-2 ">
-            Each additional child is <br /> only $4!
+            Each additional child is <br /> willbe increase
           </p>
         </div>
       </aside>
