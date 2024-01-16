@@ -20,7 +20,7 @@ export const getUserInfo = ():IDecodedInfo | '' => {
 
   if (authToken) {
     const decodedData = decodedToken(authToken) as IDecodedInfo
-    console.log(decodedData)
+    // console.log(decodedData)
     return decodedData;
   } else {
     return "";

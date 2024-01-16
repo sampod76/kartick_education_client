@@ -11,6 +11,8 @@ import { useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
 import { IPackageCategory } from "../../../types/packageType";
 import InternelError from "@/components/shared/Error/InternelError";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+
 // interface ICaterory {
 //   _id: string;
 //   title: string;
@@ -211,6 +213,9 @@ export default function JoinPackage({
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
+
+
+
   // const calculateTotalPrice = (categories: ICaterory[], plan: string) => {
   //   return (
   //     categories.reduce((total, caterory) => {
@@ -222,25 +227,37 @@ export default function JoinPackage({
   // }
 
   const { data, isLoading, error } = useGetAllPackageQuery({
-    status: "active",
+    status:ENUM_STATUS.ACTIVE,
     limit: 9999,
+    isDelete:ENUM_YN.NO,
+
   });
 
   const packageData = data?.data ?? [];
 
+  // console.log(packageData);
+
+
+  const filteredPackageData = packageData?.filter((item:IPackageData)=>item?.type  !=="multiple_select")
+
+  console.log(filteredPackageData)
+
   // ! For select package
 
   // For select package
-  const [selectPackage, setSelectPackage] = useState<IPackageData | null>(
-    packageData[0] || null
-  );
+  const [selectPackage, setSelectPackage] = useState<any | null>(
+{});
 
   ///! for the multiple and single select package
 
   const [singleSelect, setSingleSelect] = useState("");
   const [multipleSelect, setMultipleSelect] = useState("");
 
-  console.log(singleSelect, "ppppppppppp", multipleSelect);
+
+  console.log(singleSelect)
+
+
+  // console.log(singleSelect, "ppppppppppp", multipleSelect);
   const calculatePackage2 = (packages: IPackageData): number | undefined => {
     // console.log(packages);
 
@@ -293,7 +310,7 @@ export default function JoinPackage({
       </h2>
       {isLoading && <LoadingSkeleton />}
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
-        {packageData?.map((packages: IPackageData, index: number) => {
+        {filteredPackageData?.map((packages: IPackageData, index: number) => {
           const totalPackagePrice = calculatePackage2(packages);
           return (
             <div
@@ -310,13 +327,14 @@ export default function JoinPackage({
                 {/* //! category section */}
                 <div className="py-3">
                   {/* single */}
-                  {packages?.type !== "bundle" &&
+                  {packages?.type === "bundle" &&
                     packages?.categories?.map(
                       (categoryData: IPackageCategory) => {
                         const category = categoryData?.category;
+                        // console.log(category);
                         return (
                           <div
-                            className="flex justify- items-center gap-2 px-5 py-2"
+                            className="flex justify- items-center gap-2 px-5 py-2 bg-re-300"
                             key={category?.title}
                           >
                             {/* <Image
@@ -331,7 +349,7 @@ export default function JoinPackage({
                             </h5>
 
                             <span className="text-[12px] text-slate-600 ">
-                              (Pre-k t 12)
+                             {categoryData?.label}
                             </span>
                           </div>
                         );
