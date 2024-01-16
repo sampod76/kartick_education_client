@@ -477,7 +477,7 @@ export default function JoinPackage({
                   )}
                 </div>
 
-            <div>
+            <div className="w-full mx-auto text-center">
                 <h2 className="text-4xl font-bold text-center text-slate-700 ">
                   ${totalPackagePrice}
                   <span className="text-2xl text-slate-500"> /{plan}</span>
@@ -485,11 +485,11 @@ export default function JoinPackage({
                 {/*//! select button */}
                 <button
                   onClick={() => selectPackageHandler(packages)}
-                  className={`w-[90%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
+                  className={`w-[80%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
                     selectPackage?.title === packages?.title
                       ? "bg-primary text-white"
                       : "bg-white text-primary"
-                  }`}
+                  } `}
                 >
                   Select
                 </button>
