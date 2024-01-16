@@ -20,7 +20,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
             },
             components: {
               Button: {
-                colorPrimary: "#535BE5",
+                colorPrimary: "#5371FF",
                 // algorithm: true,
                 // colorBgContainer: "#5371FF",
                 colorPrimaryBg:"#535BE5",

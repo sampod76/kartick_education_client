@@ -39,6 +39,7 @@ export default function JoinSelect({
   const deActivePlane = `w-[9rem] bg-white text-primary h-[48px] border-2 border-primary text-center px-7 py-3  font-semibold `;
 
   console.log(plan);
+  
   return (
     <div className="block lg:flex justify-start gap-7 items-center">
       {/* Select section */}

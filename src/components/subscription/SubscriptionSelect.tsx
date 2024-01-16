@@ -17,7 +17,7 @@ type ISubscription = {
 const subscriptionData: ISubscription[] = [
   {
     _id: "1",
-    title: "Standard Plan",
+    title: "family-personal",
     enroll_time: "2024-01-15T10:30:00Z",
     price: 29.99,
     time_duration: "3 months",
@@ -40,6 +40,7 @@ const subscriptionData: ISubscription[] = [
     img: AllImage.subscription.subAdmin,
   },
 ];
+
 export default function SubscriptionSelect() {
   return (
     <div className="max-w-full lg:max-w-[70%] mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-7">

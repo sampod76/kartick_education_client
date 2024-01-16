@@ -53,7 +53,8 @@ export default function QuizTestPage({
   // console.log(submittedDefaultData, "ccccccccccccccccc", isCorrectAnswer);
   // if (submittedDefaultData?.submitAnswers) {
   //   setIsCorrectAnswer(checkAnswers(submittedDefaultData));
-  // }
+  // };
+
 
   const submitAnswer = async () => {
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
@@ -109,7 +110,6 @@ export default function QuizTestPage({
     } else {
       disabled = true;
     }
-
     return disabled;
   }, [currentAnswer, currentStep, submittedDefaultData, userAnswers]);
 
