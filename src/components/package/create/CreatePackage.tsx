@@ -6,8 +6,11 @@ import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
+
 const { Option } = Select;
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
+import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
 export default function CreatePackage() {
   const { data, isLoading } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
@@ -19,6 +22,8 @@ export default function CreatePackage() {
     label: select.title,
     value: select._id,
   }));
+
+  const [addPackage] = useAddPackageMutation();
 
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -33,8 +38,34 @@ export default function CreatePackage() {
     input: string,
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-  const onFinish = (values: any) => {
+
+  // const selectMembershipsValue =(value)=>{
+
+  // }
+  const onFinish = async (values: any) => {
     console.log("Received values of form:", values);
+    const packageData = {
+      membership: values.membership,
+      title: values.title,
+      // type: "bundle",
+      monthly: values.monthly,
+      biannual: values.biannual,
+      yearly: values.yearly,
+      categories: values.categories,
+    };
+    try {
+      const res = await addPackage(values).unwrap();
+      // console.log(res);
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Successfully added Package");
+      }
+      // console.log(res);
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+      console.log(error);
+    }
   };
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
@@ -49,45 +80,137 @@ export default function CreatePackage() {
           <Form.Item name={"title"} label="Title">
             <Input size="large" placeholder="Please enter package title" />
           </Form.Item>
-          <LabelUi>Select Membership </LabelUi>
-          <Select
-            style={{ width: "100%" }}
-            placeholder="Select Membership"
-            // onChange={handleChange}
-            size="large"
-            options={[
-              {
-                label: "Family & Personal",
-                value: "family-personal",
-              },
-              {
-                label: "School & Teacher",
-                value: "school-teacher",
-              },
-            ]}
-          />
-          <div>
-            <Form.Item label="Monthly">
+          <Form.Item name="types" label="Select Types">
+            {/* <LabelUi>Select Types </LabelUi> */}
+            <Select
+              style={{ width: "100%" }}
+              placeholder="Select Types"
+              size="large"
+            >
+              <Option value="bundle">Bundle</Option>
+              <Option value="select">Select</Option>
+              <Option value="multiple_select">Multiple Select</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name={["membership", "title"]} label="Select Membership">
+            {/* <LabelUi>Select Membership </LabelUi> */}
+            <Select
+              style={{ width: "100%" }}
+              placeholder="Select Membership"
+              size="large"
+            >
+              <Option value="family-personal">Family & Personal</Option>
+              <Option value="school-teacher">School & Teacher</Option>
+            </Select>
+          </Form.Item>
+          <div className="space-align-block">
+            <Space
+              title="Monthly Price & Each Student Increment"
+              style={{ margin: "18px 0" }}
+            >
+              {/*//!  monthly */}
               <Space.Compact>
                 <Form.Item
                   name={["monthly", "price"]}
-                  noStyle
+                  // noStyle
+                  label="Monthly Price"
                   rules={[{ required: true, message: "Province is required" }]}
                 >
-                  <Select placeholder="Select province">
-                    <Select.Option value="Zhejiang">Zhejiang</Select.Option>
-                    <Select.Option value="Jiangsu">Jiangsu</Select.Option>
-                  </Select>
+                  <Input
+                    name="price"
+                    type="number"
+                    placeholder="Monthly Price"
+                    // style={{ width: "70%" }}
+                  />
                 </Form.Item>
+
                 <Form.Item
-                  name={["monthly", "street"]}
-                  noStyle
-                  rules={[{ required: true, message: "Street is required" }]}
+                  name={["monthly", "each_student_increment"]}
+                  // noStyle
+                  label="Each Student price"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Each Student Price is required",
+                    },
+                  ]}
                 >
-                  <Input style={{ width: "50%" }} placeholder="Input street" />
+                  <Input
+                    style={{ width: "70%" }}
+                    type="number"
+                    placeholder="Input Each Student Price"
+                  />
                 </Form.Item>
               </Space.Compact>
-            </Form.Item>
+              {/*//!  biannual */}
+              <Space.Compact>
+                <Form.Item
+                  name={["biannual", "price"]}
+                  // noStyle
+                  label="Biannual Price"
+                  rules={[{ required: true, message: "Province is required" }]}
+                >
+                  <Input
+                    name="price"
+                    type="number"
+                    placeholder="Biannual Price"
+                    // style={{ width: "70%" }}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name={["biannual", "each_student_increment"]}
+                  // noStyle
+                  label="Each Student price"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Each Student Price is required",
+                    },
+                  ]}
+                >
+                  <Input
+                    style={{ width: "70%" }}
+                    type="number"
+                    placeholder="Input Each Student Price"
+                  />
+                </Form.Item>
+              </Space.Compact>
+              {/*//!  yearly */}
+            </Space>
+            <Space.Compact>
+              <Form.Item
+                name={["yearly", "price"]}
+                // noStyle
+                label="Yearly Price"
+                rules={[{ required: true, message: "Province is required" }]}
+              >
+                <Input
+                  name="price"
+                  type="number"
+                  placeholder="yearly Price"
+                  // style={{ width: "70%" }}
+                />
+              </Form.Item>
+
+              <Form.Item
+                name={["yearly", "each_student_increment"]}
+                // noStyle
+                label="Each Student price"
+                rules={[
+                  {
+                    required: true,
+                    message: "Each Student Price is required",
+                  },
+                ]}
+              >
+                <Input
+                  style={{ width: "70%" }}
+                  type="number"
+                  placeholder="Input Each Student Price"
+                />
+              </Form.Item>
+            </Space.Compact>
           </div>
         </Form.Item>
         <div className="border-2 rounded-lg p-3">

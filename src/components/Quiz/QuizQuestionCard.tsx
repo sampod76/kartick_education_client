@@ -110,10 +110,10 @@ export default function QuizQuestionCard({
 
 
 
-const allCorrectAnsweredIdHanlder = (responseData)=>{
+const allCorrectAnsweredIdHanlder = (responseData:any)=>{
   const correctAnswerIds = responseData?.singleQuiz?.answers
-  ?.filter((answer) => answer.correct)
-  .map((answer) => answer._id) || [];
+  ?.filter((answer:any) => answer.correct)
+  .map((answer:any) => answer._id) || [];
 
 return correctAnswerIds;
 }

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { Card, Avatar, Typography, Row, Col, Space, Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Card, Typography, Row, Col, Space, Button } from "antd";
+
 import { useGetProfileQuery } from "@/redux/api/auth/authApi";
 import { NO_IMAGE } from "@/constants/filePatch";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
