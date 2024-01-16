@@ -1,8 +1,10 @@
-import React from "react";
-import { Button, Result } from "antd";
+'use client'
+import { Button, Result } from 'antd'
+import React from 'react'
 
-const App: React.FC = () => (
-  <Result
+export default function Sudjdkj() {
+  return (
+    <div><Result
     status="success"
     title="Successfully Purchased "
     subTitle="Order number: 2017182818828182881 configuration takes 1-5 minutes, please wait."
@@ -12,7 +14,6 @@ const App: React.FC = () => (
       </Button>,
       <Button key="buy">Buy Again</Button>,
     ]}
-  />
-);
-
-export default App;
+  /></div>
+  )
+}

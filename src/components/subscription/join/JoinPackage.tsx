@@ -226,15 +226,12 @@ export default function JoinPackage({
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
-
-
   // const paramsSearch = useSea
   const searchParams = useSearchParams();
 
-  const packName = searchParams.get("pack")  as string
-  
-  console.log(packName)
+  const packName = searchParams.get("pack") as string;
 
+  console.log(packName);
 
   // const calculateTotalPrice = (categories: ICaterory[], plan: string) => {
   //   return (
@@ -279,76 +276,70 @@ export default function JoinPackage({
   };
 
   const { data, isLoading, error } = useGetAllPackageQuery({
-    status:ENUM_STATUS.ACTIVE,
+    status: ENUM_STATUS.ACTIVE,
     limit: 9999,
-    isDelete:ENUM_YN.NO,
-
+    isDelete: ENUM_YN.NO,
   });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const packageData = data?.data ?? [];
 
   // console.log(packageData);
-  const [packageFilterData,setPackageFilterData] = useState<any[]>([])
+  const [packageFilterData, setPackageFilterData] = useState<any[]>([]);
 
+  useEffect(() => {
+    if (packName === "family") {
+      const packageMultipleData = packageData?.filter(
+        (item: IPackageData) => item?.type !== "multiple_select"
+      );
 
-
-
-
-  useEffect(()=>{
-    if(packName ==="family"){
-      const packageMultipleData = packageData?.filter((item:IPackageData)=>item?.type  !=="multiple_select")
-      console.log(packageMultipleData,'yessssssss')
-      setPackageFilterData(packageMultipleData)
+      setPackageFilterData(packageMultipleData);
+    } else if (packName === "school") {
+      const onlyMultiPackage = packageData?.filter(
+        (item: IPackageData) => item?.type === "multiple_select"
+      );
+      setPackageFilterData(onlyMultiPackage);
     }
-    else {
+  }, [packName, packageData]);
 
-      const onlyMultiPackage =packageData?.filter((item:IPackageData)=>item?.type  ==="multiple_select")
-      setPackageFilterData(onlyMultiPackage)
-    }
-    },[packName,packageData])
-
-console.log(packageFilterData,'ppppppppppp')
+  console.log(packageFilterData, "ppppppppppp");
   // ! For select package
 
   // For select package
-  const [selectPackage, setSelectPackage] = useState<any | null>(
-{});
+  const [selectPackage, setSelectPackage] = useState<any | null>({});
 
   ///! for the multiple and single select package
 
   const [singleSelect, setSingleSelect] = useState({});
   const [multipleSelect, setMultipleSelect] = useState([]);
 
-
   // console.log(singleSelect)
 
-
-  console.log(singleSelect, "ppppppppppp", multipleSelect);
+ 
   const calculatePackage2 = (packages: IPackageData): number | undefined => {
     // console.log(packages);
 
     let newPrice = 0;
     if (plan === "monthly" && packages?.monthly) {
       newPrice =
-       ( packages.monthly.price +
-        packages.monthly.each_student_increment * quantity) 
-        * (packages?.type === 'multiple_select'?multipleSelect?.length :1)
-
+        (packages.monthly.price +
+          packages.monthly.each_student_increment * quantity) *
+        (packages?.type === "multiple_select" ? multipleSelect?.length : 1);
     } else if (plan === "biannual" && packages?.biannual) {
       newPrice =
-       ( packages.biannual.price +
-        packages.biannual.each_student_increment * quantity) * (packages?.type === 'multiple_select'?multipleSelect?.length :1)
+        (packages.biannual.price +
+          packages.biannual.each_student_increment * quantity) *
+        (packages?.type === "multiple_select" ? multipleSelect?.length : 1);
     } else if (plan === "yearly" && packages?.yearly) {
       newPrice =
         (packages.yearly.price +
-        packages.yearly.each_student_increment * quantity) * (packages?.type === 'multiple_select'?multipleSelect?.length :1)
+          packages.yearly.each_student_increment * quantity) *
+        (packages?.type === "multiple_select" ? multipleSelect?.length : 1);
     }
     return newPrice;
   };
 
-
-  //  ! Select Handler 
+  //  ! Select Handler
   const selectPackageHandler = (value: IPackageData) => {
     setSelectPackage(value);
 
@@ -374,7 +365,7 @@ console.log(packageFilterData,'ppppppppppp')
       />
     );
   }
-  console.log(packageFilterData)
+  console.log(packageFilterData);
   return (
     <div className="mt-[5rem]">
       <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
@@ -384,7 +375,7 @@ console.log(packageFilterData,'ppppppppppp')
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
         {packageFilterData?.map((packages: IPackageData, index: number) => {
           const totalPackagePrice = calculatePackage2(packages);
-          const incrementPrice =packages[plan]?.each_student_increment
+          const incrementPrice = packages[plan]?.each_student_increment;
           return (
             <div
               key={index + 1}
@@ -422,7 +413,7 @@ console.log(packageFilterData,'ppppppppppp')
                             </h5>
 
                             <span className="text-[12px] text-slate-600 ">
-                             {categoryData?.label}
+                              {categoryData?.label}
                             </span>
                           </div>
                         );
@@ -506,26 +497,26 @@ console.log(packageFilterData,'ppppppppppp')
                   )}
                 </div>
 
-            <div className="w-full mx-auto text-center">
-                <h2 className="text-4xl font-bold text-center text-slate-700 ">
-                  ${totalPackagePrice}
-                  <span className="text-2xl text-slate-500"> /{plan}</span>
-                  <p className="text-[12px] text-grey px-2 ">
-               Each additional child is only {incrementPrice}
-                </p>
-                </h2>
+                <div className="w-full mx-auto text-center">
+                  <h2 className="text-4xl font-bold text-center text-slate-700 ">
+                    ${totalPackagePrice}
+                    <span className="text-2xl text-slate-500"> /{plan}</span>
+                    <p className="text-[12px] text-grey px-2 ">
+                      Each additional child is only {incrementPrice}
+                    </p>
+                  </h2>
 
-                {/*//! select button */}
-                <button
-                  onClick={() => selectPackageHandler(packages)}
-                  className={`w-[80%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
-                    selectPackage?.title === packages?.title
-                      ? "bg-primary text-white"
-                      : "bg-white text-primary"
-                  } `}
-                >
-                  Select
-                </button>
+                  {/*//! select button */}
+                  <button
+                    onClick={() => selectPackageHandler(packages)}
+                    className={`w-[80%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
+                      selectPackage?.title === packages?.title
+                        ? "bg-primary text-white"
+                        : "bg-white text-primary"
+                    } `}
+                  >
+                    Select
+                  </button>
                 </div>
               </div>
             </div>
@@ -535,7 +526,16 @@ console.log(packageFilterData,'ppppppppppp')
       <div className="flex justify-center items-center m-5">
         <button onClick={makePayment}>
           {paymentLoading ? (
-            <Button type="default" style={{ padding: "1rem" ,width:"3rem", display:"flex" ,justifyContent:"center", alignItems:"center"}}>
+            <Button
+              type="default"
+              style={{
+                padding: "1rem",
+                width: "3rem",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <ButtonLoading />
             </Button>
           ) : (
