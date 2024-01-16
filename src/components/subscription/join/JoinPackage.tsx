@@ -292,9 +292,9 @@ export default function JoinPackage({
       const packageMultipleData = packageData?.filter(
         (item: IPackageData) => item?.type !== "multiple_select"
       );
-
+      console.log(packageMultipleData, "yessssssss");
       setPackageFilterData(packageMultipleData);
-    } else if (packName === "school") {
+    } else {
       const onlyMultiPackage = packageData?.filter(
         (item: IPackageData) => item?.type === "multiple_select"
       );
@@ -302,7 +302,7 @@ export default function JoinPackage({
     }
   }, [packName, packageData]);
 
-  console.log(packageFilterData, "ppppppppppp");
+  // console.log(packageFilterData,'ppppppppppp')
   // ! For select package
 
   // For select package
@@ -315,7 +315,7 @@ export default function JoinPackage({
 
   // console.log(singleSelect)
 
- 
+  // console.log(singleSelect, "ppppppppppp", multipleSelect);
   const calculatePackage2 = (packages: IPackageData): number | undefined => {
     // console.log(packages);
 
@@ -340,13 +340,14 @@ export default function JoinPackage({
   };
 
   //  ! Select Handler
-  const selectPackageHandler = (value: IPackageData) => {
-    setSelectPackage(value);
+  const selectPackageHandler = (values: any) => {
+    // ! All selected package data////////////////////////////////
+    const { totalPackagePrice, incrementPrice, packages } = values;
+    setSelectPackage(packages);
 
-    message.success(`Selected ${value?.title}`);
-    console.log(value);
-    // if (value?.type === "select") {
-    // }
+    message.success(`Selected ${packages?.title} ${totalPackagePrice}`);
+    console.log(packages);
+
     // const selectedPackageData = {};
   };
 
@@ -505,12 +506,17 @@ export default function JoinPackage({
                       Each additional child is only {incrementPrice}
                     </p>
                   </h2>
-
                   {/*//! select button */}
                   <button
-                    onClick={() => selectPackageHandler(packages)}
+                    onClick={() =>
+                      selectPackageHandler({
+                        totalPackagePrice,
+                        incrementPrice,
+                        packages,
+                      })
+                    }
                     className={`w-[80%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
-                      selectPackage?.title === packages?.title
+                      selectPackage?._id === packages?._id
                         ? "bg-primary text-white"
                         : "bg-white text-primary"
                     } `}
