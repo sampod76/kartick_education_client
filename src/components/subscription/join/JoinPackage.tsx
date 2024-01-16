@@ -5,7 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { IPlan } from "./JoinMain";
-import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Input,
+  Radio,
+  Select,
+  Space,
+  message,
+} from "antd";
 import { IPackageData } from "@/types/packageType";
 import { useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
 import { IPackageCategory } from "../../../types/packageType";
@@ -201,7 +210,10 @@ import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 //     ],
 //   },
 // ];
+import { loadStripe } from "@stripe/stripe-js";
 
+import { useAddStripePaymentMutation } from "@/redux/api/public/paymentApi";
+import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 export default function JoinPackage({
   plan,
   setPlan,
@@ -225,6 +237,38 @@ export default function JoinPackage({
   //     }, 0) * quantity
   //   );
   // }
+  const [postPayment, { isLoading: paymentLoading, error: paymentError }] =
+    useAddStripePaymentMutation();
+  const makePayment = async () => {
+    try {
+      const stripe = await loadStripe(
+        "pk_test_51OZ1ThK3q1wTHHNQ6UdozrToq0YcFNnBTvYOdOiF2crDgravXCLPkL6ZQ02UTulA7jkd0vuTvt40nuFqLK8P3wjO00hhjv5T2P"
+      );
+      const result: any = await postPayment({
+        products: [
+          {
+            name: "Language Arts",
+            img: "https://i.ibb.co/P698btB/math.jpg",
+            price: 120,
+            quantity: 1,
+          },
+        ],
+      }).unwrap();
+      console.log("🚀 ~ makePayment ~ result:", result);
+      const redirectResult = await stripe?.redirectToCheckout({
+        sessionId: result?.id,
+      });
+      if (redirectResult?.error) {
+        console.log(redirectResult?.error);
+        //@ts-ignore
+        message.error(redirectResult?.error?.message);
+      }
+    } catch (error) {
+      console.log(error);
+      //@ts-ignore
+      message.error(error?.message);
+    }
+  };
 
   const { data, isLoading, error } = useGetAllPackageQuery({
     status:ENUM_STATUS.ACTIVE,
@@ -452,6 +496,19 @@ export default function JoinPackage({
             </div>
           );
         })}
+      </div>
+      <div className="flex justify-center items-center m-5">
+        <button onClick={makePayment}>
+          {paymentLoading ? (
+            <Button type="default" style={{ padding: "1rem" ,width:"3rem", display:"flex" ,justifyContent:"center", alignItems:"center"}}>
+              <ButtonLoading />
+            </Button>
+          ) : (
+            <p className="bg-green-600 text-white p-3 rounded-md">
+              Make Payment (test)
+            </p>
+          )}
+        </button>
       </div>
     </div>
   );
