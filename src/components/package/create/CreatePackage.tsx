@@ -113,6 +113,7 @@ export default function CreatePackage() {
                 <Form.Item
                   name={["monthly", "price"]}
                   // noStyle
+                  
                   label="Monthly Price"
                   rules={[{ required: true, message: "Province is required" }]}
                 >

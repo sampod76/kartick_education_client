@@ -85,15 +85,16 @@ const TopBar = () => {
         {userLoggedIn?.email ? (
           <UserAvatarUI />
         ) : (
-          <div className="flex gap-3 font-[700]">
+          <div className="flex gap-3 font-[700]  max-h-[3rem] lg:max-h-[3.3rem]
+         ">
             <Link
-              className="py-3 px-5 lg:px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
+              className="py-2 lg:py-3 px-2 w-[5rem] lg:w-[7rem]  lg:px-3  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white text-center"
               href="/signup"
             >
               Register
             </Link>
             <Link
-              className="py-3 px-5 lg:px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1"
+              className="py-2 lg:py-3 px-3 w-[5rem] lg:w-[7rem]  lg:px-3 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1 text-center"
               href="/login"
             >
               Login
