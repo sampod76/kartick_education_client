@@ -25,7 +25,7 @@ export default function JoinMain() {
         quantity={quantity}
         setQuantity={setQuantity}
       />
-      <PaymentCard />
+      {/* <PaymentCard /> */}
     </div>
   );
 }

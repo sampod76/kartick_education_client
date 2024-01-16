@@ -37,12 +37,12 @@ const CreateStudentPage = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Customer created successfully");
-        setIsReset(true)
+        setIsReset(true);
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (isLoading) {
@@ -69,7 +69,6 @@ const CreateStudentPage = () => {
         <Form
           submitHandler={onSubmit}
           isReset={isReset}
-          
           // resolver={yupResolver(createStudentSchema)}
           defaultValues={{
             bloodGroup: bloodGroupOptions[0].value,
@@ -109,13 +108,17 @@ const CreateStudentPage = () => {
                   label="First Name"
                   required={true}
                 />
-                <FormInput
-                  type="text"
-                  name="name.middleName"
-                  size="large"
-                  label="Middle Name"
-                  // required={true}
-                />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
                 <FormInput
                   type="text"
                   name="name.lastName"
@@ -159,7 +162,7 @@ const CreateStudentPage = () => {
                 />
               </Col>
 
-              <Col
+              {/* <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
@@ -177,7 +180,7 @@ const CreateStudentPage = () => {
                   // placeholder="Select"
                   required={true}
                 />
-              </Col>
+              </Col> */}
               <Col
                 className="gutter-row"
                 xs={24}
