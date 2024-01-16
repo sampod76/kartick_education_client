@@ -80,7 +80,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
                   className={`py-3 px-7 rounded-tl-[20px] rounded-br-[20px] ${
                     index % 2 === 0 ? "bg-green-500" : "bg-primary"
                   } ${index % 3 === 1 && "bg-secondary"} text-white ${
-                    categoryId === category?._id && "py-5 border-2 translate-x-[10px] border-b-[8px] hover:brightness-110 hover:-translate-y-[1px]"
+                    categoryId === category?._id && "py-5  translate-x-[1px] border-b-[4px] brightness-125 hover:-translate-y-[1px] ring-8 ring-white"
                   }`}
                   href="/learning"
                   key={index + 1}
