@@ -228,6 +228,8 @@ export default function JoinPackage({
 
   const packageData = data?.data ?? [];
 
+  console.log(packageData);
+
   // ! For select package
 
   // For select package
@@ -310,13 +312,14 @@ export default function JoinPackage({
                 {/* //! category section */}
                 <div className="py-3">
                   {/* single */}
-                  {packages?.type !== "bundle" &&
+                  {packages?.type === "bundle" &&
                     packages?.categories?.map(
                       (categoryData: IPackageCategory) => {
                         const category = categoryData?.category;
+                        // console.log(category);
                         return (
                           <div
-                            className="flex justify- items-center gap-2 px-5 py-2"
+                            className="flex justify- items-center gap-2 px-5 py-2 "
                             key={category?.title}
                           >
                             {/* <Image

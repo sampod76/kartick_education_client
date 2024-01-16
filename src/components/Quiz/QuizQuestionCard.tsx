@@ -3,11 +3,9 @@ import { useAppDispatch } from "@/redux/hooks";
 import { IAnswer } from "@/types/singleQuiz";
 import TextToSpeech from "@/utils/TextToSpeech";
 import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
-
 import React, { useEffect, useState } from "react";
 import QuizTimer from "./QuizTimer";
 import Image from "next/image";
-
 const { Option } = Select;
 export default function QuizQuestionCard({
   quiz,
