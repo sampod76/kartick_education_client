@@ -359,7 +359,7 @@ export default function JoinPackage({
           return (
             <div
               key={index + 1}
-              className="w-full bg-white rounded-[10px] border mx-auto  items-center  shadow-xl  min-h-[24rem] flex flex-col justify-between"
+              className="w-full bg-white rounded-[10px] border mx-auto  items-center  shadow-xl  min-h-[24rem flex flex-col justify-start"
             >
               {/* //! banner section */}
               <div className="bg-primary h-[4rem] w-full mt-0 py-3 rounded-t-lg">
@@ -367,7 +367,7 @@ export default function JoinPackage({
                   {packages?.title}
                 </h1>
               </div>
-              <div className="py-3 flex flex-col justify-between   w-full">
+              <div className="py-3 flex flex-col justify-between   w-full h-full">
                 {/* //! category section */}
                 <div className="py-3">
                   {/* single */}
@@ -378,7 +378,7 @@ export default function JoinPackage({
                         // console.log(category);
                         return (
                           <div
-                            className="flex justify- items-center gap-2 px-5 py-2 bg-re-300"
+                            className="flex justify- items-center gap-2 px-5 py-2 "
                             key={category?.title}
                           >
                             {/* <Image
@@ -400,7 +400,7 @@ export default function JoinPackage({
                       }
                     )}
                   {packages?.type === "select" && (
-                    <div>
+                    <div className="">
                       <Radio.Group
                         style={{
                           display: "flex",
@@ -477,6 +477,7 @@ export default function JoinPackage({
                   )}
                 </div>
 
+            <div>
                 <h2 className="text-4xl font-bold text-center text-slate-700 ">
                   ${totalPackagePrice}
                   <span className="text-2xl text-slate-500"> /{plan}</span>
@@ -492,6 +493,8 @@ export default function JoinPackage({
                 >
                   Select
                 </button>
+                </div>
+
               </div>
             </div>
           );
