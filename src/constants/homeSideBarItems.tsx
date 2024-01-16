@@ -80,7 +80,7 @@ const homeSideItems = (onClose?: any) => {
     },
     {
       label: (
-        <Link onClick={onClose} href="/">
+        <Link onClick={onClose} href="/dashboard">
           Dashboard
         </Link>
       ),

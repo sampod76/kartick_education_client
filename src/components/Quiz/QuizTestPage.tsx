@@ -26,7 +26,7 @@ export default function QuizTestPage({
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   //! for getQUiz
-
+// console.log(quizId,'quizIdquizIdquizIdquizIdquizId')
   const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
   const userSubmitData = quizAnswerData;
@@ -85,7 +85,12 @@ export default function QuizTestPage({
   // ! For Next quiz and submit Quiz
   const handleNext = () => {
     submitAnswer();
-    return setCurrentStep((prevStep) => prevStep + 1);
+    // console.log(currentStep,"qu !== ?.length",quizAnswerData?.length)
+
+    if(currentStep+1 !== quizData?.length ){
+      // console.log('equal............' )
+      return setCurrentStep((prevStep) => prevStep + 1);
+    }
   };
 
   const handleFinishQuiz = () => {
@@ -140,7 +145,7 @@ export default function QuizTestPage({
           >
             Previous
           </Button>
-          {currentStep < quizData.length - 1 ? (
+          {currentStep < quizData.length -1 ? (
             <Button
               type="default"
               onClick={handleNext}
