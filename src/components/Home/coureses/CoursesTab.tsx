@@ -30,7 +30,7 @@ const CoursesTab = () => {
 
   const cousesData = data?.data || [];
   const activeClass =
-    " rounded-[5px] bg-blue-600 text-white text-[18px] font-bold p-1";
+    " rounded-[5px] bg-blue-600 text-white text-[18px] font-bold p-1 m-0 ring-4";
   const inactiveClass =
     " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[18px] font-bold p-1";
 
