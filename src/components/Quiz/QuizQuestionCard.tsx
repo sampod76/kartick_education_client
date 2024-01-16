@@ -62,14 +62,17 @@ export default function QuizQuestionCard({
   const isCorrectAnswer = checkAnswers(submittedDefaultData);
   // console.log(submittedDefaultData);
 
-  const getCorrectAnswerIds = (responseData: any): string[] => {
+  const getCorrectAnswerIdsHandler = (responseData: any): string[] => {
     // Existing functionality for single select answer
+    console.log(responseData?.submitAnswers,'responseData?.submitAnswers')
     const correctAnswerIds: string[] = responseData?.submitAnswers.reduce(
       (acc: string[], answerId: string) => {
-        const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+        console.log(answerId,"answerId")
+        const submittedAnswered = responseData?.singleQuiz?.answers?.find(
           (answer: any) => answer.id === answerId
         );
-        if (submittedAnswer && submittedAnswer.correct) {
+        console.log(submittedAnswered,'submmm')
+        if (submittedAnswered && submittedAnswered.correct) {
           acc.push(answerId);
         }
         return acc;
@@ -79,7 +82,7 @@ export default function QuizQuestionCard({
 
     // Check if submitAnswers length is greater than 1
     if (responseData?.submitAnswers.length > 1) {
-      // console.log(responseData?.submitAnswers);
+      // console.log(responseData?.submitAnswers,'111111111111');
       // New functionality for multiple select answers
       const allCorrect = responseData?.submitAnswers.every(
         (answerId: string) => {
@@ -103,45 +106,23 @@ export default function QuizQuestionCard({
 
     return correctAnswerIds;
   };
-  const correctId = getCorrectAnswerIds(submittedDefaultData);
-  // console.log(correctId);
-  // function getCorrectMultipleAnswerIds(submitAnswers: any, answers: any) {
-  //   const correctAnswerIds = [];
+  // const correctId = getCorrectAnswerIdsHandler(submittedDefaultData);
 
-  //   // Iterate through each answer ID in submitAnswers
-  //   submitAnswers?.forEach((submitAnswerId: any) => {
-  //     // Find the corresponding answer object in the answers array
-  //     const correspondingAnswer = answers.find(
-  //       (answer) => answer.id === submitAnswerId
-  //     );
 
-  //     // Check if the answer exists and is correct
-  //     if (correspondingAnswer && correspondingAnswer.correct) {
-  //       // Add the answer ID to the correctAnswerIds array
-  //       correctAnswerIds.push(correspondingAnswer.id);
-  //     }
-  //   });
 
-  //   return correctAnswerIds;
-  // }
+const allCorrectAnsweredIdHanlder = (responseData)=>{
+  const correctAnswerIds = responseData?.singleQuiz?.answers
+  ?.filter((answer) => answer.correct)
+  .map((answer) => answer._id) || [];
 
-  // const correctAnswerIds = getCorrectMultipleAnswerIds(
-  //   submittedDefaultData?.submitAnswers,
-  //   submittedDefaultData?.singleQuiz?.answers
-  // );
+return correctAnswerIds;
+}
 
-  // console.log("Correct Answer IDs:", correctAnswerIds);
-  // console.log(
-  //   isCorrectAnswer,
-  //   "correctId",
-  //   correctId,
-  //   submittedDefaultData?.singleQuiz?.type,
-  //   "yyyyyyyyyyyyyyyyy",
-  //   submittedDefaultData,
-  //   submittedDefaultData?.submitAnswers[0]
-  // );
 
-  // console.log(submittedDefaultData, "sssssssssssss");
+const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData)
+
+
+  // console.log('c',correctId,allCorrectAnswer)
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
     let changedAnswer = [];
@@ -245,17 +226,20 @@ export default function QuizQuestionCard({
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
           >
             {quiz?.answers?.map((option: any) => {
-              // console.log(
-              //   option?._id,
-              //   "ooooooooooooooooooooooo",
-              //   submittedDefaultData?.submitAnswers[0],
-              //   "correctId",
-              //   correctId
-              // );
-              const isCorrect = correctId?.find(
+              console.log(
+                option?._id,
+                "ooooooooooooooooooooooo",
+                submittedDefaultData?.submitAnswers[0],
+                // "correctId",
+                // correctId
+              );
+              const isCorrect = allCorrectAnswer?.find(
                 (id: string) => id === option?._id
               );
-              // console.log(isCorrect);
+              const isSubmitted = submittedDefaultData?.submitAnswers?.find(
+                (item: string) => item === option?._id
+              );
+              console.log(isCorrect,'isCorrectisCorrectisCorrect',isSubmitted);
 
               return (
                 <Radio
@@ -268,15 +252,16 @@ export default function QuizQuestionCard({
                 >
                   <div
                     className={`border-2 rounded-xl p-2 w-full 
+                    
                   ${
                     submittedDefaultData?.submitAnswers[0] === option?._id
-                      ? "bg-slate-700 text-white"
+                      ? "bg-slate-600 text-white"
                       : ""
                   }
                   ${
-                    isCorrect
+                    submittedDefaultData?.singleQuiz ? ( isCorrect
                       ? " border-2 border-green-600"
-                      : "border-2 border-red-500 "
+                      : isSubmitted === option?._id ?"border-2 border-red-500 ":""):""
                   }
                   `}
                   >
@@ -305,7 +290,14 @@ export default function QuizQuestionCard({
         {quiz?.type === "multiple_select" && (
           <Checkbox.Group
             defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
-            disabled={isDefaultValue?.is_time_up ? true : false}
+            // disabled={isDefaultValue?.is_time_up ? true : false}
+            disabled={
+              isDefaultValue?.is_time_up ||
+              currentAnswer?.singleQuiz ===
+                submittedDefaultData?.singleQuiz?._id
+                ? true
+                : false
+            }
             onChange={(value) => handleAnswerChange(index + 1, value)}
             style={{
               display: "flex",
@@ -314,7 +306,7 @@ export default function QuizQuestionCard({
             }}
           >
             {quiz?.answers?.map((option: any) => {
-              const isCorrect = correctId?.find(
+              const isCorrect = allCorrectAnswer?.find(
                 (id: string) => id === option?._id
               );
               const isSubmitted = submittedDefaultData?.submitAnswers?.find(
@@ -332,13 +324,19 @@ export default function QuizQuestionCard({
                   } // Check if the default value matches
                 >
                   <div
-                    className={`border-2 rounded-xl p-3 w-full  ${
-                      isSubmitted === option?._id
-                        ? isCorrect
+                      className={`border-2 rounded-xl p-2 w-full 
+                    
+                      ${
+                        submittedDefaultData?.submitAnswers[0] === option?._id
+                          ? "bg-slate-600 text-white"
+                          : ""
+                      }
+                      ${
+                        submittedDefaultData?.singleQuiz ? ( isCorrect
                           ? " border-2 border-green-600"
-                          : "border-2 border-red-500 "
-                        : ""
-                    } `}
+                          : isSubmitted === option?._id ?"border-2 border-red-500 ":""):""
+                      }
+                      `}
                   >
                     <p>{option?.title}</p>
                     <div className="flex flex-wrap w-full">
