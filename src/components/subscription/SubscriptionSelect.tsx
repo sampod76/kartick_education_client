@@ -12,28 +12,32 @@ type ISubscription = {
   price: number;
   time_duration: string;
   img: any;
+  params:string
 };
 
 const subscriptionData: ISubscription[] = [
   {
     _id: "1",
-    title: "family-personal",
+    title: "family & personal",
+    params:"family",
     enroll_time: "2024-01-15T10:30:00Z",
     price: 29.99,
     time_duration: "3 months",
     img: AllImage.subscription.subFamily,
   },
-  {
-    _id: "2",
-    title: "Premium Plan",
-    enroll_time: "2024-01-20T12:45:00Z",
-    price: 39.99,
-    time_duration: "6 months",
-    img: AllImage.subscription.subTeacher,
-  },
+  // {
+  //   _id: "2",
+  //   title: "Premium Plan",
+  // params:"",
+  //   enroll_time: "2024-01-20T12:45:00Z",
+  //   price: 39.99,
+  //   time_duration: "6 months",
+  //   img: AllImage.subscription.subTeacher,
+  // },
   {
     _id: "3",
-    title: "Basic Plan",
+    title: "school & teacher",
+    params:"school",
     enroll_time: "2024-01-10T08:00:00Z",
     price: 19.99,
     time_duration: "1 month",
@@ -60,7 +64,7 @@ export default function SubscriptionSelect() {
             />
             <div className="mt-2 space-y-3 flex flex-col gap-1 w-full">
               <Link
-                href={`/subscription/join/${subscription?._id}`}
+                href={`/subscription/join/${subscription?._id}?pack=${subscription?.params}`}
                 className="w-[80%] mx-auto bg-primary h-[48px] border border-white  text-center px-7 py-3 text-white font-semibold  rounded"
               >
                 Join Now

@@ -3,7 +3,7 @@ import { AllImage } from "@/assets/AllImge";
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IPlan } from "./JoinMain";
 import {
   Button,
@@ -214,6 +214,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import { useAddStripePaymentMutation } from "@/redux/api/public/paymentApi";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
+import { useSearchParams } from "next/navigation";
 export default function JoinPackage({
   plan,
   setPlan,
@@ -226,6 +227,13 @@ export default function JoinPackage({
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
 
+
+  // const paramsSearch = useSea
+  const searchParams = useSearchParams();
+
+  const packName = searchParams.get("pack")  as string
+  
+  console.log(packName)
 
 
   // const calculateTotalPrice = (categories: ICaterory[], plan: string) => {
@@ -277,15 +285,30 @@ export default function JoinPackage({
 
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const packageData = data?.data ?? [];
 
   // console.log(packageData);
+  const [packageFilterData,setPackageFilterData] = useState<any[]>([])
 
 
-  const filteredPackageData = packageData?.filter((item:IPackageData)=>item?.type  !=="multiple_select")
 
-  console.log(filteredPackageData)
 
+
+  useEffect(()=>{
+    if(packName ==="family"){
+      const packageMultipleData = packageData?.filter((item:IPackageData)=>item?.type  !=="multiple_select")
+      console.log(packageMultipleData,'yessssssss')
+      setPackageFilterData(packageMultipleData)
+    }
+    else {
+
+      const onlyMultiPackage =packageData?.filter((item:IPackageData)=>item?.type  ==="multiple_select")
+      setPackageFilterData(onlyMultiPackage)
+    }
+    },[packName,packageData])
+
+console.log(packageFilterData,'ppppppppppp')
   // ! For select package
 
   // For select package
@@ -294,35 +317,38 @@ export default function JoinPackage({
 
   ///! for the multiple and single select package
 
-  const [singleSelect, setSingleSelect] = useState("");
-  const [multipleSelect, setMultipleSelect] = useState("");
+  const [singleSelect, setSingleSelect] = useState({});
+  const [multipleSelect, setMultipleSelect] = useState([]);
 
 
-  console.log(singleSelect)
+  // console.log(singleSelect)
 
 
-  // console.log(singleSelect, "ppppppppppp", multipleSelect);
+  console.log(singleSelect, "ppppppppppp", multipleSelect);
   const calculatePackage2 = (packages: IPackageData): number | undefined => {
     // console.log(packages);
 
     let newPrice = 0;
-
     if (plan === "monthly" && packages?.monthly) {
       newPrice =
-        packages.monthly.price +
-        packages.monthly.each_student_increment * quantity;
+       ( packages.monthly.price +
+        packages.monthly.each_student_increment * quantity) 
+        * (packages?.type === 'multiple_select'?multipleSelect?.length :1)
+
     } else if (plan === "biannual" && packages?.biannual) {
       newPrice =
-        packages.biannual.price +
-        packages.biannual.each_student_increment * quantity;
+       ( packages.biannual.price +
+        packages.biannual.each_student_increment * quantity) * (packages?.type === 'multiple_select'?multipleSelect?.length :1)
     } else if (plan === "yearly" && packages?.yearly) {
       newPrice =
-        packages.yearly.price +
-        packages.yearly.each_student_increment * quantity;
+        (packages.yearly.price +
+        packages.yearly.each_student_increment * quantity) * (packages?.type === 'multiple_select'?multipleSelect?.length :1)
     }
     return newPrice;
   };
 
+
+  //  ! Select Handler 
   const selectPackageHandler = (value: IPackageData) => {
     setSelectPackage(value);
 
@@ -348,7 +374,7 @@ export default function JoinPackage({
       />
     );
   }
-  console.log(filteredPackageData)
+  console.log(packageFilterData)
   return (
     <div className="mt-[5rem]">
       <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
@@ -356,7 +382,7 @@ export default function JoinPackage({
       </h2>
       {isLoading && <LoadingSkeleton />}
       <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
-        {filteredPackageData?.map((packages: IPackageData, index: number) => {
+        {packageFilterData?.map((packages: IPackageData, index: number) => {
           const totalPackagePrice = calculatePackage2(packages);
           const incrementPrice =packages[plan]?.each_student_increment
           return (
@@ -454,7 +480,7 @@ export default function JoinPackage({
                           (option?: IPackageCategory) => (
                             <Checkbox
                               key={option?.category?.title}
-                              value={option?._id}
+                              value={option}
                               style={{
                                 display: "flex",
                                 paddingTop: "0.5rem",
