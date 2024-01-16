@@ -21,7 +21,7 @@ import dayjs from "dayjs";
 import LoaderNextImage from "@/components/ui/Loading/LoaderNextImage";
 import { ICourseData } from "@/types/courseType";
 import CoverSvg from "@/assets/svg/CoverBackground";
-import {SVGstudentIcom} from "@/assets/svg/Icon";
+import { SVGstudentIcom } from "@/assets/svg/Icon";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const { Text } = Typography;
@@ -33,7 +33,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   const screens = useBreakpoint();
   return (
     <Link
-      href={`/course/milestone/${course?._id}`}
+      href={`/course/milestone/${course?._id}?category=${course?.category?._id}`}
       className="min-w-xs max-w-xs sm:min-w-sm sm:max-w-sm md:w-full mx-auto  rounded-md shadow-md bg-white relative"
     >
       <div className="overflow-hidden">
@@ -75,7 +75,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
           </Typography.Title>
 
           <p className="text-black text-sm md:text-base">
-            <EllipsisMiddle suffixCount={3} maxLength={screens.xl? 150 :220}>
+            <EllipsisMiddle suffixCount={3} maxLength={screens.xl ? 150 : 220}>
               {course?.short_description}
             </EllipsisMiddle>
           </p>

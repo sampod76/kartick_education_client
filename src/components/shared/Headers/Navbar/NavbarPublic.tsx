@@ -31,13 +31,12 @@ const NavbarPublic = () => {
             // display:`${screens.sm ? "flex":"none"}`
             background: "none",
             backdropFilter: "blur(8px)",
-            boxShadow:"none"
+            boxShadow: "none",
           }}
           disabledOverflow
           // items={sidebarItems("homeNav")}
           items={homeNavItems}
         />
-
 
         <div
           className="flex lg:hidden"
@@ -47,13 +46,20 @@ const NavbarPublic = () => {
         >
           <SideBarHome></SideBarHome>
         </div>
-
       </nav>
 
       <div className="hidden lg:flex mr-2">
-
-        <Link href="/subscription" className="h-[48px] w-[130px] text-slate-700 px-3 py-3 font-[600] border border-secondary rounded-md hover:bg-secondary hover:text-white uppercase">Membership</Link>
-        </div>
+        <Link
+          href="/subscription"
+          className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-secondary group px-8 py-3 bg-white rounded"
+        >
+          <span className="relative z-10 text-secondary group-hover:text-white text-xl duration-500">
+            Membership
+          </span>
+          <span className="absolute w-full h-full bg-secondary -left-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
+          <span className="absolute w-full h-full bg-secondary -right-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+        </Link>
+      </div>
     </div>
   );
 };
