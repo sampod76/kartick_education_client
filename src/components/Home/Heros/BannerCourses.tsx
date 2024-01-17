@@ -9,6 +9,7 @@ import CoverSvg from "@/assets/svg/CoverBackground";
 import { useSearchParams } from "next/navigation";
 
 import { Modal, Button } from "antd";
+import ModalCourseBanner from "@/components/Modal/ModalCourseBanner";
 
 const BannerCourses = () => {
   const query: Record<string, any> = {};
@@ -31,9 +32,13 @@ const BannerCourses = () => {
 
   // ! for categoryMoadal
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalCategoryId, setIsModalCategoryId] = useState<string | null>(
+    categoryId
+  );
 
-  const showModal = () => {
+  const showModal = (categoryId: string) => {
     setIsModalOpen(true);
+    setIsModalCategoryId(categoryId);
   };
 
   const handleOk = () => {
@@ -93,7 +98,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
             categoryData?.map((category: any, index: number) => {
               return (
                 <button
-                  onClick={showModal}
+                  onClick={() => showModal(category?._id)}
                   className={`py-3 px-7 rounded-tl-[20px] rounded-br-[20px] ${
                     index % 2 === 0 ? "bg-green-500" : "bg-primary"
                   } ${index % 3 === 1 && "bg-secondary"} text-white ${
@@ -114,8 +119,10 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
           onOk={handleOk}
           onCancel={handleCancel}
         >
-
-          
+          <ModalCourseBanner
+            categoryId={isModalCategoryId}
+            setIsModalOpen={setIsModalOpen}
+          />
         </Modal>
       </div>
       {/* <div className="">
