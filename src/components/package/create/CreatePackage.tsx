@@ -85,7 +85,7 @@ export default function CreatePackage() {
       <Form
         name="dynamic_form_nest_item"
         onFinish={onFinish}
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: 800 ,marginInline:"auto",border:"1px solid gray",padding:"8px",borderRadius:"5px"}}
         autoComplete="off"
         layout="vertical"
       >
@@ -93,6 +93,9 @@ export default function CreatePackage() {
           <Form.Item name="title" label="Title">
             <Input size="large" placeholder="Please enter package title" />
           </Form.Item>
+          <Space
+             
+            >
           <Form.Item name="type" label="Select Types">
             {/* <LabelUi>Select Types </LabelUi> */}
             <Select
@@ -116,13 +119,15 @@ export default function CreatePackage() {
               <Option value="school-teacher">School & Teacher</Option>
             </Select>
           </Form.Item>
-          <div className="space-align-block">
-            <Space
-              title="Monthly Price & Each Student Increment"
-              style={{ margin: "18px 0" }}
-            >
-              {/*//!  monthly */}
-              <Space.Compact>
+
+        
+          
+     
+            </Space>
+          <div className="">
+          
+                {/*//!  monthly */}
+                <Space.Compact>
                 <Form.Item
                   name={["monthly", "price"]}
                   // noStyle
@@ -156,8 +161,8 @@ export default function CreatePackage() {
                   />
                 </Form.Item>
               </Space.Compact>
-              {/*//!  biannual */}
-              <Space.Compact>
+            <Space.Compact>
+                   {/*//!  biannual */}
                 <Form.Item
                   name={["biannual", "price"]}
                   // noStyle
@@ -190,9 +195,8 @@ export default function CreatePackage() {
                   />
                 </Form.Item>
               </Space.Compact>
-              {/*//!  yearly */}
-            </Space>
             <Space.Compact>
+                       {/*//!  yearly */}
               <Form.Item
                 name={["yearly", "price"]}
                 // noStyle
