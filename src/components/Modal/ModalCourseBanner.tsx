@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
 import React from "react";
 import SIngleCourse from "../Home/coureses/SIngleCourse";
+import SIngleBannerSIngleCourse from "../Home/coureses/SIngleBannerSIngleCourse";
 
 const { Option } = Select;
 export default function ModalCourseBanner({
@@ -63,9 +64,9 @@ export default function ModalCourseBanner({
       </Select> */}
 
       {/* <Course */}
-      <div className="grid grid-cols-1 gap-5">
+      <div className="grid grid-cols-1 gap-2">
         {CourseData?.map((item: ICourseData, index: number) => {
-          return <SIngleCourse course={item} key={index + 1} />;
+          return <SIngleBannerSIngleCourse course={item} key={index + 1} />;
         })}
       </div>
     </div>
