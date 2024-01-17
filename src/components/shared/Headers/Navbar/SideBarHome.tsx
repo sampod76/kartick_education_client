@@ -37,11 +37,11 @@ const SideBarHome = () => {
         open={open}
         extra={
           <div className="" onClick={onClose}>
-          <Logo />
-        </div>
+            <Logo />
+          </div>
         }
       >
-        <MenuUI itemData={homeSIdeItems(onClose)} />
+        <MenuUI itemData={homeSIdeItems()} setOpen={setOpen} />
       </Drawer>
     </>
   );

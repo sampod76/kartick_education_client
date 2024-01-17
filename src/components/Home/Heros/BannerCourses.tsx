@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import InternelError from "@/components/shared/Error/InternelError";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
@@ -7,6 +7,9 @@ import CategoryButtonSKeletton from "@/components/ui/Loading/CategoryButtonSKele
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import CoverSvg from "@/assets/svg/CoverBackground";
 import { useSearchParams } from "next/navigation";
+
+import { Modal, Button } from "antd";
+import ModalCourseBanner from "@/components/Modal/ModalCourseBanner";
 
 const BannerCourses = () => {
   const query: Record<string, any> = {};
@@ -22,10 +25,29 @@ const BannerCourses = () => {
 
   const categoryId = searchParams.get("category");
 
-  console.log(
-    "🚀 ~ file: BannerCourses.tsx:22 ~ BannerCourses ~ searchParams:",
+  // console.log(
+  //   "🚀 ~ file: BannerCourses.tsx:22 ~ BannerCourses ~ searchParams:",
+  //   categoryId
+  // );
+
+  // ! for categoryMoadal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalCategoryId, setIsModalCategoryId] = useState<string | null>(
     categoryId
   );
+
+  const showModal = (categoryId: string) => {
+    setIsModalOpen(true);
+    setIsModalCategoryId(categoryId);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   // console.log("🚀 ~ BannerCourses ~ categoryData:", categoryData);
 
@@ -75,22 +97,33 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
           ) : (
             categoryData?.map((category: any, index: number) => {
               return (
-                <Link
+                <button
+                  onClick={() => showModal(category?._id)}
                   className={`py-3 px-7 rounded-tl-[20px] rounded-br-[20px] ${
                     index % 2 === 0 ? "bg-green-500" : "bg-primary"
                   } ${index % 3 === 1 && "bg-secondary"} text-white ${
                     categoryId === category?._id &&
-                    "py-5  translate-x-[1px] brightness-105 hover:-translate-y-[1px] ring-8 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]"
+                    "brightness-105 ring-8 ring-white"
                   }`}
-                  href="/learning"
                   key={index + 1}
                 >
                   {category?.title}
-                </Link>
+                </button>
               );
             })
           )}
         </div>
+        <Modal
+          title="Select Course"
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <ModalCourseBanner
+            categoryId={isModalCategoryId}
+            setIsModalOpen={setIsModalOpen}
+          />
+        </Modal>
       </div>
       {/* <div className="">
             <CoverSvg />
