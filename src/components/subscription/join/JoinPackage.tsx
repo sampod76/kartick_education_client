@@ -233,7 +233,7 @@ export default function JoinPackage({
               return (
                 <div
                   key={index + 1}
-                  className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200  min-h-[36rem] "
+                  className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[33rem] "
                 >
                   <span
                     className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0
@@ -397,9 +397,9 @@ export default function JoinPackage({
                       type="button"
                       className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
                         selectPackage?._id === packages?._id
-                          ? "bg-primary"
-                          : "bg-gray-700"
-                      } hover:bg-gray-800 rounded-md absolute bottom-1 left-0`}
+                          ? "bg-primary hover:brightness-125"
+                          : "bg-gray-700 hover:bg-gray-800"
+                      }  rounded-md static lg:absolute bottom-1 left-0`}
                     >
                       Select
                     </button>
