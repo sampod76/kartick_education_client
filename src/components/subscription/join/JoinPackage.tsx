@@ -157,13 +157,12 @@ export default function JoinPackage({
     // console.log("🚀 ~ selectPackageHandler ~ values:", values);
     setSelectPackage(packages);
 
-
     // console.log(packages);
     // console.log(multipleSelect);
     // console.log(quantity);
     message.success(`Selected ${packages?.title} ${totalPackagePrice}`);
     console.log(packages);
-    console.log(plan)
+    console.log(plan);
 
     // data for purchase course
     const data = {
@@ -220,57 +219,89 @@ export default function JoinPackage({
 
   return (
     <div className="mt-[5rem]">
-      <h2 className="text-[1.4rem] text-slate-700 font-normal mt-5 mb-2">
+      <h2 className="text-[1.4rem] lg:text-[2rem] text-slate-700 font-normal mt-5 mb-5">
         Choose a package
       </h2>
       {isLoading ? (
         <LoadingSkeleton />
       ) : (
         <>
-          <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
+          <div className="w-full mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
             {packageData?.map((packages: IPackageData, index: number) => {
               const totalPackagePrice = calculatePackage2(packages);
               const incrementPrice = packages[plan]?.each_student_increment;
               return (
                 <div
                   key={index + 1}
-                  className="w-full bg-white rounded-[10px] border mx-auto  items-center  shadow-xl  min-h-[24rem flex flex-col justify-start"
+                  className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200  min-h-[36rem] "
                 >
-                  {/* //! banner section */}
-                  <div className="bg-primary h-[4rem] w-full mt-0 py-3 rounded-t-lg">
-                    <h1 className="text-center font-bold text-white ">
+                  <span
+                    className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0
+                    ${
+                      selectPackage?._id === packages?._id
+                        ? "bg-secondary text-white"
+                        : "bg-white text-black"
+                    }
+                  `}
+                  >
+                    {plan}
+                  </span>
+                  <div
+                    className={`h-28 ${
+                      selectPackage?._id === packages?._id
+                        ? "bg-primary"
+                        : "bg-gray-700"
+                    } text-center p-4`}
+                  >
+                    <h3 className="text-2xl text-white font-semibold mb-1">
                       {packages?.title}
-                    </h1>
+                    </h3>
+                    <p className="text-xs text-white">{plan}</p>
                   </div>
-                  <div className="py-3 flex flex-col justify-between   w-full h-full">
-                    {/* //! category section */}
-                    <div className="py-3">
-                      {/* single */}
+                  <div
+                    className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
+                      selectPackage?._id === packages?._id
+                        ? "bg-primary"
+                        : "bg-gray-700"
+                    } text-white border-4 flex flex-col items-center justify-center border-white`}
+                  >
+                    <h3 className="text-2xl font-semibold">
+                      ${totalPackagePrice}
+                    </h3>
+                  </div>
+                  <div className="px-6 py-4 mt-4 h-max ">
+                    <ul className="space-y-4">
+                      {/* //! for bundle type */}
                       {packages?.type === "bundle" &&
                         packages?.categories?.map(
                           (categoryData: IPackageCategory) => {
                             const category = categoryData?.category;
                             // console.log(category);
                             return (
-                              <div
-                                className="flex justify- items-center gap-2 px-5 py-2 "
-                                key={category?.title}
+                              <li
+                                className="flex items-center text-sm text-gray-500"
+                                key={category?._id}
                               >
-                                {/* <Image
-                          height={20}
-                          width={20}
-                          src={packages?.img}
-                          alt="package"
-                        /> */}
-
-                                <h5 className="text-primary text-md ">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="17"
+                                  className="mr-4 bg-green-500 fill-white rounded-full p-[3px]"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"
+                                    data-original="#000000"
+                                  />
+                                </svg>
+                                <span className="text-[16px]">
+                                  {" "}
                                   {category?.title}
-                                </h5>
-
-                                <span className="text-[12px] text-slate-600 ">
+                                </span>
+                                {/* <span>{category?.title}</span> */}
+                                <span className="text-[12px] text-slate-600 ml-2">
                                   {categoryData?.label}
                                 </span>
-                              </div>
+                              </li>
                             );
                           }
                         )}
@@ -299,11 +330,12 @@ export default function JoinPackage({
                                     alignItems: "center",
                                   }}
                                 >
-                                  <h5 className="text-primary text-md ">
+                                  <span className="text-[16px]">
+                                    {" "}
                                     {option?.category?.title}
-                                  </h5>
-
-                                  <span className="text-[12px] text-slate-600 ">
+                                  </span>
+                                  {/* <span>{category?.title}</span> */}
+                                  <span className="text-[12px] text-slate-600 ml-2">
                                     {option?.label}
                                   </span>
                                 </Radio>
@@ -312,6 +344,8 @@ export default function JoinPackage({
                           </Radio.Group>
                         </div>
                       )}
+
+                      {/* for multiple select */}
                       {packages?.type === "multiple_select" && (
                         <div>
                           <Checkbox.Group
@@ -337,11 +371,12 @@ export default function JoinPackage({
                                     alignItems: "center",
                                   }}
                                 >
-                                  <h5 className="text-primary text-md ">
+                                  <span className="text-[16px]">
+                                    {" "}
                                     {option?.category?.title}
-                                  </h5>
-
-                                  <span className="text-[12px] text-slate-600 ">
+                                  </span>
+                                  {/* <span>{category?.title}</span> */}
+                                  <span className="text-[12px] text-slate-600 ml-2">
                                     {option?.label}
                                   </span>
                                 </Checkbox>
@@ -350,37 +385,24 @@ export default function JoinPackage({
                           </Checkbox.Group>
                         </div>
                       )}
-                    </div>
-
-                    <div className="w-full mx-auto text-center">
-                      <h2 className="text-4xl font-bold text-center text-slate-700 ">
-                        ${totalPackagePrice}
-                        <span className="text-2xl text-slate-500">
-                          {" "}
-                          /{plan}
-                        </span>
-                        <p className="text-[12px] text-grey px-2 ">
-                          Each additional child is only {incrementPrice}
-                        </p>
-                      </h2>
-                      {/*//! select button */}
-                      <button
-                        onClick={() =>
-                          selectPackageHandler({
-                            totalPackagePrice,
-                            incrementPrice,
-                            packages,
-                          })
-                        }
-                        className={`w-[80%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
-                          selectPackage?._id === packages?._id
-                            ? "bg-primary text-white"
-                            : "bg-white text-primary"
-                        } `}
-                      >
-                        Select
-                      </button>
-                    </div>
+                    </ul>
+                    <button
+                      onClick={() =>
+                        selectPackageHandler({
+                          totalPackagePrice,
+                          incrementPrice,
+                          packages,
+                        })
+                      }
+                      type="button"
+                      className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
+                        selectPackage?._id === packages?._id
+                          ? "bg-primary"
+                          : "bg-gray-700"
+                      } hover:bg-gray-800 rounded-md absolute bottom-1 left-0`}
+                    >
+                      Select
+                    </button>
                   </div>
                 </div>
               );
