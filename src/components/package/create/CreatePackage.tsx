@@ -11,6 +11,8 @@ const { Option } = Select;
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
+
+// ! for uuid
 const generateUUID = () => {
   return 'xxxxxxxx-xxxx-4xxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;
@@ -21,7 +23,7 @@ const generateUUID = () => {
 export default function CreatePackage() {
 
   const uuid = generateUUID();
-  console.log(uuid,"uuiduuid")
+  // console.log(uuid,"uuiduuid")
   const { data, isLoading } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
@@ -82,8 +84,11 @@ export default function CreatePackage() {
   };
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
+        <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
+       Create Package
+        </h1>
       <Form
-        name="dynamic_form_nest_item"
+        name="package_create"
         onFinish={onFinish}
         style={{ maxWidth: 800 ,marginInline:"auto",border:"1px solid gray",padding:"8px",borderRadius:"5px"}}
         autoComplete="off"
@@ -99,7 +104,7 @@ export default function CreatePackage() {
           <Form.Item name="type" label="Select Types">
             {/* <LabelUi>Select Types </LabelUi> */}
             <Select
-              style={{ width: "100%" }}
+              style={{ maxWidth: "100%" }}
               placeholder="Select Types"
               size="large"
             >
@@ -232,63 +237,79 @@ export default function CreatePackage() {
           </div>
         </Form.Item>
         <div className="border-2 rounded-lg p-3">
+      <LabelUi>Add Category</LabelUi>
           <Form.List name="categories">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space
-                    key={key}
-                    style={{ display: "flex", marginBottom: 8 }}
-                    align="baseline"
-                  >
-                    <Form.Item
-                      {...restField}
-                      name={[name, "category"]}
-                      rules={[
-                        { required: true, message: "Missing first name" },
-                      ]}
+            {(fields, { add, remove }) => {
+    // console.log(fields,'fieldsfieldsfieldsfields') ;
+
+    const onchange=(value:any)=>{
+      // console.log(value,'value') ;
+        const updatedOptions = options?.filter((item) => item?.value !== value);
+      // console.log(updatedOptions)
+      options = updatedOptions;
+      // console.log(options)
+    }
+              return (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: "", marginBottom: 8}}
+                      align="baseline"
                     >
-                      <Select
-                        // mode="tags"
-                        style={{ width: "270px" }}
-                        placeholder="Select category"
-                        // onChange={handleChange}
-                        size="large"
-                        options={options}
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[name, "label"]}
-                      rules={[{ required: true, message: "Missing last name" }]}
+                      <Form.Item
+                        {...restField}
+                        style={{ minWidth: "140px" }}
+                        name={[name, "category"]}
+                        rules={[
+                          { required: true, message: "Missing Category" },
+                        ]}
+                      >
+                        <Select
+                        onChange={onchange}
+                          // mode="tags"
+                          loading={isLoading}
+                          style={{ width: "120px" }}
+                          placeholder="Select category"
+                          // onChange={handleChange}
+                          size="large"
+                          options={options}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        name={[name, "label"]}
+                        style={{ maxWidth: "200px" }}
+                        rules={[{ required: true, message: "Missing Category Label" }]}
+                      >
+                        <Input
+                          // style={{ width: "300p" }}
+                          size="large"
+                          placeholder="label"
+                        />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    </Space>
+                  ))}
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<PlusOutlined />}
                     >
-                      <Input
-                        style={{ width: "300px" }}
-                        size="large"
-                        placeholder="label"
-                      />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    onClick={() => add()}
-                    block
-                    icon={<PlusOutlined />}
-                  >
-                    Add Subject/category
-                  </Button>
-                </Form.Item>
-              </>
-            )}
+                      Add Subject/category
+                    </Button>
+                  </Form.Item>
+                </>
+              )
+            }}
           </Form.List>
         </div>
         <Form.Item>
           <div className="flex justify-center items-center mt-3">
             <Button type="default" htmlType="submit">
-              Submit
+              Create
             </Button>
           </div>
         </Form.Item>
