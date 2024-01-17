@@ -260,13 +260,9 @@ export default function JoinPackage({
                           alt="package"
                         /> */}
 
-                                <h5 className="text-primary text-md ">
-                                  {category?.title}
+                                <h5 className="text-gray-700 text-md ">
+                                  {category?.title} {categoryData?.label}
                                 </h5>
-
-                                <span className="text-[12px] text-slate-600 ">
-                                  {categoryData?.label}
-                                </span>
                               </div>
                             );
                           }
@@ -296,13 +292,9 @@ export default function JoinPackage({
                                     alignItems: "center",
                                   }}
                                 >
-                                  <h5 className="text-primary text-md ">
-                                    {option?.category?.title}
+                                  <h5 className="text-gray-700 text-md ">
+                                    {option?.category?.title} {option?.label}
                                   </h5>
-
-                                  <span className="text-[12px] text-slate-600 ">
-                                    {option?.label}
-                                  </span>
                                 </Radio>
                               )
                             )}
@@ -334,13 +326,9 @@ export default function JoinPackage({
                                     alignItems: "center",
                                   }}
                                 >
-                                  <h5 className="text-primary text-md ">
-                                    {option?.category?.title}
+                                  <h5 className="text-gray-700 text-md ">
+                                    {option?.category?.title} {option?.label}
                                   </h5>
-
-                                  <span className="text-[12px] text-slate-600 ">
-                                    {option?.label}
-                                  </span>
                                 </Checkbox>
                               )
                             )}
@@ -369,10 +357,10 @@ export default function JoinPackage({
                             packages,
                           })
                         }
-                        className={`w-[80%] mx-auto  h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
+                        className={`w-[80%] mx-auto hover:bg-green-700 hover:text-white h-[48px] border border-primary  text-center px-7 py-3   font-semibold  rounded-xl my-3 ${
                           selectPackage?._id === packages?._id
-                            ? "bg-primary text-white"
-                            : "bg-white text-primary"
+                            ? "bg-green-700 text-white"
+                            : "bg-white text-primary animate-pulse"
                         } `}
                       >
                         Select
@@ -401,6 +389,7 @@ export default function JoinPackage({
               ) : (
                 <button
                   type="button"
+                  disabled={multipleSelect.length === 0}
                   className="text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 mr-2 mb-2"
                 >
                   <svg

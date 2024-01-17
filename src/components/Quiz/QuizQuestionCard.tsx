@@ -64,14 +64,14 @@ export default function QuizQuestionCard({
 
   const getCorrectAnswerIdsHandler = (responseData: any): string[] => {
     // Existing functionality for single select answer
-    console.log(responseData?.submitAnswers,'responseData?.submitAnswers')
+    console.log(responseData?.submitAnswers, "responseData?.submitAnswers");
     const correctAnswerIds: string[] = responseData?.submitAnswers.reduce(
       (acc: string[], answerId: string) => {
-        console.log(answerId,"answerId")
+        console.log(answerId, "answerId");
         const submittedAnswered = responseData?.singleQuiz?.answers?.find(
           (answer: any) => answer.id === answerId
         );
-        console.log(submittedAnswered,'submmm')
+        console.log(submittedAnswered, "submmm");
         if (submittedAnswered && submittedAnswered.correct) {
           acc.push(answerId);
         }
@@ -108,19 +108,16 @@ export default function QuizQuestionCard({
   };
   // const correctId = getCorrectAnswerIdsHandler(submittedDefaultData);
 
+  const allCorrectAnsweredIdHanlder = (responseData: any) => {
+    const correctAnswerIds =
+      responseData?.singleQuiz?.answers
+        ?.filter((answer: any) => answer.correct)
+        .map((answer: any) => answer._id) || [];
 
+    return correctAnswerIds;
+  };
 
-const allCorrectAnsweredIdHanlder = (responseData:any)=>{
-  const correctAnswerIds = responseData?.singleQuiz?.answers
-  ?.filter((answer:any) => answer.correct)
-  .map((answer:any) => answer._id) || [];
-
-return correctAnswerIds;
-}
-
-
-const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData)
-
+  const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData);
 
   // console.log('c',correctId,allCorrectAnswer)
 
@@ -194,14 +191,14 @@ const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData)
             ""
           )}
         </div>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap mx-5">
           {quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
             <Image
               key={key}
               src={img}
               width={700}
               height={700}
-              className={"w-32 lg:w-96 max-h-44"}
+              className={"w-96 lg:w-full max-h-44 lg:max-h-48 m-3"}
               alt=""
             ></Image>
           ))}
@@ -226,20 +223,12 @@ const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData)
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
           >
             {quiz?.answers?.map((option: any) => {
-              console.log(
-                option?._id,
-                "ooooooooooooooooooooooo",
-                submittedDefaultData?.submitAnswers[0],
-                // "correctId",
-                // correctId
-              );
               const isCorrect = allCorrectAnswer?.find(
                 (id: string) => id === option?._id
               );
               const isSubmitted = submittedDefaultData?.submitAnswers?.find(
                 (item: string) => item === option?._id
               );
-              console.log(isCorrect,'isCorrectisCorrectisCorrect',isSubmitted);
 
               return (
                 <Radio
@@ -259,9 +248,13 @@ const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData)
                       : ""
                   }
                   ${
-                    submittedDefaultData?.singleQuiz ? ( isCorrect
-                      ? " border-2 border-green-600"
-                      : isSubmitted === option?._id ?"border-2 border-red-500 ":""):""
+                    submittedDefaultData?.singleQuiz
+                      ? isCorrect
+                        ? " border-2 border-green-600"
+                        : isSubmitted === option?._id
+                        ? "border-2 border-red-500 "
+                        : ""
+                      : ""
                   }
                   `}
                   >
@@ -274,7 +267,7 @@ const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData)
                             src={img}
                             width={700}
                             height={700}
-                            className={`w-32 lg:w-96 max-h-24 lg:max-h-44`}
+                            className={`w-96 lg:w-full  max-h-24 lg:max-h-44`}
                             alt=""
                           ></Image>
                         )
@@ -324,7 +317,7 @@ const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData)
                   } // Check if the default value matches
                 >
                   <div
-                      className={`border-2 rounded-xl p-2 w-full 
+                    className={`border-2 rounded-xl p-2 w-full 
                     
                       ${
                         submittedDefaultData?.submitAnswers[0] === option?._id
@@ -332,9 +325,13 @@ const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData)
                           : ""
                       }
                       ${
-                        submittedDefaultData?.singleQuiz ? ( isCorrect
-                          ? " border-2 border-green-600"
-                          : isSubmitted === option?._id ?"border-2 border-red-500 ":""):""
+                        submittedDefaultData?.singleQuiz
+                          ? isCorrect
+                            ? " border-2 border-green-600"
+                            : isSubmitted === option?._id
+                            ? "border-2 border-red-500 "
+                            : ""
+                          : ""
                       }
                       `}
                   >

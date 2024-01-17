@@ -7,7 +7,11 @@ import {
   useGetSubmitUserQuizQuery,
   useSubmitQuizMutation,
 } from "@/redux/api/quizSubmitApi";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import {
+  Animation_model_hook,
+  Error_model_hook,
+  Success_model,
+} from "@/utils/modalHook";
 import TopBarLoading from "../ui/Loading/TopBarLoading";
 export default function QuizTestPage({
   quizData,
@@ -26,7 +30,7 @@ export default function QuizTestPage({
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   //! for getQUiz
-// console.log(quizId,'quizIdquizIdquizIdquizIdquizId')
+  // console.log(quizId,'quizIdquizIdquizIdquizIdquizId')
   const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
   const userSubmitData = quizAnswerData;
@@ -55,7 +59,6 @@ export default function QuizTestPage({
   //   setIsCorrectAnswer(checkAnswers(submittedDefaultData));
   // };
 
-
   const submitAnswer = async () => {
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
       try {
@@ -70,7 +73,9 @@ export default function QuizTestPage({
           if (isCorrect) {
             Success_model("Answer is Correct");
           } else {
-            Error_model_hook("Incorrect answers submitted");
+            Animation_model_hook(
+              "Opps.. you are submitted wrong answers. Please continue.."
+            );
           }
         }
       } catch (err: any) {
@@ -87,7 +92,7 @@ export default function QuizTestPage({
     submitAnswer();
     // console.log(currentStep,"qu !== ?.length",quizAnswerData?.length)
 
-    if(currentStep+1 !== quizData?.length ){
+    if (currentStep + 1 !== quizData?.length) {
       // console.log('equal............' )
       return setCurrentStep((prevStep) => prevStep + 1);
     }
@@ -145,7 +150,7 @@ export default function QuizTestPage({
           >
             Previous
           </Button>
-          {currentStep < quizData.length -1 ? (
+          {currentStep < quizData.length - 1 ? (
             <Button
               type="default"
               onClick={handleNext}

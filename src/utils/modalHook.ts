@@ -35,3 +35,22 @@ export const Error_model_hook = (message: string) => {
     footer: '<a href="">Why do I have this issue?</a>',
   });
 };
+export const Animation_model_hook = (message: string) => {
+  return Swal.fire({
+    title: message || "Custom animation with Animate.css",
+    showClass: {
+      popup: `
+        animate__animated
+        animate__fadeInUp
+        animate__faster
+      `,
+    },
+    hideClass: {
+      popup: `
+        animate__animated
+        animate__fadeOutDown
+        animate__faster
+      `,
+    },
+  });
+};
