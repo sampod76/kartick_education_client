@@ -2,6 +2,7 @@
 
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
 import { Button, message, Steps } from "antd";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -78,7 +79,7 @@ const StepperForm = ({
             key={index + 1}
             className={`flex items-center cursor-pointer ${
               index === current
-                ? "bg-[#23b2b0] text-white" // Apply active color to the active step
+                ? "bg-[#23b2b0 bg-primary text-white" // Apply active color to the active step
                 : "bg-white text-gray-400"
             } h-[50px] py-2 px-6 relative`}
           >
@@ -105,7 +106,7 @@ const StepperForm = ({
           onSubmit={handleSubmit(handleStudentOnSubmit)}
           style={{ marginTop: "36px" }}
         >
-          <div>{steps[current].content}</div>
+          <div>{steps[current]?.content}</div>
 
           <div style={{ marginTop: 30 }}>
             {current > 0 && (
@@ -138,4 +139,8 @@ const StepperForm = ({
   );
 };
 
-export default StepperForm;
+// export default StepperForm;
+
+export default dynamic(() => Promise.resolve(StepperForm), {
+  ssr: false,
+});
