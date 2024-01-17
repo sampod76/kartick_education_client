@@ -19,7 +19,7 @@ const subscriptionData: ISubscription[] = [
   {
     _id: "1",
     title: "family & personal",
-    params:"family",
+    params:"family_personal",
     enroll_time: "2024-01-15T10:30:00Z",
     price: 29.99,
     time_duration: "3 months",
@@ -37,7 +37,7 @@ const subscriptionData: ISubscription[] = [
   {
     _id: "3",
     title: "school & teacher",
-    params:"school",
+    params:"school_teacher",
     enroll_time: "2024-01-10T08:00:00Z",
     price: 19.99,
     time_duration: "1 month",

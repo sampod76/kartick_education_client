@@ -38,7 +38,7 @@ export const axiosBaseQuery =
         success: boolean;
         errorMessages: Array<any>;
       };
- 
+
       const error = {
         status: err.response?.status || err?.statusCode || 400,
         data: err.response?.data || err.message,

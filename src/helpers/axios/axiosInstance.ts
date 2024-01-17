@@ -42,6 +42,7 @@ instance.interceptors.response.use(
 
   async function (error) {
     if (error?.response?.status === 403) {
+      console.log(error);
     } else {
       console.log(error);
 
@@ -61,11 +62,11 @@ instance.interceptors.response.use(
         if (error?.response?.data?.errorMessage) {
           responseObject.errorMessages.push(
             error?.response?.data?.errorMessage
-            );
-          }
+          );
         }
-        console.log("🚀 ~ responseObject:", responseObject)
-      
+      }
+      console.log("🚀 ~ responseObject:", responseObject);
+
       return Promise.reject(responseObject);
       // return responseObject;
     }

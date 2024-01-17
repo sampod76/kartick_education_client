@@ -46,7 +46,7 @@ export const categoryApi = baseApi.injectEndpoints({
           data,
         };
       },
-      invalidatesTags: [tagTypes.category,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.category, tagTypes.categoryChildren],
     }),
     // update ac department
     updateCategory: build.mutation({
