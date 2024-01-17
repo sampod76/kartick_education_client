@@ -64,7 +64,7 @@ export default function ModalCourseBanner({
       </Select> */}
 
       {/* <Course */}
-      <div className="grid grid-cols-1 gap-5">
+      <div className="grid grid-cols-1 gap-2">
         {CourseData?.map((item: ICourseData, index: number) => {
           return <SIngleBannerSIngleCourse course={item} key={index + 1} />;
         })}
