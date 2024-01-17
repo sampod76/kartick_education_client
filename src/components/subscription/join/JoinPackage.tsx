@@ -253,10 +253,10 @@ export default function JoinPackage({
                         : "bg-gray-700"
                     } text-center p-4`}
                   >
-                    <h3 className="text-2xl text-white font-semibold mb-1">
+                    <h3 className="text-2xl text-white uppercase font-semibold mb-1">
                       {packages?.title}
                     </h3>
-                    <p className="text-xs text-white">{plan}</p>
+                    {/* <p className="text-xs text-white">{plan}</p> */}
                   </div>
                   <div
                     className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
