@@ -19,7 +19,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   // const userLoggedIn = USER_ROLE.ADMIN;
 
   const userInfo:any = getUserInfo();
-  console.log("🚀 ~ DashboardLayout ~ userInfo:", userInfo)
+  // console.log("🚀 ~ DashboardLayout ~ userInfo:", userInfo)
   // console.log(userInfo);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);

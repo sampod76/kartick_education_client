@@ -25,7 +25,7 @@ const CreateStudentPage = () => {
   const [addStudentWithFormData, { isLoading }] =
     useAddStudentWithFormDataMutation();
 
-  const handleStudentSubmit = async (values: any) => {
+  const handleStudentSubmit = async (valu es: any) => {
     const { password, ...others } = values;
     const studentData = {
       password: values.password,
@@ -47,7 +47,7 @@ const CreateStudentPage = () => {
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
 

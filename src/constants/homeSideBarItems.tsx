@@ -12,16 +12,16 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 
-const homeSideItems = (onClose?: any) => {
+const homeSideItems = () => {
   const homeSIdeItems: MenuProps["items"] = [
     {
       label: (
-        <Link onClick={onClose} href="/">
+        <Link  href="/">
           Home
         </Link>
       ),
       key: "1",
-      icon: <HomeOutlined onClick={onClose} />,
+      icon: <HomeOutlined  />,
     },
     {
       label: (
@@ -30,7 +30,7 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/learning",
-      icon: <EditOutlined onClick={onClose} />,
+      icon: <EditOutlined  />,
     },
     {
       label: (
@@ -39,7 +39,7 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/subscription",
-      icon: <EuroOutlined onClick={onClose} />,
+      icon: <EuroOutlined  />,
     },
     {
       label: (
@@ -48,7 +48,7 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/assessment",
-      icon: <ControlOutlined onClick={onClose} />,
+      icon: <ControlOutlined  />,
     },
     {
       label: (
@@ -57,35 +57,35 @@ const homeSideItems = (onClose?: any) => {
         </Link>
       ),
       key: "/analysis",
-      icon: <FundOutlined onClick={onClose} />,
+      icon: <FundOutlined  />,
     },
 
     {
       label: (
-        <Link onClick={onClose} href="/contact">
+        <Link  href="/contact">
           Contact
         </Link>
       ),
       key: "/contact",
-      icon: <ContactsFilled onClick={onClose} />,
+      icon: <ContactsFilled  />,
     },
     {
       label: (
-        <Link onClick={onClose} href="/">
+        <Link  href="/">
           About
         </Link>
       ),
       key: "/About",
-      icon: <UserOutlined onClick={onClose} />,
+      icon: <UserOutlined  />,
     },
     {
       label: (
-        <Link onClick={onClose} href="/dashboard">
+        <Link  href="/dashboard">
           Dashboard
         </Link>
       ),
       key: "/dashboard",
-      icon: <PicCenterOutlined onClick={onClose} />,
+      icon: <PicCenterOutlined  />,
     },
   ];
 
