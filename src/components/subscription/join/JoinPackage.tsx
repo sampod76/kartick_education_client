@@ -157,10 +157,13 @@ export default function JoinPackage({
     // console.log("🚀 ~ selectPackageHandler ~ values:", values);
     setSelectPackage(packages);
 
-    message.success(`Selected ${totalPackagePrice}`);
+
     // console.log(packages);
     // console.log(multipleSelect);
     // console.log(quantity);
+    message.success(`Selected ${packages?.title} ${totalPackagePrice}`);
+    console.log(packages);
+    console.log(plan)
 
     // data for purchase course
     const data = {
