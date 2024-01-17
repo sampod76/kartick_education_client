@@ -116,6 +116,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
         <Modal
           title="Select Course"
           open={isModalOpen}
+                style={{ top: 20 }}
           onOk={handleOk}
           onCancel={handleCancel}
         >
