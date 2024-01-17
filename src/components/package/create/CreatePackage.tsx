@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space } from "antd";
+import { Button, Form, Input, Space ,  InputNumber} from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -11,7 +11,17 @@ const { Option } = Select;
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
+const generateUUID = () => {
+  return 'xxxxxxxx-xxxx-4xxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
 export default function CreatePackage() {
+
+  const uuid = generateUUID();
+  console.log(uuid,"uuiduuid")
   const { data, isLoading } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
@@ -45,16 +55,19 @@ export default function CreatePackage() {
   const onFinish = async (values: any) => {
     console.log("Received values of form:", values);
     const packageData = {
-      membership: values.membership,
+      membership: {
+        title:values.membership?.title,
+        uid:uuid
+      },
       title: values.title,
-      // type: "bundle",
+      type: values.type,
       monthly: values.monthly,
       biannual: values.biannual,
       yearly: values.yearly,
       categories: values.categories,
     };
     try {
-      const res = await addPackage(values).unwrap();
+      const res = await addPackage(packageData).unwrap();
       // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
@@ -77,10 +90,10 @@ export default function CreatePackage() {
         layout="vertical"
       >
         <Form.Item>
-          <Form.Item name={"title"} label="Title">
+          <Form.Item name="title" label="Title">
             <Input size="large" placeholder="Please enter package title" />
           </Form.Item>
-          <Form.Item name="types" label="Select Types">
+          <Form.Item name="type" label="Select Types">
             {/* <LabelUi>Select Types </LabelUi> */}
             <Select
               style={{ width: "100%" }}
@@ -117,7 +130,7 @@ export default function CreatePackage() {
                   label="Monthly Price"
                   rules={[{ required: true, message: "Province is required" }]}
                 >
-                  <Input
+                  <InputNumber
                     name="price"
                     type="number"
                     placeholder="Monthly Price"
@@ -136,7 +149,7 @@ export default function CreatePackage() {
                     },
                   ]}
                 >
-                  <Input
+                  <InputNumber
                     style={{ width: "70%" }}
                     type="number"
                     placeholder="Input Each Student Price"
@@ -151,7 +164,7 @@ export default function CreatePackage() {
                   label="Biannual Price"
                   rules={[{ required: true, message: "Province is required" }]}
                 >
-                  <Input
+                  <InputNumber
                     name="price"
                     type="number"
                     placeholder="Biannual Price"
@@ -170,7 +183,7 @@ export default function CreatePackage() {
                     },
                   ]}
                 >
-                  <Input
+                  <InputNumber
                     style={{ width: "70%" }}
                     type="number"
                     placeholder="Input Each Student Price"
@@ -186,7 +199,7 @@ export default function CreatePackage() {
                 label="Yearly Price"
                 rules={[{ required: true, message: "Province is required" }]}
               >
-                <Input
+                <InputNumber
                   name="price"
                   type="number"
                   placeholder="yearly Price"
@@ -205,7 +218,7 @@ export default function CreatePackage() {
                   },
                 ]}
               >
-                <Input
+                <InputNumber
                   style={{ width: "70%" }}
                   type="number"
                   placeholder="Input Each Student Price"

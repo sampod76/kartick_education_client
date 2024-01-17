@@ -25,7 +25,7 @@ const CreateStudentPage = () => {
   const [addStudentWithFormData, { isLoading }] =
     useAddStudentWithFormDataMutation();
 
-  const handleStudentSubmit = async (values: any) => {
+  const handleStudentSubmit = async (valu es: any) => {
     const { password, ...others } = values;
     const studentData = {
       password: values.password,
