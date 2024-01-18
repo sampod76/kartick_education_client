@@ -15,7 +15,7 @@ export default function PaypalSuccess() {
   query["paymentId"] = paymentId;
   query["PayerID"] = PayerID;
   query["token"] = token;
-  const { data, isLoading, error } = useGetCheckPaypalPaymentQuery(
+  const { data, isLoading, error,isSuccess } = useGetCheckPaypalPaymentQuery(
     {
       ...query,
     },

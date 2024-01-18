@@ -44,6 +44,7 @@ export default function JoinPackage({
 }) {
   // const paramsSearch = useSea
   const userInfo = getUserInfo() as any;
+  console.log("🚀 ~ userInfo:", userInfo)
   const searchParams = useSearchParams();
   const packName = searchParams.get("pack") as string;
 
@@ -158,8 +159,10 @@ export default function JoinPackage({
     // console.log("🚀 ~ selectPackageHandler ~ values:", values);
     setSelectPackage(packages);
 
-    // console.log(packages);
-    // console.log(multipleSelect);
+    console.log(packages);
+    console.log(multipleSelect);
+
+
     // console.log(quantity);
     message.success(`Selected ${packages?.title} ${totalPackagePrice}`);
     console.log(packages);
@@ -172,7 +175,7 @@ export default function JoinPackage({
       title: packages?.title,
       categories: multipleSelect.map((select: any) => ({
         ...select,
-        category: select._id,
+        category: select?.category?._id,
       })),
       total_purchase_student: quantity,
       user: userInfo?.id,
@@ -183,6 +186,7 @@ export default function JoinPackage({
         each_student_increment: packages[plan]["each_student_increment"],
       },
     };
+    console.log("🚀 ~ selectPackageHandler ~ data:", data)
 
     const paypalData = {
       items: [

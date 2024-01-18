@@ -68,6 +68,7 @@ export default function CreatePackage() {
       yearly: values.yearly,
       categories: values.categories,
     };
+    console.log("🚀 ~ onFinish ~ packageData:", packageData)
     try {
       const res = await addPackage(packageData).unwrap();
       // console.log(res);
@@ -93,6 +94,7 @@ export default function CreatePackage() {
         style={{ maxWidth: 800 ,marginInline:"auto",border:"1px solid gray",padding:"8px",borderRadius:"5px"}}
         autoComplete="off"
         layout="vertical"
+        
       >
         <Form.Item>
           <Form.Item name="title" label="Title">
