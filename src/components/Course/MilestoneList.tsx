@@ -81,7 +81,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
                     {milestone?.modules?.map((module: any, index: number) => {
                       return (
                         <Link
-                          href={`/lesson/${module?._id}`}
+                          href={`/lesson/module/${module?._id}`}
                           key={module?._id || index}
                           className="text-secondary text-start"
                           // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"

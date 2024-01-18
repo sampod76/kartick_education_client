@@ -17,10 +17,20 @@ import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import vimeoUrlChack from "@/utils/vimeoUrlChecker";
+import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
+import { getUserInfo } from "@/services/auth.service";
 
-export default function LessonList({ moduleId }: { moduleId: string }) {
+export default function LessonList({ moduleId ,moduleData}: { moduleId: string,moduleData:any }) {
   // console.log(moduleId, "moduleId from LessonList");
 
+const userInfo = getUserInfo() as any
+  ////! for purchased data of a user
+const categoryId = moduleData?.milestone?.course?.category?._id
+// console.log(categoryId,'categoryId')
+
+const {data:purchasedData} = useGetPurchasePackageQuery({status:"active",limit:99999,user:userInfo?.id,category:categoryId})
+
+console.log(purchasedData,'purchasedDatapurchasedDatapurchasedData')
   //! for Course options selection
   const lesson_query: Record<string, any> = {};
   lesson_query["limit"] = 999999;
@@ -65,13 +75,19 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     }
   };
 
-  console.log(lessonData,'lessonDatalessonData')
+  // console.log(lessonData,'lessonDatalessonData')
 
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
+
+      // console.log(lesson,"lessonlesson")
+      // const isPurchasedCategory = purchasedData?.data?.find((category:any)=>categoryId=== )
+
+const exists = purchasedData?.data?.some((item:any) => item.categories.some((category:any) => category.category._id === categoryId));
       const lessonQuizData: any = QuizData?.data?.filter(
         (item: any) => item?.lesson?._id === lesson?._id
       );
+      console.log(exists,'existsexistsexists')
       // console.log(lesson);
       // console.log("🚀 lessonQuizData", lessonQuizData);
       
@@ -86,7 +102,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
 
-            {lessonQuizData &&
+            {exists && lessonQuizData &&
               lessonQuizData?.map((quiz: any) => {
                 // console.log(quiz)
                 return (
@@ -102,6 +118,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
                   </Link>
                 );
               })}
+
           </div>
         ),
         children: (

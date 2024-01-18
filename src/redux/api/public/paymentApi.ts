@@ -79,5 +79,5 @@ export const {
   useAddStripePaymentMutation,
   useAddPaypalPaymentMutation,
   useGetCheckPaypalPaymentQuery,
-  useGetPurchasePackage,
+  useGetPurchasePackageQuery,
 } = paymentApi;
