@@ -1,7 +1,11 @@
 import { authKey } from "@/constants/storageKey";
 
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
-import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
+import {
+  getFromLocalStorage,
+  getRefreshToken,
+  setToLocalStorage,
+} from "@/utils/local-storage";
 import axios from "axios";
 // import { message } from 'antd';
 
@@ -41,6 +45,15 @@ instance.interceptors.response.use(
   },
 
   async function (error) {
+    const config = error?.config;
+    if (error?.status === 401 || !config?.sent) {
+      config.sent = true;
+      const response = await getRefreshToken();
+      const refreshToken = response?.data?.accessToken;
+      config.headers["Authorization"] = refreshToken;
+      setToLocalStorage(authKey, refreshToken);
+      return instance(config);
+    }
     if (error?.response?.status === 403) {
       console.log(error);
     } else {

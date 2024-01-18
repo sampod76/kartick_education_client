@@ -3,7 +3,7 @@ import React from "react";
 export default function ProfileAboutSection() {
   return (
     <div className="text-start mt-3">
-      <h1 className="text-slate-800  font-bold">ABout Me</h1>
+      <h1 className="text-slate-800  font-bold">About User</h1>
       <p className="text-[#686F7A]">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
         scelerisque nibh sed ligula blandit, quis faucibus lorem pellentesque.

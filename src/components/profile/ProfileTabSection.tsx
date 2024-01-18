@@ -4,6 +4,7 @@ import type { TabsProps } from "antd";
 import ProfileAboutSection from "./ProfileAboutSection";
 import Courses from "../Home/coureses/Courses";
 import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
+import UserPurchased from "../package/UserPurchased";
 export default function ProfileTabSection() {
   const onChange = (key: string) => {
     console.log(key);
@@ -22,12 +23,12 @@ export default function ProfileTabSection() {
     {
       key: "3",
       label: "Purchased",
-      children: "Content of  Purchased",
+      children: <UserPurchased />,
     },
     {
       key: "4",
       label: "Reviews",
-      children: <ReviewsPage/>,
+      children: <ReviewsPage />,
     },
     // {
     //   key: "5",

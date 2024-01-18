@@ -51,13 +51,13 @@ const NavbarPublic = () => {
       <div className="hidden lg:flex mr-2">
         <Link
           href="/subscription"
-          className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-secondary group px-8 py-3 bg-white rounded"
+          className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-primary group px-8 py-3 bg-white rounded"
         >
-          <span className="relative z-10 text-secondary group-hover:text-white text-xl duration-500">
+          <span className="relative z-10 text-primary group-hover:text-white text-xl duration-500">
             Membership
           </span>
-          <span className="absolute w-full h-full bg-secondary -left-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
-          <span className="absolute w-full h-full bg-secondary -right-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+          <span className="absolute w-full h-full bg-primary -left-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
+          <span className="absolute w-full h-full bg-primary -right-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
         </Link>
       </div>
     </div>
