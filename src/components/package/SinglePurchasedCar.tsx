@@ -40,11 +40,14 @@ export default function SInglePurchased({
               </EllipsisMiddle>
             </p>
             <div className="mt-2 flex justify-between ">
-              <h1 className ="text-sm text-gray">Total Student: {packages?.total_purchase_student}</h1>
-              <h1 className ="text-sm text-gray">Status: {packages?.paymentStatus}</h1>
-              
+              <h1 className="text-sm text-gray">
+                Total Student: {packages?.total_purchase_student}
+              </h1>
+              <h1 className="text-sm text-gray capitalize">
+                {packages?.paymentStatus}
+              </h1>
             </div>
-           
+
             <div className="flex item-center justify-between mt-3">
               <h1 className="text-gray-700 font-bold text-xl">
                 {packages?.purchase?.price} /{packages?.purchase?.label}

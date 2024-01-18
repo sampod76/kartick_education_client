@@ -16,7 +16,11 @@ const FeedbackSection = () => {
               width: "100%",
             }}
           >
-            <Progress strokeColor="red" percent={Number(item?.percent)} size={[300, 20]} />
+            <Progress
+              strokeColor="#5371FF"
+              percent={Number(item?.percent)}
+              size={[300, 20]}
+            />
             <Rate
               // defaultValue={item?.stars}
               value={item?.stars}

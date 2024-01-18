@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import Image from "next/image";
-// import { Image } from "antd";
+import { Image as ImageAnt } from "antd";
 const StudentProfile = ({ userData }: { userData: any }) => {
   //   console.log(userData, "userDatauserDatauserData");
   const userInfo = getUserInfo() as IDecodedInfo;
@@ -32,13 +32,14 @@ const StudentProfile = ({ userData }: { userData: any }) => {
             width={350}
             height={400}
             // preview={false}
-            className="object-cover object-top w-full"
+            // className="object-cover object-top w-full"
+            style={{ objectFit: "cover", objectPosition: "top", width: "100%" }}
             src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ"
             alt="Mountain"
           />
         </div>
         <div className="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
-          <Image height={200} width={200} src={img} alt="User mask" />
+          <ImageAnt height={250} width={250} src={img} alt="User mask" />
         </div>
         <div className="text-center mt-2">
           <h2 className="font-semibold uppercase">
