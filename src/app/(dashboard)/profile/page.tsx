@@ -8,7 +8,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateProfile from "@/components/profile/UpdateProfile";
-import StudentProfile from "@/components/profile/StudentProfile";
+import UserProfile from "@/components/profile/UserProfile";
 import ProfileTabSection from "@/components/profile/ProfileTabSection";
 
 const { Meta } = Card;
@@ -26,9 +26,9 @@ console.log(data,'data profile');
   return (
     <section>
       <div className="flex justify-end items-end">
-        <Button onClick={() => setUpdate(!update)}   type="default">
+        {/* <Button onClick={() => setUpdate(!update)}   type="default">
           {update ? "profile" : "Update/edit profile"}
-        </Button>
+        </Button> */}
       </div>
       {/* {update ? (
         <UpdateProfile></UpdateProfile>
@@ -84,7 +84,7 @@ console.log(data,'data profile');
         </div>
       )} */}
 
-      <StudentProfile userData={userData}/>
+      <UserProfile userData={userData}/>
       <ProfileTabSection/>
     </section>
   );
