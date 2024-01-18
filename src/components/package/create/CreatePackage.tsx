@@ -35,7 +35,7 @@ export default function CreatePackage() {
     value: select._id,
   }));
 
-  const [addPackage] = useAddPackageMutation();
+  const [addPackage,{isSuccess}] = useAddPackageMutation();
 
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -68,7 +68,8 @@ export default function CreatePackage() {
       yearly: values.yearly,
       categories: values.categories,
     };
-    console.log("🚀 ~ onFinish ~ packageData:", packageData)
+    // console.log("🚀 ~ onFinish ~ packageData:", packageData)
+
     try {
       const res = await addPackage(packageData).unwrap();
       // console.log(res);
@@ -310,7 +311,7 @@ export default function CreatePackage() {
         </div>
         <Form.Item>
           <div className="flex justify-center items-center mt-3">
-            <Button type="default" htmlType="submit">
+            <Button loading={isSuccess} type="default" htmlType="submit">
               Create
             </Button>
           </div>
