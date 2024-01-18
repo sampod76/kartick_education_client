@@ -71,6 +71,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
       );
       // console.log(lesson);
       // console.log("🚀 lessonQuizData", lessonQuizData);
+      
       return {
         key: lesson?._id,
         label: (
