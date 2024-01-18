@@ -2,7 +2,6 @@ import { tagTypes } from "@/redux/tag-types";
 import { ICategory, IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 
-
 const PAYMENT_URL = "/payment";
 
 export const paymentApi = baseApi.injectEndpoints({
@@ -29,9 +28,39 @@ export const paymentApi = baseApi.injectEndpoints({
         };
       },
     }),
+    addPaypalCheckPayment: build.mutation({
+      query: (data) => {
+        // console.log(data, "cacccc");
+        return {
+          url: `${PAYMENT_URL}/paypal/check`,
+          method: "POST",
+          data,
+        };
+      },
+    }),
+    getCheckPaypalPayment: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${PAYMENT_URL}/paypal/check`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.module],
+    }),
     // update ac department
   }),
-  overrideExisting: true
+  overrideExisting: true,
 });
 
-export const { useAddStripePaymentMutation,useAddPaypalPaymentMutation } = paymentApi;
+export const {
+  useAddStripePaymentMutation,
+  useAddPaypalPaymentMutation,
+  useGetCheckPaypalPaymentQuery,
+} = paymentApi;

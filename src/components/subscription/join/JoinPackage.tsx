@@ -44,6 +44,7 @@ export default function JoinPackage({
 }) {
   // const paramsSearch = useSea
   const userInfo = getUserInfo() as any;
+  console.log("🚀 ~ userInfo:", userInfo)
   const searchParams = useSearchParams();
   const packName = searchParams.get("pack") as string;
 
@@ -121,11 +122,12 @@ export default function JoinPackage({
           : packName === "family_personal"
           ? "family & personal"
           : "nulls",
-    },
-    {
-      skip: !Boolean(packName),
-    }
-  );
+        },
+        {
+          skip: !Boolean(packName),
+        }
+        );
+        console.log("🚀 ~ data:", data)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const packageData = data?.data ?? [];
@@ -157,8 +159,10 @@ export default function JoinPackage({
     // console.log("🚀 ~ selectPackageHandler ~ values:", values);
     setSelectPackage(packages);
 
-    // console.log(packages);
-    // console.log(multipleSelect);
+    console.log(packages);
+    console.log(multipleSelect);
+
+
     // console.log(quantity);
     message.success(`Selected ${packages?.title} ${totalPackagePrice}`);
     console.log(packages);
@@ -171,7 +175,7 @@ export default function JoinPackage({
       title: packages?.title,
       categories: multipleSelect.map((select: any) => ({
         ...select,
-        category: select._id,
+        category: select?.category?._id,
       })),
       total_purchase_student: quantity,
       user: userInfo?.id,
@@ -182,6 +186,7 @@ export default function JoinPackage({
         each_student_increment: packages[plan]["each_student_increment"],
       },
     };
+    console.log("🚀 ~ selectPackageHandler ~ data:", data)
 
     const paypalData = {
       items: [
@@ -249,7 +254,7 @@ export default function JoinPackage({
                   <div
                     className={`h-28 ${
                       selectPackage?._id === packages?._id
-                        ? "bg-primary"
+                        ? "bg-green-600"
                         : "bg-gray-700"
                     } text-center p-4`}
                   >
@@ -261,7 +266,7 @@ export default function JoinPackage({
                   <div
                     className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
                       selectPackage?._id === packages?._id
-                        ? "bg-primary"
+                        ? "bg-green-600"
                         : "bg-gray-700"
                     } text-white border-4 flex flex-col items-center justify-center border-white`}
                   >
@@ -386,7 +391,8 @@ export default function JoinPackage({
                         </div>
                       )}
                     </ul>
-                    <button
+                   <div className="">
+                   <button
                       onClick={() =>
                         selectPackageHandler({
                           totalPackagePrice,
@@ -397,12 +403,13 @@ export default function JoinPackage({
                       type="button"
                       className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
                         selectPackage?._id === packages?._id
-                          ? "bg-primary hover:brightness-125"
+                          ? "bg-green-600 hover:brightness-125"
                           : "bg-gray-700 hover:bg-gray-800"
                       }  rounded-md static lg:absolute bottom-1 left-0`}
                     >
                       Select
                     </button>
+                   </div>
                   </div>
                 </div>
               );
