@@ -9,115 +9,76 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 const StudentProfile = ({ userData }: { userData: any }) => {
-  console.log(userData);
+  console.log(userData,'userDatauserDatauserData');
 
   return (
-    <div className="max-w-full lg:max-w-[80%] mx-auto block lg:flex justify-between gap-5">
-      <aside className="w-full lg:w-[45%]">
-        {/* profile card */}
-        <div className=" bg-white p-6 rounded-lg shadow-lg">
-          <div className="flex justify-center">
-            <Image
-              src={userData?.img}
-              width={100}
-              height={100}
-              className="w-[9rem] h-[9rem] rounded-[50%]"
-              alt="dd"
-            />
-          </div>
-          <div className="mt-4 text-center">
-            <h2 className="text-xl font-bold">
-              Name: {userData?.name?.firstName} {userData?.name?.lastName}{" "}
-              {userData?.role}
-            </h2>
-            <h2 className="text-[18px] font-bold text-gray-700">
-              Full Stack Developer
-            </h2>
-            <h2 className="text-[18px] font-bold text-gray-700">
-              {userData?.address}
-            </h2>
-          </div>
-        </div>
-        {/* website cards */}
-        <div className="bg-white w-full flex flex-col gap-4 shadow-md p-4 py-9 mt-5">
-          {/* Github */}
-          <div className="flex justify-between ">
-            <aside className="flex gap-3">
-              <GithubFilled style={{ fontSize: "24px", borderRadius: "2px" }} />
-              <h2 className="text-[16px] font-semibold">Github</h2>
-            </aside>
-            <Link href={`https://github.com/sampod76`} target="_blank">
-              https://github.com/sampod76
-            </Link>
-          </div>
-          {/* Facebook */}
-          <div className="flex justify-between ">
-            <aside className="flex gap-3">
-              <FacebookFilled
-                style={{ fontSize: "24px", borderRadius: "2px" }}
-              />
-              <h2 className="text-[16px] font-semibold">Facebook</h2>
-            </aside>
-            <Link href={`https://facebook.com/sampod76`} target="_blank">
-              https://facebook.com/sampod76
-            </Link>
-          </div>
-          {/* Linkedin */}
-          <div className="flex justify-between ">
-            <aside className="flex gap-3">
-              <LinkedinFilled
-                style={{ fontSize: "24px", borderRadius: "2px" }}
-              />
-              <h2 className="text-[16px] font-semibold">Linkedin</h2>
-            </aside>
-            <Link href={`https://linkedin.com/sampod76`} target="_blank">
-              https://linkedin.com/sampod76
-            </Link>
-          </div>
-          {/* Twitter */}
-          <div className="flex justify-between ">
-            <aside className="flex gap-3">
-              <TwitterSquareFilled
-                style={{ fontSize: "24px", borderRadius: "2px" }}
-              />
-              <h2 className="text-[16px] font-semibold">Twitter</h2>
-            </aside>
-            <Link href={`https://twiter.com/sampod76`} target="_blank">
-              https://twiter.com/sampod76
-            </Link>
-          </div>
-        </div>
-      </aside>
-      <aside className="w-full lg:w-[55%] ">
-        {/* Information card */}
-        <div className="flex flex-col gap-3 bg-white shadow-xl p-7 rounded">
-          <div className="flex gap-5 justify-between  text-start  py-3">
-            <h1 className="text-[16px] font-semibold text-start">Full Name</h1>
-            <h3 className="text-[16px] ">
-              {userData?.name?.firstName} {userData?.name?.lastName}
-            </h3>
-          </div>
-          <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
-            <h1 className="text-[16px] font-semibold text-start">Email</h1>
-            <h3 className="text-[16px] ">{userData?.role}</h3>
-          </div>
-          <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
-            <h1 className="text-[16px] font-semibold text-start">Contact No</h1>
-            <h3 className="text-[16px] ">{userData?.phoneNumber}</h3>
-          </div>
-          <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
-            <h1 className="text-[16px] font-semibold text-start">
-              User status
-            </h1>
-            <h3 className="text-[16px] ">{userData?.status}</h3>
-          </div>
-          <div className="flex gap-5 justify-between  text-start  border-t-2 py-3">
-            <h1 className="text-[16px] font-semibold text-start">Address</h1>
-            <h3 className="text-[16px] ">{userData?.address}</h3>
-          </div>
-        </div>
-      </aside>
+    <main className="profile-page">
+  <section className="relative block h-500-px">
+    <div className="absolute top-0 w-full h-full bg-center bg-cover" style={
+  {backgroundImage: "url('https://img.freepik.com/free-vector/lovely-education-concept-with-flat-design_23-2147913479.jpg?w=826&t=st=1705579870~exp=1705580470~hmac=011d9bc7dd310742fc106d35bbee7bfaae649405232ddc364e74f15b5bedbf28')"}}>
+      <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span>
     </div>
+    <div className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px" style={{
+      transform:"translateZ(0px)"
+    }}>
+      <svg className="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+        <polygon className="text-blueGray-200 fill-current" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </section>
+  <section className="relative py-16 bg-blueGray-200">
+    <div className="container mx-auto px-4">
+      <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
+        <div className="px-6">
+          <div className="flex flex-wrap justify-center">
+            <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
+              <div className="relative">
+                <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"/>
+              </div>
+            </div>
+            <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
+              <div className="py-6 px-3 mt-32 sm:mt-0">
+                <button className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
+                  Connect
+                </button>
+              </div>
+            </div>
+            <div className="w-full lg:w-4/12 px-4 lg:order-1">
+              <div className="flex justify-center py-4 lg:pt-4 pt-8">
+                <div className="mr-4 p-3 text-center">
+                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span className="text-sm text-blueGray-400">Friends</span>
+                </div>
+                <div className="mr-4 p-3 text-center">
+                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span><span className="text-sm text-blueGray-400">Photos</span>
+                </div>
+                <div className="lg:mr-4 p-3 text-center">
+                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89</span><span className="text-sm text-blueGray-400">Comments</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="text-center mt-12">
+            <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+              Jenna Stones
+            </h3>
+            <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+              <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+              Los Angeles, California
+            </div>
+            <div className="mb-2 text-blueGray-600 mt-10">
+              <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Solution Manager - Creative Tim Officer
+            </div>
+            <div className="mb-2 text-blueGray-600">
+              <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>University of Computer Science
+            </div>
+          </div>
+   
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
   );
 };
 

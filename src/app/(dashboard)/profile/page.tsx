@@ -9,16 +9,17 @@ import Image from "next/image";
 import Link from "next/link";
 import UpdateProfile from "@/components/profile/UpdateProfile";
 import StudentProfile from "@/components/profile/StudentProfile";
+import ProfileTabSection from "@/components/profile/ProfileTabSection";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
 
 const ProfileTemplate = () => {
   const [update, setUpdate] = useState(false);
-  console.log(update);
+  // console.log(update);
   const { data = {}, isLoading } = useGetProfileQuery("");
-console.log(data);
-  const userData = data?.generalUser || data?.admin || data?.superAdmin;
+console.log(data,'data profile');
+  const userData = data
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
@@ -29,7 +30,7 @@ console.log(data);
           {update ? "profile" : "Update/edit profile"}
         </Button>
       </div>
-      {update ? (
+      {/* {update ? (
         <UpdateProfile></UpdateProfile>
       ) : (
         <div className="flex justify-center items-center min-h-screen">
@@ -81,9 +82,10 @@ console.log(data);
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       <StudentProfile userData={userData}/>
+      <ProfileTabSection/>
     </section>
   );
 };
