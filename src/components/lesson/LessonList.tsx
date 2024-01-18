@@ -31,6 +31,10 @@ const categoryId = moduleData?.milestone?.course?.category?._id
 const {data:purchasedData} = useGetPurchasePackageQuery({status:"active",limit:99999,user:userInfo?.id,category:categoryId})
 
 console.log(purchasedData,'purchasedDatapurchasedDatapurchasedData')
+
+const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.some((category:any) => category.category._id === categoryId));
+    
+      // console.log(IsExistCategory,'IsExistCategoryIsExistCategoryIsExistCategory purchased the category')
   //! for Course options selection
   const lesson_query: Record<string, any> = {};
   lesson_query["limit"] = 999999;
@@ -63,15 +67,15 @@ console.log(purchasedData,'purchasedDatapurchasedDatapurchasedData')
     return <LoadingSkeleton />;
   }
   const playerVideoFunc = (lesson: any) => {
-    if (lesson?.videos?.length && lesson?.videos[0]?.link) {
+    if (IsExistCategory&&lesson?.videos?.length && lesson?.videos[0]?.link) {
       const check = vimeoUrlChack(lesson?.videos[0]?.link);
-      if (check) {
+      if (IsExistCategory&&check) {
         return <VimeoPlayer link={lesson?.videos[0]?.link} />;
       } else {
-        return <div>Not video found</div>;
+        return <div>Not  add video yet.</div>;
       }
     } else {
-      return <div>Not video found</div>;
+      return <div>Not  add video yet.</div>;
     }
   };
 
@@ -79,15 +83,12 @@ console.log(purchasedData,'purchasedDatapurchasedDatapurchasedData')
 
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
-
+  const lessonQuizData: any = QuizData?.data?.filter(
+        (item: any) => item?.lesson?._id === lesson?._id
+      );
       // console.log(lesson,"lessonlesson")
       // const isPurchasedCategory = purchasedData?.data?.find((category:any)=>categoryId=== )
 
-const exists = purchasedData?.data?.some((item:any) => item.categories.some((category:any) => category.category._id === categoryId));
-      const lessonQuizData: any = QuizData?.data?.filter(
-        (item: any) => item?.lesson?._id === lesson?._id
-      );
-      console.log(exists,'existsexistsexists')
       // console.log(lesson);
       // console.log("🚀 lessonQuizData", lessonQuizData);
       
@@ -102,7 +103,7 @@ const exists = purchasedData?.data?.some((item:any) => item.categories.some((cat
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
 
-            {exists && lessonQuizData &&
+            {IsExistCategory && lessonQuizData &&
               lessonQuizData?.map((quiz: any) => {
                 // console.log(quiz)
                 return (
@@ -129,7 +130,7 @@ const exists = purchasedData?.data?.some((item:any) => item.categories.some((cat
               </div>
               {/* {lesson?.details && CutText(lesson?.details, 200)} */}
               <EllipsisMiddle suffixCount={3} maxLength={300}>
-                {lesson?.short_description}
+                {IsExistCategory&&lesson?.short_description}
               </EllipsisMiddle>
             </p>
           </div>
@@ -162,6 +163,8 @@ const exists = purchasedData?.data?.some((item:any) => item.categories.some((cat
             rotate={isActive ? 90 : 0}
           />
         )}
+        // collapsible={'disabled'}
+       accordion={false}
         // style={{ background: token.colorBgContainer }}
         items={collapseLessonData}
       />
