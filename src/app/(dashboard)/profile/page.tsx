@@ -8,6 +8,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateProfile from "@/components/profile/UpdateProfile";
+import StudentProfile from "@/components/profile/StudentProfile";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -81,6 +82,8 @@ console.log(data);
           </div>
         </div>
       )}
+
+      <StudentProfile userData={userData}/>
     </section>
   );
 };

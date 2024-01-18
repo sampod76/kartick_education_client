@@ -22,6 +22,8 @@ const generateUUID = () => {
 };
 export default function CreatePackage() {
 
+    const [form] = Form.useForm();
+
   const uuid = generateUUID();
   // console.log(uuid,"uuiduuid")
   const { data, isLoading } = useGetAllCategoryQuery({
@@ -77,6 +79,7 @@ export default function CreatePackage() {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Package");
+        form.resetFields()
       }
       // console.log(res);
     } catch (error: any) {
@@ -92,6 +95,7 @@ export default function CreatePackage() {
       <Form
         name="package_create"
         onFinish={onFinish}
+        form={form}
         style={{ maxWidth: 800 ,marginInline:"auto",border:"1px solid gray",padding:"8px",borderRadius:"5px"}}
         autoComplete="off"
         layout="vertical"
