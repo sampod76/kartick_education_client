@@ -32,7 +32,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     module: moduleId,
     ...lesson_query,
   });
-  console.log("🚀 ~ LessonList ~ lessonData:", lessonData);
+  // console.log("🚀 ~ LessonList ~ lessonData:", lessonData);
 
   // console.log(
   //   "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
@@ -64,6 +64,9 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
       return <div>Not video found</div>;
     }
   };
+
+  console.log(lessonData,'lessonDatalessonData')
+
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
       const lessonQuizData: any = QuizData?.data?.filter(
