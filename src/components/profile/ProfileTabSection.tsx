@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import ProfileAboutSection from "./ProfileAboutSection";
 import Courses from "../Home/coureses/Courses";
+import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
 export default function ProfileTabSection() {
   const onChange = (key: string) => {
     console.log(key);
@@ -26,7 +27,7 @@ export default function ProfileTabSection() {
     {
       key: "4",
       label: "Reviews",
-      children: "Content of Reviews",
+      children: <ReviewsPage/>,
     },
     // {
     //   key: "5",
@@ -35,7 +36,7 @@ export default function ProfileTabSection() {
     // },
   ];
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full mx-auto mt-5">
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </div>
   );

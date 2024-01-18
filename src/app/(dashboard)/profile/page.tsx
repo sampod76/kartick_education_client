@@ -8,27 +8,29 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import Image from "next/image";
 import Link from "next/link";
 import UpdateProfile from "@/components/profile/UpdateProfile";
+import UserProfile from "@/components/profile/UserProfile";
+import ProfileTabSection from "@/components/profile/ProfileTabSection";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
 
 const ProfileTemplate = () => {
   const [update, setUpdate] = useState(false);
-  console.log(update);
+  // console.log(update);
   const { data = {}, isLoading } = useGetProfileQuery("");
-console.log(data);
-  const userData = data?.generalUser || data?.admin || data?.superAdmin;
+console.log(data,'data profile');
+  const userData = data
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
   return (
     <section>
       <div className="flex justify-end items-end">
-        <Button onClick={() => setUpdate(!update)}   type="default">
+        {/* <Button onClick={() => setUpdate(!update)}   type="default">
           {update ? "profile" : "Update/edit profile"}
-        </Button>
+        </Button> */}
       </div>
-      {update ? (
+      {/* {update ? (
         <UpdateProfile></UpdateProfile>
       ) : (
         <div className="flex justify-center items-center min-h-screen">
@@ -80,7 +82,10 @@ console.log(data);
             </div>
           </div>
         </div>
-      )}
+      )} */}
+
+      <UserProfile userData={userData}/>
+      <ProfileTabSection/>
     </section>
   );
 };

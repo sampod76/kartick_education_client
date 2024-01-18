@@ -65,12 +65,12 @@ export type IFeedback = {
 };
 
 export const feedbackData: IFeedback[] = [
-  { percent: "70", stars: 5, feedback: "Excellent! Highly recommended." },
-  { percent: "40", stars: 4, feedback: "Very good. Enjoyed the course." },
-  { percent: "5", stars: 3, feedback: "Good, but room for improvement." },
-  { percent: "1", stars: 2, feedback: "Not satisfied with the content." },
+  { percent: "80", stars: 6, feedback: "Excellent! Highly recommended." },
+  { percent: "70", stars: 4, feedback: "Very good. Enjoyed the course." },
+  { percent: "50", stars: 4, feedback: "Good, but room for improvement." },
+  { percent: "44", stars: 2, feedback: "Not satisfied with the content." },
   {
-    percent: "1",
+    percent: "18",
     stars: 1,
     feedback: "Terrible experience. Wouldn't recommend.",
   },

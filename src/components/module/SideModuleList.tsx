@@ -60,13 +60,14 @@ const SideModuleList = ({
           return (
             <Link
               key={index}
-              href={`/lesson/${module?._id}`}
+              href={`/lesson/module/${module?._id}?module=${module?.title}`}
               className={`  text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2 text-[#1c1a1a]  py-1 px-1 md:px-3 rounded ${
                 module?._id === moduleId ? "underline" : ""
               } `}
             >
               <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>
               {module?.title}
+
             </Link>
           );
         })}

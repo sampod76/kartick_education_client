@@ -46,7 +46,7 @@ export default function ModuleTab({
         </button>
       ),
       key: "1",
-      children: <LessonList moduleId={moduleId} />,
+      children: <LessonList moduleId={moduleId} moduleData={moduleData}/>,
     },
 
     // {

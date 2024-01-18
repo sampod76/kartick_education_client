@@ -17,10 +17,24 @@ import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import vimeoUrlChack from "@/utils/vimeoUrlChecker";
+import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
+import { getUserInfo } from "@/services/auth.service";
 
-export default function LessonList({ moduleId }: { moduleId: string }) {
+export default function LessonList({ moduleId ,moduleData}: { moduleId: string,moduleData:any }) {
   // console.log(moduleId, "moduleId from LessonList");
 
+const userInfo = getUserInfo() as any
+  ////! for purchased data of a user
+const categoryId = moduleData?.milestone?.course?.category?._id
+// console.log(categoryId,'categoryId')
+
+const {data:purchasedData} = useGetPurchasePackageQuery({status:"active",limit:99999,user:userInfo?.id,category:categoryId})
+
+console.log(purchasedData,'purchasedDatapurchasedDatapurchasedData')
+
+const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.some((category:any) => category.category._id === categoryId));
+    
+      // console.log(IsExistCategory,'IsExistCategoryIsExistCategoryIsExistCategory purchased the category')
   //! for Course options selection
   const lesson_query: Record<string, any> = {};
   lesson_query["limit"] = 999999;
@@ -32,7 +46,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     module: moduleId,
     ...lesson_query,
   });
-  console.log("🚀 ~ LessonList ~ lessonData:", lessonData);
+  // console.log("🚀 ~ LessonList ~ lessonData:", lessonData);
 
   // console.log(
   //   "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
@@ -53,24 +67,31 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
     return <LoadingSkeleton />;
   }
   const playerVideoFunc = (lesson: any) => {
-    if (lesson?.videos?.length && lesson?.videos[0]?.link) {
+    if (IsExistCategory&&lesson?.videos?.length && lesson?.videos[0]?.link) {
       const check = vimeoUrlChack(lesson?.videos[0]?.link);
-      if (check) {
+      if (IsExistCategory&&check) {
         return <VimeoPlayer link={lesson?.videos[0]?.link} />;
       } else {
-        return <div>Not video found</div>;
+        return <div>Not  add video yet.</div>;
       }
     } else {
-      return <div>Not video found</div>;
+      return <div>Not  add video yet.</div>;
     }
   };
+
+  // console.log(lessonData,'lessonDatalessonData')
+
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
-      const lessonQuizData: any = QuizData?.data?.filter(
+  const lessonQuizData: any = QuizData?.data?.filter(
         (item: any) => item?.lesson?._id === lesson?._id
       );
+      // console.log(lesson,"lessonlesson")
+      // const isPurchasedCategory = purchasedData?.data?.find((category:any)=>categoryId=== )
+
       // console.log(lesson);
       // console.log("🚀 lessonQuizData", lessonQuizData);
+      
       return {
         key: lesson?._id,
         label: (
@@ -82,7 +103,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
 
-            {lessonQuizData &&
+            {IsExistCategory && lessonQuizData &&
               lessonQuizData?.map((quiz: any) => {
                 // console.log(quiz)
                 return (
@@ -98,6 +119,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
                   </Link>
                 );
               })}
+
           </div>
         ),
         children: (
@@ -108,7 +130,7 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
               </div>
               {/* {lesson?.details && CutText(lesson?.details, 200)} */}
               <EllipsisMiddle suffixCount={3} maxLength={300}>
-                {lesson?.short_description}
+                {IsExistCategory&&lesson?.short_description}
               </EllipsisMiddle>
             </p>
           </div>
@@ -141,6 +163,8 @@ export default function LessonList({ moduleId }: { moduleId: string }) {
             rotate={isActive ? 90 : 0}
           />
         )}
+        // collapsible={'disabled'}
+       accordion={false}
         // style={{ background: token.colorBgContainer }}
         items={collapseLessonData}
       />

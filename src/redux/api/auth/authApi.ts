@@ -15,7 +15,7 @@ export const authApi = baseApi.injectEndpoints({
     }),
     getProfile: build.query({
       query: () => ({
-        url: `/users/profile`,
+        url: `${AUTH_URL}/profile`,
         method: "GET",
       }),
       providesTags: [tagTypes.student],

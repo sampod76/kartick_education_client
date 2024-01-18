@@ -40,9 +40,10 @@ const ReviewsPage = () => {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "3px",
+            gap: "10px",
             background: "#F7F7F7",
             padding: "8px 14px",
+            margin:"16px 0px"
           }}
         >
           <h4 style={{ fontSize: "16px", color: "#333333" }}>4.6</h4>
