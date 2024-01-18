@@ -3,7 +3,7 @@ import Link from "next/link";
 export const homeNavItems: MenuProps["items"] = [
   {
     label: (
-      <Link className="text-base font-thin font-serif" href="/">
+      <Link className="text-base font-thin font-serif capitalize" href="/">
         Home
       </Link>
     ),
@@ -11,7 +11,7 @@ export const homeNavItems: MenuProps["items"] = [
   },
   {
     label: (
-      <Link className="text-base font-thin font-serif" href="/subscription">
+      <Link className="text-base font-thin font-serif capitalize" href="/subscription">
         subscription
       </Link>
     ),
@@ -19,7 +19,7 @@ export const homeNavItems: MenuProps["items"] = [
   },
   {
     label: (
-      <Link className="text-base font-thin font-serif" href="/learning">
+      <Link className="text-base font-thin font-serif capitalize" href="/learning">
         Learning
       </Link>
     ),
@@ -27,7 +27,7 @@ export const homeNavItems: MenuProps["items"] = [
   },
   {
     label: (
-      <Link className="text-base font-thin font-serif" href="/">
+      <Link className="text-base font-thin font-serif capitalize" href="/">
         Assessment
       </Link>
     ),
@@ -35,7 +35,7 @@ export const homeNavItems: MenuProps["items"] = [
   },
   {
     label: (
-      <Link className="text-base font-thin font-serif" href="/">
+      <Link className="text-base font-thin font-serif capitalize" href="/">
         Analysis
       </Link>
     ),
@@ -44,7 +44,7 @@ export const homeNavItems: MenuProps["items"] = [
   
   {
     label: (
-      <Link className="text-base font-thin font-serif" href="/contact">
+      <Link className="text-base font-thin font-serif capitalize" href="/contact">
         Contacts
       </Link>
     ),
@@ -52,7 +52,7 @@ export const homeNavItems: MenuProps["items"] = [
   },
   {
     label: (
-      <Link className="text-base font-thin font-serif" href="/course">
+      <Link className="text-base font-thin font-serif capitalize" href="/course">
         About
       </Link>
     ),

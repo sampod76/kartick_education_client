@@ -22,7 +22,7 @@ export default function ProfileTabSection() {
     {
       key: "3",
       label: "Purchased",
-      children: "Content of  Purchased",
+      children: <UserP,
     },
     {
       key: "4",

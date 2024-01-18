@@ -96,7 +96,7 @@ export default function CreatePackage() {
         name="package_create"
         onFinish={onFinish}
         form={form}
-        style={{ maxWidth: 800 ,marginInline:"auto",border:"1px solid gray",padding:"8px",borderRadius:"5px"}}
+        style={{ maxWidth: 850 ,marginInline:"auto",border:"0.2px solid gray",padding:"8px",borderRadius:"5px"}}
         autoComplete="off"
         layout="vertical"
         
@@ -258,45 +258,49 @@ export default function CreatePackage() {
     }
               return (
                 <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: "", marginBottom: 8}}
-                      align="baseline"
-                    >
-                      <Form.Item
-                        {...restField}
-                        style={{ minWidth: "140px" }}
-                        name={[name, "category"]}
-                        rules={[
-                          { required: true, message: "Missing Category" },
-                        ]}
-                      >
-                        <Select
-                        onChange={onchange}
-                          // mode="tags"
-                          loading={isLoading}
-                          style={{ width: "120px" }}
-                          placeholder="Select category"
-                          // onChange={handleChange}
-                          size="large"
-                          options={options}
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "label"]}
-                        style={{ maxWidth: "200px" }}
-                        rules={[{ required: true, message: "Missing Category Label" }]}
-                      >
-                        <Input
-                          // style={{ width: "300p" }}
-                          size="large"
-                          placeholder="label"
-                        />
-                      </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
+                  {fields.map(({ key, name, ...restField }) => (                    <Space key={key} style={{
+    display: "flex",
+    // flexDirection: "column", // Stack items vertically on smaller screens
+    margin: "8px auto",
+    // background: "blue",
+    width: "100%",
+  }}
+  align="center"
+>
+  <Form.Item
+    {...restField}
+    style={{ width: "", marginBottom: "8px" }}
+    name={[name, "category"]}
+    rules={[
+      { required: true, message: "Missing Category" },
+    ]}
+  >
+    <Select
+      onChange={onchange}
+      loading={isLoading}
+      style={{ width: "" }}
+      placeholder="Select category"
+      size="large"
+      options={options}
+    />
+  </Form.Item>
+  <Form.Item
+    {...restField}
+    name={[name, "label"]}
+    style={{ width: "", marginBottom: "8px", maxWidth: "200px" }}
+    rules={[{ required: true, message: "Missing Category Label" }]}
+  >
+    <Input
+      size="large"
+      placeholder="label"
+    />
+  </Form.Item>
+  <MinusCircleOutlined
+    onClick={() => remove(name)}
+    style={{ marginInline: "3px" }}
+  />
+</Space>
+
                   ))}
                   <Form.Item>
                     <Button
