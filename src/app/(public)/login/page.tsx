@@ -9,10 +9,8 @@ const LoginPage = () => {
   return (
     <>
 
-      {/* <LoginStudent/> */}
+      {/* <LoginStudent/>*/}
       <Login />
-
-
     </>
   );
 };
