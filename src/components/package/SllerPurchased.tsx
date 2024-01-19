@@ -5,7 +5,7 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { IPurchasedData } from "@/types/purchasedType";
 import SInglePurchased from "./SinglePurchasedCar";
 
-export default function UserPurchased() {
+export default function SellerPurchased() {
   const userInfo = getUserInfo() as IDecodedInfo;
   const { data: purchasedData } = useGetPurchasePackageQuery({
     status: "active",
