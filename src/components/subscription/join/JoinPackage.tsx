@@ -44,16 +44,17 @@ export default function JoinPackage({
 }) {
   // const paramsSearch = useSea
   const userInfo = getUserInfo() as any;
-  console.log("🚀 ~ userInfo:", userInfo)
+
   const searchParams = useSearchParams();
   const packName = searchParams.get("pack") as string;
 
   const [paymentData, setPaymentData] = useState({});
+  console.log("🚀 ~ paymentData:", paymentData);
   // For select package
   const [selectPackage, setSelectPackage] = useState<any | null>({});
   ///! for the multiple and single select package
-  const [singleSelect, setSingleSelect] = useState({});
-  const [multipleSelect, setMultipleSelect] = useState([]);
+  const [singleSelect, setSingleSelect] = useState<Record<string, any>>({});
+  const [multipleSelect, setMultipleSelect] = useState<string[]>([]);
 
   // const calculateTotalPrice = (categories: ICaterory[], plan: string) => {
   //   return (
@@ -70,9 +71,58 @@ export default function JoinPackage({
   ] = useAddStripePaymentMutation();
   const [
     createPaypalPayment,
-    { isLoading: PaypalpaymentLoading, error: PaypalpaymentError },
+    { isLoading: PaypalPaymentLoading, error: PaypalPaymentError },
   ] = useAddPaypalPaymentMutation();
+
   const makePayment = async (platform?: string) => {
+
+
+    let categories = [];
+    if (selectPackage?.type === "bundle") {
+      categories = selectPackage.categories.map((singleCategory: any) => ({
+        category: singleCategory.category?._id,
+        label: singleCategory.label,
+      }));
+    } else if (selectPackage?.type === "select") {
+      categories = [singleSelect];
+    } else if (selectPackage?.type === "multiple_select") {
+      categories = multipleSelect.map((select: any) => ({
+        label: select.label,
+        category: select?.category?._id,
+      }));
+    }
+    // data for purchase course
+    const data = {
+      package: selectPackage?._id,
+      membership: selectPackage?.membership,
+      title: selectPackage?.title,
+      categories: categories,
+      total_purchase_student: quantity,
+      user: userInfo?.id,
+      type: selectPackage?.type,
+      purchase: {
+        label: plan,
+        price: selectPackage[plan]["price"],
+        each_student_increment: selectPackage[plan]["each_student_increment"],
+      },
+    };
+    console.log("🚀 ~ makePayment ~ data:", data)
+ 
+
+    const paypalData = {
+      items: [
+        {
+          name: data.title,
+          sku: data.package,
+          // price: String("40"),
+          currency: "USD",
+          quantity: 1,
+        },
+      ],
+    };
+    // item_list for paypal
+
+    // return
     try {
       if (platform === "stripe") {
         const stripe = await loadStripe(
@@ -88,7 +138,7 @@ export default function JoinPackage({
             },
           ],
         }).unwrap();
-        console.log("🚀 ~ makePayment ~ result:", result);
+
         const redirectResult = await stripe?.redirectToCheckout({
           sessionId: result?.id,
         });
@@ -98,8 +148,12 @@ export default function JoinPackage({
           message.error(redirectResult?.error?.message);
         }
       } else {
-        const resultPaypal = await createPaypalPayment(paymentData).unwrap();
-        console.log(resultPaypal);
+        const resultPaypal = await createPaypalPayment({
+          item_list: paypalData,
+          // amount: { total: String("10"), currency: "USD" },
+          data,
+        }).unwrap();
+
         if (resultPaypal?.url) {
           window.open(resultPaypal?.url, "_blank");
         }
@@ -122,12 +176,11 @@ export default function JoinPackage({
           : packName === "family_personal"
           ? "family & personal"
           : "nulls",
-        },
-        {
-          skip: !Boolean(packName),
-        }
-        );
-        console.log("🚀 ~ data:", data)
+    },
+    {
+      skip: !Boolean(packName),
+    }
+  );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const packageData = data?.data ?? [];
@@ -156,55 +209,11 @@ export default function JoinPackage({
   const selectPackageHandler = (values: any) => {
     // ! All selected package data
     const { totalPackagePrice, incrementPrice, packages } = values;
-    // console.log("🚀 ~ selectPackageHandler ~ values:", values);
     setSelectPackage(packages);
-
-    console.log(packages);
-    console.log(multipleSelect);
-
-
+    console.log("🚀 ~ selectPackageHandler ~ packages:", packages)
     // console.log(quantity);
     message.success(`Selected ${packages?.title} ${totalPackagePrice}`);
-    console.log(packages);
-    console.log(plan);
 
-    // data for purchase course
-    const data = {
-      package: packages?._id,
-      membership: packages?.membership,
-      title: packages?.title,
-      categories: multipleSelect.map((select: any) => ({
-        ...select,
-        category: select?.category?._id,
-      })),
-      total_purchase_student: quantity,
-      user: userInfo?.id,
-      type: packages?.type,
-      purchase: {
-        label: plan,
-        price: packages[plan]["price"],
-        each_student_increment: packages[plan]["each_student_increment"],
-      },
-    };
-    console.log("🚀 ~ selectPackageHandler ~ data:", data)
-
-    const paypalData = {
-      items: [
-        {
-          name: data.title,
-          sku: data.package,
-          price: String(totalPackagePrice),
-          currency: "USD",
-          quantity: 1,
-        },
-      ],
-    };
-    // item_list for paypal
-    setPaymentData({
-      item_list: paypalData,
-      amount: { total: String(totalPackagePrice), currency: "USD" },
-      data,
-    });
     // const selectedPackageData = {};
   };
 
@@ -238,7 +247,7 @@ export default function JoinPackage({
               return (
                 <div
                   key={index + 1}
-                  className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[33rem] "
+                  className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[30rem] "
                 >
                   <span
                     className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0
@@ -318,13 +327,21 @@ export default function JoinPackage({
                               flexDirection: "column",
                               gap: "1rem",
                             }}
-                            onChange={(e) => setSingleSelect(e.target.value)}
+                            // onChange={(e) => {
+                            //   setSingleSelect(e.target.value);
+                            // }}
                           >
                             {packages?.categories?.map(
                               (option?: IPackageCategory) => (
                                 <Radio
                                   key={option?.category?.title}
-                                  value={option?._id}
+                                  value={option?.category?._id}
+                                  onClick={() =>
+                                    setSingleSelect({
+                                      category: option?.category?._id,
+                                      label: option?.label,
+                                    })
+                                  }
                                   style={{
                                     display: "flex",
                                     paddingTop: "0.5rem",
@@ -391,33 +408,33 @@ export default function JoinPackage({
                         </div>
                       )}
                     </ul>
-                   <div className="">
-                   <button
-                      onClick={() =>
-                        selectPackageHandler({
-                          totalPackagePrice,
-                          incrementPrice,
-                          packages,
-                        })
-                      }
-                      type="button"
-                      className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
-                        selectPackage?._id === packages?._id
-                          ? "bg-green-600 hover:brightness-125"
-                          : "bg-gray-700 hover:bg-gray-800"
-                      }  rounded-md static lg:absolute bottom-1 left-0`}
-                    >
-                      Select
-                    </button>
-                   </div>
+                    <div className="">
+                      <button
+                        onClick={() =>
+                          selectPackageHandler({
+                            totalPackagePrice,
+                            incrementPrice,
+                            packages,
+                          })
+                        }
+                        type="button"
+                        className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
+                          selectPackage?._id === packages?._id
+                            ? "bg-green-600 hover:brightness-125"
+                            : "bg-gray-700 hover:bg-gray-800"
+                        }  rounded-md static lg:absolute bottom-1 left-0`}
+                      >
+                        Select
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
           <div className="flex justify-center items-center m-5">
-            <div onClick={() => makePayment()}>
-              {paymentLoading || PaypalpaymentLoading ? (
+            <div >
+              {paymentLoading || PaypalPaymentLoading ? (
                 <Button
                   type="default"
                   style={{
@@ -433,8 +450,9 @@ export default function JoinPackage({
               ) : (
                 <button
                   type="button"
-                  disabled={multipleSelect.length === 0}
-                  className="text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 mr-2 mb-2"
+                  onClick={() => makePayment()}
+                  // disabled={multipleSelect.length === 0}
+                  className="text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 mr-2 mb-2 cursor-pointer"
                 >
                   <svg
                     className="mr-2 -ml-1 w-4 h-4"

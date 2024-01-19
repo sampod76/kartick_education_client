@@ -46,19 +46,15 @@ instance.interceptors.response.use(
 
   async function (error) {
     const config = error?.config;
-    if (error?.status === 401 || !config?.sent) {
+
+    if (error?.status === 403 || !config?.sent) {
       config.sent = true;
       const response = await getRefreshToken();
       const refreshToken = response?.data?.accessToken;
       config.headers["Authorization"] = refreshToken;
       setToLocalStorage(authKey, refreshToken);
       return instance(config);
-    }
-    if (error?.response?.status === 403) {
-      console.log(error);
     } else {
-      console.log(error);
-
       let responseObject: any = {
         statusCode: error?.response?.status || 500,
         message: "Something went wrong",
@@ -78,8 +74,6 @@ instance.interceptors.response.use(
           );
         }
       }
-      console.log("🚀 ~ responseObject:", responseObject);
-
       return Promise.reject(responseObject);
       // return responseObject;
     }
