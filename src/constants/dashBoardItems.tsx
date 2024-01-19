@@ -521,7 +521,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         Package 
         </Link>
       ),
-      icon: <ShoppingCartOutlined />,
+      icon: <ShoppingCartOutlined/>,
       key: `/${role}/package`,
     },
     {
