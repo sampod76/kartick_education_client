@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import SIngleCourse from "../Home/coureses/SIngleCourse";
 import SIngleBannerSIngleCourse from "../Home/coureses/SIngleBannerSIngleCourse";
-
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 const { Option } = Select;
 export default function ModalCourseBanner({
   categoryId,
@@ -63,6 +63,10 @@ export default function ModalCourseBanner({
         })}
       </Select> */}
 
+{isLoading&&
+ <LoadingSkeleton />
+
+}
       {/* <Course */}
       <div className="grid grid-cols-1 gap-2">
         {CourseData?.map((item: ICourseData, index: number) => {
