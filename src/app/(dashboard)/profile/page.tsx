@@ -85,7 +85,10 @@ console.log(data,'data profile');
         </div>
       )} */}
       <UserProfile userData={userData}/>
-     <SellerMainProfile/>
+{
+  userData?.role ==="seller"&&
+       <SellerMainProfile/>
+}
     </section>
   );
 };

@@ -33,11 +33,11 @@ const Login = () => {
 
 
 
-  useEffect(() => {
-    if (login) {
-      router.push("/dashboard");
-    }
-  }, [login, router]);
+  // useEffect(() => {
+  //   if (login) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [login, router]);
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
@@ -122,6 +122,7 @@ const Login = () => {
                     // label="User email"
                     placeholder="Type your email"
                     required={true}
+                    
                   />
                 </div>
                 <div
