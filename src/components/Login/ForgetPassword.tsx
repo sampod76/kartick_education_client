@@ -14,20 +14,22 @@ export default function ForgetPassword() {
 
   const onFinish = async (values: any) => {
     console.log("Received values of form:", values);
-    const packageData = {
+    const passwordData = {
       email: values.email,
     };
-    // console.log("🚀 ~ onFinish ~ packageData:", packageData)
+    // console.log("🚀 ~ onFinish ~ passwordData:", packageData)
 
     try {
-      const res = await forgetPassword(packageData).unwrap();
+      const res = await forgetPassword(passwordData).unwrap();
       // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Please check your email address");
         form.resetFields();
-        router.push('/')
+        // router.push('/')
+        setModalOpen(false)
+
       }
       // console.log(res);
     } catch (error: any) {
@@ -74,25 +76,28 @@ export default function ForgetPassword() {
                 <h2 className="block text-gray-700 font-bold mb-2">
                   Email Address
                 </h2>
-                <Input
-                  name="email"
-                  type="email"
-                  className=""
-                  id="email"
-                  placeholder="Enter your email address"
-                  style={{
-                    paddingTop: "0.5rem",
-                    paddingBottom: "0.5rem",
-                    paddingLeft: "0.75rem",
-                    paddingRight: "0.75rem",
-                    borderRadius: "0.25rem",
-                    borderWidth: "1px",
-                    width: "100%",
-                    lineHeight: 1.25,
-                    color: "#374151",
-                    appearance: "none",
-                  }}
-                />
+                <Form.Item name="email" >
+
+                  <Input
+                    name="email"
+                    type="email"
+                    className=""
+                    id="email"
+                    placeholder="Enter your email address"
+                    style={{
+                      paddingTop: "0.5rem",
+                      paddingBottom: "0.5rem",
+                      paddingLeft: "0.75rem",
+                      paddingRight: "0.75rem",
+                      borderRadius: "0.25rem",
+                      borderWidth: "1px",
+                      width: "100%",
+                      lineHeight: 1.25,
+                      color: "#374151",
+                      appearance: "none",
+                    }}
+                  />
+                </Form.Item>
               </div>
               <Button
                 style={{ "padding": "", "borderRadius": "9999px", "width": "100%", "fontSize": "0.875rem", "lineHeight": "1.25rem", "fontWeight": 600, "color": "#ffffff", "backgroundColor": "#2563EB", height: "2.5rem" }}
