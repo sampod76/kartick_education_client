@@ -137,7 +137,6 @@ export default function JoinPackage({
             },
           ],
         }).unwrap();
-
         const redirectResult = await stripe?.redirectToCheckout({
           sessionId: result?.id,
         });
