@@ -1,5 +1,5 @@
 "use client";
-import { Button, Col, Input, Row, Spin, message } from "antd";
+import { Button, Col, Input, Row, Spin, message, Modal } from "antd";
 import loginImage from "@/assets/login-image.png";
 import Image from "next/image";
 import Form from "@/components/Forms/Form";
@@ -17,6 +17,8 @@ import ButtonLoading from "../ui/Loading/ButtonLoading";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
+import Link from "next/link";
+import ForgetPassword from "./ForgetPassword";
 
 type FormValues = {
   email: string;
@@ -30,8 +32,6 @@ const Login = () => {
   const login = isLoggedIn();
 
   // console.log("🚀 ~ Login ~ login:", login)
-
-
 
   // useEffect(() => {
   //   if (login) {
@@ -63,7 +63,6 @@ const Login = () => {
     //@ts-ignore
     Error_model_hook(error?.message);
   }
-
 
   return (
     <div className="bg-white ">
@@ -122,7 +121,6 @@ const Login = () => {
                     // label="User email"
                     placeholder="Type your email"
                     required={true}
-                    
                   />
                 </div>
                 <div
@@ -145,7 +143,7 @@ const Login = () => {
                 </div>
                 <div className="">
                   <Button
-                      type="default"
+                    type="default"
                     style={{
                       width: "6rem",
                       fontWeight: "600",
@@ -159,6 +157,20 @@ const Login = () => {
                   </Button>
                 </div>
               </Form>
+              {/* //! forget password */}
+              <ForgetPassword />
+              <div className="mt-10">
+                <p className="text-sm text-center mt-6">
+                  Don{"'"}t have an account{" "}
+                  <Link
+                    href="/signup"
+                    className="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap"
+                  >
+                    Register here
+                  </Link>
+                </p>
+                F
+              </div>
             </div>
           </div>
         </div>
