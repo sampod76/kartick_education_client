@@ -99,7 +99,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
               return (
                 <button
                   onClick={() => showModal(category?._id)}
-                  className={`py-3 px-7 rounded-tl-[20px] rounded-br-[20px] ${
+                  className={`py-2 lg:py-3 px-5  lg:px-7 text-[12px] lg:text-[18px] rounded-tl-[20px] rounded-br-[20px] ${
                     index % 2 === 0 ? "bg-green-500" : "bg-primary"
                   } ${index % 3 === 1 && "bg-secondary"} text-white ${
                     categoryId === category?._id &&
