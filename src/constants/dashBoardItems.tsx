@@ -18,6 +18,7 @@ import {
   UsergroupDeleteOutlined,
   ContainerOutlined,
   HomeOutlined,
+  ShoppingCartOutlined
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -515,13 +516,13 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
       label: (
         <Link
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/${role}/review`}
+          href={`/${role}/package`}
         >
-          Sells History
+        Package 
         </Link>
       ),
-      icon: <AccountBookFilled />,
-      key: `/${role}/review`,
+      icon: <ShoppingCartOutlined/>,
+      key: `/${role}/package`,
     },
     {
       label: (
