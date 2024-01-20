@@ -47,12 +47,12 @@ instance.interceptors.response.use(
   async function (error) {
     const config = error?.config;
 
-    if (error?.status === 403 || !config?.sent) {
+    if (error?.response?.status === 403 && !config?.sent) {
       config.sent = true;
       const response = await getRefreshToken();
-      const refreshToken = response?.data?.accessToken;
-      config.headers["Authorization"] = refreshToken;
-      setToLocalStorage(authKey, refreshToken);
+      const accessToken = response?.data?.accessToken;
+      config.headers["Authorization"] = accessToken;
+      setToLocalStorage(authKey, accessToken);
       return instance(config);
     } else {
       let responseObject: any = {
