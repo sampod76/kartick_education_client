@@ -48,8 +48,6 @@ export default function JoinPackage({
   const searchParams = useSearchParams();
   const packName = searchParams.get("pack") as string;
 
-  const [paymentData, setPaymentData] = useState({});
-  console.log("🚀 ~ paymentData:", paymentData);
   // For select package
   const [selectPackage, setSelectPackage] = useState<any | null>({});
   ///! for the multiple and single select package
@@ -75,7 +73,10 @@ export default function JoinPackage({
   ] = useAddPaypalPaymentMutation();
 
   const makePayment = async (platform?: string) => {
-
+    if (!userInfo?.id) {
+      window.open("/login", "_blank");
+      return;
+    }
 
     let categories = [];
     if (selectPackage?.type === "bundle") {
@@ -106,8 +107,6 @@ export default function JoinPackage({
         each_student_increment: selectPackage[plan]["each_student_increment"],
       },
     };
-    console.log("🚀 ~ makePayment ~ data:", data)
- 
 
     const paypalData = {
       items: [
@@ -138,7 +137,6 @@ export default function JoinPackage({
             },
           ],
         }).unwrap();
-
         const redirectResult = await stripe?.redirectToCheckout({
           sessionId: result?.id,
         });
@@ -210,9 +208,9 @@ export default function JoinPackage({
     // ! All selected package data
     const { totalPackagePrice, incrementPrice, packages } = values;
     setSelectPackage(packages);
-    console.log("🚀 ~ selectPackageHandler ~ packages:", packages)
+    console.log("🚀 ~ selectPackageHandler ~ packages:", packages);
     // console.log(quantity);
-    message.success(`Selected ${packages?.title} ${totalPackagePrice}`);
+    message.success(`Selected ${packages?.title}-> $${totalPackagePrice}`);
 
     // const selectedPackageData = {};
   };
@@ -433,7 +431,7 @@ export default function JoinPackage({
             })}
           </div>
           <div className="flex justify-center items-center m-5">
-            <div >
+            <div>
               {paymentLoading || PaypalPaymentLoading ? (
                 <Button
                   type="default"

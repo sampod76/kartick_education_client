@@ -10,6 +10,7 @@ import Link from "next/link";
 import UpdateProfile from "@/components/profile/UpdateProfile";
 import UserProfile from "@/components/profile/UserProfile";
 import ProfileTabSection from "@/components/profile/ProfileTabSection";
+import SellerMainProfile from "@/components/profile/seller/SellerMainProfile";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -83,9 +84,11 @@ console.log(data,'data profile');
           </div>
         </div>
       )} */}
-
       <UserProfile userData={userData}/>
-      <ProfileTabSection/>
+{
+  userData?.role ==="seller"&&
+       <SellerMainProfile/>
+}
     </section>
   );
 };

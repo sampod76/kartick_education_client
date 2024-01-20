@@ -37,6 +37,7 @@ import React from "react";
     () => import("@/components/Home/Footer")
   );
 const HomePage = () => {
+  
   return (
     <div className="">
     
