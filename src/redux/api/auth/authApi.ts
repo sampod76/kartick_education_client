@@ -28,6 +28,14 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.student],
     }),
+      forgetPassword: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/forgot-password`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags:[tagTypes.student]
+    }),
   }),
 });
 
@@ -35,4 +43,5 @@ export const {
   useUserLoginMutation,
   useGetProfileQuery,
   useUpdateRoleMutation,
+  useForgetPasswordMutation
 } = authApi;

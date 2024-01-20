@@ -15,7 +15,7 @@ export default function SInglePurchased({
     <div
     // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
     >
-      <div className="p-2">
+      <Link href={`/seller/order`} className="p-2">
         <div className="flex w-full lg:max-w-3xl bg-white shadow-lg rounded-lg overflow-hidden">
           <div
             className="w-1/3 bg-cover"
@@ -52,14 +52,14 @@ export default function SInglePurchased({
               <h1 className="text-gray-700 font-bold text-xl">
                 {packages?.purchase?.price} /{packages?.purchase?.label}
               </h1>
-              <button className="px-3 py-2 bg-primary flex item-center  gap-2 text-white text-xs font-bold uppercase rounded">
+              <Link href={`/`} className="px-3 py-2 bg-primary flex item-center  gap-2 text-white text-xs font-bold uppercase rounded">
                 <CiClock2 className="text-white" />{" "}
                 <span>{packages?.payment?.platform}</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }
