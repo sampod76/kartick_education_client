@@ -25,7 +25,7 @@ export default function CreatePackage() {
 
   const uuid = generateUUID();
   // console.log(uuid,"uuiduuid")
-  const { data, isLoading } = useGetAllCategoryQuery({
+  const { data, isLoading, error } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
     limit: 9999,
@@ -35,7 +35,7 @@ export default function CreatePackage() {
     label: select.title,
     value: select._id,
   }));
-
+  console.log(error);
   const [addPackage, { isSuccess, isLoading: AddPackageLoading }] =
     useAddPackageMutation();
 

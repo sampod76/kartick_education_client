@@ -4,7 +4,8 @@ import React from "react";
 export default function SignUpStudent() {
   return (
     <div>
-      <CreateStudent />
+      {/* <CreateStudent /> */}
+      
     </div>
   );
 }
