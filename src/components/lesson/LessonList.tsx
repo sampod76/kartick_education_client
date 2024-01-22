@@ -23,6 +23,7 @@ import { getUserInfo } from "@/services/auth.service";
 import ModalComponent from "../Modal/ModalComponents";
 import LoginPage from "../Login/LoginPage";
 import { usePathname } from "next/navigation";
+import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
 export default function LessonList({
   moduleId,
   moduleData,
@@ -33,23 +34,54 @@ export default function LessonList({
   // console.log(moduleId, "moduleId from LessonList");
   const pathname = usePathname();
   const userInfo = getUserInfo() as any;
-  console.log("🚀 ~ LessonList ~ userInfo:", userInfo);
+  console.log(userInfo)
   ////! for purchased data of a user
   const categoryId = moduleData?.milestone?.course?.category?._id;
-  // console.log(categoryId,'categoryId')
+
 
   const { data: purchasedData } = useGetPurchasePackageQuery({
     status: "active",
     limit: 99999,
     user: userInfo?.id || "65aa1b19d1661e1c9a9e5135",
     category: categoryId,
-  });
+  }, { skip: userInfo.role === "student" ? true : false });
+  const { data: soldSellerPackage } = useGetAllPackageAndCourseQuery({
+    status: "active",
+    limit: 99999,
+  }, { skip: userInfo.role === "student" ? false : true })
+  console.log(soldSellerPackage)
+  let IsExistCategory: any = false
+  if (userInfo.role !== "student") {
+    IsExistCategory = purchasedData?.data?.some((item: any) =>
+      item.categories.some(
+        (category: any) => category.category._id === categoryId
+      )
+    );
+  } else {
+    IsExistCategory = soldSellerPackage?.data?.some((item: any) =>
+      item?.sellerPackageDetails?.categories.some(
+        (categoryData: any) => categoryData.category === categoryId
+      )
+    );
+  }
 
-  const IsExistCategory = purchasedData?.data?.some((item: any) =>
-    item.categories.some(
-      (category: any) => category.category._id === categoryId
-    )
-  );
+  // ! for match seller category
+
+
+
+  // console.log(soldSellerPackage, 'soldSellerPackagesPackage')
+
+  // const IsSoldCategory = soldSellerPackage?.data?.some((item: any) =>
+  //   item?.sellerPackageDetails?.categories.some(
+  //     (categoryData: any) => categoryData.category === categoryId
+  //   )
+  // );
+
+  console.log("🚀 ~ file: LessonList.tsx:70 ~ IsSoldCategory:", IsExistCategory)
+
+
+
+
 
   // console.log(IsExistCategory,'IsExistCategoryIsExistCategoryIsExistCategory purchased the category')
   //! for Course options selection
@@ -63,6 +95,7 @@ export default function LessonList({
     module: moduleId,
     ...lesson_query,
   });
+
   // console.log("🚀 ~ LessonList ~ lessonData:", lessonData);
 
   // console.log(
