@@ -35,6 +35,7 @@ import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import Image from "next/image";
 import { AllImage } from "@/assets/AllImge";
 import SellerAddPackageStudent from "../package/SellerAddPackageStudent";
+import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 
 const StudentListCom = ({
   setOpen,
@@ -72,26 +73,33 @@ const StudentListCom = ({
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useGetAllStudentsQuery({
+  const { data, isLoading } = useGetAllUsersQuery({
     ...query,
   });
 
   //@ts-ignore
   const StudentData = data?.data;
 
+
   //@ts-ignore
   const meta = data?.meta;
 
   const columns = [
     {
-      width: 100,
+      width: 150,
       render: function (data: any) {
         // console.log(data);
-        const fullName = `${data?.img} `;
+        let img = `${data[data.role]?.img} `;
+        if (img === "undefined" || img === "undefined ") {
+          img = "";
+        }
+
+        console.log("🚀 ~ img:", img);
+
         return (
           <>
             <Image
-              src={fullName || AllImage.notFoundImage}
+              src={img || AllImage.notFoundImage}
               alt=""
               width={500}
               height={500}
@@ -105,7 +113,7 @@ const StudentListCom = ({
       title: "Name",
       render: function (data: any) {
         // console.log(data);
-        const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
+        const fullName = `${data[data.role]?.name?.firstName} ${data[data.role]?.name?.lastName}  `;
         return <>{fullName}</>;
       },
     },
@@ -118,29 +126,34 @@ const StudentListCom = ({
       dataIndex: "userId",
     },
 
-    {
-      title: "Created at",
-      dataIndex: "createdAt",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMMM D, YYYY");
-      },
-      sorter: true,
-    },
+    
     {
       title: "Contact no.",
-      dataIndex: "phoneNumber",
-    },
-    {
-      title: "Date Of Birth",
-      dataIndex: "dateOfBirth",
-
+      // dataIndex: "phoneNumber",
       render: function (data: any) {
-        return data && dayjs(data).format("MMMM D, YYYY");
+        // console.log(data);
+        const fullName = `${data[data.role]?.phoneNumber}`;
+        return <>{fullName}</>;
       },
     },
+    // {
+    //   title: "Date Of Birth",
+    //   // dataIndex: "dateOfBirth",
+    //   render: function (data: any) {
+    //     // console.log(data);
+    //     const date = `${data[data.role]?.dateOfBirth}   `;
+    //     return date && dayjs(date).format("MMMM D, YYYY");
+    //   },
+      
+    // },
     {
       title: "Gender",
-      dataIndex: "gender",
+      // dataIndex: "gender",
+      render: function (data: any) {
+        // console.log(data);
+        const gender = `${data[data.role]?.gender}   `;
+        return <>{gender}</>
+      },
     },
     {
       title: "Status",
@@ -150,8 +163,6 @@ const StudentListCom = ({
       title: "Action",
       dataIndex: "_id",
       render: function (data: any) {
-      
-
         return (
           <>
             <Space size="middle">
@@ -180,7 +191,7 @@ const StudentListCom = ({
                       Delete
                     </Menu.Item>
                     <ModalComponent buttonText="Add package">
-                      <SellerAddPackageStudent userId={data}/>
+                      <SellerAddPackageStudent userId={data} />
                     </ModalComponent>
                   </Menu>
                 }

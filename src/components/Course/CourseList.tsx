@@ -244,7 +244,7 @@ const CourseList = () => {
   };
 
   const deleteCourseHandler = async (id: string) => {
-    console.log(id);
+
     try {
       const res:any = await deleteCourse(id);
       console.log("🚀 ~ deleteCourseHandler ~ res:", res)
