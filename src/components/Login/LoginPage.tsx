@@ -66,8 +66,8 @@ const Login = ({ redirectLink ,setOpen }: { redirectLink?: string ,setOpen?:any}
 
   return (
     <div className="bg-white ">
-      <div className="flex justify-center h-screen shadow">
-        <div
+      <div className="flex justify-center items-center h-screen shadow">
+        {/* <div
           className="hidden bg-cover lg:block lg:w-2/3"
           style={{
             backgroundImage: `url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)`,
@@ -85,7 +85,7 @@ const Login = ({ redirectLink ,setOpen }: { redirectLink?: string ,setOpen?:any}
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex items-center w-full max-w-lg px-6 mx-auto lg:w-3/6 ">
           <div className="flex-1 shadow-lg p-5 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
