@@ -13,9 +13,11 @@ import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
 import { getUserInfo } from "@/services/auth.service";
 import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
 export default function StudentActiveCourse() {
   const userInfo = getUserInfo() as any;
+  const router = useRouter();
   const { data, isLoading, error } = useGetAllPackageAndCourseQuery(
     // { user: userInfo.id },
     // { skip: !Boolean(userInfo.id) }
@@ -41,6 +43,17 @@ export default function StudentActiveCourse() {
     );
     console.log(error, data?.data);
   }
+
+  const navigatePackage = (getPackage: any[]) => {
+    //@ts-ignore
+    const data = getPackage || []; // Example nested array of objects
+
+    const stringifiedData = JSON.stringify(data);
+    const encodedData = encodeURIComponent(stringifiedData);
+    const href = `/${userInfo?.role}/activeCourse?data=${encodedData}`;
+
+    router.push(href);
+  };
   return (
     <>
       {isLoading ? (
@@ -53,13 +66,19 @@ export default function StudentActiveCourse() {
             return (
               <div
                 key={item._id || index}
+                onClick={() =>
+                  navigatePackage(item?.sellerPackageDetails?.categoriesDetails)
+                }
                 // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
               >
-                <div className="p-3">
-                  <div className="flex  w-full justify-center items-center bg-white shadow-2xl rounded-lg overflow-hidden p-2">
+                <div className="p-3 cursor-pointer">
+                  <div className="flex flex-col  w-full justify-center items-center bg-white shadow-2xl rounded-lg overflow-hidden p-2">
                     <div>
                       <Image
-                        src={item?.package?.img || AllImage?.notFoundImage}
+                        src={
+                          item?.sellerPackageDetails?.package?.img ||
+                          AllImage?.notFoundImage
+                        }
                         width={300}
                         height={500}
                         alt=""
@@ -67,21 +86,22 @@ export default function StudentActiveCourse() {
                       />
                     </div>
                     <div className="w-full p-2">
-                      <h1 className="text-gray-900 capitalize text-center font-bold text-lg lg:text-2xl border-b-2 ">
+                      <h1 className="text-gray-900 capitalize text-center  text-lg lg:text-2xl border-b-2 ">
                         {" "}
                         <EllipsisMiddle suffixCount={3} maxLength={90}>
-                          {item?.package?.title}
+                          {item?.sellerPackageDetails?.title}
                         </EllipsisMiddle>
                       </h1>
                       <div className="mt-2 flex justify-between ">
-                        <p className="mt-2 font-bold capitalize text-gray-700 text-sm lg:text-base">
+                        <p className="mt-2  capitalize text-gray-700 text-sm lg:text-base">
                           {" "}
                           <EllipsisMiddle suffixCount={3} maxLength={160}>
-                            {item?.package?.membership?.title}
+                            {item?.sellerPackageDetails?.membership?.title}
                           </EllipsisMiddle>
                         </p>
-                        <p className="mt-2 font-bold capitalize text-gray-700 text-sm lg:text-base">
-                          Total subject: {item?.package?.categories?.length}
+                        <p className="mt-2  capitalize text-gray-700 text-sm lg:text-base">
+                          Total subject:{" "}
+                          {item?.sellerPackageDetails?.categories?.length}
                         </p>
 
                         {/* <ModalComponent buttonText="Add Student">
@@ -90,15 +110,16 @@ export default function StudentActiveCourse() {
                       </div>
 
                       <div className="flex item-center justify-between mt-3">
-                        <h1 className="text-gray-700 font-bold text-sm lg:text-base capitalize">
-                          Package type: {item?.package?.purchase?.label}
+                        <h1 className="text-gray-700  text-sm lg:text-base capitalize">
+                          Package type:{" "}
+                          {item?.sellerPackageDetails?.purchase?.label}
                         </h1>
-                        <p className="text-gray-700 font-bold text-sm lg:text-base capitalize">
+                        <p className="text-gray-700  text-sm lg:text-base capitalize">
                           Expiry date:{" "}
-                          {item?.package?.expiry_date &&
-                            dayjs(item?.package?.expiry_date).format(
-                              "MMMM D, YYYY"
-                            )}
+                          {item?.sellerPackageDetails?.expiry_date &&
+                            dayjs(
+                              item?.sellerPackageDetails?.expiry_date
+                            ).format("MMMM D, YYYY")}
                         </p>
                         {/* <Link
                       href={`/`}

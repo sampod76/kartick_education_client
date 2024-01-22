@@ -16,6 +16,7 @@ import {
   useUpdateIncreaseStudentPackageMutation,
   useUpdatePackageMutation,
 } from "@/redux/api/userApi/packageAPi";
+import { Button } from "antd";
 
 export default function SellerAddPackageStudent({ setOpen, userId }: any) {
   const userInfo = getUserInfo() as IDecodedInfo;
@@ -36,18 +37,18 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
   const addPackageForStudent = async (packageId: string) => {
     try {
       const data = await addPackageAndCourse({
-        package: packageId,
+        sellerPackage: packageId,
         user: userId,
         author: userInfo.id,
       }).unwrap();
-      console.log("🚀 ~ addPackageForStudent ~ data:", data)
+      console.log("🚀 ~ addPackageForStudent ~ data:", data);
 
       const data2 = await updateIncreaseStudentPackage({
         id: packageId,
         data: { studentId: userId },
       });
-      console.log("🚀 ~ addPackageForStudent ~ data2:", data2)
-  
+      console.log("🚀 ~ addPackageForStudent ~ data2:", data2);
+
       Success_model("Successfully added package");
       setOpen(false);
     } catch (error: any) {
@@ -123,10 +124,14 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
                     </Link> */}
                     </div>
                   </div>
-                  <div className="flex justify-center items-center bg-blue-600 text-white px-10 py-2 rounded-md">
-                    <button onClick={() => addPackageForStudent(item._id)}>
+                  <div className="flex justify-center items-center  text-white px-10 py-2 rounded-md">
+                    <Button
+                      loading={addPackageAndCourseLoading}
+                      style={{ background: "blue", color: "white" ,padding: "5px 10px" }}
+                      onClick={() => addPackageForStudent(item._id)}
+                    >
                       Add +
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
