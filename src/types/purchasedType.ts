@@ -30,12 +30,13 @@ export type IPurchasedData = {
     each_student_increment: 15;
   };
   _id: string;
-  package: string;
+  package: string | any;
   title: string;
   categories: IPurchasedCategory[];
   total_purchase_student: 6;
   students: [];
   paymentStatus: string;
+  expiry_date: string;
   user: {
     _id: string;
     email: string;

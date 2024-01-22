@@ -164,7 +164,7 @@ const BookingDetails = ({ params }: any) => {
             >
               <FormInput
                 label="Phone Number (For contact)"
-                type="text"
+                type="number"
                 name="phoneNumber"
                 readOnly={true}
               />

@@ -4,7 +4,7 @@ import type { TabsProps } from "antd";
 import ProfileAboutSection from "./ProfileAboutSection";
 import Courses from "../Home/coureses/Courses";
 import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
-import UserPurchased from "../package/SllerPurchased";
+import UserPurchased from "../package/SellerPurchased";
 
 // File: types.ts
 export interface Tab {

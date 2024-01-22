@@ -1,9 +1,10 @@
 "use client";
 import { Button, Result } from "antd";
+import Link from "next/link";
 import React from "react";
 
 export default function PaymentSuccessComponent({
-  orderNumber,
+  orderNumber="",
 }: {
   orderNumber: string;
 }) {
@@ -12,11 +13,11 @@ export default function PaymentSuccessComponent({
       <Result
         status="success"
         title="Successfully Purchased "
-        subTitle="Order number: 2017182818828182881 configuration takes 1-5 minutes, please wait."
+        subTitle={`Order number: ${orderNumber} configuration takes 1-5 minutes, please wait.`}
         extra={[
-          <Button type="primary" key="console">
+          <Link href={'/'} key={"dd"} className="bg-green-600 text-white px-3 py-[5px] rounded">
             Go Home
-          </Button>,
+          </Link>,
           <Button key="buy">Buy Again</Button>,
         ]}
       />

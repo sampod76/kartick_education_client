@@ -9,6 +9,7 @@ import React from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { SVGYelloDot } from "@/assets/svg/Icon";
+import { ENUM_YN } from "@/constants/globalEnums";
 
 const MilestoneList = ({ courseId }: { courseId: string }) => {
   const {
@@ -16,7 +17,11 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
     isLoading: courseLoading,
     error,
   } = useGetSingleCourseQuery(courseId);
-
+  const query: Record<string, any> = {};
+  query["limit"] = 999999;
+  query["sortOrder"] = "asc";
+  query["status"] = "active";
+  query["isDelete"] = ENUM_YN.NO;
   const {
     data,
     isLoading,
@@ -24,6 +29,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
   } = useGetAllMilestoneQuery({
     course: courseId,
     module: "yes",
+    ...query,
   });
 
   // console.log(data,"courseId");
@@ -100,7 +106,10 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
                         >
                           {/* //! Modules List  */}
                           {/* <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div> */}
-                         <p className="mt-2"> <SVGYelloDot /></p>
+                          <p className="mt-2">
+                            {" "}
+                            <SVGYelloDot />
+                          </p>
                           {module?.title}
                         </Link>
                       );

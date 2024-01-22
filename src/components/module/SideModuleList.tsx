@@ -9,6 +9,7 @@ import { Divider } from "antd";
 import Link from "next/link";
 import React from "react";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
+import { ENUM_YN } from "@/constants/globalEnums";
 
 const SideModuleList = ({
   milestoneId,
@@ -18,6 +19,11 @@ const SideModuleList = ({
   moduleId: string;
 }) => {
   // console.log(milestoneId);
+  const query: Record<string, any> = {};
+  query["limit"] = 999999;
+  query["sortOrder"] = "asc";
+  query["status"] = "active";
+  query["isDelete"] = ENUM_YN.NO;
 
   const { data: milestoneData, isLoading } =
     useGetSingleMilestoneQuery(milestoneId);
@@ -27,7 +33,8 @@ const SideModuleList = ({
   const { data, isLoading: moduleLoading } = useGetAllModuleQuery({
     milestone: milestoneId,
     // lesson: "yes",
-    status: "active",
+
+    ...query,
   });
 
   // console.log(data,"milestoneId");
@@ -67,7 +74,6 @@ const SideModuleList = ({
             >
               <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>
               {module?.title}
-
             </Link>
           );
         })}

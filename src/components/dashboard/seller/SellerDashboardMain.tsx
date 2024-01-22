@@ -1,7 +1,10 @@
-import React from 'react'
+import SellerPurchased from "@/components/package/SellerPurchased";
+import React from "react";
 
 export default function SellerDashboardMain() {
   return (
-    <div>SellerDashboardMain</div>
-  )
+    <div>
+      <SellerPurchased />
+    </div>
+  );
 }

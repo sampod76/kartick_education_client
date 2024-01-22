@@ -64,7 +64,7 @@ const UserCreateComponent = ({
           password: password,
           [USER_ROLE.SELLER]: { ...allValue },
         };
-        res = await addSellerUserWithFormData({ ...allValue }).unwrap();
+        res = await addSellerUserWithFormData({ ...modifyValue }).unwrap();
       } else if (role.value === USER_ROLE.TRAINER) {
         const { password, ...allValue } = values;
         const modifyValue = {
@@ -82,7 +82,7 @@ const UserCreateComponent = ({
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Customar created successfully");
+        Success_model("User created successfully");
         setIsReset(true)
       }
       // message.success("Admin created successfully!");
@@ -280,7 +280,7 @@ const UserCreateComponent = ({
                 }}
               >
                 <FormInput
-                  type="text"
+                  type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"

@@ -3,7 +3,7 @@ import ProfileTabSection from '../ProfileTabSection'
 import ProfileAboutSection from '../ProfileAboutSection';
 import { TabsProps } from 'antd';
 import Courses from '@/components/Home/coureses/Courses';
-import SellerPurchased from '@/components/package/SllerPurchased';
+import SellerPurchased from '@/components/package/SellerPurchased';
 import ReviewsPage from '@/components/Course/CourseDetails/ReviewsPage';
 
 

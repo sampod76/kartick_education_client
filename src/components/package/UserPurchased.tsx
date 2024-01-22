@@ -3,7 +3,7 @@ import React from "react";
 import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { IPurchasedData } from "@/types/purchasedType";
-import SInglePurchased from "./SinglePurchasedCar";
+import SInglePurchased from "./SinglePurchasedCard";
 
 export default function UserPurchased() {
   const userInfo = getUserInfo() as IDecodedInfo;

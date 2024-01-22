@@ -72,7 +72,6 @@ const CourseList = () => {
 
   //@ts-ignore
   const courseData = data?.data;
-
   //@ts-ignore
   const meta = data?.meta;
 
@@ -81,8 +80,6 @@ const CourseList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteCourse(id).unwrap();
-         
-
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -108,8 +105,8 @@ const CourseList = () => {
               <Image
                 src={data?.img}
                 style={{ height: "50px", width: "80px" }}
-                width={50}
-                height={50}
+                width={150}
+                height={150}
                 alt="dd"
               />
             }

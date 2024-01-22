@@ -19,6 +19,19 @@ export const studentApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.student],
     }),
+    addStudentWithAuthorData: build.mutation({
+      query: (data) => {
+        // 
+        return {
+          url: "/users/create-student-author",
+          method: "POST",
+          data: data,
+          // contentType: "multipart/form-data",
+          contentType: "application/json",
+        };
+      },
+      invalidatesTags: [tagTypes.student],
+    }),
     getAllStudents: build.query({
       query: (arg: Record<string, any>) => {
         return {
@@ -73,4 +86,5 @@ export const {
   useAddStudentWithFormDataMutation,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
+  useAddStudentWithAuthorDataMutation
 } = studentApi;

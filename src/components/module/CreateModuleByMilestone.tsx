@@ -72,7 +72,7 @@ export default function CreateModuleByMilestone() {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Module");
-        setIsReset(false);
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {

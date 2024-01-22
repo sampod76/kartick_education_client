@@ -63,7 +63,7 @@ const CreateStudentPage = () => {
         padding: "1rem",
       }}
     >
-      <h1 className="text-base font-normal">Create Customer/normal user</h1>
+      <h1 className="text-base font-normal">Create student</h1>
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
         <Form
@@ -151,7 +151,7 @@ const CreateStudentPage = () => {
                 }}
               >
                 <FormInput
-                  type="string"
+                  type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"

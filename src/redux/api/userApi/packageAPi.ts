@@ -36,7 +36,7 @@ export const packageApi = baseApi.injectEndpoints({
     }),
     // create a new academic department
     addPackage: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: PACKAGE_URL,
         method: "POST",
         data,
@@ -47,6 +47,14 @@ export const packageApi = baseApi.injectEndpoints({
     updatePackage: build.mutation({
       query: ({ data, id }) => ({
         url: `${PACKAGE_URL}/${id}`,
+        method: "PATCH",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.package],
+    }),
+    updateIncreaseStudentPackage: build.mutation({
+      query: ({ data, id }) => ({
+        url: `${PACKAGE_URL}/increment/${id}`,
         method: "PATCH",
         data: data,
       }),
@@ -70,4 +78,5 @@ export const {
   useGetAllPackageQuery,
   useGetSinglePackageQuery,
   useUpdatePackageMutation,
+  useUpdateIncreaseStudentPackageMutation
 } = packageApi;

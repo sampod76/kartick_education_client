@@ -1,3 +1,4 @@
+"use client";
 import {
   CaretRightOutlined,
   RightCircleOutlined,
@@ -13,35 +14,51 @@ import Link from "next/link";
 import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
 import { CutText } from "@/utils/CutText";
 import VimeoPlayer from "@/utils/vimoPlayer";
-import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
+import { ENUM_VIDEO_PLATFORM, ENUM_YN } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import vimeoUrlChack from "@/utils/vimeoUrlChecker";
 import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
 import { getUserInfo } from "@/services/auth.service";
-
-export default function LessonList({ moduleId ,moduleData}: { moduleId: string,moduleData:any }) {
+import ModalComponent from "../Modal/ModalComponents";
+import LoginPage from "../Login/LoginPage";
+import { usePathname } from "next/navigation";
+export default function LessonList({
+  moduleId,
+  moduleData,
+}: {
+  moduleId: string;
+  moduleData: any;
+}) {
   // console.log(moduleId, "moduleId from LessonList");
-
-const userInfo = getUserInfo() as any
+  const pathname = usePathname();
+  const userInfo = getUserInfo() as any;
+  console.log("🚀 ~ LessonList ~ userInfo:", userInfo);
   ////! for purchased data of a user
-const categoryId = moduleData?.milestone?.course?.category?._id
-// console.log(categoryId,'categoryId')
+  const categoryId = moduleData?.milestone?.course?.category?._id;
+  // console.log(categoryId,'categoryId')
 
-const {data:purchasedData} = useGetPurchasePackageQuery({status:"active",limit:99999,user:userInfo?.id,category:categoryId})
+  const { data: purchasedData } = useGetPurchasePackageQuery({
+    status: "active",
+    limit: 99999,
+    user: userInfo?.id || "65aa1b19d1661e1c9a9e5135",
+    category: categoryId,
+  });
 
-console.log(purchasedData,'purchasedDatapurchasedDatapurchasedData')
+  const IsExistCategory = purchasedData?.data?.some((item: any) =>
+    item.categories.some(
+      (category: any) => category.category._id === categoryId
+    )
+  );
 
-const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.some((category:any) => category.category._id === categoryId));
-    
-      // console.log(IsExistCategory,'IsExistCategoryIsExistCategoryIsExistCategory purchased the category')
+  // console.log(IsExistCategory,'IsExistCategoryIsExistCategoryIsExistCategory purchased the category')
   //! for Course options selection
   const lesson_query: Record<string, any> = {};
   lesson_query["limit"] = 999999;
   lesson_query["sortBy"] = "lesson_number";
   lesson_query["sortOrder"] = "asc";
   lesson_query["status"] = "active";
-
+  lesson_query["isDelete"] = ENUM_YN.NO;
   const { data: lessonData, isLoading } = useGetAllLessonQuery({
     module: moduleId,
     ...lesson_query,
@@ -56,7 +73,7 @@ const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
   quiz_query["limit"] = 999999;
-
+  quiz_query["isDelete"] = ENUM_YN.NO;
   const { data: QuizData } = useGetAllQuizQuery({
     status: "active",
     module: moduleId,
@@ -67,15 +84,24 @@ const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.
     return <LoadingSkeleton />;
   }
   const playerVideoFunc = (lesson: any) => {
-    if (IsExistCategory&&lesson?.videos?.length && lesson?.videos[0]?.link) {
-      const check = vimeoUrlChack(lesson?.videos[0]?.link);
-      if (IsExistCategory&&check) {
-        return <VimeoPlayer link={lesson?.videos[0]?.link} />;
-      } else {
-        return <div>Not  add video yet.</div>;
+    if (IsExistCategory) {
+      if (lesson?.videos?.length && lesson?.videos[0]?.link) {
+        const check = vimeoUrlChack(lesson?.videos[0]?.link);
+        if (check) {
+          return <VimeoPlayer link={lesson?.videos[0]?.link} />;
+        } else {
+          return <div>Not add video yet.</div>;
+        }
       }
     } else {
-      return <div>Not  add video yet.</div>;
+      return (
+        <div className="text-lg text-red-500 font-medium">
+          This contents is privet. First purchase this course.
+          <ModalComponent buttonText="login">
+            <LoginPage redirectLink={pathname} />
+          </ModalComponent>
+        </div>
+      );
     }
   };
 
@@ -83,7 +109,7 @@ const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.
 
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
-  const lessonQuizData: any = QuizData?.data?.filter(
+      const lessonQuizData: any = QuizData?.data?.filter(
         (item: any) => item?.lesson?._id === lesson?._id
       );
       // console.log(lesson,"lessonlesson")
@@ -91,7 +117,7 @@ const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.
 
       // console.log(lesson);
       // console.log("🚀 lessonQuizData", lessonQuizData);
-      
+
       return {
         key: lesson?._id,
         label: (
@@ -103,7 +129,8 @@ const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
 
-            {IsExistCategory && lessonQuizData &&
+            {IsExistCategory &&
+              lessonQuizData &&
               lessonQuizData?.map((quiz: any) => {
                 // console.log(quiz)
                 return (
@@ -119,7 +146,6 @@ const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.
                   </Link>
                 );
               })}
-
           </div>
         ),
         children: (
@@ -130,7 +156,7 @@ const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.
               </div>
               {/* {lesson?.details && CutText(lesson?.details, 200)} */}
               <EllipsisMiddle suffixCount={3} maxLength={300}>
-                {IsExistCategory&&lesson?.short_description}
+                {IsExistCategory && lesson?.short_description}
               </EllipsisMiddle>
             </p>
           </div>
@@ -164,7 +190,7 @@ const IsExistCategory = purchasedData?.data?.some((item:any) => item.categories.
           />
         )}
         // collapsible={'disabled'}
-       accordion={false}
+        accordion={false}
         // style={{ background: token.colorBgContainer }}
         items={collapseLessonData}
       />

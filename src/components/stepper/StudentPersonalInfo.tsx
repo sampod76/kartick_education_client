@@ -59,7 +59,7 @@ export default function StudentPersonalInfo() {
 
         <Col span={24} style={{ margin: "10px 0" }}>
           <FormInput
-            type="string"
+            type="number"
             name="phoneNumber"
             size="large"
             label="Phone Number"

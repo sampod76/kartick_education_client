@@ -1,4 +1,4 @@
-import SellerPurchased from '@/components/package/SllerPurchased'
+import SellerPurchased from '@/components/package/SellerPurchased'
 import React from 'react'
 
 export default function SellerPackage() {

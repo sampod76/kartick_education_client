@@ -72,7 +72,7 @@ export default function CreateModule() {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Module");
-        setIsReset(false);
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -253,11 +253,13 @@ export default function CreateModule() {
                   </Col>
                 </Row>
               </div>
-              {serviceLoading ? (
+             <div className="flex justify-center items-center">
+             {serviceLoading ? (
                 <Spin />
               ) : (
                 <ButtonSubmitUI>Create Module</ButtonSubmitUI>
               )}
+             </div>
             </Form>
           </div>
         </div>

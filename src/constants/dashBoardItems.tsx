@@ -18,13 +18,13 @@ import {
   UsergroupDeleteOutlined,
   ContainerOutlined,
   HomeOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 import { GiJetPack } from "react-icons/gi";
 export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
-  console.log("🚀 ~ dashboardItems ~ role:", role);
+
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: (
@@ -448,18 +448,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
       icon: <CalendarOutlined />,
       key: `/${role}/activeCourse`,
     },
-    {
-      label: (
-        <Link
-          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/${role}/trainers`}
-        >
-          Trainers
-        </Link>
-      ),
-      icon: <UsergroupDeleteOutlined />,
-      key: `/${role}/trainers`,
-    },
+
     {
       label: (
         <Link
@@ -518,11 +507,40 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/package`}
         >
-        Package 
+          Package
         </Link>
       ),
-      icon: <ShoppingCartOutlined/>,
+      icon: <ShoppingCartOutlined />,
       key: `/${role}/package`,
+    },
+    {
+      label: "Students",
+      key: "students",
+      icon: <UserOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/students/create`}
+            >
+              Create Student
+            </Link>
+          ),
+          key: `/${role}/students/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/students`}
+            >
+              Students List
+            </Link>
+          ),
+          key: `${role}/students`,
+        },
+      ],
     },
     {
       label: (
@@ -530,7 +548,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/order`}
         >
-          Order Historuy
+          Order History
         </Link>
       ),
       icon: <AccountBookFilled />,
@@ -551,7 +569,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
     },
   ];
 
-  console.log(role);
+
   if (role === USER_ROLE.TRAINER) return trainerSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.STUDENT) return studentSidebarItems;

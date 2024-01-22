@@ -5,7 +5,7 @@ import StudentActiveCourse from "./StudentActiveCourse";
 export default function StudentDashboardMain() {
   return (
     <div>
-      <TopDashStatistics />
+      {/* <TopDashStatistics /> */}
       <StudentActiveCourse />
     </div>
   );

@@ -10,12 +10,23 @@ import { Progress, Rate } from "antd";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import { ICourseData } from "@/types/courseType";
 import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
+import { getUserInfo } from "@/services/auth.service";
+import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
+import dayjs from "dayjs";
 
 export default function StudentActiveCourse() {
-  const { data, isLoading, error } = useGetAllCourseQuery({
-    status: "active",
-    limit: 5,
-  });
+  const userInfo = getUserInfo() as any;
+  const { data, isLoading, error } = useGetAllPackageAndCourseQuery(
+    // { user: userInfo.id },
+    // { skip: !Boolean(userInfo.id) }
+    {}
+  );
+  //@ts-ignore
+  const getPackage = data?.data;
+  console.log("🚀 ~ ActivePackage ~ getPackage:", getPackage);
+  if (isLoading) {
+    return <LoadingSkeleton number={20} />;
+  }
   const courseData = data?.data || [];
   if (
     error ||
@@ -37,71 +48,72 @@ export default function StudentActiveCourse() {
       ) : courseData?.length === 0 ? (
         <NotFoundCourse />
       ) : (
-        <div className="mt-3   ">
-          <h2 className="mt-5 text-2xl font-bold text-slate-800 mb-2">
-            Your Enrolled Courses
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2  gap-2 ">
-            {courseData?.map((course: ICourseData, index: number) => {
-              return (
-                <div key={index + 1} className="flex flex-col justify-center ">
-                  <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 min-w-full  max-w-xs md:max-w-3xl mx-auto border border-white bg-white">
-                    <div className="w-full md:w-1/3 bg-white grid place-items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+          {getPackage?.map((item: any, index: number) => {
+            return (
+              <div
+                key={item._id || index}
+                // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
+              >
+                <div className="p-3">
+                  <div className="flex  w-full justify-center items-center bg-white shadow-2xl rounded-lg overflow-hidden p-2">
+                    <div>
                       <Image
-                        height={350}
-                        width={350}
-                        src={course?.img || AllImage?.notFoundImage}
-                        alt="seller_course"
-                        className="rounded h-[10rem] w-full lg:w-[11rem]"
+                        src={item?.package?.img || AllImage?.notFoundImage}
+                        width={300}
+                        height={500}
+                        alt=""
+                        className="h-20 w-24"
                       />
                     </div>
-                    <div className="w-full md:w-2/3 text-start bg-white flex flex-col space-y-2 p-3">
-                      <div className="flex justify-between item-center">
-                        <p className="text-gray-500 font-medium hidden md:block">
-                          {course?.duration?.length &&
-                            formatMongoCreatedAtDate(course?.duration[1])}
+                    <div className="w-full p-2">
+                      <h1 className="text-gray-900 capitalize text-center font-bold text-lg lg:text-2xl border-b-2 ">
+                        {" "}
+                        <EllipsisMiddle suffixCount={3} maxLength={90}>
+                          {item?.package?.title}
+                        </EllipsisMiddle>
+                      </h1>
+                      <div className="mt-2 flex justify-between ">
+                        <p className="mt-2 font-bold capitalize text-gray-700 text-sm lg:text-base">
+                          {" "}
+                          <EllipsisMiddle suffixCount={3} maxLength={160}>
+                            {item?.package?.membership?.title}
+                          </EllipsisMiddle>
                         </p>
-                        <div className="flex items-center">
-                          <Rate count={1} disabled value={1} />
-                          <p className="text-gray-600 font-bold text-sm ml-1">
-                            4.96
-                            <span className="text-gray-500 font-normal">
-                              (76 reviews)
-                            </span>
-                          </p>
-                        </div>
+                        <p className="mt-2 font-bold capitalize text-gray-700 text-sm lg:text-base">
+                          Total subject: {item?.package?.categories?.length}
+                        </p>
 
-                        <div className="bg-gray-200 px-3 py-1 rounded-full text-xs font-medium text-gray-800 hidden md:block">
-                          {course?.price_type}
-                        </div>
+                        {/* <ModalComponent buttonText="Add Student">
+                      <AddStudentComponent />
+                    </ModalComponent> */}
                       </div>
-                      <h3 className="font-black text-gray-800 md:text-2xl text-xl">
-                        {course?.title}
-                      </h3>
 
-                      <p className="text-xl font-black text-gray-800">
-                        <span className="font-normal text-gray-600 text-base">
-                          ${course?.price}
-                        </span>
-                      </p>
-                      <Progress
-                        // steps={1}
-                        strokeColor={
-                          {
-                            // "0%": "5371FF",
-                            // "100%": "#FB8500",
-                          }
-                        }
-                        type="line"
-                        percent={80}
-                        size={[300, 40]}
-                      />
+                      <div className="flex item-center justify-between mt-3">
+                        <h1 className="text-gray-700 font-bold text-sm lg:text-base capitalize">
+                          Package type: {item?.package?.purchase?.label}
+                        </h1>
+                        <p className="text-gray-700 font-bold text-sm lg:text-base capitalize">
+                          Expiry date:{" "}
+                          {item?.package?.expiry_date &&
+                            dayjs(item?.package?.expiry_date).format(
+                              "MMMM D, YYYY"
+                            )}
+                        </p>
+                        {/* <Link
+                      href={`/`}
+                      className="px-3 py-2 bg-primary flex item-center  gap-2 text-white text-xs font-bold uppercase rounded"
+                    >
+                      <CiClock2 className="text-white" />{" "}
+                      <span>{packages?.payment?.platform}</span>
+                    </Link> */}
+                      </div>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </>

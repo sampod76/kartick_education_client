@@ -93,7 +93,7 @@ const CreateLesson = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
-        setIsReset(false);
+        setIsReset(true);
       }
     } catch (error: any) {
       Error_model_hook(error?.message);

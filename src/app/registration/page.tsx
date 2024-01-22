@@ -199,7 +199,7 @@ const Registration = () => {
                 }}
               >
                 <FormInput
-                  type="text"
+                   type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"

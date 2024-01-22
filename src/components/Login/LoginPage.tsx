@@ -25,19 +25,18 @@ type FormValues = {
   password: string;
 };
 
-const Login = () => {
+const Login = ({ redirectLink ,setOpen }: { redirectLink?: string ,setOpen?:any}) => {
   const router = useRouter();
   const [userLogin, { error, isLoading }] = useUserLoginMutation();
 
   const login = isLoggedIn();
+  console.log("🚀 ~ Login ~ login:", login)
 
-  // console.log("🚀 ~ Login ~ login:", login)
-
-  // useEffect(() => {
-  //   if (login) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [login, router]);
+  useEffect(() => {
+    if (login) {
+      router.push("/");
+    }
+  }, [login, router]);
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
@@ -45,7 +44,8 @@ const Login = () => {
         // router.push("/profile");
         message.success("User logged in successfully!");
         storeUserInfo({ accessToken: res?.accessToken });
-        router.push("/dashboard");
+        router.push(redirectLink || `/`);
+        // setOpen(false)
       } else {
         Error_model_hook(res?.message);
       }
@@ -169,7 +169,6 @@ const Login = () => {
                     Register here
                   </Link>
                 </p>
-                F
               </div>
             </div>
           </div>

@@ -164,7 +164,7 @@ const EditStudentPage = ({ params }: any) => {
                 }}
               >
                 <FormInput
-                  type="text"
+                   type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
