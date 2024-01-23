@@ -10,6 +10,7 @@ import NotFoundCourse from "@/components/ui/NotFound/NotFoundCourse";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import InternelError from "@/components/shared/Error/InternelError";
 import { ICourseData } from "@/types/courseType";
+import { useAppSelector } from "@/redux/hooks";
 
 interface ICourseItemType {
   status?: string;
@@ -46,8 +47,11 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
 
   const { data, isLoading, error } = useGetAllCourseQuery({ ...queryAll });
   const courseData = data?.data || [];
-  console.log("🚀 ~ Courses ~ courseData:", courseData)
+  // console.log("🚀 ~ Courses ~ courseData:", courseData)
 
+
+  // const { data: userStateData } = useAppSelector(state => state.userInfo)
+  // console.log('userStateData', userStateData)
   if (error) {
     return (
       <InternelError

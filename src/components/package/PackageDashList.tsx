@@ -67,7 +67,7 @@ export default function PackageDashList() {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo
 
   const [deletePackage] = useDeletePackageMutation();
 
@@ -164,24 +164,28 @@ export default function PackageDashList() {
       title: "Type",
       dataIndex: "type",
       ellipsis: true,
+      width: 100,
     },
     {
       title: "MemberShip",
-      dataIndex: ['membership','title'],
+      dataIndex: ['membership', 'title'],
       ellipsis: true,
     },
     {
       title: "Monthly Price",
-      dataIndex: ['monthly','price'],
+      dataIndex: ['monthly', 'price'],
       ellipsis: true,
+      width: 100,
     },
-    {title: "Yearly Price",
-    dataIndex: ['yearly','price'],
-    ellipsis: true,
+    {
+      title: "Yearly Price",
+      dataIndex: ['yearly', 'price'],
+      ellipsis: true,
+      width: 100,
 
     }
     ,
-  
+
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -210,7 +214,7 @@ export default function PackageDashList() {
                       Edit
                     </Link>
                   </Menu.Item>
-                 
+
                   <Menu.Item
                     key="delete"
                     onClick={() => {
@@ -227,6 +231,7 @@ export default function PackageDashList() {
           </Space>
         </>
       ),
+      width: 100,
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -294,13 +299,13 @@ export default function PackageDashList() {
       />
       <HeadingUI>Package List</HeadingUI>
       <ActionBar>
-        <div className="flex gap-2">
+        <div className="block lg:flex gap-5">
           <Input
             size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "20%",
+              width: "50%",
             }}
           />
           <FilterCourse
@@ -308,7 +313,7 @@ export default function PackageDashList() {
             setFilterValue={setFilterValue}
           />
         </div>
-        <div>
+        <div className="block lg:flex gap-5">
           <Button
             type="default"
             style={{ marginRight: "5px" }}
@@ -317,7 +322,7 @@ export default function PackageDashList() {
             Filter
           </Button>
 
-         
+
           <Link href={`/${userInfo?.role}/package/create`}>
             <Button type="default">Create Package</Button>
           </Link>

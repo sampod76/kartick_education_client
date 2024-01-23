@@ -19,6 +19,8 @@ import {
   ContainerOutlined,
   HomeOutlined,
   ShoppingCartOutlined,
+  ContactsOutlined,
+  UserSwitchOutlined
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -28,12 +30,15 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: (
-        <Link
-          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/dashboard`}
-        >
-          Dashboard
-        </Link>
+        <div  >
+          <Link
+            onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+            href={`/dashboard`}
+          >
+            Dashboard
+          </Link>
+
+        </div>
       ),
       key: `/dashboard`,
       icon: <HomeOutlined />,
@@ -66,6 +71,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: (
             <Link
+
               onClick={() => (setCollapsed ? setCollapsed(false) : null)}
               href={`/${role}/category/create`}
             >
@@ -271,7 +277,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
     {
       label: "Manage Users",
       key: "manage-user",
-      icon: <ScheduleOutlined />,
+      icon: <UsergroupDeleteOutlined />,
       children: [
         {
           label: "All Users",
@@ -305,7 +311,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: "Students",
           key: "students",
-          icon: <UserOutlined />,
+          icon: <ContactsOutlined />,
           children: [
             {
               label: (
@@ -334,7 +340,7 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
         {
           label: "Trainers",
           key: "trainers",
-          icon: <UserOutlined />,
+          icon: <UserSwitchOutlined />,
           children: [
             {
               label: (

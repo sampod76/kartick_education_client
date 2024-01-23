@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space, InputNumber } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
@@ -36,7 +36,7 @@ export default function CreatePackage() {
     value: select._id,
   }));
 
-  const [addPackage, {  isLoading: AddPackageLoading }] =
+  const [addPackage, { isLoading: AddPackageLoading }] =
     useAddPackageMutation();
 
 
@@ -71,7 +71,7 @@ export default function CreatePackage() {
       console.log(error);
     }
   };
-
+  const [dynamicOption, setDynamicOption] = useState(options)
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
@@ -134,7 +134,7 @@ export default function CreatePackage() {
                   name="price"
                   type="number"
                   placeholder="Monthly Price"
-                  // style={{ width: "70%" }}
+                // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -168,7 +168,7 @@ export default function CreatePackage() {
                   name="price"
                   type="number"
                   placeholder="Biannual Price"
-                  // style={{ width: "70%" }}
+                // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -202,7 +202,7 @@ export default function CreatePackage() {
                   name="price"
                   type="number"
                   placeholder="yearly Price"
-                  // style={{ width: "70%" }}
+                // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -232,8 +232,8 @@ export default function CreatePackage() {
             {(fields, { add, remove }) => {
               // console.log(fields,'fieldsfieldsfieldsfields') ;
 
-              const onchange = (value: any) => {
-                // console.log(value,'value') ;
+              const handleChange = (value: any) => {
+                console.log(value, 'value');
                 const updatedOptions = options?.filter(
                   (item) => item?.value !== value
                 );
@@ -241,6 +241,12 @@ export default function CreatePackage() {
                 options = updatedOptions;
                 // console.log(options)
               };
+
+              const handleRemove = (value: any) => {
+                console.log(value, 'handleRemove');
+                remove(value)
+              }
+
               return (
                 <>
                   {fields.map(({ key, name, ...restField }) => (
@@ -264,7 +270,8 @@ export default function CreatePackage() {
                         ]}
                       >
                         <Select
-                          onChange={onchange}
+                          onChange={handleChange}
+                          // onBlur={() => handleChange(restField.value, name)}
                           loading={isLoading}
                           style={{ width: "" }}
                           placeholder="Select category"
@@ -287,7 +294,7 @@ export default function CreatePackage() {
                         <Input size="large" placeholder="label" />
                       </Form.Item>
                       <MinusCircleOutlined
-                        onClick={() => remove(name)}
+                        onClick={() => handleRemove(name)}
                         style={{ marginInline: "3px" }}
                       />
                     </Space>
