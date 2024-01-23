@@ -11,7 +11,7 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
+import { useAppSelector, useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
@@ -38,6 +38,8 @@ const CourseList = () => {
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
   const userInfo = getUserInfo() as IDecodedInfo;
+  // const { userInfo } = useAppSelector((state: any) => state.);
+  console.log(userInfo);
   const [deleteCourse] = useDeleteCourseMutation();
 
   const [page, setPage] = useState<number>(1);
@@ -88,7 +90,7 @@ const CourseList = () => {
             Success_model("Course Successfully Deleted");
           }
         } catch (error: any) {
-          console.log("🚀 ~ confirm_modal ~ error:", error)
+          console.log("🚀 ~ confirm_modal ~ error:", error);
           message.error(error.message);
         }
       }
@@ -244,16 +246,15 @@ const CourseList = () => {
   };
 
   const deleteCourseHandler = async (id: string) => {
-
     try {
-      const res:any = await deleteCourse(id);
-      console.log("🚀 ~ deleteCourseHandler ~ res:", res)
+      const res: any = await deleteCourse(id);
+      console.log("🚀 ~ deleteCourseHandler ~ res:", res);
       if (res._id) {
         message.success("Admin Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
-      console.log("🚀 ~ deleteCourseHandler ~ error:", error)
+      console.log("🚀 ~ deleteCourseHandler ~ error:", error);
       message.error(error.message);
     }
   };

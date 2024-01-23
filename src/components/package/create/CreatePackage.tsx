@@ -35,27 +35,11 @@ export default function CreatePackage() {
     label: select.title,
     value: select._id,
   }));
-  console.log(error);
-  const [addPackage, { isSuccess, isLoading: AddPackageLoading }] =
+
+  const [addPackage, {  isLoading: AddPackageLoading }] =
     useAddPackageMutation();
 
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
 
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
-
-  // Filter `option.label` match the user type `input`
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-
-  // const selectMembershipsValue =(value)=>{
-
-  // }
   const onFinish = async (values: any) => {
     console.log("Received values of form:", values);
     const packageData = {
@@ -87,6 +71,7 @@ export default function CreatePackage() {
       console.log(error);
     }
   };
+
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">

@@ -2,30 +2,37 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 interface UserRole {
-  role: "student" | "admin" | "moderator";
-  name: string;
-  email: string;
-  id: string;
+  data: {
+    role: string;
+    name: string;
+    email: string;
+    _id: string;
+  };
+  isLoading?: boolean;
+  isError?: boolean;
 }
 
 const initialState: UserRole = {
-  role: "student",
-  name: "",
-  email: "",
-  id: "",
+  data: { role: "", name: "", email: "", _id: "" },
+  isLoading: true,
+  isError: false,
 };
 
 export const userRoleSlice = createSlice({
-  name: "role",
+  name: "userInfo",
   initialState,
   reducers: {
-    setUserRole: (state, action) => {
-      state.role = action.payload;
-      state.email = action.payload;
-      state.name = action.payload;
-      state.id = action.payload;
+    setUserRole: (
+      { data, isLoading, isError },
+      { payload }: { payload: UserRole }
+    ) => {
+      data.role = payload.data.role;
+      data.email = payload.data.email;
+      data.name = payload.data.name;
+      data._id = payload.data._id;
+      isLoading = payload.isLoading;
+      isError = payload.isError;
     },
-
   },
 });
 
