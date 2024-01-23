@@ -291,7 +291,7 @@ const CreateLesson = () => {
                     marginBottom: "10px",
                   }}
                 >
-                  <UploadMultipalImage name="imgs" />
+                  <UploadMultipalImage isReset={isReset} name="imgs" />
                 </Col>
                 <Col className="gutter-row" xs={24} style={{}}>
                   <div>

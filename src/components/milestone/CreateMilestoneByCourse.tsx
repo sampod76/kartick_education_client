@@ -163,7 +163,7 @@ export default function CreateMilestoneByCourse() {
                     <TagsSelectUI />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage name="imgs" />
+                    <UploadMultipalImage   isReset={isReset} name="imgs" />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>

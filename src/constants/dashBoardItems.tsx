@@ -30,12 +30,12 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
       label: (
         <Link
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/`}
+          href={`/dashboard`}
         >
-          Home
+          Dashboard
         </Link>
       ),
-      key: `/home`,
+      key: `/dashboard`,
       icon: <HomeOutlined />,
     },
     {

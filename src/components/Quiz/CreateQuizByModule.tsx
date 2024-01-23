@@ -256,7 +256,7 @@ const CreateQuizByLesson = () => {
                     {/*//! 10--- */}
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage name="imgs" />
+                    <UploadMultipalImage   isReset={isReset} name="imgs" />
                     {/* //! 2 -- */}
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>

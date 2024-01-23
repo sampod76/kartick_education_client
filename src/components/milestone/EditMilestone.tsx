@@ -181,6 +181,7 @@ export default function EditMilestone({milestoneId}:{milestoneId:string}) {
                       <UploadMultipalImage
                         defaultImage={data?.imgs || []}
                         name="img"
+                        // isReset={isReset}
                       />
                       
                     </Col>

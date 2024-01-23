@@ -322,6 +322,7 @@ const UserCreateComponent = ({
               </Col>
             </Row>
           </div>
+          <div>
           {AdminLoading || StudentLoading || SellerLoading ? (
             <ButtonLoading />
           ) : (
@@ -329,6 +330,7 @@ const UserCreateComponent = ({
               Create
             </Button>
           )}
+          </div>
         </Form>
       </div>
     </div>

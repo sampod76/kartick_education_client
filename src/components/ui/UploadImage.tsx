@@ -4,7 +4,7 @@ import { message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
@@ -29,12 +29,14 @@ type ImageUploadProps = {
   name: string;
   defaultImage?: string;
   customChange?: any;
+  isReset?: boolean;
 };
 
 const UploadImage = ({
   name,
   defaultImage,
   customChange,
+  isReset = false,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
@@ -60,6 +62,12 @@ const UploadImage = ({
     }
   };
 
+  useEffect(() => {
+    if (isReset) {
+      setImageUrl("");
+    }
+  }, [isReset]);
+
   const uploadButton = (
     <div className="">
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -74,7 +82,6 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-    
         action="/api/file"
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
