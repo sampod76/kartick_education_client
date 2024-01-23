@@ -29,16 +29,18 @@ type ImageUploadProps = {
   name: string;
   defaultImage?: string[];
   customChange?: any;
+  isReset?: boolean;
 };
 
 const UploadMultipalImage = ({
   name,
   defaultImage = [],
   customChange,
+  isReset=false,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
 
-  const [imagesUrl, setImagesUrl] = useState<string[]>([]);
+  const [imagesUrl, setImagesUrl] = useState<string[]>(defaultImage);
   const { setValue } = useFormContext();
   useEffect(() => {
     setValue(name, imagesUrl);
@@ -70,6 +72,12 @@ const UploadMultipalImage = ({
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
+
+  useEffect(() => {
+    if (isReset) {
+      setImagesUrl([]);
+    }
+  }, [isReset]);
 
   return (
     <div className="flex justify-center items-center border p-5 rounded-lg my-2">

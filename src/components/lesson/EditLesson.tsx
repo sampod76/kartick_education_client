@@ -284,6 +284,7 @@ export default function EditLesson({lessonId}:{lessonId:string}) {
                     <UploadMultipalImage
                       defaultImage={data?.imgs || []}
                       name="imgs"
+                      // isReset={isReset}
                     />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>

@@ -213,6 +213,7 @@ export default function EditModule({moduleId}:{moduleId:string}) {
                       <UploadMultipalImage
                         defaultImage={data?.imgs}
                         name="imgs"
+                        // isReset={isReset}
                       />
                     </Col>
                     <Col className="gutter-row" xs={24} style={{}}>

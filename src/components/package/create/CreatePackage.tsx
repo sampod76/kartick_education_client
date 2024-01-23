@@ -25,7 +25,7 @@ export default function CreatePackage() {
 
   const uuid = generateUUID();
   // console.log(uuid,"uuiduuid")
-  const { data, isLoading } = useGetAllCategoryQuery({
+  const { data, isLoading, error } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
     limit: 9999,
@@ -36,26 +36,10 @@ export default function CreatePackage() {
     value: select._id,
   }));
 
-  const [addPackage, { isSuccess, isLoading: AddPackageLoading }] =
+  const [addPackage, {  isLoading: AddPackageLoading }] =
     useAddPackageMutation();
 
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
 
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
-
-  // Filter `option.label` match the user type `input`
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-
-  // const selectMembershipsValue =(value)=>{
-
-  // }
   const onFinish = async (values: any) => {
     console.log("Received values of form:", values);
     const packageData = {
@@ -87,6 +71,7 @@ export default function CreatePackage() {
       console.log(error);
     }
   };
+
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">

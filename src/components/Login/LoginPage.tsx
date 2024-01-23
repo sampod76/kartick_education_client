@@ -25,17 +25,21 @@ type FormValues = {
   password: string;
 };
 
-const Login = ({ redirectLink ,setOpen }: { redirectLink?: string ,setOpen?:any}) => {
+const Login = ({
+  redirectLink,
+  setOpen,
+}: {
+  redirectLink?: string;
+  setOpen?: any;
+}) => {
   const router = useRouter();
   const [userLogin, { error, isLoading }] = useUserLoginMutation();
-
   const login = isLoggedIn();
-  console.log("🚀 ~ Login ~ login:", login)
-
   useEffect(() => {
     if (login) {
       router.push("/");
     }
+    
   }, [login, router]);
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
@@ -66,7 +70,8 @@ const Login = ({ redirectLink ,setOpen }: { redirectLink?: string ,setOpen?:any}
 
   return (
     <div className="bg-white ">
-      <div className="flex justify-center h-screen shadow">
+      <div className="flex justify-center items-center mt-3 relative">
+        {/* 
         <div
           className="hidden bg-cover lg:block lg:w-2/3"
           style={{
@@ -85,10 +90,21 @@ const Login = ({ redirectLink ,setOpen }: { redirectLink?: string ,setOpen?:any}
               </p>
             </div>
           </div>
-        </div>
+        </div> 
+        */}
+        <Image
+          className=""
+          style={{ width: "100vw", height: "100vh" }}
+          src={
+            "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          }
+          width={700}
+          height={700}
+          alt=""
+        />
 
-        <div className="flex items-center w-full max-w-lg px-6 mx-auto lg:w-3/6 ">
-          <div className="flex-1 shadow-lg p-5 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
+        <div className="flex items-center w-full max-w-lg px-6 mx-auto lg:w-3/6 absolute z-30 top-0 inset-0  ">
+          <div className="flex-1 shadow-lg p-5 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 backdrop-blur-2xl">
             <div className="text-center">
               <div className="flex justify-center mx-auto">
                 <Image
@@ -172,6 +188,7 @@ const Login = ({ redirectLink ,setOpen }: { redirectLink?: string ,setOpen?:any}
               </div>
             </div>
           </div>
+          I
         </div>
       </div>
     </div>

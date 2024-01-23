@@ -358,7 +358,7 @@ const CreateSingleQuiz = () => {
                   }}
                 >
                   <LabelUi>Select Quiz Question images (optional)</LabelUi>
-                  <UploadMultipalImage name="imgs" />
+                  <UploadMultipalImage   isReset={isReset} name="imgs" />
                 </Col>
               </Row>
               <Col

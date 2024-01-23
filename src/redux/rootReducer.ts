@@ -4,6 +4,6 @@ import userRoleSlice from "./features/user/userRoleSlice";
 
 export const reducer = {
   [baseApi.reducerPath]: baseApi.reducer,
-  role: userRoleSlice,
+  userInfo: userRoleSlice,
   quiz:quizSlice
 };
