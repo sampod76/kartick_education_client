@@ -88,13 +88,13 @@ const TopBar = () => {
          "
           >
             <Link
-              className="py-2 lg:py-3 px-2 w-[5rem] lg:w-[7rem]  lg:px-3  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white text-center"
+              className="py-2 lg:py-3 px-2 w-[5rem] lg:w-[6rem]  lg:px-3  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white text-center"
               href="/signup"
             >
               Register
             </Link>
             <Link
-              className="py-2 lg:py-3 px-3 w-[5rem] lg:w-[7rem]  lg:px-3 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1 text-center"
+              className="py-2 lg:py-3 px-3 w-[5rem] lg:w-[6rem]  lg:px-3 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1 text-center"
               href="/login"
             >
               Login

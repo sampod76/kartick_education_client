@@ -114,7 +114,7 @@ import { dashboardItems } from "@/constants/dashBoardItems";
 import DashboardSidebar from "@/components/shared/DashBoard/DashboardSidebar";
 import DashboardNavBar from "@/components/shared/DashBoard/DashboardNavbar";
 import dynamic from "next/dynamic";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetProfileQuery } from "@/redux/api/auth/authApi";
 import { setUserRole } from "@/redux/features/user/userRoleSlice";
 
@@ -141,41 +141,50 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const screens = useBreakpoint();
 
-  // useEffect(() => {
-  //   if (!profileLoading) {
-  //     if (!data?.data?._id) {
-  //       router.push("/login");
-  //     }
-  //   }
-  // }, [data?.data?._id, profileLoading, router]);
+  useEffect(() => {
+    if (!profileLoading) {
+      if (!data?._id) {
+        router.push("/login");
+      }
+    }
+  }, [data?._id, profileLoading, router]);
 
 
+  console.log('data', data,
+    'profileLoading',
+    profileLoading,
+    'error',
+    error,
+    'isSuccess',
+    isSuccess,)
 
-  if (isSuccess && data?.data?._id) {
+  if (isSuccess && data?._id) {
     console.log('isSuccess', isSuccess, "🚀 ~ DashboardLayout ~ data:", data);
     dispatch(
       setUserRole({
-        data: { ...data.data[data.data.role], _id: data.data._id },
+        data: { ...data[data.role], _id: data._id },
         isLoading: profileLoading,
       })
     );
   }
 
-  if (profileLoading) {
-    return (
-      <Row
-        justify="center"
-        align="middle"
-        style={{
-          height: "100vh",
-        }}
-      >
-        <Space>
-          <Spin size="large"></Spin>
-        </Space>
-      </Row>
-    );
-  }
+  // const { data: userStateData } = useAppSelector(state => state.userInfo)
+  // console.log('userStateData', userStateData)
+  // if (profileLoading) {
+  //   return (
+  //     <Row
+  //       justify="center"
+  //       align="middle"
+  //       style={{
+  //         height: "100vh",
+  //       }}
+  //     >
+  //       <Space>
+  //         <Spin size="large"></Spin>
+  //       </Space>
+  //     </Row>
+  //   );
+  // }
 
   return (
     <Layout
@@ -188,11 +197,15 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           placement="left"
           onClose={() => setCollapsed(false)}
           open={collapsed}
+          style={{
+            width: 350
+          }}
         >
           <Menu
             // className="bg-white"
             style={{ backgroundColor: "#ffffff" }}
             defaultSelectedKeys={["1"]}
+
             mode="inline"
             items={dashboardItems(userInfo?.role, setCollapsed)}
           />

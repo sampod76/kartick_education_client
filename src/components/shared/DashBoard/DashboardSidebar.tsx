@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 
 import Link from "next/link";
@@ -18,7 +18,17 @@ const DashboardSidebar = ({
   collapsed: boolean;
   setCollapsed: any;
 }) => {
-  const userInfo =getUserInfo() as any
+  const userInfo = getUserInfo() as any
+  const [selectedKey, setSelectedKey] = useState('1');
+
+  const handleMenuSelect = ({ key }: { key: string }) => {
+    setSelectedKey(key);
+  };
+  const clipPathStyle = {
+    clipPath: selectedKey === '1' ? 'polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%)' : 'none',
+    // background: "white"
+  };
+
   return (
     <Sider
       // collapsible
@@ -39,7 +49,7 @@ const DashboardSidebar = ({
         padding: "8px 0 0 0",
         marginRight: "10px",
         // width: "70vw",
-        background: "white",
+        // background: "white",
         // background:"",
         // overflow: "auto",
         // height: "100vh",
@@ -47,6 +57,9 @@ const DashboardSidebar = ({
         // left: 0,
         // top: 0,
         // bottom: 0,
+        background: "gray",
+        color: "white",
+
       }}
     >
       {/* {!collapsed ? (
@@ -71,11 +84,23 @@ const DashboardSidebar = ({
         defaultSelectedKeys={["1"]}
         style={{
           overflowY: "auto",
+          background: "gray",
+          color: "white",
+          fontWeight: "500",
+          marginTop: "36px",
+          fontSize: "16px",
+          paddingInline:'10px',
+          
+          // ...clipPathStyle,
         }}
         mode="inline"
         items={dashboardItems(userInfo?.role)}
-        // items={dashboardItems(USER_ROLE.SELLER)}
+        onSelect={handleMenuSelect}
+      // items={dashboardItems(USER_ROLE.SELLER)}
       />
+      <div style={{ ...clipPathStyle }}>
+      
+      </div>
     </Sider>
   );
 };

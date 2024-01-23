@@ -39,7 +39,9 @@ const CourseList = () => {
   // const SUPER_ADMIN=USER_ROLE.ADMIN
   const userInfo = getUserInfo() as IDecodedInfo;
   // const { userInfo } = useAppSelector((state: any) => state.);
-  console.log(userInfo);
+  const { data: userStateData } = useAppSelector(state => state.userInfo)
+  console.log('userStateData', userStateData)
+  // console.log(userInfo);
   const [deleteCourse] = useDeleteCourseMutation();
 
   const [page, setPage] = useState<number>(1);
