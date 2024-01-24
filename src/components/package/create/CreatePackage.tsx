@@ -232,15 +232,15 @@ export default function CreatePackage() {
             {(fields, { add, remove }) => {
               // console.log(fields,'fieldsfieldsfieldsfields') ;
 
-              const handleChange = (value: any) => {
-                console.log(value, 'value');
-                const updatedOptions = options?.filter(
-                  (item) => item?.value !== value
-                );
-                // console.log(updatedOptions)
-                options = updatedOptions;
-                // console.log(options)
-              };
+              // const handleChange = (value: any) => {
+              //   console.log(value, 'value');
+              //   const updatedOptions = options?.filter(
+              //     (item) => item?.value !== value
+              //   );
+              //   // console.log(updatedOptions)
+              //   options = updatedOptions;
+              //   // console.log(options)
+              // };
 
               const handleRemove = (value: any) => {
                 console.log(value, 'handleRemove');
@@ -270,7 +270,7 @@ export default function CreatePackage() {
                         ]}
                       >
                         <Select
-                          onChange={handleChange}
+                          // onChange={handleChange}
                           // onBlur={() => handleChange(restField.value, name)}
                           loading={isLoading}
                           style={{ width: "" }}
