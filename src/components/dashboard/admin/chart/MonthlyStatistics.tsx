@@ -1,144 +1,115 @@
+"use client";
+import { useRef, useEffect, useState } from "react";
+import { Chart } from "chart.js/auto";
+import axios from "axios";
 
-"use client"
-import React from "react";
-import { Chart, ChartType } from "chart.js/auto";
-declare global {
-    interface Window {
-        myLine: any;
-    }
-}
+export default function BarChart() {
+    const chartRef = useRef<any>(null);
+    const [chartData, setChartData] = useState([]);
 
-export default function CardLineChart() {
-    React.useEffect(() => {
-        var config = {
-            type: 'line' as ChartType,  // <-- Provide a valid chart type here
-            data: {
-                labels: [
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                ],
-                datasets: [
-                    {
-                        label: new Date().getFullYear(),
-                        backgroundColor: "#3182ce",
-                        borderColor: "#3182ce",
-                        data: [65, 78, 66, 44, 56, 67, 75],
-                        fill: false,
-                    },
-                    {
-                        label: new Date().getFullYear() - 1,
-                        fill: false,
-                        backgroundColor: "#edf2f7",
-                        borderColor: "#edf2f7",
-                        data: [40, 68, 86, 74, 56, 60, 87],
-                    },
-                ],
-            },
-            options: {
-                maintainAspectRatio: false,
-                responsive: true,
-                title: {
-                    display: false,
-                    text: "Sales Charts",
-                    fontColor: "white",
-                },
-                legend: {
-                    labels: {
-                        fontColor: "white",
-                    },
-                    align: "end",
-                    position: "bottom",
-                },
-                tooltips: {
-                    mode: "index",
-                    intersect: false,
-                },
-                hover: {
-                    mode: "nearest",
-                    intersect: true,
-                },
-                scales: {
-                    xAxes: [
-                        {
-                            ticks: {
-                                fontColor: "rgba(255,255,255,.7)",
-                            },
-                            display: true,
-                            scaleLabel: {
-                                display: false,
-                                labelString: "Month",
-                                fontColor: "white",
-                            },
-                            gridLines: {
-                                display: false,
-                                borderDash: [2],
-                                borderDashOffset: [2],
-                                color: "rgba(33, 37, 41, 0.3)",
-                                zeroLineColor: "rgba(0, 0, 0, 0)",
-                                zeroLineBorderDash: [2],
-                                zeroLineBorderDashOffset: [2],
-                            },
-                        },
-                    ],
-                    yAxes: [
-                        {
-                            ticks: {
-                                fontColor: "rgba(255,255,255,.7)",
-                            },
-                            display: true,
-                            scaleLabel: {
-                                display: false,
-                                labelString: "Value",
-                                fontColor: "white",
-                            },
-                            gridLines: {
-                                borderDash: [3],
-                                borderDashOffset: [3],
-                                drawBorder: false,
-                                color: "rgba(255, 255, 255, 0.15)",
-                                zeroLineColor: "rgba(33, 37, 41, 0)",
-                                zeroLineBorderDash: [2],
-                                zeroLineBorderDashOffset: [2],
-                            },
-                        },
-                    ],
-                },
-            },
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios("https://dummyjson.com/users");
+            if (response.status != 200) {
+                console.error("Bad response");
+            }
+            const data = response.data;
+            // console.log(data);
+            const firstSix = data.users.splice(0, 6);
+            setChartData(firstSix);
         };
-        const ctx = (document.getElementById("line-chart") as HTMLCanvasElement)?.getContext("2d");
 
-        if (ctx) {
-
-            window.myLine = new Chart(ctx, config);
-        } else {
-            console.error("Canvas or context is null.");
-        }
+        fetchData();
     }, []);
+
+    useEffect(() => {
+        if (chartRef.current) {
+            if (chartRef.current.chart) {
+                chartRef.current.chart.destroy();
+            }
+
+            const context = chartRef.current.getContext("2d");
+
+            const label = chartData.map((items:any) => items.firstName);
+            const data = chartData.map((items:any) => items.weight);
+
+            const newChart = new Chart(context, {
+                type: "bar",
+                data: {
+                    labels: label,
+                    datasets: [
+                        {
+                            // barPercentage: 0.9,
+                            // barThickness: 50,
+                            label: "Info",
+                            data: data,
+                            backgroundColor: [
+                                "rgb(255, 99, 132, 0.2)",
+                                "rgb(255, 159, 64, 0.2)",
+                                "rgb(255, 205, 86, 0.2)",
+                                "rgb(75, 192, 192, 0.2)",
+                                "rgb(54, 162, 235, 0.2)",
+                                "rgb(153, 102, 255, 0.2)",
+                                "rgb(201, 203, 207, 0.2)",
+                            ],
+                            borderColor: [
+                                "rgb(255, 99, 132)",
+                                "rgb(255, 159, 64)",
+                                "rgb(255, 205, 86)",
+                                "rgb(75, 192, 192)",
+                                "rgb(54, 162, 235)",
+                                "rgb(153, 102, 255)",
+                                "rgb(201, 203, 207)",
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 10,
+                        },
+                    ],
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "Weight Name Info",
+                        },
+                    },
+                    layout: {
+                        padding: 40,
+                    },
+                    // responsive: true
+                    scales: {
+                        x: {
+                            type: "category",
+                        },
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            });
+
+            (chartRef.current as any).chart = newChart;
+        }
+    }, [chartData]);
+
+    function handleDownload() {
+        if (chartRef.current) {
+            const file = chartRef.current.toDataURL("image/png");
+            const link = document.createElement("a");
+            link.href = file;
+            link.download = "barChart.png";
+            link.click();
+        }
+    }
     return (
-        <>
-            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-700">
-                <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
-                    <div className="flex flex-wrap items-center">
-                        <div className="relative w-full max-w-full flex-grow flex-1">
-                            <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-                                Overview
-                            </h6>
-                            <h2 className="text-white text-xl font-semibold">Sales value</h2>
-                        </div>
-                    </div>
-                </div>
-                <div className="p-4 flex-auto">
-                    {/* Chart */}
-                    <div className="relative h-350-px">
-                        <canvas id="line-chart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </>
+        <div style={{ position: "relative", width: "90vw", height: "80vh" }}>
+            <canvas ref={chartRef} />
+            <button
+                onClick={handleDownload}
+                className="rounded-md bg-amber-600 bg-opacity-25 p-3 m-4 border border-amber-800"
+            >
+                Download Chart
+            </button>
+        </div>
     );
 }
