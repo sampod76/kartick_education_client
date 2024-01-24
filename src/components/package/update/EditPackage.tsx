@@ -31,7 +31,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
         }
     );
 
-    console.log(defaultPackageData, 'defaultPackageDatadefaultPackageData')
+    // console.log(defaultPackageData, 'defaultPackageDatadefaultPackageData')
 
     const [updatePackage, { isLoading: UpdatePackageLoading }] = useUpdatePackageMutation()
 
@@ -52,27 +52,26 @@ export default function EditPackage({ packageId }: { packageId: string }) {
 
     // const [addPackage, { isLoading: UpdatePackageLoading }] =
     //     useAddPackageMutation();
-
-
     const onFinish = async (values: any) => {
-        console.log("Received values of form:", values);
+
         const packageData: Partial<IPackageData> = {
-            membership: defaultPackageData?.membership || {
+            membership: {
                 title: values.membership?.title,
                 uid: uuid,
-            },
-            title: defaultPackageData?.title || values.title,
-            type: defaultPackageData?.type || values.type,
-            monthly: defaultPackageData?.monthly || values.monthly,
-            biannual: defaultPackageData?.biannual || values.biannual,
-            yearly: defaultPackageData?.yearly || values.yearly,
-            categories: defaultPackageData?.categories || values.categories,
+            } || defaultPackageData?.membership,
+            title: values.title || defaultPackageData?.title,
+            type: values.type || defaultPackageData?.type,
+            monthly: values.monthly || defaultPackageData?.monthly,
+            biannual: values.biannual || defaultPackageData?.biannual,
+            yearly: values.yearly || defaultPackageData?.yearly,
+            categories: values.categories || defaultPackageData?.categories,
 
         };
+        console.log("Received values of form:", values, 'annnnnnnnnnnd', packageData);
         // console.log("🚀 ~ onFinish ~ packageData:", packageData)
 
         try {
-            const res = await updatePackage(packageData).unwrap();
+            const res = await updatePackage({ id: packageId, packageData }).unwrap();
             // console.log(res);
             if (res?.success == false) {
                 Error_model_hook(res?.message);
@@ -95,6 +94,11 @@ export default function EditPackage({ packageId }: { packageId: string }) {
         )
     }
 
+    const defaultCategory = defaultPackageData?.categories?.map((select: any) => ({
+        label: select?.label,
+        value: select?.category,
+    }));
+
     const initialPackageFormData = {
         title: defaultPackageData?.title,
         type: defaultPackageData?.type,
@@ -102,14 +106,21 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             price: 100,
             each_student_increment: 10,
         },
-        membership: defaultPackageData?.membership?.title
-
-
+        biannual: {
+            price: 100,
+            each_student_increment: 10,
+        },
+        yearly: {
+            price: 100,
+            each_student_increment: 10,
+        },
+        membership: defaultPackageData?.membership?.title,
+        categories: defaultCategory
 
     };
 
     console.log(initialPackageFormData, 'initialPackageFormData')
-
+    // console.log('defaultCategory7', defaultCategory[1].value)
     return (
         <div className="bg-white shadow-lg p-5 rounded-xl">
             <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
@@ -153,6 +164,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                                 style={{ width: "100%" }}
                                 placeholder="Select Membership"
                                 size="large"
+                                defaultValue={defaultPackageData?.membership?.title}
                             >
                                 <Option value="family & personal">Family & Personal</Option>
                                 <Option value="school & teacher">School & Teacher</Option>
@@ -267,7 +279,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                 </Form.Item>
                 <div className="border-2 rounded-lg p-3">
                     <LabelUi>Add Category</LabelUi>
-                    <Form.List name="categories">
+                    <Form.List name="categories" initialValue={defaultCategory}>
                         {(fields, { add, remove }) => {
                             // console.log(fields,'fieldsfieldsfieldsfields') ;
 
@@ -282,7 +294,8 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                             // };
 
                             const handleRemove = (value: any) => {
-                                console.log(value, 'handleRemove');
+                                // console.log(value, 'handleRemove');
+                                // console.log('defaultCategory[value]?.category', defaultCategory[value]?.category)
                                 remove(value)
                             }
 
@@ -304,13 +317,15 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                                                 {...restField}
                                                 style={{ width: "", marginBottom: "8px" }}
                                                 name={[name, "category"]}
-                                                rules={[
-                                                    { required: true, message: "Missing Category" },
-                                                ]}
+                                            // rules={[
+                                            //     { required: true, message: "Missing Category" },
+                                            // ]}
+                                            // initialValue={defaultCategory[name]}
                                             >
                                                 <Select
                                                     // onChange={handleChange}
                                                     // onBlur={() => handleChange(restField.value, name)}
+                                                    // defaultValue={defaultCategory[name]?.value}
                                                     loading={isLoading}
                                                     style={{ width: "" }}
                                                     placeholder="Select category"
@@ -332,6 +347,8 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                                             >
                                                 <Input size="large" placeholder="label" />
                                             </Form.Item>
+
+
                                             <MinusCircleOutlined
                                                 onClick={() => handleRemove(name)}
                                                 style={{ marginInline: "3px" }}
@@ -360,7 +377,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                             type="default"
                             htmlType="submit"
                         >
-                            Update
+                            {UpdatePackageLoading ? 'updating....' : "Update"}
                         </Button>
                     </div>
                 </Form.Item>
