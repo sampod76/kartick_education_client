@@ -9,7 +9,7 @@ import TopBar from "./TopBar";
 
 const HomeHeader = () => {
   return (
-    <div className="sticky  -top-[5rem] z-40">
+    <div className="sticky -top-[3.6rem]   lg:-top-[5rem] z-40">
       <TopBar />
       <NavbarPublic />
     </div>
