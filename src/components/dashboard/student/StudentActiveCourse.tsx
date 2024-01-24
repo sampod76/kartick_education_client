@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 export default function StudentActiveCourse() {
   const userInfo = getUserInfo() as any;
   const router = useRouter();
+  // !auto detection userid
   const { data, isLoading, error } = useGetAllPackageAndCourseQuery(
     // { user: userInfo.id },
     // { skip: !Boolean(userInfo.id) }
@@ -25,7 +26,7 @@ export default function StudentActiveCourse() {
   );
   //@ts-ignore
   const getPackage = data?.data;
-  console.log("🚀 ~ ActivePackage ~ getPackage:", getPackage);
+
   if (isLoading) {
     return <LoadingSkeleton number={20} />;
   }
@@ -41,7 +42,7 @@ export default function StudentActiveCourse() {
         //@ts-ignore
         data?.data?.message
     );
-    console.log(error, data?.data);
+ 
   }
 
   const navigatePackage = (getPackage: any[]) => {

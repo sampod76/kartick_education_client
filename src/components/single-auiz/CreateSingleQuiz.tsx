@@ -225,7 +225,7 @@ const CreateSingleQuiz = () => {
             isReset={isReset}
             // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
           >
-            <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2 ">
+            <h1 className="text-xl font-bold text-center border-b-2 border-spacing-4 mb-2 ">
               Create A Single Quiz
             </h1>
             <div

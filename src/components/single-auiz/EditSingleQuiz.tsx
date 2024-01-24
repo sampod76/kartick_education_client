@@ -159,24 +159,24 @@ export default function EditSingleQuiz({
         <div className="text-xl font-bold space-x-2 mb-2 text-start my-2 shadow-lg p-3 bg-white rounded-lg">
           <span className=" p-3  text-base md:text-lg border rounded-lg hover:bg-blue-600 hover:text-white">
             {" "}
-            Category:➡
+            Category:
             {data?.lesson?.module?.milestone?.course?.category?.title}
           </span>{" "}
           <span className=" p-3 text-base md:text-lg border rounded-xl hover:bg-blue-600 hover:text-white">
-            Course:➡ {data?.lesson?.module?.milestone?.course?.title}
+            Course:{data?.lesson?.module?.milestone?.course?.title}
           </span>
           <h1 className=" mt-3 p-1 rounded-lg w-fit text-base md:text-lg hover:bg-blue-600 hover:text-white">
-            Milestone:➡{data?.lesson?.module?.milestone?.milestone_number}
+            Milestone:{data?.lesson?.module?.milestone?.milestone_number}
             {" : "}
             {data?.lesson?.module?.milestone?.title}
           </h1>
           <h1 className=" mt-3 p-1 rounded-lg w-fit text-base md:text-lg hover:bg-blue-600 hover:text-white">
-            Module:➡{data?.lesson?.module?.module_number}
+            Module:{data?.lesson?.module?.module_number}
             {" : "}
             {data?.lesson?.module?.title}
           </h1>
           <h1 className=" mt-3 p-1 rounded-lg w-fit text-base md:text-lg hover:bg-blue-600 hover:text-white">
-            Module:➡{data?.lesson?.module_number}
+            Module:{data?.lesson?.module_number}
             {" : "}
             {data?.lesson?.title}
           </h1>
@@ -484,6 +484,8 @@ export default function EditSingleQuiz({
                 </Col>
               </Row>
             </div>
+            <div className="flex justify-center items-center">
+
             {serviceLoading ? (
               <ButtonLoading />
             ) : (
@@ -491,6 +493,7 @@ export default function EditSingleQuiz({
                 Update
               </Button>
             )}
+            </div>
           </Form>
         </div>
       ) : (

@@ -6,7 +6,12 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
 // import { useUserLoginMutation } from "@/redux/api/authApi";
-import { isLoggedIn, storeUserInfo } from "@/services/auth.service";
+import {
+  IDecodedInfo,
+  getUserInfo,
+  isLoggedIn,
+  storeUserInfo,
+} from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/schemas/login";
@@ -34,13 +39,19 @@ const Login = ({
 }) => {
   const router = useRouter();
   const [userLogin, { error, isLoading }] = useUserLoginMutation();
-  const login = isLoggedIn();
+  const [loading, setLoading] = useState(true);
+  const userInfo = getUserInfo() as IDecodedInfo;
   useEffect(() => {
-    if (login) {
-      router.push("/");
+    if (userInfo.id) {
+      router.back();
     }
-    
-  }, [login, router]);
+    setLoading(false);
+    return () => {};
+  }, [router, userInfo]);
+
+  if (loading) {
+    return <LoadingForDataFetch />;
+  }
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
@@ -70,7 +81,7 @@ const Login = ({
 
   return (
     <div className="bg-white ">
-      <div className="flex justify-center items-center mt-3 relative">
+      <div className="flex justify-center items-center mt-3 relative ">
         {/* 
         <div
           className="hidden bg-cover lg:block lg:w-2/3"
@@ -103,8 +114,8 @@ const Login = ({
           alt=""
         />
 
-        <div className="flex items-center w-full max-w-lg px-6 mx-auto lg:w-3/6 absolute z-30 top-0 inset-0  ">
-          <div className="flex-1 shadow-lg p-5 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 backdrop-blur-2xl">
+        <div className="flex items-start pt-10 w-full max-w-lg px-6 mx-auto lg:w-3/6 absolute z-30 top-0 inset-0  ">
+          <div className="flex-1 shadow-lg p-5 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 backdrop-blur-3xl">
             <div className="text-center">
               <div className="flex justify-center mx-auto">
                 <Image

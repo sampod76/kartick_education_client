@@ -72,7 +72,7 @@ const FormInput = ({
               value={value ? value : field.value}
             />
           ) : type === "number" ? (
-            <div className="flex flex-col">
+            <div className="">
               <h1 className="">
                 <LabelUi>
                   {label}{" "}
@@ -90,7 +90,7 @@ const FormInput = ({
               </h1>
               <InputNumber
                 type={type}
-                style={{ width: "100%", marginRight: "2px" }}
+                style={{ width: "100%",  }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}

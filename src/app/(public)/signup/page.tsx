@@ -13,14 +13,19 @@ import { USER_ROLE } from "@/constants/role";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/seller";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
+import { getUserInfo } from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Row, message } from "antd";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { IDecodedInfo } from "../../../services/auth.service";
+import { useRouter } from "next/navigation";
+import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 const SignUpTeacherAndStudent = () => {
+  const router = useRouter();
   const [isReset, setIsReset] = useState(false);
   const [addAdminUserWithFormData, { isLoading: AdminLoading }] =
     useAddAdminWithFormDataMutation();
@@ -28,9 +33,22 @@ const SignUpTeacherAndStudent = () => {
     useAddStudentWithFormDataMutation();
   const [addSellerUserWithFormData, { isLoading: SellerLoading }] =
     useAddSellerWithFormDataMutation();
+  const [loading, setLoading] = useState(true);
+  const userInfo = getUserInfo() as IDecodedInfo;
+  useEffect(() => {
+    if (userInfo.id) {
+      router.back();
+    }
+    setLoading(false);
+    return () => {};
+  }, [router, userInfo]);
+
+  if (loading) {
+    return <LoadingForDataFetch />;
+  }
 
   const onSubmit = async (values: any) => {
-    console.log("🚀 ~ onSubmit ~ values:", values)
+    console.log("🚀 ~ onSubmit ~ values:", values);
     try {
       let res;
       if (values?.role === USER_ROLE.ADMIN) {
@@ -74,6 +92,7 @@ const SignUpTeacherAndStudent = () => {
       } else {
         Success_model("User created successfully");
         setIsReset(true);
+        router.push("/login");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
@@ -87,15 +106,7 @@ const SignUpTeacherAndStudent = () => {
   // }
 
   return (
-    <div
-      style={{
-        boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
-      }}
-    >
+    <div className="container mx-auto p-5 bg-white rounded-lg shadow-2xl">
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
         <Form submitHandler={onSubmit} isReset={isReset}>
@@ -113,7 +124,7 @@ const SignUpTeacherAndStudent = () => {
               }}
               className="font-semibold text-2xl text-center"
             >
-             Registration
+              Registration
             </p>
             <hr className="border my-2" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -269,7 +280,7 @@ const SignUpTeacherAndStudent = () => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: "px",
                 }}
               >
                 <FormInput
@@ -294,6 +305,7 @@ const SignUpTeacherAndStudent = () => {
                   name="dateOfBirth"
                   label="Date of birth"
                   size="large"
+                  disablePrevious={false}
                 />
               </Col>
 

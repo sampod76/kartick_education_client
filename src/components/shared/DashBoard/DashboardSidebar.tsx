@@ -57,7 +57,7 @@ const DashboardSidebar = ({
         // left: 0,
         // top: 0,
         // bottom: 0,
-        background: "gray",
+        // background: "#1D2327",
         color: "white",
 
       }}
@@ -84,8 +84,8 @@ const DashboardSidebar = ({
         defaultSelectedKeys={["1"]}
         style={{
           overflowY: "auto",
-          background: "gray",
-          color: "white",
+          // background: "#1D2327",
+          // color: "white",
           fontWeight: "500",
           marginTop: "36px",
           fontSize: "16px",
@@ -94,6 +94,7 @@ const DashboardSidebar = ({
           // ...clipPathStyle,
         }}
         mode="inline"
+        theme="dark"
         items={dashboardItems(userInfo?.role)}
         onSelect={handleMenuSelect}
       // items={dashboardItems(USER_ROLE.SELLER)}

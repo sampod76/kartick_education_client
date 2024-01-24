@@ -25,7 +25,7 @@ import {
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 import { GiJetPack } from "react-icons/gi";
-export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
+export const dashboardItems = (role: string, setCollapsed?: any) => {
 
   const defaultSidebarItems: MenuProps["items"] = [
     {
@@ -47,10 +47,12 @@ export const dashboardItems = (role: USER_ROLE, setCollapsed?: any) => {
       label: "Profile",
       key: "profile",
       icon: <ProfileOutlined />,
+      
       children: [
         {
           label: (
             <Link
+            
               onClick={() => (setCollapsed ? setCollapsed(false) : null)}
               href={`/profile`}
             >

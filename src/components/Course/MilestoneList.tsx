@@ -3,20 +3,27 @@
 
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
-import { Divider } from "antd";
+import { Button, Divider, message } from "antd";
 import Link from "next/link";
 import React from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { SVGYelloDot } from "@/assets/svg/Icon";
 import { ENUM_YN } from "@/constants/globalEnums";
+import ButtonLoading from "../ui/Loading/ButtonLoading";
+import { useAddPaypalPaymentByCourseMutation } from "@/redux/api/public/paymentApi";
+import { getUserInfo } from "@/services/auth.service";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import PaypalCheckoutByCourse from "../Utlis/PaypalCheckoutByCourse";
 
 const MilestoneList = ({ courseId }: { courseId: string }) => {
+  const userInfo = getUserInfo() as any;
   const {
     data: courseData = {},
     isLoading: courseLoading,
     error,
   } = useGetSingleCourseQuery(courseId);
+
   const query: Record<string, any> = {};
   query["limit"] = 999999;
   query["sortOrder"] = "asc";
@@ -48,6 +55,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
           style={{
             marginTop: "1.25rem",
           }}
+          className="relative"
         >
           <h2
             style={{
@@ -60,8 +68,10 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
             }}
           >
             {courseData?.title}
-            {/* //! Course Title */}
           </h2>
+          <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
+            <PaypalCheckoutByCourse courseData={courseData} />
+          </div>
           <Divider
             style={{
               color: "red",

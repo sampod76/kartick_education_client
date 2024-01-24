@@ -28,6 +28,16 @@ export const paymentApi = baseApi.injectEndpoints({
         };
       },
     }),
+    addPaypalPaymentByCourse: build.mutation({
+      query: (data) => {
+        // console.log(data, "cacccc");
+        return {
+          url: `${PAYMENT_URL}/paypal/buy_course`,
+          method: "POST",
+          data,
+        };
+      },
+    }),
     addPaypalCheckPayment: build.mutation({
       query: (data) => {
         // console.log(data, "cacccc");
@@ -80,4 +90,5 @@ export const {
   useAddPaypalPaymentMutation,
   useGetCheckPaypalPaymentQuery,
   useGetPurchasePackageQuery,
+  useAddPaypalPaymentByCourseMutation
 } = paymentApi;

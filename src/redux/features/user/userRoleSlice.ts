@@ -6,6 +6,7 @@ interface UserRole {
     role: string;
     name: string;
     email: string;
+    img?: string;
     _id: string;
   };
   isLoading?: boolean;

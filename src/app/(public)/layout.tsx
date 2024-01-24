@@ -6,8 +6,8 @@ import BannerCourses from "@/components/Home/Heros/BannerCourses";
 import SupportHero from "@/components/Home/Heros/SupportHero";
 // import NavbarPublic from "@/components/shared/Headers/Navbar/NavbarPublic";
 
-// import TopBar from "@/components/shared/Headers/TopBar";
-const TopBar = React.lazy(() => import("@/components/shared/Headers/TopBar"));
+import TopBar from "@/components/shared/Headers/TopBar";
+// const TopBar = React.lazy(() => import("@/components/shared/Headers/TopBar"));
 const NavbarPublic = React.lazy(
   () => import("@/components/shared/Headers/Navbar/NavbarPublic")
 );

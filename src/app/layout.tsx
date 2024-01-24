@@ -20,6 +20,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+ 
   return (
     <MyErrorBoundary>
       <Providers>
@@ -29,8 +30,9 @@ export default function RootLayout({
             content="upgrade-insecure-requests"
           />
           <body
+      
             // className="container mx-auto "
-            className={`${inter.className} max-w-[1990px] mx-auto`}
+            className={`${inter.className} max-w-[1990px] mx-auto `}
             // style={{maxWidth: '1990px',margin:"auto"}}
           >
             <Providers>{children}</Providers>

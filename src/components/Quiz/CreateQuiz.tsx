@@ -18,7 +18,7 @@ import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Col, Row, message } from "antd";
+import { Button, Col, Row, message } from "antd";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
@@ -31,9 +31,13 @@ const TextEditor = dynamic(
   }
 );
 const CreateQuiz = () => {
-  const [category, setCategory] = useState<{ _id?: string; title?: string }>({});
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
-  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>({});
+  const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
   const [isReset, setIsReset] = useState(false);
@@ -47,14 +51,14 @@ const CreateQuiz = () => {
 
   const categoryData: any = Category?.data;
   //
-  const [addQuiz, { isLoading: serviceLoading }] = useAddQuizMutation();
+  const [addQuiz, { isLoading: quizLoading }] = useAddQuizMutation();
 
   const onSubmit = async (values: any) => {
     const createQuizeData: {} = {
       ...values,
       category: category?._id,
-      course:course?._id,
-      milestone:milestone?._id,
+      course: course?._id,
+      milestone: milestone?._id,
       module: module?._id,
       lesson: lesson?._id,
     };
@@ -67,7 +71,7 @@ const CreateQuiz = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Quiz");
-        setIsReset(true)
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -229,7 +233,7 @@ const CreateQuiz = () => {
                     <TagsSelectUI />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage   isReset={isReset} name="imgs" />
+                    <UploadMultipalImage isReset={isReset} name="imgs" />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>
@@ -258,7 +262,7 @@ const CreateQuiz = () => {
                         Description
                       </p>
                       <TextEditor
-                      isReset={isReset}
+                        isReset={isReset}
                         // textEditorValue={textEditorValue}
                         // setTextEditorValue={setTextEditorValue}
                       />
@@ -267,7 +271,21 @@ const CreateQuiz = () => {
                 </Row>
               </div>
 
-              <ButtonSubmitUI>Create</ButtonSubmitUI>
+              <div className="w-fit mx-auto">
+                <Button
+                  loading={quizLoading}
+                  // disabled={imageUploadLoading}
+                  type="default"
+                  style={{
+                    marginTop: "1rem",
+                    background: "blue",
+                    color: "white",
+                  }}
+                  htmlType="submit"
+                >
+                  Create Quiz
+                </Button>
+              </div>
             </Form>
           </div>
         </div>
