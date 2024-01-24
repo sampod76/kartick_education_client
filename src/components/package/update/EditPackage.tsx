@@ -9,8 +9,9 @@ import type { SelectProps } from "antd";
 
 const { Option } = Select;
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-import { useAddPackageMutation, useUpdatePackageMutation } from "@/redux/api/userApi/packageAPi";
+import { useAddPackageMutation, useGetSinglePackageQuery, useUpdatePackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { IPackageData } from "@/types/packageType";
 
 // ! for uuid
 const generateUUID = () => {
@@ -23,9 +24,16 @@ const generateUUID = () => {
 export default function EditPackage({ packageId }: { packageId: string }) {
 
     console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ packageId:", packageId)
+    const { data: defaultPackageData = {}, isLoading: defaultLoading } = useGetSinglePackageQuery(
+        packageId,
+        {
+            skip: !Boolean(packageId),
+        }
+    );
 
+    console.log(defaultPackageData, 'defaultPackageDatadefaultPackageData')
 
-    const [updatePackage] = useUpdatePackageMutation()
+    const [updatePackage, { isLoading: UpdatePackageLoading }] = useUpdatePackageMutation()
 
     const [form] = Form.useForm();
 
@@ -37,39 +45,40 @@ export default function EditPackage({ packageId }: { packageId: string }) {
         limit: 9999,
     });
     let options: SelectProps["options"] = [];
-    options = data?.data?.map((select) => ({
+    options = data?.data?.map((select: any) => ({
         label: select.title,
         value: select._id,
     }));
 
-    const [addPackage, { isLoading: AddPackageLoading }] =
-        useAddPackageMutation();
+    // const [addPackage, { isLoading: UpdatePackageLoading }] =
+    //     useAddPackageMutation();
 
 
     const onFinish = async (values: any) => {
         console.log("Received values of form:", values);
-        const packageData = {
-            membership: {
+        const packageData: Partial<IPackageData> = {
+            membership: defaultPackageData?.membership || {
                 title: values.membership?.title,
                 uid: uuid,
             },
-            title: values.title,
-            type: values.type,
-            monthly: values.monthly,
-            biannual: values.biannual,
-            yearly: values.yearly,
-            categories: values.categories,
+            title: defaultPackageData?.title || values.title,
+            type: defaultPackageData?.type || values.type,
+            monthly: defaultPackageData?.monthly || values.monthly,
+            biannual: defaultPackageData?.biannual || values.biannual,
+            yearly: defaultPackageData?.yearly || values.yearly,
+            categories: defaultPackageData?.categories || values.categories,
+
         };
         // console.log("🚀 ~ onFinish ~ packageData:", packageData)
 
         try {
-            const res = await addPackage(packageData).unwrap();
+            const res = await updatePackage(packageData).unwrap();
             // console.log(res);
             if (res?.success == false) {
                 Error_model_hook(res?.message);
             } else {
-                Success_model("Successfully added Package");
-                form.resetFields();
+                Success_model("Successfully Updated Package");
+                // form.resetFields();
             }
             // console.log(res);
         } catch (error: any) {
@@ -77,7 +86,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             console.log(error);
         }
     };
-    const [dynamicOption, setDynamicOption] = useState(options)
+
     return (
         <div className="bg-white shadow-lg p-5 rounded-xl">
             <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
@@ -102,7 +111,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                         <Input size="large" placeholder="Please enter package title" />
                     </Form.Item>
                     <Space>
-                        <Form.Item name="type" label="Select Types">
+                        <Form.Item name="type" label="Select Types" initialValue={defaultPackageData?.type}>
                             {/* <LabelUi>Select Types </LabelUi> */}
                             <Select
                                 style={{ maxWidth: "100%" }}
@@ -323,7 +332,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                 <Form.Item>
                     <div className="flex justify-center items-center mt-3">
                         <Button
-                            loading={AddPackageLoading}
+                            loading={UpdatePackageLoading}
                             type="default"
                             htmlType="submit"
                         >
