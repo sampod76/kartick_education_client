@@ -51,9 +51,9 @@ const Success = () => {
   ];
   return (
     <div className="bg-[#A2B0F321] mt-5 py-[100px] container mx-auto flex flex-col ">
-      <h1 className="text-3xl text-center text-[#282938] font-[600]">
+      <h1 className="text-2xl  lg:text-3xl  text-center text-[#282938] font-[600]">
         Discover how <span className="text-secondary">iBlossomLearn </span>{" "}
-        success for every learner with <br /> personalized and interactive lessons.
+        success for every learner with   <br /> personalized and interactive lessons.
       </h1>
 
       <section className="my-[6rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-7 w-full lg:max-w-[90%] mx-auto">

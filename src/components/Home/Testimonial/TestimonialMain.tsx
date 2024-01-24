@@ -67,7 +67,14 @@ export default function TestimonialMain() {
     },
     responsive: [
       {
-        breakpoint: 768, // Medium devices and above
+        breakpoint: 868, // Medium devices and above
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 640, // Medium devices and above
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -82,50 +89,50 @@ export default function TestimonialMain() {
 
   return (
     <div className="bg-white my-16 py-[7rem] px-2">
-   <div className="w-full lg:max-w-[80%] mx-auto ">
-   <h2 className="text-2xl  lg:text-3xl text-center text-[#282938] font-[600] mb-[5rem]">
-        Explore how <span className="text-secondary">iBlossomLearn </span>{" "}
-        supports students and be inspired <br /> by their success stories.
-      </h2>
-      <Slider {...settings}>
-        {testimonials.map((testimonial, index) => (
-          <div key={index} className="text-center">
-            {/* <img
+      <div className="w-full lg:max-w-[80%] mx-auto ">
+        <h2 className="text-2xl  lg:text-3xl text-center text-[#282938] font-[600] mb-[5rem]">
+          Explore how <span className="text-secondary">iBlossomLearn </span>{" "}
+          supports students and be inspired <br /> by their success stories.
+        </h2>
+        <Slider {...settings}>
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="text-center">
+              {/* <img
               className="mx-auto mt-4 rounded-full h-[9rem] w-[9rem]"
               src={testimonial.image}
               alt={`name ${index + 1}`}
             /> */}
 
-            <div className="border-[2px] border-slate-200 h-[14rem] w-[14rem] p-1 mx-auto rounded-full">
-              <Image
-                style={{
-                  marginInline: "auto",
-                  width: "14rem",
-                  height: "14rem",
-                  borderRadius: "100%",
-                }}
-                // className="mx-auto mt-4 rounded-full h-[9rem] w-[9rem]"
-                src={testimonial.image}
-                alt={`name ${index + 1}`}
-              />
-            </div>
+              <div className="border-[2px] border-slate-200 h-[14rem] w-[14rem] p-1 mx-auto rounded-full">
+                <Image
+                  style={{
+                    marginInline: "auto",
+                    width: "14rem",
+                    height: "14rem",
+                    borderRadius: "100%",
+                  }}
+                  // className="mx-auto mt-4 rounded-full h-[9rem] w-[9rem]"
+                  src={testimonial.image}
+                  alt={`name ${index + 1}`}
+                />
+              </div>
 
-            <blockquote className="mx-auto mt-3 px-2">
-              <p className="text-base lg:text-[16px] text-[#1E1E1E] font-[550] px-2 capitalize">
-                {CutText(testimonial?.details, 154)}
-              </p>
-              <h2 className="font-bold text-xl lg:text-2xl mt-5">
-                {testimonial?.name} <span className="">| </span>
-                <span className="text-[#1E1E1E] text-[18px]">
-                  {testimonial?.role}
-                </span>
-              </h2>
-              {/* <small>{testimonial.name}</small> */}
-            </blockquote>
-          </div>
-        ))}
-      </Slider>
-   </div>
+              <blockquote className="mx-auto mt-3 px-2">
+                <p className="text-base lg:text-[16px] text-[#1E1E1E] font-[550] px-2 capitalize">
+                  {CutText(testimonial?.details, 154)}
+                </p>
+                <h2 className="font-bold text-xl lg:text-2xl mt-5">
+                  {testimonial?.name} <span className="">| </span>
+                  <span className="text-[#1E1E1E] text-[18px]">
+                    {testimonial?.role}
+                  </span>
+                </h2>
+                {/* <small>{testimonial.name}</small> */}
+              </blockquote>
+            </div>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 }
