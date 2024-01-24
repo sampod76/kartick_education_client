@@ -9,7 +9,7 @@ import type { SelectProps } from "antd";
 
 const { Option } = Select;
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
+import { useAddPackageMutation, useUpdatePackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 // ! for uuid
@@ -20,7 +20,13 @@ const generateUUID = () => {
         return v.toString(16);
     });
 };
-export default function UpdatePackage({ id }: { id: string }) {
+export default function EditPackage({ packageId }: { packageId: string }) {
+
+    console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ packageId:", packageId)
+
+
+    const [updatePackage] = useUpdatePackageMutation()
+
     const [form] = Form.useForm();
 
     const uuid = generateUUID();
