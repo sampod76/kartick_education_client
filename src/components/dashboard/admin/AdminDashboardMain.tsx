@@ -6,6 +6,7 @@ import Courses from '@/components/Home/coureses/Courses';
 import CardLineChart from './chart/BarChart';
 import BarChart from './chart/BarChart';
 import LineChart from './chart/LineChart';
+import PieChart from './chart/PirChart';
 // import Courses from '@/components/Home/coureses/Courses';
 const EnrollStatistics = dynamic(() => import('@/components/dashboard/admin/EnrollStatistics'), {
   ssr: false, // Disable server-side rendering
@@ -25,6 +26,7 @@ export default function AdminDashboardMain() {
       <div className="grid grid-cols-2 gap-3 bg-slate-50 mt-7">
         <BarChart />
         <LineChart />
+        <PieChart />
       </div>
       {/* <Courses query={{}}/> */}
 
