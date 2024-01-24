@@ -34,9 +34,8 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   const screens = useBreakpoint();
   return (
     <Link
-      href={`/course/milestone/${course?._id}?category=${
-        course?.category?._id || course?.category
-      }`}
+      href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title}&courseName=${course?.title}&category=${course?.category?._id || course?.category}`}
+
       className="min-w-xs max-w-xs sm:min-w-sm sm:max-w-sm md:w-full mx-auto  rounded-md shadow-md bg-white relative"
     >
       <div className="overflow-hidden">
@@ -50,9 +49,9 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               src={course?.img || AllImage?.notFoundImage}
               // onLoadingComplete={(img) => console.log(img.naturalWidth)}
               alt="Sunset in the mountains"
-              // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
+            // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
 
-              // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
+            // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
             />
           </div>
           <div className="hover:bg-transparent   rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>

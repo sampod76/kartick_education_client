@@ -17,23 +17,25 @@ const BannerSection = () => {
       }}
     >
       <section className="w-full lg:w-[60%] px-5 py-[3rem]">
-        <div className=" font-[800] text-black uppercase space-y-3">
-          <h1 className="text-[1.7rem]  lg:text-[4vw] xl:text-7xl font-normal">
+        <div className=" text-black  uppercase space-y-3 ">
+          <h1 className=" text-[24px]  lg:text-[50px] leading-[1] xl:text-[64px]
+              font-[700] lg:font-[800]">
             Feel bored or anxious
           </h1>
-          <h1 className="text-[1.6rem]  lg:text-[4vw] xl:text-7xl">
+          <h1 className="text-[24px]  lg:text-[50px] leading-[1] xl:text-[64px]
+              font-[700] lg:font-[800]">
             About{" "}
             <span className="text-secondary whitespace-nowrap">
               Math or English ?
             </span>
           </h1>
         </div>
-        <p className="mt-[2rem] text-[1.3rem]  lg:text-5xl leading-[2rem]">
+        <p className="mt-[2rem] text-[24px] lg:text-[48px] xl:text-[56px] leading-[1.3]">
           Overcome challenges with
-          <span className="text-secondary  text-[1.3rem]  lg:text-5xl">
-            {" "}
-            iBlossomLearn{" "}
-          </span>{" "}
+          <span className="text-secondary  text-[24px] lg:text-[48px] xl:text-[56px] mx-1 leading-[1.5]">
+
+            iBlossomLearn
+          </span>
           classes. Your adventure in learning awaits!
         </p>
         <div className="mt-2 md:mt-[3rem] max-h-[3.8rem] flex">

@@ -30,9 +30,9 @@ const CoursesTab = () => {
 
   const cousesData = data?.data || [];
   const activeClass =
-    " rounded-[5px] bg-blue-600 text-white text-[18px] font-bold p-1 m-0 ring-4";
+    " rounded-[5px] bg-blue-600 text-white text-[14px] lg:text-[18px] font-bold p-1 m-0 ring-4";
   const inactiveClass =
-    " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[18px] font-bold p-1";
+    " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[14px] lg:text-[18px] font-bold p-1";
 
   const tabsItems2: TabsProps["items"] = cousesData?.map(
     (singleData: Record<string, any>, index: number | string) => ({
@@ -55,12 +55,12 @@ const CoursesTab = () => {
   tabsItems2.unshift({
     label: (
       <button
-        className={activeTabKey === String("011") ? activeClass : inactiveClass}
+        className={activeTabKey === String("011allCourses") ? activeClass : inactiveClass}
       >
         <p className="px-1"> {"All"}</p>
       </button>
     ),
-    key: String("011"),
+    key: String("011allCourses"),
     children: <Courses query={{ status: "active" }} />,
   });
 
@@ -72,8 +72,8 @@ const CoursesTab = () => {
     const errorType: any = error;
     Error_model_hook(
       errorType?.message ||
-        //@ts-ignore
-        data?.data?.message
+      //@ts-ignore
+      data?.data?.message
     );
     console.log(error, data?.data);
   }
@@ -89,12 +89,12 @@ const CoursesTab = () => {
         <TopBarLoading />
       ) : (
         <Tabs
-          defaultActiveKey="011"
+          defaultActiveKey="011allCourses"
           // centered
           animated
           onChange={handleTabClick}
           items={tabsItems2}
-          style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto" }}
+          style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", padding: screens.sm ? "0" : "1em" }}
           onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       )}

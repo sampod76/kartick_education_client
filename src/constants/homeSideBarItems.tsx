@@ -16,12 +16,12 @@ const homeSideItems = () => {
   const homeSIdeItems: MenuProps["items"] = [
     {
       label: (
-        <Link  href="/">
+        <Link href="/">
           Home
         </Link>
       ),
       key: "1",
-      icon: <HomeOutlined  />,
+      icon: <HomeOutlined />,
     },
     {
       label: (
@@ -30,7 +30,7 @@ const homeSideItems = () => {
         </Link>
       ),
       key: "/learning",
-      icon: <EditOutlined  />,
+      icon: <EditOutlined />,
     },
     {
       label: (
@@ -39,7 +39,7 @@ const homeSideItems = () => {
         </Link>
       ),
       key: "/subscription",
-      icon: <EuroOutlined  />,
+      icon: <EuroOutlined />,
     },
     {
       label: (
@@ -48,7 +48,7 @@ const homeSideItems = () => {
         </Link>
       ),
       key: "/assessment",
-      icon: <ControlOutlined  />,
+      icon: <ControlOutlined />,
     },
     {
       label: (
@@ -57,35 +57,44 @@ const homeSideItems = () => {
         </Link>
       ),
       key: "/analysis",
-      icon: <FundOutlined  />,
+      icon: <FundOutlined />,
     },
 
     {
       label: (
-        <Link  href="/contact">
+        <Link href="/contact">
           Contact
         </Link>
       ),
       key: "/contact",
-      icon: <ContactsFilled  />,
+      icon: <ContactsFilled />,
     },
     {
       label: (
-        <Link  href="/">
+        <Link href="/">
           About
         </Link>
       ),
       key: "/About",
-      icon: <UserOutlined  />,
+      icon: <UserOutlined />,
     },
     {
       label: (
-        <Link  href="/dashboard">
+        <Link className="text-base font-thin font-serif" href="/subscription">
+          Membership
+        </Link>
+      ),
+      key: "/Membership",
+      icon: <EuroOutlined />,
+    },
+    {
+      label: (
+        <Link href="/dashboard">
           Dashboard
         </Link>
       ),
       key: "/dashboard",
-      icon: <PicCenterOutlined  />,
+      icon: <PicCenterOutlined />,
     },
   ];
 
