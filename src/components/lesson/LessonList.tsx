@@ -88,7 +88,7 @@ export default function LessonList({
 
   // ! for match seller category
 
-  // console.log(soldSellerPackage, 'soldSellerPackagesPackage')
+  console.log(soldSellerPackage, 'soldSellerPackagesPackage')
 
   // const IsSoldCategory = soldSellerPackage?.data?.some((item: any) =>
   //   item?.sellerPackageDetails?.categories.some(

@@ -23,7 +23,7 @@ const generateUUID = () => {
 };
 export default function EditPackage({ packageId }: { packageId: string }) {
 
-    console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ packageId:", packageId)
+    // console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ packageId:", packageId)
     const { data: defaultPackageData = {}, isLoading: defaultLoading } = useGetSinglePackageQuery(
         packageId,
         {
@@ -120,7 +120,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
 
     };
 
-    console.log(initialPackageFormData, 'initialPackageFormData..........')
+    // console.log(initialPackageFormData, 'initialPackageFormData..........')
     // console.log('defaultCategory7', defaultCategory[1].value)
     return (
         <div className="bg-white shadow-lg p-5 rounded-xl">
