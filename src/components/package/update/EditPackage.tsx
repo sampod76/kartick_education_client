@@ -87,6 +87,29 @@ export default function EditPackage({ packageId }: { packageId: string }) {
         }
     };
 
+    if (defaultLoading) {
+        return (
+            <div>
+                Loading ..........
+            </div>
+        )
+    }
+
+    const initialPackageFormData = {
+        title: defaultPackageData?.title,
+        type: defaultPackageData?.type,
+        monthly: {
+            price: 100,
+            each_student_increment: 10,
+        },
+        membership: defaultPackageData?.membership?.title
+
+
+
+    };
+
+    console.log(initialPackageFormData, 'initialPackageFormData')
+
     return (
         <div className="bg-white shadow-lg p-5 rounded-xl">
             <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
@@ -103,15 +126,16 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                     padding: "8px",
                     borderRadius: "5px",
                 }}
-                autoComplete="off"
+                // autoComplete="off"
+                initialValues={initialPackageFormData}
                 layout="vertical"
             >
                 <Form.Item>
-                    <Form.Item name="title" label="Title">
+                    <Form.Item name="title" label="Title" >
                         <Input size="large" placeholder="Please enter package title" />
                     </Form.Item>
                     <Space>
-                        <Form.Item name="type" label="Select Types" initialValue={defaultPackageData?.type}>
+                        <Form.Item name="type" label="Select Types" >
                             {/* <LabelUi>Select Types </LabelUi> */}
                             <Select
                                 style={{ maxWidth: "100%" }}
