@@ -56,7 +56,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
 
         const packageData: Partial<IPackageData> = {
             membership: {
-                title: values.membership?.title,
+                title: values.membership,
                 uid: uuid,
             } || defaultPackageData?.membership,
             title: values.title || defaultPackageData?.title,
@@ -67,11 +67,11 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             categories: values.categories || defaultPackageData?.categories,
 
         };
-        console.log("Received values of form:", values, 'annnnnnnnnnnd', packageData);
-        // console.log("🚀 ~ onFinish ~ packageData:", packageData)
-
+        console.log("Received values of form:", values,);
+        console.log("🚀 ~ onFinish ~ packageData:", packageData)
+        // return
         try {
-            const res = await updatePackage({ id: packageId, packageData }).unwrap();
+            const res = await updatePackage({ id: packageId, data: packageData }).unwrap();
             // console.log(res);
             if (res?.success == false) {
                 Error_model_hook(res?.message);
@@ -95,8 +95,9 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     }
 
     const defaultCategory = defaultPackageData?.categories?.map((select: any) => ({
+        category: select?.category,
         label: select?.label,
-        value: select?.category,
+
     }));
 
     const initialPackageFormData = {
@@ -119,7 +120,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
 
     };
 
-    console.log(initialPackageFormData, 'initialPackageFormData')
+    console.log(initialPackageFormData, 'initialPackageFormData..........')
     // console.log('defaultCategory7', defaultCategory[1].value)
     return (
         <div className="bg-white shadow-lg p-5 rounded-xl">
@@ -158,7 +159,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                                 <Option value="multiple_select">Multiple Select</Option>
                             </Select>
                         </Form.Item>
-                        <Form.Item name={["membership", "title"]} label="Select Membership">
+                        <Form.Item name={"membership"} label="Select Membership" initialValue={defaultPackageData?.membership?.title}>
                             {/* <LabelUi>Select Membership </LabelUi> */}
                             <Select
                                 style={{ width: "100%" }}
@@ -325,7 +326,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                                                 <Select
                                                     // onChange={handleChange}
                                                     // onBlur={() => handleChange(restField.value, name)}
-                                                    // defaultValue={defaultCategory[name]?.value}
+                                                    defaultValue={defaultCategory[name]?.category}
                                                     loading={isLoading}
                                                     style={{ width: "" }}
                                                     placeholder="Select category"
