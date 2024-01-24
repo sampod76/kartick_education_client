@@ -30,19 +30,21 @@ export default function BarChart() {
 
             const context = chartRef.current.getContext("2d");
 
-            const label = chartData.map((items:any) => items.firstName);
-            const data = chartData.map((items:any) => items.weight);
+            const label = chartData.map((items: any) => items.firstName);
+            const data = chartData.map((items: any) => items.weight);
 
             const newChart = new Chart(context, {
                 type: "bar",
+                // ! data functions of the chart
                 data: {
                     labels: label,
                     datasets: [
                         {
                             // barPercentage: 0.9,
                             // barThickness: 50,
-                            label: "Info",
-                            data: data,
+                            label: "Student Quiz Marks",
+
+                            data: data,   // ! data  of the chart
                             backgroundColor: [
                                 "rgb(255, 99, 132, 0.2)",
                                 "rgb(255, 159, 64, 0.2)",
@@ -66,11 +68,12 @@ export default function BarChart() {
                         },
                     ],
                 },
+                // ! options of the chart
                 options: {
                     plugins: {
                         title: {
                             display: true,
-                            text: "Weight Name Info",
+                            text: "Student Quiz Answer Rate",
                         },
                     },
                     layout: {
@@ -92,6 +95,8 @@ export default function BarChart() {
         }
     }, [chartData]);
 
+
+    // ! for download charts
     function handleDownload() {
         if (chartRef.current) {
             const file = chartRef.current.toDataURL("image/png");
@@ -102,11 +107,11 @@ export default function BarChart() {
         }
     }
     return (
-        <div style={{ position: "relative", width: "90vw", height: "80vh" }}>
+        <div style={{ position: "relative" }} className="h-[80vh w-[40vw] ">
             <canvas ref={chartRef} />
             <button
                 onClick={handleDownload}
-                className="rounded-md bg-amber-600 bg-opacity-25 p-3 m-4 border border-amber-800"
+                className="rounded-md bg-primary bg-opacity-25 p-3  border border-secondary"
             >
                 Download Chart
             </button>

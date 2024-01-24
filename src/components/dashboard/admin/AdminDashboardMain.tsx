@@ -3,8 +3,9 @@ import React from 'react';
 import TopDashStatistics from './TopDashStatistics';
 import dynamic from "next/dynamic";
 import Courses from '@/components/Home/coureses/Courses';
-import CardLineChart from './chart/MonthlyStatistics';
-import BarChart from './chart/MonthlyStatistics';
+import CardLineChart from './chart/BarChart';
+import BarChart from './chart/BarChart';
+import LineChart from './chart/LineChart';
 // import Courses from '@/components/Home/coureses/Courses';
 const EnrollStatistics = dynamic(() => import('@/components/dashboard/admin/EnrollStatistics'), {
   ssr: false, // Disable server-side rendering
@@ -21,8 +22,10 @@ export default function AdminDashboardMain() {
       <EnrollStatistics />
 
       {/* <Course query={{}}/> */}
-      <BarChart />
-
+      <div className="grid grid-cols-2 gap-3 bg-slate-50 mt-7">
+        <BarChart />
+        <LineChart />
+      </div>
       {/* <Courses query={{}}/> */}
 
       {/* <Courses query={{}}/> */}
