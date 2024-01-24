@@ -6,7 +6,7 @@ import Courses from '@/components/Home/coureses/Courses';
 import CardLineChart from './chart/BarChart';
 import BarChart from './chart/BarChart';
 import LineChart from './chart/LineChart';
-import PieChart from './chart/PirChart';
+import PieChart from './chart/PieChart';
 // import Courses from '@/components/Home/coureses/Courses';
 const EnrollStatistics = dynamic(() => import('@/components/dashboard/admin/EnrollStatistics'), {
   ssr: false, // Disable server-side rendering

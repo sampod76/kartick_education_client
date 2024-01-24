@@ -51,9 +51,26 @@ export default function PieChart() {
             chartRef.current.chart = newChart;
         }
     }, []);
+
+    // ! for download charts
+    function handleDownload() {
+        if (chartRef.current) {
+            const file = chartRef.current.toDataURL("image/png");
+            const link = document.createElement("a");
+            link.href = file;
+            link.download = "barChart.png";
+            link.click();
+        }
+    }
     return (
-        <div style={{ position: "relative" }} className="h-[50vh] w-[40vw]">
+        <div  className="relative h-[35rem w-[40vw]">
             <canvas ref={chartRef} />
+            <button
+                onClick={handleDownload}
+                className="rounded-md bg-primary bg-opacity-25 p-3  border border-secondary"
+            >
+                Download Chart
+            </button>
         </div>
     );
 }
