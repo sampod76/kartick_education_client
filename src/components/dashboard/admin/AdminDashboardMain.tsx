@@ -23,7 +23,7 @@ export default function AdminDashboardMain() {
       <EnrollStatistics />
 
       {/* <Course query={{}}/> */}
-      <div className="grid grid-cols-2 gap-3 bg-slate-50 mt-7">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 bg-slate-50 mt-7">
         <BarChart />
         <LineChart />
         <PieChart />

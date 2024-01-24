@@ -107,7 +107,7 @@ export default function BarChart() {
         }
     }
     return (
-        <div style={{ position: "relative" }} className="h-[80vh w-[40vw] ">
+        <div style={{ position: "relative" }} className="h-[80vh w-[40vw ">
             <canvas ref={chartRef} />
             <button
                 onClick={handleDownload}

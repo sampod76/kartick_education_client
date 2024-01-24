@@ -63,7 +63,7 @@ export default function PieChart() {
         }
     }
     return (
-        <div  className="relative h-[35rem w-[40vw]">
+        <div  className="relative h-[35rem] w-[40vw">
             <canvas ref={chartRef} />
             <button
                 onClick={handleDownload}
