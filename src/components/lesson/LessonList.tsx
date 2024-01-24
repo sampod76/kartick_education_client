@@ -24,6 +24,7 @@ import ModalComponent from "../Modal/ModalComponents";
 import LoginPage from "../Login/LoginPage";
 import { usePathname } from "next/navigation";
 import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
+import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourse";
 export default function LessonList({
   moduleId,
   moduleData,
@@ -34,40 +35,58 @@ export default function LessonList({
   // console.log(moduleId, "moduleId from LessonList");
   const pathname = usePathname();
   const userInfo = getUserInfo() as any;
-  console.log(userInfo)
+
   ////! for purchased data of a user
   const categoryId = moduleData?.milestone?.course?.category?._id;
 
+  const { data: purchasedData } = useGetPurchasePackageQuery(
+    {
+      status: "active",
+      isDelete: ENUM_YN.NO,
+      limit: 99999,
+      user: userInfo?.id || "65aa1b19d1661e1c9a9e5135", ///is not valid user
+      category: categoryId,
+    },
+    { skip: userInfo.role === "student" ? true : false }
+  );
+  const { data: soldSellerPackage } = useGetAllPackageAndCourseQuery(
+    {
+      isDelete: ENUM_YN.NO,
+      status: "active",
+      limit: 99999,
+    },
+    { skip: userInfo.role === "student" ? false : true }
+  );
 
-  const { data: purchasedData } = useGetPurchasePackageQuery({
+  // any user by the course and chack this
+  const { data: userToAllCourse } = useGetCheckPurchasesCourseQuery({
+    user: userInfo.id,
+    course: moduleData.course,
+    isDelete: ENUM_YN.NO,
     status: "active",
     limit: 99999,
-    user: userInfo?.id || "65aa1b19d1661e1c9a9e5135",
-    category: categoryId,
-  }, { skip: userInfo.role === "student" ? true : false });
-  const { data: soldSellerPackage } = useGetAllPackageAndCourseQuery({
-    status: "active",
-    limit: 99999,
-  }, { skip: userInfo.role === "student" ? false : true })
-  console.log(soldSellerPackage)
-  let IsExistCategory: any = false
+  });
+
+  let IsExistCategoryOrCourse: any = false;
   if (userInfo.role !== "student") {
-    IsExistCategory = purchasedData?.data?.some((item: any) =>
+    IsExistCategoryOrCourse = purchasedData?.data?.some((item: any) =>
       item.categories.some(
         (category: any) => category.category._id === categoryId
       )
     );
   } else {
-    IsExistCategory = soldSellerPackage?.data?.some((item: any) =>
+    IsExistCategoryOrCourse = soldSellerPackage?.data?.some((item: any) =>
       item?.sellerPackageDetails?.categories.some(
         (categoryData: any) => categoryData.category === categoryId
       )
     );
   }
 
+  if (userToAllCourse?.data?.length) {
+    IsExistCategoryOrCourse = true;
+  }
+
   // ! for match seller category
-
-
 
   // console.log(soldSellerPackage, 'soldSellerPackagesPackage')
 
@@ -76,12 +95,6 @@ export default function LessonList({
   //     (categoryData: any) => categoryData.category === categoryId
   //   )
   // );
-
-  console.log("🚀 ~ file: LessonList.tsx:70 ~ IsSoldCategory:", IsExistCategory)
-
-
-
-
 
   // console.log(IsExistCategory,'IsExistCategoryIsExistCategoryIsExistCategory purchased the category')
   //! for Course options selection
@@ -95,7 +108,6 @@ export default function LessonList({
     module: moduleId,
     ...lesson_query,
   });
-  // console.log("🚀 ~ LessonList ~ lessonData:", lessonData);
 
   // console.log(
   //   "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
@@ -116,7 +128,7 @@ export default function LessonList({
     return <LoadingSkeleton />;
   }
   const playerVideoFunc = (lesson: any) => {
-    if (IsExistCategory) {
+    if (IsExistCategoryOrCourse) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {
         const check = vimeoUrlChack(lesson?.videos[0]?.link);
         if (check) {
@@ -161,7 +173,7 @@ export default function LessonList({
               <EyeOutlined style={{ fontSize: "18px" }} />
             </button>
 
-            {IsExistCategory &&
+            {IsExistCategoryOrCourse &&
               lessonQuizData &&
               lessonQuizData?.map((quiz: any) => {
                 // console.log(quiz)
@@ -188,7 +200,7 @@ export default function LessonList({
               </div>
               {/* {lesson?.details && CutText(lesson?.details, 200)} */}
               <EllipsisMiddle suffixCount={3} maxLength={300}>
-                {IsExistCategory && lesson?.short_description}
+                {IsExistCategoryOrCourse && lesson?.short_description}
               </EllipsisMiddle>
             </p>
           </div>

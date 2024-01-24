@@ -3,7 +3,7 @@ import AdminDashboardMain from "@/components/dashboard/admin/AdminDashboardMain"
 import OrderSummery from "@/components/dashboard/seller/OrderSummery";
 import SellerCourse from "@/components/dashboard/seller/SellerCourse";
 import SellerDashboardMain from "@/components/dashboard/seller/SellerDashboardMain";
-import StudentActiveCourse from "@/components/dashboard/student/StudentActiveCourse";
+import StudentActivePackageToCourse from "@/components/dashboard/student/StudentActivePackageToCourse";
 import StudentDashboardMain from "@/components/dashboard/student/StudentDashboardMain";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import dynamic from "next/dynamic";

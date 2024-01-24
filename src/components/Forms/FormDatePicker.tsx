@@ -17,7 +17,7 @@ const FormDatePicker = ({
   label,
   onChange,
   size = 'large',
-  disablePrevious = true,
+  disablePrevious = false,
   specificDates,
 }: UMDatePikerProps) => {
   const { control, setValue } = useFormContext();

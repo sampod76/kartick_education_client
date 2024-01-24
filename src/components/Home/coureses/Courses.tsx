@@ -20,12 +20,14 @@ interface ICourseItemType {
 }
 
 const Courses = ({ query }: { query: ICourseItemType }) => {
+  console.log("🚀 ~ Courses ~ query:", query)
   const [currentPage, setCurrentPage] = useState(1);
   const [pageLimitCount, setPageCountLimit] = useState(10);
   const queryAll: Record<string, any> = {};
   queryAll["status"] = ENUM_STATUS.ACTIVE;
   queryAll["limit"] = pageLimitCount;
   queryAll["page"] = currentPage;
+  
 
   queryAll["sortOrder"] = ENUM_SORT_ORDER.ASC;
   const onShowSizeChange: PaginationProps["onShowSizeChange"] = (
@@ -44,7 +46,7 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
       queryAll[key] = query[key];
     }
   }
-
+  console.log("🚀 ~ Courses ~ queryAll:", queryAll)
   const { data, isLoading, error } = useGetAllCourseQuery({ ...queryAll });
   const courseData = data?.data || [];
   // console.log("🚀 ~ Courses ~ courseData:", courseData)
