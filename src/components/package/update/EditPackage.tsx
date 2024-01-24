@@ -20,7 +20,7 @@ const generateUUID = () => {
         return v.toString(16);
     });
 };
-export default function UpdatePackage() {
+export default function UpdatePackage({ id }: { id: string }) {
     const [form] = Form.useForm();
 
     const uuid = generateUUID();
