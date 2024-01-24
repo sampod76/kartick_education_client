@@ -46,7 +46,7 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
       queryAll[key] = query[key];
     }
   }
-  console.log("🚀 ~ Courses ~ queryAll:", queryAll)
+  // console.log("🚀 ~ Courses ~ queryAll:", queryAll)
   const { data, isLoading, error } = useGetAllCourseQuery({ ...queryAll });
   const courseData = data?.data || [];
   // console.log("🚀 ~ Courses ~ courseData:", courseData)
