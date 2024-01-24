@@ -20,24 +20,23 @@ import {
   HomeOutlined,
   ShoppingCartOutlined,
   ContactsOutlined,
-  UserSwitchOutlined
+  UserSwitchOutlined,
 } from "@ant-design/icons";
+import { PiPackageDuotone } from "react-icons/pi";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 import { GiJetPack } from "react-icons/gi";
 export const dashboardItems = (role: string, setCollapsed?: any) => {
-
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: (
-        <div  >
+        <div>
           <Link
             onClick={() => (setCollapsed ? setCollapsed(false) : null)}
             href={`/dashboard`}
           >
             Dashboard
           </Link>
-
         </div>
       ),
       key: `/dashboard`,
@@ -47,12 +46,11 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       label: "Profile",
       key: "profile",
       icon: <ProfileOutlined />,
-      
+
       children: [
         {
           label: (
             <Link
-            
               onClick={() => (setCollapsed ? setCollapsed(false) : null)}
               href={`/profile`}
             >
@@ -73,7 +71,6 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         {
           label: (
             <Link
-
               onClick={() => (setCollapsed ? setCollapsed(false) : null)}
               href={`/${role}/category/create`}
             >
@@ -456,6 +453,18 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       icon: <CalendarOutlined />,
       key: `/${role}/activeCourse`,
     },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/activePackage`}
+        >
+          Active Package
+        </Link>
+      ),
+      icon: <PiPackageDuotone />,
+      key: `/${role}/activePackage`,
+    },
 
     {
       label: (
@@ -576,7 +585,6 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       key: `/${role}/support`,
     },
   ];
-
 
   if (role === USER_ROLE.TRAINER) return trainerSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;

@@ -15,12 +15,13 @@ import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackage
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 
-export default function StudentActiveCourse() {
+export default function StudentActivePackageToCourse() {
   const userInfo = getUserInfo() as any;
+
   const router = useRouter();
   // !auto detection userid
   const { data, isLoading, error } = useGetAllPackageAndCourseQuery(
-    // { user: userInfo.id },
+    { user: userInfo.id },
     // { skip: !Boolean(userInfo.id) }
     {}
   );
@@ -31,28 +32,17 @@ export default function StudentActiveCourse() {
     return <LoadingSkeleton number={20} />;
   }
   const courseData = data?.data || [];
-  if (
-    error ||
-    //@ts-ignore
-    data?.data?.success === false
-  ) {
+  if (error) {
     const errorType: any = error;
-    Error_model_hook(
-      errorType?.message ||
-        //@ts-ignore
-        data?.data?.message
-    );
- 
+    Error_model_hook(errorType?.message);
   }
 
   const navigatePackage = (getPackage: any[]) => {
     //@ts-ignore
     const data = getPackage || []; // Example nested array of objects
-
     const stringifiedData = JSON.stringify(data);
     const encodedData = encodeURIComponent(stringifiedData);
-    const href = `/${userInfo?.role}/activeCourse?data=${encodedData}`;
-
+    const href = `/${userInfo?.role}/package_category_and_course?data=${encodedData}`;
     router.push(href);
   };
   return (

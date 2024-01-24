@@ -27,13 +27,15 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 const { Text } = Typography;
 
 const SIngleCourse = ({ course }: { course: ICourseData }) => {
+ 
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   // console.log(course);
   const screens = useBreakpoint();
   return (
     <Link
-      href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title}&courseName=${course?.title}&category=${course?.category?._id}`}
+      href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title}&courseName=${course?.title}&category=${course?.category?._id || course?.category}`}
+
       className="min-w-xs max-w-xs sm:min-w-sm sm:max-w-sm md:w-full mx-auto  rounded-md shadow-md bg-white relative"
     >
       <div className="overflow-hidden">

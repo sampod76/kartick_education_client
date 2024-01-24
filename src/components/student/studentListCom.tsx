@@ -94,7 +94,7 @@ const StudentListCom = ({
           img = "";
         }
 
-        console.log("🚀 ~ img:", img);
+      
 
         return (
           <>

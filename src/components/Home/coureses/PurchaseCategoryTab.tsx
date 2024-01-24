@@ -14,12 +14,11 @@ const PurchaseCategoryTab = () => {
     // console.log(key);
   };
   const searchParams = useSearchParams();
-  const encodedData:any = searchParams.get("data");
+  const encodedData: any = searchParams.get("data");
   //=================================
   const decodedData = decodeURIComponent(encodedData);
   const data = JSON.parse(decodedData);
-  console.log("🚀 ~ PurchaseCategoryTab ~ data:", data)
-
+  console.log("🚀 ~ PurchaseCategoryTab ~ data:", data);
 
   const activeClass =
     " rounded-[5px] bg-blue-600 text-white text-[18px] font-bold p-1 m-0 ring-4";
@@ -34,12 +33,21 @@ const PurchaseCategoryTab = () => {
             activeTabKey === String(index) ? activeClass : inactiveClass
           }
         >
-          <p className="px-1"> {singleData?.title}</p>
+          <p className="px-1">
+            {" "}
+            {singleData?.title || singleData?.category?.title}
+          </p>
         </button>
       ),
       key: String(index),
       children: (
-        <Courses query={{ status: "active", category: singleData?._id }} />
+        <Courses
+          query={{
+            status: "active",
+            // singleData?.category?._id must be first because it  is first
+            category: singleData?.category?._id || singleData?._id,
+          }}
+        />
       ),
     })
   );

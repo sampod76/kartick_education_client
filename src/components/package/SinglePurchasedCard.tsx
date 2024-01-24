@@ -1,3 +1,4 @@
+"use client";
 import { AllImage } from "@/assets/AllImge";
 import { IPurchasedData } from "@/types/purchasedType";
 
@@ -10,15 +11,30 @@ import dayjs from "dayjs";
 import { Button } from "antd";
 import ModalComponent from "../Modal/ModalComponents";
 import AddStudentComponent from "../student/addStudentByAuthor/addStudentComponent";
+import { getUserInfo } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 export default function SInglePurchased({
   packages,
 }: {
   packages: IPurchasedData;
 }) {
+  const router = useRouter();
+  const userInfo = getUserInfo() as any;
+  console.log("🚀 ~ packages:", packages);
+  const navigatePackage = (getPackage: any[]) => {
+    //@ts-ignore
+    const data = getPackage || []; // Example nested array of objects
+    const stringifiedData = JSON.stringify(data);
+    const encodedData = encodeURIComponent(stringifiedData);
+    const href = `/${userInfo?.role}/package_category_and_course?data=${encodedData}`;
+    router.push(href);
+  };
   return (
     <div
-    // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
+      // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
+      onClick={() => navigatePackage(packages?.categories)}
+      className="cursor-pointer"
     >
       <div className="p-2">
         <div className="flex w-full justify-center items-center bg-white shadow-lg rounded-lg overflow-hidden p-2">

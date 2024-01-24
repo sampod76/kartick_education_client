@@ -19,6 +19,7 @@ export default function SellerPurchased() {
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
   }
+  console.log("🚀 ~ SellerPurchased ~ purchasedData:", purchasedData);
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">

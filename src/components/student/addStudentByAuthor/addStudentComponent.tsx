@@ -51,9 +51,7 @@ const CreateStudentComponent = ({
       Error_model_hook(err?.message || err?.data);
     }
   };
-  if (isLoading) {
-    message.loading("Loading...");
-  }
+ 
 
   // const defaultValues = {
   //   blood,
@@ -262,6 +260,7 @@ const CreateStudentComponent = ({
                   name="dateOfBirth"
                   label="Date of birth"
                   size="large"
+                  disablePrevious={false}
                 />
               </Col>
 
@@ -271,7 +270,7 @@ const CreateStudentComponent = ({
             </Row>
           </div>
           <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="default">
+            <Button loading={isLoading} htmlType="submit" type="default">
               Create
             </Button>
           </div>
