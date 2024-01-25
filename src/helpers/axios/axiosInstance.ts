@@ -1,4 +1,5 @@
 import { authKey } from "@/constants/storageKey";
+import { removeUserInfo } from "@/services/auth.service";
 
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 import {
@@ -55,6 +56,10 @@ instance.interceptors.response.use(
       setToLocalStorage(authKey, accessToken);
       return instance(config);
     } else {
+      console.log(error);
+      if (error?.response?.status === 403 || error?.response?.status === 401) {
+        removeUserInfo(authKey);
+      }
       let responseObject: any = {
         statusCode: error?.response?.status || 500,
         message: "Something went wrong",

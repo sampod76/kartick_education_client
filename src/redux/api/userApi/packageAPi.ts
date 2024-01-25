@@ -21,7 +21,6 @@ export const packageApi = baseApi.injectEndpoints({
         return {
           data: response,
           meta,
-          success: true,
         };
       },
       providesTags: [tagTypes.package],

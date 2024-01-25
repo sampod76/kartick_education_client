@@ -26,6 +26,7 @@ import { PiPackageDuotone } from "react-icons/pi";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 import { GiJetPack } from "react-icons/gi";
+import { CiLogin } from "react-icons/ci";
 export const dashboardItems = (role: string, setCollapsed?: any) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
@@ -60,6 +61,11 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
           key: `/${role}/profile`,
         },
       ],
+    },
+    {
+      label: "Login history",
+      key: "Login history",
+      icon: <CiLogin />,
     },
   ];
   const trainerSidebarItems: MenuProps["items"] = [

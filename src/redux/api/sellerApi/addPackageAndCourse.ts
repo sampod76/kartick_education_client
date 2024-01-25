@@ -22,7 +22,6 @@ export const addPackageAndCourse = baseApi.injectEndpoints({
         return {
           data: response,
           meta,
-          success: true,
         };
       },
       providesTags: [tagTypes.addPackageAndcourseTag],
