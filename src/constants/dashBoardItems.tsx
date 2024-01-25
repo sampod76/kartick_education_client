@@ -55,17 +55,17 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
               onClick={() => (setCollapsed ? setCollapsed(false) : null)}
               href={`/profile`}
             >
-              Your Profile
+              👩‍🏫 Your Profile
             </Link>
           ),
           key: `/${role}/profile`,
         },
+        {
+          label: <Link href={`/loginHistory`}>Login history</Link>,
+          key: "Login history",
+          icon: <CiLogin />,
+        },
       ],
-    },
-    {
-      label: "Login history",
-      key: "Login history",
-      icon: <CiLogin />,
     },
   ];
   const trainerSidebarItems: MenuProps["items"] = [
