@@ -214,7 +214,7 @@ export default function QuizQuestionCard({
             name="radiogroup"
             disabled={
               isDefaultValue?.is_time_up ||
-              currentAnswer?.singleQuiz ===
+                currentAnswer?.singleQuiz ===
                 submittedDefaultData?.singleQuiz?._id
                 ? true
                 : false
@@ -234,28 +234,26 @@ export default function QuizQuestionCard({
                 <Radio
                   key={option?._id}
                   value={option?._id}
-                  // defaultChecked={
-                  //   submittedDefaultData?.submitAnswers[0] === option?._id &&
-                  //   true
-                  // }
+                // defaultChecked={
+                //   submittedDefaultData?.submitAnswers[0] === option?._id &&
+                //   true
+                // }
                 >
                   <div
                     className={`border-2 rounded-xl p-2 w-full 
                     
-                  ${
-                    submittedDefaultData?.submitAnswers[0] === option?._id
-                      ? "bg-slate-600 text-white"
-                      : ""
-                  }
-                  ${
-                    submittedDefaultData?.singleQuiz
-                      ? isCorrect
-                        ? " border-2 border-green-600"
-                        : isSubmitted === option?._id
-                        ? "border-2 border-red-500 "
+                  ${submittedDefaultData?.submitAnswers[0] === option?._id
+                        ? "bg-slate-600 text-white"
                         : ""
-                      : ""
-                  }
+                      }
+                  ${submittedDefaultData?.singleQuiz
+                        ? isCorrect
+                          ? " border-2 border-green-600"
+                          : isSubmitted === option?._id
+                            ? "border-2 border-red-500 "
+                            : ""
+                        : ""
+                      }
                   `}
                   >
                     <p>{option?.title}</p>
@@ -286,7 +284,7 @@ export default function QuizQuestionCard({
             // disabled={isDefaultValue?.is_time_up ? true : false}
             disabled={
               isDefaultValue?.is_time_up ||
-              currentAnswer?.singleQuiz ===
+                currentAnswer?.singleQuiz ===
                 submittedDefaultData?.singleQuiz?._id
                 ? true
                 : false
@@ -319,19 +317,17 @@ export default function QuizQuestionCard({
                   <div
                     className={`border-2 rounded-xl p-2 w-full 
                     
-                      ${
-                        submittedDefaultData?.submitAnswers[0] === option?._id
-                          ? "bg-slate-600 text-white"
-                          : ""
+                      ${submittedDefaultData?.submitAnswers[0] === option?._id
+                        ? "bg-slate-600 text-white"
+                        : ""
                       }
-                      ${
-                        submittedDefaultData?.singleQuiz
-                          ? isCorrect
-                            ? " border-2 border-green-600"
-                            : isSubmitted === option?._id
+                      ${submittedDefaultData?.singleQuiz
+                        ? isCorrect
+                          ? " border-2 border-green-600"
+                          : isSubmitted === option?._id
                             ? "border-2 border-red-500 "
                             : ""
-                          : ""
+                        : ""
                       }
                       `}
                   >

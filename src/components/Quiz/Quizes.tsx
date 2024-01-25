@@ -31,10 +31,10 @@ export default function QuizeSinglePage({
   quiz_query["quiz"] = quizeId;
   const { data: allSingleQuizeData, isLoading } = useGetAllSingleQuizQuery({
     ...quiz_query,
-
     quiz: quizeId,
   });
-  console.log("🚀 ~ allSingleQuizeData:", allSingleQuizeData);
+  console.log('quizeIdquizeId', quizeId, "🚀 ~ allSingleQuizeData:", allSingleQuizeData);
+
 
 
   const handleFinishQuiz = () => {
@@ -70,14 +70,14 @@ export default function QuizeSinglePage({
         /> 
         */}
       </div>
-      
-        <div className="w-full  mx-auto my-5 lg:my-0 ">
-          <QuizTestPage
-            quizData={allSingleQuizeData?.data || []}
-            quizId={quizeId}
-          />
 
-          {/* <div className="flex flex-col gap-3">
+      <div className="w-full  mx-auto my-5 lg:my-0 ">
+        <QuizTestPage
+          quizData={allSingleQuizeData?.data || []}
+          quizId={quizeId}
+        />
+
+        {/* <div className="flex flex-col gap-3">
             {allSingleQuizeData?.data?.map((quiz: any, index: number) => (
               
               <Card key={quiz?._id} className="mb-4">
@@ -139,7 +139,7 @@ export default function QuizeSinglePage({
               </Button>
             </div>
           </div> */}
-    
+
       </div>
     </div>
   );

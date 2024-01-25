@@ -25,12 +25,12 @@ export default function QuizTestPage({
   const [currentAnswer, setCurrentAnswer] = useState<any>(null);
   // const [userResponses, setUserResponses] = useState<any[]>([]);
 
-  const [submitQuiz] = useSubmitQuizMutation();
+  const [submitQuiz, { isLoading: submitLoading }] = useSubmitQuizMutation();
   ///! for submit quiz
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   //! for getQUiz
-  // console.log(quizId,'quizIdquizIdquizIdquizIdquizId')
+  console.log(quizId,'quizIdquizIdquizIdquizIdquizId')
   const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
   const userSubmitData = quizAnswerData;
@@ -66,6 +66,7 @@ export default function QuizTestPage({
         console.log(res, "response");
         if (res?.success === false) {
           Error_model_hook(res?.message);
+
         } else {
           // Check if submitted answers are correct
           const isCorrect = checkAnswers(res);
@@ -77,6 +78,11 @@ export default function QuizTestPage({
               "Opps.. you are submitted wrong answers. Please continue.."
             );
           }
+          if (currentStep + 1 !== quizData?.length) {
+            // console.log('equal............' )
+            return setCurrentStep((prevStep) => prevStep + 1);
+          }
+
         }
       } catch (err: any) {
         console.error(err);
@@ -92,17 +98,20 @@ export default function QuizTestPage({
     submitAnswer();
     // console.log(currentStep,"qu !== ?.length",quizAnswerData?.length)
 
-    if (currentStep + 1 !== quizData?.length) {
-      // console.log('equal............' )
-      return setCurrentStep((prevStep) => prevStep + 1);
-    }
+    // if (currentStep + 1 !== quizData?.length) {
+    //   console.log('equal............' )
+    //   return setCurrentStep((prevStep) => prevStep + 1);
+    // }
   };
 
   const handleFinishQuiz = () => {
     // console.log(userAnswers);
     // submitAnswer();
-    message.success("Quiz Finished successfully!");
-  };
+
+    message.success("Quiz Finished successfully!")
+
+  }
+
 
   // ! For disabled Next Button
   const isDisabledNext = useMemo(() => {
@@ -123,7 +132,7 @@ export default function QuizTestPage({
     return disabled;
   }, [currentAnswer, currentStep, submittedDefaultData, userAnswers]);
 
-  // console.log(quizData?.length, "and", quizAnswerData?.length);
+  console.log(quizData?.length, "and", quizAnswerData);
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
@@ -138,8 +147,8 @@ export default function QuizTestPage({
             currentAnswer={currentAnswer}
             setCurrentAnswer={setCurrentAnswer}
             submittedDefaultData={submittedDefaultData}
-            // setUserResponses={setUserResponses}
-            // userResponses={userResponses}
+          // setUserResponses={setUserResponses}
+          // userResponses={userResponses}
           />
         )}
 
