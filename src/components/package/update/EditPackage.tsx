@@ -103,18 +103,9 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     const initialPackageFormData = {
         title: defaultPackageData?.title,
         type: defaultPackageData?.type,
-        monthly: {
-            price: 100,
-            each_student_increment: 10,
-        },
-        biannual: {
-            price: 100,
-            each_student_increment: 10,
-        },
-        yearly: {
-            price: 100,
-            each_student_increment: 10,
-        },
+        monthly: defaultPackageData?.monthly,
+        biannual: defaultPackageData?.biannual,
+        yearly: defaultPackageData?.yearly,
         membership: defaultPackageData?.membership?.title,
         categories: defaultCategory
 
