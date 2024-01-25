@@ -172,14 +172,14 @@ export default function QuizQuestionCard({
             submittedDefaultData={submittedDefaultData}
           />
         </div>
-        <div className="absolute right-0 top-0  p-2">
+        <div className="absolute right-0 top-0 p-2">
           {submittedDefaultData?.singleQuiz ? (
             isCorrectAnswer ? (
               <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
                 Correct
               </button>
             ) : (
-              <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#ff000091] via-[#a01212] to-[#690303]">
+                <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#ff000091] via-[#a01212] to-[#880202] hover:shadow-red-500 hover:scale-105">
                 Incorrect
               </button>
             )

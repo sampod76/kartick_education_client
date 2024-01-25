@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { Button, message } from "antd";
+import { Button, Modal, message } from "antd";
 import QuizQuestionCard from "./QuizQuestionCard";
 import { useAppSelector } from "@/redux/hooks";
 import {
@@ -30,7 +30,7 @@ export default function QuizTestPage({
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   //! for getQUiz
-  console.log(quizId, 'quizIdquizIdquizIdquizIdquizId')
+  // console.log(quizId, 'quizIdquizIdquizIdquizIdquizId')
   const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
   const userSubmitData = quizAnswerData;
@@ -111,13 +111,7 @@ export default function QuizTestPage({
     // }
   };
 
-  const handleFinishQuiz = () => {
-    // console.log(userAnswers);
-    // submitAnswer();
 
-    message.success("Quiz Finished successfully!")
-
-  }
 
 
   // ! For disabled Next Button
@@ -139,7 +133,72 @@ export default function QuizTestPage({
     return disabled;
   }, [currentAnswer, currentStep, submittedDefaultData, userAnswers]);
 
-  console.log(quizData?.length, "and", quizAnswerData);
+  // console.log(quizData?.length, "and", quizAnswerData);
+
+  // ! for result Show modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const handleFinishQuiz = () => {
+    // console.log(userAnswers);
+    // submitAnswer();
+    // message.success("Quiz Finished successfully!")
+    showModal()
+
+  }
+
+  // ! for result Show Function
+  interface AnalysisResult {
+    correctAnswers: string[];
+    incorrectAnswers: string[];
+  }
+  // console.log('userSubmitData', userSubmitData)
+  function analyzeQuizAnswers(submittedData: any): AnalysisResult {
+    const correctAnswersSet: Set<string> = new Set();
+    const incorrectAnswersSet: Set<string> = new Set();
+
+    submittedData?.forEach((submission: any) => {
+      const { singleQuiz, submitAnswers } = submission;
+
+      if (singleQuiz && submitAnswers) {
+        if (singleQuiz?.type === "select" || singleQuiz?.type === "multiple_select") {
+          // For "select" and "multiple_select" types
+          singleQuiz?.answers?.forEach((answer: any) => {
+            if (submitAnswers?.includes(answer?._id)) {
+              if (answer?.correct) {
+                correctAnswersSet.add(singleQuiz?._id);
+              } else {
+                incorrectAnswersSet.add(singleQuiz?._id);
+              }
+            }
+          });
+        }
+      }
+    });
+
+    const correctAnswers = Array.from(correctAnswersSet);
+    const incorrectAnswers = Array.from(incorrectAnswersSet);
+
+    return { correctAnswers, incorrectAnswers };
+  }
+
+
+  // console.log(userSubmitData)
+
+  // Example usage with the provided submittedData
+  const result = analyzeQuizAnswers(userSubmitData);
+  console.log('result', result);
+
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
@@ -193,6 +252,20 @@ export default function QuizTestPage({
           )}
         </div>
 
+
+        {/* //! For result container UI */}
+
+        <Modal title="Your Result" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <div className="">
+            <h2 className="text-center my-3">Total Quiz {quizData?.length}</h2>
+            <h2 className="text-[1rem] font-serif  ">
+              Total Correct Answer : <span className="text-green-600">{result?.correctAnswers?.length}</span>
+            </h2>
+            <h2 className="text-[1rem] font-serif  ">
+              Total InCorrect Answer : <span className="text-red-600">{result?.incorrectAnswers?.length}</span>
+            </h2>
+          </div>
+        </Modal>
         {/*         
         <Steps
         current={currentStep}
