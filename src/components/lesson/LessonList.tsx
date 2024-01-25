@@ -139,7 +139,7 @@ export default function LessonList({
       }
     } else {
       return (
-        <div className="text-lg text-red-500 font-medium">
+        <div className="text-base lg:text-lg text-start text-red-500 font-medium">
           This contents is privet. First purchase this course.
           <ModalComponent buttonText="login">
             <LoginPage redirectLink={pathname} />
@@ -165,9 +165,9 @@ export default function LessonList({
       return {
         key: lesson?._id,
         label: (
-          <div className="text-[18px]  md:px-1 font-semibold   py-2 shadow-1 ">
+          <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
             <button className="flex justify-between w-full">
-              <h2 className="text-base font-normal">
+              <h2 className="text-base text-start font-normal">
                 <span>Lesson {index + 1}: </span> {lesson?.title}
               </h2>
               <EyeOutlined style={{ fontSize: "18px" }} />
@@ -194,7 +194,7 @@ export default function LessonList({
         ),
         children: (
           <div>
-            <p className="text-center">
+            <p className="">
               <div className="flex justify-center items-center my-2">
                 {playerVideoFunc(lesson)}
               </div>
@@ -214,9 +214,9 @@ export default function LessonList({
 
   return (
     <div
-      className="w-full  lg:w-[60vw] mx-auto "
+      className="w-full  lg:w-[60vw] mx-auto px-0 lg:px-2 "
       style={{
-        padding: "10px 5vw",
+        // padding: "10px 5vw",
       }}
     >
       <Collapse

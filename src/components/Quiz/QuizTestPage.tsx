@@ -30,7 +30,7 @@ export default function QuizTestPage({
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   //! for getQUiz
-  console.log(quizId,'quizIdquizIdquizIdquizIdquizId')
+  console.log(quizId, 'quizIdquizIdquizIdquizIdquizId')
   const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
   const userSubmitData = quizAnswerData;
@@ -70,7 +70,10 @@ export default function QuizTestPage({
         } else {
           // Check if submitted answers are correct
           const isCorrect = checkAnswers(res);
-
+          if (currentStep + 1 !== quizData?.length) {
+            // console.log('equal............')
+            return setCurrentStep((prevStep) => prevStep + 1);
+          }
           if (isCorrect) {
             Success_model("Answer is Correct");
           } else {
@@ -90,6 +93,10 @@ export default function QuizTestPage({
       }
     } else {
       // message.error("Already submitted the answer");
+      if (currentStep + 1 !== quizData?.length) {
+        // console.log('equal............')
+        return setCurrentStep((prevStep) => prevStep + 1);
+      }
     }
   };
 
