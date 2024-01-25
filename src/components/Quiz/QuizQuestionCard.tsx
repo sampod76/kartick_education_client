@@ -162,7 +162,7 @@ export default function QuizQuestionCard({
 
   return (
     <div>
-      <div key={quiz?._id} className={`m-4 w-full`}>
+      <div key={quiz?._id} className={`m-4 w-full relative `}>
         <div className="text-center mt-4 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
@@ -172,26 +172,27 @@ export default function QuizQuestionCard({
             submittedDefaultData={submittedDefaultData}
           />
         </div>
+        <div className="absolute right-0 top-0  p-2">
+          {submittedDefaultData?.singleQuiz ? (
+            isCorrectAnswer ? (
+              <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
+                Correct
+              </button>
+            ) : (
+              <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#ff000091] via-[#a01212] to-[#690303]">
+                Incorrect
+              </button>
+            )
+          ) : (
+            ""
+          )}
+        </div>
         <div className="flex justify-between items-center my-2 pr-4">
           <p className={`lg:text-lg font-[550] mb-2 text-base mx-2`}>
             <TextToSpeech text={quiz?.title} />
             Question {index + 1} : {quiz?.title}
           </p>
-          <div className="">
-            {submittedDefaultData?.singleQuiz ? (
-              isCorrectAnswer ? (
-                <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
-                  Correct
-                </button>
-              ) : (
-                <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#ff000091] via-[#a01212] to-[#690303]">
-                  Incorrect
-                </button>
-              )
-            ) : (
-              ""
-            )}
-          </div>
+
         </div>
         <div className="flex flex-wrap mx-5">
           {quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
