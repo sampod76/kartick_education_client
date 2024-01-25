@@ -3,7 +3,6 @@ import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "@/redux/tag-types";
 
-
 const LOGIN_HISTORY = "/login_history";
 
 export const loginHistoryApi = baseApi.injectEndpoints({
@@ -34,24 +33,6 @@ export const loginHistoryApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.LoginHistory],
     }),
-    // create a new academic department
-    addLoginHistory: build.mutation({
-      query: (data) => ({
-        url: LOGIN_HISTORY,
-        method: "POST",
-        data,
-      }),
-      invalidatesTags: [tagTypes.LoginHistory, tagTypes.categoryChildren],
-    }),
-    // update ac department
-    updateLoginHistory: build.mutation({
-      query: ({ data, id }) => ({
-        url: `${LOGIN_HISTORY}/${id}`,
-        method: "PATCH",
-        data: data,
-      }),
-      invalidatesTags: [tagTypes.LoginHistory],
-    }),
 
     // delete ac department
     deleteLoginHistory: build.mutation({
@@ -65,9 +46,7 @@ export const loginHistoryApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useAddLoginHistoryMutation,
   useDeleteLoginHistoryMutation,
   useGetAllLoginHistoryQuery,
   useGetSingleLoginHistoryQuery,
-  useUpdateLoginHistoryMutation,
 } = loginHistoryApi;

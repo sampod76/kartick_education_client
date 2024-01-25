@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UMTable from "../ui/UMTable";
 import { useDebounced } from "@/redux/hooks";
-import { Dropdown, Menu, Space, message } from "antd";
+import { Button, Dropdown, Menu, Space, message } from "antd";
 import Link from "next/link";
+
 import {
   Error_model_hook,
   Success_model,
@@ -12,12 +13,17 @@ import {
 
 import dayjs from "dayjs";
 import { getUserInfo } from "@/services/auth.service";
-import { useGetAllLoginHistoryQuery } from "@/redux/api/public/loginHistory";
+import { useGetAllLoginHistoryQuery } from "@/redux/api/public/loginHistoryApi";
 import { FaWindows } from "react-icons/fa6";
 import { MdDevicesOther } from "react-icons/md";
+import GetCookies from "../Utlis/GetCookies";
+import { useUserLogOutMutation } from "@/redux/api/auth/authApi";
+import { ENUM_YN } from "@/constants/globalEnums";
+
 export default function LoginHistory() {
   const userInfo = getUserInfo() as any;
   const query: Record<string, any> = {};
+  const [refreshToken, setRefreshToken] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -29,9 +35,20 @@ export default function LoginHistory() {
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
   query["user"] = userInfo?.id;
+  query["isDelete"] = ENUM_YN.NO;
 
   const { data = [], isLoading } = useGetAllLoginHistoryQuery({ ...query });
-  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+  const [logOutHistory, { isLoading: LogoutLoading }] = useUserLogOutMutation();
+
+  useEffect(() => {
+    GetCookies()
+      .then((res: any) => {
+        setRefreshToken(res?.value);
+      })
+      .catch(() => {
+        setRefreshToken("");
+      });
+  }, []);
 
   //@ts-ignore
   const loginHistoryData = data?.data || [];
@@ -103,41 +120,15 @@ export default function LoginHistory() {
       fixed: "right",
       render: (record: any) => (
         // console.log(object);
-        <>
-          <Space size="middle">
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.Item key="view">
-                    <Link
-                      href={`/${userInfo?.role}/package/details/${record._id}`}
-                    >
-                      View
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item key="edit">
-                    <Link
-                      href={`/${userInfo?.role}/package/edit/${record._id}`}
-                    >
-                      Edit
-                    </Link>
-                  </Menu.Item>
-
-                  <Menu.Item
-                    key="delete"
-                    onClick={() => {
-                      handleDelete(record._id);
-                    }}
-                  >
-                    Delete
-                  </Menu.Item>
-                </Menu>
-              }
-            >
-              <a>Action</a>
-            </Dropdown>
-          </Space>
-        </>
+        <div className={`${refreshToken === record?.token && "hidden"}`}>
+          <Button
+            loading={!refreshToken}
+            onClick={() => handleLogout(record?._id)}
+            style={{ marginRight: "5px", background: "red", color: "white" }}
+          >
+            Log out
+          </Button>
+        </div>
       ),
       width: 100,
     },
@@ -159,21 +150,20 @@ export default function LoginHistory() {
     setSortOrder("");
     setSearchTerm("");
   };
-  const handleDelete = (id: string) => {
-    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
+  const handleLogout = (id: string) => {
+    confirm_modal(`Are you sure you want to Logout`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          const res = await logOutHistory({ id, data: {} });
 
-          const res = { success: false, message: "" };
-
-          console.log(res, "response for delete Package");
+          //@ts-ignore
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
+            //@ts-ignore
             Error_model_hook(res?.message);
           } else {
-            Success_model("Package Successfully Deleted");
+            Success_model("Successfully Logout");
           }
         } catch (error: any) {
           message.error(error.message);

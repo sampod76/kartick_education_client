@@ -11,7 +11,16 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: loginData,
       }),
-      invalidatesTags:[tagTypes.student]
+      invalidatesTags: [tagTypes.student],
+    }),
+    userLogOut: build.mutation({
+      query: ({ id, data }) => ({
+        url: `${AUTH_URL}/log-out-history/${id}`,
+        method: "POST",
+        data: {},
+        withCredentials: true,
+      }),
+      invalidatesTags: [tagTypes.LoginHistory],
     }),
     getProfile: build.query({
       query: () => ({
@@ -28,20 +37,22 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.student],
     }),
-      forgetPassword: build.mutation({
+    forgetPassword: build.mutation({
       query: (data) => ({
         url: `${AUTH_URL}/forgot-password`,
         method: "POST",
         data: data,
       }),
-      invalidatesTags:[tagTypes.student]
+      invalidatesTags: [tagTypes.student],
     }),
   }),
+  overrideExisting: true
 });
 
 export const {
   useUserLoginMutation,
   useGetProfileQuery,
   useUpdateRoleMutation,
-  useForgetPasswordMutation
+  useForgetPasswordMutation,
+  useUserLogOutMutation,
 } = authApi;
