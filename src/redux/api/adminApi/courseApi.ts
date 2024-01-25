@@ -22,7 +22,6 @@ export const courseApi = baseApi.injectEndpoints({
         return {
           data: response,
           meta,
-          success: true,
         };
       },
       providesTags: [tagTypes.course],

@@ -28,7 +28,7 @@ async ({ url, method, data, params, contentType }) => {
       headers: {
         "Content-Type": contentType || "application/json",
       },
-      withCredentials: true,
+      // withCredentials: true,
     });
     return result;
   } catch (axiosError) {

@@ -10,7 +10,6 @@ export const AdminApi = baseApi.injectEndpoints({
       query: (data) => {
         // console.log(data, "Admin");
         return {
-
           url: "/users/create-admin",
 
           method: "POST",
