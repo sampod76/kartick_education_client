@@ -18,7 +18,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();
   // const userLoggedIn = USER_ROLE.ADMIN;
 
-  const userInfo:any = getUserInfo();
+  const userInfo: any = getUserInfo();
   // console.log("🚀 ~ DashboardLayout ~ userInfo:", userInfo)
   // console.log(userInfo);
   const router = useRouter();
@@ -44,7 +44,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         }}
       >
         <Space>
-          <Spin  size="large"></Spin>
+          <Spin size="large"></Spin>
         </Space>
       </Row>
     );
@@ -61,13 +61,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           placement="left"
           onClose={() => setCollapsed(false)}
           open={collapsed}
+          style={{
+            background: "#001529",
+            color: "white"
+          }}
+
         >
           <Menu
+            theme="dark"
             // className="bg-white"
-            style={{ backgroundColor: "#1D2327" }}
+            style={{ backgroundColor: "#", color: "white" }}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={dashboardItems(userInfo?.role,setCollapsed)}
+            items={dashboardItems(userInfo?.role, setCollapsed)}
           />
         </Drawer>
       ) : (
@@ -97,8 +103,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 // export default DashboardLayout;
 
 export default dynamic(() => Promise.resolve(DashboardLayout), {
-   ssr: false,
- });
+  ssr: false,
+});
 
 // "use client";
 // import Contents from "@/components/ui/Contents";
