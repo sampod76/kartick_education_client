@@ -11,6 +11,7 @@ import UpdateProfile from "@/components/profile/UpdateProfile";
 import UserProfile from "@/components/profile/UserProfile";
 import ProfileTabSection from "@/components/profile/ProfileTabSection";
 import SellerMainProfile from "@/components/profile/seller/SellerMainProfile";
+import AdminMainProfile from "@/components/profile/admin/AdminMainProfile";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -19,7 +20,7 @@ const ProfileTemplate = () => {
   const [update, setUpdate] = useState(false);
   // console.log(update);
   const { data = {}, isLoading } = useGetProfileQuery("");
-console.log(data,'data profile');
+  console.log(data, 'data profile');
   const userData = data
   if (isLoading) {
     return <LoadingForDataFetch />;
@@ -84,11 +85,16 @@ console.log(data,'data profile');
           </div>
         </div>
       )} */}
-      <UserProfile userData={userData}/>
-{
-  userData?.role ==="seller"&&
-       <SellerMainProfile/>
-}
+      <UserProfile userData={userData} />
+      {
+        userData?.role === "seller" &&
+        <SellerMainProfile />
+      }
+      {
+        userData?.role === "admin" &&
+        <AdminMainProfile />
+      }
+
     </section>
   );
 };

@@ -76,7 +76,7 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
   return (
     <div>
       <CountdownCircleTimer
-        isPlaying={currentData?.is_time_up ? false : true}
+        isPlaying={(submittedDefaultData?.singleQuiz || currentData?.is_time_up) ? false : true}
         duration={
           currentData?.usedTime ? currentData?.usedTime : time_duration / 1000
         } // convert milliseconds to seconds
@@ -86,11 +86,11 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
         size={120}
         strokeWidth={6}
         isSmoothColorTransition
-        // onUpdate={(remainingTime) => {
-        //     if (remainingTime !== updatedTime) {
-        //       setUpdatedTime(remainingTime);
-        //     }
-        //   }}
+      // onUpdate={(remainingTime) => {
+      //     if (remainingTime !== updatedTime) {
+      //       setUpdatedTime(remainingTime);
+      //     }
+      //   }}
       >
         {({ remainingTime }) => formatTime(remainingTime)}
       </CountdownCircleTimer>

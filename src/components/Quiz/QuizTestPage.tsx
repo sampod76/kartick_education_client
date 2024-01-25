@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { Button, message } from "antd";
+import { Button, Modal, message } from "antd";
 import QuizQuestionCard from "./QuizQuestionCard";
 import { useAppSelector } from "@/redux/hooks";
 import {
@@ -25,12 +25,12 @@ export default function QuizTestPage({
   const [currentAnswer, setCurrentAnswer] = useState<any>(null);
   // const [userResponses, setUserResponses] = useState<any[]>([]);
 
-  const [submitQuiz] = useSubmitQuizMutation();
+  const [submitQuiz, { isLoading: submitLoading }] = useSubmitQuizMutation();
   ///! for submit quiz
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   //! for getQUiz
-  // console.log(quizId,'quizIdquizIdquizIdquizIdquizId')
+  // console.log(quizId, 'quizIdquizIdquizIdquizIdquizId')
   const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
   const userSubmitData = quizAnswerData;
@@ -66,10 +66,14 @@ export default function QuizTestPage({
         console.log(res, "response");
         if (res?.success === false) {
           Error_model_hook(res?.message);
+
         } else {
           // Check if submitted answers are correct
           const isCorrect = checkAnswers(res);
-
+          if (currentStep + 1 !== quizData?.length) {
+            // console.log('equal............')
+            return setCurrentStep((prevStep) => prevStep + 1);
+          }
           if (isCorrect) {
             Success_model("Answer is Correct");
           } else {
@@ -77,6 +81,11 @@ export default function QuizTestPage({
               "Opps.. you are submitted wrong answers. Please continue.."
             );
           }
+          if (currentStep + 1 !== quizData?.length) {
+            // console.log('equal............' )
+            return setCurrentStep((prevStep) => prevStep + 1);
+          }
+
         }
       } catch (err: any) {
         console.error(err);
@@ -84,6 +93,10 @@ export default function QuizTestPage({
       }
     } else {
       // message.error("Already submitted the answer");
+      if (currentStep + 1 !== quizData?.length) {
+        // console.log('equal............')
+        return setCurrentStep((prevStep) => prevStep + 1);
+      }
     }
   };
 
@@ -92,17 +105,14 @@ export default function QuizTestPage({
     submitAnswer();
     // console.log(currentStep,"qu !== ?.length",quizAnswerData?.length)
 
-    if (currentStep + 1 !== quizData?.length) {
-      // console.log('equal............' )
-      return setCurrentStep((prevStep) => prevStep + 1);
-    }
+    // if (currentStep + 1 !== quizData?.length) {
+    //   console.log('equal............' )
+    //   return setCurrentStep((prevStep) => prevStep + 1);
+    // }
   };
 
-  const handleFinishQuiz = () => {
-    // console.log(userAnswers);
-    // submitAnswer();
-    message.success("Quiz Finished successfully!");
-  };
+
+
 
   // ! For disabled Next Button
   const isDisabledNext = useMemo(() => {
@@ -123,7 +133,72 @@ export default function QuizTestPage({
     return disabled;
   }, [currentAnswer, currentStep, submittedDefaultData, userAnswers]);
 
-  // console.log(quizData?.length, "and", quizAnswerData?.length);
+  // console.log(quizData?.length, "and", quizAnswerData);
+
+  // ! for result Show modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const handleFinishQuiz = () => {
+    // console.log(userAnswers);
+    // submitAnswer();
+    // message.success("Quiz Finished successfully!")
+    showModal()
+
+  }
+
+  // ! for result Show Function
+  interface AnalysisResult {
+    correctAnswers: string[];
+    incorrectAnswers: string[];
+  }
+  // console.log('userSubmitData', userSubmitData)
+  function analyzeQuizAnswers(submittedData: any): AnalysisResult {
+    const correctAnswersSet: Set<string> = new Set();
+    const incorrectAnswersSet: Set<string> = new Set();
+
+    submittedData?.forEach((submission: any) => {
+      const { singleQuiz, submitAnswers } = submission;
+
+      if (singleQuiz && submitAnswers) {
+        if (singleQuiz?.type === "select" || singleQuiz?.type === "multiple_select") {
+          // For "select" and "multiple_select" types
+          singleQuiz?.answers?.forEach((answer: any) => {
+            if (submitAnswers?.includes(answer?._id)) {
+              if (answer?.correct) {
+                correctAnswersSet.add(singleQuiz?._id);
+              } else {
+                incorrectAnswersSet.add(singleQuiz?._id);
+              }
+            }
+          });
+        }
+      }
+    });
+
+    const correctAnswers = Array.from(correctAnswersSet);
+    const incorrectAnswers = Array.from(incorrectAnswersSet);
+
+    return { correctAnswers, incorrectAnswers };
+  }
+
+
+  // console.log(userSubmitData)
+
+  // Example usage with the provided submittedData
+  const result = analyzeQuizAnswers(userSubmitData);
+  // console.log('result', result);
+
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
@@ -138,8 +213,8 @@ export default function QuizTestPage({
             currentAnswer={currentAnswer}
             setCurrentAnswer={setCurrentAnswer}
             submittedDefaultData={submittedDefaultData}
-            // setUserResponses={setUserResponses}
-            // userResponses={userResponses}
+          // setUserResponses={setUserResponses}
+          // userResponses={userResponses}
           />
         )}
 
@@ -170,13 +245,27 @@ export default function QuizTestPage({
                 </Button>
               ) : (
                 <Button type="default" onClick={handleFinishQuiz}>
-                  Finished Already
+                  See Result
                 </Button>
               )}
             </div>
           )}
         </div>
 
+
+        {/* //! For result container UI */}
+
+        <Modal title="Your Result" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} >
+          <div className="">
+            <h2 className="text-center my-3">Total Quiz {quizData?.length}</h2>
+            <h2 className="text-[1rem] font-serif text-green-600 ">
+              Total Correct Answer : <span className="">{result?.correctAnswers?.length}</span>
+            </h2>
+            <h2 className="text-[1rem] font-serif  text-red-600">
+              Total InCorrect Answer : <span className="">{result?.incorrectAnswers?.length}</span>
+            </h2>
+          </div>
+        </Modal>
         {/*         
         <Steps
         current={currentStep}

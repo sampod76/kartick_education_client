@@ -24,7 +24,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
                 // // algorithm: true,
                 // // colorBgContainer: "#5371FF",
                 // colorPrimaryBg:"#535BE5",
-                // defaultBg:'#5371FF'
+                defaultBg: 'red'
               },
             },
           }}
