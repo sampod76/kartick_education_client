@@ -27,6 +27,7 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 const { Text } = Typography;
 
 const SIngleCourse = ({ course }: { course: ICourseData }) => {
+ console.log("🚀 ~ SIngleCourse ~ course:", course)
  
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
@@ -36,7 +37,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
     <Link
       href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title}&courseName=${course?.title}&category=${course?.category?._id || course?.category}`}
 
-      className="min-w-xs max-w-xs sm:min-w-sm sm:max-w-sm md:w-full mx-auto  rounded-md shadow-md bg-white relative"
+      className="w-[350px] md:w-full mx-auto  rounded-md shadow-md bg-white relative"
     >
       <div className="overflow-hidden">
         <div className="relative">
@@ -88,7 +89,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               {course?.duration?.length &&
                 dayjs(course?.duration[1]).format("MMM D, YYYY")}
             </span> */}
-            <CgPlayButtonO /> {course?.videos_count || 50} video
+            <CgPlayButtonO /> {course?.totalVideoSize } video
           </span>
           <span className="flex whitespace-nowrap justify-center items-center gap-1">
             <CiClock2 className="text-gray-900" />{" "}
@@ -96,7 +97,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
           </span>
           <span className="flex whitespace-nowrap justify-center items-center gap-1">
             <SVGstudentIcom className="text-gray-900" />{" "}
-            {course?.total_enroll_student || "200 students"}
+            {course?.totalEnrollStudentSize || "200 students"}
           </span>
         </div>
       </div>

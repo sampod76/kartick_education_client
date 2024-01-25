@@ -35,5 +35,6 @@ export type ICourseData = {
   //
   videos_count?:number,
   total_time_duration?:number
-  total_enroll_student?:number
+  totalEnrollStudentSize?:number
+  totalVideoSize?:number
 };
