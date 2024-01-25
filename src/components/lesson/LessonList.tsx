@@ -180,7 +180,7 @@ export default function LessonList({
                 return (
                   <Link
                     key={quiz?._id}
-                    href={`/lesson/quiz/${quiz?._id}`}
+                    href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
                     className="text-[14px] flex justify-between w-full mt-3"
                   >
                     <h2 className="text-base font-normal">

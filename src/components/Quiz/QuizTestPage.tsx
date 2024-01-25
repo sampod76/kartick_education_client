@@ -197,7 +197,7 @@ export default function QuizTestPage({
 
   // Example usage with the provided submittedData
   const result = analyzeQuizAnswers(userSubmitData);
-  console.log('result', result);
+  // console.log('result', result);
 
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
@@ -245,7 +245,7 @@ export default function QuizTestPage({
                 </Button>
               ) : (
                 <Button type="default" onClick={handleFinishQuiz}>
-                  Finished Already
+                  See Result
                 </Button>
               )}
             </div>
@@ -255,14 +255,14 @@ export default function QuizTestPage({
 
         {/* //! For result container UI */}
 
-        <Modal title="Your Result" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Modal title="Your Result" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} >
           <div className="">
             <h2 className="text-center my-3">Total Quiz {quizData?.length}</h2>
-            <h2 className="text-[1rem] font-serif  ">
-              Total Correct Answer : <span className="text-green-600">{result?.correctAnswers?.length}</span>
+            <h2 className="text-[1rem] font-serif text-green-600 ">
+              Total Correct Answer : <span className="">{result?.correctAnswers?.length}</span>
             </h2>
-            <h2 className="text-[1rem] font-serif  ">
-              Total InCorrect Answer : <span className="text-red-600">{result?.incorrectAnswers?.length}</span>
+            <h2 className="text-[1rem] font-serif  text-red-600">
+              Total InCorrect Answer : <span className="">{result?.incorrectAnswers?.length}</span>
             </h2>
           </div>
         </Modal>
