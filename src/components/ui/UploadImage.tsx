@@ -6,7 +6,7 @@ import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-
+import { Image as AntImage } from 'antd';
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result as string));
@@ -76,7 +76,17 @@ const UploadImage = ({
   );
 
   return (
-    <>
+    <div className="flex justify-start items-center gap-2">
+      {imageUrl || defaultImage ? (
+        <AntImage
+          src={imageUrl ? imageUrl : (defaultImage as string)}
+          alt="avatar"
+          style={{ width: "150px" }}
+          width={200}
+         
+          // fill
+        />
+      ) : null}
       <Upload
         name={name}
         listType="picture-card"
@@ -86,20 +96,10 @@ const UploadImage = ({
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >
-        {imageUrl || defaultImage ? (
-          <Image
-            src={imageUrl ? imageUrl : (defaultImage as string)}
-            alt="avatar"
-            style={{ width: "100px" }}
-            width={60}
-            height={60}
-            // fill
-          />
-        ) : (
-          uploadButton
-        )}
+
+        {uploadButton}
       </Upload>
-    </>
+    </div>
   );
 };
 

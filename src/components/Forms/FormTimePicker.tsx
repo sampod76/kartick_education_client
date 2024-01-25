@@ -43,6 +43,7 @@ export default function FormTimePicker({ name, label }: FormTimePickerProps) {
                 onChange={(el, value) => {
                   setValue(name, value);
                 }}
+                popupStyle={{ backgroundColor: 'black' }}
                 style={{ width: "100%" }}
               />
             </div>
