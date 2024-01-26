@@ -21,10 +21,19 @@ const ProfileTemplate = () => {
   // console.log(update);
   const { data = {}, isLoading } = useGetProfileQuery("");
   console.log(data, 'data profile');
+
+
   const userData = data
+
+  const firstName =
+    userData?.name?.firstName 
+  const lastName =
+    userData?.name?.lastName 
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
+
+
   return (
     <section>
       <div className="flex justify-end items-end">
