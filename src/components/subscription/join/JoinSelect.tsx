@@ -39,10 +39,14 @@ export default function JoinSelect({
   const deActivePlane = `w-[9rem] bg-white text-primary h-[48px] border-2 border-primary text-center px-7 py-3  font-semibold `;
 
   // console.log(plan);
-
   const quantityInputHandler = (value: number) => {
-    setQuantity(value)
-  }
+    console.log('value', value);
+    if (value >= 1) {
+      setQuantity(value);
+    } else {
+      message.error("Please choose at least 1 plan");
+    }
+  };
 
   return (
     <div className="block lg:flex justify-start gap-7 items-center">
