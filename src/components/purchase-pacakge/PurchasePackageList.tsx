@@ -39,7 +39,8 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
+import { useGetAllPurchasePackageQuery } from "@/redux/api/public/purchaseAPi";
+// import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
 export default function PurchasePackageList() {
     //
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -98,7 +99,7 @@ export default function PurchasePackageList() {
     if (!!debouncedSearchTerm) {
         query["searchTerm"] = debouncedSearchTerm;
     }
-    const { data = [], isLoading } = useGetPurchasePackageQuery({ ...query });
+    const { data = [], isLoading } = useGetAllPurchasePackageQuery({ ...query });
     // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
     //@ts-ignore

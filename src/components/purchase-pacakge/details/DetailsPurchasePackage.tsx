@@ -1,5 +1,6 @@
 "use client";
-import { useGetSinglePurchasePackageQuery } from '@/redux/api/public/paymentApi';
+
+import { useGetSinglePurchasePackageQuery } from '@/redux/api/public/purchaseAPi';
 import { IPackageCategory } from '@/types/packageType';
 import { Checkbox, Radio, Spin } from 'antd';
 import React from 'react'
