@@ -3,7 +3,7 @@ import { ICategory, IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 
 const PAYMENT_URL = "/payment";
-const PURCHASE_URL = '/purchase_packages'
+const PURCHASE_URL = "/purchase_packages";
 export const paymentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // create a new academic department
@@ -80,6 +80,15 @@ export const paymentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.userPurchaseCourse],
     }),
+    getSinglePurchasePackage: build.query({
+      query: (id: string | undefined) => {
+        return {
+          url: `${PURCHASE_URL}/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
     // update ac department
   }),
   overrideExisting: true,
@@ -90,5 +99,6 @@ export const {
   useAddPaypalPaymentMutation,
   useGetCheckPaypalPaymentQuery,
   useGetPurchasePackageQuery,
-  useAddPaypalPaymentByCourseMutation
+  useAddPaypalPaymentByCourseMutation,
+  useGetSinglePurchasePackageQuery,
 } = paymentApi;

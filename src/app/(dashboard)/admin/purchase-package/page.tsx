@@ -31,17 +31,13 @@ import {
     confirm_modal,
 } from "@/utils/modalHook";
 
-import {
-    useDeleteMilestoneMutation,
-    useGetAllMilestoneQuery,
-} from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterCourse from "@/components/dashboard/Filter/FilterCourse";
 import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { useDeletePackageMutation, useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
+
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
 
@@ -104,7 +100,7 @@ export default function PurchasePackageListPage() {
         query["searchTerm"] = debouncedSearchTerm;
     }
     const { data = [], isLoading } = useGetPurchasePackageQuery({ ...query });
-    console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+    // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
     //@ts-ignore
     const packageData = data?.data || [];
@@ -225,7 +221,7 @@ export default function PurchasePackageListPage() {
                             overlay={
                                 <Menu>
                                     <Menu.Item key="view">
-                                        <Link href={`/${userInfo?.role}/package/details/${record._id}`}>
+                                        <Link href={`/${userInfo?.role}/purchase-package/details/${record._id}`}>
                                             View
                                         </Link>
                                     </Menu.Item>
