@@ -79,6 +79,8 @@ const CourseList = () => {
   //@ts-ignore
   const meta = data?.meta;
 
+  // console.log('userInfo?.role',userInfo?.role)
+
   const handleDelete = (id: string) => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
@@ -134,7 +136,7 @@ const CourseList = () => {
     {
       title: "duration",
       dataIndex: "duration",
-      ellipsis: true,
+      // ellipsis: true,
     },
     {
       title: "level",
@@ -144,7 +146,7 @@ const CourseList = () => {
     {
       title: "Price Type",
       dataIndex: "price_type",
-      ellipsis: true,
+      // ellipsis: true,
       width: 100,
     },
     {
@@ -154,7 +156,7 @@ const CourseList = () => {
         // console.log(data);
         return data.email;
       },
-      ellipsis: true,
+      // ellipsis: true,
     },
     {
       title: "category",
@@ -185,6 +187,7 @@ const CourseList = () => {
     {
       title: "Action",
       fixed: "right",
+      width: 80,
       render: (record: any) => (
         <>
           <Space size="middle">
