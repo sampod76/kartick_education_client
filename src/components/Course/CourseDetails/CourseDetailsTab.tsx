@@ -35,7 +35,12 @@ const CourseDetailsTab = ({ CourseData }: { CourseData: ICourseData }) => {
       key: "3",
       children: <ReviewsPage />,
     },
-  ];
+  ]
+
+
+
+
+
   return (
     <div className="mt-5">
       <Tabs
