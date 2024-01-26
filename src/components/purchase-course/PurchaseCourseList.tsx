@@ -39,9 +39,9 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import { useGetAllPurchasePackageQuery } from "@/redux/api/public/purchaseAPi";
+import { useGetAllPurchaseCourseQuery, useGetAllPurchasePackageQuery } from "@/redux/api/public/purchaseAPi";
 // import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
-export default function PurchasePackageList() {
+export default function PurchaseCourseList() {
     //
     const [openDrawer, setOpenDrawer] = useState(false);
     const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -99,7 +99,7 @@ export default function PurchasePackageList() {
     if (!!debouncedSearchTerm) {
         query["searchTerm"] = debouncedSearchTerm;
     }
-    const { data = [], isLoading } = useGetAllPurchasePackageQuery({ ...query });
+    const { data = [], isLoading } = useGetAllPurchaseCourseQuery({ ...query });
     // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
     //@ts-ignore
@@ -134,13 +134,14 @@ export default function PurchasePackageList() {
     const columns = [
         {
             title: "Image",
+            dataIndex: 'course',
             render: function (data: any) {
                 return (
                     <>
                         {
                             <Image
                                 src={
-                                    data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
+                                    data?.img?.length ? data?.img : AllImage.notFoundImage
                                 }
                                 style={{ height: "50px", width: "80px" }}
                                 width={50}
@@ -155,21 +156,17 @@ export default function PurchasePackageList() {
         },
         {
             title: "Name",
-            dataIndex: "title",
+            dataIndex: ['course', "title"],
             ellipsis: true,
             // width: 90,
         },
         {
-            title: "Type",
-            dataIndex: "type",
+            title: "Price Type",
+            dataIndex: ['course', "price_type"],
             //   ellipsis: true,
             width: 130,
         },
-        {
-            title: "MemberShip",
-            dataIndex: ['membership', 'title'],
-            ellipsis: true,
-        },
+
         {
             title: "Payment",
             dataIndex: ['payment', 'platform'],
@@ -189,7 +186,7 @@ export default function PurchasePackageList() {
         ,
         {
             title: "Price",
-            dataIndex: 'purchase',
+            dataIndex: ['course', "price"],
             // ellipsis: true,
             width: 100,
             render: function (data: any) {
@@ -197,30 +194,26 @@ export default function PurchasePackageList() {
             }
 
         }
-        ,
-        {
-            title: "Expiry Date",
-            dataIndex: 'expiry_date',
-            // ellipsis: true,
-            width: 150,
-            render: function (data: any) {
-                return data && dayjs(data).format("MMM D, YYYY hh:mm A")
-            }
 
-        }
         ,
         {
             title: "PaymentStatus",
             dataIndex: 'paymentStatus',
             // ellipsis: true,
-            width: 100,
-            render: function (data: string) {
-                return <>
-                    {data === "approved" ? <button className="text-sm p-1 rounded-sm text-slate-700 bg-green-400">Approved</button> : <button className="text-sm p-1 rounded-sm text-slate-700 bg-red-400">Pending</button>
-
-                    }
-                </>
+            width: 100, render: function (data: 'approved' | 'pending' | 'reject') {
+                return (
+                    <>
+                        {data === "approved" ? (
+                            <button className="text-sm p-1 rounded-sm text-white bg-green-800">Approved</button>
+                        ) : data === 'pending' ? (
+                            <button className="text-sm p-1 rounded-sm text-white bg-red-800">Pending</button>
+                        ) : (
+                            <button className="text-sm p-1 rounded-sm text-white bg-red-800">Rejected</button>
+                        )}
+                    </>
+                );
             }
+
 
         }
         ,
@@ -244,7 +237,7 @@ export default function PurchasePackageList() {
                             overlay={
                                 <Menu>
                                     <Menu.Item key="view">
-                                        <Link href={`/${userInfo?.role}/purchase-package/details/${record._id}`}>
+                                        <Link href={`/${userInfo?.role}/purchase-course/details/${record._id}`}>
                                             View
                                         </Link>
                                     </Menu.Item>
@@ -324,8 +317,8 @@ export default function PurchasePackageList() {
                         link: `/${userInfo?.role}`,
                     },
                     {
-                        label: `Purchase Package`,
-                        link: `/${userInfo?.role}/purchase-package`,
+                        label: `Purchase Course`,
+                        link: `/${userInfo?.role}/purchase-course`,
                     },
                 ]}
             />

@@ -1,4 +1,4 @@
-import PurchasePackageList from "@/components/purchase-pacakge/PurchasePackageList";
+import PurchasePackageList from "@/components/purchase-course/PurchaseCourseList";
 
 
 export default function PurchasePackageListPage() {

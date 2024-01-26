@@ -51,13 +51,23 @@ export const paymentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.userPurchaseCourse],
     }),
+    getSinglePurchaseCourse: build.query({
+      query: (id: string | undefined) => {
+        return {
+          url: `${PURCHASE_COURSE_URL}/purchase-and-pending-courses/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
     // update ac department
   }),
-  overrideExisting: true,
+  // overrideExisting: true,
 });
 
 export const {
   useGetAllPurchasePackageQuery,
   useGetAllPurchaseCourseQuery,
   useGetSinglePurchasePackageQuery,
+  useGetSinglePurchaseCourseQuery,
 } = paymentApi;
