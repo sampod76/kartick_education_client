@@ -2,19 +2,19 @@
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import {
-  Button,
-  Drawer,
-  DrawerProps,
-  Dropdown,
-  Input,
-  Menu,
-  Space,
-  message,
+    Button,
+    Drawer,
+    DrawerProps,
+    Dropdown,
+    Input,
+    Menu,
+    Space,
+    message,
 } from "antd";
 import Link from "next/link";
 import {
 
-  ReloadOutlined,
+    ReloadOutlined,
 
 } from "@ant-design/icons";
 import { useState } from "react";
@@ -26,14 +26,14 @@ import UMModal from "@/components/ui/UMModal";
 
 import Image from "next/image";
 import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
+    Error_model_hook,
+    Success_model,
+    confirm_modal,
 } from "@/utils/modalHook";
 
 import {
-  useDeleteMilestoneMutation,
-  useGetAllMilestoneQuery,
+    useDeleteMilestoneMutation,
+    useGetAllMilestoneQuery,
 } from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterCourse from "@/components/dashboard/Filter/FilterCourse";
@@ -43,356 +43,365 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { useDeletePackageMutation, useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
+import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
 
 export default function PurchasePackageListPage() {
-  //
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
-  //
-  //----------------------------------------------------------------
-  const [category, setCategory] = useState<{ _id?: string; title?: string }>(
-    {}
-  );
-  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+    //
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
+    //
+    //----------------------------------------------------------------
+    const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+        {}
+    );
+    const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
 
-  const queryCategory: Record<string, any> = {};
-  queryCategory["children"] = "course";
-  //! for Category options selection
-  const { data: Category, isLoading: categoryLoading } =
-    useGetAllCategoryChildrenQuery({
-      ...queryCategory,
-    });
-  const categoryData: any = Category?.data;
-  //----------------------------------------------------------------
+    const queryCategory: Record<string, any> = {};
+    queryCategory["children"] = "course";
+    //! for Category options selection
+    const { data: Category, isLoading: categoryLoading } =
+        useGetAllCategoryChildrenQuery({
+            ...queryCategory,
+        });
+    const categoryData: any = Category?.data;
+    //----------------------------------------------------------------
 
-  const query: Record<string, any> = {};
+    const query: Record<string, any> = {};
 
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo
+    // const SUPER_ADMIN=USER_ROLE.ADMIN
+    const userInfo = getUserInfo() as IDecodedInfo
 
-  const [deletePackage] = useDeletePackageMutation();
+    //   const [deletePurchasePackage] = useDeletePackageMutation();
 
-  const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
-  const [filterValue, setFilterValue] = useState("");
+    const [page, setPage] = useState<number>(1);
+    const [size, setSize] = useState<number>(10);
+    const [sortBy, setSortBy] = useState<string>("");
+    const [sortOrder, setSortOrder] = useState<string>("");
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [open, setOpen] = useState<boolean>(false);
+    const [purchaseId, setpurchaseId] = useState<string>("");
+    const [filterValue, setFilterValue] = useState("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  query["status"] = "active";
-  //
-  query["category"] = category?._id;
+    query["limit"] = size;
+    query["page"] = page;
+    query["sortBy"] = sortBy;
+    query["sortOrder"] = sortOrder;
+    query["status"] = "active";
+    //
+    query["category"] = category?._id;
 
-  //
-  if (filterValue) {
-    query["category"] = filterValue;
-  }
-
-  const debouncedSearchTerm = useDebounced({
-    searchQuery: searchTerm,
-    delay: 600,
-  });
-
-  if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
-  }
-  const { data = [], isLoading } = useGetAllPackageQuery({ ...query });
-  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
-
-  //@ts-ignore
-  const packageData = data?.data || [];
-
-  //@ts-ignore
-  const meta = data?.meta;
-
-  const handleDelete = (id: string) => {
-    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-      if (res.isConfirmed) {
-        try {
-          console.log(id);
-
-          const res = await deletePackage(id).unwrap();
-
-          console.log(res, "response for delete Package");
-          if (res?.success == false) {
-            // message.success("Admin Successfully Deleted!");
-            // setOpen(false);
-            Error_model_hook(res?.message);
-          } else {
-            Success_model("Package Successfully Deleted");
-          }
-        } catch (error: any) {
-          message.error(error.message);
-        }
-      }
-    });
-  };
-
-  const columns = [
-    {
-      title: "Image",
-      render: function (data: any) {
-        return (
-          <>
-            {
-              <Image
-                src={
-                  data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
-                }
-                style={{ height: "50px", width: "80px" }}
-                width={50}
-                height={50}
-                alt="dd"
-              />
-            }
-          </>
-        );
-      },
-      width: 100,
-    },
-    {
-      title: "Name",
-      dataIndex: "title",
-      ellipsis: true,
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-      ellipsis: true,
-      width: 100,
-    },
-    {
-      title: "MemberShip",
-      dataIndex: ['membership', 'title'],
-      ellipsis: true,
-    },
-    {
-      title: "Monthly Price",
-      dataIndex: ['monthly', 'price'],
-      ellipsis: true,
-      width: 100,
-    },
-    {
-      title: "Yearly Price",
-      dataIndex: ['yearly', 'price'],
-      ellipsis: true,
-      width: 100,
-
+    //
+    if (filterValue) {
+        query["category"] = filterValue;
     }
-    ,
 
-    {
-      title: "Created at",
-      dataIndex: "createdAt",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
-    },
-    {
-      title: "Action",
-      fixed: "right",
-      render: (record: any) => (
-        // console.log(object);
-        <>
-          <Space size="middle">
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.Item key="view">
-                    <Link href={`/${userInfo?.role}/package/details/${record._id}`}>
-                      View
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item key="edit">
+    const debouncedSearchTerm = useDebounced({
+        searchQuery: searchTerm,
+        delay: 600,
+    });
+
+    if (!!debouncedSearchTerm) {
+        query["searchTerm"] = debouncedSearchTerm;
+    }
+    const { data = [], isLoading } = useGetPurchasePackageQuery({ ...query });
+    console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+
+    //@ts-ignore
+    const packageData = data?.data || [];
+
+    //@ts-ignore
+    const meta = data?.meta;
+
+    const handleDelete = (id: string) => {
+        confirm_modal(`Are you sure you want to delete`).then(async (res) => {
+            if (res.isConfirmed) {
+                // try {
+                //   console.log(id);
+
+                //   const res = await deletePurchasePackage(id).unwrap();
+
+                //   console.log(res, "response for delete Package");
+                //   if (res?.success == false) {
+                //     // message.success("Admin Successfully Deleted!");
+                //     // setOpen(false);
+                //     Error_model_hook(res?.message);
+                //   } else {
+                //     Success_model("Package Successfully Deleted");
+                //   }
+                // } catch (error: any) {
+                //   message.error(error.message);
+                // }
+            }
+        });
+    };
+
+    const columns = [
+        {
+            title: "Image",
+            render: function (data: any) {
+                return (
+                    <>
+                        {
+                            <Image
+                                src={
+                                    data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
+                                }
+                                style={{ height: "50px", width: "80px" }}
+                                width={50}
+                                height={50}
+                                alt="dd"
+                            />
+                        }
+                    </>
+                );
+            },
+            width: 100,
+        },
+        {
+            title: "Name",
+            dataIndex: "title",
+            ellipsis: true,
+        },
+        {
+            title: "Type",
+            dataIndex: "type",
+            //   ellipsis: true,
+            width: 100,
+        },
+        {
+            title: "MemberShip",
+            dataIndex: ['membership', 'title'],
+            ellipsis: true,
+        },
+        {
+            title: "Payment",
+            dataIndex: ['payment', 'platform'],
+            ellipsis: true,
+            width: 100,
+        },
+        {
+            title: "Purchased",
+            dataIndex: 'purchase',
+            // ellipsis: true,
+            width: 100,
+            render: function (data: any) {
+                return `${data?.label}/${data?.price}`
+            }
+
+        }
+        ,
+        {
+            title: "PaymentStatus",
+            dataIndex: 'paymentStatus',
+            // ellipsis: true,
+            width: 100,
+            render: function (data: string) {
+                return <>
+                    {data === "approved" ? <button className="text-sm p-1 rounded-sm text-slate-700 bg-green-400">Approved</button> : <button className="text-sm p-1 rounded-sm text-slate-700 bg-red-400">Pending</button>
+
+                    }
+                </>
+            }
+
+        }
+        ,
+
+        {
+            title: "Created at",
+            dataIndex: "createdAt",
+            render: function (data: any) {
+                return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+            },
+            sorter: true,
+        },
+        {
+            title: "Action",
+            fixed: "right",
+            render: (record: any) => (
+                // console.log(object);
+                <>
+                    <Space size="middle">
+                        <Dropdown
+                            overlay={
+                                <Menu>
+                                    <Menu.Item key="view">
+                                        <Link href={`/${userInfo?.role}/package/details/${record._id}`}>
+                                            View
+                                        </Link>
+                                    </Menu.Item>
+                                    {/* <Menu.Item key="edit">
                     <Link href={`/${userInfo?.role}/package/edit/${record._id}`}>
                       Edit
                     </Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
 
-                  <Menu.Item
-                    key="delete"
-                    onClick={() => {
-                      handleDelete(record._id);
-                    }}
-                  >
-                    Delete
-                  </Menu.Item>
-                </Menu>
-              }
-            >
-              <a>Action</a>
-            </Dropdown>
-          </Space>
-        </>
-      ),
-      width: 100,
-    },
-  ];
-  const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
-    setPage(page);
-    setSize(pageSize);
-  };
-  const onTableChange = (pagination: any, filter: any, sorter: any) => {
-    const { order, field } = sorter;
-    // console.log(order, field);
-    setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
-  };
 
-  const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
-  };
+                                </Menu>
+                            }
+                        >
+                            <a>Action</a>
+                        </Dropdown>
+                    </Space>
+                </>
+            ),
+            width: 100,
+        },
+    ];
+    const onPaginationChange = (page: number, pageSize: number) => {
+        //  // console.log("Page:", page, "PageSize:", pageSize);
+        setPage(page);
+        setSize(pageSize);
+    };
+    const onTableChange = (pagination: any, filter: any, sorter: any) => {
+        const { order, field } = sorter;
+        // console.log(order, field);
+        setSortBy(field as string);
+        setSortOrder(order === "ascend" ? "asc" : "desc");
+    };
 
-  const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
-    try {
-      const res = await deletePackage(id);
-      if (res) {
-        message.success("Package Successfully Deleted!");
-        setOpen(false);
-      }
-    } catch (error: any) {
-      message.error(error.message);
-    }
-  };
+    const resetFilters = () => {
+        setSortBy("");
+        setSortOrder("");
+        setSearchTerm("");
+    };
 
-  //---------------------------------
-  const showDrawer = () => {
-    setOpenDrawer(true);
-  };
-  const onClose = () => {
-    setOpenDrawer(false);
-  };
+    const deleteAdminHandler = async (id: string) => {
+        // console.log(id);
+        // try {
+        //   const res = await deletePurchasePackage(id);
+        //   if (res) {
+        //     message.success("Package Successfully Deleted!");
+        //     setOpen(false);
+        //   }
+        // } catch (error: any) {
+        //   message.error(error.message);
+        // }
+    };
 
-  //--------------------------------
+    //---------------------------------
+    const showDrawer = () => {
+        setOpenDrawer(true);
+    };
+    const onClose = () => {
+        setOpenDrawer(false);
+    };
 
-  return (
-    <div
-      style={{
-        boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
-      }}
-    >
-      <UMBreadCrumb
-        items={[
-          {
-            label: `${userInfo?.role}`,
-            link: `/${userInfo?.role}`,
-          },
-          {
-            label: `Package`,
-            link: `/${userInfo?.role}/package`,
-          },
-        ]}
-      />
-      <HeadingUI>Package List</HeadingUI>
-      <ActionBar>
-        <div className="block lg:flex gap-5">
-          <Input
-            size="large"
-            placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
+    //--------------------------------
+
+    return (
+        <div
             style={{
-              width: "50%",
+                boxShadow:
+                    "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                borderRadius: "1rem",
+                backgroundColor: "white",
+                padding: "1rem",
             }}
-          />
-          <FilterCourse
-            filterValue={filterValue}
-            setFilterValue={setFilterValue}
-          />
-        </div>
-        <div className="block lg:flex gap-5">
-          <Button
-            type="default"
-            style={{ marginRight: "5px" }}
-            onClick={showDrawer}
-          >
-            Filter
-          </Button>
+        >
+            <UMBreadCrumb
+                items={[
+                    {
+                        label: `${userInfo?.role}`,
+                        link: `/${userInfo?.role}`,
+                    },
+                    {
+                        label: `Package`,
+                        link: `/${userInfo?.role}/package`,
+                    },
+                ]}
+            />
+            <HeadingUI>Purchased Package List</HeadingUI>
+            <ActionBar>
+                <div className="block lg:flex gap-5">
+                    <Input
+                        size="large"
+                        placeholder="Search"
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{
+                            width: "50%",
+                        }}
+                    />
+                    <FilterCourse
+                        filterValue={filterValue}
+                        setFilterValue={setFilterValue}
+                    />
+                </div>
+                <div className="block lg:flex gap-5">
+                    <Button
+                        type="default"
+                        style={{ marginRight: "5px" }}
+                        onClick={showDrawer}
+                    >
+                        Filter
+                    </Button>
 
 
-          <Link href={`/${userInfo?.role}/package/create`}>
-            <Button type="default">Create Package</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="default"
-              onClick={resetFilters}
+                    {(!!sortBy || !!sortOrder || !!searchTerm) && (
+                        <Button
+                            style={{ margin: "0px 5px" }}
+                            type="default"
+                            onClick={resetFilters}
+                        >
+                            <ReloadOutlined />
+                        </Button>
+                    )}
+                </div>
+            </ActionBar>
+            <UMTable
+                loading={isLoading}
+                columns={columns}
+                dataSource={packageData}
+                pageSize={size}
+                totalPages={meta?.total}
+                showSizeChanger={true}
+                onPaginationChange={onPaginationChange}
+                onTableChange={onTableChange}
+                showPagination={true}
+            />
+            <UMModal
+                title="Remove Package"
+                isOpen={open}
+                closeModal={() => setOpen(false)}
+                handleOk={() => deleteAdminHandler(purchaseId)}
             >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
-      </ActionBar>
-      <UMTable
-        loading={isLoading}
-        columns={columns}
-        dataSource={packageData}
-        pageSize={size}
-        totalPages={meta?.total}
-        showSizeChanger={true}
-        onPaginationChange={onPaginationChange}
-        onTableChange={onTableChange}
-        showPagination={true}
-      />
-      <UMModal
-        title="Remove Package"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteAdminHandler(adminId)}
-      >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal>
-      <Drawer
-        title={
-          <div className="flex justify-between items-center ">
-            <p>Filter</p>{" "}
-            <button
-              onClick={onClose}
-              className="text-lg text-red-500 rounded hover:text-white px-5  hover:bg-red-600"
+                <p className="my-5">Do you want to remove this package?</p>
+            </UMModal>
+            <Drawer
+                title={
+                    <div className="flex justify-between items-center ">
+                        <p>Filter</p>{" "}
+                        <button
+                            onClick={onClose}
+                            className="text-lg text-red-500 rounded hover:text-white px-5  hover:bg-red-600"
+                        >
+                            X
+                        </button>
+                    </div>
+                }
+                placement={placement}
+                closable={false}
+                onClose={onClose}
+                open={openDrawer}
+                key={placement}
+                size="large"
             >
-              X
-            </button>
-          </div>
-        }
-        placement={placement}
-        closable={false}
-        onClose={onClose}
-        open={openDrawer}
-        key={placement}
-        size="large"
-      >
-        <SelectCategoryChildren
-          lableText="Select category"
-          setState={setCategory}
-          isLoading={categoryLoading}
-          categoryData={categoryData}
-        />
+                <SelectCategoryChildren
+                    lableText="Select category"
+                    setState={setCategory}
+                    isLoading={categoryLoading}
+                    categoryData={categoryData}
+                />
 
-        <SelectCategoryChildren
-          lableText="Select courses"
-          setState={setCourse}
-          categoryData={
-            //@ts-ignore
-            category?.courses || []
-          }
-        />
-      </Drawer>
-      ;
-    </div>
-  );
+                <SelectCategoryChildren
+                    lableText="Select courses"
+                    setState={setCourse}
+                    categoryData={
+                        //@ts-ignore
+                        category?.courses || []
+                    }
+                />
+            </Drawer>
+            ;
+        </div>
+    );
 }
