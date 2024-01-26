@@ -100,7 +100,7 @@ export default function JoinSelect({
           <input
             onChange={(e) => quantityInputHandler(Number(e.target.value))}
             type="number"
-            className="w-[3.9rem] h-[3rem] border border-slate-700 rounded-sm text-center outline-none bg-transparent"
+            className="w-[7rem] h-[3rem] border border-slate-700 rounded-sm text-center outline-none bg-transparent"
             value={quantity}
           />
           <button
