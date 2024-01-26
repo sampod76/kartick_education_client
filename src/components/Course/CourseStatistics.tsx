@@ -6,6 +6,7 @@ import videoIcon from "@/assets/Icon/video.png";
 import Image from "next/image";
 import { useGetSingleCourseModuleLessonQuizVideoSizeQuery } from "@/redux/api/adminApi/courseApi";
 
+
 const CourseStatistics = ({ courseId }: { courseId: any }) => {
   const { data, isLoading } =
     useGetSingleCourseModuleLessonQuizVideoSizeQuery(courseId);
@@ -41,6 +42,7 @@ const CourseStatistics = ({ courseId }: { courseId: any }) => {
         <h1 className="w-4 h-4 mx-auto bg-gray-200 rounded-lg animate-pulse"></h1>
       ) : allData?.quizzesSize,
     },
+
   ];
 
   return (

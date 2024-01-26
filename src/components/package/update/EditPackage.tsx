@@ -53,7 +53,6 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     // const [addPackage, { isLoading: UpdatePackageLoading }] =
     //     useAddPackageMutation();
     const onFinish = async (values: any) => {
-
         const packageData: Partial<IPackageData> = {
             membership: {
                 title: values.membership,
@@ -97,7 +96,6 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     const defaultCategory = defaultPackageData?.categories?.map((select: any) => ({
         category: select?.category,
         label: select?.label,
-
     }));
 
     const initialPackageFormData = {
