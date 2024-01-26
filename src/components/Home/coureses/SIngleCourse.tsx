@@ -27,16 +27,20 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 const { Text } = Typography;
 
 const SIngleCourse = ({ course }: { course: ICourseData }) => {
- 
+  console.log("🚀 ~ SIngleCourse ~ course:", course);
+
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   // console.log(course);
   const screens = useBreakpoint();
   return (
     <Link
-      href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title}&courseName=${course?.title}&category=${course?.category?._id || course?.category}`}
-
-      className="min-w-xs max-w-xs sm:min-w-sm sm:max-w-sm md:w-full mx-auto  rounded-md shadow-md bg-white relative"
+      href={`/course/milestone/${course?._id}?categoryName=${
+        course?.category?.title
+      }&courseName=${course?.title}&category=${
+        course?.category?._id || course?.category
+      }`}
+      className="w-[350px] md:w-full mx-auto  rounded-md shadow-md bg-white relative"
     >
       <div className="overflow-hidden">
         <div className="relative">
@@ -49,9 +53,9 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               src={course?.img || AllImage?.notFoundImage}
               // onLoadingComplete={(img) => console.log(img.naturalWidth)}
               alt="Sunset in the mountains"
-            // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
+              // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
 
-            // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
+              // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
             />
           </div>
           <div className="hover:bg-transparent   rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
@@ -88,7 +92,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               {course?.duration?.length &&
                 dayjs(course?.duration[1]).format("MMM D, YYYY")}
             </span> */}
-            <CgPlayButtonO /> {course?.videos_count || 50} video
+            <CgPlayButtonO className="mr-1"/> {course?.totalVideoSize} video
           </span>
           <span className="flex whitespace-nowrap justify-center items-center gap-1">
             <CiClock2 className="text-gray-900" />{" "}
@@ -96,7 +100,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
           </span>
           <span className="flex whitespace-nowrap justify-center items-center gap-1">
             <SVGstudentIcom className="text-gray-900" />{" "}
-            {course?.total_enroll_student || "200 students"}
+            {course?.totalEnrollStudentSize + " " + "students"}
           </span>
         </div>
       </div>

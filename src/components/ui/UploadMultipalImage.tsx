@@ -44,7 +44,7 @@ const UploadMultipalImage = ({
   const { setValue } = useFormContext();
   useEffect(() => {
     setValue(name, imagesUrl);
-  }, [imagesUrl, name, setValue]);
+  }, [imagesUrl, name]);
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>

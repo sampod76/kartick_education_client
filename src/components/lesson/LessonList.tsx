@@ -88,7 +88,7 @@ export default function LessonList({
 
   // ! for match seller category
 
-  console.log(soldSellerPackage, 'soldSellerPackagesPackage')
+  console.log(soldSellerPackage, "soldSellerPackagesPackage");
 
   // const IsSoldCategory = soldSellerPackage?.data?.some((item: any) =>
   //   item?.sellerPackageDetails?.categories.some(
@@ -120,6 +120,7 @@ export default function LessonList({
   quiz_query["isDelete"] = ENUM_YN.NO;
   const { data: QuizData } = useGetAllQuizQuery({
     status: "active",
+    isDelete:ENUM_YN.NO,
     module: moduleId,
     ...quiz_query,
   });
@@ -127,8 +128,9 @@ export default function LessonList({
   if (isLoading) {
     return <LoadingSkeleton />;
   }
-  const playerVideoFunc = (lesson: any) => {
-    if (IsExistCategoryOrCourse) {
+
+  const playerVideoFunc = (lesson: any, index?: number) => {
+    if (IsExistCategoryOrCourse || index === 0) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {
         const check = vimeoUrlChack(lesson?.videos[0]?.link);
         if (check) {
@@ -141,9 +143,9 @@ export default function LessonList({
       return (
         <div className="text-base lg:text-lg text-start text-red-500 font-medium">
           This contents is privet. First purchase this course.
-          <ModalComponent buttonText="login">
+          {/* <ModalComponent buttonText="login">
             <LoginPage redirectLink={pathname} />
-          </ModalComponent>
+          </ModalComponent> */}
         </div>
       );
     }
@@ -161,6 +163,99 @@ export default function LessonList({
 
       // console.log(lesson);
       // console.log("🚀 lessonQuizData", lessonQuizData);
+      if (IsExistCategoryOrCourse) {
+        return {
+          key: lesson?._id,
+          label: (
+            <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
+              <button className="flex justify-between w-full">
+                <h2 className="text-base text-start font-normal">
+                  <span>Lesson {index + 1}: </span> {lesson?.title}
+                </h2>
+                <EyeOutlined style={{ fontSize: "18px" }} />
+              </button>
+
+              {IsExistCategoryOrCourse &&
+                lessonQuizData &&
+                lessonQuizData?.map((quiz: any) => {
+                  // console.log(quiz)
+                  return (
+                    <Link
+                      key={quiz?._id}
+                      href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
+                      className="text-[14px] flex justify-between w-full mt-3"
+                    >
+                      <h2 className="text-base font-normal">
+                        Quiz {index + 1} : <span>{quiz?.title} </span>
+                      </h2>
+                      <LockOutlined style={{ fontSize: "18px" }} />
+                    </Link>
+                  );
+                })}
+            </div>
+          ),
+          children: (
+            <div>
+              <p className="">
+                <div className="flex justify-center items-center my-2">
+                  {playerVideoFunc(lesson)}
+                </div>
+                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+                <EllipsisMiddle suffixCount={3} maxLength={300}>
+                  {IsExistCategoryOrCourse && lesson?.short_description}
+                </EllipsisMiddle>
+              </p>
+            </div>
+          ),
+          // style: panelStyle,
+        };
+      } else {
+        return {
+          key: lesson?._id,
+          label: (
+            <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
+              <button className="flex justify-between w-full">
+                <h2 className="text-base text-start font-normal">
+                  <span>Lesson {index + 1}: </span> {lesson?.title}
+                </h2>
+                <EyeOutlined style={{ fontSize: "18px" }} />
+              </button>
+
+              {IsExistCategoryOrCourse &&
+                lessonQuizData &&
+                lessonQuizData?.map((quiz: any) => {
+                  // console.log(quiz)
+                  return (
+                    <Link
+                      key={quiz?._id}
+                      href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
+                      className="text-[14px] flex justify-between w-full mt-3"
+                    >
+                      <h2 className="text-base font-normal">
+                        Quiz {index + 1} : <span>{quiz?.title} </span>
+                      </h2>
+                      <LockOutlined style={{ fontSize: "18px" }} />
+                    </Link>
+                  );
+                })}
+            </div>
+          ),
+          children: (
+            <div>
+              <p className="">
+                <div className="flex justify-center items-center my-2">
+                  {playerVideoFunc(lesson, index)}
+                </div>
+                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+                <EllipsisMiddle suffixCount={3} maxLength={300}>
+                  {IsExistCategoryOrCourse && lesson?.short_description}
+                </EllipsisMiddle>
+              </p>
+            </div>
+          ),
+          // style: panelStyle,
+        };
+      }
 
       return {
         key: lesson?._id,
@@ -215,9 +310,11 @@ export default function LessonList({
   return (
     <div
       className="w-full  lg:w-[60vw] mx-auto px-0 lg:px-2 "
-      style={{
-        // padding: "10px 5vw",
-      }}
+      style={
+        {
+          // padding: "10px 5vw",
+        }
+      }
     >
       <Collapse
         bordered={false}

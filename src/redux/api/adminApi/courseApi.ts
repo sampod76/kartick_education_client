@@ -34,6 +34,13 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.course],
     }),
+    getSingleCourseModuleLessonQuizVideoSize: build.query({
+      query: (id: string | string[] | undefined) => ({
+        url: `${COURSE_URL}/course-modulesize-lessonsize-quizsize/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.course],
+    }),
     // create a new academic department
     addCourse: build.mutation({
       query: (data) => ({
@@ -70,4 +77,5 @@ export const {
   useGetAllCourseQuery,
   useGetSingleCourseQuery,
   useUpdateCourseMutation,
+  useGetSingleCourseModuleLessonQuizVideoSizeQuery
 } = courseApi;
