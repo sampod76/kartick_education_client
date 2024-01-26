@@ -79,6 +79,8 @@ const CourseList = () => {
   //@ts-ignore
   const meta = data?.meta;
 
+  // console.log('userInfo?.role',userInfo?.role)
+
   const handleDelete = (id: string) => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {

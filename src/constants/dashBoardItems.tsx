@@ -21,6 +21,7 @@ import {
   ShoppingCartOutlined,
   ContactsOutlined,
   UserSwitchOutlined,
+  PayCircleFilled
 } from "@ant-design/icons";
 import { PiPackageDuotone } from "react-icons/pi";
 import Link from "next/link";
@@ -425,6 +426,25 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
               href={`/${role}/package`}
             >
               Package List
+            </Link>
+          ),
+          key: `/${role}/package`,
+        },
+      ],
+    },
+    {
+      label: "Purchase Package",
+      key: "Manage-pouches-package",
+      icon: <PayCircleFilled />,
+      children: [
+
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/purchase-package`}
+            >
+              Purchase  Package List
             </Link>
           ),
           key: `/${role}/package`,
