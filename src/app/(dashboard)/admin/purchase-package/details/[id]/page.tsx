@@ -1,3 +1,4 @@
+"use client";
 import { useGetSinglePurchasePackageQuery } from '@/redux/api/public/paymentApi';
 import { IPackageCategory } from '@/types/packageType';
 import { Checkbox, Radio, Spin } from 'antd';
@@ -18,7 +19,7 @@ export default function PurchasePackageAdminDetails({ params }: { params: { id: 
     return (
         <div> <div
 
-            className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[30rem] "
+            className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[30rem] max-w-2xl mx-auto"
         >
             <span
                 className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0
@@ -40,7 +41,7 @@ export default function PurchasePackageAdminDetails({ params }: { params: { id: 
             >
                 <h3 className="text-2xl font-semibold">
                     {/* ${totalPackagePrice} */}
-                    220000
+                    $ {packages?.purchase?.price}
                 </h3>
             </div>
             <div className="px-6 py-4 mt-4 h-max ">
@@ -109,7 +110,7 @@ export default function PurchasePackageAdminDetails({ params }: { params: { id: 
                                         >
                                             <span className="text-[16px]">
                                                 {" "}
-                                                {option?.category?.title}
+                                                Category  {option?.category?.title}
                                             </span>
                                             {/* <span>{category?.title}</span> */}
                                             <span className="text-[12px] text-slate-600 ml-2">
@@ -131,6 +132,8 @@ export default function PurchasePackageAdminDetails({ params }: { params: { id: 
                                     flexDirection: "column",
                                     gap: "1rem",
                                 }}
+                            // disabled
+
                             // onChange={(value: any) => setMultipleSelect(value)}
                             >
                                 {packages?.categories?.map(
@@ -150,7 +153,7 @@ export default function PurchasePackageAdminDetails({ params }: { params: { id: 
                                         >
                                             <span className="text-[16px]">
                                                 {" "}
-                                                {option?.category?.title}
+                                                {option?.category?.title}asd
                                             </span>
                                             {/* <span>{category?.title}</span> */}
                                             <span className="text-[12px] text-slate-600 ml-2">
@@ -165,6 +168,28 @@ export default function PurchasePackageAdminDetails({ params }: { params: { id: 
                 </ul>
 
             </div>
-        </div></div>
+            <div className="text-center flex justify-between px-3">
+                <h2 className="text-center">Purchase  </h2>
+                <div className="flex text-lg text-center gap-3 justify-center">
+                    <h4>{packages?.purchase?.label}/ {packages?.purchase?.price}</h4>
+                    <span className='text-gray-600 text-sm'>Increment {packages?.purchase?.each_student_increment}</span>
+                </div>
+            </div>
+            <div className="">
+
+                <h2 className="text-center">Payment History </h2>
+
+                <div className="flex justify-between max-w-[80%] mx-auto text-gray-600 py-3">
+                    <h2>Platform : <span className='text-sm text-black'>{packages?.payment?.platform}</span></h2>
+                    <h2 className='text-sm text-start '>Payment Status {packages?.paymentStatus === "approved" ? <button className="text-sm p-1 rounded-sm text-black bg-green-400">Approved</button> : <button className="text-sm p-1 rounded-sm text-black bg-red-400">Pending</button>}</h2>
+
+                </div>
+                <h5 className='text-center '> TransactionId: {packages?.payment?.transactionId}</h5>
+
+
+            </div>
+
+        </div>
+        </div>
     )
 }

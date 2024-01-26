@@ -181,7 +181,29 @@ export default function PurchasePackageListPage() {
             // ellipsis: true,
             width: 100,
             render: function (data: any) {
-                return `${data?.label}/${data?.price}`
+                return `${data?.label}`
+            }
+
+        }
+        ,
+        {
+            title: "Price",
+            dataIndex: 'purchase',
+            // ellipsis: true,
+            width: 100,
+            render: function (data: any) {
+                return `$ ${data?.price}`
+            }
+
+        }
+        ,
+        {
+            title: "Expiry Date",
+            dataIndex: 'expiry_date',
+            // ellipsis: true,
+            width: 150,
+            render: function (data: any) {
+                return data && dayjs(data).format("MMM D, YYYY hh:mm A")
             }
 
         }
