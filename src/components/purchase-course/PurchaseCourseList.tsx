@@ -69,7 +69,7 @@ export default function PurchaseCourseList() {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllPurchasePackageQuery({ ...query });
-  console.log("🚀 ~ PurchaseCourseList ~ data:", data);
+  
   // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
   //@ts-ignore
