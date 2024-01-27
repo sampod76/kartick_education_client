@@ -21,7 +21,7 @@ export default function SInglePurchased({
 }) {
   const router = useRouter();
   const userInfo = getUserInfo() as any;
-  console.log("🚀 ~ packages:", packages);
+  // console.log("🚀 ~ packages:", packages);
   const navigatePackage = (getPackage: any[]) => {
     //@ts-ignore
     const data = getPackage || []; // Example nested array of objects
