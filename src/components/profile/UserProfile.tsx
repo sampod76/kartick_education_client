@@ -37,8 +37,11 @@ const StudentProfile = ({ userData }: { userData: any }) => {
             alt="Mountain"
           />
         </div>
-        <div className="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
-          <ImageAnt height={250} width={250} src={img} alt="User mask" />
+        <div className="mx-auto w-[180px] h-[180px] relative -mt-16 border-4 border-white rounded-full overflow-hidden">
+          <ImageAnt style={{
+            height: "180px",
+            width: "180px"
+          }} src={img} alt="User mask" />
         </div>
         <div className="text-center mt-2">
           <h2 className="font-semibold uppercase">

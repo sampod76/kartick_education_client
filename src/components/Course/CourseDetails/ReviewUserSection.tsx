@@ -7,7 +7,7 @@ export default function ReviewUserSection() {
   const [value, setValue] = useState(1);
 
   const onChange = (e: RadioChangeEvent) => {
-     //  // console.log("radio checked", e.target.value);
+    //  // console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
 
@@ -48,7 +48,7 @@ export default function ReviewUserSection() {
               />
               <div style={{}}>
                 <h1 style={{ fontSize: "18px", fontWeight: "600" }}>
-                  Sampod Debnath Nath
+                  {item?.user?.name}
                 </h1>
                 <button
                   style={{

@@ -252,7 +252,7 @@ export default function JoinPackage({
                   className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[30rem] "
                 >
                   <span
-                    className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0
+                    className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
                     ${
                       selectPackage?._id === packages?._id
                         ? "bg-secondary text-white"

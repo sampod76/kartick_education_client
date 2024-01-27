@@ -20,8 +20,8 @@ export default function JoinSelect({
     } else if (value === "yearly") {
       setPlan("yearly");
     }
-    else{
-    setPlan("biannual")
+    else {
+      setPlan("biannual")
     }
   };
   const quantityHandler = (value: "increase" | "decrease") => {
@@ -38,7 +38,15 @@ export default function JoinSelect({
 
   const deActivePlane = `w-[9rem] bg-white text-primary h-[48px] border-2 border-primary text-center px-7 py-3  font-semibold `;
 
-  console.log(plan);
+  // console.log(plan);
+  const quantityInputHandler = (value: number) => {
+    console.log('value', value);
+    if (value >= 1) {
+      setQuantity(value);
+    } else {
+      message.error("Please choose at least 1 plan");
+    }
+  };
 
   return (
     <div className="block lg:flex justify-start gap-7 items-center">
@@ -50,25 +58,22 @@ export default function JoinSelect({
         <div className="flex items-center gap-0 ">
           <button
             onClick={() => planHandler("monthly")}
-            className={`rounded-l-md ${
-              plan === "monthly" ? activePlan : deActivePlane
-            }`}
+            className={`rounded-l-md ${plan === "monthly" ? activePlan : deActivePlane
+              }`}
           >
             Monthly
           </button>
           <button
             onClick={() => planHandler("biannual")}
-            className={` ${
-              plan === "biannual" ? activePlan : deActivePlane
-            } border-x-none`}
+            className={` ${plan === "biannual" ? activePlan : deActivePlane
+              } border-x-none`}
           >
             Biannual
           </button>
           <button
             onClick={() => planHandler("yearly")}
-            className={`rounded-r-md ${
-              plan === "yearly" ? activePlan : deActivePlane
-            }`}
+            className={`rounded-r-md ${plan === "yearly" ? activePlan : deActivePlane
+              }`}
           >
             Yearly
           </button>
@@ -89,9 +94,15 @@ export default function JoinSelect({
           >
             +
           </button>
-          <button className="min-w-[5.5rem] h-[3rem] border border-slate-700 rounded-sm">
+          {/* <button className="min-w-[5.5rem] h-[3rem] border border-slate-700 rounded-sm">
             {quantity}
-          </button>
+          </button> */}
+          <input
+            onChange={(e) => quantityInputHandler(Number(e.target.value))}
+            type="number"
+            className="w-[7rem] h-[3rem] border border-slate-700 rounded-sm text-center outline-none bg-transparent"
+            value={quantity}
+          />
           <button
             onClick={() => quantityHandler("decrease")}
             className="min-w-[4rem] h-[3rem] border border-slate-700 hover:bg-primary hover:text-white font-bold text-2xl hover:border-white rounded-sm"

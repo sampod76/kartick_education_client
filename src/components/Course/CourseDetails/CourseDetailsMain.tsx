@@ -3,6 +3,7 @@ import CourseDetailsTop from "./CourseDetailsTop";
 import AuthorCourseDetails from "./AuthorCourseDetails";
 import CourseDetailsTab from "./CourseDetailsTab";
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
+import CourseStatistics from "../CourseStatistics";
 
 export default function CourseDetailsMain({ courseId }: { courseId: string }) {
   const { data: CourseData, isLoading } = useGetSingleCourseQuery(courseId, {
@@ -11,10 +12,10 @@ export default function CourseDetailsMain({ courseId }: { courseId: string }) {
   // console.log(CourseData, "courseData");
   return (
     <div>
-      {/* <CourseStatistics/> */}
       <CourseDetailsTop courseData={CourseData} />
+      <CourseStatistics CourseData={CourseData} />
       <AuthorCourseDetails authorData={CourseData?.author} />
-      <CourseDetailsTab courseId={courseId} />
+      <CourseDetailsTab CourseData={CourseData} />
     </div>
   );
 }
