@@ -26,6 +26,7 @@ import { usePathname } from "next/navigation";
 import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
 import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourse";
 import { useGetAllPurchasePackageQuery } from "@/redux/api/public/purchaseAPi";
+import { USER_ROLE } from "@/constants/role";
 export default function LessonList({
   moduleId,
   moduleData,
@@ -40,6 +41,7 @@ export default function LessonList({
   ////! for purchased data of a user
   const categoryId = moduleData?.milestone?.course?.category?._id;
 
+  // for seller
   const { data: purchasedData } = useGetAllPurchasePackageQuery(
     {
       status: "active",
@@ -48,25 +50,43 @@ export default function LessonList({
       user: userInfo?.id || "65aa1b19d1661e1c9a9e5135", ///is not valid user
       category: categoryId,
     },
-    { skip: userInfo.role === "student" ? true : false }
+    {
+      skip:
+        userInfo.role === USER_ROLE.ADMIN
+          ? true
+          : userInfo.role === "student"
+          ? true
+          : false,
+    }
   );
+  // for student
   const { data: soldSellerPackage } = useGetAllPackageAndCourseQuery(
     {
       isDelete: ENUM_YN.NO,
       status: "active",
       limit: 99999,
     },
-    { skip: userInfo.role === "student" ? false : true }
+    {
+      skip:
+        userInfo.role === USER_ROLE.ADMIN
+          ? true
+          : userInfo.role === "student"
+          ? false
+          : true,
+    }
   );
 
   // any user by the course and chack this
-  const { data: userToAllCourse } = useGetCheckPurchasesCourseQuery({
-    user: userInfo.id,
-    course: moduleData.course,
-    isDelete: ENUM_YN.NO,
-    status: "active",
-    limit: 99999,
-  });
+  const { data: userToAllCourse } = useGetCheckPurchasesCourseQuery(
+    {
+      user: userInfo.id,
+      course: moduleData.course,
+      isDelete: ENUM_YN.NO,
+      status: "active",
+      limit: 99999,
+    },
+    { skip: userInfo.role === USER_ROLE.ADMIN ? true : false }
+  );
 
   let IsExistCategoryOrCourse: any = false;
   if (userInfo.role !== "student") {
@@ -87,9 +107,10 @@ export default function LessonList({
     IsExistCategoryOrCourse = true;
   }
 
+  if (userInfo.role === USER_ROLE.ADMIN) {
+    IsExistCategoryOrCourse = true;
+  }
   // ! for match seller category
-
-  console.log(soldSellerPackage, "soldSellerPackagesPackage");
 
   // const IsSoldCategory = soldSellerPackage?.data?.some((item: any) =>
   //   item?.sellerPackageDetails?.categories.some(
@@ -121,7 +142,7 @@ export default function LessonList({
   quiz_query["isDelete"] = ENUM_YN.NO;
   const { data: QuizData } = useGetAllQuizQuery({
     status: "active",
-    isDelete:ENUM_YN.NO,
+    isDelete: ENUM_YN.NO,
     module: moduleId,
     ...quiz_query,
   });
