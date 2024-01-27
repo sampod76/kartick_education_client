@@ -14,31 +14,34 @@ import dynamic from "next/dynamic";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();
-  const [userInfo, setUserInfo] = useState<any>({
-    loading: false,
-    data: { email: "", id: "", role: "" },
-  });
+  // const [userInfo, setUserInfo] = useState<any>({
+  //   loading: true,
+  //   data: { email: "", id: "", role: "" },
+  // });
+  const userInfo =getUserInfo() as any;
 
-  useEffect(() => {
-    // Fetch user info asynchronously on the client side
-    const fetchUserInfo = async () => {
-      const userInfo = (await getUserInfo()) as any;
-      setUserInfo((c: any) => ({ ...c, ...userInfo }));
-    };
-    fetchUserInfo();
-  }, []);
+  // useEffect(() => {
+  //   // Fetch user info asynchronously on the client side
+  
+  //   const fetchUserInfo = async () => {
+  //     const userInfo = (await getUserInfo()) as any;
+  //     setUserInfo((c: any) => ({ ...c, ...userInfo }));
+  //   };
+  //   fetchUserInfo();
+  //   setUserInfo({loading:false})
+  // }, []);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   
 
   useEffect(() => {
-    if (!userInfo?.data?.role) {
+    if (!userInfo?.role) {
       router.push("/login");
-    } else if (userInfo?.data?.role !== USER_ROLE.ADMIN) {
+    } else if (userInfo?.role !== USER_ROLE.ADMIN) {
       router.back();
     }
     setIsLoading(false);
-  }, [router, isLoading, userLoggedIn, userInfo?.data?.role]);
+  }, [router, isLoading, userLoggedIn, userInfo?.role]);
 
   if (isLoading) {
     return (

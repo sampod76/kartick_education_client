@@ -38,11 +38,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const screens = useBreakpoint();
 
   useEffect(() => {
-    if (!userInfo?.data.role) {
+    if (!userInfo?.data?.role) {
       router.push("/login");
     }
     setIsLoading(false);
-  }, [router, isLoading, userInfo?.data.role]);
+  }, [router, isLoading, userInfo?.data?.role]);
 
   if (isLoading || userInfo.loading) {
     return (
