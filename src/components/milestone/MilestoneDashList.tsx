@@ -67,7 +67,7 @@ const MileStoneList = () => {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo
 
   const [deleteMilestone] = useDeleteMilestoneMutation();
 
@@ -102,7 +102,7 @@ const MileStoneList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
-  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+  // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
   //@ts-ignore
   const milestoneData = data?.data || [];
@@ -159,6 +159,7 @@ const MileStoneList = () => {
       title: "Name",
       dataIndex: "title",
       ellipsis: true,
+      sorter: true,
     },
     {
       title: "Description",
@@ -169,6 +170,7 @@ const MileStoneList = () => {
       title: "Milestone Number",
       dataIndex: "milestone_number",
       ellipsis: true,
+      width: 100,
     },
     {
       title: "course",
@@ -181,14 +183,17 @@ const MileStoneList = () => {
     {
       title: "Created at",
       dataIndex: "createdAt",
+      width: 150,
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
+
     },
     {
       title: "Action",
       fixed: "right",
+      width: 120,
       render: (record: any) => (
         // console.log(object);
         <>
@@ -319,7 +324,7 @@ const MileStoneList = () => {
             Filter
           </Button>
 
-         
+
           <Link href={`/${userInfo?.role}/milestone/create`}>
             <Button type="default">Create Milestone</Button>
           </Link>
