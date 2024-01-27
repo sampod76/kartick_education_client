@@ -21,12 +21,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   });
 
   useEffect(() => {
+    setUserInfo({ loading: true });
     // Fetch user info asynchronously on the client side
     const fetchUserInfo = async () => {
       const userInfo = (await getUserInfo()) as any;
       setUserInfo((c: any) => ({ ...c, ...userInfo }));
     };
     fetchUserInfo();
+    setUserInfo({ loading: false });
   }, []);
 
   const router = useRouter();
