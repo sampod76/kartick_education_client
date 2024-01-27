@@ -12,18 +12,17 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import Image from "next/image";
 import { Image as ImageAnt } from "antd";
 const StudentProfile = ({ userData }: { userData: any }) => {
-  //   console.log(userData, "userDatauserDatauserData");
   const userInfo = getUserInfo() as IDecodedInfo;
-  const img = userData?.img || userData[userData.role]["img"];
+  const img = userData?.img || userData[userData.role]?.img;
   // console.log(img);
-  const gender = userData?.gender || userData[userData.role]["gender"];
+  const gender = userData?.gender || userData[userData.role]?.gender;
   const phoneNumber =
-    userData?.phoneNumber || userData[userData.role]["phoneNumber"];
-  const address = userData?.address || userData[userData.role]["address"];
+    userData?.phoneNumber || userData[userData.role]?.phoneNumber;
+  const address = userData?.address || userData[userData.role]?.address;
   const firstName =
-    userData?.name?.firstName || userData[userData.role]["name"].firstName;
+    userData?.name?.firstName || userData[userData.role]?.name?.firstName;
   const lastName =
-    userData?.name?.lastName || userData[userData.role]["name"].lastName;
+    userData?.name?.lastName || userData[userData.role]?.name?.lastName;
   return (
     <main className="profile-page">
       <div className="max-w-2xl mx-4 sm:max-w-sm md:max-w-sm lg:max-w-[30rem] xl:max-w-[30rem] sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-2 bg-white shadow-xl rounded-lg text-gray-900">
@@ -47,7 +46,10 @@ const StudentProfile = ({ userData }: { userData: any }) => {
           </h2>
           <p className="text-gray-500">{userData?.role}</p>
         </div>
-
+        <div className="flex flex-col justify-center items-center">
+          <p>Phone Number : {phoneNumber}</p>
+          <p>Gender: {gender}</p>
+        </div>
         <div className="flex flex-wrap items-center justify-around my-4 py-5">
           <Link
             href="/"

@@ -43,12 +43,13 @@ export default function LoginHistory() {
   useEffect(() => {
     GetCookies()
       .then((res: any) => {
+       
         setRefreshToken(res?.value);
       })
       .catch(() => {
         setRefreshToken("");
       });
-  }, []);
+  }, [LogoutLoading]);
 
   //@ts-ignore
   const loginHistoryData = data?.data || [];

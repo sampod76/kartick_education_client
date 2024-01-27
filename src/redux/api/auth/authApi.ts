@@ -11,7 +11,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: loginData,
       }),
-      invalidatesTags: [tagTypes.student],
+      invalidatesTags: [tagTypes.LoginHistory],
     }),
     userLogOut: build.mutation({
       query: ({ id, data }) => ({
@@ -27,7 +27,7 @@ export const authApi = baseApi.injectEndpoints({
         url: `${AUTH_URL}/profile`,
         method: "GET",
       }),
-      providesTags: [tagTypes.student],
+      providesTags: [tagTypes.profile],
     }),
     updateRole: build.mutation({
       query: (data) => ({
@@ -35,7 +35,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data.body,
       }),
-      invalidatesTags: [tagTypes.student],
+      invalidatesTags: [tagTypes.profile],
     }),
     forgetPassword: build.mutation({
       query: (data) => ({
@@ -43,7 +43,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: [tagTypes.student],
+      invalidatesTags: [tagTypes.profile],
     }),
   }),
   overrideExisting: true

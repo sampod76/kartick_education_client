@@ -3,13 +3,11 @@ import LoginStudent from "@/components/Login/LoginStudent";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Login",
-  description: "..",
+  description: "...",
 };
 const LoginPage = () => {
-
   return (
     <>
-
       {/* <LoginStudent/>*/}
       <Login />
     </>
