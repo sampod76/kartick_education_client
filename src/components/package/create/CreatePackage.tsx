@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, InputNumber } from "antd";
+import { Button, Form, Input, Space, InputNumber, Upload } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -11,6 +11,7 @@ const { Option } = Select;
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 
 // ! for uuid
 const generateUUID = () => {
@@ -39,14 +40,28 @@ export default function CreatePackage() {
   const [addPackage, { isLoading: AddPackageLoading }] =
     useAddPackageMutation();
 
+  // const [imgUrl, setImgUrl] = useState(null);
+  // const handleChange = async (info) => {
+  //   if (info.file.status === 'done') {
+  //     // Set the imgUrl to the Form values
+  //     setImgUrl(info.file.response);
+  //     form.setFieldsValue({ img: info.file.response });
+  //   }
+  // };
 
   const onFinish = async (values: any) => {
-    console.log("Received values of form:", values);
+    // console.log("Received values", values);
+    if (values?.img) {
+      const imgUrl = await uploadImgCloudinary(values?.img?.file?.originFileObj);
+      // console.log(imgUrl, 'imgUrl')
+      values.img = imgUrl
+    }
     const packageData = {
       membership: {
         title: values.membership?.title,
         uid: uuid,
       },
+      img: values?.img,
       title: values.title,
       type: values.type,
       monthly: values.monthly,
@@ -55,6 +70,7 @@ export default function CreatePackage() {
       categories: values.categories,
     };
     // console.log("🚀 ~ onFinish ~ packageData:", packageData)
+    // return
 
     try {
       const res = await addPackage(packageData).unwrap();
@@ -225,6 +241,22 @@ export default function CreatePackage() {
               </Form.Item>
             </Space.Compact>
           </div>
+
+          <Form.Item name="img">
+            <Upload
+              listType="picture-circle"
+            // beforeUpload={async (file) => {
+            //   console.log(file)
+            //   const imgUrl = await uploadImgCloudinary(file);
+            //   form.setFieldsValue({ img: imgUrl }); // Set imgUrl in Form values
+            //   return false; // Prevent default upload behavior
+            // }}
+
+            >
+              Upload
+            </Upload>
+          </Form.Item>
+
         </Form.Item>
         <div className="border-2 rounded-lg p-3">
           <LabelUi>Add Category</LabelUi>
@@ -257,7 +289,7 @@ export default function CreatePackage() {
                         // flexDirection: "column", // Stack items vertically on smaller screens
                         margin: "8px auto",
                         // background: "blue",
-                        width: "100%",
+                        // width: "100%",
                       }}
                       align="center"
                     >
@@ -277,6 +309,9 @@ export default function CreatePackage() {
                           placeholder="Select category"
                           size="large"
                           options={options}
+                          listHeight={200}
+                          popupMatchSelectWidth
+                          dropdownStyle={{ minWidth: "250px" }}
                         />
                       </Form.Item>
                       <Form.Item

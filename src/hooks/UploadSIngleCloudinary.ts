@@ -21,6 +21,7 @@ const uploadImgCloudinary = async (file: any) => {
       method: "post",
       body: formData,
     });
+    console.log(response)
 
     if (response.ok) {
       const data = await response.json();

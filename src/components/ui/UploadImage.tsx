@@ -51,6 +51,7 @@ const UploadImage = ({
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
+      console.log(info.file.originFileObj)
       const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
       console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
@@ -83,8 +84,8 @@ const UploadImage = ({
           alt="avatar"
           style={{ width: "150px" }}
           width={200}
-         
-          // fill
+
+        // fill
         />
       ) : null}
       <Upload
