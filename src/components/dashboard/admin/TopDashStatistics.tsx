@@ -11,6 +11,7 @@ import { Col, Row } from "antd";
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useGetAllTrainersQuery } from "@/redux/api/adminApi/trainer";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 
 type ICard = {
   _id: string;
@@ -20,18 +21,18 @@ type ICard = {
   link?: string;
 };
 export default function TopDashStatistics() {
-  const { data: allUserData } = useGetAllUsersQuery({});
+  const { data: allUserData,error:UserError,isLoading:userLoading } = useGetAllUsersQuery({});
   // console.log(
   //   "🚀 ~ file: TopDashStatistics.tsx:14 ~ TopDashStatistics ~ allUserData:",
   //   allUserData
   // );
 
-  const { data: allCourseData } = useGetAllCourseQuery({});
-  const { data: allTrainer, error: trainerError } = useGetAllTrainersQuery({});
+  const { data: allCourseData,error:CourseError,isLoading:courseLoading } = useGetAllCourseQuery({});
+  const { data: allTrainer, error: trainerError ,isLoading:trainerLoading} = useGetAllTrainersQuery({});
 
   const userNumber = allUserData?.meta?.total;
   const allCourseNumber = allCourseData?.meta?.total;
-  console.log(trainerError);
+  console.log(trainerError,CourseError);
   const cardData: ICard[] = [
     {
       _id: "1",
@@ -76,6 +77,9 @@ export default function TopDashStatistics() {
       link: "",
     },
   ];
+  if(userLoading || courseLoading || trainerLoading){
+    return <LoadingSkeleton/>
+  }
   return (
     <div>
       <Row gutter={[16, 16]}>

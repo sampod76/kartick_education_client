@@ -21,12 +21,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   });
 
   useEffect(() => {
+    setUserInfo({ loading: true });
     // Fetch user info asynchronously on the client side
     const fetchUserInfo = async () => {
       const userInfo = (await getUserInfo()) as any;
       setUserInfo((c: any) => ({ ...c, ...userInfo }));
     };
     fetchUserInfo();
+    setUserInfo({ loading: false });
   }, []);
 
   const router = useRouter();
@@ -36,11 +38,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const screens = useBreakpoint();
 
   useEffect(() => {
-    if (!userInfo?.data.role) {
+    if (!userInfo?.data?.role) {
       router.push("/login");
     }
     setIsLoading(false);
-  }, [router, isLoading, userInfo?.data.role]);
+  }, [router, isLoading, userInfo?.data?.role]);
 
   if (isLoading || userInfo.loading) {
     return (

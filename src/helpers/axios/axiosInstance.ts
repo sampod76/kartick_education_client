@@ -51,15 +51,14 @@ instance.interceptors.response.use(
     if (error?.response?.status === 403 && !config?.sent) {
       config.sent = true;
       const response = await getRefreshToken();
-      // console.log(response, "rrrrrrrrr", error?.response?.status);
       const accessToken = response?.data?.accessToken;
       config.headers["Authorization"] = accessToken;
       setToLocalStorage(authKey, accessToken);
       return instance(config);
     } else {
       console.log(error);
-      if (error?.response?.status === 403 || error?.response?.status === 401) {
-        // removeUserInfo(authKey);
+      if (error?.response?.status === 403 || error?.response?.status === 401 || error?.response?.data?.message ==='Validation Error:-> refreshToken : Refresh Token is required') {
+        removeUserInfo(authKey);
       }
       let responseObject: any = {
         statusCode: error?.response?.status || 500,

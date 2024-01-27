@@ -27,9 +27,7 @@ import {
   confirm_modal,
 } from "@/utils/modalHook";
 import { useDeleteBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
-import { USER_ROLE } from "@/constants/role";
-import dynamic from "next/dynamic";
-import { AllImage } from "@/assets/AllImge";
+
 import { ENUM_STATUS } from "@/constants/globalEnums";
 import { getUserInfo } from "@/services/auth.service";
 
@@ -40,12 +38,14 @@ const BlogList = () => {
   });
 
   useEffect(() => {
+    setUserInfo({loading:true})
     // Fetch user info asynchronously on the client side
     const fetchUserInfo = async () => {
       const userInfo = (await getUserInfo()) as any;
       setUserInfo((c: any) => ({ ...c, ...userInfo }));
     };
     fetchUserInfo();
+    setUserInfo({loading:false})
   }, []);
   const query: Record<string, any> = {};
   const [deleteBlog] = useDeleteBlogMutation();
@@ -85,6 +85,8 @@ const BlogList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteBlog(id).unwrap();
+         
+       
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -145,12 +147,12 @@ const BlogList = () => {
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                  type="default"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)}   type="default" danger>
+            <Button onClick={() => handleDelete(data)} type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -175,7 +177,6 @@ const BlogList = () => {
     setSortOrder("");
     setSearchTerm("");
   };
-  
 
   const deleteAdminHandler = async (id: string) => {
     // console.log(id);
@@ -216,7 +217,7 @@ const BlogList = () => {
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-                type="default"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />
@@ -252,5 +253,3 @@ const BlogList = () => {
 };
 
 export default BlogList;
-
-
