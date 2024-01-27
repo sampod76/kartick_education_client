@@ -433,42 +433,26 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Purchase Package",
+      label: <Link
+        onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+        href={`/${role}/purchase-package`}
+      >
+        Purchase Package History
+      </Link>,
       key: "Manage-pouches-package",
       icon: <PayCircleFilled />,
-      children: [
 
-        {
-          label: (
-            <Link
-              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-              href={`/${role}/purchase-package`}
-            >
-              Purchase  Package List
-            </Link>
-          ),
-          key: `/${role}/purchase-package`,
-        },
-      ],
     },
     {
-      label: "Purchase course",
+      label: <Link
+        onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+        href={`/${role}/purchase-course`}
+      >
+        Purchase  course List
+      </Link>,
       key: "Manage-pouches-course",
       icon: <PayCircleFilled />,
-      children: [
 
-        {
-          label: (
-            <Link
-              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-              href={`/${role}/purchase-course`}
-            >
-              Purchase  course List
-            </Link>
-          ),
-          key: `/${role}/purchase-course`,
-        },
-      ],
     },
   ];
 
