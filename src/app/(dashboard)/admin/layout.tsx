@@ -12,9 +12,8 @@ import DashboardSidebar from "@/components/shared/DashBoard/DashboardSidebar";
 import DashboardNavBar from "@/components/shared/DashBoard/DashboardNavbar";
 import dynamic from "next/dynamic";
 
-const { Content } = Layout;
-
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+  const userLoggedIn = isLoggedIn();
   // const userLoggedIn = USER_ROLE.ADMIN;
 
   const userInfo: any = getUserInfo();
@@ -29,9 +28,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!userInfo?.role) {
       router.push("/login");
+    } else if (userInfo?.role !== USER_ROLE.ADMIN) {
+      router.back();
     }
     setIsLoading(false);
-  }, [router, isLoading, userInfo?.role]);
+  }, [router, isLoading, userLoggedIn, userInfo?.role]);
 
   if (isLoading) {
     return (
@@ -49,58 +50,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  return (
-    <Layout
-      hasSider
-      style={{ display: "flex", justifyContent: "space-between" }}
-    >
-      {!screens.sm ? (
-        <Drawer
-          title={`${userInfo?.role} Dash`}
-          placement="left"
-          onClose={() => setCollapsed(false)}
-          open={collapsed}
-          style={{
-            background: "#001529",
-            color: "white",
-          }}
-        >
-          <Menu
-            theme="dark"
-            // className="bg-white"
-            style={{ backgroundColor: "#", color: "white" }}
-            defaultSelectedKeys={["1"]}
-            mode="inline"
-            items={dashboardItems(userInfo?.role, setCollapsed)}
-          />
-        </Drawer>
-      ) : (
-        <section>
-          <DashboardSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
-        </section>
-      )}
-
-      <Layout style={{ overflow: "hidden" }}>
-        <DashboardNavBar collapsed={collapsed} setCollapsed={setCollapsed} />
-        <Content
-          style={{
-            padding: "1em",
-            minHeight: "100vh",
-            overflowY: "initial",
-            // textAlign: "center",
-          }}
-        >
-          {children}
-        </Content>
-        {/* <Footer></Footer> */}
-      </Layout>
-    </Layout>
-  );
+  return <>{children}</>;
 };
 
 // export default DashboardLayout;
 
-export default dynamic(() => Promise.resolve(DashboardLayout), {
+export default dynamic(() => Promise.resolve(AdminLayout), {
   ssr: false,
 });
 

@@ -27,8 +27,6 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 const { Text } = Typography;
 
 const SIngleCourse = ({ course }: { course: ICourseData }) => {
-  console.log("🚀 ~ SIngleCourse ~ course:", course);
-
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   // console.log(course);
@@ -92,7 +90,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               {course?.duration?.length &&
                 dayjs(course?.duration[1]).format("MMM D, YYYY")}
             </span> */}
-            <CgPlayButtonO className="mr-1"/> {course?.totalVideoSize} video
+            <CgPlayButtonO className="mr-1" /> {course?.totalVideoSize} video
           </span>
           <span className="flex whitespace-nowrap justify-center items-center gap-1">
             <CiClock2 className="text-gray-900" />{" "}
