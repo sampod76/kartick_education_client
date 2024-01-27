@@ -20,7 +20,7 @@ interface ICourseItemType {
 }
 
 const Courses = ({ query }: { query: ICourseItemType }) => {
-  console.log("🚀 ~ Courses ~ query:", query)
+  // console.log("🚀 ~ Courses ~ query:", query)
   const [currentPage, setCurrentPage] = useState(1);
   const [pageLimitCount, setPageCountLimit] = useState(10);
   const queryAll: Record<string, any> = {};

@@ -1,11 +1,19 @@
 "use client"
+import { useGetAllCartQuery } from '@/redux/api/userApi/cartAPi'
 import { toggleCartModal } from '@/redux/features/cartSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { IDecodedInfo, getUserInfo } from '@/services/auth.service'
 import { Button, Drawer, Space } from 'antd'
 import React from 'react'
 
 export default function CartDrawer() {
-    const { cartModal, course:cartCourse } = useAppSelector(state => state.cart)
+
+    const userInfo = getUserInfo() as IDecodedInfo
+    const { cartModal, course: cartCourse } = useAppSelector(state => state.cart)
+
+    const { data: cartData, isLoading } = useGetAllCartQuery({ status: "active", user: userInfo?.id })
+
+    console.log('cartData', cartData)
     const dispatch = useAppDispatch()
     const showDrawer = () => {
         // setOpen(true);
@@ -16,7 +24,7 @@ export default function CartDrawer() {
         // setOpen(false);
         dispatch(toggleCartModal(false))
     }
-    ;
+        ;
     return (
 
         <Drawer

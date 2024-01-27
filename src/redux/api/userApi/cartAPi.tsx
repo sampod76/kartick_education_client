@@ -1,5 +1,5 @@
 import { tagTypes } from "@/redux/tag-types";
-import {  IMeta } from "@/types";
+import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 
 const CART_URL = "/course-cart";
@@ -9,6 +9,7 @@ export const cartApi = baseApi.injectEndpoints({
         // get all academic departments
         getAllCart: build.query({
             query: (arg: Record<string, any>) => {
+                console.log(arg, 'args')
                 return {
                     url: CART_URL,
                     method: "GET",

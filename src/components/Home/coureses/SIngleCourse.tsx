@@ -27,6 +27,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cartSlice";
 import { useAddCartMutation } from "@/redux/api/userApi/cartAPi";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 const { Text } = Typography;
 
@@ -41,7 +42,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
 
   const [addCart] = useAddCartMutation()
 
-  const addToCartHandler = (CartCourse: ICourseData) => {
+  const addToCartHandler = async (CartCourse: ICourseData) => {
     // dispatch(addToCart(CartCourse))
 
     const cartData = {
@@ -49,7 +50,21 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
       user: userInfo?.id
 
     }
-    console.log()
+
+    try {
+      const res = await addCart(cartData).unwrap();
+      // console.log(res);
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model(`${CartCourse?.title} added to Cart`);
+      }
+      // console.log(res);
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+      console.log(error);
+    }
+    // console.log(cartData, 'cartData')
   }
   return (
     <div
