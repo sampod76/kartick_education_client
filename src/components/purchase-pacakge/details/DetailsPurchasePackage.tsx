@@ -15,7 +15,7 @@ export default function DetailsPurchasePackage({ purchaseId }: { purchaseId: str
 
     // console.log("🚀 ~ file: DetailsPurchasePackage.tsx:13 ~ DetailsPurchasePackage ~ allPurchaseData:", allPurchaseData)
 
-    const packages = allPurchaseData?.data[0]
+    const packages = allPurchaseData?.data?.find((item: any) => item?._id === purchaseId)
 
 
     const userData = packages?.user

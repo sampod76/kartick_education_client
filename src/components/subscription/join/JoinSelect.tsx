@@ -2,6 +2,7 @@
 import { message } from "antd";
 import React from "react";
 import { IPlan } from "./JoinMain";
+import { useSearchParams } from "next/navigation";
 
 export default function JoinSelect({
   plan,
@@ -14,7 +15,11 @@ export default function JoinSelect({
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
+  const searchParams = useSearchParams();
+  const packName = searchParams.get("pack") as string;
+
   const planHandler = (value: IPlan) => {
+
     if (value === "monthly") {
       setPlan("monthly");
     } else if (value === "yearly") {
@@ -25,6 +30,14 @@ export default function JoinSelect({
     }
   };
   const quantityHandler = (value: "increase" | "decrease") => {
+    if (packName === 'family_personal' && quantity >= 10 && value === "increase") {
+      message.info("Select max 10 for Family Pack")
+      return
+    }
+    else if (packName === 'school_teacher' && quantity <= 10 && value === "decrease") {
+      message.info("Select min 10 for School Teacher  Pack")
+      return
+    }
     if (value === "increase") {
       setQuantity((q) => q + 1);
     } else if (value === "decrease" && quantity > 1) {
@@ -40,8 +53,12 @@ export default function JoinSelect({
 
   // console.log(plan);
   const quantityInputHandler = (value: number) => {
-    console.log('value', value);
-    if (value >= 1) {
+    if (
+      (packName === 'family_personal' && value > 10) ||
+      (packName === 'school_teacher' && value < 1)
+    ) {
+      message.info("Select max 10 for Family Pack");
+    } else if (value >= 1) {
       setQuantity(value);
     } else {
       message.error("Please choose at least 1 plan");
