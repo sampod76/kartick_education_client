@@ -2,7 +2,7 @@
 
 import { AllImage } from '@/assets/AllImge';
 import SIngleBannerSIngleCourse from '@/components/Home/coureses/SIngleBannerSIngleCourse';
-import { useGetAllPurchaseCourseQuery, useGetAllPurchasePackageQuery, useGetSinglePurchasePackageQuery } from '@/redux/api/public/purchaseAPi';
+import { useGetAllPurchaseCourseQuery, useGetAllPurchasePackageQuery, useGetSinglePurchaseCourseQuery, useGetSinglePurchasePackageQuery } from '@/redux/api/public/purchaseAPi';
 import { IPackageCategory } from '@/types/packageType';
 import { EllipsisMiddle } from '@/utils/CutTextElliples';
 import { Checkbox, Radio, Spin } from 'antd';
@@ -10,7 +10,7 @@ import React from 'react'
 import { CiClock2 } from 'react-icons/ci';
 export default function Detailscourse({ purchaseId }: { purchaseId: string }) {
 
-    // const { data: course, isLoading } = useGetSinglecourseQuery(purchaseId)
+    // const { data: courseData, isLoading } = useGetSinglePurchaseCourseQuery(purchaseId)
 
 
     //! Test UI
@@ -18,11 +18,11 @@ export default function Detailscourse({ purchaseId }: { purchaseId: string }) {
     const { data: allPurchaseData, isLoading } = useGetAllPurchaseCourseQuery({ status: "active", limit: 9999999999 })
 
     // console.log("🚀 ~ file: DetailsPurchasePackage.tsx:13 ~ DetailsPurchasePackage ~ allPurchaseData:", allPurchaseData)
+    const courseData = allPurchaseData?.data?.find((item: any) => item?._id === purchaseId)
+    const course = courseData?.course
 
-    const course = allPurchaseData?.data[0].course
 
-
-    const userData = allPurchaseData?.data[0]?.user
+    const userData = courseData?.user
 
 
 

@@ -100,7 +100,7 @@ export default function PurchasePackageList() {
         query["searchTerm"] = debouncedSearchTerm;
     }
     const { data = [], isLoading } = useGetAllPurchasePackageQuery({ ...query });
-    // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+    console.log("🚀 ~ file: page.tsx:68 ~  ~ data:", data);
 
     //@ts-ignore
     const packageData = data?.data || [];

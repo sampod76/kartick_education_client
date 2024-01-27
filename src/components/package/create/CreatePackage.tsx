@@ -33,7 +33,7 @@ export default function CreatePackage() {
     limit: 9999,
   });
   let options: SelectProps["options"] = [];
-  options = data?.data?.map((select) => ({
+  options = data?.data?.map((select:any) => ({
     label: select.title,
     value: select._id,
   }));
