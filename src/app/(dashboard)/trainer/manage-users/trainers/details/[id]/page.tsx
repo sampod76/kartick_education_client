@@ -3,7 +3,7 @@
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 import { useGetSingleStudentQuery } from "@/redux/api/adminApi/moderatorApi";
-import StudentProfile from "@/components/profile/UserProfile";
+import UserProfile from "@/components/profile/UserProfile";
 import ProfileInstructorPage from "@/components/profile/ProfileInstructorPage";
 
 const StudentDetailsPage = ({ params }: any) => {

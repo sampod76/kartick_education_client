@@ -71,7 +71,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
   ];
   const trainerSidebarItems: MenuProps["items"] = [
     {
-      label: "Manage category",
+      label: " category",
       key: "manage-category",
       icon: <CreditCardOutlined />,
       children: [
@@ -100,7 +100,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Manage Course",
+      label: " Course",
       key: "manage-Course",
       icon: <FileTextOutlined />,
       children: [
@@ -130,7 +130,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Manage Milestone",
+      label: " Milestone",
       key: "manage-Milestone",
       icon: <BookOutlined />,
       children: [
@@ -160,7 +160,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Manage Module",
+      label: " Module",
       key: "manage-Module",
       icon: <DatabaseOutlined />,
       children: [
@@ -189,7 +189,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Manage Lesson",
+      label: " Lesson",
       key: "manage-lesson",
       icon: <AlignCenterOutlined />,
       children: [
@@ -218,7 +218,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Manage Quiz",
+      label: " Quiz",
       key: "manage-quiz",
       icon: <ThunderboltOutlined />,
       children: [
@@ -248,7 +248,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
     },
 
     {
-      label: "Manage Single Quiz",
+      label: " Single Quiz",
       key: "manage-single-quiz",
       icon: <ThunderboltOutlined />,
       children: [
@@ -281,7 +281,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
     ...defaultSidebarItems,
     ...trainerSidebarItems,
     {
-      label: "Manage Users",
+      label: " Users",
       key: "manage-user",
       icon: <UsergroupDeleteOutlined />,
       children: [
@@ -433,23 +433,26 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Purchase Package",
+      label: <Link
+        onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+        href={`/${role}/purchase-package`}
+      >
+        Purchase Package History
+      </Link>,
       key: "Manage-pouches-package",
       icon: <PayCircleFilled />,
-      children: [
 
-        {
-          label: (
-            <Link
-              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-              href={`/${role}/purchase-package`}
-            >
-              Purchase  Package List
-            </Link>
-          ),
-          key: `/${role}/package`,
-        },
-      ],
+    },
+    {
+      label: <Link
+        onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+        href={`/${role}/purchase-course`}
+      >
+        Purchase  course List
+      </Link>,
+      key: "Manage-pouches-course",
+      icon: <PayCircleFilled />,
+
     },
   ];
 

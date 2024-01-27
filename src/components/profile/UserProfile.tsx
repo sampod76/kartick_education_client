@@ -11,6 +11,7 @@ import Link from "next/link";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import Image from "next/image";
 import { Image as ImageAnt } from "antd";
+
 const StudentProfile = ({ userData }: { userData: any }) => {
   const userInfo = getUserInfo() as IDecodedInfo;
   const img = userData?.img || userData[userData.role]?.img;
@@ -23,6 +24,7 @@ const StudentProfile = ({ userData }: { userData: any }) => {
     userData?.name?.firstName || userData[userData.role]?.name?.firstName;
   const lastName =
     userData?.name?.lastName || userData[userData.role]?.name?.lastName;
+
   return (
     <main className="profile-page">
       <div className="max-w-2xl mx-4 sm:max-w-sm md:max-w-sm lg:max-w-[30rem] xl:max-w-[30rem] sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-2 bg-white shadow-xl rounded-lg text-gray-900">
@@ -123,4 +125,4 @@ const StudentProfile = ({ userData }: { userData: any }) => {
   );
 };
 
-export default StudentProfile;
+export default UserProfile;

@@ -35,7 +35,7 @@ const DashboardSidebar = ({
       className="bg-primar"
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
-      width={250}
+      width={300}
       style={{
         overflow: "auto",
         height: "110vh",
