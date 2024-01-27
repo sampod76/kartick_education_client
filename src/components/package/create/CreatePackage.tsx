@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, InputNumber, Upload } from "antd";
+import { Button, Form, Input, Space, InputNumber, Upload, DatePicker } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -12,7 +12,8 @@ import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
-
+import dayjs from 'dayjs';
+const { RangePicker } = DatePicker;
 // ! for uuid
 const generateUUID = () => {
   return "xxxxxxxx-xxxx-4xxx".replace(/[xy]/g, function (c) {
@@ -52,16 +53,21 @@ export default function CreatePackage() {
   const onFinish = async (values: any) => {
     // console.log("Received values", values);
     if (values?.img) {
-      const imgUrl = await uploadImgCloudinary(values?.img?.file?.originFileObj);
+      const imgUrl = await uploadImgCloudinary(values?.img?.file);
       // console.log(imgUrl, 'imgUrl')
       values.img = imgUrl
     }
+    // console.log("Received values", values);
+    const formattedDateRange = values.date_range.map((date: any) => dayjs(date).format('YYYY-MM-DD'));
+    values.date_range = formattedDateRange
+
     const packageData = {
       membership: {
         title: values.membership?.title,
         uid: uuid,
       },
       img: values?.img,
+      date_range: values.date_range,
       title: values.title,
       type: values.type,
       monthly: values.monthly,
@@ -241,21 +247,37 @@ export default function CreatePackage() {
               </Form.Item>
             </Space.Compact>
           </div>
+          <Space.Compact>
 
-          <Form.Item name="img">
-            <Upload
-              listType="picture-circle"
-            // beforeUpload={async (file) => {
-            //   console.log(file)
-            //   const imgUrl = await uploadImgCloudinary(file);
-            //   form.setFieldsValue({ img: imgUrl }); // Set imgUrl in Form values
-            //   return false; // Prevent default upload behavior
-            // }}
 
-            >
-              Upload
-            </Upload>
-          </Form.Item>
+          </Space.Compact>
+          <Space.Compact style={{
+
+          }}>
+            <Form.Item name="img" required>
+              <Upload
+                listType="picture-circle"
+                beforeUpload={async (file) => {
+                  // console.log(file)
+                  // const imgUrl = await uploadImgCloudinary(file);
+                  form.setFieldsValue({ imgs: '' }); // Set imgUrl in Form values
+                  return false; // Prevent default upload behavior
+                  // return true
+                }}
+
+              >
+                Upload
+              </Upload>
+            </Form.Item>
+
+            <Form.Item name="date_range" label="Select a duration" required>
+
+              <RangePicker format="YYYY-MM-DD" />
+
+
+            </Form.Item>
+          </Space.Compact>
+
 
         </Form.Item>
         <div className="border-2 rounded-lg p-3">

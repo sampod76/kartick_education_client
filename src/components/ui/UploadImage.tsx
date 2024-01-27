@@ -53,7 +53,7 @@ const UploadImage = ({
       // Get this url from response in real world.
       console.log(info.file.originFileObj)
       const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
-      console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
+      // console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
       setValue(name, imgUrl);
       getBase64(info.file.originFileObj as RcFile, (url) => {

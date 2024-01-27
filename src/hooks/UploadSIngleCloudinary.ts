@@ -5,10 +5,10 @@ const env = getCloudinaryEnv();
 const url = `https://api.cloudinary.com/v1_1/${env.cloud_name}/image/upload`;
 
 const uploadImgCloudinary = async (file: any) => {
-  console.log(
-    "🚀 ~ file: ImgUploadCloudinary.ts:8 ~ uploadImgCloudinary ~ file:",
-    file
-  );
+  // console.log(
+  //   "🚀 ~ file: ImgUploadCloudinary.ts:8 ~ uploadImgCloudinary ~ file:",
+  //   file
+  // );
 
   // console.log(url);
   try {
@@ -21,7 +21,7 @@ const uploadImgCloudinary = async (file: any) => {
       method: "post",
       body: formData,
     });
-    console.log(response)
+    // console.log(response)
 
     if (response.ok) {
       const data = await response.json();
