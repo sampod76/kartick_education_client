@@ -2,7 +2,7 @@
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { USER_ROLE } from "@/constants/role";
-import { getUserInfo, isLoggedIn } from "@/services/auth.service";
+import { IDecodedInfo, getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { Drawer, Layout, Menu, Row, Space, Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,11 +15,20 @@ import dynamic from "next/dynamic";
 const { Content } = Layout;
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  // const userLoggedIn = USER_ROLE.ADMIN;
+  const [userInfo, setUserInfo] = useState<any>({
+    loading: false,
+    data: { email: "", id: "", role: "" },
+  });
 
-  const userInfo: any = getUserInfo();
-  // console.log("🚀 ~ DashboardLayout ~ userInfo:", userInfo)
-  // console.log(userInfo);
+  useEffect(() => {
+    // Fetch user info asynchronously on the client side
+    const fetchUserInfo = async () => {
+      const userInfo = (await getUserInfo()) as any;
+      setUserInfo((c: any) => ({ ...c, ...userInfo }));
+    };
+    fetchUserInfo();
+  }, []);
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [collapsed, setCollapsed] = useState(false);
@@ -27,13 +36,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const screens = useBreakpoint();
 
   useEffect(() => {
-    if (!userInfo?.role) {
+    if (!userInfo?.data.role) {
       router.push("/login");
     }
     setIsLoading(false);
-  }, [router, isLoading, userInfo?.role]);
+  }, [router, isLoading, userInfo?.data.role]);
 
-  if (isLoading) {
+  if (isLoading || userInfo.loading) {
     return (
       <Row
         justify="center"
@@ -56,7 +65,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     >
       {!screens.sm ? (
         <Drawer
-          title={`${userInfo?.role} Dash`}
+          title={`${userInfo?.data?.role} Dash`}
           placement="left"
           onClose={() => setCollapsed(false)}
           open={collapsed}
@@ -71,7 +80,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             style={{ backgroundColor: "#", color: "white" }}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={dashboardItems(userInfo?.role, setCollapsed)}
+            items={dashboardItems(userInfo?.data?.role, setCollapsed)}
           />
         </Drawer>
       ) : (
@@ -98,11 +107,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// export default DashboardLayout;
-
-export default dynamic(() => Promise.resolve(DashboardLayout), {
-  ssr: false,
-});
+export default DashboardLayout;
 
 // "use client";
 // import Contents from "@/components/ui/Contents";

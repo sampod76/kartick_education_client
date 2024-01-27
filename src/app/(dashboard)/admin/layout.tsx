@@ -14,25 +14,31 @@ import dynamic from "next/dynamic";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();
-  // const userLoggedIn = USER_ROLE.ADMIN;
-
-  const userInfo: any = getUserInfo();
-  // console.log("🚀 ~ DashboardLayout ~ userInfo:", userInfo)
-  // console.log(userInfo);
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [collapsed, setCollapsed] = useState(false);
-
-  const screens = useBreakpoint();
+  const [userInfo, setUserInfo] = useState<any>({
+    loading: false,
+    data: { email: "", id: "", role: "" },
+  });
 
   useEffect(() => {
-    if (!userInfo?.role) {
+    // Fetch user info asynchronously on the client side
+    const fetchUserInfo = async () => {
+      const userInfo = (await getUserInfo()) as any;
+      setUserInfo((c: any) => ({ ...c, ...userInfo }));
+    };
+    fetchUserInfo();
+  }, []);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  
+
+  useEffect(() => {
+    if (!userInfo?.data?.role) {
       router.push("/login");
-    } else if (userInfo?.role !== USER_ROLE.ADMIN) {
+    } else if (userInfo?.data?.role !== USER_ROLE.ADMIN) {
       router.back();
     }
     setIsLoading(false);
-  }, [router, isLoading, userLoggedIn, userInfo?.role]);
+  }, [router, isLoading, userLoggedIn, userInfo?.data?.role]);
 
   if (isLoading) {
     return (
@@ -53,11 +59,11 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-// export default DashboardLayout;
+export default AdminLayout;
 
-export default dynamic(() => Promise.resolve(AdminLayout), {
-  ssr: false,
-});
+// export default dynamic(() => Promise.resolve(AdminLayout), {
+//   ssr: false,
+// });
 
 // "use client";
 // import Contents from "@/components/ui/Contents";

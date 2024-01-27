@@ -10,7 +10,7 @@ import {
   ReloadOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 
@@ -34,8 +34,19 @@ import { ENUM_STATUS } from "@/constants/globalEnums";
 import { getUserInfo } from "@/services/auth.service";
 
 const BlogList = () => {
-  // const userInfo?.role = USER_ROLE.ADMIN;
-  const userInfo = getUserInfo() as any
+  const [userInfo, setUserInfo] = useState<any>({
+    loading: false,
+    data: { email: "", id: "", role: "" },
+  });
+
+  useEffect(() => {
+    // Fetch user info asynchronously on the client side
+    const fetchUserInfo = async () => {
+      const userInfo = (await getUserInfo()) as any;
+      setUserInfo((c: any) => ({ ...c, ...userInfo }));
+    };
+    fetchUserInfo();
+  }, []);
   const query: Record<string, any> = {};
   const [deleteBlog] = useDeleteBlogMutation();
 
@@ -123,12 +134,12 @@ const BlogList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${userInfo?.role}/blog/details/${data}`}>
+            <Link href={`/${userInfo?.data?.role}/blog/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${userInfo?.role}/blog/edit/${data}`}>
+            <Link href={`/${userInfo?.data?.role}/blog/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -184,8 +195,8 @@ const BlogList = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${userInfo?.role}",
-            link: "/${userInfo?.role}",
+            label: "${userInfo?.data?.role}",
+            link: "/${userInfo?.data?.role}",
           },
         ]}
       /> */}
@@ -199,7 +210,7 @@ const BlogList = () => {
           }}
         />
         <div>
-          <Link href={`/${userInfo?.role}/blog/create`}>
+          <Link href={`/${userInfo?.data?.role}/blog/create`}>
             <Button type="primary">Create blog</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -240,8 +251,6 @@ const BlogList = () => {
   );
 };
 
-// export default BlogList;
-export default dynamic(() => Promise.resolve(BlogList), {
-   ssr: false,
- });
+export default BlogList;
+
 
