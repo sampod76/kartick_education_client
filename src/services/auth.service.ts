@@ -11,7 +11,7 @@ export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {
 
 export interface IDecodedInfo {
   id: string;
-  role: USER_ROLE;
+  role: USER_ROLE | string;
   email: string;
 }
 

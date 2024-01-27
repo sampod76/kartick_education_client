@@ -23,7 +23,10 @@ import { ENUM_YN } from "@/constants/globalEnums";
 export default function LoginHistory() {
   const userInfo = getUserInfo() as any;
   const query: Record<string, any> = {};
-  const [refreshToken, setRefreshToken] = useState<string>("");
+  const [refreshToken, setRefreshToken] = useState<{
+    loading: boolean;
+    value: string;
+  }>({ loading: true, value: "" });
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -43,11 +46,10 @@ export default function LoginHistory() {
   useEffect(() => {
     GetCookies()
       .then((res: any) => {
-       
-        setRefreshToken(res?.value);
+        setRefreshToken({ loading: false, value: res?.value });
       })
       .catch(() => {
-        setRefreshToken("");
+        setRefreshToken({ loading: false, value: "" });
       });
   }, [LogoutLoading]);
 
@@ -121,9 +123,10 @@ export default function LoginHistory() {
       fixed: "right",
       render: (record: any) => (
         // console.log(object);
-        <div className={`${refreshToken === record?.token && "hidden"}`}>
+        <div className={`${refreshToken.value === record?.token && "hidden"}`}>
           <Button
-            loading={!refreshToken}
+            loading={refreshToken.loading}
+            hidden={refreshToken.value === record?.token}
             onClick={() => handleLogout(record?._id)}
             style={{ marginRight: "5px", background: "red", color: "white" }}
           >

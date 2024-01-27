@@ -2,7 +2,7 @@
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { USER_ROLE } from "@/constants/role";
-import { getUserInfo, isLoggedIn } from "@/services/auth.service";
+import { IDecodedInfo, getUserInfo, isLoggedIn } from "@/services/auth.service";
 import { Drawer, Layout, Menu, Row, Space, Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,7 +17,21 @@ const { Content } = Layout;
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   // const userLoggedIn = USER_ROLE.ADMIN;
 
-  const userInfo: any = getUserInfo();
+  const [userInfo, setUserLoggedIn] = useState<any>({
+    email: "",
+    id: "",
+    role: "",
+  });
+
+  useEffect(() => {
+    // Fetch user info asynchronously on the client side
+    const fetchUserInfo = async () => {
+      const userInfo = (await getUserInfo()) as any;
+      setUserLoggedIn(userInfo);
+    };
+
+    fetchUserInfo();
+  }, []);
   // console.log("🚀 ~ DashboardLayout ~ userInfo:", userInfo)
   // console.log(userInfo);
   const router = useRouter();
