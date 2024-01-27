@@ -41,6 +41,7 @@ const Login = ({
   const [userLogin, { error, isLoading }] = useUserLoginMutation();
   const [loading, setLoading] = useState(true);
   const userInfo = getUserInfo() as IDecodedInfo;
+
   useEffect(() => {
     if (userInfo.id) {
       router.back();
@@ -49,6 +50,9 @@ const Login = ({
     return () => {};
   }, [router, userInfo]);
 
+
+
+  
   if (loading) {
     return <LoadingForDataFetch />;
   }
