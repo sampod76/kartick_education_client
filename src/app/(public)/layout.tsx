@@ -1,5 +1,6 @@
 import CourseStatistics from "@/components/Course/CourseStatistics";
 import MilestoneList from "@/components/Course/MilestoneList";
+import CartDrawer from "@/components/Home/Cart/CartDrawer";
 
 
 import BannerCourses from "@/components/Home/Heros/BannerCourses";
@@ -21,16 +22,20 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="">
-      
+
       <div className="sticky -top-[5.2rem] top z-40">
-      <TopBar />
-      <NavbarPublic />
+        <TopBar />
+        <NavbarPublic />
       </div>
 
       {/* <BannerCourses /> */}
       {/* <BannerCourses /> */}
       {/* <CourseStatistics /> */}
-      <main style={{ minHeight: "100vh" }}>{children}</main>
+        {/* <CartDrawer /> */}
+
+      <main style={{ minHeight: "100vh" }}>
+        {children}
+      </main>
       <Footer />
     </div>
   );

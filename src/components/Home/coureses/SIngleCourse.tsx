@@ -1,3 +1,4 @@
+"use client"
 import React, { ReactNode } from "react";
 import {
 
@@ -22,6 +23,11 @@ import { ICourseData } from "@/types/courseType";
 import CoverSvg from "@/assets/svg/CoverBackground";
 import { SVGstudentIcom } from "@/assets/svg/Icon";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { useAppDispatch } from "@/redux/hooks";
+import { addToCart } from "@/redux/features/cartSlice";
+import { useAddCartMutation } from "@/redux/api/userApi/cartAPi";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 const { Text } = Typography;
 
@@ -30,6 +36,36 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   // const { title, details, img, demo_video, tags} = course;
   // console.log(course);
   const screens = useBreakpoint();
+
+  // const dispatch = useAppDispatch()
+  const userInfo = getUserInfo() as IDecodedInfo
+
+  const [addCart] = useAddCartMutation()
+
+  const addToCartHandler = async (CartCourse: ICourseData) => {
+    // dispatch(addToCart(CartCourse))
+
+    const cartData = {
+      course: CartCourse?._id,
+      user: userInfo?.id
+
+    }
+
+    try {
+      const res = await addCart(cartData).unwrap();
+      // console.log(res);
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model(`${CartCourse?.title} added to Cart`);
+      }
+      // console.log(res);
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+      console.log(error);
+    }
+    // console.log(cartData, 'cartData')
+  }
   return (
     <div
 
@@ -95,7 +131,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
             </span> */}
           <CgPlayButtonO className="mr-1" /> {course?.totalVideoSize} video
         </span>
-        <span className="flex whitespace-nowrap justify-center items-center gap-1 cursor-pointer">
+        <span onClick={() => addToCartHandler(course)} className="flex whitespace-nowrap justify-center items-center gap-1 cursor-pointer">
           <ShoppingCartOutlined style={{}} /> Add to cart
         </span>
         <span className="flex whitespace-nowrap justify-center items-center gap-1">

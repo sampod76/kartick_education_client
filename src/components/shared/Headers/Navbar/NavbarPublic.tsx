@@ -7,9 +7,18 @@ import SideBarHome from "./SideBarHome";
 import { homeNavItems } from "@/constants/homeNabItems";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 import Link from "next/link";
+import { ShoppingCartOutlined } from "@ant-design/icons"
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { toggleCartModal } from "@/redux/features/cartSlice";
 
 const NavbarPublic = () => {
   // const screens = useBreakpoint();
+  const userInfo = getUserInfo() as IDecodedInfo
+
+  const dispatch = useAppDispatch()
+  const { cartModal } = useAppSelector(state => state.cart)
+
 
   return (
     <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
@@ -18,7 +27,9 @@ const NavbarPublic = () => {
     flex align-center justify-between gap-[5rem] "
       >
         <Logo />
-
+        {userInfo?.role &&
+          <button onClick={() => dispatch(toggleCartModal(true))}>Your Cart <ShoppingCartOutlined /> </button>
+        }
         <Menu
           mode="horizontal"
           className="hidden lg:flex"
@@ -38,11 +49,12 @@ const NavbarPublic = () => {
           items={homeNavItems}
         />
 
+
         <div
           className="flex lg:hidden"
-          // style={{
-          //   display: `${screens.sm ? "none" : "flex"}`,
-          // }}
+        // style={{
+        //   display: `${screens.sm ? "none" : "flex"}`,
+        // }}
         >
           <SideBarHome></SideBarHome>
         </div>
