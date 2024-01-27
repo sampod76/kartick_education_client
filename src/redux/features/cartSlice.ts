@@ -5,15 +5,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface ICart {
   course: ICourseData[];
   total: 0;
+  cartModal: boolean;
 }
 
 const initialState: ICart = {
   course: [],
   total: 0,
+  cartModal: false,
 };
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: "CourseCart",
   initialState: initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<ICourseData>) => {
@@ -24,8 +26,8 @@ const cartSlice = createSlice({
         console.log("the  course is exists ");
       } else {
         state.course.push(action?.payload);
+        state.total += action.payload.price;
       }
-      state.total += action.payload.price;
     },
     removeFromCart: (state, action: PayloadAction<ICourseData>) => {
       state.course = state.course.filter(
@@ -33,9 +35,12 @@ const cartSlice = createSlice({
       );
       state.total -= action.payload.price;
     },
+    toggleCartModal: (state,payload) => {
+      state.cartModal = !state.cartModal;
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart,toggleCartModal} = cartSlice.actions;
 
 export default cartSlice.reducer;

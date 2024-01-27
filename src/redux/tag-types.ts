@@ -24,6 +24,7 @@ export enum tagTypes {
   addPackageAndcourseTag = "addPackageAndcourseTag",
   LoginHistory = "LoginHistory",
   profile = "profile",
+  cart = "cart",
 }
 
 export const tagTypesList = [
@@ -52,5 +53,6 @@ export const tagTypesList = [
   tagTypes.userPurchaseCategory,
   tagTypes.addPackageAndcourseTag,
   tagTypes.LoginHistory,
-  tagTypes.profile
+  tagTypes.profile,
+  tagTypes.cart,
 ];
