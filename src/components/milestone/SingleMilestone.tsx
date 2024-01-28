@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react'
 
 export default function SingleMilestone({ milestoneData }: { milestoneData: IMilestoneData }) {
-    console.log('milestoneData', milestoneData)
+    // console.log('milestoneData', milestoneData)
     return (
         <div
 
