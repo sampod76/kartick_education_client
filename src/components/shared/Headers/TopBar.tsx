@@ -9,7 +9,7 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import SocialGroup from "../socialIcon/SocialGroup";
 
 const TopBar = () => {
-  const [userInfoloading, setUserInfoLoading] = useState(true);
+  const [userInfoLoading, setUserInfoLoading] = useState(true);
   const [userInfo, setUserInfo] = useState<Partial<IDecodedInfo>>({
     email: "",
     id: "",
@@ -41,7 +41,7 @@ const TopBar = () => {
       </section>
       <section className="flex justify-between gap-3 lg:mt-0 ">
         <SocialGroup />
-        {userInfoloading ? (
+        {userInfoLoading ? (
           <div className="bg-white w-[50px] h-[50px] rounded-full shadow-md animate-pulse"></div>
         ) : userInfo?.email ? (
           <UserAvatarUI />

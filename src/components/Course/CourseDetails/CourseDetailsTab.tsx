@@ -2,7 +2,7 @@
 import Courses from "@/components/Home/coureses/Courses";
 import { Tabs, TabsProps } from "antd";
 import React, { useState } from "react";
-import MilestoneList from "../MilestoneList";
+import MilestoneList from "../MilestoneHomeList";
 import ReviewsPage from "./ReviewsPage";
 import CourseAbout from "./CourseAbout";
 import { ICourseData } from "@/types/courseType";

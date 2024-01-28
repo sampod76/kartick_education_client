@@ -10,7 +10,7 @@ import { FaUserNinja } from "react-icons/fa";
 import { Col, Row } from "antd";
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useGetAllTrainersQuery } from "@/redux/api/adminApi/trainer";
+import { useGetAllTrainersQuery } from "@/redux/api/adminApi/trainerApi";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { ENUM_YN } from "@/constants/globalEnums";
 import {
@@ -29,6 +29,7 @@ type ICard = {
   link?: string;
 };
 export default function TopDashStatistics() {
+
   const {
     data: allUserData,
     error: UserError,
@@ -70,6 +71,7 @@ export default function TopDashStatistics() {
     error: allSellCourseErrorAmount,
     isLoading: allSellCourseAmountLoading,
   } = useGetAllPurchaseAcceptedCourseAmountQuery({ isDelete: ENUM_YN.NO });
+
 
 
   const userNumber = allUserData?.meta?.total;
@@ -119,6 +121,7 @@ export default function TopDashStatistics() {
       link: "",
     },
   ];
+
   if (
     userLoading ||
     courseLoading ||
@@ -129,6 +132,7 @@ export default function TopDashStatistics() {
     allSellPackageAmountLoading
   ) {
     return <LoadingSkeleton />;
+
   }
   return (
     <div>

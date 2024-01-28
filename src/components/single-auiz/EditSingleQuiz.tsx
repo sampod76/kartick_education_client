@@ -11,7 +11,7 @@ import { courseStatusOptions, singleQuizTypes } from "@/constants/global";
 import {
   useGetSingleOneQuizQuery,
   useUpdateSingleQuizMutation,
-} from "@/redux/api/adminApi/singleQuiz";
+} from "@/redux/api/adminApi/singleQuizApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -296,7 +296,7 @@ export default function EditSingleQuiz({
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                    //
+                  //
                   />
                 </Col>
                 <Col
@@ -437,8 +437,8 @@ export default function EditSingleQuiz({
                   </p>
                   <TextEditor
                     isReset={isReset}
-                    // textEditorValue={textEditorValue}
-                    // setTextEditorValue={setTextEditorValue}
+                  // textEditorValue={textEditorValue}
+                  // setTextEditorValue={setTextEditorValue}
                   />
                 </section>
               </Col>
@@ -486,13 +486,13 @@ export default function EditSingleQuiz({
             </div>
             <div className="flex justify-center items-center">
 
-            {serviceLoading ? (
-              <ButtonLoading />
-            ) : (
-              <Button htmlType="submit" type="default">
-                Update
-              </Button>
-            )}
+              {serviceLoading ? (
+                <ButtonLoading />
+              ) : (
+                <Button htmlType="submit" type="default">
+                  Update
+                </Button>
+              )}
             </div>
           </Form>
         </div>

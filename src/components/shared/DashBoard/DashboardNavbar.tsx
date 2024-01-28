@@ -48,8 +48,8 @@ const DashboardNavBar = ({
 }) => {
   const router = useRouter();
   //   const userInfo = getUserInfo() as any;
-  const userLoggedIn = getUserInfo() as any
-  const userInfo =getUserInfo() as IDecodedInfo
+  // const userLoggedIn = getUserInfo() as any
+  // const userInfo =getUserInfo() as IDecodedInfo
   // console.log(userLoggedIn);
   /* 
   const [isNavbarFixed, setNavbarFixed] = useState(false);

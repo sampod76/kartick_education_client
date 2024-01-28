@@ -2,7 +2,7 @@
 import { Button, Menu } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import Logo from "../../Logo";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBarHome from "./SideBarHome";
 import { homeNavItems } from "@/constants/homeNabItems";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
@@ -14,11 +14,26 @@ import { toggleCartModal } from "@/redux/features/cartSlice";
 
 const NavbarPublic = () => {
   // const screens = useBreakpoint();
-  const userInfo = getUserInfo() as IDecodedInfo
+  // const userInfo = getUserInfo() as IDecodedInfo
+  const [userInfoLoading, setUserInfoLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState<Partial<IDecodedInfo>>({
+    email: "",
+    id: "",
+    role: undefined,
+  });
+
+  useEffect(() => {
+    // Fetch user info asynchronously on the client side
+    const fetchUserInfo = async () => {
+      const userInfo = (await getUserInfo()) as any;
+      setUserInfo(userInfo);
+    };
+    fetchUserInfo();
+    setUserInfoLoading(false);
+  }, []);
 
   const dispatch = useAppDispatch()
   const { cartModal } = useAppSelector(state => state.cart)
-
 
   return (
     <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
@@ -27,9 +42,9 @@ const NavbarPublic = () => {
     flex align-center justify-between gap-[5rem] "
       >
         <Logo />
-        {userInfo?.role &&
+        {/* {userInfo?.role &&
           <button onClick={() => dispatch(toggleCartModal(true))}>Your Cart <ShoppingCartOutlined /> </button>
-        }
+        } */}
         <Menu
           mode="horizontal"
           className="hidden lg:flex"

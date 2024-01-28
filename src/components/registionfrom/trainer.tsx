@@ -11,7 +11,7 @@ import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
-import { useAddTrainerWithFormDataMutation } from "@/redux/api/adminApi/trainer";
+import { useAddTrainerWithFormDataMutation } from "@/redux/api/adminApi/trainerApi";
 import { trainerSchema } from "@/schemas/trainer";
 // import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
@@ -22,7 +22,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, Upload, message } from "antd";
 
-const CreateTrainer = ({open,setOpen}:any) => {
+const CreateTrainer = ({ open, setOpen }: any) => {
   const [addTrainerWithFormData, { isLoading }] =
     useAddTrainerWithFormDataMutation();
 

@@ -5,7 +5,7 @@ import React from "react";
 import { Card, Radio, Input, Select, Button } from "antd";
 import QuizAside from "./QuizAside";
 import UMBreadCrumb from "../ui/UMBreadCrumb";
-import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuiz";
+import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuizApi";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { usePathname, useSearchParams } from "next/navigation";
 import TextToSpeech from "@/utils/TextToSpeech";
@@ -21,6 +21,7 @@ export default function QuizeSinglePage({
   quizeId: string;
   quiz_title: string;
 }) {
+  
   // console.log("🚀 ~ quizeId:", quizeId)
   const searchParams = useSearchParams();
   const quiz_query: Record<string, any> = {};

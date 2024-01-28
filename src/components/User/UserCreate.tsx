@@ -14,7 +14,7 @@ import {
 } from "@/constants/global";
 import { USER_ROLE } from "@/constants/role";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
-import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/seller";
+import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/sellerApi";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -323,13 +323,13 @@ const UserCreateComponent = ({
             </Row>
           </div>
           <div>
-          {AdminLoading || StudentLoading || SellerLoading ? (
-            <ButtonLoading />
-          ) : (
-            <Button htmlType="submit" type="default">
-              Create
-            </Button>
-          )}
+            {AdminLoading || StudentLoading || SellerLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button htmlType="submit" type="default">
+                Create
+              </Button>
+            )}
           </div>
         </Form>
       </div>
