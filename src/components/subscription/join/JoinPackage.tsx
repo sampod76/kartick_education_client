@@ -31,6 +31,7 @@ import {
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import { useSearchParams } from "next/navigation";
 import { getUserInfo } from "@/services/auth.service";
+import { useGetAllPurchasePackageQuery } from "@/redux/api/public/purchaseAPi";
 export default function JoinPackage({
   plan,
   setPlan,
@@ -44,6 +45,16 @@ export default function JoinPackage({
 }) {
   // const paramsSearch = useSea
   const userInfo = getUserInfo() as any;
+  const query: Record<string, any> = {};
+  query["limit"] = 999999;
+  query["status"] = "active";
+  query["user"] = userInfo?.id;
+  query["isDelete"] = ENUM_YN.NO;
+  const { data: GetPurchasePackage, isLoading: GetPurchasePackageLoading } =
+    useGetAllPurchasePackageQuery({});
+  const userToGetPurchasePackage = GetPurchasePackage?.data?.map(
+    (data: { package: any }) => data.package
+  );
 
   const searchParams = useSearchParams();
   const packName = searchParams.get("pack") as string;
@@ -73,23 +84,26 @@ export default function JoinPackage({
   ] = useAddPaypalPaymentMutation();
 
   const makePayment = async (platform?: string) => {
+    if (userToGetPurchasePackage?.includes(selectPackage?._id)) {
+      message.error("This package has already purchased");
+      return;
+    }
     if (!userInfo?.id) {
       window.open("/login", "_blank");
       return;
     }
     if (!selectPackage?._id) {
-      message.error("Please select any package")
-      return
+      message.error("Please select any package");
+      return;
     }
-    if (packName === 'family_personal' && quantity > 11) {
-      message.info("Select max 10 for Family Pack")
-      setSelectPackage(null)
-      return
-    }
-    else if (packName === 'school_teacher' && quantity < 11) {
-      setSelectPackage(null)
-      message.info("Select min 10 for School Teacher  Pack")
-      return
+    if (packName === "family_personal" && quantity > 11) {
+      message.info("Select max 10 for Family Pack");
+      setSelectPackage(null);
+      return;
+    } else if (packName === "school_teacher" && quantity < 11) {
+      setSelectPackage(null);
+      message.info("Select min 10 for School Teacher  Pack");
+      return;
     }
 
     let categories = [];
@@ -186,8 +200,8 @@ export default function JoinPackage({
         packName === "school_teacher"
           ? "school & teacher"
           : packName === "family_personal"
-            ? "family & personal"
-            : "nulls",
+          ? "family & personal"
+          : "nulls",
     },
     {
       skip: !Boolean(packName),
@@ -219,15 +233,14 @@ export default function JoinPackage({
 
   //  ! Select Handler
   const selectPackageHandler = (values: any) => {
-    if (packName === 'family_personal' && quantity > 11) {
-      message.info("Select max 10 for Family Pack")
-      setSelectPackage(null)
-      return
-    }
-    else if (packName === 'school_teacher' && quantity < 11) {
-      setSelectPackage(null)
-      message.info("Select min 10 for School Teacher  Pack")
-      return
+    if (packName === "family_personal" && quantity > 11) {
+      message.info("Select max 10 for Family Pack");
+      setSelectPackage(null);
+      return;
+    } else if (packName === "school_teacher" && quantity < 11) {
+      setSelectPackage(null);
+      message.info("Select min 10 for School Teacher  Pack");
+      return;
     }
 
     // ! All selected package data
@@ -259,7 +272,7 @@ export default function JoinPackage({
       <h2 className="text-[1.4rem] lg:text-[2rem] text-slate-700 font-normal mt-5 mb-5">
         Choose a package
       </h2>
-      {isLoading ? (
+      {isLoading || GetPurchasePackageLoading ? (
         <LoadingSkeleton />
       ) : (
         <>
@@ -274,30 +287,36 @@ export default function JoinPackage({
                 >
                   <span
                     className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
-                    ${selectPackage?._id === packages?._id
+                    ${
+                      selectPackage?._id === packages?._id
                         ? "bg-secondary text-white"
                         : "bg-white text-black"
-                      }
+                    }
                   `}
                   >
                     {plan}
                   </span>
                   <div
-                    className={`h-28 ${selectPackage?._id === packages?._id
-                      ? "bg-green-600"
-                      : "bg-gray-700"
-                      } text-center p-4`}
+                    className={`h-28 ${
+                      selectPackage?._id === packages?._id
+                        ? "bg-green-600"
+                        : "bg-gray-700"
+                    } text-center p-4`}
                   >
                     <h3 className="text-2xl text-white uppercase font-semibold mb-1">
                       {packages?.title}
                     </h3>
-                    {/* <p className="text-xs text-white">{plan}</p> */}
+                    <p className="text-xs text-white">
+                      {userToGetPurchasePackage?.includes(packages?._id) &&
+                        "(Already purchased)"}
+                    </p>
                   </div>
                   <div
-                    className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${selectPackage?._id === packages?._id
-                      ? "bg-green-600"
-                      : "bg-gray-700"
-                      } text-white border-4 flex flex-col items-center justify-center border-white`}
+                    className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
+                      selectPackage?._id === packages?._id
+                        ? "bg-green-600"
+                        : "bg-gray-700"
+                    } text-white border-4 flex flex-col items-center justify-center border-white`}
                   >
                     <h3 className="text-2xl font-semibold">
                       ${totalPackagePrice}
@@ -347,9 +366,9 @@ export default function JoinPackage({
                               flexDirection: "column",
                               gap: "1rem",
                             }}
-                          // onChange={(e) => {
-                          //   setSingleSelect(e.target.value);
-                          // }}
+                            // onChange={(e) => {
+                            //   setSingleSelect(e.target.value);
+                            // }}
                           >
                             {packages?.categories?.map(
                               (option?: IPackageCategory) => (
@@ -438,10 +457,11 @@ export default function JoinPackage({
                           })
                         }
                         type="button"
-                        className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${selectPackage?._id === packages?._id
-                          ? "bg-green-600 hover:brightness-125"
-                          : "bg-gray-700 hover:bg-gray-800"
-                          }  rounded-md static lg:absolute bottom-1 left-0`}
+                        className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
+                          selectPackage?._id === packages?._id
+                            ? "bg-green-600 hover:brightness-125"
+                            : "bg-gray-700 hover:bg-gray-800"
+                        }  rounded-md static lg:absolute bottom-1 left-0`}
                       >
                         Select
                       </button>

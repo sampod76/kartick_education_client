@@ -12,7 +12,7 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import Image from "next/image";
 import { Image as ImageAnt } from "antd";
 
-const StudentProfile = ({ userData }: { userData: any }) => {
+const UserProfile = ({ userData }: { userData: any }) => {
   const userInfo = getUserInfo() as IDecodedInfo;
   const img = userData?.img || userData[userData.role]?.img;
   // console.log(img);
