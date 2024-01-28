@@ -32,7 +32,7 @@ export default function TopDashStatistics() {
 
   const userNumber = allUserData?.meta?.total;
   const allCourseNumber = allCourseData?.meta?.total;
-  console.log(trainerError,CourseError);
+  
   const cardData: ICard[] = [
     {
       _id: "1",

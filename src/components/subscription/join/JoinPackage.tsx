@@ -53,9 +53,9 @@ export default function JoinPackage({
   const { data: GetPurchasePackage, isLoading: GetPurchasePackageLoading } =
     useGetAllPurchasePackageQuery({});
   const userToGetPurchasePackage = GetPurchasePackage?.data?.map(
-    (data: { package: any; }) => data.package
+    (data: { package: any }) => data.package
   );
-  console.log("🚀 ~ userToGetPurchasePackage:", userToGetPurchasePackage);
+
   const searchParams = useSearchParams();
   const packName = searchParams.get("pack") as string;
 
@@ -84,7 +84,7 @@ export default function JoinPackage({
   ] = useAddPaypalPaymentMutation();
 
   const makePayment = async (platform?: string) => {
-    if (userToGetPurchasePackage.includes(selectPackage?._id)) {
+    if (userToGetPurchasePackage?.includes(selectPackage?._id)) {
       message.error("This package has already purchased");
       return;
     }
@@ -307,7 +307,7 @@ export default function JoinPackage({
                       {packages?.title}
                     </h3>
                     <p className="text-xs text-white">
-                      {userToGetPurchasePackage.includes(packages?._id) &&
+                      {userToGetPurchasePackage?.includes(packages?._id) &&
                         "(Already purchased)"}
                     </p>
                   </div>
