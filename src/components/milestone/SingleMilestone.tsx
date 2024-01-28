@@ -5,9 +5,9 @@ import React from 'react'
 
 export default function SingleMilestone({ milestoneData }: { milestoneData: IMilestoneData }) {
     // console.log('milestoneData', milestoneData)
+    
     return (
         <div
-
             className="border-2 shadow-xl p-2 rounded-xl"
         >
             <Link

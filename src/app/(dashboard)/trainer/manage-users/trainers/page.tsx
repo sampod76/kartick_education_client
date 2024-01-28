@@ -33,7 +33,7 @@ import CreateTrainer from "@/components/registionfrom/trainer";
 import {
   useDeleteTrainerMutation,
   useGetAllTrainersQuery,
-} from "@/redux/api/adminApi/trainer";
+} from "@/redux/api/adminApi/trainerApi";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const TrainerListPage = () => {

@@ -168,15 +168,15 @@ const QuizDashList = () => {
       dataIndex: "title",
       ellipsis: true,
     },
+    // {
+    //   title: "Description",
+    //   dataIndex: "short_description",
+    //   ellipsis: true,
+    // },
     {
-      title: "Description",
-      dataIndex: "short_description",
-      ellipsis: true,
-    },
-    {
-      title: "passingGrade",
+      title: "Passing Grade",
       dataIndex: "passingGrade",
-      width: 100,
+      // width: 100,
     },
     {
       title: "module",
@@ -194,7 +194,7 @@ const QuizDashList = () => {
 
     {
       title: "Action",
-      fixed: "right",
+      fixed: "right", width: 100,
       render: (record: any) => (
         <>
           <Space size="middle">
@@ -316,7 +316,7 @@ const QuizDashList = () => {
           >
             Filter
           </Button>
-   
+
           <Link href={`/${userInfo?.role}/quiz/create`}>
             <Button>Create Quiz</Button>
           </Link>

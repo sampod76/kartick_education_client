@@ -11,7 +11,7 @@ import UploadImage from "@/components/ui/UploadImage";
 import { genderOptions, roleOptions } from "@/constants/global";
 import { USER_ROLE } from "@/constants/role";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
-import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/seller";
+import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/sellerApi";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 import { getUserInfo } from "@/services/auth.service";
 
@@ -40,7 +40,7 @@ const SignUpTeacherAndStudent = () => {
       router.back();
     }
     setLoading(false);
-    return () => {};
+    return () => { };
   }, [router, userInfo]);
 
   if (loading) {

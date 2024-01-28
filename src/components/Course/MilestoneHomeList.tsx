@@ -38,8 +38,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
     course: courseId,
     module: "yes",
     ...query,
-  });
-
+  })
   // console.log(data,"courseId");
   const milestoneData = data?.data || [];
 
