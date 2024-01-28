@@ -11,6 +11,7 @@ import { dashboardItems } from "@/constants/dashBoardItems";
 import DashboardSidebar from "@/components/shared/DashBoard/DashboardSidebar";
 import DashboardNavBar from "@/components/shared/DashBoard/DashboardNavbar";
 import dynamic from "next/dynamic";
+import { CloseOutlined } from "@ant-design/icons"
 
 const { Content } = Layout;
 
@@ -53,13 +54,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     >
       {!screens.sm ? (
         <Drawer
-          title={`${userInfo?.data?.role} Dash`}
+          title={<h2 className="text-white">{userInfo?.role} Dash</h2>}
           placement="left"
           onClose={() => setCollapsed(false)}
           open={collapsed}
+          closeIcon={<CloseOutlined style={{ color: "white" }} />}
+
+          width={300}
           style={{
             background: "#001529",
             color: "white",
+
           }}
         >
           <Menu
@@ -68,7 +73,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             style={{ backgroundColor: "#", color: "white" }}
             defaultSelectedKeys={["1"]}
             mode="inline"
-            items={dashboardItems(userInfo?.data?.role, setCollapsed)}
+            items={dashboardItems(userInfo?.role, setCollapsed)}
           />
         </Drawer>
       ) : (
