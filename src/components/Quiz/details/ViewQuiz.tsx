@@ -45,11 +45,11 @@ export default function ViewQuiz({ quizId }: { quizId: string }) {
       <h3> Quiz Details page</h3>
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
 
-        {<div  className={`m-4 w-full relative `}>
+        {<div className={`m-4 w-full relative `}>
           <div className="text-center mt-4 flex justify-center items-center">
             {/* <p>Time Remaining: {timer} seconds</p> */}
             QUiz Time:  {quiz?.time_duration && (
-              <span>{Math.floor(quiz.time_duration / 1000 / 60)} minutes</span>
+              <span>{Math.floor(quiz.time_duration / 1000 / 60)} </span>
             )} Minutes
           </div>
 
@@ -81,6 +81,8 @@ export default function ViewQuiz({ quizId }: { quizId: string }) {
                 gap: "1rem",
               }}
               name="radiogroup"
+
+              defaultValue={quiz?.answers?.find((item: IAnswer) => item?.correct === true)?._id}
 
             // defaultValue={submittedDefaultData?.submitAnswers[0]} // Set the default value based on isDefaultValue
 
@@ -128,7 +130,9 @@ export default function ViewQuiz({ quizId }: { quizId: string }) {
             <Checkbox.Group
               // defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
               // disabled={isDefaultValue?.is_time_up ? true : false}
-
+              defaultValue={quiz?.answers
+                .filter((item: any) => item?.correct === true)
+                .map((item: any) => item?._id)}
 
               style={{
                 display: "flex",
