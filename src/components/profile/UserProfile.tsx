@@ -6,21 +6,31 @@ import {
   FacebookFilled,
   LinkedinFilled,
   InstagramFilled,
+  MailOutlined,
+  WhatsAppOutlined,
+  EnvironmentOutlined,
+  BankOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import Image from "next/image";
 import { Image as ImageAnt } from "antd";
+import { IUserData } from "@/types/userType";
 
-const UserProfile = ({ userData }: { userData: any }) => {
-  console.log("🚀 ~ UserProfile ~ userData:", userData)
+
+const UserProfile = ({ userData }: { userData: IUserData | any }) => {
+  // console.log(userData, 'userData')
+
   const userInfo = getUserInfo() as IDecodedInfo;
   const img = userData?.img || userData[userData?.role]?.img;
   // console.log(img);
   const gender = userData?.gender || userData[userData?.role]?.gender;
   const phoneNumber =
-    userData?.phoneNumber || userData[userData?.role]?.phoneNumber;
-  const address = userData?.address || userData[userData?.role]?.address;
+
+    userData?.phoneNumber || userData[userData.role]?.phoneNumber;
+  const address = userData?.address || userData[userData.role]?.address;
+  const dateOfBirth = userData?.dateOfBirth || userData[userData.role]?.dateOfBirth;
+
   const firstName =
     userData?.name?.firstName || userData[userData?.role]?.name?.firstName;
   const lastName =
@@ -46,16 +56,27 @@ const UserProfile = ({ userData }: { userData: any }) => {
             width: "180px"
           }} src={img} alt="User mask" />
         </div>
-        <div className="text-center mt-2">
-          <h2 className="font-semibold uppercase">
-            {firstName} {lastName}
+
+        <div className=" mt-2">
+          <h2 className="font-semibold text-center uppercase">
+            {firstName} {lastName} <span className="text-sm capitalize text-gray-800">{userData?.role}</span>
           </h2>
-          <p className="text-gray-500">{userData?.role}</p>
         </div>
-        <div className="flex flex-col justify-center items-center">
-          <p>Phone Number : {phoneNumber}</p>
-          <p>Gender: {gender}</p>
+
+
+        <div className="px-3">
+          <div className="flex justify-between ">
+            <p>Phone Number : {phoneNumber}</p>
+            <p>Gender: {gender}</p>
+          </div>
+          <div className="text-[10px] my-3 text-gray-800">
+            <h2> <MailOutlined /> <span className="text-[14px] ml-2 ">{userData?.email}</span></h2>
+            <h2> <BankOutlined /><span className="text-[14px] ml-2 "> BirthDay: {dateOfBirth}</span></h2>
+            <h2><EnvironmentOutlined /> <span className="text-[14px] ml-2 ">{address}</span></h2>
+          </div>
         </div>
+
+        {/* //! social group  */}
         <div className="flex flex-wrap items-center justify-around my-4 py-5">
           <Link
             href="/"

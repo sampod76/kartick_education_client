@@ -161,6 +161,7 @@ const AdminPage = () => {
     },
     {
       title: "Action",
+      width: 130,
       dataIndex: "_id",
       render: function (data: any) {
         // console.log(data);

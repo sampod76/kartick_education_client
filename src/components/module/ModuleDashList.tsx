@@ -44,7 +44,7 @@ import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 export default function ModuleDashList() {
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo
   //
   const [openDrawer, setOpenDrawer] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -194,7 +194,8 @@ export default function ModuleDashList() {
     },
     {
       title: "Action",
-      fixed: "right",
+      // fixed: "right",
+      width: 130,
       render: (record: any) => (
         <>
           <Space size="middle">

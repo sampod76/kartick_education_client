@@ -192,7 +192,7 @@ const MileStoneList = () => {
     },
     {
       title: "Action",
-      fixed: "right",
+      // fixed: "right",
       width: 120,
       render: (record: any) => (
         // console.log(object);

@@ -106,3 +106,5 @@ export default CoursesTab;
 // export default dynamic(() => Promise.resolve(CoursesTab), {
 //    ssr: false,
 //  });
+
+

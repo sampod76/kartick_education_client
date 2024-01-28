@@ -21,11 +21,6 @@ export default function SellerMainProfile() {
       children: <ProfileAboutSection />,
     },
     {
-      key: "2",
-      label: "Courses",
-      children: <Courses query={{ status: "active" }} />,
-    },
-    {
       key: "3",
       label: "Purchased",
       children: <SellerPurchased />,

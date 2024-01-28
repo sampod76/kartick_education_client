@@ -186,8 +186,8 @@ const CourseList = () => {
     },
     {
       title: "Action",
-      fixed: "right",
-      width: 80,
+      // fixed: "right",
+      width: 110,
       render: (record: any) => (
         <>
           <Space size="middle">
