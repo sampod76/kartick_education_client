@@ -65,6 +65,7 @@ export const cartApi = baseApi.injectEndpoints({
 
         // delete ac department
         deleteCart: build.mutation({
+            
             query: (id) => ({
                 url: `${CART_URL}/${id}`,
                 method: "DELETE",
