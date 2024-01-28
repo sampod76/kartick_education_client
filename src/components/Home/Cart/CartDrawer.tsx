@@ -52,14 +52,13 @@ export default function CartDrawer() {
             message.error(error.message);
         }
     }
-
-    const totalPrice: number | undefined = !isLoading && cartData?.length && cartData?.reduce((accumulator, cartItem:ICartData) => {
+    const totalPrice: any= !isLoading && cartData?.length && cartData?.reduce((accumulator: number, cartItem: ICartData) => {
         // Extract the price from the first item in the courseDetails array
         const coursePrice = cartItem.courseDetails[0].price;
 
         // Add the course price to the accumulator
         return accumulator + coursePrice;
-    }, 0)
+    }, 0);
 
     // console.log(totalPrice, 'totalPrice')
     return (

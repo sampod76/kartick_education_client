@@ -26,7 +26,7 @@ export type ICartData = {
       _id: string;
       title: string;
       img: string;
-      price: string;
+      price: number;
       status: string;
     }
   ];
