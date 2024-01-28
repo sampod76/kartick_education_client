@@ -1,6 +1,6 @@
 "use client";
 import { AllImage } from "@/assets/AllImge";
-import { IPurchasedData } from "@/types/purchasedType";
+import { IPurchasedCategory, IPurchasedData } from "@/types/purchasedType";
 
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import Image from "next/image";
@@ -13,6 +13,7 @@ import ModalComponent from "../Modal/ModalComponents";
 import AddStudentComponent from "../student/addStudentByAuthor/addStudentComponent";
 import { getUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+
 
 export default function SInglePurchased({
   packages,
@@ -31,73 +32,123 @@ export default function SInglePurchased({
     const href = `/${userInfo?.role}/package_category_and_course?data=${encodedData}`;
     router.push(href);
   };
+
+  // console.log(new Date(packages?.expiry_date),'newDate', new Date())
   return (
+
     <div
-      // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
       onClick={() => navigatePackage(packages?.categories)}
-      className="cursor-pointer"
+      className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 hover:brightness-105 bg-blue-200 min-h-full  lg:min-h-[30rem] cursor-pointer w-full lg:max-w-xl relative"
     >
-      <div className="p-2">
-        <div className="flex w-full justify-center items-center bg-white shadow-lg rounded-lg overflow-hidden p-2">
-          <div>
-            <Image
-              src={packages?.package?.img || AllImage?.notFoundImage}
-              width={300}
-              height={500}
-              alt=""
-              className="h-36 w-40"
-            />
-          </div>
-          <div className="w-full p-2">
-            <h1 className="text-gray-900 capitalize text-center font-bold text-2xl border-b-2 ">
-              {" "}
-              <EllipsisMiddle suffixCount={3} maxLength={90}>
-                {packages?.title}
-              </EllipsisMiddle>
-            </h1>
-            <div className="mt-2 flex justify-between ">
-              <p className="mt-2 font-bold capitalize text-gray-700 text-base">
-                {" "}
-                <EllipsisMiddle suffixCount={3} maxLength={160}>
-                  {packages?.membership?.title}
-                </EllipsisMiddle>
-              </p>
+      <span
+        className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
+                 bg-white
 
-              {/* <ModalComponent buttonText="Add Student">
-                <AddStudentComponent />
-              </ModalComponent> */}
-            </div>
+                  `}
+      >
+        {packages?.purchase?.label}
+      </span>
 
-            <div className="mt-2 flex justify-between ">
-              <h1 className="text-base text-gray">
-                Total Student: {packages?.total_purchase_student}
-              </h1>
-              <h1 className="text-base text-gray capitalize">
-                Remaining Student:{" "}
-                {packages?.total_purchase_student - packages?.students?.length}
-              </h1>
-            </div>
+      {/* //! top title section  */}
+      <div
+        className={`h-28 
+        ${new Date(packages?.expiry_date) < new Date()
+            ? "bg-red-600"
+            : "bg-green-700"
+          } text-center p-4`}
+      >
+        <h3 className="text-xl text-white uppercase font-semibold mb-1">
+          {packages?.title}
+          <span className="text-sm capitalize">{new Date(packages?.expiry_date) < new Date() && " (expired)"}</span>
+        </h3>
+        <p className="text-base font-mono text-slate-200">
+          {packages?.user?.email}
+        </p>
+      </div>
+      {/* //! round price  */}
+      <div
+        className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${new Date(packages?.expiry_date) < new Date()
+          ? "bg-red-600"
+          : "bg-green-700"
 
-            <div className="flex item-center justify-between mt-3">
-              <h1 className="text-gray-700 font-bold text-base capitalize">
-                Package type: {packages?.purchase?.label}
-              </h1>
-              <p className="text-gray-700 font-bold text-base capitalize">
-                Expiry date:{" "}
-                {packages?.expiry_date &&
-                  dayjs(packages?.expiry_date).format("MMMM D, YYYY")}
-              </p>
-              {/* <Link
-                href={`/`}
-                className="px-3 py-2 bg-primary flex item-center  gap-2 text-white text-xs font-bold uppercase rounded"
-              >
-                <CiClock2 className="text-white" />{" "}
-                <span>{packages?.payment?.platform}</span>
-              </Link> */}
-            </div>
-          </div>
-        </div>
+          } hover:brightness-125 transition-all duration-500 text-white border-4 flex flex-col items-center justify-center border-white`}
+      >
+        <h3 className="text-2xl font-semibold">
+          ${packages?.total_price}
+        </h3>
+      </div>
+      {/* //! container or Category section */}
+      <div className="px-6 py-5  mt-4  ">
+        <ul className="space-y-4">
+          {/* //! for bundle type */}
+          {packages?.type &&
+            packages?.categories?.map(
+              (categoryData: IPurchasedCategory) => {
+                const category = categoryData?.category;
+                // console.log(category);
+                return (
+                  <li
+                    className="flex items-center text-sm text-gray-500"
+                    key={category?._id}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="17"
+                      className="mr-4 bg-green-500 fill-white rounded-full p-[3px]"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"
+                        data-original="#000000"
+                      />
+                    </svg>
+                    <span className="text-[16px]">
+                      {" "}
+                      {category?.title}
+                    </span>
+                    {/* <span>{category?.title}</span> */}
+                    <span className="text-[12px] text-slate-600 ml-2">
+                      {categoryData?.label}
+                    </span>
+                  </li>
+                );
+              }
+            )}
+
+        </ul>
+
+      </div>
+      {/* //! Footer section  */}
+      <div className="px-3 bg-gray-200 rounded min-h-max py-3  w-full">
+        <h4 className="text-center mb-3 uppercase text-lg"> {packages?.membership?.title}</h4>
+        <h2 className="text-sm capitalize flex justify-between">
+          <span>Total Purchased: {packages?.total_purchase_student}</span>
+          <span>
+            Remaining Student: {packages?.total_purchase_student - packages?.students?.length}
+          </span>
+        </h2>
+        <h4 className="flex justify-between my-2">
+          <span>Paid by {packages?.payment?.platform}</span>
+          <span>   {packages?.paymentStatus === "approved" ? (
+            <span className="text-sm p-1 rounded-sm text-white bg-green-700">
+              Approved
+            </span>
+          ) : packages?.paymentStatus === "pending" ? (
+            <span className="text-sm p-1 rounded-sm text-white bg-red-600">
+              Pending
+            </span>
+          ) : (
+            <span className="text-sm p-1 rounded-sm text-white bg-red-600">
+              Rejected
+            </span>
+          )}</span> </h4>
+        <p className="mb-2 text-sm text-slate-900">Transaction:  {packages?.payment?.transactionId}</p>
+        <h2 className={`text-base  `}>Expire date: <span className={`text-sm 
+          ${new Date(packages?.expiry_date) < new Date() ? "text-red-700" : "text-stone-700"}
+          `}>{packages?.expiry_date &&
+            dayjs(packages?.expiry_date).format("MMMM D, YYYY")} {new Date(packages?.expiry_date) < new Date() && " (expired)"}</span></h2>
       </div>
     </div>
+
   );
 }

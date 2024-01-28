@@ -1,5 +1,5 @@
 import CourseStatistics from "@/components/Course/CourseStatistics";
-import MilestoneList from "@/components/Course/MilestoneList";
+import MilestoneList from "@/components/Course/MilestoneHomeList";
 import CartDrawer from "@/components/Home/Cart/CartDrawer";
 
 
@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       {/* <BannerCourses /> */}
       {/* <BannerCourses /> */}
       {/* <CourseStatistics /> */}
-        {/* <CartDrawer /> */}
+      {/* <CartDrawer /> */}
 
       <main style={{ minHeight: "100vh" }}>
         {children}
