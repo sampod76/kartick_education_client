@@ -1,7 +1,5 @@
 import React from 'react'
 import ProfileAboutSection from '../ProfileAboutSection';
-import Courses from '@/components/Home/coureses/Courses';
-import SellerPurchased from '@/components/package/SellerPurchased';
 import ReviewsPage from '@/components/Course/CourseDetails/ReviewsPage';
 import ProfileTabSection from '../ProfileTabSection';
 
@@ -18,16 +16,6 @@ export default function AdminMainProfile() {
             key: "1",
             label: "About",
             children: <ProfileAboutSection />,
-        },
-        {
-            key: "2",
-            label: "Courses",
-            children: <Courses query={{ status: "active" }} />,
-        },
-        {
-            key: "3",
-            label: "Purchased",
-            children: <SellerPurchased />,
         },
         {
             key: "4",

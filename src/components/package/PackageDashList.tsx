@@ -197,6 +197,7 @@ export default function PackageDashList() {
     {
       title: "Action",
       // fixed: "right",
+      width: 130,
       render: (record: any) => (
         // console.log(object);
         <>
@@ -231,7 +232,7 @@ export default function PackageDashList() {
           </Space>
         </>
       ),
-      width: 100,
+      // width: 100,
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {

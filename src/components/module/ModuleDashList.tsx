@@ -195,6 +195,7 @@ export default function ModuleDashList() {
     {
       title: "Action",
       // fixed: "right",
+      width: 130,
       render: (record: any) => (
         <>
           <Space size="middle">

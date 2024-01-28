@@ -9,13 +9,14 @@ export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: str
     const { data, isLoading: gerMilestoneLoading } =
         useGetSingleMilestoneQuery(milestoneId);
 
-    if (gerMilestoneLoading){
+    if (gerMilestoneLoading) {
         return (<div className="">
             <LoadingSkeleton number={20} />
         </div>)
-        }
+    }
 
-    console.log(data,'datadata')
+    // console.log(data, 'datadata')
+
     return (
         <div>
             <div className="">

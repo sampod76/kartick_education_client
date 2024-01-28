@@ -121,6 +121,7 @@ export default function LoginHistory() {
     {
       title: "Action",
       // fixed: "right",
+      width: 110,
       render: (record: any) => (
         // console.log(object);
         <div className={`${refreshToken.value === record?.token && "hidden"}`}>
@@ -134,7 +135,7 @@ export default function LoginHistory() {
           </Button>
         </div>
       ),
-      width: 100,
+      // width: 100,
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
