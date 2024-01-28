@@ -24,7 +24,7 @@ export default function SellerPurchased() {
   // console.log("🚀 ~ SellerPurchased ~ purchasedData:", purchasedData);
   return (
     <div>
-      <h1 className="text-center m-2">All Packages</h1>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {purchasedData?.data?.map((item: IPurchasedData, index: number) => {
           return <SInglePurchased packages={item} key={index + 1} />
