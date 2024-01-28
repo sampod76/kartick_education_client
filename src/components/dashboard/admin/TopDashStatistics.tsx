@@ -40,7 +40,6 @@ export default function TopDashStatistics() {
     error: CourseError,
     isLoading: courseLoading,
   } = useGetAllCourseQuery({ isDelete: ENUM_YN.NO });
-  console.log("🚀 ~ TopDashStatistics ~ allCourseData:", allCourseData);
   const {
     data: allTrainer,
     error: trainerError,
@@ -61,67 +60,13 @@ export default function TopDashStatistics() {
     error: allSellPackageAmountError,
     isLoading: allSellPackageAmountLoading,
   } = useGetAllPurchaseAcceptedPackageAmountQuery({ isDelete: ENUM_YN.NO });
-
-  console.log(
-    "🚀 ~ TopDashStatistics ~ allSellPackageAmount:",
-    allSellPackageAmount
-  );
   const {
     data: allSellCourseAmount,
     error: allSellCourseErrorAmount,
     isLoading: allSellCourseAmountLoading,
   } = useGetAllPurchaseAcceptedCourseAmountQuery({ isDelete: ENUM_YN.NO });
-
-
-
   const userNumber = allUserData?.meta?.total;
   const allCourseNumber = allCourseData?.meta?.total;
-
-  const cardData: ICard[] = [
-    {
-      _id: "1",
-      title: "Total Users",
-      icon: <FaUser className="h-7 w-7" />,
-      count: userNumber,
-      link: "",
-    },
-    {
-      _id: "2",
-      title: "Total Course",
-      icon: <GiBookCover className="h-7 w-7" />,
-      count: allCourseNumber,
-      link: "",
-    },
-    {
-      _id: "3",
-      title: "Total Amount",
-      icon: <MdAccountBalance className="h-7 w-7" />,
-      count: 50,
-      link: "",
-    }, // Assign a number, not a string
-    {
-      _id: "4",
-      title: "Total Sold Course",
-      icon: <SiSellfy className="h-7 w-7" />,
-      count: "",
-      link: "",
-    },
-    {
-      _id: "5",
-      title: "Total Admin",
-      icon: <FaUserTimes className="h-7 w-7" />,
-      count: "",
-      link: "",
-    },
-    {
-      _id: "6",
-      title: "Total Trainers",
-      icon: <FaUserNurse className="h-7 w-7" />,
-      count: allTrainer?.meta?.total,
-      link: "",
-    },
-  ];
-
   if (
     userLoading ||
     courseLoading ||
@@ -136,7 +81,8 @@ export default function TopDashStatistics() {
   }
   return (
     <div>
-      {/* <Row gutter={[16, 16]}>
+      {/*
+       <Row gutter={[16, 16]}>
         {cardData?.map((item: ICard, index: number) => (
           <Col style={{ width: "100%" }} sm={16} md={6} key={index + 1}>
             <div className="w-full col-span-12 sm:col-span-6 md:col-span-3">
@@ -152,7 +98,8 @@ export default function TopDashStatistics() {
             </div>
           </Col>
         ))}
-      </Row> */}
+      </Row> 
+      */}
       <>
         {
           <div className="w-full mx-auto p-4 grid grid-cols-12 gap-2 min-h-screen">

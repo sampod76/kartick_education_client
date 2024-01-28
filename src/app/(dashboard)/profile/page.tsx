@@ -33,6 +33,7 @@ const ProfileTemplate = () => {
     return <LoadingForDataFetch />;
   }
 
+  
 
   return (
     <section>

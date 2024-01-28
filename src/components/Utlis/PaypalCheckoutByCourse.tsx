@@ -5,6 +5,7 @@ import { Button, message } from "antd";
 import React from "react";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourseApi";
+import { USER_ROLE } from "@/constants/role";
 
 export default function PaypalCheckoutByCourse({ courseData }: any) {
   const userInfo = getUserInfo() as any;
@@ -59,7 +60,7 @@ export default function PaypalCheckoutByCourse({ courseData }: any) {
     }
   };
   return (
-    <div className={`${data?.data?.length ? "hidden" : "block"}`}>
+    <div className={`${data?.data?.length || userInfo?.role ===USER_ROLE.SELLER ? "hidden" : "block"}`}>
       {PaypalPaymentLoading || isLoading ? (
         <Button
           type="default"

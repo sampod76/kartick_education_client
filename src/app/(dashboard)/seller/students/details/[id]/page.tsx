@@ -9,6 +9,8 @@ const StudentDetailsPage = ({ params }: any) => {
   const id = params.id;
 
   const { data: userData, isLoading: loading } = useGetSingleStudentQuery(id);
+  console.log("🚀 ~ StudentDetailsPage ~ userData:", userData)
+
 
   if (loading) {
     return <LoadingForDataFetch />;
@@ -23,6 +25,3 @@ const StudentDetailsPage = ({ params }: any) => {
 
 export default StudentDetailsPage;
 
-function useAdminQuery(id: any): { data: any; isLoading: any } {
-  throw new Error("Function not implemented.");
-}

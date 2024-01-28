@@ -25,7 +25,7 @@ export const axiosBaseQuery =
     data,
     params,
     contentType,
-    withCredentials = true,
+    withCredentials = false,
   }) => {
     try {
       const result = await axiosInstance({
