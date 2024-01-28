@@ -32,6 +32,7 @@ export type IPurchasedData = {
   _id: string;
   package: string | any;
   title: string;
+  total_price:number;
   categories: IPurchasedCategory[];
   total_purchase_student: 6;
   students: [];
