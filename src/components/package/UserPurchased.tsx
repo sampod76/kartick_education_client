@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
-import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
+
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { IPurchasedData } from "@/types/purchasedType";
 import SInglePurchased from "./SinglePurchasedCard";
+import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 
 export default function UserPurchased() {
   const userInfo = getUserInfo() as IDecodedInfo;
-  const { data: purchasedData } = useGetPurchasePackageQuery({
+  const { data: purchasedData } = useGetAllPurchaseAcceptedPackageQuery({
     status: "active",
     limit: 99999,
     user: userInfo?.id,

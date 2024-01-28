@@ -6,12 +6,12 @@ import { IPurchasedData } from "@/types/purchasedType";
 import SInglePurchased from "./SinglePurchasedCard";
 import { ENUM_YN } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { useGetAllPurchasePackageQuery } from "@/redux/api/public/purchaseAPi";
+import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 import { useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
 
 export default function SellerPurchased() {
   const userInfo = getUserInfo() as IDecodedInfo;
-  const { data: purchasedData, isLoading } = useGetAllPurchasePackageQuery({
+  const { data: purchasedData, isLoading } = useGetAllPurchaseAcceptedPackageQuery({
     status: "active",
     isDelete: ENUM_YN.NO,
     limit: 99999,
@@ -24,7 +24,7 @@ export default function SellerPurchased() {
   // console.log("🚀 ~ SellerPurchased ~ purchasedData:", purchasedData);
   return (
     <div>
-      <h1>Seller Packages</h1>
+      <h1 className="text-center m-2">All Packages</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {purchasedData?.data?.map((item: IPurchasedData, index: number) => {
           return <SInglePurchased packages={item} key={index + 1} />

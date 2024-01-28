@@ -19,6 +19,7 @@ export default function SInglePurchased({
 }: {
   packages: IPurchasedData;
 }) {
+  console.log("🚀 ~ packages:", packages)
   const router = useRouter();
   const userInfo = getUserInfo() as any;
   // console.log("🚀 ~ packages:", packages);

@@ -2,7 +2,7 @@
 import PurchaseCategoryTab from "@/components/Home/coureses/PurchaseCategoryTab";
 import SIngleCourse from "@/components/Home/coureses/SIngleCourse";
 import { ENUM_YN } from "@/constants/globalEnums";
-import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourse";
+import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourseApi";
 import { getUserInfo } from "@/services/auth.service";
 import React from "react";
 
