@@ -110,6 +110,7 @@ const TrainerListPage = () => {
     {
       title: "Action",
       dataIndex: "_id",
+      width: 130,
       render: function (data: any) {
         return (
           <>

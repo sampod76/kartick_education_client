@@ -52,13 +52,14 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
             width: "180px"
           }} src={img} alt="User mask" />
         </div>
-        <div className=" mt-2">
 
+        <div className=" mt-2">
           <h2 className="font-semibold text-center uppercase">
             {firstName} {lastName} <span className="text-sm capitalize text-gray-800">{userData?.role}</span>
           </h2>
-
         </div>
+
+
         <div className="px-3">
           <div className="flex justify-between ">
             <p>Phone Number : {phoneNumber}</p>
