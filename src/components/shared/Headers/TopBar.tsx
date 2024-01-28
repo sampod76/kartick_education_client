@@ -9,20 +9,23 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import SocialGroup from "../socialIcon/SocialGroup";
 
 const TopBar = () => {
-  const [userLoggedIn, setUserLoggedIn] = useState<Partial<IDecodedInfo>>({
+const [loading,setLoading]=useState(true)
+  const [userInfo, setUserInfo] = useState<Partial<IDecodedInfo>>({
     email: "",
     id: "",
     role: undefined,
   });
 
   useEffect(() => {
+    setLoading(true);
     // Fetch user info asynchronously on the client side
     const fetchUserInfo = async () => {
       const userInfo = (await getUserInfo()) as any;
-      setUserLoggedIn(userInfo);
+      setUserInfo(userInfo);
     };
 
     fetchUserInfo();
+    setLoading(false);
   }, []);
 
   return (
@@ -40,7 +43,7 @@ const TopBar = () => {
       </section>
       <section className="flex justify-between gap-3 lg:mt-0 ">
         <SocialGroup />
-        {userLoggedIn?.email ? (
+        {loading? <div className="bg-white w-[50px] h-[50px] rounded-full shadow-md animate-pulse"></div>: userInfo?.email ? (
           <UserAvatarUI />
         ) : (
           <div
