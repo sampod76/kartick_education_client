@@ -32,6 +32,8 @@ export default function SInglePurchased({
     const href = `/${userInfo?.role}/package_category_and_course?data=${encodedData}`;
     router.push(href);
   };
+
+  // console.log(new Date(packages?.expiry_date),'newDate', new Date())
   return (
     <div
       // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
@@ -45,25 +47,32 @@ export default function SInglePurchased({
         <span
           className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
                  bg-white
+
                   `}
         >
           {packages?.purchase?.label}
         </span>
         <div
-          className={`h-28 bg-green-600
-                    } text-center p-4`}
-        >
-          <h3 className="text-2xl text-white uppercase font-semibold mb-1">
-            {packages?.title}
-          </h3>
-          <p className="text-xs text-white">
+          className={`h-28 
+${new Date(packages?.expiry_date) < new Date()
+              ? "bg-red-600"
+              : "bg-green-700"
+            }
 
+                     text-center p-4`}
+        >
+          <h3 className="text-xl text-white uppercase font-semibold mb-1">
+            {packages?.title}
+            <span className="text-sm capitalize">{new Date(packages?.expiry_date) < new Date() && " (expired)"}</span>
+          </h3>
+          <p className="text-base font-mono text-slate-200">
+            {packages?.user?.email}
           </p>
         </div>
         <div
           className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${new Date(packages?.expiry_date) < new Date()
-            ? "bg-green-600"
-            : "bg-gray-700"
+            ? "bg-red-600"
+            : "bg-green-700"
             } text-white border-4 flex flex-col items-center justify-center border-white`}
         >
           <h3 className="text-2xl font-semibold">
