@@ -1,6 +1,6 @@
 import React from "react";
 
-const SingleQuixPage = ({ params }: { params: { id: string } }) => {
+const SingleQuizPage = ({ params }: { params: { id: string } }) => {
   return (
     <div style={{
       boxShadow:
@@ -14,4 +14,4 @@ const SingleQuixPage = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default SingleQuixPage;
+export default SingleQuizPage;
