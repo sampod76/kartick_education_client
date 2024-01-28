@@ -1,16 +1,16 @@
 'use client'
 import { useGetSingleMilestoneQuery } from '@/redux/api/adminApi/milestoneApi';
 import React from 'react'
-import SingleMilestone from '../SingleMilestone';
+
 import LoadingSkeleton from '@/components/ui/Loading/LoadingSkeleton';
 import { useGetAllModuleQuery } from '@/redux/api/adminApi/moduleApi';
-import { IMilestoneData } from '@/types/miestoneType';
+import { ImoduleData } from '@/types/miestoneType';
 import { CiClock2 } from 'react-icons/ci';
 import { EllipsisMiddle } from '@/utils/CutTextElliples';
 import { AllImage } from '@/assets/AllImge';
+import { useGetAllLessonQuery } from '@/redux/api/adminApi/lessoneApi';
 
-export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: string }) {
-
+export default function DetailsModuleDash({ moduleId }: { moduleId: string }) {
 
 
     const query: Record<string, any> = {};
@@ -20,23 +20,22 @@ export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: str
     query["sortOrder"] = "asc";
 
     //! for Module options selection
-    const { data: moduleData, isLoading } = useGetAllModuleQuery({ ...query, milestone: milestoneId });
-    // console.log(moduleData, 'moduleData')
+    const { data: lessonData, isLoading } = useGetAllLessonQuery({ ...query, milestone: moduleId });
+    // console.log(lessonData, 'lessonData')
     if (isLoading) {
         return (<div className="">
             <LoadingSkeleton number={20} />
         </div>)
     }
 
-    const milestoneData = { ...moduleData?.data[0]?.milestone }
+    const moduleData = { ...lessonData?.data[0]?.module }
 
 
-    const singleMilestoneData: IMilestoneData = {
-        ...milestoneData,
-        modules: moduleData?.data
+    const singleModuleData: any = {
+        ...moduleData,
+        modules: lessonData?.data
     }
 
-    // console.log(singleMilestoneData)
     return (
         <div>
             <h2 className='text-center text-xl my-3'>Milestone Details </h2>
@@ -46,15 +45,15 @@ export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: str
 
                 <div className="p-2 border-2 shadow-md  rounded-xl flex max-w-xl bg-white  overflow-hidden">
                     <div className="w-1/3 bg-cover" style={{
-                        backgroundImage: `url(${milestoneData?.imgs[0] || AllImage?.notFoundImage})`
+                        backgroundImage: `url(${moduleData?.imgs[0] || AllImage?.notFoundImage})`
                     }}>
                     </div>
                     <div className="w-2/3 p-2 ">
                         <h1 className="text-gray-900 font-bold text-2xl uppercase">  <EllipsisMiddle suffixCount={3} maxLength={90}>
-                            {milestoneData?.title}
+                            {moduleData?.title}
                         </EllipsisMiddle></h1>
                         <p className="mt-2 text-gray-600 text-sm">  <EllipsisMiddle suffixCount={3} maxLength={160}>
-                            {milestoneData?.short_description}
+                            {moduleData?.short_description}
                         </EllipsisMiddle></p>
                         <div className="flex item-center mt-2">
                             <svg className="w-5 h-5 fill-current text-yellow-700" viewBox="0 0 24 24">
@@ -74,7 +73,7 @@ export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: str
                             </svg>
                         </div>
                         <div className="flex item-center justify-between mt-3">
-                            <h1 className="text-gray-700 font-bold text-xl">Milestone No : {milestoneData?.milestone_number}</h1>
+                            <h1 className="text-gray-700 font-bold text-xl">Milestone No : {moduleData?.milestone_number}</h1>
 
                         </div>
                     </div>
@@ -82,7 +81,7 @@ export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: str
 
 
                 <div className="max-w-xl">
-                    <SingleMilestone milestoneData={singleMilestoneData} />
+                    {/* <SingleMilestone moduleData={singlemoduleData} /> */}
                 </div>
             </div>
         </div>

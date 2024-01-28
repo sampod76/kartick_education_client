@@ -1,13 +1,12 @@
-import React from 'react'
+import DetailsMilestoneDash from '@/components/milestone/details/DetailsMilestoneDash';
+import React from 'react';
 
-export default function ModuleDetailsPage() {
+const ModuleDetailsPage = ({ params }: { params: { id: string } }) => {
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>ModuleDetailsPage</div>
-  )
-}
+    <div >
+    <DetailsMilestoneDash milestoneId={params?.id} />
+    </div>
+  );
+};
+
+export default ModuleDetailsPage;

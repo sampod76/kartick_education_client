@@ -159,7 +159,7 @@ export default function ModuleDashList() {
     {
       title: "Name",
       dataIndex: "title",
-      ellipsis: true,
+      // ellipsis: true,
     },
     {
       title: "Description",
@@ -170,6 +170,7 @@ export default function ModuleDashList() {
       title: "Module Number",
       dataIndex: "module_number",
       ellipsis: true,
+      width: 100,
     },
 
     {
@@ -191,6 +192,7 @@ export default function ModuleDashList() {
     {
       title: "Status",
       dataIndex: "status",
+      width: 80,
     },
     {
       title: "Action",
