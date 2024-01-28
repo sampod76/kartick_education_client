@@ -1,6 +1,7 @@
 import { tagTypes } from "@/redux/tag-types";
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
+import { ICartData } from "@/types/cartData";
 
 const CART_URL = "/course-cart";
 
@@ -16,7 +17,7 @@ export const cartApi = baseApi.injectEndpoints({
                     params: arg,
                 };
             },
-            transformResponse: (response: any[], meta: IMeta) => {
+            transformResponse: (response: ICartData[], meta: IMeta) => {
                 // console.log(response);
                 return {
                     data: response,
@@ -64,6 +65,7 @@ export const cartApi = baseApi.injectEndpoints({
 
         // delete ac department
         deleteCart: build.mutation({
+            
             query: (id) => ({
                 url: `${CART_URL}/${id}`,
                 method: "DELETE",
