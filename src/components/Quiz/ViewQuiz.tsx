@@ -47,7 +47,7 @@ export default function ViewQuiz({ quizId }: { quizId: string }) {
         {<div key={quiz?._id} className={`m-4 w-full relative `}>
           <div className="text-center mt-4 flex justify-center items-center">
             {/* <p>Time Remaining: {timer} seconds</p> */}
-            QUiz Time
+            QUiz Time {(quiz?.time_duration / 1000 / 60)} Minutes
           </div>
 
           <div className="flex justify-between items-center my-2 pr-4">
