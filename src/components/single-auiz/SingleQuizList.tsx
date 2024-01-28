@@ -42,7 +42,7 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import {
   useDeleteSingleQuizMutation,
   useGetAllSingleQuizQuery,
-} from "@/redux/api/adminApi/singleQuiz";
+} from "@/redux/api/adminApi/singleQuizApi";
 import { AllImage } from "@/assets/AllImge";
 import { USER_ROLE } from "@/constants/role";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";

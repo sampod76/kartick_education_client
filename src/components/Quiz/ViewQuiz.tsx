@@ -1,5 +1,4 @@
 "use client";
-
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 

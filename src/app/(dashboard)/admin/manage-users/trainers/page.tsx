@@ -30,13 +30,13 @@ import {
 } from "@/redux/api/adminApi/studentApi";
 import ModalComponent from "@/components/Modal/ModalComponents";
 import CreateTrainer from "@/components/registionfrom/trainer";
-import { useDeleteTrainerMutation, useGetAllTrainersQuery } from "@/redux/api/adminApi/trainer";
+import { useDeleteTrainerMutation, useGetAllTrainersQuery } from "@/redux/api/adminApi/trainerApi";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const TrainerListPage = () => {
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo
   const query: Record<string, any> = {};
-  const [deleteTrainer,{isLoading:trainerDeleteLoading}] = useDeleteTrainerMutation();
+  const [deleteTrainer, { isLoading: trainerDeleteLoading }] = useDeleteTrainerMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -204,9 +204,9 @@ const TrainerListPage = () => {
           }}
         />
         <div>
-         <ModalComponent buttonText="Create trainer">
-          <CreateTrainer/>
-         </ModalComponent>
+          <ModalComponent buttonText="Create trainer">
+            <CreateTrainer />
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}

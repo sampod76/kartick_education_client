@@ -35,7 +35,6 @@ const NavbarPublic = () => {
   const dispatch = useAppDispatch()
   const { cartModal } = useAppSelector(state => state.cart)
 
-
   return (
     <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
       <nav
@@ -43,9 +42,9 @@ const NavbarPublic = () => {
     flex align-center justify-between gap-[5rem] "
       >
         <Logo />
-        {userInfo?.role &&
+        {/* {userInfo?.role &&
           <button onClick={() => dispatch(toggleCartModal(true))}>Your Cart <ShoppingCartOutlined /> </button>
-        }
+        } */}
         <Menu
           mode="horizontal"
           className="hidden lg:flex"

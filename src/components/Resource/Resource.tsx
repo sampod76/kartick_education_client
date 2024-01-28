@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import TextEditor from "../shared/TextEditor/TextEditor";
 import Form from "../Forms/Form";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { useAddResourceMutation } from "@/redux/api/adminApi/resource";
+import { useAddResourceMutation } from "@/redux/api/adminApi/resourceApi";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import ButtonSubmitUI from "../ui/ButtonSubmitUI";
 import dynamic from "next/dynamic";

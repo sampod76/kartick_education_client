@@ -14,7 +14,7 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import { courseStatusOptions, singleQuizTypes } from "@/constants/global";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 
-import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuiz";
+import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuizApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -223,7 +223,7 @@ const CreateSingleQuiz = () => {
           <Form
             submitHandler={onSubmit}
             isReset={isReset}
-            // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
           >
             <h1 className="text-xl font-bold text-center border-b-2 border-spacing-4 mb-2 ">
               Create A Single Quiz
@@ -237,7 +237,7 @@ const CreateSingleQuiz = () => {
               }}
             >
               <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                  <Col
+                <Col
                   className="gutter-row"
                   xs={12}
                   md={8}
@@ -291,7 +291,7 @@ const CreateSingleQuiz = () => {
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                    // required={true}
+                  // required={true}
                   />
                 </Col>
                 <Col
@@ -305,7 +305,7 @@ const CreateSingleQuiz = () => {
                 >
                   <FormTimePicker name="time_duration" label="Time Duration" />
                 </Col>
-              
+
 
                 <Col
                   className="gutter-row"
@@ -358,7 +358,7 @@ const CreateSingleQuiz = () => {
                   }}
                 >
                   <LabelUi>Select Quiz Question images (optional)</LabelUi>
-                  <UploadMultipalImage   isReset={isReset} name="imgs" />
+                  <UploadMultipalImage isReset={isReset} name="imgs" />
                 </Col>
               </Row>
               <Col
@@ -402,8 +402,8 @@ const CreateSingleQuiz = () => {
                   </p>
                   <TextEditor
                     isReset={isReset}
-                    // textEditorValue={textEditorValue}
-                    // setTextEditorValue={setTextEditorValue}
+                  // textEditorValue={textEditorValue}
+                  // setTextEditorValue={setTextEditorValue}
                   />
                 </section>
               </Col>
@@ -449,15 +449,15 @@ const CreateSingleQuiz = () => {
                 </Col>
               </Row>
             </div>
-           <div className="flex justify-center items-center">
-           {serviceLoading ? (
-              <ButtonLoading />
-            ) : (
-              <Button htmlType="submit" size="large" style={{width:"10rem"}} type="default">
-                Create
-              </Button>
-            )}
-           </div>
+            <div className="flex justify-center items-center">
+              {serviceLoading ? (
+                <ButtonLoading />
+              ) : (
+                <Button htmlType="submit" size="large" style={{ width: "10rem" }} type="default">
+                  Create
+                </Button>
+              )}
+            </div>
           </Form>
         </div>
       ) : (
