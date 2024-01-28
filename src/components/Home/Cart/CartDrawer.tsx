@@ -1,9 +1,13 @@
 "use client"
-import { useGetAllCartQuery } from '@/redux/api/userApi/cartAPi'
+import LoadingSkeleton from '@/components/ui/Loading/LoadingSkeleton'
+import { useDeleteCartMutation, useGetAllCartQuery } from '@/redux/api/userApi/cartAPi'
 import { toggleCartModal } from '@/redux/features/cartSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { IDecodedInfo, getUserInfo } from '@/services/auth.service'
-import { Button, Drawer, Space } from 'antd'
+import { ICartData } from '@/types/cartData'
+import { Error_model_hook, Success_model } from '@/utils/modalHook'
+import { Button, Drawer, Space, message } from 'antd'
+import Image from 'next/image'
 import React from 'react'
 
 export default function CartDrawer() {
@@ -11,9 +15,16 @@ export default function CartDrawer() {
     const userInfo = getUserInfo() as IDecodedInfo
     const { cartModal, course: cartCourse } = useAppSelector(state => state.cart)
 
-    const { data: cartData, isLoading } = useGetAllCartQuery({ status: "active", user: userInfo?.id })
+    const { data, isLoading } = useGetAllCartQuery({ status: "active" })
 
+    const cartData: ICartData[] | undefined = data?.data
     console.log('cartData', cartData)
+
+
+    const [deleteCart] = useDeleteCartMutation()
+
+
+
     const dispatch = useAppDispatch()
     const showDrawer = () => {
         // setOpen(true);
@@ -24,11 +35,37 @@ export default function CartDrawer() {
         // setOpen(false);
         dispatch(toggleCartModal(false))
     }
-        ;
+    const deleteHandler = async (id: string) => {
+        try {
+            const res = await deleteCart(id).unwrap();
+
+
+            if (res?.success == false) {
+                // message.success("Admin Successfully Deleted!");
+                // setOpen(false);
+                Error_model_hook(res?.message);
+            } else {
+                Success_model("Course Successfully Removed");
+            }
+        } catch (error: any) {
+            Error_model_hook(error.data);
+            message.error(error.message);
+        }
+    }
+
+    const totalPrice: number | undefined = !isLoading && cartData?.length && cartData?.reduce((accumulator, cartItem:ICartData) => {
+        // Extract the price from the first item in the courseDetails array
+        const coursePrice = cartItem.courseDetails[0].price;
+
+        // Add the course price to the accumulator
+        return accumulator + coursePrice;
+    }, 0)
+
+    // console.log(totalPrice, 'totalPrice')
     return (
 
         <Drawer
-            title="Create a new account"
+            title="Your Cart "
             width={'60%'}
             onClose={onClose}
             open={cartModal}
@@ -55,82 +92,38 @@ export default function CartDrawer() {
                         <div className=" w-full lg:w-2/3  bg-white overflow-y-auto overflow-x-hidden " id="scroll">
 
                             {/* <p className="text-5xl font-black leading-10 text-gray-800 pt-3">Course</p> */}
+                            {isLoading &&
+                                <LoadingSkeleton />
+                            }
                             {/*//! course-1  */}
-                            <div className="md:flex items-center mt-14 py-2 border-t border-gray-200">
-                                <div className="w-1/4">
-                                    <img src="https://cdn.tuk.dev/assets/templates/e-commerce-kit/bestSeller3.png" alt='cart' className="w-full h-full object-center object-cover" />
-                                </div>
-                                <div className="md:pl-3 md:w-3/4">
-                                    <p className="text-xs leading-3 text-gray-800 md:pt-0 pt-4">RF293</p>
-                                    <div className="flex items-center justify-between w-full pt-1">
-                                        <p className="text-base font-black leading-none text-gray-800">North wolf bag</p>
+                            {
+                                !isLoading && cartData?.map((cart: ICartData, index: number) => {
+                                    const courseData = cart?.courseDetails[0]
+                                    return <div key={index} className="md:flex items-center mt-14 py-2 border-t border-gray-200">
+                                        <div className="w-1/4">
+                                            <Image height={200} width={200} src={courseData?.img} alt='cart' className="w-full h-full object-center object-cover" />
+                                        </div>
+                                        <div className="md:pl-3 md:w-3/4">
+                                            <p className="text-xs leading-3 text-gray-800 md:pt-0 pt-4">{courseData?.status}</p>
+                                            <div className="flex items-center justify-between w-full pt-1">
+                                                <p className="text-base font-black leading-none text-gray-800">{courseData?.title}</p>
 
-                                    </div>
-                                    <p className="text-xs leading-3 text-gray-600 pt-2">Height: 10 inches</p>
-                                    <p className="text-xs leading-3 text-gray-600 py-4">Color: Black</p>
-                                    <p className="w-96 text-xs leading-3 text-gray-600">Composition: 100% calf leather</p>
-                                    <div className="flex items-center justify-between pt-5 pr-6">
-                                        <div className="flex itemms-center">
-                                            <p className="text-xs leading-3 underline text-gray-800 cursor-pointer">Add to favorites</p>
-                                            <p className="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</p>
+                                            </div>
+                                            <p className="text-xs leading-3 text-gray-600 pt-2">Height: 10 inches</p>
+                                            <p className="text-xs leading-3 text-gray-600 py-4">Color: Black</p>
+                                            <p className="w-96 text-xs leading-3 text-gray-600">Composition: 100% calf leather</p>
+                                            <div className="flex items-center justify-between pt-5 pr-6">
+                                                <div className="flex itemms-center">
+                                                    <p className="text-xs leading-3 underline text-gray-800 cursor-pointer">Buy the course</p>
+                                                    <button onClick={() => deleteHandler(courseData?._id)} className="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</button>
+                                                </div>
+                                                <p className="text-base font-black leading-none text-gray-800">$ {courseData?.price}</p>
+                                            </div>
                                         </div>
-                                        <p className="text-base font-black leading-none text-gray-800">$9,000</p>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="md:flex items-center py-8 border-t border-gray-200">
-                                <div className="w-1/4">
-                                    <img src="https://cdn.tuk.dev/assets/templates/e-commerce-kit/bestSeller2.png" alt className="w-full h-full object-center object-cover" />
-                                </div>
-                                <div className="md:pl-3 md:w-3/4 w-full">
-                                    <p className="text-xs leading-3 text-gray-800 md:pt-0 pt-4">RF293</p>
-                                    <div className="flex items-center justify-between w-full pt-1">
-                                        <p className="text-base font-black leading-none text-gray-800">Luxe Signature Ring</p>
-                                        <select className="py-2 px-1 border border-gray-200 mr-6 focus:outline-none">
-                                            <option>01</option>
-                                            <option>02</option>
-                                            <option>03</option>
-                                        </select>
-                                    </div>
-                                    <p className="text-xs leading-3 text-gray-600 pt-2">Height: 10 inches</p>
-                                    <p className="text-xs leading-3 text-gray-600 py-4">Color: Black</p>
-                                    <p className="w-96 text-xs leading-3 text-gray-600">Composition: 100% calf leather</p>
-                                    <div className="flex items-center justify-between pt-5 pr-6">
-                                        <div className="flex itemms-center">
-                                            <p className="text-xs leading-3 underline text-gray-800 cursor-pointer">Add to favorites</p>
-                                            <p className="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</p>
-                                        </div>
-                                        <p className="text-base font-black leading-none text-gray-800">$9,000</p>
-                                    </div>
-                                </div>
-                            </div>
+                                })
+                            }
 
-                            <div className="md:flex items-center py-8 border-t border-b border-gray-200">
-                                <div className="h-full w-1/4">
-                                    <img src="https://cdn.tuk.dev/assets/templates/e-commerce-kit/bestSeller1.png" alt className="w-full h-full object-center object-cover" />
-                                </div>
-                                <div className="md:pl-3 md:w-3/4 w-full">
-                                    <p className="text-xs leading-3 text-gray-800 md:pt-0 pt-4">RF293</p>
-                                    <div className="flex items-center justify-between w-full pt-1">
-                                        <p className="text-base font-black leading-none text-gray-800">Luxe Signature Shoes</p>
-                                        <select className="py-2 px-1 border border-gray-200 mr-6 focus:outline-none">
-                                            <option>01</option>
-                                            <option>02</option>
-                                            <option>03</option>
-                                        </select>
-                                    </div>
-                                    <p className="text-xs leading-3 text-gray-600 pt-2">Height: 10 inches</p>
-                                    <p className="text-xs leading-3 text-gray-600 py-4">Color: Black</p>
-                                    <p className="w-96 text-xs leading-3 text-gray-600">Composition: 100% calf leather</p>
-                                    <div className="flex items-center justify-between pt-5 pr-6">
-                                        <div className="flex itemms-center">
-                                            <p className="text-xs leading-3 underline text-gray-800 cursor-pointer">Add to favorites</p>
-                                            <p className="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</p>
-                                        </div>
-                                        <p className="text-base font-black leading-none text-gray-800">$9,000</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         {/* //! summery section */}
@@ -140,7 +133,7 @@ export default function CartDrawer() {
                                 <div className=' mt-5 '>
                                     <div className="flex items-center justify-between ">
                                         <p className="text-base leading-none text-gray-800">Subtotal</p>
-                                        <p className="text-base leading-none text-gray-800">$9,000</p>
+                                        <p className="text-base leading-none text-gray-800">${totalPrice}</p>
                                     </div>
                                     <div className="flex items-center justify-between pt-5">
                                         <p className="text-base leading-none text-gray-800">Shipping</p>
@@ -154,7 +147,7 @@ export default function CartDrawer() {
                                 <div className=''>
                                     <div className="flex items-center pb-6 justify-between pt-2">
                                         <p className="text-2xl leading-normal text-gray-800">Total</p>
-                                        <p className="text-2xl font-bold leading-normal text-right text-gray-800">$10,240</p>
+                                        <p className="text-2xl font-bold leading-normal text-right text-gray-800">${Number(totalPrice) + 30 + 35}</p>
                                     </div>
                                     <button className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white">
                                         Checkout
