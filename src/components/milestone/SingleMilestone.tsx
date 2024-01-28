@@ -1,11 +1,13 @@
 import { SVGYelloDot } from '@/assets/svg/Icon';
+import { IMilestoneData } from '@/types/miestoneType';
 import Link from 'next/link';
 import React from 'react'
 
-export default function SingleMilestone(milestoneData: any) {
+export default function SingleMilestone({ milestoneData }: { milestoneData: IMilestoneData }) {
+    console.log('milestoneData', milestoneData)
     return (
         <div
-            key={milestoneData?._id}
+
             className="border-2 shadow-xl p-2 rounded-xl"
         >
             <Link
