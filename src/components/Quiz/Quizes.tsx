@@ -25,7 +25,7 @@ export default function QuizeSinglePage({
   // console.log("🚀 ~ quizeId:", quizeId)
   const searchParams = useSearchParams();
   const quiz_query: Record<string, any> = {};
-  //! for Course options selection
+  //! for a quiz data 
   quiz_query["limit"] = 999999;
   quiz_query["sortBy"] = "serialNumber";
   quiz_query["sortOrder"] = "asc";
@@ -34,7 +34,7 @@ export default function QuizeSinglePage({
     ...quiz_query,
     quiz: quizeId,
   });
-  console.log('quizeIdquizeId', quizeId, "🚀 ~ allSingleQuizeData:", allSingleQuizeData);
+  // console.log('quizeIdquizeId', quizeId, "🚀 ~ allSingleQuizeData:", allSingleQuizeData);
 
 
 

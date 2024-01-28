@@ -175,7 +175,7 @@ export default function PurchaseCourseList() {
     },
     {
       title: "Action",
-      fixed: "right",
+      // fixed: "right",
       render: (record: any) => (
         // console.log(object);
         <>

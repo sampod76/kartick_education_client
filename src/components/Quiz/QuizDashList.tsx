@@ -43,8 +43,11 @@ import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+
 
 const QuizDashList = () => {
+  const screens = useBreakpoint();
   //----------------------------------------------------------------
   const [openDrawer, setOpenDrawer] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -176,7 +179,7 @@ const QuizDashList = () => {
     {
       title: "Passing Grade",
       dataIndex: "passingGrade",
-      // width: 100,
+      width: 120,
     },
     {
       title: "module",
@@ -194,7 +197,8 @@ const QuizDashList = () => {
 
     {
       title: "Action",
-      fixed: "right", width: 100,
+      // fixed: "right",
+      width: 100,
       render: (record: any) => (
         <>
           <Space size="middle">
@@ -300,13 +304,13 @@ const QuizDashList = () => {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "20%",
+              width: screens.sm ? "30%" : "100%"
             }}
           />
-          <FilterLesson
+          {/* <FilterLesson
             filterValue={filterValue}
             setFilterValue={setFilterValue}
-          />
+          /> */}
         </div>
         <div>
           <Button

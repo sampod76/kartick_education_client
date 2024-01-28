@@ -182,7 +182,7 @@ export default function PurchasePackageList() {
     },
     {
       title: "Action",
-      fixed: "right",
+      // fixed: "right",
       render: (record: any) => (
         // console.log(object);
         <>

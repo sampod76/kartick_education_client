@@ -29,7 +29,7 @@ export default function QuizTestPage({
   ///! for submit quiz
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
-  //! for getQUiz
+  //! for submitted  getQUiz
   // console.log(quizId, 'quizIdquizIdquizIdquizIdquizId')
   const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
@@ -58,6 +58,7 @@ export default function QuizTestPage({
   // if (submittedDefaultData?.submitAnswers) {
   //   setIsCorrectAnswer(checkAnswers(submittedDefaultData));
   // };
+
 
   const submitAnswer = async () => {
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {

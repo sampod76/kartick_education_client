@@ -186,7 +186,7 @@ const CourseList = () => {
     },
     {
       title: "Action",
-      fixed: "right",
+      // fixed: "right",
       width: 80,
       render: (record: any) => (
         <>
