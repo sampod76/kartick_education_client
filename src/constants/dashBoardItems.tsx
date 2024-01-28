@@ -448,7 +448,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         onClick={() => (setCollapsed ? setCollapsed(false) : null)}
         href={`/${role}/purchase-course`}
       >
-        Purchase  course List
+        Purchase  course  History
       </Link>,
       key: "Manage-pouches-course",
       icon: <PayCircleFilled />,
