@@ -458,18 +458,18 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
 
   const studentSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    {
-      label: (
-        <Link
-          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/${role}/booking`}
-        >
-          Booking History
-        </Link>
-      ),
-      icon: <ThunderboltOutlined />,
-      key: `/${role}/booking`,
-    },
+    // {
+    //   label: (
+    //     <Link
+    //       onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+    //       href={`/${role}/booking`}
+    //     >
+    //       Booking History
+    //     </Link>
+    //   ),
+    //   icon: <ThunderboltOutlined />,
+    //   key: `/${role}/booking`,
+    // },
     {
       label: (
         <Link
@@ -535,18 +535,18 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
   ];
   const sellerSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    {
-      label: (
-        <Link
-          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/${role}/course_sell`}
-        >
-          Course sell
-        </Link>
-      ),
-      icon: <ThunderboltOutlined />,
-      key: `/${role}/course_sell`,
-    },
+    // {
+    //   label: (
+    //     <Link
+    //       onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+    //       href={`/${role}/course_sell`}
+    //     >
+    //       Course sell
+    //     </Link>
+    //   ),
+    //   icon: <ThunderboltOutlined />,
+    //   key: `/${role}/course_sell`,
+    // },
     {
       label: (
         <Link

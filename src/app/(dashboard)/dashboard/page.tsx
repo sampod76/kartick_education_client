@@ -1,9 +1,7 @@
 "use client";
 import AdminDashboardMain from "@/components/dashboard/admin/AdminDashboardMain";
-import OrderSummery from "@/components/dashboard/seller/OrderSummery";
-import SellerCourse from "@/components/dashboard/seller/SellerCourse";
 import SellerDashboardMain from "@/components/dashboard/seller/SellerDashboardMain";
-import StudentActivePackageToCourse from "@/components/dashboard/student/StudentActivePackageToCourse";
+
 import StudentDashboardMain from "@/components/dashboard/student/StudentDashboardMain";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import dynamic from "next/dynamic";
@@ -13,9 +11,9 @@ const DashboardPage = () => {
   const userInfo = getUserInfo() as IDecodedInfo;
   // console.log(userInfo);
 
-  if (userInfo.role == "admin") {
+  if (userInfo?.role == "admin") {
     return <AdminDashboardMain />;
-  } else if (userInfo.role == "seller") {
+  } else if (userInfo?.role == "seller") {
     return <SellerDashboardMain />;
   } else {
     return <StudentDashboardMain />;

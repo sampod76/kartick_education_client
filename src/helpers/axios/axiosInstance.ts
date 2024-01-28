@@ -57,7 +57,7 @@ instance.interceptors.response.use(
       return instance(config);
     } else {
       console.log(error);
-      if (error?.response?.status === 403 || error?.response?.status === 401 || error?.response?.data?.message ==='Validation Error:-> refreshToken : Refresh Token is required') {
+      if (error?.response?.status === 403  || error?.response?.data?.message ==='Validation Error:-> refreshToken : Refresh Token is required') {
         removeUserInfo(authKey);
       }
       let responseObject: any = {
