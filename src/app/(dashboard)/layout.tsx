@@ -20,7 +20,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [collapsed, setCollapsed] = useState(false);
-
   const screens = useBreakpoint();
 
   useEffect(() => {

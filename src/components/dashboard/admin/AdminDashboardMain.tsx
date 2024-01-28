@@ -19,20 +19,13 @@ export default function AdminDashboardMain() {
     <div>
 
       <TopDashStatistics />
-      {/* <CardLineChart/> */}
-      <EnrollStatistics />
-
-      {/* <Course query={{}}/> */}
+ 
+      {/* <EnrollStatistics />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 bg-slate-50 mt-7">
         <BarChart />
         <LineChart />
         <PieChart />
-      </div>
-      {/* <Courses query={{}}/> */}
-
-      {/* <Courses query={{}}/> */}
-
-
+      </div> */}
 
     </div>
   )

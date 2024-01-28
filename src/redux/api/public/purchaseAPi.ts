@@ -91,7 +91,66 @@ export const paymentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.userPurchaseCourse],
     }),
-    // update ac department
+
+    getAllPurchaseAcceptedCourse: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${PURCHASE_COURSE_URL}`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
+    getSinglePurchaseAcceptCourse: build.query({
+      query: (id: string | undefined) => {
+        return {
+          url: `${PURCHASE_COURSE_URL}/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
+    //! total amount
+    getAllPurchaseAcceptedCourseAmount: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${PURCHASE_COURSE_URL}/total-amount`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
+
+    getAllPurchaseAcceptedPackageAmount: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${PURCHASE_PACKAGE_URL}/total-amount`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
   }),
   // overrideExisting: true,
 });
@@ -99,10 +158,18 @@ export const paymentApi = baseApi.injectEndpoints({
 export const {
   useGetSinglePurchasePendingAndAcceptedPackageQuery,
   useGetAllPurchasePendingAndAcceptedPackageQuery,
-  //
+  // package accepted
   useGetAllPurchaseAcceptedPackageQuery,
   useGetSinglePurchasePackageQuery,
-  //
+  //Course
   useGetAllPurchasePendingAndAcceptedCourseQuery,
   useGetSinglePurchaseAcceptAndPendingCourseQuery,
+  //Course accepted
+  useGetAllPurchaseAcceptedCourseQuery,
+  useGetSinglePurchaseAcceptCourseQuery,
+  //total amount
+  useGetAllPurchaseAcceptedCourseAmountQuery,
+  useGetAllPurchaseAcceptedPackageAmountQuery
+
+
 } = paymentApi;
