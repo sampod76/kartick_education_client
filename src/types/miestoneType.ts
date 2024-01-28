@@ -16,5 +16,6 @@ export type IMilestoneData = {
   createdAt: string;
   updatedAt: string;
   isDelete: string;
-  modules: [];
+  modules: any[];
+
 };

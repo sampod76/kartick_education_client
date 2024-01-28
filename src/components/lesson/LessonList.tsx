@@ -79,9 +79,9 @@ export default function LessonList({
   // any user by the course and chack this
   const { data: userToAllCourse } = useGetCheckPurchasesCourseQuery(
     {
-      user: userInfo.id,
-      course: moduleData.course,
-      isDelete: ENUM_YN.NO,
+      user: userInfo?.id,
+      course: moduleData?.course,
+      isDelete: ENUM_YN?.NO,
       status: "active",
       limit: 99999,
     },

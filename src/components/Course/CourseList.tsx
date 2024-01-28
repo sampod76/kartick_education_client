@@ -132,10 +132,15 @@ const CourseList = () => {
       title: "price",
       dataIndex: "price",
       ellipsis: true,
+      width: 100,
     },
     {
       title: "duration",
       dataIndex: "duration",
+      render: function (data: any) {
+        // console.log(data)
+        return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[1]).format("MMM D, YYYY hh:mm A")}`;
+      },
       // ellipsis: true,
     },
     {
@@ -165,6 +170,7 @@ const CourseList = () => {
         return data.title;
       },
       ellipsis: true,
+      // width: 120,
     },
 
     {
