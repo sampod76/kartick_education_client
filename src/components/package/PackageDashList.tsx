@@ -196,7 +196,7 @@ export default function PackageDashList() {
     },
     {
       title: "Action",
-      fixed: "right",
+      // fixed: "right",
       render: (record: any) => (
         // console.log(object);
         <>

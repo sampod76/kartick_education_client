@@ -203,7 +203,7 @@ export default function LessonDashList() {
 
     {
       title: "Action",
-      fixed: "right",
+      // fixed: "right",
       width: 130,
       render: (record: any) => (
         <>
@@ -328,7 +328,7 @@ export default function LessonDashList() {
             Filter
           </Button>
 
-     
+
           <Link href={`/${userInfo?.role}/lesson/create`}>
             <Button type="default">Create Lesson</Button>
           </Link>

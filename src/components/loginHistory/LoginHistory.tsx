@@ -120,7 +120,7 @@ export default function LoginHistory() {
     },
     {
       title: "Action",
-      fixed: "right",
+      // fixed: "right",
       render: (record: any) => (
         // console.log(object);
         <div className={`${refreshToken.value === record?.token && "hidden"}`}>
