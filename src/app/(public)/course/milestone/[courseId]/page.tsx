@@ -6,7 +6,7 @@ import BannerCourses from "@/components/Home/Heros/BannerCourses";
 import SupportHero from "@/components/Home/Heros/SupportHero";
 import React from "react";
 const MilestoneList = React.lazy(
-  () => import("@/components/Course/MilestoneList")
+  () => import("@/components/Course/MilestoneHomeList")
 );
 const MilestonePage = ({
   params: { courseId },
@@ -15,10 +15,10 @@ const MilestonePage = ({
 }) => {
 
   // console.log(courseId);
- 
+
   return (
     <div>
-    <CourseMilestoneDetails courseId={courseId}/>
+      <CourseMilestoneDetails courseId={courseId} />
     </div>
   );
 };
