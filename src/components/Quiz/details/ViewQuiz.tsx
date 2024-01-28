@@ -42,9 +42,10 @@ export default function ViewQuiz({ quizId }: { quizId: string }) {
 
   return (
     <div className="">
-      <h3>Single Quiz Details page</h3>
+      <h3> Quiz Details page</h3>
       <div className="flex flex-col justify-center items-center gap-3 mt-4">
-        {<div key={quiz?._id} className={`m-4 w-full relative `}>
+
+        {<div  className={`m-4 w-full relative `}>
           <div className="text-center mt-4 flex justify-center items-center">
             {/* <p>Time Remaining: {timer} seconds</p> */}
             QUiz Time:  {quiz?.time_duration && (
