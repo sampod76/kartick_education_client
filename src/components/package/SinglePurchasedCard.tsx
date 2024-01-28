@@ -44,10 +44,10 @@ export default function SInglePurchased({
       >
         <span
           className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
-                 
+                 bg-white
                   `}
         >
-          {packages?.membership?.title}
+          {packages?.purchase?.label}
         </span>
         <div
           className={`h-28 bg-green-600
@@ -62,55 +62,55 @@ export default function SInglePurchased({
         </div>
         <div
           className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${new Date(packages?.expiry_date) < new Date()
-        ? "bg-green-600"
-        : "bg-gray-700"
+            ? "bg-green-600"
+            : "bg-gray-700"
             } text-white border-4 flex flex-col items-center justify-center border-white`}
         >
-        <h3 className="text-2xl font-semibold">
-          ${packages?.total_price}
-        </h3>
-      </div>
-      <div className="px-6 py-4 mt-4 h-max ">
-        <ul className="space-y-4">
-          {/* //! for bundle type */}
-          {packages?.type &&
-            packages?.categories?.map(
-              (categoryData: IPurchasedCategory) => {
-                const category = categoryData?.category;
-                // console.log(category);
-                return (
-                  <li
-                    className="flex items-center text-sm text-gray-500"
-                    key={category?._id}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="17"
-                      className="mr-4 bg-green-500 fill-white rounded-full p-[3px]"
-                      viewBox="0 0 24 24"
+          <h3 className="text-2xl font-semibold">
+            ${packages?.total_price}
+          </h3>
+        </div>
+        <div className="px-6 py-4 mt-4 h-max ">
+          <ul className="space-y-4">
+            {/* //! for bundle type */}
+            {packages?.type &&
+              packages?.categories?.map(
+                (categoryData: IPurchasedCategory) => {
+                  const category = categoryData?.category;
+                  // console.log(category);
+                  return (
+                    <li
+                      className="flex items-center text-sm text-gray-500"
+                      key={category?._id}
                     >
-                      <path
-                        d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"
-                        data-original="#000000"
-                      />
-                    </svg>
-                    <span className="text-[16px]">
-                      {" "}
-                      {category?.title}
-                    </span>
-                    {/* <span>{category?.title}</span> */}
-                    <span className="text-[12px] text-slate-600 ml-2">
-                      {categoryData?.label}
-                    </span>
-                  </li>
-                );
-              }
-            )}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="17"
+                        className="mr-4 bg-green-500 fill-white rounded-full p-[3px]"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"
+                          data-original="#000000"
+                        />
+                      </svg>
+                      <span className="text-[16px]">
+                        {" "}
+                        {category?.title}
+                      </span>
+                      {/* <span>{category?.title}</span> */}
+                      <span className="text-[12px] text-slate-600 ml-2">
+                        {categoryData?.label}
+                      </span>
+                    </li>
+                  );
+                }
+              )}
 
-        </ul>
+          </ul>
 
+        </div>
       </div>
-    </div>
     </div >
   );
 }
