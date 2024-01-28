@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
+
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { IPurchasedData } from "@/types/purchasedType";
 import SInglePurchased from "./SinglePurchasedCard";
@@ -17,6 +17,7 @@ import {
   useUpdatePackageMutation,
 } from "@/redux/api/userApi/packageAPi";
 import { Button } from "antd";
+import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 
 export default function SellerAddPackageStudent({ setOpen, userId }: any) {
   const userInfo = getUserInfo() as IDecodedInfo;
@@ -24,7 +25,7 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
     useAddPackageAndCourseMutation();
   const [updateIncreaseStudentPackage, { isLoading: packageUpdateLoading }] =
     useUpdateIncreaseStudentPackageMutation();
-  const { data: purchasedData, isLoading } = useGetPurchasePackageQuery({
+  const { data: purchasedData, isLoading } = useGetAllPurchaseAcceptedPackageQuery({
     status: "active",
     isDelete: ENUM_YN.NO,
     limit: 99999,

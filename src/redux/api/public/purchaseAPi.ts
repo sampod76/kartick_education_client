@@ -10,7 +10,7 @@ export const paymentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // create a new academic department
 
-    getAllPurchasePackage: build.query({
+    getAllPurchasePendingAndAcceptedPackage: build.query({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PURCHASE_PACKAGE_URL}/purchase-and-pending-package`,
@@ -26,7 +26,47 @@ export const paymentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.userPurchaseCourse],
     }),
-    getAllPurchaseCourse: build.query({
+
+    getSinglePurchasePendingAndAcceptedPackage: build.query({
+      query: (id: string | undefined) => {
+        return {
+          url: `${PURCHASE_PACKAGE_URL}/purchase-and-pending-package/${id}`,
+          method: "GET",
+        };
+      },
+
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
+
+    //!  only accepted packages
+    getAllPurchaseAcceptedPackage: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${PURCHASE_PACKAGE_URL}`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
+
+    getSinglePurchasePackage: build.query({
+      query: (id: string | undefined) => {
+        return {
+          url: `${PURCHASE_PACKAGE_URL}/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: [tagTypes.userPurchaseCourse],
+    }),
+    //! only course all api
+    getAllPurchasePendingAndAcceptedCourse: build.query({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PURCHASE_COURSE_URL}/purchase-and-pending-courses`,
@@ -42,16 +82,7 @@ export const paymentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.userPurchaseCourse],
     }),
-    getSinglePurchasePackage: build.query({
-      query: (id: string | undefined) => {
-        return {
-          url: `${PURCHASE_PACKAGE_URL}/${id}`,
-          method: "GET",
-        };
-      },
-      providesTags: [tagTypes.userPurchaseCourse],
-    }),
-    getSinglePurchaseCourse: build.query({
+    getSinglePurchaseAcceptAndPendingCourse: build.query({
       query: (id: string | undefined) => {
         return {
           url: `${PURCHASE_COURSE_URL}/purchase-and-pending-courses/${id}`,
@@ -66,8 +97,12 @@ export const paymentApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllPurchasePackageQuery,
-  useGetAllPurchaseCourseQuery,
+  useGetSinglePurchasePendingAndAcceptedPackageQuery,
+  useGetAllPurchasePendingAndAcceptedPackageQuery,
+  //
+  useGetAllPurchaseAcceptedPackageQuery,
   useGetSinglePurchasePackageQuery,
-  useGetSinglePurchaseCourseQuery,
+  //
+  useGetAllPurchasePendingAndAcceptedCourseQuery,
+  useGetSinglePurchaseAcceptAndPendingCourseQuery,
 } = paymentApi;

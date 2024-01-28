@@ -4,7 +4,7 @@ import { Error_model_hook } from "@/utils/modalHook";
 import { Button, message } from "antd";
 import React from "react";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
-import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourse";
+import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourseApi";
 
 export default function PaypalCheckoutByCourse({ courseData }: any) {
   const userInfo = getUserInfo() as any;

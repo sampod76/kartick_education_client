@@ -16,6 +16,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setIsLoading(true)
     if (!userInfo?.role) {
       router.push("/login");
     } else if (userInfo?.role !== USER_ROLE.SELLER) {

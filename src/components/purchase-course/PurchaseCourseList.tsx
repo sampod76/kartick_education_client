@@ -19,7 +19,6 @@ import UMTable from "@/components/ui/UMTable";
 
 import dayjs from "dayjs";
 
-
 import Image from "next/image";
 import {
   Error_model_hook,
@@ -31,13 +30,9 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import FilterCourse from "@/components/dashboard/Filter/FilterCourse";
 import { AllImage } from "@/assets/AllImge";
 
-
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
-import {
-  useGetAllPurchaseCourseQuery,
-  useGetAllPurchasePackageQuery,
-} from "@/redux/api/public/purchaseAPi";
+import { useGetAllPurchasePendingAndAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 
 export default function PurchaseCourseList() {
   const query: Record<string, any> = {};
@@ -68,8 +63,11 @@ export default function PurchaseCourseList() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllPurchasePackageQuery({ ...query });
-  
+  const { data = [], isLoading } =
+    useGetAllPurchasePendingAndAcceptedPackageQuery({
+      ...query,
+    });
+
   // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
   //@ts-ignore
@@ -87,7 +85,7 @@ export default function PurchaseCourseList() {
           <>
             {
               <Image
-                src={data?.img?.length ? data?.img : AllImage.notFoundImage}
+                src={data?.package?.img || AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
@@ -101,15 +99,20 @@ export default function PurchaseCourseList() {
     },
     {
       title: "Name",
-      dataIndex: ["course", "title"],
+      //   dataIndex: ["course", "title"],
+      render: function (data: any) {
+        return `${data?.title}`;
+      },
       ellipsis: true,
       // width: 90,
     },
     {
-      title: "Price Type",
-      dataIndex: ["course", "price_type"],
-      //   ellipsis: true,
-      width: 130,
+      title: "Email",
+      //   dataIndex: ["course", "title"],
+      render: function (data: any) {
+        return `${data?.user?.email}`;
+      },
+      // width: 90,
     },
 
     {
@@ -129,16 +132,16 @@ export default function PurchaseCourseList() {
     },
     {
       title: "Price",
-      dataIndex: ["course", "price"],
+
       // ellipsis: true,
       width: 100,
       render: function (data: any) {
-        return `$ ${data?.price}`;
+        return `$ ${data?.total_price}`;
       },
     },
 
     {
-      title: "PaymentStatus",
+      title: "Status",
       dataIndex: "paymentStatus",
       // ellipsis: true,
       width: 100,

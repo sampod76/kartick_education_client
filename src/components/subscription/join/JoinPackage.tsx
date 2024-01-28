@@ -31,7 +31,7 @@ import {
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import { useSearchParams } from "next/navigation";
 import { getUserInfo } from "@/services/auth.service";
-import { useGetAllPurchasePackageQuery } from "@/redux/api/public/purchaseAPi";
+import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 export default function JoinPackage({
   plan,
   setPlan,
@@ -51,7 +51,7 @@ export default function JoinPackage({
   query["user"] = userInfo?.id;
   query["isDelete"] = ENUM_YN.NO;
   const { data: GetPurchasePackage, isLoading: GetPurchasePackageLoading } =
-    useGetAllPurchasePackageQuery({});
+    useGetAllPurchaseAcceptedPackageQuery({});
   const userToGetPurchasePackage = GetPurchasePackage?.data?.map(
     (data: { package: any }) => data.package
   );

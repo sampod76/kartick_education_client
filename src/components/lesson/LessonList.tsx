@@ -18,14 +18,14 @@ import { ENUM_VIDEO_PLATFORM, ENUM_YN } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import vimeoUrlChack from "@/utils/vimeoUrlChecker";
-// import { useGetPurchasePackageQuery } from "@/redux/api/public/paymentApi";
+
 import { getUserInfo } from "@/services/auth.service";
 import ModalComponent from "../Modal/ModalComponents";
 import LoginPage from "../Login/LoginPage";
 import { usePathname } from "next/navigation";
 import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
-import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourse";
-import { useGetAllPurchasePackageQuery } from "@/redux/api/public/purchaseAPi";
+import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourseApi";
+import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 import { USER_ROLE } from "@/constants/role";
 export default function LessonList({
   moduleId,
@@ -42,7 +42,7 @@ export default function LessonList({
   const categoryId = moduleData?.milestone?.course?.category?._id;
 
   // for seller
-  const { data: purchasedData } = useGetAllPurchasePackageQuery(
+  const { data: purchasedData } = useGetAllPurchaseAcceptedPackageQuery(
     {
       status: "active",
       isDelete: ENUM_YN.NO,
