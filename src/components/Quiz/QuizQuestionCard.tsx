@@ -261,7 +261,10 @@ export default function QuizQuestionCard({
                       }
                   `}
                   >
+                     <div className="flex gap-1">
+                     {option?.title &&<TextToSpeech text={option?.title} />}
                     <p>{option?.title}</p>
+                     </div>
                     <div className="flex flex-wrap w-full">
                       {option?.imgs?.map(
                         (img: string, key: number, allimages: any[]) => (
