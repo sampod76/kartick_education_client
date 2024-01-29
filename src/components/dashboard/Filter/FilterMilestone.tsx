@@ -41,7 +41,7 @@ export default function FilterMilestone({
     };
   });
 
-  console.log(MilestoneOptions);
+  // console.log(MilestoneOptions);
 
   return (
     <Select

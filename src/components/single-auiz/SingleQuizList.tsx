@@ -165,16 +165,49 @@ const SingleQuizList = () => {
       dataIndex: "title",
       ellipsis: true,
     },
+    {
+      title: "Serial",
+      dataIndex: "serialNumber",
+      // ellipsis: true,
+      width: 100
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      // ellipsis: true,
+      width: 120
+    },
+    {
+      title: "Time",
+      dataIndex: "time_duration",
+      render: function (data: any) {
+        return <>{Math.floor(data / 1000 / 60)} minutes</>;
+      },
+      // ellipsis: true,
+      width: 120,
+
+    },
 
     {
-      title: "quiz",
-      // dataIndex: "showing_number",
-
+      title: "Quiz Name",
+      dataIndex: ['quiz', 'title'],
       ellipsis: true,
-      render: function (data: any) {
-        return <>{data?.quiz?.title}</>;
-      },
+      // width: 120
     },
+    {
+      title: "Hints",
+      dataIndex: "hints",
+      ellipsis: true,
+      // width: 120
+    },
+    {
+      title: "Module",
+      dataIndex: ['module', 'title'],
+      ellipsis: true,
+      sorter: true,
+      // width: 120
+    },
+
     // {
     //   title: "course",
     //   dataIndex: ["course", "title"],
@@ -192,7 +225,7 @@ const SingleQuizList = () => {
     {
       title: "Action",
       // fixed: "right",
-      width: 130,
+      width: 100,
       render: (record: any) => (
         <>
           <Space size="middle">
