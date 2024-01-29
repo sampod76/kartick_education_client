@@ -97,18 +97,16 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
           ) : (
             categoryData?.map((category: any, index: number) => {
               return (
-                <button
-                  onClick={() => showModal(category?._id)}
-                  className={`py-2 lg:py-3 px-5  lg:px-7 text-[12px] lg:text-[18px] rounded-tl-[20px] rounded-br-[20px] ${
-                    index % 2 === 0 ? "bg-green-500" : "bg-primary"
-                  } ${index % 3 === 1 && "bg-secondary"} text-white ${
-                    categoryId === category?._id &&
-                    "brightness-105 ring-8 ring-white"
-                  }`}
-                  key={index + 1}
-                >
-                  {category?.title}
-                </button>
+                <div key={index + 1} onClick={() => showModal(category?._id)} className={`p-3`}>
+                  <button
+                    className={`py-2 lg:py-3 px-2  lg:px-3 text-[12px] lg:text-[18px] rounded-tl-[20px] rounded-br-[20px] ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
+                      } ${index % 3 === 1 && "bg-secondary"} text-white ${categoryId === category?._id &&
+                      "px-3 lg:px-5 bg-gradient-to-r  via-[#059669] shadow-2xl shadow-green-400 scale-105 duration-300 from-[#047857] to-[#14b8a6]"
+                      }`}
+                  >
+                    {category?.title}
+                  </button>
+                </div>
               );
             })
           )}
@@ -116,9 +114,18 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
         <Modal
           title="Select Course"
           open={isModalOpen}
-                style={{ top: 20 }}
-          onOk={handleOk}
+          style={{ top: 20 }}
+          // onOk={handleOk}
           onCancel={handleCancel}
+
+          footer={(_, { OkBtn, CancelBtn }) => (
+            <>
+              {/* <Button>Custom Button</Button>
+            <CancelBtn />
+            <OkBtn /> */}
+              <Button onClick={handleOk}>Ok </Button>
+            </>
+          )}
         >
           <ModalCourseBanner
             categoryId={isModalCategoryId}
@@ -136,7 +143,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
         // width={100}
         alt="wave"
       /> */}
-    </div>
+    </div >
   );
 };
 

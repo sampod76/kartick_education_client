@@ -4,9 +4,10 @@ import {
   RightCircleOutlined,
   EyeOutlined,
   LockOutlined,
+  EyeInvisibleOutlined
 } from "@ant-design/icons";
 import type { CSSProperties } from "react";
-import React from "react";
+import React, { useState } from "react";
 import type { CollapseProps } from "antd";
 import { Collapse, theme } from "antd";
 import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
@@ -38,6 +39,7 @@ export default function LessonList({
   const pathname = usePathname();
   const userInfo = getUserInfo() as any;
 
+  const [currentCollapse, setCurrentCollapse] = useState<string[]>([])
   ////! for purchased data of a user
   const categoryId = moduleData?.milestone?.course?.category?._id;
 
@@ -55,8 +57,8 @@ export default function LessonList({
         userInfo.role === USER_ROLE.ADMIN
           ? true
           : userInfo.role === "student"
-          ? true
-          : false,
+            ? true
+            : false,
     }
   );
   // for student
@@ -71,8 +73,8 @@ export default function LessonList({
         userInfo.role === USER_ROLE.ADMIN
           ? true
           : userInfo.role === "student"
-          ? false
-          : true,
+            ? false
+            : true,
     }
   );
 
@@ -175,11 +177,14 @@ export default function LessonList({
 
   // console.log(lessonData,'lessonDatalessonData')
 
+  //! collapse data ////
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
       const lessonQuizData: any = QuizData?.data?.filter(
         (item: any) => item?.lesson?._id === lesson?._id
       );
+      const isLessonCollapsed = currentCollapse.includes(lesson?._id);
+      // console.log(currentCollapse, lesson?._id, 'iss', isLessonCollapsed)
       // console.log(lesson,"lessonlesson")
       // const isPurchasedCategory = purchasedData?.data?.find((category:any)=>categoryId=== )
 
@@ -194,9 +199,26 @@ export default function LessonList({
                 <h2 className="text-base text-start font-normal">
                   <span>Lesson {index + 1}: </span> {lesson?.title}
                 </h2>
-                <EyeOutlined style={{ fontSize: "18px" }} />
+                {
+                  isLessonCollapsed ? <EyeInvisibleOutlined style={{ fontSize: "18px" }} /> : <EyeOutlined style={{ fontSize: "18px" }} />
+                }
+
               </button>
 
+
+            </div>
+          ),
+          children: (
+            <div>
+              <div className="">
+                <div className="flex justify-center items-center my-2">
+                  {playerVideoFunc(lesson)}
+                </div>
+                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+                <EllipsisMiddle suffixCount={3} maxLength={300}>
+                  {IsExistCategoryOrCourse && lesson?.short_description}
+                </EllipsisMiddle>
+              </div>
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
                 lessonQuizData?.map((quiz: any) => {
@@ -214,19 +236,6 @@ export default function LessonList({
                     </Link>
                   );
                 })}
-            </div>
-          ),
-          children: (
-            <div>
-              <p className="">
-                <div className="flex justify-center items-center my-2">
-                  {playerVideoFunc(lesson)}
-                </div>
-                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-                <EllipsisMiddle suffixCount={3} maxLength={300}>
-                  {IsExistCategoryOrCourse && lesson?.short_description}
-                </EllipsisMiddle>
-              </p>
             </div>
           ),
           // style: panelStyle,
@@ -264,7 +273,7 @@ export default function LessonList({
           ),
           children: (
             <div>
-              <p className="">
+              <div className="">
                 <div className="flex justify-center items-center my-2">
                   {playerVideoFunc(lesson, index)}
                 </div>
@@ -272,7 +281,7 @@ export default function LessonList({
                 <EllipsisMiddle suffixCount={3} maxLength={300}>
                   {IsExistCategoryOrCourse && lesson?.short_description}
                 </EllipsisMiddle>
-              </p>
+              </div>
             </div>
           ),
           // style: panelStyle,
@@ -311,7 +320,7 @@ export default function LessonList({
         ),
         children: (
           <div>
-            <p className="">
+            <div className="">
               <div className="flex justify-center items-center my-2">
                 {playerVideoFunc(lesson)}
               </div>
@@ -319,13 +328,24 @@ export default function LessonList({
               <EllipsisMiddle suffixCount={3} maxLength={300}>
                 {IsExistCategoryOrCourse && lesson?.short_description}
               </EllipsisMiddle>
-            </p>
+            </div>
           </div>
         ),
         // style: panelStyle,
       };
     }
   );
+
+
+
+
+  const handleChange = (key: any) => {
+    // console.log(key, 'key')
+
+    setCurrentCollapse(key)
+
+  }
+
 
   // <RightCircleOutlined />
 
@@ -352,6 +372,7 @@ export default function LessonList({
             rotate={isActive ? 90 : 0}
           />
         )}
+        onChange={handleChange}
         // collapsible={'disabled'}
         accordion={false}
         // style={{ background: token.colorBgContainer }}
