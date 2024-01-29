@@ -4,9 +4,10 @@ import {
   RightCircleOutlined,
   EyeOutlined,
   LockOutlined,
+  EyeInvisibleOutlined
 } from "@ant-design/icons";
 import type { CSSProperties } from "react";
-import React from "react";
+import React, { useState } from "react";
 import type { CollapseProps } from "antd";
 import { Collapse, theme } from "antd";
 import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
@@ -38,11 +39,12 @@ export default function LessonList({
   const pathname = usePathname();
   const userInfo = getUserInfo() as any;
 
+  const [currentCollapse, setCurrentCollapse] = useState<string[]>([])
   ////! for purchased data of a user
   const categoryId = moduleData?.milestone?.course?.category?._id;
 
   // for seller
-  const { data: purchasedData } = useGetAllPurchaseAcceptedPackageQuery(
+  const { data: purchasedData, isLoading: purchaseAcceptLoading } = useGetAllPurchaseAcceptedPackageQuery(
     {
       status: "active",
       isDelete: ENUM_YN.NO,
@@ -55,12 +57,12 @@ export default function LessonList({
         userInfo.role === USER_ROLE.ADMIN
           ? true
           : userInfo.role === "student"
-          ? true
-          : false,
+            ? true
+            : false,
     }
   );
   // for student
-  const { data: soldSellerPackage } = useGetAllPackageAndCourseQuery(
+  const { data: soldSellerPackage, isLoading: purchaseAllLoading } = useGetAllPackageAndCourseQuery(
     {
       isDelete: ENUM_YN.NO,
       status: "active",
@@ -71,13 +73,13 @@ export default function LessonList({
         userInfo.role === USER_ROLE.ADMIN
           ? true
           : userInfo.role === "student"
-          ? false
-          : true,
+            ? false
+            : true,
     }
   );
 
   // any user by the course and chack this
-  const { data: userToAllCourse } = useGetCheckPurchasesCourseQuery(
+  const { data: userToAllCourse, isLoading: gePurchaseLoading } = useGetCheckPurchasesCourseQuery(
     {
       user: userInfo?.id,
       course: moduleData?.course,
@@ -140,17 +142,18 @@ export default function LessonList({
   //! for Course options selection
   quiz_query["limit"] = 999999;
   quiz_query["isDelete"] = ENUM_YN.NO;
-  const { data: QuizData } = useGetAllQuizQuery({
+  const { data: QuizData, isLoading: quizLoading } = useGetAllQuizQuery({
     status: "active",
     isDelete: ENUM_YN.NO,
     module: moduleId,
     ...quiz_query,
   });
 
-  if (isLoading) {
-    return <LoadingSkeleton />;
+  if (isLoading || quizLoading || gePurchaseLoading || purchaseAcceptLoading || purchaseAllLoading) {
+    return <LoadingSkeleton />
   }
 
+  // console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
     if (IsExistCategoryOrCourse || index === 0) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {
@@ -175,16 +178,23 @@ export default function LessonList({
 
   // console.log(lessonData,'lessonDatalessonData')
 
+  //! collapse data ////
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
       const lessonQuizData: any = QuizData?.data?.filter(
         (item: any) => item?.lesson?._id === lesson?._id
       );
+
+      // console.log(QuizData, 'lessonQuizData=============', lessonQuizData)
+      const isLessonCollapsed = currentCollapse.includes(lesson?._id);
+      // console.log(currentCollapse, lesson?._id, 'iss', isLessonCollapsed)
       // console.log(lesson,"lessonlesson")
       // const isPurchasedCategory = purchasedData?.data?.find((category:any)=>categoryId=== )
 
       // console.log(lesson);
       // console.log("🚀 lessonQuizData", lessonQuizData);
+
+      ///! isExist have
       if (IsExistCategoryOrCourse) {
         return {
           key: lesson?._id,
@@ -194,8 +204,26 @@ export default function LessonList({
                 <h2 className="text-base text-start font-normal">
                   <span>Lesson {index + 1}: </span> {lesson?.title}
                 </h2>
-                <EyeOutlined style={{ fontSize: "18px" }} />
+                {
+                  isLessonCollapsed ? <EyeInvisibleOutlined style={{ fontSize: "18px" }} /> : <EyeOutlined style={{ fontSize: "18px" }} />
+                }
+
               </button>
+
+
+            </div>
+          ),
+          children: (
+            <div>
+              <div className="">
+                <div className="flex justify-center items-center my-2">
+                  {playerVideoFunc(lesson)}
+                </div>
+                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+                <EllipsisMiddle suffixCount={3} maxLength={300}>
+                  {IsExistCategoryOrCourse && lesson?.short_description}
+                </EllipsisMiddle>
+              </div>
 
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
@@ -216,22 +244,10 @@ export default function LessonList({
                 })}
             </div>
           ),
-          children: (
-            <div>
-              <p className="">
-                <div className="flex justify-center items-center my-2">
-                  {playerVideoFunc(lesson)}
-                </div>
-                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-                <EllipsisMiddle suffixCount={3} maxLength={300}>
-                  {IsExistCategoryOrCourse && lesson?.short_description}
-                </EllipsisMiddle>
-              </p>
-            </div>
-          ),
           // style: panelStyle,
         };
       } else {
+        ///! IsExistCategoryOrCourse do not have
         return {
           key: lesson?._id,
           label: (
@@ -243,6 +259,20 @@ export default function LessonList({
                 <EyeOutlined style={{ fontSize: "18px" }} />
               </button>
 
+
+            </div>
+          ),
+          children: (
+            <div>
+              <div className="">
+                <div className="flex justify-center items-center my-2">
+                  {playerVideoFunc(lesson, index)}
+                </div>
+                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+                <EllipsisMiddle suffixCount={3} maxLength={300}>
+                  {IsExistCategoryOrCourse && lesson?.short_description}
+                </EllipsisMiddle>
+              </div>
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
                 lessonQuizData?.map((quiz: any) => {
@@ -262,70 +292,68 @@ export default function LessonList({
                 })}
             </div>
           ),
-          children: (
-            <div>
-              <p className="">
-                <div className="flex justify-center items-center my-2">
-                  {playerVideoFunc(lesson, index)}
-                </div>
-                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-                <EllipsisMiddle suffixCount={3} maxLength={300}>
-                  {IsExistCategoryOrCourse && lesson?.short_description}
-                </EllipsisMiddle>
-              </p>
-            </div>
-          ),
           // style: panelStyle,
         };
       }
 
-      return {
-        key: lesson?._id,
-        label: (
-          <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
-            <button className="flex justify-between w-full">
-              <h2 className="text-base text-start font-normal">
-                <span>Lesson {index + 1}: </span> {lesson?.title}
-              </h2>
-              <EyeOutlined style={{ fontSize: "18px" }} />
-            </button>
+      // return {
+      //   key: lesson?._id,
+      //   label: (
+      //     <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
+      //       <button className="flex justify-between w-full">
+      //         <h2 className="text-base text-start font-normal">
+      //           <span>Lesson {index + 1}: </span> {lesson?.title}
+      //         </h2>
+      //         <EyeOutlined style={{ fontSize: "18px" }} />
+      //       </button>
 
-            {IsExistCategoryOrCourse &&
-              lessonQuizData &&
-              lessonQuizData?.map((quiz: any) => {
-                // console.log(quiz)
-                return (
-                  <Link
-                    key={quiz?._id}
-                    href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                    className="text-[14px] flex justify-between w-full mt-3"
-                  >
-                    <h2 className="text-base font-normal">
-                      Quiz {index + 1} : <span>{quiz?.title} </span>
-                    </h2>
-                    <LockOutlined style={{ fontSize: "18px" }} />
-                  </Link>
-                );
-              })}
-          </div>
-        ),
-        children: (
-          <div>
-            <p className="">
-              <div className="flex justify-center items-center my-2">
-                {playerVideoFunc(lesson)}
-              </div>
-              {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-              <EllipsisMiddle suffixCount={3} maxLength={300}>
-                {IsExistCategoryOrCourse && lesson?.short_description}
-              </EllipsisMiddle>
-            </p>
-          </div>
-        ),
-        // style: panelStyle,
-      };
+      //       {IsExistCategoryOrCourse &&
+      //         lessonQuizData &&
+      //         lessonQuizData?.map((quiz: any) => {
+      //           // console.log(quiz)
+      //           return (
+      //             <Link
+      //               key={quiz?._id}
+      //               href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
+      //               className="text-[14px] flex justify-between w-full mt-3"
+      //             >
+      //               <h2 className="text-base font-normal">
+      //                 Quiz {index + 1} : <span>{quiz?.title} </span>
+      //               </h2>
+      //               <LockOutlined style={{ fontSize: "18px" }} />
+      //             </Link>
+      //           );
+      //         })}
+      //     </div>
+      //   ),
+      //   children: (
+      //     <div>
+      //       <div className="">
+      //         <div className="flex justify-center items-center my-2">
+      //           {playerVideoFunc(lesson)}
+      //         </div>
+      //         {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+      //         <EllipsisMiddle suffixCount={3} maxLength={300}>
+      //           {IsExistCategoryOrCourse && lesson?.short_description}
+      //         </EllipsisMiddle>
+      //       </div>
+      //     </div>
+      //   ),
+      //   // style: panelStyle,
+      // };
     }
   );
+
+
+
+
+  const handleChange = (key: any) => {
+    // console.log(key, 'key')
+
+    setCurrentCollapse(key)
+
+  }
+
 
   // <RightCircleOutlined />
 
@@ -352,6 +380,7 @@ export default function LessonList({
             rotate={isActive ? 90 : 0}
           />
         )}
+        onChange={handleChange}
         // collapsible={'disabled'}
         accordion={false}
         // style={{ background: token.colorBgContainer }}

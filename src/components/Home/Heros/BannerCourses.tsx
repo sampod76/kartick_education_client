@@ -91,24 +91,22 @@ const BannerCourses = () => {
       >
         {/* border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
 active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
-        <div className="flex   uppercase justify-between items-center gap-5  font-[550] mb-9 md:mb-[8rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap">
+        <div className="flex   uppercase justify-between items-center gap-2  font-[550] mb-9 md:mb-[8rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap">
           {isLoading ? (
             <CategoryButtonSKeletton />
           ) : (
             categoryData?.map((category: any, index: number) => {
               return (
-                <button
-                  onClick={() => showModal(category?._id)}
-                  className={`py-2 lg:py-3 px-5  lg:px-7 text-[12px] lg:text-[18px] rounded-tl-[20px] rounded-br-[20px] ${
-                    index % 2 === 0 ? "bg-green-500" : "bg-primary"
-                  } ${index % 3 === 1 && "bg-secondary"} text-white ${
-                    categoryId === category?._id &&
-                    "brightness-105 ring-8 ring-white"
-                  }`}
-                  key={index + 1}
-                >
-                  {category?.title}
-                </button>
+                <div key={index + 1} onClick={() => showModal(category?._id)} className={`p-3`}>
+                  <button
+                    className={`py-2 lg:py-3 px-2  lg:px-3 text-[12px] lg:text-[18px] rounded-tl-[20px] rounded-br-[20px] ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
+                      } ${index % 3 === 1 && "bg-secondary"} text-white ${categoryId === category?._id &&
+                      " bg-gradient-to-r  via-[#059669] shadow-xl shadow-green-600 scale-105 duration-300 from-[#047857] to-[#14b8a6]"
+                      }`}
+                  >
+                    {category?.title} 
+                  </button>
+                </div>
               );
             })
           )}
@@ -116,9 +114,18 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
         <Modal
           title="Select Course"
           open={isModalOpen}
-                style={{ top: 20 }}
-          onOk={handleOk}
+          style={{ top: 20 }}
+          // onOk={handleOk}
           onCancel={handleCancel}
+
+          footer={(_, { OkBtn, CancelBtn }) => (
+            <>
+              {/* <Button>Custom Button</Button>
+            <CancelBtn />
+            <OkBtn /> */}
+              <Button onClick={handleOk}>Ok </Button>
+            </>
+          )}
         >
           <ModalCourseBanner
             categoryId={isModalCategoryId}
@@ -136,7 +143,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
         // width={100}
         alt="wave"
       /> */}
-    </div>
+    </div >
   );
 };
 
