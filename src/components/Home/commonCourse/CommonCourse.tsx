@@ -7,13 +7,12 @@ import CardLoading from "@/components/ui/Loading/CardLoading";
 import SIngleCourse from "../coureses/SIngleCourse";
 import type { PaginationProps } from "antd";
 import { Pagination } from "antd";
-
-
+import { useAppSelector } from "@/redux/hooks";
 
 const CommonCourse = () => {
   const [current, setCurrent] = useState(1);
   const [pageCount, setPageCount] = useState(10);
-
+  const { searchValue } = useAppSelector((state:any) => state.bannerSearch)
   const query: Record<string, any> = {};
   query["limit"] = pageCount;
   query["page"] = current;
@@ -35,13 +34,17 @@ const CommonCourse = () => {
   };
   const { data, isLoading, error } = useGetAllCourseQuery({ ...query });
   const courseData = data?.data || [];
-  
+
+  if (searchValue?.length > 1) {
+    return <h4>searching course ........</h4>
+  }
+
   if (isLoading) {
     return <CardLoading />;
   }
   return (
     <div className="mt-[2rem] lg:mt-[6rem]  mx-auto bg-[#A2B0F321] pt-7">
-<h1 className=" text-center text-gray-800 text-3xl xl:text-5xl font-medium leading-9 tracking-wider">BUILD A HEALTHIER FOUNDATION FOR LIFELONG LEARNING</h1>
+      <h1 className=" text-center text-gray-800 text-3xl xl:text-5xl font-medium leading-9 tracking-wider">BUILD A HEALTHIER FOUNDATION FOR LIFELONG LEARNING</h1>
       <div className=" mt-[1rem] md:pt-6 lg:pt-12 px-1 lg:px-3">
         <div className="max-w-[90% container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 ">

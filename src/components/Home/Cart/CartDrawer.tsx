@@ -16,8 +16,8 @@ import React from "react";
 export default function CartDrawer() {
   const userInfo = getUserInfo() as IDecodedInfo;
   const { cartModal, course: cartCourse } = useAppSelector(
-    (state) => state.cart
-  );
+    state => state.cart
+  )
 
   const { data, isLoading } = useGetAllCartQuery(
     { status: "active" },

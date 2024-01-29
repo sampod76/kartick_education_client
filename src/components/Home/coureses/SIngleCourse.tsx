@@ -115,7 +115,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
             </Typography.Title>
 
             <p className="text-black text-sm md:text-base">
-              <EllipsisMiddle suffixCount={3} maxLength={screens.xl ? 150 : 220}>
+              <EllipsisMiddle suffixCount={3} maxLength={screens.xl ? 120 : 200}>
                 {course?.short_description}
               </EllipsisMiddle>
             </p>

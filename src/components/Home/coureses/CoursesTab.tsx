@@ -11,6 +11,7 @@ import { ENUM_SORT_ORDER, ENUM_STATUS } from "@/constants/globalEnums";
 import TopBarLoading from "@/components/ui/Loading/TopBarLoading";
 import { Error_model_hook } from "@/utils/modalHook";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import { useAppSelector } from "@/redux/hooks";
 
 const CoursesTab = () => {
   const screens = useBreakpoint();
@@ -21,11 +22,17 @@ const CoursesTab = () => {
     // console.log(key);
   };
 
+  const { searchValue } = useAppSelector(state => state.bannerSearch)
   const query: Record<string, any> = {};
   query["status"] = ENUM_STATUS.ACTIVE;
   query["limit"] = 99999;
   query["sortOrder"] = ENUM_SORT_ORDER.ASC;
 
+  if (searchValue?.length > 0) {
+    query['searchTerm'] = searchValue
+  }
+
+  console.log('searchValue', searchValue)
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
 
   const cousesData = data?.data || [];
