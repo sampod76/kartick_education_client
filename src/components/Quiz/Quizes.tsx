@@ -10,6 +10,8 @@ import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { usePathname, useSearchParams } from "next/navigation";
 import TextToSpeech from "@/utils/TextToSpeech";
 // import QuizTestPage from "./QuizTestPage";
+import { ArrowLeftOutlined } from "@ant-design/icons"
+import Link from "next/link";
 const QuizTestPage = React.lazy(() => import("./QuizTestPage"));
 
 const { Option } = Select;
@@ -21,7 +23,7 @@ export default function QuizeSinglePage({
   quizeId: string;
   quiz_title: string;
 }) {
-  
+
   // console.log("🚀 ~ quizeId:", quizeId)
   const searchParams = useSearchParams();
   const quiz_query: Record<string, any> = {};
@@ -36,8 +38,7 @@ export default function QuizeSinglePage({
   });
   // console.log('quizeIdquizeId', quizeId, "🚀 ~ allSingleQuizeData:", allSingleQuizeData);
 
-
-
+  
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
   };
@@ -45,8 +46,16 @@ export default function QuizeSinglePage({
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
   }
+
+  // href = {`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`
+  // }
+  const moduleInfo = allSingleQuizeData?.data[0]?.module
+  // console.log(allSingleQuizeData, 'allSingleQuizeData', moduleInfo)
+
+
   return (
     <div className="container mx-auto rounded-xl mt-3 shadow-2xl">
+      <Link href={`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`} className="px-2 my-3"> <ArrowLeftOutlined /> Back </Link>
       <h1 className="text-sm  lg:text-2xl  font-bold p-5">
         <TextToSpeech text={quiz_title} />
         {quiz_title}
@@ -70,6 +79,7 @@ export default function QuizeSinglePage({
           ]}
         /> 
         */}
+
       </div>
 
       <div className="w-full  mx-auto my-5 lg:my-0 ">
