@@ -1,3 +1,4 @@
+'use client'
 import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import Image from "next/image";
