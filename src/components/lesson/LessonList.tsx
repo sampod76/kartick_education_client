@@ -153,7 +153,7 @@ export default function LessonList({
     return <LoadingSkeleton />
   }
 
-  console.log('QuizData', QuizData)
+  // console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
     if (IsExistCategoryOrCourse || index === 0) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {
