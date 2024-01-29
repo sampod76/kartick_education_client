@@ -44,7 +44,7 @@ export default function LessonList({
   const categoryId = moduleData?.milestone?.course?.category?._id;
 
   // for seller
-  const { data: purchasedData } = useGetAllPurchaseAcceptedPackageQuery(
+  const { data: purchasedData, isLoading: purchaseAcceptLoading } = useGetAllPurchaseAcceptedPackageQuery(
     {
       status: "active",
       isDelete: ENUM_YN.NO,
@@ -62,7 +62,7 @@ export default function LessonList({
     }
   );
   // for student
-  const { data: soldSellerPackage } = useGetAllPackageAndCourseQuery(
+  const { data: soldSellerPackage, isLoading: purchaseAllLoading } = useGetAllPackageAndCourseQuery(
     {
       isDelete: ENUM_YN.NO,
       status: "active",
@@ -79,7 +79,7 @@ export default function LessonList({
   );
 
   // any user by the course and chack this
-  const { data: userToAllCourse } = useGetCheckPurchasesCourseQuery(
+  const { data: userToAllCourse, isLoading: gePurchaseLoading } = useGetCheckPurchasesCourseQuery(
     {
       user: userInfo?.id,
       course: moduleData?.course,
@@ -149,10 +149,11 @@ export default function LessonList({
     ...quiz_query,
   });
 
-  if (isLoading || quizLoading) {
-    return <LoadingSkeleton />;
+  if (isLoading || quizLoading || gePurchaseLoading || purchaseAcceptLoading || purchaseAllLoading) {
+    return <LoadingSkeleton />
   }
 
+  console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
     if (IsExistCategoryOrCourse || index === 0) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {

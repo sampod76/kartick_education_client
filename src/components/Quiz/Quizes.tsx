@@ -38,7 +38,7 @@ export default function QuizeSinglePage({
   });
   // console.log('quizeIdquizeId', quizeId, "🚀 ~ allSingleQuizeData:", allSingleQuizeData);
 
-  
+
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
   };
@@ -55,7 +55,7 @@ export default function QuizeSinglePage({
 
   return (
     <div className="container mx-auto rounded-xl mt-3 shadow-2xl">
-      <Link href={`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`} className="px-2 my-3"> <ArrowLeftOutlined /> Back </Link>
+      <Link href={`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`} className="p-2 my-3 shadow"> <ArrowLeftOutlined /> Back to Module </Link>
       <h1 className="text-sm  lg:text-2xl  font-bold p-5">
         <TextToSpeech text={quiz_title} />
         {quiz_title}
