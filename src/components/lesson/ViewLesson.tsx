@@ -8,7 +8,7 @@ export default function ViewLesson({lessonId}:{lessonId:string}) {
   const { data: data, isLoading } = useGetSingleCategoryQuery(lessonId, {
     skip: !Boolean(lessonId),
   });
-  console.log(data);
+
 
   if (isLoading) {
     return <LoadingForDataFetch />;
