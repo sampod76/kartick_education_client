@@ -10,7 +10,7 @@ import NotFoundCourse from "@/components/ui/NotFound/NotFoundCourse";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import InternelError from "@/components/shared/Error/InternelError";
 import { ICourseData } from "@/types/courseType";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppSelector, useDebounced } from "@/redux/hooks";
 
 interface ICourseItemType {
   status?: string;
@@ -21,12 +21,25 @@ interface ICourseItemType {
 
 const Courses = ({ query }: { query: ICourseItemType }) => {
   // console.log("🚀 ~ Courses ~ query:", query)
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageLimitCount, setPageCountLimit] = useState(10);
+  ///! for search course by banner search
+  const { searchValue } = useAppSelector(state => state.bannerSearch)
+
+  const debouncedSearchTerm = useDebounced({
+    searchQuery: searchValue,
+    delay: 600,
+  });
   const queryAll: Record<string, any> = {};
   queryAll["status"] = ENUM_STATUS.ACTIVE;
   queryAll["limit"] = pageLimitCount;
   queryAll["page"] = currentPage;
+
+  if (!!debouncedSearchTerm) {
+    query["searchTerm"] = debouncedSearchTerm;
+  }
   
 
   queryAll["sortOrder"] = ENUM_SORT_ORDER.ASC;
