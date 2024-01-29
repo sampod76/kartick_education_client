@@ -12,9 +12,12 @@ export interface IQuizAnswer {
   }[];
 }
 
+
 const initialState: IQuizAnswer = {
   userAnswers: [],
-};
+}
+
+
 
 const quizSlice = createSlice({
   name: "userAnswers",

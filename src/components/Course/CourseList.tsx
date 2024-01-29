@@ -139,7 +139,7 @@ const CourseList = () => {
       dataIndex: "duration",
       render: function (data: any) {
         // console.log(data)
-        return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[1]).format("MMM D, YYYY hh:mm A")}`;
+        return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
       },
       // ellipsis: true,
     },

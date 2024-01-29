@@ -6,6 +6,7 @@ import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 import React, { useEffect, useState } from "react";
 import QuizTimer from "./QuizTimer";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 const { Option } = Select;
 export default function QuizQuestionCard({
   quiz,
@@ -29,6 +30,7 @@ export default function QuizQuestionCard({
   // console.log(quiz);
 
   const dispatch = useAppDispatch();
+  const router = useRouter()
 
   if (!currentAnswer || quiz?._id !== currentAnswer?.singleQuiz) {
     const beforeANswer = {
@@ -179,7 +181,7 @@ export default function QuizQuestionCard({
                 Correct
               </button>
             ) : (
-                <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#ff000091] via-[#a01212] to-[#880202] hover:shadow-red-500 hover:scale-105">
+              <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#ff000091] via-[#a01212] to-[#880202] hover:shadow-red-500 hover:scale-105">
                 Incorrect
               </button>
             )
