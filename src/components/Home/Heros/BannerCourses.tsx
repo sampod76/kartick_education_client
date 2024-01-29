@@ -91,7 +91,7 @@ const BannerCourses = () => {
       >
         {/* border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
 active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
-        <div className="flex   uppercase justify-between items-center gap-5  font-[550] mb-9 md:mb-[8rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap">
+        <div className="flex   uppercase justify-between items-center gap-2  font-[550] mb-9 md:mb-[8rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap">
           {isLoading ? (
             <CategoryButtonSKeletton />
           ) : (
@@ -101,10 +101,10 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
                   <button
                     className={`py-2 lg:py-3 px-2  lg:px-3 text-[12px] lg:text-[18px] rounded-tl-[20px] rounded-br-[20px] ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
                       } ${index % 3 === 1 && "bg-secondary"} text-white ${categoryId === category?._id &&
-                      "px-3 lg:px-5 bg-gradient-to-r  via-[#059669] shadow-2xl shadow-green-400 scale-105 duration-300 from-[#047857] to-[#14b8a6]"
+                      " bg-gradient-to-r  via-[#059669] shadow-xl shadow-green-600 scale-105 duration-300 from-[#047857] to-[#14b8a6]"
                       }`}
                   >
-                    {category?.title}
+                    {category?.title} 
                   </button>
                 </div>
               );
