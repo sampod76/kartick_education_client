@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import bannerBG from "@/assets/banner/bannerBG.png";
 import treeBoy from "@/assets/banner/treeBoy.png";
 import Image from "next/image";
@@ -15,27 +15,36 @@ const BannerSection = () => {
   const dispatch = useAppDispatch()
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
-    delay: 600,
+    delay: 10,
   });
   // let searchData = ''
-  if (!!debouncedSearchTerm) {
-    // searchData = debouncedSearchTerm;
-    dispatch(addBannerSearchValue(debouncedSearchTerm))
-  }
+  // useEffect(() => {
+  //     if (!!debouncedSearchTerm) {
+  //       dispatch(addBannerSearchValue(debouncedSearchTerm));
+  //     }
+  //   }, [debouncedSearchTerm, dispatch,searchTerm]);
+
+  //  if (!!debouncedSearchTerm) {
+  //       dispatch(addBannerSearchValue(debouncedSearchTerm));
+  //     }
+
+
+  // console.log('searchTerm', searchTerm, 'resetValue', resetValue, 'searchValue', searchValue)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-
+    dispatch(addBannerSearchValue(searchTerm));
     if (!resetValue) {
-      e.currentTarget.reset(); // Use currentTarget to access the input element
+      setSearchTerm('');
     }
 
     setResetValue(true);
   };
 
   const handleReset = () => {
-    dispatch(clearBannerSearchValue(null))
-    setResetValue(false)
-  }
+    setSearchTerm('');
+    dispatch(clearBannerSearchValue(null));
+    setResetValue(false);
+  };
 
   return (
     <div
@@ -71,9 +80,11 @@ const BannerSection = () => {
         <div className="mt-2 md:mt-[3rem] max-h-[3.8rem] flex">
           <input
             type="text"
-            onChange={(e: any) => handleChange(e)}
+            value={searchTerm}
+
+            onChange={(e) => handleChange(e)}
             placeholder="Search here"
-            className=" border-2 outline-none text-xl text-[#949494 text-slate-800 px-3 border-primary rounded-l-[8px] w-full lg:w-[512px] p-2 bg-[#ADADFA40] h-[3.8rem]"
+            className="border-2 outline-none text-xl text-[#949494 text-slate-800 px-3 border-primary rounded-l-[8px] w-full lg:w-[512px] p-2 bg-[#ADADFA40] h-[3.8rem]"
           />
           <h3 className="bg-primary p-[16px] rounded-r-[8px] max-w-[3.7rem] h-[3.8rem]">
             <SearchOutlined
@@ -86,9 +97,8 @@ const BannerSection = () => {
             />
           </h3>
 
-          {resetValue && searchValue?.length > 1 &&
-            <button onClick={() => handleReset()} className="bg-white p-[16px] rounded-r-[8px] max-w-[3.7rem] h-[3.8rem]">
-
+          {resetValue && searchValue?.length > 1 && (
+            <button onClick={handleReset} className="bg-white p-[16px] rounded-r-[8px] max-w-[3.7rem] h-[3.8rem]">
               <ReloadOutlined
                 style={{
                   minHeight: "24px",
@@ -98,8 +108,7 @@ const BannerSection = () => {
                 }}
               />
             </button>
-          }
-
+          )}
         </div>
 
         <div className="mt-2 md:mt-[3rem] lg:mt-[5rem] flex flex-col lg:flex-row xl:flex-row gap-3 text-[1.2rem] text-white font-[700] uppercase">
