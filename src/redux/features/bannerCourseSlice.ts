@@ -28,6 +28,7 @@ const bannerCourseSlice = createSlice({
       //   }
     },
     clearBannerSearchValue: (state, action) => {
+      console.log("action", action);
       state.searchValue = "";
       //   state.course = state.course.filter(
       //     (course) => course._id !== action.payload._id

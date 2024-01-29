@@ -10,6 +10,7 @@ import { useDebounced } from "@/redux/hooks";
 import { addBannerSearchValue, clearBannerSearchValue } from "@/redux/features/bannerCourseSlice";
 const BannerSection = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [resetValue, setResetValue] = useState<boolean>(false)
   const { searchValue } = useAppSelector(state => state.bannerSearch)
   const dispatch = useAppDispatch()
   const debouncedSearchTerm = useDebounced({
@@ -21,8 +22,19 @@ const BannerSection = () => {
     // searchData = debouncedSearchTerm;
     dispatch(addBannerSearchValue(debouncedSearchTerm))
   }
-  const handleChange = (value: string) => {
-    setSearchTerm(value)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+
+    if (!resetValue) {
+      e.currentTarget.reset(); // Use currentTarget to access the input element
+    }
+
+    setResetValue(true);
+  };
+
+  const handleReset = () => {
+    dispatch(clearBannerSearchValue(null))
+    setResetValue(false)
   }
 
   return (
@@ -59,7 +71,7 @@ const BannerSection = () => {
         <div className="mt-2 md:mt-[3rem] max-h-[3.8rem] flex">
           <input
             type="text"
-            onChange={(e: any) => handleChange(e?.target?.value)}
+            onChange={(e: any) => handleChange(e)}
             placeholder="Search here"
             className=" border-2 outline-none text-xl text-[#949494 text-slate-800 px-3 border-primary rounded-l-[8px] w-full lg:w-[512px] p-2 bg-[#ADADFA40] h-[3.8rem]"
           />
@@ -74,8 +86,8 @@ const BannerSection = () => {
             />
           </h3>
 
-          {searchValue?.length &&
-            <h3 onClick={() => dispatch(clearBannerSearchValue(null))} className="bg-white p-[16px] rounded-r-[8px] max-w-[3.7rem] h-[3.8rem]">
+          {resetValue && searchValue?.length > 1 &&
+            <button onClick={() => handleReset()} className="bg-white p-[16px] rounded-r-[8px] max-w-[3.7rem] h-[3.8rem]">
 
               <ReloadOutlined
                 style={{
@@ -85,7 +97,7 @@ const BannerSection = () => {
                   fontWeight: "700",
                 }}
               />
-            </h3>
+            </button>
           }
 
         </div>

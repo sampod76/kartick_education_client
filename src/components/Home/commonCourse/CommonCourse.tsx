@@ -12,7 +12,7 @@ import { useAppSelector } from "@/redux/hooks";
 const CommonCourse = () => {
   const [current, setCurrent] = useState(1);
   const [pageCount, setPageCount] = useState(10);
-  const { searchValue } = useAppSelector(state => state.bannerSearch)
+  const { searchValue } = useAppSelector((state:any) => state.bannerSearch)
   const query: Record<string, any> = {};
   query["limit"] = pageCount;
   query["page"] = current;
