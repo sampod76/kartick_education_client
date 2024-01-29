@@ -3,9 +3,10 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Flex, message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Image } from 'antd';
+import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import Resizer from "react-image-file-resizer";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -14,15 +15,18 @@ const getBase64 = (img: RcFile, callback: (url: string) => void) => {
 };
 
 const beforeUpload = (file: RcFile) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  const isJpgOrPng =
+    file.type === "image/jpeg" ||
+    file.type === "image/png" ||
+    file.type === "image/jpg";
   if (!isJpgOrPng) {
     message.error("You can only upload JPG/PNG file!");
   }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
+  // const isLt2M = file.size / 1024 / 1024 < 5;
+  // if (!isLt2M) {
+  //   message.error("Image must smaller than 2MB!");
+  // }
+  return isJpgOrPng;
 };
 
 type ImageUploadProps = {
@@ -36,7 +40,7 @@ const UploadMultipalImage = ({
   name,
   defaultImage = [],
   customChange,
-  isReset=false,
+  isReset = false,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
 
@@ -45,6 +49,35 @@ const UploadMultipalImage = ({
   useEffect(() => {
     setValue(name, imagesUrl);
   }, [imagesUrl, name]);
+  const handleImageProcessing = useCallback(async (file: any) => {
+    try {
+      // Resize the image
+      const resizedImage = await new Promise((resolve) => {
+        Resizer.imageFileResizer(
+          file,
+          700, // width
+          500, // height
+          "JPEG", // format
+          100, // quality
+          0, // rotation
+          (uri: unknown) => {
+            resolve(uri);
+          },
+          "file" // output type (file, blob, base64)
+        );
+      });
+
+      // Get the compressed image URL
+      const imgUrl = await uploadImgCloudinary(resizedImage);
+      console.log("🚀 ~ handleImageProcessing ~ imgUrl:", imgUrl)
+
+      setImagesUrl((prevImages) => [...prevImages, imgUrl]);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error processing image:", error);
+      setLoading(false);
+    }
+  }, []);
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
@@ -55,14 +88,7 @@ const UploadMultipalImage = ({
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
-
-      // setValue(name, imgUrl);
-      setImagesUrl((c) => [...c, imgUrl]);
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        // setImagesUrl(imgUrl);
-      });
+      await handleImageProcessing(info.file.originFileObj);
     }
   };
 
@@ -80,19 +106,19 @@ const UploadMultipalImage = ({
   }, [isReset]);
 
   return (
-    <div className="flex justify-center items-center border p-5 rounded-lg my-2">
-      {defaultImage.length ?
-        defaultImage?.map((image, i) => (
+    <div className="flex justify-center items-center border p-5 rounded-lg my-2 gap-3">
+      {defaultImage.length
+        ? defaultImage?.map((image, i) => (
           <Image
-            key={i}
-            src={image}
-            alt="avatar"
-            width={500}
-            height={500}
-            // fill
-            className="w-36"
-          />
-        )):null}
+          key={i}
+          className=" rounded "
+          src={image}
+          width={300}
+          height={120}
+          alt=""
+        />
+          ))
+        : null}
       <Upload
         name={name}
         listType="picture-card"

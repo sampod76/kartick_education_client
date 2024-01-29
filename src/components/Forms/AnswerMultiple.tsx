@@ -9,6 +9,7 @@ import HeadingUI from "../ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "../ui/dashboardUI/SubHeadingUI";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
+import { Image } from 'antd';
 
 interface Answer {
   title: string;
@@ -27,7 +28,8 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
   answersMultiple,
   setAnswersMultiple,
 }) => {
-  //  // console.log("🚀 ~ file: DynamicFormFiled.tsx:28 ~ answersMultiple:", answersMultiple);
+   console.log("🚀 ~ answersMultiple:", answersMultiple)
+   
 
   const handleAdd = () => {
     setAnswersMultiple([
@@ -45,7 +47,6 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
   const handleChange = (index: number, updatedAnswer: Answer) => {
     let updatedAnswersMultiple = [...answersMultiple];
     updatedAnswersMultiple[index] = updatedAnswer;
-
     setAnswersMultiple(updatedAnswersMultiple);
   };
 
@@ -106,6 +107,7 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
               <Radio value={false}>Incorrect</Radio>
             </Radio.Group>
             {/* quiz uploader */}
+            <div className="flex flex-wrap justify-start items-center gap-2">
             <Upload
               listType="picture"
               style={{ textAlign: "start" }}
@@ -136,6 +138,16 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
             >
               <Button style={{ textAlign: "start" }}>Answer Image +</Button>
             </Upload>
+            {answer.imgs.map((img,key) =>( <Image
+                  key={key}
+                  className="w-10 h-10 rounded"
+                  src={img}
+                  width={50}
+                  height={40}
+                  alt=""
+                />))}
+            </div>
+            
             {/* serial number */}
             <div className="text-start ">
               <label>Serial number</label>

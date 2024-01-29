@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { IDecodedInfo } from "../../../services/auth.service";
 import { useRouter } from "next/navigation";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const SignUpTeacherAndStudent = () => {
   const router = useRouter();
@@ -49,6 +50,7 @@ const SignUpTeacherAndStudent = () => {
 
   const onSubmit = async (values: any) => {
     console.log("🚀 ~ onSubmit ~ values:", values);
+    removeNullUndefinedAndFalsey(values);
     try {
       let res;
       if (values?.role === USER_ROLE.ADMIN) {

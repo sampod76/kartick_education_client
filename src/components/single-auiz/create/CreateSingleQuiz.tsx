@@ -36,6 +36,7 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import dynamic from "next/dynamic";
 import { ENUM_STATUS } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -80,6 +81,7 @@ const CreateSingleQuiz = () => {
     useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     console.log("🚀 ~ onSubmit ~ values:", values);
     if (!quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");

@@ -32,6 +32,7 @@ import { useEffect, useState } from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import { NO_IMAGE } from "@/constants/filePatch";
 import { useUpdateSuperAdminMutation } from "@/redux/api/superAdminApi";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const UpdateProfile = () => {
   const [user, setUserData] = useState<any>({});
@@ -53,7 +54,7 @@ const UpdateProfile = () => {
 
   const onSubmit = async (values: any) => {
     console.log(user);
-
+    removeNullUndefinedAndFalsey(values);
     try {
       let res;
       if (user?.role === USER_ROLE.STUDENT) {

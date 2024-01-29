@@ -7,11 +7,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import {
-
-  genderOptions,
-  roleOptions,
-} from "@/constants/global";
+import { genderOptions, roleOptions } from "@/constants/global";
 import { USER_ROLE } from "@/constants/role";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/sellerApi";
@@ -19,10 +15,10 @@ import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentA
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-
 import { Button, Col, Row, message } from "antd";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import { useState } from "react";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const UserCreateComponent = ({
   role = { label: "Please select role", value: "" },
@@ -41,6 +37,7 @@ const UserCreateComponent = ({
     useAddSellerWithFormDataMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     try {
       let res;
       if (role.value === USER_ROLE.ADMIN) {
@@ -83,12 +80,12 @@ const UserCreateComponent = ({
         Error_model_hook(res?.message);
       } else {
         Success_model("User created successfully");
-        setIsReset(true)
+        setIsReset(true);
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   // if (AdminLoading || StudentLoading || SellerLoading) {

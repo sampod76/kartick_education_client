@@ -22,6 +22,7 @@ import dynamic from "next/dynamic";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -58,13 +59,14 @@ export default function CreateModule() {
       Error_model_hook("Please ensure your are selected milestone,course");
       return;
     }
+    removeNullUndefinedAndFalsey(values);
     const ModuleData: {} = {
       ...values,
       course: course?._id,
       // details: textEditorValue,
       milestone: milestone?._id,
     };
-
+    removeNullUndefinedAndFalsey(ModuleData);
     try {
       const res = await addModule(ModuleData).unwrap();
       console.log(res);
@@ -216,7 +218,7 @@ export default function CreateModule() {
                     <TagsSelectUI />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage   isReset={isReset} name="imgs" />
+                    <UploadMultipalImage isReset={isReset} name="imgs" />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>
@@ -253,13 +255,13 @@ export default function CreateModule() {
                   </Col>
                 </Row>
               </div>
-             <div className="flex justify-center items-center">
-             {serviceLoading ? (
-                <Spin />
-              ) : (
-                <ButtonSubmitUI>Create Module</ButtonSubmitUI>
-              )}
-             </div>
+              <div className="flex justify-center items-center">
+                {serviceLoading ? (
+                  <Spin />
+                ) : (
+                  <ButtonSubmitUI>Create Module</ButtonSubmitUI>
+                )}
+              </div>
             </Form>
           </div>
         </div>

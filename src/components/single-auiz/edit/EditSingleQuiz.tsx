@@ -33,6 +33,7 @@ import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import timeDurationToMilliseconds, {
   convertTimeDurationMillisecondsToTime,
 } from "@/hooks/stringToMiliSecend";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 export default function EditSingleQuiz({
   singleQuizId,
@@ -71,6 +72,7 @@ export default function EditSingleQuiz({
     { skip: !Boolean(singleQuizId) }
   );
 
+  console.log("🚀 ~ data:", data);
   useEffect(() => {
     setAnswers(data?.answers || []);
     setQuizTypes(data?.type);
@@ -91,6 +93,7 @@ export default function EditSingleQuiz({
   };
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     if (answers.length) {
       values["answers"] = answers;
     } else if (singleAnswer) {
@@ -296,7 +299,7 @@ export default function EditSingleQuiz({
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                  //
+                    //
                   />
                 </Col>
                 <Col
@@ -437,8 +440,8 @@ export default function EditSingleQuiz({
                   </p>
                   <TextEditor
                     isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
                   />
                 </section>
               </Col>
@@ -485,7 +488,6 @@ export default function EditSingleQuiz({
               </Row>
             </div>
             <div className="flex justify-center items-center">
-
               {serviceLoading ? (
                 <ButtonLoading />
               ) : (

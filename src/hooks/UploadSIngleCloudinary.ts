@@ -1,21 +1,13 @@
-import { getCloudinaryEnv } from "@/helpers/config/envConfig";
+import { getBaseUrl, getCloudinaryEnv } from "@/helpers/config/envConfig";
 
 const env = getCloudinaryEnv();
 
-const url = `https://api.cloudinary.com/v1_1/${env.cloud_name}/image/upload`;
+const url = `${getBaseUrl()}/upload/upload-single-image`;
 
 const uploadImgCloudinary = async (file: any) => {
-  // console.log(
-  //   "🚀 ~ file: ImgUploadCloudinary.ts:8 ~ uploadImgCloudinary ~ file:",
-  //   file
-  // );
-
-  // console.log(url);
   try {
     const formData = new FormData();
-    formData.append("file", file as Blob);
-    formData.append("upload_preset", env.upload_preset);
-    formData.append("cloud_name", env.cloud_name);
+    formData.append("image", file as Blob);
 
     const response = await fetch(url, {
       method: "post",
@@ -25,7 +17,8 @@ const uploadImgCloudinary = async (file: any) => {
 
     if (response.ok) {
       const data = await response.json();
-      return data?.secure_url;
+      console.log("🚀 ~ uploadImgCloudinary ~ data:", data)
+      return data?.data?.secure_url;
     } else {
       console.error("Failed to upload image to Cloudinary");
     }

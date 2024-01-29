@@ -5,6 +5,7 @@ import FormInput from "@/components/Forms/FormInput";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UploadImage from "@/components/ui/UploadImage";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import {
   useGetSingleCategoryQuery,
   useUpdateCategoryMutation,
@@ -31,6 +32,7 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
     useUpdateCategoryMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     const UpdateValues = {
       ...values,
     };

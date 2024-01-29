@@ -11,6 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useUpdateAdminMutation } from "@/redux/api/adminApi";
 import { useGetSingleAdminQuery } from "@/redux/api/adminApi/adminApi";
 
@@ -34,10 +35,11 @@ const EditAdminPage = ({ params }: any) => {
     useUpdateAdminMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     const UpdateValues = {
       ...values,
     };
-    console.log(UpdateValues);
+    // console.log(UpdateValues);
     try {
       const res = await updateAdmin({
         id: params?.id,

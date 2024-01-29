@@ -7,6 +7,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useAddStudentWithAuthorDataMutation } from "@/redux/api/adminApi/studentApi";
 
 import { IStudentCreate } from "@/types/userTypes";
@@ -27,6 +28,7 @@ const CreateStudentComponent = ({
 
   const onSubmit = async (values: IStudentCreate & { img: any }) => {
     // console.log(values.img, "values of student");
+    removeNullUndefinedAndFalsey(values);
     const { password, ...otherValue } = values;
     const studentData = {
       password,

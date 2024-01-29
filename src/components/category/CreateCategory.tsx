@@ -5,6 +5,7 @@ import FormInput from "@/components/Forms/FormInput";
 
 import UploadImage from "@/components/ui/UploadImage";
 import { ENUM_STATUS } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useAddCategoryMutation } from "@/redux/api/adminApi/categoryApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -16,6 +17,7 @@ const CreateCategory = () => {
   const [addCategory, { isLoading: serviceLoading }] = useAddCategoryMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     // console.log(values);
     const status = "active";
     // const imgUrl = await uploadImgCloudinary(values.img);

@@ -23,6 +23,7 @@ import { Button, Col, Form, Input, InputNumber, Rate, Row } from "antd";
 
 import Image from "next/image";
 import { useState } from "react";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const BookingDetails = ({ params }: any) => {
   const [form] = Form.useForm();
@@ -46,7 +47,7 @@ const BookingDetails = ({ params }: any) => {
       ...data,
       bookingTickets: changeBookingTickets || bookingData?.bookingTickets,
     };
-
+    removeNullUndefinedAndFalsey(updateData);
     try {
       //@ts-ignore
       const res = await updateBooking({

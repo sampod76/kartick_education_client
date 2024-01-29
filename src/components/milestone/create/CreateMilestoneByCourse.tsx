@@ -20,6 +20,7 @@ import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 //
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -31,7 +32,7 @@ const TextEditor = dynamic(
 export default function CreateMilestoneByCourse() {
   //
 
-  const [category, setCategory] = useState<{_id?:string}>({});
+  const [category, setCategory] = useState<{ _id?: string }>({});
   const [courses, setCourses] = useState<{ _id?: string }>({});
   const [isReset, setIsReset] = useState(false);
 
@@ -51,7 +52,7 @@ export default function CreateMilestoneByCourse() {
   const onSubmit = async (values: any) => {
     // console.log(values);
     // const imgUrl = await uploadImgBB(values.img);
-
+    removeNullUndefinedAndFalsey(values);
     // values.img = imgUrl;
     if (!courses._id) {
       Error_model_hook("Course must be select");
@@ -64,7 +65,7 @@ export default function CreateMilestoneByCourse() {
       course: courses._id,
     };
     // console.log(MilestoneData);
-
+    removeNullUndefinedAndFalsey(MilestoneData);
     try {
       const res = await addMilestone(MilestoneData).unwrap();
       console.log(res);
@@ -163,7 +164,7 @@ export default function CreateMilestoneByCourse() {
                     <TagsSelectUI />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage   isReset={isReset} name="imgs" />
+                    <UploadMultipalImage isReset={isReset} name="imgs" />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>

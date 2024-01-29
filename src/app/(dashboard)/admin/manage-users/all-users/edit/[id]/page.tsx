@@ -11,6 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
@@ -33,6 +34,7 @@ const EditUserData = ({ params }: any) => {
       ...values,
   
     };
+    removeNullUndefinedAndFalsey(UpdateValues);
     try {
       const res = await updateService({
         id: params?.id,

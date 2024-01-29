@@ -9,6 +9,7 @@ import { useAddGlossaryMutation } from "@/redux/api/adminApi/glossaryApi";
 import dynamic from "next/dynamic";
 import SelectModuleField from "../Forms/SelectData/SelectModuleField";
 import { Button } from "antd";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(() => import("../shared/TextEditor/TextEditor"), {
   ssr: false,
 });
@@ -17,6 +18,7 @@ export default function GlossaryCreate({ setOpen, moduleId }: any) {
 
   const [addGlossary, { isLoading }] = useAddGlossaryMutation();
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
     if (!moduleId) {
       Error_model_hook("Please ensure your are selected moduleId");

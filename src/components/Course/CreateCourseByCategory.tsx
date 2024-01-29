@@ -29,6 +29,7 @@ import { useState } from "react";
 
 import dynamic from "next/dynamic";
 import { ENUM_STATUS } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -58,6 +59,7 @@ export default function CreateCourseByCategory() {
   
     // console.log(demo_video);
     const onSubmit = async (values: any) => {
+      removeNullUndefinedAndFalsey(values);
       const CourseData = {
         demo_video,
         details: textEditorValue,

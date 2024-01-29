@@ -25,6 +25,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 //
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -58,6 +59,7 @@ export default function EditMilestone({milestoneId}:{milestoneId:string}) {
       useUpdateMilestoneMutation();
   
     const onSubmit = async (values: any) => {
+      removeNullUndefinedAndFalsey(values);
       if (courses._id) {
         values["course"] = courses._id;
       }
@@ -66,7 +68,7 @@ export default function EditMilestone({milestoneId}:{milestoneId:string}) {
         // details: textEditorValue,
       };
       // console.log(MilestoneData);
-  
+      removeNullUndefinedAndFalsey(MilestoneData);
       try {
         const res = await updateMilestone({
           id: milestoneId,

@@ -7,6 +7,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 import { IStudentCreate } from "@/types/userTypes";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -27,7 +28,7 @@ const CreateStudentPage = () => {
     };
 
     console.log(studentData, "student");
-
+    removeNullUndefinedAndFalsey(studentData);
     // Success_model("Customer created successfully");
 
     try {

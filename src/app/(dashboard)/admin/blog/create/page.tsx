@@ -10,6 +10,7 @@ import FormTimePicker from "@/components/Forms/FormTimePicker";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import UploadImage from "@/components/ui/UploadImage";
 import { ENUM_STATUS } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useAddBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -23,6 +24,7 @@ const CreateBlog = () => {
 
   const [addBlog, { isLoading: blogLoading }] = useAddBlogMutation();
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     try {
       const res = await addBlog(values).unwrap();
       if (res?.success == false) {

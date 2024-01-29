@@ -37,6 +37,7 @@ import ButtonGroup from "antd/es/button/button-group";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import { FormProps, useForm } from "react-hook-form";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -71,6 +72,7 @@ const CreateLesson = () => {
       { skip: !Boolean(module?._id) }
     );
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
     if (!module?._id || !milestone?._id || !course?._id || !category?._id) {
       Error_model_hook(
@@ -85,7 +87,7 @@ const CreateLesson = () => {
       milestone: milestone?._id,
       module: module?._id,
     };
-    console.log(LessonData);
+    removeNullUndefinedAndFalsey(LessonData);
     // return;
     try {
       const res = await addLesson(LessonData).unwrap();

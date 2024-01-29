@@ -30,6 +30,7 @@ import dynamic from "next/dynamic";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -66,6 +67,7 @@ const CreateQuizByLesson = () => {
   };
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     const LessonData: {} = {
       ...values,
 

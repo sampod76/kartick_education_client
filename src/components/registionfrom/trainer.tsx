@@ -10,6 +10,7 @@ import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
 import { useAddTrainerWithFormDataMutation } from "@/redux/api/adminApi/trainerApi";
 import { trainerSchema } from "@/schemas/trainer";
@@ -28,6 +29,7 @@ const CreateTrainer = ({ open, setOpen }: any) => {
 
   const onSubmit = async (values: any) => {
     // console.log(values.img, "values of student");
+    removeNullUndefinedAndFalsey(values);
     const { password, ...value } = values;
     // Success_model("Customer created successfully");
 

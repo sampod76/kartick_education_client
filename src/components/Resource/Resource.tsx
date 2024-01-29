@@ -7,6 +7,7 @@ import { useAddResourceMutation } from "@/redux/api/adminApi/resourceApi";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import ButtonSubmitUI from "../ui/ButtonSubmitUI";
 import dynamic from "next/dynamic";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("../shared/TextEditor/TextEditor"),
   {
@@ -18,6 +19,7 @@ export default function ResourceCreate({ setOpen, moduleId }: any) {
   const [isReset, setIsReset] = useState(false);
   const [addResource, { isLoading }] = useAddResourceMutation();
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
     if (!moduleId) {
       Error_model_hook("Please ensure your are selected moduleId");

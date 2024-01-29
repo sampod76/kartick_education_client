@@ -36,6 +36,7 @@ import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCatego
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -78,6 +79,7 @@ export default function EditQuiz({quizId}:{quizId:string}) {
     };
   
     const onSubmit = async (values: any) => {
+      removeNullUndefinedAndFalsey(values);
       if (lesson?._id) {
         values["lesson"] = lesson?._id;
       }

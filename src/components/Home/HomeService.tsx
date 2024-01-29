@@ -22,6 +22,7 @@ import { ENUM_BOOKING_STATUS } from "@/constants/globalEnums";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useDebounced } from "@/redux/hooks";
 import Search, { SearchProps } from "antd/es/input/Search";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const UpComingService = ({
   status,
@@ -61,6 +62,7 @@ const UpComingService = ({
 
   //
   const onSubmit = async (data: any) => {
+    removeNullUndefinedAndFalsey(data);
     try {
       //@ts-ignore
       const res = await addBooking({

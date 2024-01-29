@@ -9,6 +9,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
 import { NO_IMAGE } from "@/constants/filePatch";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import {
   useAddBlogMutation,
   useGetAllBlogQuery,
@@ -30,7 +31,7 @@ const EditFaq = ({params}:{params:any}) => {
   const [isReset, setIsReset] = useState(false);
   const [updateBlog, { isLoading: blogLoading }] = useUpdateBlogMutation();
   const onSubmit = async (values: any) => {
-
+    removeNullUndefinedAndFalsey(values);
     try {
       const res = await updateBlog({id:params.id,body:values}).unwrap();
       if (res?.success == false) {
