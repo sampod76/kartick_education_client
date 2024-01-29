@@ -3,7 +3,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Flex, message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import Image from "next/image";
+import { Image } from 'antd';
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
@@ -106,18 +106,17 @@ const UploadMultipalImage = ({
   }, [isReset]);
 
   return (
-    <div className="flex justify-center items-center border p-5 rounded-lg my-2">
+    <div className="flex justify-center items-center border p-5 rounded-lg my-2 gap-3">
       {defaultImage.length
         ? defaultImage?.map((image, i) => (
-            <Image
-              key={i}
-              src={image}
-              alt="avatar"
-              width={500}
-              height={500}
-              // fill
-              className="w-36"
-            />
+          <Image
+          key={i}
+          className=" rounded "
+          src={image}
+          width={300}
+          height={120}
+          alt=""
+        />
           ))
         : null}
       <Upload
