@@ -14,7 +14,7 @@ const bannerCourseSlice = createSlice({
   name: "BannerCourseSearch",
   initialState: initialState,
   reducers: {
-    addSearchValue: (state, action: PayloadAction<string>) => {
+    addBannerSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
 
       //   const existingCourse = state.course.find(
@@ -27,7 +27,7 @@ const bannerCourseSlice = createSlice({
       //     state.total += action.payload.price;
       //   }
     },
-    clearSearchValue: (state, action) => {
+    clearBannerSearchValue: (state, action) => {
       state.searchValue = "";
       //   state.course = state.course.filter(
       //     (course) => course._id !== action.payload._id
@@ -37,6 +37,7 @@ const bannerCourseSlice = createSlice({
   },
 });
 
-export const { addSearchValue, clearSearchValue } = bannerCourseSlice.actions;
+export const { addBannerSearchValue, clearBannerSearchValue } =
+  bannerCourseSlice.actions;
 
 export default bannerCourseSlice.reducer;
