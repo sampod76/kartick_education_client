@@ -142,14 +142,14 @@ export default function LessonList({
   //! for Course options selection
   quiz_query["limit"] = 999999;
   quiz_query["isDelete"] = ENUM_YN.NO;
-  const { data: QuizData } = useGetAllQuizQuery({
+  const { data: QuizData, isLoading: quizLoading } = useGetAllQuizQuery({
     status: "active",
     isDelete: ENUM_YN.NO,
     module: moduleId,
     ...quiz_query,
   });
 
-  if (isLoading) {
+  if (isLoading || quizLoading) {
     return <LoadingSkeleton />;
   }
 
@@ -183,6 +183,8 @@ export default function LessonList({
       const lessonQuizData: any = QuizData?.data?.filter(
         (item: any) => item?.lesson?._id === lesson?._id
       );
+
+      // console.log(QuizData, 'lessonQuizData=============', lessonQuizData)
       const isLessonCollapsed = currentCollapse.includes(lesson?._id);
       // console.log(currentCollapse, lesson?._id, 'iss', isLessonCollapsed)
       // console.log(lesson,"lessonlesson")
@@ -190,6 +192,8 @@ export default function LessonList({
 
       // console.log(lesson);
       // console.log("🚀 lessonQuizData", lessonQuizData);
+
+      ///! isExist have
       if (IsExistCategoryOrCourse) {
         return {
           key: lesson?._id,
@@ -219,6 +223,7 @@ export default function LessonList({
                   {IsExistCategoryOrCourse && lesson?.short_description}
                 </EllipsisMiddle>
               </div>
+
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
                 lessonQuizData?.map((quiz: any) => {
@@ -241,6 +246,7 @@ export default function LessonList({
           // style: panelStyle,
         };
       } else {
+        ///! IsExistCategoryOrCourse do not have
         return {
           key: lesson?._id,
           label: (
@@ -252,6 +258,20 @@ export default function LessonList({
                 <EyeOutlined style={{ fontSize: "18px" }} />
               </button>
 
+
+            </div>
+          ),
+          children: (
+            <div>
+              <div className="">
+                <div className="flex justify-center items-center my-2">
+                  {playerVideoFunc(lesson, index)}
+                </div>
+                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+                <EllipsisMiddle suffixCount={3} maxLength={300}>
+                  {IsExistCategoryOrCourse && lesson?.short_description}
+                </EllipsisMiddle>
+              </div>
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
                 lessonQuizData?.map((quiz: any) => {
@@ -271,68 +291,55 @@ export default function LessonList({
                 })}
             </div>
           ),
-          children: (
-            <div>
-              <div className="">
-                <div className="flex justify-center items-center my-2">
-                  {playerVideoFunc(lesson, index)}
-                </div>
-                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-                <EllipsisMiddle suffixCount={3} maxLength={300}>
-                  {IsExistCategoryOrCourse && lesson?.short_description}
-                </EllipsisMiddle>
-              </div>
-            </div>
-          ),
           // style: panelStyle,
         };
       }
 
-      return {
-        key: lesson?._id,
-        label: (
-          <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
-            <button className="flex justify-between w-full">
-              <h2 className="text-base text-start font-normal">
-                <span>Lesson {index + 1}: </span> {lesson?.title}
-              </h2>
-              <EyeOutlined style={{ fontSize: "18px" }} />
-            </button>
+      // return {
+      //   key: lesson?._id,
+      //   label: (
+      //     <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
+      //       <button className="flex justify-between w-full">
+      //         <h2 className="text-base text-start font-normal">
+      //           <span>Lesson {index + 1}: </span> {lesson?.title}
+      //         </h2>
+      //         <EyeOutlined style={{ fontSize: "18px" }} />
+      //       </button>
 
-            {IsExistCategoryOrCourse &&
-              lessonQuizData &&
-              lessonQuizData?.map((quiz: any) => {
-                // console.log(quiz)
-                return (
-                  <Link
-                    key={quiz?._id}
-                    href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                    className="text-[14px] flex justify-between w-full mt-3"
-                  >
-                    <h2 className="text-base font-normal">
-                      Quiz {index + 1} : <span>{quiz?.title} </span>
-                    </h2>
-                    <LockOutlined style={{ fontSize: "18px" }} />
-                  </Link>
-                );
-              })}
-          </div>
-        ),
-        children: (
-          <div>
-            <div className="">
-              <div className="flex justify-center items-center my-2">
-                {playerVideoFunc(lesson)}
-              </div>
-              {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-              <EllipsisMiddle suffixCount={3} maxLength={300}>
-                {IsExistCategoryOrCourse && lesson?.short_description}
-              </EllipsisMiddle>
-            </div>
-          </div>
-        ),
-        // style: panelStyle,
-      };
+      //       {IsExistCategoryOrCourse &&
+      //         lessonQuizData &&
+      //         lessonQuizData?.map((quiz: any) => {
+      //           // console.log(quiz)
+      //           return (
+      //             <Link
+      //               key={quiz?._id}
+      //               href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
+      //               className="text-[14px] flex justify-between w-full mt-3"
+      //             >
+      //               <h2 className="text-base font-normal">
+      //                 Quiz {index + 1} : <span>{quiz?.title} </span>
+      //               </h2>
+      //               <LockOutlined style={{ fontSize: "18px" }} />
+      //             </Link>
+      //           );
+      //         })}
+      //     </div>
+      //   ),
+      //   children: (
+      //     <div>
+      //       <div className="">
+      //         <div className="flex justify-center items-center my-2">
+      //           {playerVideoFunc(lesson)}
+      //         </div>
+      //         {/* {lesson?.details && CutText(lesson?.details, 200)} */}
+      //         <EllipsisMiddle suffixCount={3} maxLength={300}>
+      //           {IsExistCategoryOrCourse && lesson?.short_description}
+      //         </EllipsisMiddle>
+      //       </div>
+      //     </div>
+      //   ),
+      //   // style: panelStyle,
+      // };
     }
   );
 
