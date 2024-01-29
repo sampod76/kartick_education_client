@@ -37,10 +37,15 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
   queryAll["limit"] = pageLimitCount;
   queryAll["page"] = currentPage;
 
-  if (!!debouncedSearchTerm) {
+  console.log(searchValue?.length, 'searchValue?.length', debouncedSearchTerm)
+  if (!!debouncedSearchTerm &&searchValue?.length >0) {
     query["searchTerm"] = debouncedSearchTerm;
+  }else{
+    query["searchTerm"] =''
   }
-  
+
+  // console.log(query,'query')
+
 
   queryAll["sortOrder"] = ENUM_SORT_ORDER.ASC;
   const onShowSizeChange: PaginationProps["onShowSizeChange"] = (

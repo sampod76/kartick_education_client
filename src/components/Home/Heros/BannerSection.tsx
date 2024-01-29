@@ -31,10 +31,14 @@ const BannerSection = () => {
 
   // console.log('searchTerm', searchTerm, 'resetValue', resetValue, 'searchValue', searchValue)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const text: string = e.target.value
     setSearchTerm(e.target.value);
     dispatch(addBannerSearchValue(searchTerm));
     if (!resetValue) {
       setSearchTerm('');
+    }
+    if (e.target.value?.length < 1) {
+      dispatch(clearBannerSearchValue(null));
     }
 
     setResetValue(true);
@@ -97,7 +101,7 @@ const BannerSection = () => {
             />
           </h3>
 
-          {resetValue && searchValue?.length > 1 && (
+          {resetValue && searchValue?.length > 0 && (
             <button onClick={handleReset} className="bg-white p-[16px] rounded-r-[8px] max-w-[3.7rem] h-[3.8rem]">
               <ReloadOutlined
                 style={{
