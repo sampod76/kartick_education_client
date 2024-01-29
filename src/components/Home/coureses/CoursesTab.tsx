@@ -12,10 +12,12 @@ import TopBarLoading from "@/components/ui/Loading/TopBarLoading";
 import { Error_model_hook } from "@/utils/modalHook";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAppSelector } from "@/redux/hooks";
+import { useDebounced } from "@/redux/hooks";
 
 const CoursesTab = () => {
   const screens = useBreakpoint();
   const [activeTabKey, setActiveTabKey] = useState("0");
+  // const [searchTerm, setSearchTerm] = useState<string>("rrrr");
 
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
@@ -23,16 +25,24 @@ const CoursesTab = () => {
   };
 
   const { searchValue } = useAppSelector(state => state.bannerSearch)
+
+  const debouncedSearchTerm = useDebounced({
+    searchQuery: searchValue,
+    delay: 600,
+  });
+
+
   const query: Record<string, any> = {};
   query["status"] = ENUM_STATUS.ACTIVE;
   query["limit"] = 99999;
   query["sortOrder"] = ENUM_SORT_ORDER.ASC;
 
-  if (searchValue?.length > 0) {
-    query['searchTerm'] = searchValue
+  if (!!debouncedSearchTerm) {
+    query["searchTerm"] = debouncedSearchTerm;
   }
 
-  console.log('searchValue', searchValue)
+  // console.log('query',query)
+  // console.log('searchValue', searchValue)
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
 
   const cousesData = data?.data || [];
