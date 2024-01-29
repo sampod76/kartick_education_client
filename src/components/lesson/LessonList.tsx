@@ -28,6 +28,7 @@ import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackage
 import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourseApi";
 import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 import { USER_ROLE } from "@/constants/role";
+import parse from 'html-react-parser';
 export default function LessonList({
   moduleId,
   moduleData,
@@ -133,10 +134,8 @@ export default function LessonList({
     ...lesson_query,
   });
 
-  // console.log(
-  //   "🚀 ~ file: LessonList.tsx:22 ~ LessonList ~ lessonData:",
-  //   lessonData
-  // );
+  console.log("🚀 ~ lessonData:", lessonData)
+  
 
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
@@ -223,6 +222,7 @@ export default function LessonList({
                 <EllipsisMiddle suffixCount={3} maxLength={300}>
                   {IsExistCategoryOrCourse && lesson?.short_description}
                 </EllipsisMiddle>
+                {lesson?.details && parse(lesson?.details)}
               </div>
 
               {IsExistCategoryOrCourse &&
@@ -272,6 +272,7 @@ export default function LessonList({
                 <EllipsisMiddle suffixCount={3} maxLength={300}>
                   {IsExistCategoryOrCourse && lesson?.short_description}
                 </EllipsisMiddle>
+               {lesson?.details && parse(lesson?.details)}
               </div>
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
@@ -296,51 +297,6 @@ export default function LessonList({
         };
       }
 
-      // return {
-      //   key: lesson?._id,
-      //   label: (
-      //     <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
-      //       <button className="flex justify-between w-full">
-      //         <h2 className="text-base text-start font-normal">
-      //           <span>Lesson {index + 1}: </span> {lesson?.title}
-      //         </h2>
-      //         <EyeOutlined style={{ fontSize: "18px" }} />
-      //       </button>
-
-      //       {IsExistCategoryOrCourse &&
-      //         lessonQuizData &&
-      //         lessonQuizData?.map((quiz: any) => {
-      //           // console.log(quiz)
-      //           return (
-      //             <Link
-      //               key={quiz?._id}
-      //               href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-      //               className="text-[14px] flex justify-between w-full mt-3"
-      //             >
-      //               <h2 className="text-base font-normal">
-      //                 Quiz {index + 1} : <span>{quiz?.title} </span>
-      //               </h2>
-      //               <LockOutlined style={{ fontSize: "18px" }} />
-      //             </Link>
-      //           );
-      //         })}
-      //     </div>
-      //   ),
-      //   children: (
-      //     <div>
-      //       <div className="">
-      //         <div className="flex justify-center items-center my-2">
-      //           {playerVideoFunc(lesson)}
-      //         </div>
-      //         {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-      //         <EllipsisMiddle suffixCount={3} maxLength={300}>
-      //           {IsExistCategoryOrCourse && lesson?.short_description}
-      //         </EllipsisMiddle>
-      //       </div>
-      //     </div>
-      //   ),
-      //   // style: panelStyle,
-      // };
     }
   );
 
