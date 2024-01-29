@@ -32,7 +32,7 @@ import TagsSelectNotSetFormUI from "@/components/ui/dashboardUI/TagsSelectNotSet
 import Dragger from "antd/es/upload/Dragger";
 import { getCloudinaryEnv } from "@/helpers/config/envConfig";
 import UploadMultipalDragAndDropImge from "@/components/ui/UploadMultipalDragAndDropImge";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeFalseyValue";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditorNotSetForm = dynamic(
   () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
   {

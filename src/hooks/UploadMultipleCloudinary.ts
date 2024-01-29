@@ -1,9 +1,6 @@
-import { getCloudinaryEnv } from "@/helpers/config/envConfig";
+import { getBaseUrl } from "@/helpers/config/envConfig";
 
-const cloudinaryEnv = getCloudinaryEnv();
-const upload_preset = cloudinaryEnv.upload_preset;
-const cloud_name = cloudinaryEnv.cloud_name;
-const url = `https://api.cloudinary.com/v1_1/${"duyfxtcdd"}/image/upload`;
+const url = `${getBaseUrl()}/upload/upload-multiple-images`;
 
 const uploadFilesCloudinary = async (files: FileList | File[]) => {
   try {
@@ -12,11 +9,8 @@ const uploadFilesCloudinary = async (files: FileList | File[]) => {
     const formData = new FormData();
 
     for (let i = 0; i < fileListArray.length; i++) {
-      formData.append("files", fileListArray[i]);
+      formData.append("images", fileListArray[i]);
     }
-
-    formData.append("upload_preset", "mvfmecoi");
-    formData.append("cloud_name", "duyfxtcdd");
 
     const response = await fetch(url, {
       method: "post",
@@ -25,7 +19,8 @@ const uploadFilesCloudinary = async (files: FileList | File[]) => {
 
     if (response.ok) {
       const data = await response.json();
-      return data?.resources.map((resource: any) => resource.secure_url);
+      console.log("🚀 ~ uploadFilesCloudinary ~ data:", data);
+      return data?.data?.map((resource: any) => resource.secure_url);
     } else {
       console.error("Failed to upload files to Cloudinary");
     }

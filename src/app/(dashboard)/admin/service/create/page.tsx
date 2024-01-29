@@ -8,6 +8,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAddServiceWithFormDataMutation } from "@/redux/api/serviceApi";
@@ -24,6 +25,7 @@ const CreateService = () => {
   const { data = [], isLoading } = useGetAllCategoryQuery({});
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     const changeValues = { ...values, serviceDate: new Date().toISOString() };
     console.log(changeValues);
     try {

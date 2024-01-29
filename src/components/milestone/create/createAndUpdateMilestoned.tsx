@@ -21,6 +21,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import { ENUM_STATUS } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 //
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -55,14 +56,14 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
       Error_model_hook("Course must be select");
       return;
     }
-
+    removeNullUndefinedAndFalsey(values);
     const MilestoneData: {} = {
       ...values,
       category: category?._id,
       course: courses._id || courseId,
     };
     // console.log(MilestoneData);
-
+    removeNullUndefinedAndFalsey(MilestoneData);
     try {
       const res = await addMilestone(MilestoneData).unwrap();
       console.log(res);

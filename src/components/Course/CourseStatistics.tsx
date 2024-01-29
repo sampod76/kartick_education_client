@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useGetSingleCourseModuleLessonQuizVideoSizeQuery } from "@/redux/api/adminApi/courseApi";
 
 
-const CourseStatistics = ({ courseId }: { courseId: any }) => {
+const CourseStatistics = ({ courseId }: { courseId: string }) => {
   const { data, isLoading } =
     useGetSingleCourseModuleLessonQuizVideoSizeQuery(courseId);
   const allData: any = data;

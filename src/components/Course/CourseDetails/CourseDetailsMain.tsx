@@ -13,7 +13,7 @@ export default function CourseDetailsMain({ courseId }: { courseId: string }) {
   return (
     <div>
       <CourseDetailsTop courseData={CourseData} />
-      <CourseStatistics CourseData={CourseData} />
+      <CourseStatistics courseId={courseId} />
       <AuthorCourseDetails authorData={CourseData?.author} />
       <CourseDetailsTab CourseData={CourseData} />
     </div>

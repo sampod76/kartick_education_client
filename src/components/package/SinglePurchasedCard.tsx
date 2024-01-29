@@ -13,7 +13,8 @@ import ModalComponent from "../Modal/ModalComponents";
 import AddStudentComponent from "../student/addStudentByAuthor/addStudentComponent";
 import { getUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
-import PackageToStudent from "@/app/(dashboard)/seller/students/packageToStudent/page";
+import PackageToStudent from "./PackageToStudent";
+
 
 export default function SInglePurchased({
   packages,

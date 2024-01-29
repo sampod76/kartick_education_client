@@ -29,7 +29,6 @@ type ICard = {
   link?: string;
 };
 export default function TopDashStatistics() {
-
   const {
     data: allUserData,
     error: UserError,
@@ -40,11 +39,7 @@ export default function TopDashStatistics() {
     error: CourseError,
     isLoading: courseLoading,
   } = useGetAllCourseQuery({ isDelete: ENUM_YN.NO });
-  const {
-    data: allTrainer,
-    error: trainerError,
-    isLoading: trainerLoading,
-  } = useGetAllTrainersQuery({ isDelete: ENUM_YN.NO });
+
   const {
     data: allAcceptedCourse,
     error: allAcceptedCourseError,
@@ -70,14 +65,12 @@ export default function TopDashStatistics() {
   if (
     userLoading ||
     courseLoading ||
-    trainerLoading ||
     allAcceptedCourseLoading ||
     allSellPackageLoading ||
     allSellCourseAmountLoading ||
     allSellPackageAmountLoading
   ) {
     return <LoadingSkeleton />;
-
   }
   return (
     <div>
@@ -202,7 +195,7 @@ export default function TopDashStatistics() {
                           Name
                         </p>
                         <p className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                          email
+                          Amount
                         </p>
                       </div>
                       <div className="divide-y divide-gray-200 space-y-4">
@@ -224,9 +217,9 @@ export default function TopDashStatistics() {
                                   <p>{new Date(createdAt).toLocaleString()}</p>
                                 </div>
                                 <div className="py-4 text-sm text-gray-500 capitalize">
-                                  <p>{course?.title}</p>
-                                  <p className="line-clamp-1">
-                                    {course?.price}
+                                  <p>Title: {course?.title}</p>
+                                  <p className="line-clamp-1 text-right">
+                                    price: ${course?.price}
                                   </p>{" "}
                                   <br />
                                 </div>
@@ -250,10 +243,10 @@ export default function TopDashStatistics() {
                     <div className="w-full divide-y divide-gray-300">
                       <div className="flex justify-between">
                         <p className="py-3.5 pl-3 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                          Name
+                          User
                         </p>
                         <p className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                          email
+                          title
                         </p>
                       </div>
                       <div className="divide-y divide-gray-200 space-y-4">
@@ -275,9 +268,9 @@ export default function TopDashStatistics() {
                                   <p>{new Date(createdAt).toLocaleString()}</p>
                                 </div>
                                 <div className="py-4 text-sm text-gray-500 capitalize">
-                                  <p>{title}</p>
-                                  <p className="line-clamp-1">
-                                    {total_price}
+                                  <p>Title: {title}</p>
+                                  <p className="line-clamp-1 text-right">
+                                    Price: ${total_price}
                                   </p>{" "}
                                   <br />
                                 </div>

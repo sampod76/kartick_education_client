@@ -23,17 +23,12 @@ const ProfileTemplate = () => {
   console.log(data, 'data profile');
 
 
-  const userData = data
 
-  const firstName =
-    userData?.name?.firstName 
-  const lastName =
-    userData?.name?.lastName 
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
 
-  
+
 
   return (
     <section>
@@ -95,13 +90,13 @@ const ProfileTemplate = () => {
           </div>
         </div>
       )} */}
-      <UserProfile userData={userData} />
+      <UserProfile userData={data} />
       {
-        userData?.role === "seller" &&
+        data?.role === "seller" &&
         <SellerMainProfile />
       }
       {
-        userData?.role === "admin" &&
+        data?.role === "admin" &&
         <AdminMainProfile />
       }
 

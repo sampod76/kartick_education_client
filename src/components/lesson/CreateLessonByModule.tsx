@@ -25,6 +25,7 @@ import { useSearchParams } from "next/navigation";
 
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -43,6 +44,7 @@ export default function CreateLessonByModule({moduleId,moduleName}:{moduleId:str
   
   
     const onSubmit = async (values: any) => {
+      removeNullUndefinedAndFalsey(values);
       // console.log(values);
       // const status = "active";
       // const imgUrl = await uploadImgBB(values.img);
@@ -55,6 +57,7 @@ export default function CreateLessonByModule({moduleId,moduleName}:{moduleId:str
         module: moduleId,
         // details: textEditorValue,
       };
+      removeNullUndefinedAndFalsey(LessonData);
       // console.log(LessonData);
   
       try {

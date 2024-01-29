@@ -6,9 +6,9 @@ import FormInput from "@/components/Forms/FormInput";
 
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { ENUM_STATUS } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 import { useAddFaqMutation } from "@/redux/api/faqApi";
-
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -16,11 +16,10 @@ import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
 const CreateFaq = () => {
-  
   const [addFaq, { isLoading: blogLoading }] = useAddFaqMutation();
   const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
-    console.log(values);
+    removeNullUndefinedAndFalsey(values);
 
     try {
       const res = await addFaq(values).unwrap();
@@ -46,9 +45,11 @@ const CreateFaq = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} isReset={isReset}
+        <Form
+          submitHandler={onSubmit}
+          isReset={isReset}
           // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
-          >
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -84,13 +85,8 @@ const CreateFaq = () => {
                 />
               </Col>
 
-
               <Col span={24} style={{ margin: "10px 0" }}>
-                <FormTextArea
-                  name="content"
-                  label="Faq content"
-                  rows={10}
-                />
+                <FormTextArea name="content" label="Faq content" rows={10} />
               </Col>
 
               {/* <Col span={12} style={{ margin: "10px 0" }}>
@@ -99,7 +95,7 @@ const CreateFaq = () => {
             </Row>
           </div>
 
-          <Button htmlType="submit"   type="default">
+          <Button htmlType="submit" type="default">
             Create
           </Button>
         </Form>

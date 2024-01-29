@@ -28,16 +28,15 @@
     "antd": "^5.9.2",
     "axios": "^1.5.0",
     "chart.js": "^4.4.1",
-
     "eslint": "8.49.0",
     "eslint-config-next": "^14.0.4",
     "html-react-parser": "^5.0.11",
+    "image-resize-compress": "^1.1.0",
     "jodit-react": "^1.3.39",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "mathjax": "^3.2.2",
     "next": "^14.0.4",
-
     "owl.carousel": "^2.3.4",
     "rc-tween-one": "^3.0.6",
     "react": "^18.2.0",

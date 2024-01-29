@@ -21,6 +21,7 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -59,12 +60,13 @@ export default function CreateModuleByMilestone() {
       Error_model_hook("Please ensure your are selected quiz");
       return;
     }
+    removeNullUndefinedAndFalsey(values);
     const ModuleData: {} = {
       ...values,
       // details: textEditorValue,
       milestone: milestone?._id,
     };
-
+    removeNullUndefinedAndFalsey(ModuleData);
     try {
       const res = await addModule(ModuleData).unwrap();
       console.log(res);

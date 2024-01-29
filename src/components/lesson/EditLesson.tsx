@@ -32,6 +32,7 @@ import dynamic from "next/dynamic";
 import VideoSelect from "@/components/Forms/VideoSelect";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -65,14 +66,14 @@ export default function EditLesson({lessonId}:{lessonId:string}) {
   
     
     const onSubmit = async (values: any) => {
-   
+      removeNullUndefinedAndFalsey(values);
       if (module?._id) {
         values["module"] = module?._id;
       }
       const LessonData: {} = {
         ...values,
       };
-      console.log(LessonData);
+      removeNullUndefinedAndFalsey(LessonData);
   
       try {
         const res = await updateLesson({

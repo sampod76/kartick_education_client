@@ -23,6 +23,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const EditStudentPage = ({ params }: any) => {
   const { data: singleStudent, isLoading } = useGetSingleStudentQuery(
@@ -41,7 +42,7 @@ const EditStudentPage = ({ params }: any) => {
     const UpdateValues = {
       ...values,
     };
-    console.log(UpdateValues);
+    removeNullUndefinedAndFalsey(values);
     try {
       const res = await updateStudent({
         id: params?.id,

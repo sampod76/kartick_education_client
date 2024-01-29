@@ -21,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row, Space, Spin, message } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const Registration = () => {
   const [addGeneralUserWithFormData, { isLoading }] =
@@ -30,6 +31,7 @@ const Registration = () => {
   const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
     console.log(values);
+    removeNullUndefinedAndFalsey(values);
     try {
       const res = await addGeneralUserWithFormData({ ...values }).unwrap();
       if (res?.success == false) {

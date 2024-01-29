@@ -11,6 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
@@ -34,6 +35,7 @@ const EditServicePage = ({ params }: any) => {
       availableTickets: Number(values?.availableTickets || 0),
       price: Number(values?.price || 0),
     };
+    removeNullUndefinedAndFalsey(UpdateValues);
     try {
       const res = await updateService({
         id: params?.id,
@@ -47,7 +49,7 @@ const EditServicePage = ({ params }: any) => {
       }
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (isLoading || updateLoading) {
@@ -247,7 +249,6 @@ const EditServicePage = ({ params }: any) => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -283,7 +284,7 @@ const EditServicePage = ({ params }: any) => {
               alignItems: "center",
             }}
           >
-            <Button htmlType="submit"   type="default">
+            <Button htmlType="submit" type="default">
               Update
             </Button>
           </div>

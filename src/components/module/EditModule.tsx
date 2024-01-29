@@ -25,6 +25,7 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -61,12 +62,13 @@ export default function EditModule({moduleId}:{moduleId:string}) {
       if (milestone?._id) {
         values["milestone"] = milestone?._id;
       }
+      removeNullUndefinedAndFalsey(values);
       const ModuleData: {} = {
         ...values,
   
         // details: textEditorValue,
       };
-  
+      removeNullUndefinedAndFalsey(ModuleData);
       try {
         const res = await updateModule({
           id: moduleId,

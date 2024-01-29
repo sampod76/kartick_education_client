@@ -33,6 +33,7 @@ import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import timeDurationToMilliseconds, {
   convertTimeDurationMillisecondsToTime,
 } from "@/hooks/stringToMiliSecend";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 export default function EditSingleQuiz({
   singleQuizId,
@@ -91,6 +92,7 @@ export default function EditSingleQuiz({
   };
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     if (answers.length) {
       values["answers"] = answers;
     } else if (singleAnswer) {

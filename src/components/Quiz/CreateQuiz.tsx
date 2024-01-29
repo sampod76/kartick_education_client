@@ -24,6 +24,7 @@ import dynamic from "next/dynamic";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -54,6 +55,7 @@ const CreateQuiz = () => {
   const [addQuiz, { isLoading: quizLoading }] = useAddQuizMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     const createQuizeData: {} = {
       ...values,
       category: category?._id,
@@ -63,7 +65,6 @@ const CreateQuiz = () => {
       lesson: lesson?._id,
     };
     // console.log(LessonData);
-
     try {
       const res = await addQuiz(createQuizeData).unwrap();
       console.log(res);
