@@ -72,6 +72,7 @@ export default function EditSingleQuiz({
     { skip: !Boolean(singleQuizId) }
   );
 
+  console.log("🚀 ~ data:", data);
   useEffect(() => {
     setAnswers(data?.answers || []);
     setQuizTypes(data?.type);
@@ -298,7 +299,7 @@ export default function EditSingleQuiz({
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                  //
+                    //
                   />
                 </Col>
                 <Col
@@ -439,8 +440,8 @@ export default function EditSingleQuiz({
                   </p>
                   <TextEditor
                     isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
                   />
                 </section>
               </Col>
@@ -487,7 +488,6 @@ export default function EditSingleQuiz({
               </Row>
             </div>
             <div className="flex justify-center items-center">
-
               {serviceLoading ? (
                 <ButtonLoading />
               ) : (

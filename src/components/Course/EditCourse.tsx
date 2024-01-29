@@ -37,6 +37,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
 import { ENUM_YN } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -62,6 +63,7 @@ console.log(getCourse);
 
 // console.log(demo_video);
 const onSubmit = async (values: any) => {
+  removeNullUndefinedAndFalsey(values);
   const CourseData = {
     ...values,
   };

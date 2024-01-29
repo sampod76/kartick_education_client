@@ -62,7 +62,7 @@ const UpComingService = ({
 
   //
   const onSubmit = async (data: any) => {
-    removeNullUndefinedAndFalsey(values);
+    removeNullUndefinedAndFalsey(data);
     try {
       //@ts-ignore
       const res = await addBooking({

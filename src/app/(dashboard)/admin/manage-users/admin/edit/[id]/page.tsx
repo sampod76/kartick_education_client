@@ -35,11 +35,11 @@ const EditAdminPage = ({ params }: any) => {
     useUpdateAdminMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     const UpdateValues = {
       ...values,
     };
     // console.log(UpdateValues);
-    removeNullUndefinedAndFalsey(values);
     try {
       const res = await updateAdmin({
         id: params?.id,
