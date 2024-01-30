@@ -23,12 +23,12 @@ export default function DragTest() {
     event.preventDefault();
 
     const draggedItem = event.dataTransfer.getData('text/plain');
-    console.log('draggedItem', draggedItem);
+    // console.log('draggedItem', draggedItem);
 
     // Remove the dropped item from ImagesData
     // ImagesData = ImagesData.filter((item: any) => item !== draggedItem);
     const currentIndex = ImagesData?.findIndex((item) => item === draggedItem)
-    console.log('currentIndex', currentIndex);
+    // console.log('currentIndex', currentIndex);
     // const newImages = ImagesData?.splice(currentIndex, 1)
     // setImagesData(ImagesData?.splice(currentIndex, 1))
 
@@ -36,7 +36,7 @@ export default function DragTest() {
 
     setImagesData(currentImages)
 
-    console.log('ImagesData', ImagesData)
+    // console.log('ImagesData', ImagesData)
     // if (currentIndex !== -1) {
     //   // If the answer with the provided _id already exists, replace it
     //   state.userAnswers[existingAnswerIndex] = payload;

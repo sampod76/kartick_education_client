@@ -43,7 +43,7 @@ const TextEditorNotSetValue = ({
 
   return (
     <>
-      <Switch checkedChildren="Open" unCheckedChildren='Close' defaultChecked onChange={onChange} style={{
+      <Switch checkedChildren="Close" unCheckedChildren='Open' defaultChecked onChange={onChange} style={{
         background: openTextEditor ? "blue" : "#4D545A"
       }} />
 

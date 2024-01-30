@@ -125,6 +125,7 @@ export default function QuizQuestionCard({
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
     let changedAnswer = [];
+    console.log(answer, 'answer')
     if (Array.isArray(answer)) {
       changedAnswer = answer;
     } else if (typeof answer === "string") {
@@ -261,10 +262,10 @@ export default function QuizQuestionCard({
                       }
                   `}
                   >
-                     <div className="flex gap-1">
-                     {option?.title &&<TextToSpeech text={option?.title} />}
-                    <p>{option?.title}</p>
-                     </div>
+                    <div className="flex gap-1">
+                      {option?.title && <TextToSpeech text={option?.title} />}
+                      {/* <p>{option?.title}</p> */}
+                    </div>
                     <div className="flex flex-wrap w-full">
                       {option?.imgs?.map(
                         (img: string, key: number, allimages: any[]) => (
@@ -361,11 +362,11 @@ export default function QuizQuestionCard({
           </Checkbox.Group>
         )}
 
-        {/* {quiz?.type === "input" && (
+        {quiz?.type === "input" && (
           <div>
-            <p className="text-lg font-[550] mb-2">
+            {/* <p className="text-lg font-[550] mb-2">
               Question {index + 1} : {quiz?.title}
-            </p>
+            </p> */}
             <Input
               onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
               style={{ minHeight: "1rem", width: "12rem" }}
@@ -373,7 +374,7 @@ export default function QuizQuestionCard({
             />
           </div>
         )}
-        {quiz?.type === "text" && (
+        {/* {quiz?.type === "text" && (
           <Input.TextArea
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
             style={{ minHeight: "6rem" }}
