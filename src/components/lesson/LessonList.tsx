@@ -171,6 +171,7 @@ export default function LessonList({
             <VimeoPlayer
               width={!screens.sm ? 350 : 750}
               height={!screens.sm ? 350 : 600}
+              // link={result.data as string}
               link={lesson?.videos[0]?.link}
             />
           );
