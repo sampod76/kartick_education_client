@@ -113,8 +113,6 @@ export default function QuizTestPage({
   };
 
 
-
-
   // ! For disabled Next Button
   const isDisabledNext = useMemo(() => {
     const isSelected = userAnswers.find(
@@ -202,8 +200,8 @@ export default function QuizTestPage({
 
   return (
     <div className="w-full  mx-auto my-5 lg:my-0">
-  
-      <div className="flex flex-col justify-center items-center gap-3 mt-4">
+
+      <div className="flex flex-col justify-start items-center gap-3 mt-4">
         {/* Render quiz based on the current step */}
         {isLoading && <TopBarLoading />}
         {quizData.length > 0 && (
@@ -257,7 +255,14 @@ export default function QuizTestPage({
 
         {/* //! For result container UI */}
 
-        <Modal title="Your Result" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} >
+        <Modal title="Your Result" open={isModalOpen} footer={(_, { OkBtn, CancelBtn }) => (
+          <>
+            {/* <Button>Custom Button</Button>
+            <CancelBtn />
+            <OkBtn /> */}
+            <Button onClick={handleOk}>Ok </Button>
+          </>
+        )} onCancel={handleCancel} >
           <div className="">
             <h2 className="text-center my-3">Total Quiz {quizData?.length}</h2>
             <h2 className="text-[1rem] font-serif text-green-600 ">
