@@ -1,26 +1,37 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 // import TextEditor from "../shared/TextEditor/TextEditor";
 import Form from "../Forms/Form";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { useAddResourceMutation } from "@/redux/api/adminApi/resourceApi";
+import {
+  useAddResourceMutation,
+  useUpdateResourceMutation,
+} from "@/redux/api/adminApi/resourceApi";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import ButtonSubmitUI from "../ui/ButtonSubmitUI";
 import dynamic from "next/dynamic";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-const TextEditor = dynamic(
-  () => import("../shared/TextEditor/TextEditor"),
-  {
-    ssr: false,
-  }
-);
+import { useGetAllRatingFeedbackQuery } from "@/redux/api/ratingFeedback";
+import { ENUM_YN } from "@/constants/globalEnums";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
+const TextEditor = dynamic(() => import("../shared/TextEditor/TextEditor"), {
+  ssr: false,
+});
 
 export default function ResourceCreate({ setOpen, moduleId }: any) {
   const [isReset, setIsReset] = useState(false);
   const [addResource, { isLoading }] = useAddResourceMutation();
+  const [updateResource, { isLoading: updateLoading }] =
+    useUpdateResourceMutation();
+  const { data, isLoading: GetLoading } = useGetAllRatingFeedbackQuery({
+    module: moduleId,
+    isDelete: ENUM_YN.NO,
+    // status: ENUM_STATUS.ACTIVE,
+  });
+  const resource = data?.data[0];
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
-    console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
+
     if (!moduleId) {
       Error_model_hook("Please ensure your are selected moduleId");
       return;
@@ -32,12 +43,17 @@ export default function ResourceCreate({ setOpen, moduleId }: any) {
     console.log(resourceData);
     // return;
     try {
-      const res = await addResource(resourceData).unwrap();
+      let res;
+      if (!resource) {
+        res = await addResource(resourceData).unwrap();
+      } else {
+        res = await updateResource(resourceData).unwrap();
+      }
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Resource");
-        setOpen(true);
+        Success_model(`Successfully ${resource ? "Update" : "added"} Resource`);
+        // setOpen(false);
         setIsReset(true);
       }
     } catch (error: any) {
@@ -45,15 +61,20 @@ export default function ResourceCreate({ setOpen, moduleId }: any) {
       console.log(error);
     }
   };
+
+  if (GetLoading) {
+    return <LoadingSkeleton />;
+  }
   return (
     <Form submitHandler={onSubmit}>
-      <TextEditor isReset={isReset}
-          />
+      <TextEditor isReset={isReset} />
       <div className="w-fit mx-auto">
         {isLoading ? (
           <ButtonLoading />
         ) : (
-          <ButtonSubmitUI>Create Resource</ButtonSubmitUI>
+          <ButtonSubmitUI>
+            {resource ? "Update" : "Create Resource"}
+          </ButtonSubmitUI>
         )}
       </div>
     </Form>
