@@ -135,7 +135,7 @@ export default function LessonList({
   });
 
   console.log("🚀 ~ lessonData:", lessonData)
-  
+
 
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
@@ -233,7 +233,7 @@ export default function LessonList({
                     <Link
                       key={quiz?._id}
                       href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                      className="text-[14px] flex justify-between w-full mt-3"
+                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3"
                     >
                       <h2 className="text-base font-normal">
                         Quiz {index + 1} : <span>{quiz?.title} </span>
@@ -272,7 +272,7 @@ export default function LessonList({
                 <EllipsisMiddle suffixCount={3} maxLength={300}>
                   {IsExistCategoryOrCourse && lesson?.short_description}
                 </EllipsisMiddle>
-               {lesson?.details && parse(lesson?.details)}
+                {lesson?.details && parse(lesson?.details)}
               </div>
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&

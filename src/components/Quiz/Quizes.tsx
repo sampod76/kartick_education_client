@@ -7,7 +7,7 @@ import QuizAside from "./QuizAside";
 import UMBreadCrumb from "../ui/UMBreadCrumb";
 import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuizApi";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import TextToSpeech from "@/utils/TextToSpeech";
 // import QuizTestPage from "./QuizTestPage";
 import { ArrowLeftOutlined } from "@ant-design/icons"
@@ -24,6 +24,7 @@ export default function QuizeSinglePage({
   quiz_title: string;
 }) {
 
+  const router = useRouter()
   // console.log("🚀 ~ quizeId:", quizeId)
   const searchParams = useSearchParams();
   const quiz_query: Record<string, any> = {};
@@ -52,10 +53,27 @@ export default function QuizeSinglePage({
   const moduleInfo = allSingleQuizeData?.data[0]?.module
   // console.log(allSingleQuizeData, 'allSingleQuizeData', moduleInfo)
 
+  const rediretBack = () => {
+    if (moduleInfo?._id) {
+      router.push(`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`)
+    } else {
+      router.back()
+    }
+  }
 
   return (
     <div className="container mx-auto rounded-xl mt-3 shadow-2xl">
-      <Link href={`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`} className="p-2 my-3 shadow"> <ArrowLeftOutlined /> Back to Module </Link>
+      <button
+        onClick={rediretBack}
+        // href={
+        //   moduleInfo?._id
+        //     ? (`` as Url)
+        //     : (router?.back() as Url)
+        // }
+        className="p-3 my-3"
+      >
+        <ArrowLeftOutlined /> Back to Module
+      </button>
       <h1 className="text-sm  lg:text-2xl  font-bold p-5">
         <TextToSpeech text={quiz_title} />
         {quiz_title}

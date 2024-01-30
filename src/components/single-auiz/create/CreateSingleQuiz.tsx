@@ -82,7 +82,7 @@ const CreateSingleQuiz = () => {
 
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
-    console.log("🚀 ~ onSubmit ~ values:", values);
+    // console.log("🚀 ~ onSubmit ~ values:", values);
     if (!quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");
       return;
