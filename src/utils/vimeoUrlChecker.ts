@@ -1,6 +1,4 @@
-import React from "react";
 
-import { Error_model_hook } from "./modalHook";
 
 function vimeoUrlChack(url: string) {
   let number = null;

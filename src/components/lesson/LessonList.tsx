@@ -4,7 +4,7 @@ import {
   RightCircleOutlined,
   EyeOutlined,
   LockOutlined,
-  EyeInvisibleOutlined
+  EyeInvisibleOutlined,
 } from "@ant-design/icons";
 import type { CSSProperties } from "react";
 import React, { useState } from "react";
@@ -18,7 +18,7 @@ import VimeoPlayer from "@/utils/vimoPlayer";
 import { ENUM_VIDEO_PLATFORM, ENUM_YN } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import vimeoUrlChack from "@/utils/vimeoUrlChecker";
+import YoutubePlayer from "react-player/youtube";
 
 import { getUserInfo } from "@/services/auth.service";
 import ModalComponent from "../Modal/ModalComponents";
@@ -28,7 +28,9 @@ import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackage
 import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourseApi";
 import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 import { USER_ROLE } from "@/constants/role";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { urlChecker } from "@/utils/urlChecker";
 export default function LessonList({
   moduleId,
   moduleData,
@@ -37,59 +39,63 @@ export default function LessonList({
   moduleData: any;
 }) {
   // console.log(moduleId, "moduleId from LessonList");
-  const pathname = usePathname();
+
+  const screens = useBreakpoint();
   const userInfo = getUserInfo() as any;
 
-  const [currentCollapse, setCurrentCollapse] = useState<string[]>([])
+  const [currentCollapse, setCurrentCollapse] = useState<string[]>([]);
   ////! for purchased data of a user
   const categoryId = moduleData?.milestone?.course?.category?._id;
 
   // for seller
-  const { data: purchasedData, isLoading: purchaseAcceptLoading } = useGetAllPurchaseAcceptedPackageQuery(
-    {
-      status: "active",
-      isDelete: ENUM_YN.NO,
-      limit: 99999,
-      user: userInfo?.id || "65aa1b19d1661e1c9a9e5135", ///is not valid user
-      category: categoryId,
-    },
-    {
-      skip:
-        userInfo.role === USER_ROLE.ADMIN
-          ? true
-          : userInfo.role === "student"
+  const { data: purchasedData, isLoading: purchaseAcceptLoading } =
+    useGetAllPurchaseAcceptedPackageQuery(
+      {
+        status: "active",
+        isDelete: ENUM_YN.NO,
+        limit: 99999,
+        user: userInfo?.id || "65aa1b19d1661e1c9a9e5135", ///is not valid user
+        category: categoryId,
+      },
+      {
+        skip:
+          userInfo.role === USER_ROLE.ADMIN
+            ? true
+            : userInfo.role === "student"
             ? true
             : false,
-    }
-  );
+      }
+    );
   // for student
-  const { data: soldSellerPackage, isLoading: purchaseAllLoading } = useGetAllPackageAndCourseQuery(
-    {
-      isDelete: ENUM_YN.NO,
-      status: "active",
-      limit: 99999,
-    },
-    {
-      skip:
-        userInfo.role === USER_ROLE.ADMIN
-          ? true
-          : userInfo.role === "student"
+  const { data: soldSellerPackage, isLoading: purchaseAllLoading } =
+    useGetAllPackageAndCourseQuery(
+      {
+        isDelete: ENUM_YN.NO,
+        status: "active",
+        limit: 99999,
+      },
+      {
+        skip:
+          userInfo.role === USER_ROLE.ADMIN
+            ? true
+            : userInfo.role === "student"
             ? false
             : true,
-    }
-  );
+      }
+    );
 
   // any user by the course and chack this
-  const { data: userToAllCourse, isLoading: gePurchaseLoading } = useGetCheckPurchasesCourseQuery(
-    {
-      user: userInfo?.id,
-      course: moduleData?.course,
-      isDelete: ENUM_YN?.NO,
-      status: "active",
-      limit: 99999,
-    },
-    { skip: userInfo.role === USER_ROLE.ADMIN ? true : false }
-  );
+  const { data: userToAllCourse, isLoading: gePurchaseLoading } =
+    useGetCheckPurchasesCourseQuery(
+      {
+        user: userInfo?.id,
+        course: moduleData?.course,
+        isDelete: ENUM_YN?.NO,
+        status: "active",
+        limit: 99999,
+      },
+      { skip: userInfo.role === USER_ROLE.ADMIN ? true : false }
+    );
 
   let IsExistCategoryOrCourse: any = false;
   if (userInfo.role !== "student") {
@@ -134,9 +140,6 @@ export default function LessonList({
     ...lesson_query,
   });
 
-  console.log("🚀 ~ lessonData:", lessonData)
-  
-
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
   quiz_query["limit"] = 999999;
@@ -148,17 +151,33 @@ export default function LessonList({
     ...quiz_query,
   });
 
-  if (isLoading || quizLoading || gePurchaseLoading || purchaseAcceptLoading || purchaseAllLoading) {
-    return <LoadingSkeleton />
+  if (
+    isLoading ||
+    quizLoading ||
+    gePurchaseLoading ||
+    purchaseAcceptLoading ||
+    purchaseAllLoading
+  ) {
+    return <LoadingSkeleton />;
   }
 
   // console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
     if (IsExistCategoryOrCourse || index === 0) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {
-        const check = vimeoUrlChack(lesson?.videos[0]?.link);
-        if (check) {
-          return <VimeoPlayer link={lesson?.videos[0]?.link} />;
+        const result = urlChecker(lesson?.videos[0]?.link);
+        if (result.platform === ENUM_VIDEO_PLATFORM.VIMEO) {
+          return (
+            <VimeoPlayer
+              width={!screens.sm ? 350 : 750}
+              height={!screens.sm ? 350 : 600}
+              link={lesson?.videos[0]?.link}
+            />
+          );
+        } else if (result.platform === ENUM_VIDEO_PLATFORM.YOUTUBE) {
+          return (
+            <YoutubePlayer url={result.data ? (result.data as string) : ""} />
+          );
         } else {
           return <div>Not add video yet.</div>;
         }
@@ -203,19 +222,18 @@ export default function LessonList({
                 <h2 className="text-base text-start font-normal">
                   <span>Lesson {index + 1}: </span> {lesson?.title}
                 </h2>
-                {
-                  isLessonCollapsed ? <EyeInvisibleOutlined style={{ fontSize: "18px" }} /> : <EyeOutlined style={{ fontSize: "18px" }} />
-                }
-
+                {isLessonCollapsed ? (
+                  <EyeInvisibleOutlined style={{ fontSize: "18px" }} />
+                ) : (
+                  <EyeOutlined style={{ fontSize: "18px" }} />
+                )}
               </button>
-
-
             </div>
           ),
           children: (
             <div>
               <div className="">
-                <div className="flex justify-center items-center my-2">
+                <div className="flex justify-center items-center my-1">
                   {playerVideoFunc(lesson)}
                 </div>
                 {/* {lesson?.details && CutText(lesson?.details, 200)} */}
@@ -258,8 +276,6 @@ export default function LessonList({
                 </h2>
                 <EyeOutlined style={{ fontSize: "18px" }} />
               </button>
-
-
             </div>
           ),
           children: (
@@ -272,7 +288,7 @@ export default function LessonList({
                 <EllipsisMiddle suffixCount={3} maxLength={300}>
                   {IsExistCategoryOrCourse && lesson?.short_description}
                 </EllipsisMiddle>
-               {lesson?.details && parse(lesson?.details)}
+                {lesson?.details && parse(lesson?.details)}
               </div>
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
@@ -296,20 +312,14 @@ export default function LessonList({
           // style: panelStyle,
         };
       }
-
     }
   );
-
-
-
 
   const handleChange = (key: any) => {
     // console.log(key, 'key')
 
-    setCurrentCollapse(key)
-
-  }
-
+    setCurrentCollapse(key);
+  };
 
   // <RightCircleOutlined />
 
