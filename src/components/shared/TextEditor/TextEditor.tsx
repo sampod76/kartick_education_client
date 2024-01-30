@@ -2,6 +2,7 @@
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { useFormContext } from "react-hook-form";
+import { Switch } from 'antd';
 const TextEditor = ({
   textEditorValue,
   setTextEditorValue,
@@ -16,7 +17,11 @@ const TextEditor = ({
   setTextEditorValue?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const editor = useRef(null);
+
   const [content, setContent] = useState(defaultTextEditorValue);
+
+  const [openTextEditor, setopenTextEditor] = useState<boolean>(false);
+
   console.log("🚀 ~ content:", content);
   // const [vlaue, setTextEditorValue] = useState("");
   const { setValue } = useFormContext();
@@ -39,22 +44,35 @@ const TextEditor = ({
     }
   }, [isReset]);
 
+  const onChange = (checked: boolean) => {
+    // console.log(`switch to ${checked}`);
+    setopenTextEditor(checked)
+  };
+
   return (
     <div>
-      <JoditEditor
-        ref={editor}
-        config={editorConfig}
-        value={content}
-        // tabIndex={1} // tabIndex of textarea
-        onBlur={(newContent) => {
-          setValue(name, newContent);
-          setContent(newContent);
-        }} // preferred to use only this option to update the content for performance reasons
+      {/* <h2></h2> */}
+      <Switch checkedChildren="Close" unCheckedChildren='Open' defaultChecked onChange={onChange} style={{
+        background: openTextEditor ? "blue" : "#4D545A"
+      }} />
+      {openTextEditor &&
+        <JoditEditor
+          ref={editor}
+          config={editorConfig}
+          value={content}
+          // tabIndex={1} // tabIndex of textarea
+          onBlur={(newContent) => {
+            setValue(name, newContent);
+            setContent(newContent);
+          }} // preferred to use only this option to update the content for performance reasons
         // onChange={(newContent) => {
 
         //   setValue(name, newContent);
         // }}
-      />
+        />
+
+      }
+
     </div>
   );
 };
