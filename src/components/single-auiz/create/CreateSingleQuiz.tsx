@@ -116,7 +116,7 @@ const CreateSingleQuiz = () => {
       type: quizType,
     };
 
-    console.log(singleQuizDat);
+    // console.log(singleQuizDat);
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
@@ -257,8 +257,9 @@ const CreateSingleQuiz = () => {
                   <Select
                     placeholder="Select Quiz Types"
                     style={{ width: "100%" }}
-                    onChange={(value) => setQuizTypes(value)}
+                    onChange={(value: any) => setQuizTypes(value)}
                     size="large"
+                    defaultValue={'select'}
                   >
                     {singleQuizTypes.map((item: any, i: number) => {
                       return (
@@ -445,6 +446,9 @@ const CreateSingleQuiz = () => {
                       </LabelUi>
                       <Input
                         placeholder="Type the answer"
+                        style={{
+                          width: "70%"
+                        }}
                         onBlur={(value: any) =>
                           setSingleAnswerInput(value.target.value)
                         }

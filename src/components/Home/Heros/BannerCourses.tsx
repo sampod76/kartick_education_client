@@ -94,7 +94,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
                   <button
                     className={`py-2 lg:py-3 px-2  lg:px-3 text-[12px] lg:text-[18px] rounded-tl-[20px] rounded-br-[20px] ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
                       } ${index % 3 === 1 && "bg-secondary"} text-white ${categoryId === category?._id &&
-                      "border-[4px] border-white bg-gradient-to-r  via-[#059669] shadow-xl shadow-green-600 scale-105 duration-300 from-[#047857] to-[#14b8a6]"
+                      "border-[4px] border-white bg-gradient-to-r  via-[#059669] scale-105 duration-300 from-[#047857] to-[#14b8a6]"
                       }`}
                   >
                     {category?.title}
