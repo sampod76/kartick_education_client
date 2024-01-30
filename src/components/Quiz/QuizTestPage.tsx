@@ -31,10 +31,11 @@ export default function QuizTestPage({
 
   //! for submitted  getQUiz
   // console.log(quizId, 'quizIdquizIdquizIdquizIdquizId')
-  const { data: quizAnswerData, isLoading } = useGetSubmitUserQuizQuery(quizId);
+  const { data: userSubmitData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
-  const userSubmitData = quizAnswerData;
+  // const userSubmitData = quizAnswerData;
 
+  console.log(userSubmitData)
   const submittedDefaultData = userSubmitData?.find(
     (answer: any) => answer?.singleQuiz?._id === currentAnswer?.singleQuiz
   );
@@ -197,11 +198,11 @@ export default function QuizTestPage({
   // Example usage with the provided submittedData
   const result = analyzeQuizAnswers(userSubmitData);
   // console.log('result', result);
-  console.log(currentAnswer, 'submittedANswer', userSubmitData, quizData)
+  // console.log(currentAnswer, 'submittedANswer', userSubmitData, quizData)
   return (
-    <div className="w-full  mx-auto my-5 lg:my-0">
+    <div className="w-full  mx-auto my-5 lg:my-0 ">
 
-      <div className="flex flex-col justify-start items-center gap-3 mt-4">
+      <div className="flex flex-col justify-start items-center gap-3 mt-4  w-[80%] ">
         {/* Render quiz based on the current step */}
         {isLoading && <TopBarLoading />}
         {quizData.length > 0 && (
@@ -235,7 +236,7 @@ export default function QuizTestPage({
             </Button>
           ) : (
             <div>
-              {quizData?.length !== quizAnswerData?.length ? (
+              {quizData?.length !== userSubmitData?.length ? (
                 <Button
                   type="default"
                   disabled={isDisabledNext}
