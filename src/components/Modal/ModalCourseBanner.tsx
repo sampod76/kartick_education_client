@@ -1,21 +1,24 @@
 "use clint";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { ICourseData } from "@/types/courseType";
-import { Select } from "antd";
+import { Button, Modal, Select } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import SIngleCourse from "../Home/coureses/SIngleCourse";
 import SIngleBannerSIngleCourse from "../Home/coureses/SIngleBannerSIngleCourse";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 const { Option } = Select;
 export default function ModalCourseBanner({
   categoryId,
-  setIsModalOpen,
+  showModal, isModalOpen, setIsModalOpen
 }: {
   categoryId: string | null;
-  setIsModalOpen: any;
+  showModal: any
+  isModalOpen: any
+  setIsModalOpen: any
+
 }) {
   //   console.log(categoryId);
   const router = useRouter();
@@ -30,49 +33,52 @@ export default function ModalCourseBanner({
     category: categoryId,
   });
   const CourseData = Course?.data;
-  // console.log(CourseData)
-  //   const CourseOptions = CourseData?.map((item: any) => {
-  //     return {
-  //       label: item?.title,
-  //       value: item?._id,
-  //     };
-  //   });
-  //   console.log(CourseOptions);
 
-  const handleChange = (courseId: string) => {
-    // console.log(courseId, "courseIdcourseId");
-    router.push(`/course/milestone/${courseId}?category=${categoryId}`);
+  const handleOk = () => {
     setIsModalOpen(false);
   };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  {
+    isLoading &&
+      <LoadingSkeleton />
+  }
   return (
-    <div>
-      {/* <Select
-        placeholder="Select course "
-        style={{ width: "100%" }}
-        loading={isLoading}
-        defaultActiveFirstOption
-        listHeight={150}
-        onChange={handleChange}
-      >
-        {CourseData?.map((course: ICourseData) => {
-          return (
-            <Option value={course?._id} key={course?._id}>
-              {course?.title}
-            </Option>
-          );
-        })}
-      </Select> */}
 
-{isLoading&&
- <LoadingSkeleton />
 
-}
+    <Modal
+      title="Select Course"
+      open={isModalOpen}
+      style={{ top: 20 }}
+      // onOk={handleOk}
+      onCancel={handleCancel}
+
+      footer={(_, { OkBtn, CancelBtn }) => (
+        <>
+          {/* <Button>Custom Button</Button>
+            <CancelBtn />
+            <OkBtn /> */}
+          <Button onClick={handleOk}>Ok </Button>
+        </>
+      )}
+    >
       {/* <Course */}
       <div className="grid grid-cols-1 gap-2">
         {CourseData?.map((item: ICourseData, index: number) => {
-          return <SIngleBannerSIngleCourse course={item} key={index + 1} />;
+          return <div onClick={handleOk} key={index + 1} >
+            <SIngleBannerSIngleCourse course={item} />;
+          </div>
         })}
       </div>
-    </div>
-  );
+
+    </Modal>
+
+
+
+
+
+  )
 }

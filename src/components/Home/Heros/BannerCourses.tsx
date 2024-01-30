@@ -41,13 +41,6 @@ const BannerCourses = () => {
     setIsModalCategoryId(categoryId);
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   // console.log("🚀 ~ BannerCourses ~ categoryData:", categoryData);
 
@@ -104,34 +97,20 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
                       " bg-gradient-to-r  via-[#059669] shadow-xl shadow-green-600 scale-105 duration-300 from-[#047857] to-[#14b8a6]"
                       }`}
                   >
-                    {category?.title} 
+                    {category?.title}
                   </button>
                 </div>
               );
             })
           )}
         </div>
-        <Modal
-          title="Select Course"
-          open={isModalOpen}
-          style={{ top: 20 }}
-          // onOk={handleOk}
-          onCancel={handleCancel}
+        <ModalCourseBanner
+          categoryId={isModalCategoryId}
+          showModal={showModal}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
 
-          footer={(_, { OkBtn, CancelBtn }) => (
-            <>
-              {/* <Button>Custom Button</Button>
-            <CancelBtn />
-            <OkBtn /> */}
-              <Button onClick={handleOk}>Ok </Button>
-            </>
-          )}
-        >
-          <ModalCourseBanner
-            categoryId={isModalCategoryId}
-            setIsModalOpen={setIsModalOpen}
-          />
-        </Modal>
+        />
       </div>
       {/* <div className="">
             <CoverSvg />

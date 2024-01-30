@@ -37,7 +37,7 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
   queryAll["limit"] = pageLimitCount;
   queryAll["page"] = currentPage;
 
-  console.log(searchValue?.length, 'searchValue?.length', debouncedSearchTerm)
+  // console.log(searchValue?.length, 'searchValue?.length', debouncedSearchTerm)
   if (!!debouncedSearchTerm &&searchValue?.length >0) {
     query["searchTerm"] = debouncedSearchTerm;
   }else{

@@ -113,3 +113,9 @@ password : 11223344
 5. !!!!!!!! Quiz Test data is not find (discuss)
 6. Package select and card designed . but should be dynamic
 7. Topbar Social icon updated
+
+
+# Bug fixing
+
+1. solved default active all in courseTab
+2. 

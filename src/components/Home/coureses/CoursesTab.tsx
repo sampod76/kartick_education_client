@@ -49,32 +49,33 @@ const CoursesTab = () => {
     " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[14px] lg:text-[18px] font-bold p-1";
 
   const tabsItems2: TabsProps["items"] = categoryData?.map(
-    (singleCategory: Record<string, any>, index: number | string) => ({
+    (singleCategory: Record<string, any>, index: number ) => ({
       label: (
         <button
           className={
-            activeTabKey === String(index) ? activeClass : inactiveClass
+            activeTabKey === String(index+1)  ? activeClass : inactiveClass
           }
         >
           <p className="px-1"> {singleCategory?.title}</p>
         </button>
       ),
-      key: String(index),
+      key: String(index+1) ,
       children: (
         <Courses query={{ status: "active", category: singleCategory?._id }} />
       ),
     })
   );
 
+  console.log('activeTabKey', activeTabKey)
   tabsItems2.unshift({
     label: (
       <button
-        className={activeTabKey === String("011allCourses") ? activeClass : inactiveClass}
+        className={activeTabKey === "011allCourses" || activeTabKey === '0' ? activeClass : inactiveClass}
       >
         <p className="px-1"> {"All"}</p>
       </button>
     ),
-    key: String("011allCourses"),
+    key: "011allCourses",
     children: <Courses query={{ status: "active" }} />,
   });
 
