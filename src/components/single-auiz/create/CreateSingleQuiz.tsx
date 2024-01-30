@@ -51,11 +51,12 @@ const CreateSingleQuiz = () => {
     "input" | "select" | "multiple_select"
   >("select"); // !  tag selection
 
-  // ! For quiz Answer
-  const [answers, setAnswers] = useState([]);
   const [isReset, setIsReset] = useState(false);
+  // ! For quiz Answer
 
-  const [singleAnswer, setSingleAnswerInput] = useState<string>("");
+  const [answers, setAnswers] = useState([]); ///! select and multiple select
+
+  const [singleAnswer, setSingleAnswerInput] = useState<string>(""); ///! for input
   //
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
     {}
@@ -251,6 +252,8 @@ const CreateSingleQuiz = () => {
                     Please select quiz type{" "}
                     <span className="text-red-500">*</span>
                   </LabelUi>
+
+                  {/* //! Quiz Types */}
                   <Select
                     placeholder="Select Quiz Types"
                     style={{ width: "100%" }}
