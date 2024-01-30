@@ -118,9 +118,10 @@ password : 11223344
 # Bug fixing
 
 1. solved default active all in courseTab
-2. solved banner modal and active buttomn
+2. solved banner modal and active button
 3. lessonList quiz nested
 4. added ok button in quiz result
 5. solved back to module
 6. solved ok button
-7. 
+7. TextEditor toggle
+8. 
