@@ -8,7 +8,7 @@ import { Switch } from 'antd';
 const TextEditorNotSetValue = ({
   textEditorValue,
   setTextEditorValue,
-  defaultTextEditorValue: defultTextEditorValue = "",
+  defaultTextEditorValue = "",
   name = "details",
 }: {
   textEditorValue?: string;
@@ -17,12 +17,9 @@ const TextEditorNotSetValue = ({
   setTextEditorValue: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const editor = useRef(null);
-  const [content, setContent] = useState(defultTextEditorValue);
+  const [content, setContent] = useState(defaultTextEditorValue);
   const [openTextEditor, setopenTextEditor] = useState<boolean>(false);
-  // console.log("🚀 ~ content:", content);
 
-  // const [vlaue, setTextEditorValue] = useState("");
-  // const { setValue } = useFormContext();
 
   const editorConfig = useMemo(
     () => ({
