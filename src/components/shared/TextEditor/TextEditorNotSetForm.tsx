@@ -19,10 +19,7 @@ const TextEditorNotSetValue = ({
   const editor = useRef(null);
   const [content, setContent] = useState(defaultTextEditorValue);
   const [openTextEditor, setopenTextEditor] = useState<boolean>(false);
-  // console.log("🚀 ~ content:", content);
 
-  // const [vlaue, setTextEditorValue] = useState("");
-  // const { setValue } = useFormContext();
 
   const editorConfig = useMemo(
     () => ({
