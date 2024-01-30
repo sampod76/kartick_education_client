@@ -140,6 +140,7 @@ export default function LessonList({
     ...lesson_query,
   });
 
+
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
   quiz_query["limit"] = 999999;
@@ -252,7 +253,7 @@ export default function LessonList({
                     <Link
                       key={quiz?._id}
                       href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                      className="text-[14px] flex justify-between w-full mt-3"
+                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3"
                     >
                       <h2 className="text-base font-normal">
                         Quiz {index + 1} : <span>{quiz?.title} </span>

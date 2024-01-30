@@ -202,12 +202,13 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
       ))}
       <Button
         type="dashed"
-        disabled={answers?.length > 6 ? true : false}
+        // disabled={answers?.length > 6 ? true : false}
         onClick={handleAdd}
         // block
         icon={<PlusOutlined />}
       >
-        {answers?.length < 7 ? "Add Answer" : "Already added 6"}
+        {/* {answers?.length < 7 ? "Add Answer" : "Already added 6"} */}
+        Add Answer
       </Button>
     </div>
   );

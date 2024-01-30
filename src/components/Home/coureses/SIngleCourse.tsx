@@ -131,9 +131,9 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
             </span> */}
           <CgPlayButtonO className="mr-1" /> {course?.totalVideoSize} video
         </span>
-        <span onClick={() => addToCartHandler(course)} className="flex whitespace-nowrap justify-center items-center gap-1 cursor-pointer">
+        {/* <span onClick={() => addToCartHandler(course)} className="flex whitespace-nowrap justify-center items-center gap-1 cursor-pointer">
           <ShoppingCartOutlined style={{}} /> Add to cart
-        </span>
+        </span> */}
         <span className="flex whitespace-nowrap justify-center items-center gap-1">
           <SVGstudentIcom className="text-gray-900" />{" "}
           {course?.totalEnrollStudentSize + " " + "students"}

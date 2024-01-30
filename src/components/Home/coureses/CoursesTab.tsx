@@ -24,12 +24,12 @@ const CoursesTab = () => {
     // console.log(key);
   };
 
-  const { searchValue } = useAppSelector(state => state.bannerSearch)
+  // const { searchValue } = useAppSelector(state => state.bannerSearch)
 
-  const debouncedSearchTerm = useDebounced({
-    searchQuery: searchValue,
-    delay: 600,
-  });
+  // const debouncedSearchTerm = useDebounced({
+  //   searchQuery: searchValue,
+  //   delay: 600,
+  // });
 
 
   const query: Record<string, any> = {};
@@ -37,47 +37,45 @@ const CoursesTab = () => {
   query["limit"] = 99999;
   query["sortOrder"] = ENUM_SORT_ORDER.ASC;
 
-  if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
-  }
 
   // console.log('query',query)
   // console.log('searchValue', searchValue)
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
 
-  const cousesData = data?.data || [];
+  const categoryData = data?.data || [];
   const activeClass =
     " rounded-[5px] bg-blue-600 text-white text-[14px] lg:text-[18px] font-bold p-1 m-0 ring-4";
   const inactiveClass =
     " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[14px] lg:text-[18px] font-bold p-1";
 
-  const tabsItems2: TabsProps["items"] = cousesData?.map(
-    (singleData: Record<string, any>, index: number | string) => ({
+  const tabsItems2: TabsProps["items"] = categoryData?.map(
+    (singleCategory: Record<string, any>, index: number ) => ({
       label: (
         <button
           className={
-            activeTabKey === String(index) ? activeClass : inactiveClass
+            activeTabKey === String(index+1)  ? activeClass : inactiveClass
           }
         >
-          <p className="px-1"> {singleData?.title}</p>
+          <p className="px-1"> {singleCategory?.title}</p>
         </button>
       ),
-      key: String(index),
+      key: String(index+1) ,
       children: (
-        <Courses query={{ status: "active", category: singleData?._id }} />
+        <Courses query={{ status: "active", category: singleCategory?._id }} />
       ),
     })
   );
 
+  console.log('activeTabKey', activeTabKey)
   tabsItems2.unshift({
     label: (
       <button
-        className={activeTabKey === String("011allCourses") ? activeClass : inactiveClass}
+        className={activeTabKey === "011allCourses" || activeTabKey === '0' ? activeClass : inactiveClass}
       >
         <p className="px-1"> {"All"}</p>
       </button>
     ),
-    key: String("011allCourses"),
+    key: "011allCourses",
     children: <Courses query={{ status: "active" }} />,
   });
 
