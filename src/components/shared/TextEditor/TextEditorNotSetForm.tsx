@@ -35,13 +35,14 @@ const TextEditorNotSetValue = ({
 
   const onChange = (checked: boolean) => {
     // console.log(`switch to ${checked}`);
-    setopenTextEditor(checked)
+    setopenTextEditor((v) => !v)
   };
 
   return (
     <>
       <Switch checkedChildren="Close" unCheckedChildren='Open' defaultChecked onChange={onChange} style={{
-        background: openTextEditor ? "blue" : "#4D545A"
+        background: openTextEditor ? "blue" : "#4D545A",
+        marginBlock: "10px"
       }} />
 
       {openTextEditor &&

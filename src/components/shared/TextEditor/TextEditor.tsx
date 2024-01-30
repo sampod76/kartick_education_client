@@ -41,14 +41,15 @@ const TextEditor = ({
 
   const onChange = (checked: boolean) => {
     // console.log(`switch to ${checked}`);
-    setopenTextEditor(checked)
+    setopenTextEditor((v) => !v)
   };
 
   return (
     <div>
       {/* <h2></h2> */}
       <Switch checkedChildren="Close" unCheckedChildren='Open' defaultChecked onChange={onChange} style={{
-        background: openTextEditor ? "blue" : "#4D545A"
+        background: openTextEditor ? "blue" : "#4D545A",
+        marginBlock: "10px"
       }} />
       {openTextEditor &&
         <JoditEditor
