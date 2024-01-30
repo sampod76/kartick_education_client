@@ -16,6 +16,7 @@ import { CloseOutlined } from "@ant-design/icons"
 const { Content } = Layout;
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+ 
   const userInfo = getUserInfo() as any;
 
   const router = useRouter();
@@ -25,7 +26,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!userInfo?.role) {
-      router.push("/login");
+      router.push(`/login`);
     }
     setIsLoading(false);
   }, [router, isLoading, userInfo?.role]);

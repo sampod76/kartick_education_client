@@ -14,12 +14,7 @@ const SubscriptionLayout = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!userInfo?.role) {
-      router.push("/login");
-    } else if (
-      userInfo?.role !== USER_ROLE.SELLER &&
-      userInfo?.role !== USER_ROLE.ADMIN
-    ) {
+    if (userInfo?.role === USER_ROLE.STUDENT) {
       message.error("Student not available any packages or subscriptions");
       router.push("/");
     }

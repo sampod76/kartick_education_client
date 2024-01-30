@@ -29,9 +29,14 @@ import {
   useAddStripePaymentMutation,
 } from "@/redux/api/public/paymentApi";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getUserInfo } from "@/services/auth.service";
 import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
+import ModalComponent from "@/components/Modal/ModalComponents";
+import Registration from "@/app/registration/page";
+import SignUpTeacherAndStudent from "@/app/(public)/signup/page";
+import { usePathname } from "next/navigation";
+
 export default function JoinPackage({
   plan,
   setPlan,
@@ -44,6 +49,7 @@ export default function JoinPackage({
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
   // const paramsSearch = useSea
+  const router = useRouter();
   const userInfo = getUserInfo() as any;
   const query: Record<string, any> = {};
   query["limit"] = 999999;
@@ -55,10 +61,15 @@ export default function JoinPackage({
   const userToGetPurchasePackage = GetPurchasePackage?.data?.map(
     (data: { package: any }) => data.package
   );
+  // ! ---------------url---------
+  // console.log(window.location.href,window.location.hostname);
+  const url = new URL(window.location.href);
+  // Get the pathname and search without the base URL
+  const modifiedPathname = url.pathname + url.search;
+  //! --------------end-------------
 
   const searchParams = useSearchParams();
   const packName = searchParams.get("pack") as string;
-
   // For select package
   const [selectPackage, setSelectPackage] = useState<any | null>({});
   ///! for the multiple and single select package
@@ -89,7 +100,8 @@ export default function JoinPackage({
       return;
     }
     if (!userInfo?.id) {
-      window.open("/login", "_blank");
+      // window.open("/login", "_blank");
+      router.push(`/login?redirectLink=${modifiedPathname}`);
       return;
     }
     if (!selectPackage?._id) {

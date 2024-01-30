@@ -13,7 +13,7 @@ import { USER_ROLE } from "@/constants/role";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/sellerApi";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
-import { getUserInfo } from "@/services/auth.service";
+import { getUserInfo, storeUserInfo } from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -24,12 +24,14 @@ import { IDecodedInfo } from "../../../services/auth.service";
 import { useRouter } from "next/navigation";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useUserLoginMutation } from "@/redux/api/auth/authApi";
 
-const SignUpTeacherAndStudent = () => {
+const SignUpTeacherAndStudent = ({setOpen}:any) => {
+  console.log("🚀 ~ SignUpTeacherAndStudent ~ setOpen:", setOpen)
   const router = useRouter();
   const [isReset, setIsReset] = useState(false);
-  const [addAdminUserWithFormData, { isLoading: AdminLoading }] =
-    useAddAdminWithFormDataMutation();
+  const [userLogin, { error, isLoading: LoginLoading }] =
+    useUserLoginMutation();
   const [addStudentUserWithFormData, { isLoading: StudentLoading }] =
     useAddStudentWithFormDataMutation();
   const [addSellerUserWithFormData, { isLoading: SellerLoading }] =
@@ -41,7 +43,7 @@ const SignUpTeacherAndStudent = () => {
       router.back();
     }
     setLoading(false);
-    return () => { };
+    return () => {};
   }, [router, userInfo]);
 
   if (loading) {
@@ -53,15 +55,7 @@ const SignUpTeacherAndStudent = () => {
     removeNullUndefinedAndFalsey(values);
     try {
       let res;
-      if (values?.role === USER_ROLE.ADMIN) {
-        const { password, ...allValue } = values;
-        const modifyValue = {
-          password: password,
-          [USER_ROLE.ADMIN]: { ...allValue },
-        };
-
-        res = await addAdminUserWithFormData({ ...modifyValue }).unwrap();
-      } else if (values?.role === USER_ROLE.STUDENT) {
+      if (values?.role === USER_ROLE.STUDENT) {
         const { password, ...allValue } = values;
         const modifyValue = {
           password: password,
@@ -73,13 +67,6 @@ const SignUpTeacherAndStudent = () => {
         const modifyValue = {
           password: password,
           [USER_ROLE.SELLER]: { ...allValue },
-        };
-        res = await addSellerUserWithFormData({ ...modifyValue }).unwrap();
-      } else if (values?.role === USER_ROLE.TRAINER) {
-        const { password, ...allValue } = values;
-        const modifyValue = {
-          password: password,
-          [USER_ROLE.TRAINER]: { ...allValue },
         };
         res = await addSellerUserWithFormData({ ...modifyValue }).unwrap();
       } else {
@@ -94,6 +81,24 @@ const SignUpTeacherAndStudent = () => {
       } else {
         Success_model("User created successfully");
         setIsReset(true);
+        try {
+          const res = await userLogin({
+            email: values?.email,
+            password: values?.password,
+          }).unwrap();
+          if (res?.accessToken) {
+            // router.push("/profile");
+            message.success("User logged in successfully!");
+            storeUserInfo({ accessToken: res?.accessToken });
+
+            // setOpen(false)
+          } else {
+            Error_model_hook(res?.message);
+          }
+        } catch (err: any) {
+          Error_model_hook(err?.data || err?.message);
+          console.log(err);
+        }
         router.push("/login");
       }
       // message.success("Admin created successfully!");
@@ -330,7 +335,7 @@ const SignUpTeacherAndStudent = () => {
             </Row>
           </div>
           <div className="flex justify-center items-center">
-            {AdminLoading || StudentLoading || SellerLoading ? (
+            { StudentLoading || SellerLoading ? (
               <ButtonLoading />
             ) : (
               <Button htmlType="submit" type="default">

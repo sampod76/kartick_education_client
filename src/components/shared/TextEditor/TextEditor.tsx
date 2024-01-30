@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 const TextEditor = ({
   textEditorValue,
   setTextEditorValue,
-  defaultTextEditorValue: defultTextEditorValue = "",
+  defaultTextEditorValue = "",
   name = "details",
   isReset = false,
 }: {
@@ -16,7 +16,7 @@ const TextEditor = ({
   setTextEditorValue?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const editor = useRef(null);
-  const [content, setContent] = useState(defultTextEditorValue);
+  const [content, setContent] = useState(defaultTextEditorValue);
   console.log("🚀 ~ content:", content);
   // const [vlaue, setTextEditorValue] = useState("");
   const { setValue } = useFormContext();

@@ -196,7 +196,6 @@ export default function LessonList({
     }
   };
 
-  // console.log(lessonData,'lessonDatalessonData')
 
   //! collapse data ////
   const collapseLessonData = lessonData?.data?.map(
@@ -205,15 +204,8 @@ export default function LessonList({
         (item: any) => item?.lesson?._id === lesson?._id
       );
 
-      // console.log(QuizData, 'lessonQuizData=============', lessonQuizData)
       const isLessonCollapsed = currentCollapse.includes(lesson?._id);
-      // console.log(currentCollapse, lesson?._id, 'iss', isLessonCollapsed)
-      // console.log(lesson,"lessonlesson")
-      // const isPurchasedCategory = purchasedData?.data?.find((category:any)=>categoryId=== )
-
-      // console.log(lesson);
-      // console.log("🚀 lessonQuizData", lessonQuizData);
-
+  
       ///! isExist have
       if (IsExistCategoryOrCourse) {
         return {

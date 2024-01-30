@@ -24,7 +24,7 @@ import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
 import Link from "next/link";
 import ForgetPassword from "./ForgetPassword";
-
+import { useSearchParams } from 'next/navigation'
 type FormValues = {
   email: string;
   password: string;
@@ -37,11 +37,14 @@ const Login = ({
   redirectLink?: string;
   setOpen?: any;
 }) => {
+  const redirect = useSearchParams().get("redirectLink");
+
   const router = useRouter();
   const [userLogin, { error, isLoading }] = useUserLoginMutation();
   const [loading, setLoading] = useState(true);
   const userInfo = getUserInfo() as IDecodedInfo;
 
+  //!----------- if user already login then auto redirect
   useEffect(() => {
     if (userInfo.id) {
       router.back();
@@ -49,10 +52,7 @@ const Login = ({
     setLoading(false);
     return () => {};
   }, [router, userInfo]);
-
-
-
-  
+  //----------------------------------------------------------------
   if (loading) {
     return <LoadingForDataFetch />;
   }
@@ -63,7 +63,7 @@ const Login = ({
         // router.push("/profile");
         message.success("User logged in successfully!");
         storeUserInfo({ accessToken: res?.accessToken });
-        router.push(redirectLink || `/`);
+        router.push(redirect ||redirectLink || `/`);
         // setOpen(false)
       } else {
         Error_model_hook(res?.message);
@@ -203,7 +203,6 @@ const Login = ({
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>

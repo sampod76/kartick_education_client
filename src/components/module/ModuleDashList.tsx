@@ -44,7 +44,7 @@ import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 export default function ModuleDashList() {
-  const userInfo = getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
   //
   const [openDrawer, setOpenDrawer] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -102,8 +102,7 @@ export default function ModuleDashList() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllModuleQuery({ ...query });
-  console.log(data);
+  const { data, isLoading } = useGetAllModuleQuery({ ...query });
 
   //@ts-ignore
   const MilestoneData = data?.data;
@@ -205,12 +204,16 @@ export default function ModuleDashList() {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${userInfo?.role}/module/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/module/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/module/edit/${record._id}`}>Edit</Link>
+                    <Link href={`/${userInfo?.role}/module/edit/${record._id}`}>
+                      Edit
+                    </Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -222,11 +225,11 @@ export default function ModuleDashList() {
                     Delete
                   </Menu.Item>
                   <div className="flex flex-col justify-center items-center gap-1">
-                    <ModalComponent buttonText="Add Resource">
+                    <ModalComponent buttonText="Add/edit Resource">
                       <ResourceCreate moduleId={record._id} />
                     </ModalComponent>
 
-                    <ModalComponent buttonText="Add Glossary">
+                    <ModalComponent buttonText="Add/edit Glossary">
                       <GlossaryCreate moduleId={record._id} />
                     </ModalComponent>
                   </div>
