@@ -51,7 +51,7 @@ export default function QuizeSinglePage({
   }
 
 
-  const filteredByTypesQuizData: ISingleQuizData[] = allSingleQuizeData?.data?.filter(item => {
+  const filteredByTypesQuizData = allSingleQuizeData?.data?.filter(item => {
     return singleQuizTypes.includes(item?.type);
   });
 

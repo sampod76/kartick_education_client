@@ -19,7 +19,7 @@ export default function QuizQuestionCard({
   setCurrentAnswer,
   submittedDefaultData,
 }: {
-    quiz: ISingleQuizData;
+  quiz: ISingleQuizData;
   index: number;
   // setUserResponses: any;
   // userResponses: any;
@@ -54,7 +54,7 @@ export default function QuizQuestionCard({
       const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
       return isCorrectInput
     }
-    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select') {
+    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find") {
       const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
         const submittedAnswer = responseData?.singleQuiz?.answers?.find(
           (answer: any) => answer.id === answerId && answer.correct
@@ -136,6 +136,7 @@ export default function QuizQuestionCard({
   const handleAnswerChange = (questionIndex: number, answer: any) => {
     let changedAnswer = [];
     console.log(answer, 'answer')
+
     if (Array.isArray(answer)) {
       changedAnswer = answer;
     } else if (typeof answer === "string") {
@@ -175,16 +176,16 @@ export default function QuizQuestionCard({
   // console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
   return (
     <div>
-      <div key={quiz?._id} className={`m-4 w-full relative   `}>
+      <div key={quiz?._id} className={`my-4 w-full relative   `}>
         {/* //! Quiz Timer */}
         <div className="text-center mt-3 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
-          {/* <QuizTimer
+          <QuizTimer
             quiz={quiz}
             time_duration={quiz?.time_duration}
             index={index}
             submittedDefaultData={submittedDefaultData}
-          /> */}
+          />
         </div>
         <div className="absolute right-4 top-0 p-">
           {submittedDefaultData?.singleQuiz ? (
@@ -373,37 +374,106 @@ export default function QuizQuestionCard({
           </Checkbox.Group>
         )}
 
-        {quiz?.type === "input" && (
-          <div>
-            {/* <p className="text-lg font-[550] mb-2">
-              Question {index + 1} : {quiz?.title}
-            </p> */}
-            <Input
-              // defaultValue={submittedDefaultData?.submitAnswers?.length && submittedDefaultData?.submitAnswers[0]}
-              // defaultValue='asdfasdfasd '
+        {quiz?.type === "find" && (
+          <Checkbox.Group
+            defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
+            // disabled={isDefaultValue?.is_time_up ? true : false}
+            disabled={
+              isDefaultValue?.is_time_up ||
+                currentAnswer?.singleQuiz ===
+                submittedDefaultData?.singleQuiz?._id
+                ? true
+                : false
+            }
+            onChange={(value) => handleAnswerChange(index + 1, value)}
+            style={{
+              display: "grid",
+              // flexDirection: "column",
+              gridTemplateColumns: 'repeat(5, 1fr)',
+              gap: "1rem",
+              padding: "2px 8px",
+              // backgroundColor: 'red',
 
-              disabled={
-                isDefaultValue?.is_time_up ||
-                  currentAnswer?.singleQuiz ===
-                  submittedDefaultData?.singleQuiz?._id
-                  ? true
-                  : false
-              }
-              onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
-              style={{ minHeight: "1rem", width: "12rem" }}
-              placeholder="Type your answer"
-            />
+            }}
+          >
+            {quiz?.answers?.map((option: any) => {
+              const isCorrect = allCorrectAnswer?.find(
+                (id: string) => id === option?._id
+              );
+              const isSubmitted = submittedDefaultData?.submitAnswers?.find(
+                (item: string) => item === option?._id
+              );
+              // console.log(isCorrect, ".............", option,isSubmitted);
+              return (
+                <Checkbox
+                  key={option?.title}
+                  value={option?._id}
+                  defaultChecked={
+                    !submittedDefaultData?.submitAnswers.find(
+                      (item: string) => item === option?._id
+                    )
+                  } // Check if the default value matches
 
-          </div>
+                  style={{
+                    // border:"2px solid black",
+                    borderRadius: '10px',
+                    padding: '8px',
+                    backgroundColor: submittedDefaultData?.submitAnswers[0] === option?._id
+                      ? '#2d3748'
+                      : 'transparent',
+                    border: submittedDefaultData?.singleQuiz
+                      ? isCorrect
+                        ? '2px solid #38a169'
+                        : isSubmitted === option?._id
+                          ? '2px solid #e53e3e'
+                          : "2px solid #4D545A"
+                      : "2px solid #4D545A",
+                    color: submittedDefaultData?.submitAnswers[0] === option?._id
+                      ? '#fff'
+                      : '#000',
+
+                  }}
+                >
+                  <div
+                    className={`
+                    
+                      ${submittedDefaultData?.submitAnswers[0] === option?._id
+                        ? "bg-slate-600 text-white"
+                        : ""
+                      }
+                      ${submittedDefaultData?.singleQuiz
+                        ? isCorrect
+                          ? " border-2 border-green-600"
+                          : isSubmitted === option?._id
+                            ? "border-2 border-red-500 "
+                            : ""
+                        : ""
+                      }
+                      `}
+                  >
+                    <p>{option?.title}</p>
+                    <div className="flex flex-wrap w-full">
+                      {option?.imgs?.map(
+                        (img: string, key: number, allimages: any[]) => (
+                          <Image
+                            key={key}
+                            src={img}
+                            width={700}
+                            height={700}
+                            className={`w-32 lg:w-96 max-h-24 lg:max-h-44`}
+                            alt=""
+                          ></Image>
+                        )
+                      )}
+                    </div>
+                  </div>
+                </Checkbox>
+              );
+            })}
+          </Checkbox.Group>
         )}
-        {/* {quiz?.type === "text" && (
-          <Input.TextArea
-            onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
-            style={{ minHeight: "6rem" }}
-            placeholder="Type your answer"
-          />
-        )} */}
-         {quiz?.type === "input" && (
+
+        {quiz?.type === "input" && (
           <div>
             {/* <p className="text-lg font-[550] mb-2">
               Question {index + 1} : {quiz?.title}

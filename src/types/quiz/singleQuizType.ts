@@ -26,6 +26,7 @@ export type ISingleQuizData = {
   milestone: string;
   module: IModuleData;
   lesson: string;
+  time_duration:number;
   quiz: {
     _id: string;
     title: string;
