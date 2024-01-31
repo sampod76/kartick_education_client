@@ -1,6 +1,6 @@
 import { addAnswer } from "@/redux/features/quizSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { IAnswer } from "@/types/quiz/singleQuizType";
+import { IAnswer, ISingleQuizData } from "@/types/quiz/singleQuizType";
 import TextToSpeech from "@/utils/TextToSpeech";
 import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 import React, { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ export default function QuizQuestionCard({
   setCurrentAnswer,
   submittedDefaultData,
 }: {
-  quiz: any;
+    quiz: ISingleQuizData;
   index: number;
   // setUserResponses: any;
   // userResponses: any;
@@ -179,12 +179,12 @@ export default function QuizQuestionCard({
         {/* //! Quiz Timer */}
         <div className="text-center mt-3 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
-          <QuizTimer
+          {/* <QuizTimer
             quiz={quiz}
             time_duration={quiz?.time_duration}
             index={index}
             submittedDefaultData={submittedDefaultData}
-          />
+          /> */}
         </div>
         <div className="absolute right-4 top-0 p-">
           {submittedDefaultData?.singleQuiz ? (
@@ -374,6 +374,36 @@ export default function QuizQuestionCard({
         )}
 
         {quiz?.type === "input" && (
+          <div>
+            {/* <p className="text-lg font-[550] mb-2">
+              Question {index + 1} : {quiz?.title}
+            </p> */}
+            <Input
+              // defaultValue={submittedDefaultData?.submitAnswers?.length && submittedDefaultData?.submitAnswers[0]}
+              // defaultValue='asdfasdfasd '
+
+              disabled={
+                isDefaultValue?.is_time_up ||
+                  currentAnswer?.singleQuiz ===
+                  submittedDefaultData?.singleQuiz?._id
+                  ? true
+                  : false
+              }
+              onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
+              style={{ minHeight: "1rem", width: "12rem" }}
+              placeholder="Type your answer"
+            />
+
+          </div>
+        )}
+        {/* {quiz?.type === "text" && (
+          <Input.TextArea
+            onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
+            style={{ minHeight: "6rem" }}
+            placeholder="Type your answer"
+          />
+        )} */}
+         {quiz?.type === "input" && (
           <div>
             {/* <p className="text-lg font-[550] mb-2">
               Question {index + 1} : {quiz?.title}

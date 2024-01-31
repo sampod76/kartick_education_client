@@ -1,6 +1,7 @@
 import { tagTypes } from "@/redux/tag-types";
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
+import { ISingleQuizData } from "@/types/quiz/singleQuizType";
 
 const SINGLE_QUIZ_URL = "/single-quiz";
 
@@ -16,7 +17,7 @@ export const SingleQuizApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any[], meta: IMeta) => {
+      transformResponse: (response: ISingleQuizData[], meta: IMeta) => {
         // console.log(response);
 
         return {
@@ -68,16 +69,14 @@ export const SingleQuizApi = baseApi.injectEndpoints({
     // delete ac department
     deleteSingleQuiz: build.mutation({
       query: (id) => {
-        
-        console.log("🚀 ~ file: singleQuiz.ts:78 ~ id:", id)
+        console.log("🚀 ~ file: singleQuiz.ts:78 ~ id:", id);
         return {
           url: `${SINGLE_QUIZ_URL}/${id}`,
           method: "DELETE",
-        }
+        };
       },
       invalidatesTags: [tagTypes.quiz],
     }),
-
   }),
 });
 

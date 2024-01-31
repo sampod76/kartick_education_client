@@ -14,11 +14,12 @@ import {
 } from "@/utils/modalHook";
 import TopBarLoading from "../ui/Loading/TopBarLoading";
 import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
+import { ISingleQuizData } from "@/types/quiz/singleQuizType";
 export default function QuizTestPage({
   quizData,
   quizId,
 }: {
-  quizData: any[];
+    quizData: ISingleQuizData[];
   quizId: string;
 }) {
   ///! state of quiz card

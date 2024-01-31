@@ -13,6 +13,7 @@ import TextToSpeech from "@/utils/TextToSpeech";
 import { ArrowLeftOutlined } from "@ant-design/icons"
 import Link from "next/link";
 import { singleQuizTypes } from "@/constants/global";
+import { ISingleQuizData } from "@/types/quiz/singleQuizType";
 const QuizTestPage = React.lazy(() => import("./QuizTestPage"));
 
 const { Option } = Select;
@@ -50,7 +51,7 @@ export default function QuizeSinglePage({
   }
 
 
-  const filteredByTypesQuizData = allSingleQuizeData?.data?.filter(item => {
+  const filteredByTypesQuizData: ISingleQuizData[] = allSingleQuizeData?.data?.filter(item => {
     return singleQuizTypes.includes(item?.type);
   });
 
