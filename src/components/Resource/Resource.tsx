@@ -18,7 +18,13 @@ const TextEditor = dynamic(() => import("../shared/TextEditor/TextEditor"), {
   ssr: false,
 });
 
-export default function ResourceCreate({ setOpen, moduleId }: any) {
+export default function ResourceCreate({
+  setOpen,
+  moduleId,
+}: {
+  moduleId: string;
+  setOpen: React.Dispatch<React.SetStateAction<any>>;
+}) {
   const [isReset, setIsReset] = useState(false);
   const [addResource, { isLoading }] = useAddResourceMutation();
   const [updateResource, { isLoading: updateLoading }] =
@@ -53,7 +59,9 @@ export default function ResourceCreate({ setOpen, moduleId }: any) {
         Error_model_hook(res?.message);
       } else {
         Success_model(`Successfully ${resource ? "Update" : "added"} Resource`);
-        // setOpen(false);
+        // if (setOpen) {
+        //   setOpen(false);
+        // }
         setIsReset(true);
       }
     } catch (error: any) {

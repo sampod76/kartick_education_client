@@ -53,6 +53,7 @@ const SignUpTeacherAndStudent = ({setOpen}:any) => {
   const onSubmit = async (values: any) => {
     console.log("🚀 ~ onSubmit ~ values:", values);
     removeNullUndefinedAndFalsey(values);
+
     try {
       let res;
       if (values?.role === USER_ROLE.STUDENT) {
