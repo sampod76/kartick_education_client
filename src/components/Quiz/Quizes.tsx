@@ -12,6 +12,8 @@ import TextToSpeech from "@/utils/TextToSpeech";
 // import QuizTestPage from "./QuizTestPage";
 import { ArrowLeftOutlined } from "@ant-design/icons"
 import Link from "next/link";
+import { singleQuizTypes } from "@/constants/global";
+import { ISingleQuizData } from "@/types/quiz/singleQuizType";
 const QuizTestPage = React.lazy(() => import("./QuizTestPage"));
 
 const { Option } = Select;
@@ -47,6 +49,11 @@ export default function QuizeSinglePage({
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
   }
+
+
+  const filteredByTypesQuizData = allSingleQuizeData?.data?.filter(item => {
+    return singleQuizTypes.includes(item?.type);
+  });
 
   // href = {`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`
   // }
@@ -102,12 +109,12 @@ export default function QuizeSinglePage({
 
       <div className="w-full  mx-auto my-5 lg:my-0 ">
         <QuizTestPage
-          quizData={allSingleQuizeData?.data || []}
+          quizData={filteredByTypesQuizData || []}
           quizId={quizeId}
         />
 
         {/* <div className="flex flex-col gap-3">
-            {allSingleQuizeData?.data?.map((quiz: any, index: number) => (
+            {filteredByTypesQuizData?.map((quiz: any, index: number) => (
               
               <Card key={quiz?._id} className="mb-4">
                 <p className="text-lg font-[550] mb-2">

@@ -64,7 +64,7 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
     }
   };
 
-  console.log(submittedDefaultData)
+  // console.log(submittedDefaultData)
 
   //   const [updatedTime, setUpdatedTime] = useState<number | null>(null);
 

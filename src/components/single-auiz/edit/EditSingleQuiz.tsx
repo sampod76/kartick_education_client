@@ -18,11 +18,11 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Button, Col, Input, Row, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
-import AnswerSInlge from "@/components/Forms/AnswerSingle";
+import AnswerSInlge from "@/components/Forms/answer/AnswerSingle";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 
-import AnswerMultiple from "@/components/Forms/AnswerMultiple";
+import AnswerMultiple from "@/components/Forms/answer/AnswerMultiple";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
@@ -299,7 +299,7 @@ export default function EditSingleQuiz({
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                    //
+                  //
                   />
                 </Col>
                 <Col
@@ -440,8 +440,8 @@ export default function EditSingleQuiz({
                   </p>
                   <TextEditor
                     isReset={isReset}
-                    // textEditorValue={textEditorValue}
-                    // setTextEditorValue={setTextEditorValue}
+                  // textEditorValue={textEditorValue}
+                  // setTextEditorValue={setTextEditorValue}
                   />
                 </section>
               </Col>

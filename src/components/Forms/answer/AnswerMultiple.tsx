@@ -5,11 +5,11 @@ import {
   MinusCircleOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import HeadingUI from "../ui/dashboardUI/HeadingUI";
-import SubHeadingUI from "../ui/dashboardUI/SubHeadingUI";
+import HeadingUI from "../../ui/dashboardUI/HeadingUI";
+import SubHeadingUI from "../../ui/dashboardUI/SubHeadingUI";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
-import { Image } from "antd";
+import { Image } from 'antd';
 
 interface Answer {
   title: string;
@@ -20,55 +20,40 @@ interface Answer {
 }
 
 interface AnswerInputListProps {
-  answers: Answer[];
-  setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>;
+  answersMultiple: Answer[];
+  setAnswersMultiple: React.Dispatch<React.SetStateAction<Answer[]>>;
 }
 
-const AnswerSInlge: React.FC<AnswerInputListProps> = ({
-  answers,
-  setAnswers,
+const AnswerMultiple: React.FC<AnswerInputListProps> = ({
+  answersMultiple,
+  setAnswersMultiple,
 }) => {
+  console.log("🚀 ~ answersMultiple:", answersMultiple)
+
+
   const handleAdd = () => {
-    setAnswers([
-      ...answers,
-      {
-        title: "",
-        correct: false,
-        imgs: [],
-        serialNumber: 0,
-        status: "active",
-      },
+    setAnswersMultiple([
+      ...answersMultiple,
+      { title: "", correct: false, imgs: [], serialNumber: 0, status: "active" },
     ]);
   };
 
   const handleRemove = (index: number) => {
-    const updatedAnswers = [...answers];
-
-    updatedAnswers.splice(index, 1);
-    setAnswers(updatedAnswers);
+    const updatedAnswersMultiple = [...answersMultiple];
+    updatedAnswersMultiple.splice(index, 1);
+    setAnswersMultiple(updatedAnswersMultiple);
   };
 
   const handleChange = (index: number, updatedAnswer: Answer) => {
-    // console.log(updatedAnswer,"🚀 ~ file: AnswerSingle.tsx:51 ~ handleChange ~ index:", index)
-
-    let updatedAnswers = [...answers];
-    updatedAnswers[index] = updatedAnswer;
-    // If the selected answer is correct, set other answers to incorrect
-    if (updatedAnswer.correct) {
-      updatedAnswers = updatedAnswers.map((answer, i) => ({
-        ...answer,
-        correct: i === index,
-      }));
-    } else {
-      updatedAnswers[index] = updatedAnswer;
-    }
-    setAnswers(updatedAnswers);
+    let updatedAnswersMultiple = [...answersMultiple];
+    updatedAnswersMultiple[index] = updatedAnswer;
+    setAnswersMultiple(updatedAnswersMultiple);
   };
 
   return (
     <div className="">
       <SubHeadingUI>Add Answer </SubHeadingUI>
-      {answers?.map((answer, index) => (
+      {answersMultiple?.map((answer, index) => (
         <Space
           key={index}
           style={{
@@ -101,14 +86,14 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               placeholder="Option Title"
               style={{
                 width: "70vw",
-                height: "2.7rem",
+                height: "2.7rem"
               }}
               // width={500}
               value={answer.title}
               onChange={(e) =>
                 handleChange(index, { ...answer, title: e.target.value })
               }
-              // defaultValue={index + 1}
+            // defaultValue={index + 1}
             />
             {/* Quiz radio select */}
 
@@ -135,7 +120,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                   //   file
                   // );
                   // You can add custom logic before uploading, e.g., checking file type or size
-                  const images = answer?.imgs;
+                  const images = answer?.imgs
                   const imgUrl = await uploadImgCloudinary(file);
 
                   if (imgUrl) {
@@ -153,24 +138,23 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               >
                 <Button style={{ textAlign: "start" }}>Answer Image +</Button>
               </Upload>
-              {answer?.imgs?.map((img, key) => (
-                <Image
-                  key={key}
-                  className="w-10 h-10 rounded"
-                  src={img}
-                  width={50}
-                  height={40}
-                  alt=""
-                />
-              ))}
+              {answer.imgs.map((img, key) => (<Image
+                key={key}
+                className="w-10 h-10 rounded"
+                src={img}
+                width={50}
+                height={40}
+                alt=""
+              />))}
             </div>
+
             {/* serial number */}
             <div className="text-start ">
               <label>Serial number</label>
               <Input
                 placeholder="Serial Number"
                 type="number"
-                value={answer?.serialNumber ? answer?.serialNumber : index + 1}
+                value={answer.serialNumber}
                 defaultValue={index + 1}
                 onChange={(e) =>
                   handleChange(index, {
@@ -178,7 +162,6 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                     serialNumber: +e.target.value,
                   })
                 }
-                onWheel={(e) => e.preventDefault()}
               />
             </div>
 
@@ -202,16 +185,15 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
       ))}
       <Button
         type="dashed"
-        // disabled={answers?.length > 6 ? true : false}
+        disabled={answersMultiple?.length > 6 ? true : false}
         onClick={handleAdd}
         // block
         icon={<PlusOutlined />}
       >
-        {/* {answers?.length < 7 ? "Add Answer" : "Already added 6"} */}
-        Add Answer
+        {answersMultiple?.length < 7 ? "Add Answer" : "Already added 6"}
       </Button>
     </div>
   );
 };
 
-export default AnswerSInlge;
+export default AnswerMultiple;

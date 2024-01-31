@@ -1,3 +1,4 @@
+import { IModuleData } from "./../moduleType";
 export type IAnswer = {
   _id?: string;
   title: string;
@@ -7,24 +8,53 @@ export type IAnswer = {
   status: "active" | "deactivate" | "save";
 };
 
-export type IQuizType = "input" | "select" | "multiple_select" | "text";
-export type ISingleQuiz = {
+export type IQuizType =
+  | "input"
+  | "select"
+  | "multiple_select"
+  | "text"
+  | "find";
+export type ISingleQuizData = {
   _id: string;
   title: string;
-  imgs?: string[];
-  details?: string;
-  short_description?: string;
-  hints?: string;
-  serialNumber?: number;
-  time_duration?: number; // milliseconds
-  answers?: IAnswer[];
-  single_answer?: string;
+  answers: IAnswer[];
+  imgs: [];
   type: IQuizType;
-  //
-  quiz: string;
-  author?: string;
-  module: string;
-  status: "active" | "deactivate" | "save";
-  demo_video?: Record<string, string>;
-  tags?: string[];
+  serialNumber: 3;
+  category: string;
+  course: string;
+  milestone: string;
+  module: IModuleData;
+  lesson: string;
+  time_duration:number;
+  quiz: {
+    _id: string;
+    title: string;
+    imgs: [string];
+    details: string;
+    short_description: string;
+    passingGrade: number;
+    minus_skip: boolean;
+    category: string;
+    course: string;
+    milestone: string;
+    module: string;
+    lesson: string;
+    status: string;
+    demo_video: {
+      video: string;
+      platform: string;
+    };
+    tags: [];
+    isDelete: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: 0;
+  };
+  status: string;
+  isDelete: string;
+  tags: [];
+  createdAt: string;
+  updatedAt: string;
+  __v: 0;
 };
