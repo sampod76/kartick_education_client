@@ -38,6 +38,7 @@ import dynamic from "next/dynamic";
 import { ENUM_STATUS } from "@/constants/globalEnums";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { IQuizType } from "@/types/quiz/singleQuizType";
+import AnswerFind from "@/components/Forms/answer/AnswerFind";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -438,6 +439,12 @@ const CreateSingleQuiz = () => {
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
+                    />
+                  )}
+                  {quizType === "find" && (
+                    <AnswerFind
+                      answersFind={answers}
+                      setAnswersFind={setAnswers as any}
                     />
                   )}
                   {quizType === "input" && (

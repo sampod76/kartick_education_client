@@ -39,7 +39,7 @@ export default function QuizTestPage({
   // console.log(userSubmitData)
   const submittedDefaultData: ISubmittedUserQuizData = userSubmitData?.find(
     (answer: any) => answer?.singleQuiz?._id === currentAnswer?.singleQuiz
-  );
+  )
 
   // ! For Test is submitted Answer is CorrectAnswer;
 

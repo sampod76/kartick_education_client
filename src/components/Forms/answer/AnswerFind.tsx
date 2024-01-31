@@ -85,7 +85,7 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                         <Input
                             placeholder="Option Title"
                             style={{
-                                width: "70vw",
+                                width: "30vw",
                                 height: "2.7rem"
                             }}
                             // width={500}
@@ -149,11 +149,15 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                         </div>
 
                         {/* serial number */}
-                        <div className="text-start ">
+                        <div className="text-start flex flex-col">
                             <label>Serial number</label>
                             <Input
                                 placeholder="Serial Number"
                                 type="number"
+                                style={{
+                                    width: '8rem'
+                                }}
+                                
                                 value={answer.serialNumber}
                                 defaultValue={index + 1}
                                 onChange={(e) =>
@@ -185,12 +189,13 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
             ))}
             <Button
                 type="dashed"
-                disabled={answersFind?.length > 6 ? true : false}
+                // disabled={answersFind?.length > 6 ? true : false}
                 onClick={handleAdd}
                 // block
                 icon={<PlusOutlined />}
             >
-                {answersFind?.length < 7 ? "Add Answer" : "Already added 6"}
+                Add Answer
+                {/* {answersFind?.length < 7 ? "Add Answer" : "Already added 6"} */}
             </Button>
         </div>
     );

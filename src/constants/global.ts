@@ -151,4 +151,4 @@ export const daysOptions = days?.map((day: string) => {
 
 export const serviceStatus = ["available", "upcoming", "unavailable"];
 // 'available' | 'upcoming' | 'unavailable'
-export const singleQuizTypes = ["select", "multiple_select", "input"];
+export const singleQuizTypes = ["select", "multiple_select", "input", "find"];
