@@ -11,7 +11,7 @@ export default function LessonQUizPage({ params }: { params: { id: string } }) {
 
   console.log("🚀 ~ file: page.tsx:13 ~ LessonQUizPage ~ quizData:", quizData)
 
-  console.log(quizData?._id, 'quizData?._id')
+  // console.log(quizData?._id, 'quizData?._id')
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
   }

@@ -199,7 +199,7 @@ export default function QuizTestPage({
   // Example usage with the provided submittedData
   const result = analyzeQuizAnswers(userSubmitData);
   // console.log('result', result);
-  console.log(currentAnswer, 'submittedANswer', userSubmitData, quizData)
+  // console.log(currentAnswer, 'submittedANswer', userSubmitData, quizData)
   return (
     <div className="w-full  mx-aut my-5 lg:my-0 ">
 
