@@ -2,7 +2,7 @@
 import React from "react";
 
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { IPurchasedData } from "@/types/purchasedType";
+import { IPurchasedData } from "@/types/package/purchasedType";
 import SInglePurchased from "./SinglePurchasedCard";
 import { ENUM_YN } from "@/constants/globalEnums";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
@@ -64,7 +64,7 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
           return (
             <div
               key={item._id || index}
-              // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
+            // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
             >
               <div className="p-3">
                 <div className="flex flex-col w-full justify-center items-center bg-white shadow-2xl rounded-lg overflow-hidden p-2">
@@ -128,7 +128,7 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
                   <div className="flex justify-center items-center  text-white px-10 py-2 rounded-md">
                     <Button
                       loading={addPackageAndCourseLoading}
-                      style={{ background: "blue", color: "white" ,padding: "5px 10px" }}
+                      style={{ background: "blue", color: "white", padding: "5px 10px" }}
                       onClick={() => addPackageForStudent(item._id)}
                     >
                       Add +

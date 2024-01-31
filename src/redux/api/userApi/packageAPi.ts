@@ -1,7 +1,7 @@
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "@/redux/tag-types";
-import { IPackageData } from "@/types/packageType";
+import { IPackageData } from "@/types/package/packageType";
 
 const PACKAGE_URL = "/packages";
 
@@ -77,5 +77,5 @@ export const {
   useGetAllPackageQuery,
   useGetSinglePackageQuery,
   useUpdatePackageMutation,
-  useUpdateIncreaseStudentPackageMutation
+  useUpdateIncreaseStudentPackageMutation,
 } = packageApi;

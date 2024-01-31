@@ -7,7 +7,6 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 interface QuizTimerProps {
   time_duration: number;
   quiz: any;
-
   index: number;
   submittedDefaultData: any;
 }

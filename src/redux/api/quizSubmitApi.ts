@@ -31,7 +31,7 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
         // console.log(id,'getSubmitUserQuizgetSubmitUserQuizgetSubmitUserQuizgetSubmitUserQuiz');
 
         return {
-          url: `${SUBMIT_QUIZ_URL}/verify/quizId/${id}`,
+          url: `${SUBMIT_QUIZ_URL}/verify/quizId/${id}?delete=no`,
           method: "GET",
         };
       },

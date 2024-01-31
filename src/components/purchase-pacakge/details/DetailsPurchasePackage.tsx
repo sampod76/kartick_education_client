@@ -5,8 +5,8 @@ import {
   useGetSinglePurchasePackageQuery,
   useGetSinglePurchasePendingAndAcceptedPackageQuery,
 } from "@/redux/api/public/purchaseAPi";
-import { IPackageCategory } from "@/types/packageType";
-import { IPurchasedCategory } from "@/types/purchasedType";
+import { IPackageCategory } from "@/types/package/packageType";
+import { IPurchasedCategory } from "@/types/package/purchasedType";
 import { Checkbox, Radio, Spin } from "antd";
 import React from "react";
 export default function DetailsPurchasePackage({
@@ -85,7 +85,7 @@ export default function DetailsPurchasePackage({
                           />
                         </svg>
                         <span className="text-[16px]">
-                      
+
                           {category?.title}
                         </span>
                         {/* <span>{category?.title}</span> */}

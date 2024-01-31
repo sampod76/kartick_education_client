@@ -11,7 +11,7 @@ const { Option } = Select;
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import { useAddPackageMutation, useGetSinglePackageQuery, useUpdatePackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { IPackageData } from "@/types/packageType";
+import { IPackageData } from "@/types/package/packageType";
 
 // ! for uuid
 const generateUUID = () => {

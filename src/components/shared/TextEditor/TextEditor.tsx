@@ -47,7 +47,7 @@ const TextEditor = ({
   return (
     <div>
       {/* <h2></h2> */}
-      <Switch checkedChildren="Close" unCheckedChildren='Open' defaultChecked onChange={onChange} style={{
+      <Switch checkedChildren="Open" unCheckedChildren='Close'  onChange={onChange} style={{
         background: openTextEditor ? "blue" : "#4D545A",
         marginBlock: "10px"
       }} />

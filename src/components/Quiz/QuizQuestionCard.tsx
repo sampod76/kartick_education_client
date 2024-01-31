@@ -1,12 +1,13 @@
 import { addAnswer } from "@/redux/features/quizSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { IAnswer } from "@/types/singleQuiz";
+import { IAnswer } from "@/types/quiz/singleQuizType";
 import TextToSpeech from "@/utils/TextToSpeech";
 import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 import React, { useEffect, useState } from "react";
 import QuizTimer from "./QuizTimer";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 const { Option } = Select;
 export default function QuizQuestionCard({
   quiz,
@@ -25,7 +26,7 @@ export default function QuizQuestionCard({
   userAnswers: any[];
   currentAnswer: any;
   setCurrentAnswer: any;
-  submittedDefaultData: any;
+  submittedDefaultData: ISubmittedUserQuizData;
 }) {
   // console.log(quiz);
 
@@ -41,21 +42,30 @@ export default function QuizQuestionCard({
       category: quiz?.category,
       quiz: quiz?.quiz?._id,
       singleQuiz: quiz?._id,
-      submitAnswers: [quiz?.milestone],
+      submitAnswers: [''],
     };
 
     setCurrentAnswer(beforeANswer);
   }
 
-  const checkAnswers = (responseData: any) => {
-    const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
-      const submittedAnswer = responseData?.singleQuiz?.answers?.find(
-        (answer: any) => answer.id === answerId && answer.correct
-      );
-      return submittedAnswer && submittedAnswer.correct;
-    });
+  const checkAnswers = (responseData: ISubmittedUserQuizData) => {
 
-    return allCorrect;
+    if (responseData?.singleQuiz?.type === 'input') {
+      const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
+      return isCorrectInput
+    }
+    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select') {
+      const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
+        const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+          (answer: any) => answer.id === answerId && answer.correct
+        );
+        return submittedAnswer && submittedAnswer.correct;
+      });
+      return allCorrectSelect;
+    }
+
+    return false
+
   };
 
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
@@ -162,11 +172,12 @@ export default function QuizQuestionCard({
   const isDefaultValue = userAnswers?.find(
     (answer) => answer?._id === quiz?._id
   );
-
+  console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
   return (
     <div>
-      <div key={quiz?._id} className={`m-4 w-full min-w-2xl relative  `}>
-        <div className="text-center mt-4 flex justify-center items-center">
+      <div key={quiz?._id} className={`m-4 w-full relative   `}>
+        {/* //! Quiz Timer */}
+        <div className="text-center mt-3 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
             quiz={quiz}
@@ -175,7 +186,7 @@ export default function QuizQuestionCard({
             submittedDefaultData={submittedDefaultData}
           />
         </div>
-        <div className="absolute right-0 top-0 p-2">
+        <div className="absolute right-4 top-0 p-">
           {submittedDefaultData?.singleQuiz ? (
             isCorrectAnswer ? (
               <button className="flex justify-center items-center gap-2 w-24 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
@@ -368,10 +379,21 @@ export default function QuizQuestionCard({
               Question {index + 1} : {quiz?.title}
             </p> */}
             <Input
+              defaultValue={submittedDefaultData?.submitAnswers[0]}
+              // defaultValue='asdfasdfasd '
+
+              disabled={
+                isDefaultValue?.is_time_up ||
+                  currentAnswer?.singleQuiz ===
+                  submittedDefaultData?.singleQuiz?._id
+                  ? true
+                  : false
+              }
               onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
               style={{ minHeight: "1rem", width: "12rem" }}
               placeholder="Type your answer"
             />
+
           </div>
         )}
         {/* {quiz?.type === "text" && (
