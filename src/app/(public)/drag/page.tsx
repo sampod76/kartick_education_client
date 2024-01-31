@@ -23,27 +23,14 @@ export default function DragTest() {
     event.preventDefault();
 
     const draggedItem = event.dataTransfer.getData('text/plain');
-    // console.log('draggedItem', draggedItem);
-
-    // Remove the dropped item from ImagesData
-    // ImagesData = ImagesData.filter((item: any) => item !== draggedItem);
+ 
     const currentIndex = ImagesData?.findIndex((item) => item === draggedItem)
-    // console.log('currentIndex', currentIndex);
-    // const newImages = ImagesData?.splice(currentIndex, 1)
-    // setImagesData(ImagesData?.splice(currentIndex, 1))
+  
 
     const currentImages = ImagesData?.filter((item) => item !== draggedItem)
 
     setImagesData(currentImages)
 
-    // console.log('ImagesData', ImagesData)
-    // if (currentIndex !== -1) {
-    //   // If the answer with the provided _id already exists, replace it
-    //   state.userAnswers[existingAnswerIndex] = payload;
-    // } else {
-    //   // If the answer with the provided _id doesn't exist, add it
-    //   state.userAnswers.push(payload);
-    // }
     setDraggedItems((prevItems) => {
       if (!prevItems.includes(draggedItem)) {
         // Update the state with the dropped item
@@ -92,7 +79,8 @@ export default function DragTest() {
         onDragOver={handleDragOver}
         className='p-3 text-white min-h-[20rem]'
         style={{
-          border: '2px dashed #000', marginTop: '20px', background: `url(${'https://i.ibb.co/RbjJ4Xf/garden1.jpg'})`, backgroundRepeat: "no-repeat",
+          border: '2px dashed #000', marginTop: '20px',
+          //  background: `url(${'https://i.ibb.co/RbjJ4Xf/garden1.jpg'})`, backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}
       >
