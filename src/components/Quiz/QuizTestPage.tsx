@@ -200,9 +200,9 @@ export default function QuizTestPage({
   // console.log('result', result);
   console.log(currentAnswer, 'submittedANswer', userSubmitData, quizData)
   return (
-    <div className="w-full  mx-auto my-5 lg:my-0 ">
+    <div className="w-full  mx-aut my-5 lg:my-0 ">
 
-      <div className="flex flex-col justify-start items-center gap-3 mt-4  w-[80%] ">
+      <div className="flex flex-col justify-start  gap-3 mt-4  w-[80 ">
         {/* Render quiz based on the current step */}
         {isLoading && <TopBarLoading />}
         {quizData.length > 0 && (
@@ -219,7 +219,7 @@ export default function QuizTestPage({
           />
         )}
 
-        <div className="flex justify-between  gap-5 mb-3 px-3">
+        <div className="flex justify-between  gap-5 mb-3 px-3 max-w-6">
           <Button
             onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
             disabled={currentStep === 0}

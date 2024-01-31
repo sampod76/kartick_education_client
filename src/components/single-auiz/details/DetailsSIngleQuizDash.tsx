@@ -1,7 +1,7 @@
 'use client';
 import LoadingSkeleton from '@/components/ui/Loading/LoadingSkeleton';
 import { useGetSingleOneQuizQuery } from '@/redux/api/adminApi/singleQuizApi'
-import { IAnswer } from '@/types/singleQuiz';
+import { IAnswer } from '@/types/quiz/singleQuiz';
 import TextToSpeech from '@/utils/TextToSpeech';
 import { Checkbox, Radio } from 'antd';
 import Image from 'next/image';

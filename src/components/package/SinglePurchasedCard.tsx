@@ -1,6 +1,6 @@
 "use client";
 import { AllImage } from "@/assets/AllImge";
-import { IPurchasedCategory, IPurchasedData } from "@/types/purchasedType";
+import { IPurchasedCategory, IPurchasedData } from "@/types/package/purchasedType";
 
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import Image from "next/image";
@@ -50,11 +50,10 @@ export default function SInglePurchased({
         {/* //! top title section  */}
         <div
           className={`h-28 
-        ${
-          new Date(packages?.expiry_date) < new Date()
-            ? "bg-red-600"
-            : "bg-green-700"
-        } text-center p-4`}
+        ${new Date(packages?.expiry_date) < new Date()
+              ? "bg-red-600"
+              : "bg-green-700"
+            } text-center p-4`}
         >
           <h3 className="text-xl text-white uppercase font-semibold mb-1">
             {packages?.title}
@@ -68,11 +67,10 @@ export default function SInglePurchased({
         </div>
         {/* //! round price  */}
         <div
-          className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
-            new Date(packages?.expiry_date) < new Date()
+          className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${new Date(packages?.expiry_date) < new Date()
               ? "bg-red-600"
               : "bg-green-700"
-          } hover:brightness-125 transition-all duration-500 text-white border-4 flex flex-col items-center justify-center border-white`}
+            } hover:brightness-125 transition-all duration-500 text-white border-4 flex flex-col items-center justify-center border-white`}
         >
           <h3 className="text-2xl font-semibold">${packages?.total_price}</h3>
         </div>
@@ -149,11 +147,10 @@ export default function SInglePurchased({
             Expire date:{" "}
             <span
               className={`text-sm 
-          ${
-            new Date(packages?.expiry_date) < new Date()
-              ? "text-red-700"
-              : "text-stone-700"
-          }
+          ${new Date(packages?.expiry_date) < new Date()
+                  ? "text-red-700"
+                  : "text-stone-700"
+                }
           `}
             >
               {packages?.expiry_date &&
@@ -165,7 +162,7 @@ export default function SInglePurchased({
       </div>
       <div className="flex justify-end items-center absolute bottom-0 right-0 ">
         <ModalComponent buttonText="View Student List">
-         <PackageToStudent packageId={packages?._id}/>
+          <PackageToStudent packageId={packages?._id} />
         </ModalComponent>
       </div>
     </div>

@@ -15,9 +15,9 @@ import {
   Space,
   message,
 } from "antd";
-import { IPackageData } from "@/types/packageType";
+import { IPackageData } from "@/types/package/packageType";
 import { useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
-import { IPackageCategory } from "../../../types/packageType";
+import { IPackageCategory } from "../../../types/package/packageType";
 import InternelError from "@/components/shared/Error/InternelError";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
@@ -212,8 +212,8 @@ export default function JoinPackage({
         packName === "school_teacher"
           ? "school & teacher"
           : packName === "family_personal"
-          ? "family & personal"
-          : "nulls",
+            ? "family & personal"
+            : "nulls",
     },
     {
       skip: !Boolean(packName),
@@ -299,21 +299,19 @@ export default function JoinPackage({
                 >
                   <span
                     className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
-                    ${
-                      selectPackage?._id === packages?._id
+                    ${selectPackage?._id === packages?._id
                         ? "bg-secondary text-white"
                         : "bg-white text-black"
-                    }
+                      }
                   `}
                   >
                     {plan}
                   </span>
                   <div
-                    className={`h-28 ${
-                      selectPackage?._id === packages?._id
+                    className={`h-28 ${selectPackage?._id === packages?._id
                         ? "bg-green-600"
                         : "bg-gray-700"
-                    } text-center p-4`}
+                      } text-center p-4`}
                   >
                     <h3 className="text-2xl text-white uppercase font-semibold mb-1">
                       {packages?.title}
@@ -324,11 +322,10 @@ export default function JoinPackage({
                     </p>
                   </div>
                   <div
-                    className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
-                      selectPackage?._id === packages?._id
+                    className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${selectPackage?._id === packages?._id
                         ? "bg-green-600"
                         : "bg-gray-700"
-                    } text-white border-4 flex flex-col items-center justify-center border-white`}
+                      } text-white border-4 flex flex-col items-center justify-center border-white`}
                   >
                     <h3 className="text-2xl font-semibold">
                       ${totalPackagePrice}
@@ -378,9 +375,9 @@ export default function JoinPackage({
                               flexDirection: "column",
                               gap: "1rem",
                             }}
-                            // onChange={(e) => {
-                            //   setSingleSelect(e.target.value);
-                            // }}
+                          // onChange={(e) => {
+                          //   setSingleSelect(e.target.value);
+                          // }}
                           >
                             {packages?.categories?.map(
                               (option?: IPackageCategory) => (
@@ -469,11 +466,10 @@ export default function JoinPackage({
                           })
                         }
                         type="button"
-                        className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
-                          selectPackage?._id === packages?._id
+                        className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${selectPackage?._id === packages?._id
                             ? "bg-green-600 hover:brightness-125"
                             : "bg-gray-700 hover:bg-gray-800"
-                        }  rounded-md static lg:absolute bottom-1 left-0`}
+                          }  rounded-md static lg:absolute bottom-1 left-0`}
                       >
                         Select
                       </button>

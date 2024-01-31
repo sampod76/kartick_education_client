@@ -1,6 +1,6 @@
 import { addAnswer } from "@/redux/features/quizSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { IAnswer } from "@/types/singleQuiz";
+import { IAnswer } from "@/types/quiz/singleQuiz";
 import TextToSpeech from "@/utils/TextToSpeech";
 import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 import React, { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ export default function QuizQuestionCard({
       category: quiz?.category,
       quiz: quiz?.quiz?._id,
       singleQuiz: quiz?._id,
-      submitAnswers: [quiz?.milestone],
+      submitAnswers: [''],
     };
 
     setCurrentAnswer(beforeANswer);
@@ -165,8 +165,9 @@ export default function QuizQuestionCard({
 
   return (
     <div>
-      <div key={quiz?._id} className={`m-4 w-full min-w-2xl relative  `}>
-        <div className="text-center mt-4 flex justify-center items-center">
+      <div key={quiz?._id} className={`m-4 w-full relative   `}>
+        {/* //! Quiz Timer */}
+        <div className="text-center mt-3 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
             quiz={quiz}
@@ -175,7 +176,7 @@ export default function QuizQuestionCard({
             submittedDefaultData={submittedDefaultData}
           />
         </div>
-        <div className="absolute right-0 top-0 p-2">
+        <div className="absolute right-4 top-0 p-">
           {submittedDefaultData?.singleQuiz ? (
             isCorrectAnswer ? (
               <button className="flex justify-center items-center gap-2 w-24 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">

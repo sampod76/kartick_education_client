@@ -2,7 +2,7 @@
 import React from "react";
 
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { IPurchasedData } from "@/types/purchasedType";
+import { IPurchasedData } from "@/types/package/purchasedType";
 import SInglePurchased from "./SinglePurchasedCard";
 import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 

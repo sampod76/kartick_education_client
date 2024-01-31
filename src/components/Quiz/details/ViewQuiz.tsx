@@ -2,7 +2,7 @@
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuizApi";
-import { IAnswer, ISingleQuiz } from "@/types/singleQuiz";
+import { IAnswer, ISingleQuiz } from "@/types/quiz/singleQuiz";
 import TextToSpeech from "@/utils/TextToSpeech";
 import { Button, Checkbox, Radio } from "antd";
 

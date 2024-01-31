@@ -3,7 +3,7 @@
 import { AllImage } from "@/assets/AllImge";
 import SIngleBannerSIngleCourse from "@/components/Home/coureses/SIngleBannerSIngleCourse";
 import { useGetSinglePurchaseAcceptAndPendingCourseQuery } from "@/redux/api/public/purchaseAPi";
-import { IPackageCategory } from "@/types/packageType";
+import { IPackageCategory } from "@/types/package/packageType";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import { Checkbox, Radio, Spin } from "antd";
 import React from "react";
@@ -43,9 +43,8 @@ export default function Detailscourse({ purchaseId }: { purchaseId: string }) {
               <div
                 className="w-1/3 bg-cover"
                 style={{
-                  backgroundImage: `url(${
-                    course?.img || AllImage?.notFoundImage
-                  })`,
+                  backgroundImage: `url(${course?.img || AllImage?.notFoundImage
+                    })`,
                 }}
               ></div>
               <div className="w-2/3 p-2">
