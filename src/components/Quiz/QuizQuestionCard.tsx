@@ -1,12 +1,13 @@
 import { addAnswer } from "@/redux/features/quizSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { IAnswer } from "@/types/quiz/singleQuiz";
+import { IAnswer } from "@/types/quiz/singleQuizType";
 import TextToSpeech from "@/utils/TextToSpeech";
 import { Card, Checkbox, Input, Radio, Select, Space, message } from "antd";
 import React, { useEffect, useState } from "react";
 import QuizTimer from "./QuizTimer";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 const { Option } = Select;
 export default function QuizQuestionCard({
   quiz,
@@ -25,7 +26,7 @@ export default function QuizQuestionCard({
   userAnswers: any[];
   currentAnswer: any;
   setCurrentAnswer: any;
-  submittedDefaultData: any;
+  submittedDefaultData: ISubmittedUserQuizData;
 }) {
   // console.log(quiz);
 
@@ -47,15 +48,24 @@ export default function QuizQuestionCard({
     setCurrentAnswer(beforeANswer);
   }
 
-  const checkAnswers = (responseData: any) => {
-    const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
-      const submittedAnswer = responseData?.singleQuiz?.answers?.find(
-        (answer: any) => answer.id === answerId && answer.correct
-      );
-      return submittedAnswer && submittedAnswer.correct;
-    });
+  const checkAnswers = (responseData: ISubmittedUserQuizData) => {
 
-    return allCorrect;
+    if (responseData?.singleQuiz?.type === 'input') {
+      const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
+      return isCorrectInput
+    }
+    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select') {
+      const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
+        const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+          (answer: any) => answer.id === answerId && answer.correct
+        );
+        return submittedAnswer && submittedAnswer.correct;
+      });
+      return allCorrectSelect;
+    }
+
+    return false
+
   };
 
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);

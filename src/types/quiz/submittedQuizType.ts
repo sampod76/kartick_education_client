@@ -1,4 +1,4 @@
-import { IQuizType } from "./singleQuiz";
+import { IQuizType } from "./singleQuizType";
 
 export type ISubmittedUserQuizData = {
   _id: string;
@@ -15,7 +15,7 @@ export type ISubmittedUserQuizData = {
     _id: string;
     title: string;
     imgs: [];
-    single_answer: string;
+    single_answer?: string;
     type: IQuizType;
     serialNumber: number;
     time_duration: number;
@@ -32,7 +32,15 @@ export type ISubmittedUserQuizData = {
       platform: string;
     };
     tags: [];
-    answers: [];
+    answers: {
+      title: string;
+      correct: boolean;
+      imgs: [string];
+      serialNumber: boolean;
+      status: string;
+      _id: string;
+      id: string;
+    }[];
     createdAt: string;
     updatedAt: string;
     __v: 0;

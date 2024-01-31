@@ -13,6 +13,7 @@ import {
   Success_model,
 } from "@/utils/modalHook";
 import TopBarLoading from "../ui/Loading/TopBarLoading";
+import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 export default function QuizTestPage({
   quizData,
   quizId,
@@ -35,8 +36,8 @@ export default function QuizTestPage({
 
   // const userSubmitData = quizAnswerData;
 
-  console.log(userSubmitData)
-  const submittedDefaultData = userSubmitData?.find(
+  // console.log(userSubmitData)
+  const submittedDefaultData: ISubmittedUserQuizData = userSubmitData?.find(
     (answer: any) => answer?.singleQuiz?._id === currentAnswer?.singleQuiz
   );
 
