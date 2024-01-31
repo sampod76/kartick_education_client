@@ -172,7 +172,7 @@ export default function QuizQuestionCard({
   const isDefaultValue = userAnswers?.find(
     (answer) => answer?._id === quiz?._id
   );
-
+  console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
   return (
     <div>
       <div key={quiz?._id} className={`m-4 w-full relative   `}>
@@ -379,10 +379,21 @@ export default function QuizQuestionCard({
               Question {index + 1} : {quiz?.title}
             </p> */}
             <Input
+              defaultValue={submittedDefaultData?.submitAnswers[0]}
+              // defaultValue='asdfasdfasd '
+
+              disabled={
+                isDefaultValue?.is_time_up ||
+                  currentAnswer?.singleQuiz ===
+                  submittedDefaultData?.singleQuiz?._id
+                  ? true
+                  : false
+              }
               onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
               style={{ minHeight: "1rem", width: "12rem" }}
               placeholder="Type your answer"
             />
+
           </div>
         )}
         {/* {quiz?.type === "text" && (
