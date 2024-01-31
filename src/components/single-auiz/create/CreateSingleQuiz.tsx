@@ -23,11 +23,11 @@ import React, { useState } from "react";
 
 import SelectQUizField from "@/components/Forms/SelectData/SelectQUizField";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
-import AnswerSInlge from "@/components/Forms/AnswerSingle";
+import AnswerSInlge from "@/components/Forms/answer/AnswerSingle";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import timeDurationToMilliseconds from "@/hooks/stringToMiliSecend";
-import AnswerMultiple from "@/components/Forms/AnswerMultiple";
+import AnswerMultiple from "@/components/Forms/answer/AnswerMultiple";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
@@ -37,6 +37,7 @@ import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import dynamic from "next/dynamic";
 import { ENUM_STATUS } from "@/constants/globalEnums";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { IQuizType } from "@/types/quiz/singleQuizType";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -48,7 +49,7 @@ const CreateSingleQuiz = () => {
   //
 
   const [quizType, setQuizTypes] = useState<
-    "input" | "select" | "multiple_select"
+    IQuizType
   >("select"); // !  tag selection
 
   const [isReset, setIsReset] = useState(false);

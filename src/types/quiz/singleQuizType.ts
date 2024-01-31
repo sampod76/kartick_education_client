@@ -7,7 +7,12 @@ export type IAnswer = {
   status: "active" | "deactivate" | "save";
 };
 
-export type IQuizType = "input" | "select" | "multiple_select" | "text";
+export type IQuizType =
+  | "input"
+  | "select"
+  | "multiple_select"
+  | "text"
+  | "find";
 export type ISingleQuiz = {
   _id: string;
   title: string;

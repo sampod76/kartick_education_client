@@ -379,7 +379,7 @@ export default function QuizQuestionCard({
               Question {index + 1} : {quiz?.title}
             </p> */}
             <Input
-              defaultValue={submittedDefaultData?.submitAnswers?.length && submittedDefaultData?.submitAnswers[0]}
+              // defaultValue={submittedDefaultData?.submitAnswers?.length && submittedDefaultData?.submitAnswers[0]}
               // defaultValue='asdfasdfasd '
 
               disabled={
