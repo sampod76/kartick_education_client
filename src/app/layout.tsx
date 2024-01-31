@@ -1,9 +1,12 @@
+'use client'
 import "./globals.css";
 import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 import Providers from "@/lib/Providers";
 import { Noto_Sans } from "next/font/google";
 import MyErrorBoundary from "@/components/Utlis/MyErrorBoundary";
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 // import { CookiesProvider } from "react-cookie";
 const inter = Noto_Sans({ subsets: ["latin"], weight: ["400"] });
 
@@ -21,6 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <DndProvider backend={HTML5Backend}>
     <MyErrorBoundary>
       {/* <CookiesProvider defaultSetOptions={{ path: "/" }}> */}
         <Providers>
@@ -40,5 +44,6 @@ export default function RootLayout({
         </Providers>
       {/* </CookiesProvider> */}
     </MyErrorBoundary>
+    </DndProvider>
   );
 }
