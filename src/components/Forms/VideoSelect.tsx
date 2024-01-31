@@ -19,9 +19,9 @@ interface Video {
 //   setVideos: React.Dispatch<React.SetStateAction<Video[] | []>>;
 // }
 
-const VideoSelect = ({defaultValue=[]}:{defaultValue?:Array<Video>}) => {
+const VideoSelect = ({ defaultValue = [] }: { defaultValue?: Array<Video> }) => {
   const { setValue } = useFormContext();
-  const [videos, setVideos] = useState<Video[]|[]>(defaultValue);
+  const [videos, setVideos] = useState<Video[] | []>(defaultValue);
   //   console.log("🚀 ~ file: VideoSelect.tsx:24 ~ videos:", videos, setVideos);
 
   if (videos?.length) {
@@ -126,19 +126,22 @@ const VideoSelect = ({defaultValue=[]}:{defaultValue?:Array<Video>}) => {
             </Select> */}
             <Input
               className="w-full "
+
               addonBefore={
                 <Select
                   className=""
                   placeholder="Select Video Platform"
-                  defaultValue={video.platform ||"vimeo"}
+                  defaultValue={video.platform || "vimeo"}
                   size="large"
-                 
+                  // style={{
+                  // }}
+
                   //   onChange={handleVideoTypeChange}
                   onChange={(value) =>
                     handleChange(index, { ...video, platform: value })
                   }
                 >
-                  <Select.Option  value="youtube">youtube</Select.Option>
+                  <Select.Option value="youtube">youtube</Select.Option>
                   <Select.Option value="vimeo">vimeo</Select.Option>
                 </Select>
               }
@@ -148,7 +151,7 @@ const VideoSelect = ({defaultValue=[]}:{defaultValue?:Array<Video>}) => {
               defaultValue={video.link}
               placeholder={`Enter ${videoType} Video URL`}
               //   value={videoUrl}
-               style={{width: "100%",}}
+              style={{ minWidth: "40vw",  }}
               onChange={(e) =>
                 handleVideoUrlChange(index, { link: e.target.value })
               }

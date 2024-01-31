@@ -255,7 +255,7 @@ const CreateSingleQuiz = () => {
                     <span className="text-red-500">*</span>
                   </LabelUi>
 
-                  {/* //! Quiz Types */}
+                  {/* /// ! Quiz Types */}
                   <Select
                     placeholder="Select Quiz Types"
                     style={{ width: "100%" }}
@@ -287,52 +287,57 @@ const CreateSingleQuiz = () => {
                     required={true}
                   />
                 </Col>
-                <Col
-                  className="gutter-row"
-                  xs={4}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormInput
-                    type="number"
-                    name="serialNumber"
-                    size="large"
-                    label="Serial number"
-                  // required={true}
-                  />
-                </Col>
-                <Col
-                  className="gutter-row"
-                  xs={4}
-                  style={
-                    {
-                      // background:"r ed"
-                    }
-                  }
-                >
-                  <FormTimePicker name="time_duration" label="Time Duration" />
-                </Col>
+                <Row gutter={10} align='middle' justify='space-between'  >
 
 
-                <Col
-                  className="gutter-row"
-                  xs={12}
-                  md={8}
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <FormSelectField
-                    size="large"
-                    name="status"
-                    options={courseStatusOptions as any}
-                    // defaultValue={priceTypeOptions[0]}
-                    label="status"
-                    // placeholder="Select"
-                    required={true}
-                  />
-                </Col>
+                  <Col
+                    className="gutter-row"
+                    xs={12}
+                    md={8}
+                    style={{
+                      // marginBottom: "10px",
+                    }}
+                  >
+                    <FormInput
+                      type="number"
+                      name="serialNumber"
+                      size="large"
+                      label="Serial number"
+                    // required={true}
+                    />
+                  </Col>
+
+                  <Col
+                    className="gutter-row"
+                    xs={12}
+                    md={8}
+                    style={{
+                      // marginBottom: "10px",
+                    }}
+                  >
+                    <FormTimePicker name="time_duration" label="Time Duration" />
+                  </Col>
+
+
+                  <Col
+                    className="gutter-row"
+                    xs={12}
+                    md={8}
+                    style={{
+                      // marginBottom: "10px",
+                    }}
+                  >
+                    <FormSelectField
+                      size="large"
+                      name="status"
+                      options={courseStatusOptions as any}
+                      // defaultValue={priceTypeOptions[0]}
+                      label="status"
+                      // placeholder="Select"
+                      required={true}
+                    />
+                  </Col>
+                </Row>
                 <Col
                   className="gutter-row"
                   xs={24}
