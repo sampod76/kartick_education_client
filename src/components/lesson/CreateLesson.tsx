@@ -197,7 +197,7 @@ const CreateLesson = () => {
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    // marginBottom: "10px",
                   }}
                 >
                   <FormInput

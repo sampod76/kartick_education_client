@@ -441,14 +441,7 @@ export default function QuizQuestionCard({
                         ? "bg-slate-600 text-white"
                         : ""
                       }
-                      ${submittedDefaultData?.singleQuiz
-                        ? isCorrect
-                          ? " border-2 border-green-600"
-                          : isSubmitted === option?._id
-                            ? "border-2 border-red-500 "
-                            : ""
-                        : ""
-                      }
+                     
                       `}
                   >
                     <p>{option?.title}</p>
