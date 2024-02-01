@@ -28,7 +28,7 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
     answersFind,
     setAnswersFind,
 }) => {
-    console.log("🚀 ~ answersFind:", answersFind)
+    // console.log("🚀 ~ answersFind:", answersFind)
 
 
     const handleAdd = () => {
@@ -122,11 +122,11 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                                     // You can add custom logic before uploading, e.g., checking file type or size
                                     const images = answer?.imgs
                                     const imgUrl = await uploadImgCloudinary(file);
-
+                                    console.log('imgUrl', imgUrl)
                                     if (imgUrl) {
                                         images.push(imgUrl);
                                     }
-                                    // console.log(images,imgUrl, answer);
+                                    console.log(file, images, imgUrl, answer, 'ffffffffffffffffffffffffffffff');
 
                                     handleChange(index, {
                                         ...answer,
@@ -149,11 +149,11 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                         </div>
 
                         {/*//! serial number */}
-                <div className="text-start">
-                        <label>Serial number</label>
+                        <div className="text-start">
+                            <label>Serial number</label>
                             <Input
                                 placeholder="Serial Number"
-                                 type="number"
+                                type="number"
                                 value={answer?.serialNumber ? answer?.serialNumber : index + 1}
                                 defaultValue={index + 1}
                                 onChange={(e) =>

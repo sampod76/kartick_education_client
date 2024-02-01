@@ -34,6 +34,8 @@ import timeDurationToMilliseconds, {
   convertTimeDurationMillisecondsToTime,
 } from "@/hooks/stringToMiliSecend";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import AnswerFind from "@/components/Forms/answer/AnswerFind";
+import { IQuizType } from "@/types/quiz/singleQuizType";
 
 export default function EditSingleQuiz({
   singleQuizId,
@@ -41,7 +43,7 @@ export default function EditSingleQuiz({
   singleQuizId: string;
 }) {
   const [quizType, setQuizTypes] = useState<
-    "input" | "select" | "multiple_select"
+    IQuizType
   >("select"); // !  tag selection
   const [videoType, setVideoType] = useState(null); // ! for video insert
   const [videoUrl, setVideoUrl] = useState("");
@@ -469,6 +471,19 @@ export default function EditSingleQuiz({
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
+                    />
+                  )}
+                  {quizType === "find" && (
+                    <AnswerFind
+                      answersFind={answers}
+                      setAnswersFind={setAnswers as any}
+                    />
+                  )}
+                  {/* //! should update cause it is statics */}
+                  {quizType === "drag" && (
+                    <AnswerFind
+                      answersFind={answers}
+                      setAnswersFind={setAnswers as any}
                     />
                   )}
                   {quizType === "input" && (

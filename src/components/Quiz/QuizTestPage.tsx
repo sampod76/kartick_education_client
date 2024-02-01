@@ -15,11 +15,12 @@ import {
 import TopBarLoading from "../ui/Loading/TopBarLoading";
 import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 import { ISingleQuizData } from "@/types/quiz/singleQuizType";
+import DragQUizTest from "../dragCustom/DragQuiz";
 export default function QuizTestPage({
   quizData,
   quizId,
 }: {
-    quizData: ISingleQuizData[];
+  quizData: ISingleQuizData[];
   quizId: string;
 }) {
   ///! state of quiz card
@@ -118,10 +119,14 @@ export default function QuizTestPage({
 
   // ! For disabled Next Button
   const isDisabledNext = useMemo(() => {
-    const isSelected = userAnswers.find(
-      (answer: any) => answer?.index === currentStep + 1
-    );
 
+    const isSelected = userAnswers.find(
+      (answer: any) => answer?.index === (currentStep < quizData.length - 1 ? currentStep + 1 : currentStep)
+    );
+    // if (currentStep < quizData.length - 1) {
+
+    // }
+    // console.log(userAnswers, 'isSelected', isSelected, currentStep + 1)
     let disabled = false;
 
     if (currentAnswer?.singleQuiz === submittedDefaultData?.singleQuiz?._id) {
@@ -133,8 +138,9 @@ export default function QuizTestPage({
       disabled = true;
     }
     return disabled;
-  }, [currentAnswer, currentStep, submittedDefaultData, userAnswers]);
+  }, [currentAnswer?.singleQuiz, currentStep, quizData.length, submittedDefaultData?.singleQuiz?._id, userAnswers]);
 
+  // console.log(isDisabledNext, 'isDisabledNext')
   // console.log(quizData?.length, "and", quizAnswerData);
 
   // ! for result Show modal
@@ -173,17 +179,26 @@ export default function QuizTestPage({
       const { singleQuiz, submitAnswers } = submission;
 
       if (singleQuiz && submitAnswers) {
-        if (singleQuiz?.type === "select" || singleQuiz?.type === "multiple_select") {
+        if (singleQuiz?.type === "select" || singleQuiz?.type === "multiple_select" || singleQuiz?.type === "find" || singleQuiz?.type === "drag") {
           // For "select" and "multiple_select" types
           singleQuiz?.answers?.forEach((answer: any) => {
             if (submitAnswers?.includes(answer?._id)) {
               if (answer?.correct) {
+                //! for incorrect answers push in correctAnswersSet
                 correctAnswersSet.add(singleQuiz?._id);
               } else {
+                //! for correct answers push in inCorrectAnswersSet
                 incorrectAnswersSet.add(singleQuiz?._id);
               }
             }
           });
+        }
+        else if (singleQuiz?.type === 'input') {
+          if (singleQuiz?.single_answer === submitAnswers[0]) {
+            correctAnswersSet.add(singleQuiz?._id);
+          } else {
+            incorrectAnswersSet.add(singleQuiz?._id);
+          }
         }
       }
     });
@@ -220,6 +235,9 @@ export default function QuizTestPage({
           // userResponses={userResponses}
           />
         )}
+        {/* {
+          <DragQUizTest />
+        } */}
 
         <div className="flex justify-between  gap-5 mb-3 px-3 max-w-6">
           <Button
