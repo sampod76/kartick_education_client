@@ -33,7 +33,7 @@ export default function CreatePackage() {
     limit: 9999,
   });
   let options: SelectProps["options"] = [];
-  options = data?.data?.map((select:any) => ({
+  options = data?.data?.map((select: any) => ({
     label: select.title,
     value: select._id,
   }));
@@ -270,7 +270,7 @@ export default function CreatePackage() {
               </Upload>
             </Form.Item>
 
-            <Form.Item name="date_range" label="Select a duration" required>
+            <Form.Item name="date_range" label="Package duration" required>
 
               <RangePicker format="YYYY-MM-DD" />
 

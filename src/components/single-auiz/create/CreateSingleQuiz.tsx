@@ -154,7 +154,7 @@ const CreateSingleQuiz = () => {
             At fast Filter
           </h1>
           <Row gutter={[16, 16]}>
-            <Col xs={24} md={6}>
+            <Col xs={24} md={12}>
               <SelectCategoryChildren
                 lableText="Select category"
                 setState={setCategory}
@@ -162,7 +162,7 @@ const CreateSingleQuiz = () => {
                 categoryData={categoryData}
               />
             </Col>
-            <Col xs={24} md={6}>
+            <Col xs={24} md={12}>
               <SelectCategoryChildren
                 lableText="Select courses"
                 setState={setCourse}
@@ -287,7 +287,9 @@ const CreateSingleQuiz = () => {
                     required={true}
                   />
                 </Col>
-                <Row gutter={10} align='middle' justify='space-between'  >
+                <Row gutter={10} align='middle' justify='space-between' style={{
+                  // background: "red"
+                }} >
 
 
                   <Col
@@ -295,7 +297,7 @@ const CreateSingleQuiz = () => {
                     xs={12}
                     md={8}
                     style={{
-                      // marginBottom: "10px",
+                      marginBottom: "10px",
                     }}
                   >
                     <FormInput

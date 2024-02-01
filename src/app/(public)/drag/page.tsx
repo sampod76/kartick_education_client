@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-
+import { Avatar, Badge, Space } from 'antd';
 interface DragAndDropProps {
   imageUrls: string[];
 }
@@ -23,9 +23,9 @@ export default function DragTest() {
     event.preventDefault();
 
     const draggedItem = event.dataTransfer.getData('text/plain');
- 
+
     const currentIndex = ImagesData?.findIndex((item) => item === draggedItem)
-  
+
 
     const currentImages = ImagesData?.filter((item) => item !== draggedItem)
 
@@ -61,7 +61,7 @@ export default function DragTest() {
 
   return (
     <div className='max-w-2xl mx-auto my-3'>
-      <div style={{ display: 'flex', gap: '10px' }}>
+      <div style={{ display: 'flex', gap: '10px' }} id="images">
         {ImagesData.map((imageUrl, index: number) => (
           <div
             key={index}
@@ -85,17 +85,22 @@ export default function DragTest() {
         }}
       >
         {/* <strong>Drop Zone</strong> */}
-        <div className='flex gap-2 justify-center items-center'>
+        <div className='flex gap-3 justify-center items-center' >
           {draggedItems.map((item, index) => (
-            <div key={index}>
-              <Image
-                src={item}
-                alt={`Image ${index}`}
-                width={100}
-                height={100}
-                onClick={() => handleRemoveItem(index, item)}
-                style={{ cursor: 'pointer' }}
-              />
+            <div key={index} className=""
+              style={{ cursor: 'zoom-out' }}>
+              <Badge.Ribbon text={<span onClick={() => handleRemoveItem(index, item)}>X</span>} color='red' placement="end">
+                <Image
+                  src={item}
+                  alt={`Image ${index}`}
+                  width={100}
+                  height={120}
+
+
+                />
+
+              </Badge.Ribbon>
+
             </div>
           ))}
         </div>

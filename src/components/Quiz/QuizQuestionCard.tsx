@@ -173,10 +173,11 @@ export default function QuizQuestionCard({
   const isDefaultValue = userAnswers?.find(
     (answer) => answer?._id === quiz?._id
   );
-  // console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
+  console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
+
   return (
     <div>
-      <div key={quiz?._id} className={`my-4 w-full relative   `}>
+      <div key={quiz?._id} className={`my-4 w-full relative px-2 lg:pl-3 `}>
         {/* //! Quiz Timer */}
         <div className="text-center mt-3 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
@@ -471,21 +472,27 @@ export default function QuizQuestionCard({
             {/* <p className="text-lg font-[550] mb-2">
               Question {index + 1} : {quiz?.title}
             </p> */}
-            <Input
-              // defaultValue={submittedDefaultData?.submitAnswers?.length && submittedDefaultData?.submitAnswers[0]}
-              // defaultValue='asdfasdfasd '
+            {currentAnswer?.singleQuiz !==
+              submittedDefaultData?.singleQuiz?._id
+              ? <Input
+                defaultValue={submittedDefaultData?.submitAnswers?.length && submittedDefaultData?.submitAnswers[0]}
+                // defaultValue='asdfasdfasd '
+                disabled={
+                  isDefaultValue?.is_time_up ||
+                    currentAnswer?.singleQuiz ===
+                    submittedDefaultData?.singleQuiz?._id
+                    ? true
+                    : false
+                }
+                onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
+                style={{ minHeight: "1rem", width: "12rem" }}
+                placeholder="Type your answer"
+              />:
+              <h4>{submittedDefaultData?.submitAnswers[0]}</h4>
+            }
+           
 
-              disabled={
-                isDefaultValue?.is_time_up ||
-                  currentAnswer?.singleQuiz ===
-                  submittedDefaultData?.singleQuiz?._id
-                  ? true
-                  : false
-              }
-              onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
-              style={{ minHeight: "1rem", width: "12rem" }}
-              placeholder="Type your answer"
-            />
+          
 
           </div>
         )}

@@ -100,7 +100,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
             <Input
               placeholder="Option Title"
               style={{
-                width: "70vw",
+                width: "15rem",
                 height: "2.7rem",
               }}
               // width={500}
@@ -178,6 +178,9 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                     serialNumber: +e.target.value,
                   })
                 }
+                style={{
+                  width: '8rem'
+                }}
                 onWheel={(e) => e.preventDefault()}
               />
             </div>
