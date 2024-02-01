@@ -35,6 +35,7 @@ import timeDurationToMilliseconds, {
 } from "@/hooks/stringToMiliSecend";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import AnswerFind from "@/components/Forms/answer/AnswerFind";
+import { IQuizType } from "@/types/quiz/singleQuizType";
 
 export default function EditSingleQuiz({
   singleQuizId,
@@ -42,7 +43,7 @@ export default function EditSingleQuiz({
   singleQuizId: string;
 }) {
   const [quizType, setQuizTypes] = useState<
-    "input" | "select" | "multiple_select"
+    IQuizType
   >("select"); // !  tag selection
   const [videoType, setVideoType] = useState(null); // ! for video insert
   const [videoUrl, setVideoUrl] = useState("");
