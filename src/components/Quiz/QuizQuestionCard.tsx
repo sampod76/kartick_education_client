@@ -8,6 +8,7 @@ import QuizTimer from "./QuizTimer";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
+import DragQUizTest from "../dragCustom/DragQuiz";
 const { Option } = Select;
 export default function QuizQuestionCard({
   quiz,
@@ -173,7 +174,13 @@ export default function QuizQuestionCard({
   const isDefaultValue = userAnswers?.find(
     (answer) => answer?._id === quiz?._id
   );
-  console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
+  // console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
+
+  const IsDisabledQUiz = isDefaultValue?.is_time_up ||
+    currentAnswer?.singleQuiz ===
+    submittedDefaultData?.singleQuiz?._id
+    ? true
+    : false
 
   return (
     <div>
@@ -222,7 +229,7 @@ export default function QuizQuestionCard({
             ></Image>
           ))}
         </div>
-
+        {/* //! For select Quiz */}
         {quiz?.type === "select" && (
           <Radio.Group
             style={{
@@ -300,16 +307,13 @@ export default function QuizQuestionCard({
           </Radio.Group>
         )}
 
+        {/* // !for multiple select */}
         {quiz?.type === "multiple_select" && (
           <Checkbox.Group
             defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
             // disabled={isDefaultValue?.is_time_up ? true : false}
             disabled={
-              isDefaultValue?.is_time_up ||
-                currentAnswer?.singleQuiz ===
-                submittedDefaultData?.singleQuiz?._id
-                ? true
-                : false
+              IsDisabledQUiz
             }
             onChange={(value) => handleAnswerChange(index + 1, value)}
             style={{
@@ -374,17 +378,13 @@ export default function QuizQuestionCard({
             })}
           </Checkbox.Group>
         )}
-
+        {/* //! For find Quiz */}
         {quiz?.type === "find" && (
           <Checkbox.Group
             defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
             // disabled={isDefaultValue?.is_time_up ? true : false}
             disabled={
-              isDefaultValue?.is_time_up ||
-                currentAnswer?.singleQuiz ===
-                submittedDefaultData?.singleQuiz?._id
-                ? true
-                : false
+              IsDisabledQUiz
             }
             onChange={(value) => handleAnswerChange(index + 1, value)}
             style={{
@@ -466,7 +466,7 @@ export default function QuizQuestionCard({
             })}
           </Checkbox.Group>
         )}
-
+        {/* FOr //! input quiz */}
         {quiz?.type === "input" && (
           <div>
             {/* <p className="text-lg font-[550] mb-2">
@@ -478,24 +478,30 @@ export default function QuizQuestionCard({
                 defaultValue={submittedDefaultData?.submitAnswers?.length && submittedDefaultData?.submitAnswers[0]}
                 // defaultValue='asdfasdfasd '
                 disabled={
-                  isDefaultValue?.is_time_up ||
-                    currentAnswer?.singleQuiz ===
-                    submittedDefaultData?.singleQuiz?._id
-                    ? true
-                    : false
+                  IsDisabledQUiz
                 }
                 onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
                 style={{ minHeight: "1rem", width: "12rem" }}
                 placeholder="Type your answer"
-              />:
+              /> :
               <h4>{submittedDefaultData?.submitAnswers[0]}</h4>
             }
-           
-
-          
 
           </div>
         )}
+        {quiz?.type === "drag" && (
+
+
+          <DragQUizTest
+            imageUrl={['image']}
+            defaultValue="yourDefaultValue"
+            disabled={IsDisabledQUiz}
+            onChange={handleAnswerChange}
+            quizIndex={index}
+          />
+        )}
+
+
         {/* {quiz?.type === "text" && (
           <Input.TextArea
             onChange={(e) => handleAnswerChange(index + 1, e.target.value)}

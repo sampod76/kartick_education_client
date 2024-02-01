@@ -13,7 +13,8 @@ export type IQuizType =
   | "select"
   | "multiple_select"
   | "text"
-  | "find";
+  | "find"
+  | 'drag'
 export type ISingleQuizData = {
   _id: string;
   title: string;

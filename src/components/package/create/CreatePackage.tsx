@@ -271,14 +271,9 @@ export default function CreatePackage() {
             </Form.Item>
 
             <Form.Item name="date_range" label="Package duration" required>
-
               <RangePicker format="YYYY-MM-DD" />
-
-
             </Form.Item>
           </Space.Compact>
-
-
         </Form.Item>
         <div className="border-2 rounded-lg p-3">
           <LabelUi>Add Category</LabelUi>

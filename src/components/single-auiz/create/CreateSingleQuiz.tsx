@@ -6,22 +6,17 @@ import FormInput from "@/components/Forms/FormInput";
 
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-
-import UploadImage from "@/components/ui/UploadImage";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+
 
 import { courseStatusOptions, singleQuizTypes } from "@/constants/global";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 
 import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuizApi";
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Input, Row, Select } from "antd";
 import React, { useState } from "react";
 
-import SelectQUizField from "@/components/Forms/SelectData/SelectQUizField";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import AnswerSInlge from "@/components/Forms/answer/AnswerSingle";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
@@ -54,7 +49,10 @@ const CreateSingleQuiz = () => {
   >("select"); // !  tag selection
 
   const [isReset, setIsReset] = useState(false);
-  // ! For quiz Answer
+
+  
+  // ! For quiz Answer// 
+
 
   const [answers, setAnswers] = useState([]); ///! select and multiple select
 
@@ -449,6 +447,13 @@ const CreateSingleQuiz = () => {
                     />
                   )}
                   {quizType === "find" && (
+                    <AnswerFind
+                      answersFind={answers}
+                      setAnswersFind={setAnswers as any}
+                    />
+                  )}
+                  {/* //! should update cause it is statics */}
+                  {quizType === "drag" && (
                     <AnswerFind
                       answersFind={answers}
                       setAnswersFind={setAnswers as any}

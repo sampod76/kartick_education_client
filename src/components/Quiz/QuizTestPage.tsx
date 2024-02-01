@@ -15,11 +15,12 @@ import {
 import TopBarLoading from "../ui/Loading/TopBarLoading";
 import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 import { ISingleQuizData } from "@/types/quiz/singleQuizType";
+import DragQUizTest from "../dragCustom/DragQuiz";
 export default function QuizTestPage({
   quizData,
   quizId,
 }: {
-    quizData: ISingleQuizData[];
+  quizData: ISingleQuizData[];
   quizId: string;
 }) {
   ///! state of quiz card
@@ -220,6 +221,9 @@ export default function QuizTestPage({
           // userResponses={userResponses}
           />
         )}
+        {/* {
+          <DragQUizTest />
+        } */}
 
         <div className="flex justify-between  gap-5 mb-3 px-3 max-w-6">
           <Button

@@ -34,6 +34,7 @@ import timeDurationToMilliseconds, {
   convertTimeDurationMillisecondsToTime,
 } from "@/hooks/stringToMiliSecend";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import AnswerFind from "@/components/Forms/answer/AnswerFind";
 
 export default function EditSingleQuiz({
   singleQuizId,
@@ -469,6 +470,19 @@ export default function EditSingleQuiz({
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
+                    />
+                  )}
+                  {quizType === "find" && (
+                    <AnswerFind
+                      answersFind={answers}
+                      setAnswersFind={setAnswers as any}
+                    />
+                  )}
+                  {/* //! should update cause it is statics */}
+                  {quizType === "drag" && (
+                    <AnswerFind
+                      answersFind={answers}
+                      setAnswersFind={setAnswers as any}
                     />
                   )}
                   {quizType === "input" && (
