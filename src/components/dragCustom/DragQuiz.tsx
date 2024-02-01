@@ -38,6 +38,9 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disa
     const currentImages = ImagesData?.filter((item) => item !== draggedItem)
 
     setImagesData(currentImages)
+    if (draggedItems?.length > 0) {
+      onChange(quizIndex, ImagesData)
+    }
 
     setDraggedItems((prevItems) => {
       if (!prevItems.includes(draggedItem)) {
@@ -64,16 +67,15 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disa
 
   };
 
-  if(ImagesData?.length>0){
-    onChange(quizIndex,ImagesData)
-  }else{
-    
-  }
+  // if (draggedItems?.length > 0) {
+  //   onChange(quizIndex, ImagesData)
+  // } else {
+  // }
 
-  // console.log(ImagesData, 'draggedItems', draggedItems)
+  console.log(ImagesData, 'draggedItems', draggedItems)
 
   return (
-    <div className='max-w-2xl mx-auto my-3'>
+    <div className={`max-w-2xl mx-auto my-3 ${disabled && 'disabled:'}`}>
       <div style={{ display: 'flex', gap: '10px' }} id="images">
         {ImagesData.map((imageUrl, index: number) => (
           <div
