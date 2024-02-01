@@ -1,8 +1,8 @@
 "use client";
 
-import Image from 'next/image';
+import ImageNext from 'next/image';
 import React, { useState } from 'react';
-import { Avatar, Badge, Space } from 'antd';
+import { Avatar, Badge, Image, Space } from 'antd';
 interface DragAndDropProps {
   imageUrl: string[];
   defaultValue: string;  // Change the type as per your data type
@@ -15,6 +15,7 @@ interface DragAndDropProps {
 
 const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disabled, onChange, quizIndex }) => {
 
+  console.log(disabled, 'disabled')
 
   const imageUrls = [
     'https://i.ibb.co/WDzDCFw/nodejs.png',
@@ -23,9 +24,9 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disa
     // Add more image URLs as needed
   ];
 
-  const [ImagesData, setImagesData] = useState<string[]>(imageUrls || [])
+  const [ImagesData, setImagesData] = useState<string[]>(disabled ? [] : imageUrl)
   // let ImagesData = [...imageUrls]
-  const [draggedItems, setDraggedItems] = useState<string[]>([]);
+  const [draggedItems, setDraggedItems] = useState<string[]>(disabled ? imageUrls : []);
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -72,11 +73,12 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disa
   // } else {
   // }
 
-  console.log(ImagesData, 'draggedItems', draggedItems)
+  // console.log(ImagesData, 'draggedItems', draggedItems)
 
   return (
-    <div className={`max-w-2xl mx-auto my-3 ${disabled && 'disabled:'}`}>
-      <div style={{ display: 'flex', gap: '10px' }} id="images">
+    <div className={`max-w-2xl mx-auto my-3 ${disabled && 'disabled opacity-[0.5] cursor-none '}`}>
+
+      <div style={{ display: 'flex', gap: '10px', }} id="images">
         {ImagesData.map((imageUrl, index: number) => (
           <div
             key={index}
@@ -84,10 +86,10 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disa
             onDragStart={(event) => event.dataTransfer.setData('text/plain', imageUrl)}
             style={{ cursor: 'move' }}
           >
-            <Image src={imageUrl} alt={`Image ${index}`} width={100} height={100} />
+            <ImageNext src={imageUrl} alt={`Image ${index}`} width={100} height={100} />
           </div>
         ))}
-      </div>
+        I</div>
       <div
         id="destination"
         onDrop={handleDrop}
@@ -102,14 +104,18 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disa
         {/* <strong>Drop Zone</strong> */}
         <div className='flex gap-3 justify-center items-center' >
           {draggedItems.map((item, index) => (
-            <div key={index} className=""
+            <div  key={index} className=""
               style={{ cursor: 'zoom-out' }}>
-              <Badge.Ribbon text={<span onClick={() => handleRemoveItem(index, item)}>X</span>} color='red' placement="end">
+              <Badge.Ribbon  text={<span onClick={() => handleRemoveItem(index, item)}>X</span>} color='red' placement="end">
                 <Image
                   src={item}
                   alt={`Image ${index}`}
                   width={100}
                   height={120}
+                  style={{
+                    height: "100px",
+                    width: "100px"
+                  }}
 
 
                 />

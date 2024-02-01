@@ -50,12 +50,11 @@ export default function QuizQuestionCard({
   }
 
   const checkAnswers = (responseData: ISubmittedUserQuizData) => {
-
     if (responseData?.singleQuiz?.type === 'input') {
       const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
       return isCorrectInput
     }
-    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find") {
+    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find" || responseData?.singleQuiz?.type === "drag") {
       const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
         const submittedAnswer = responseData?.singleQuiz?.answers?.find(
           (answer: any) => answer.id === answerId && answer.correct
