@@ -125,3 +125,9 @@ password : 11223344
 6. solved ok button
 7. TextEditor toggle
 8. 
+
+
+# drag
+1. target background image (1 string in array)
+2. Answer: uploaded
+ans

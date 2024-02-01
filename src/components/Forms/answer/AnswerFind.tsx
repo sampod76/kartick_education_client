@@ -148,17 +148,13 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                             />))}
                         </div>
 
-                        {/* serial number */}
-                        <div className="text-start flex flex-col">
-                            <label>Serial number</label>
+                        {/*//! serial number */}
+                <div className="text-start">
+                        <label>Serial number</label>
                             <Input
                                 placeholder="Serial Number"
-                                type="number"
-                                style={{
-                                    width: '8rem'
-                                }}
-                                
-                                value={answer.serialNumber}
+                                 type="number"
+                                value={answer?.serialNumber ? answer?.serialNumber : index + 1}
                                 defaultValue={index + 1}
                                 onChange={(e) =>
                                     handleChange(index, {
@@ -166,6 +162,10 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                                         serialNumber: +e.target.value,
                                     })
                                 }
+                                style={{
+                                    width: '8rem'
+                                }}
+                                onWheel={(e) => e.preventDefault()}
                             />
                         </div>
 
