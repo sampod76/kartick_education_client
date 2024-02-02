@@ -131,3 +131,9 @@ password : 11223344
 1. target background image (1 string in array)
 2. Answer: uploaded
 ans
+
+# Home UI Updates:
+
+1. fixed common course margin and text responsive
+2. bottom join Now course buttons
+3. 

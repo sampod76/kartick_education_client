@@ -1,7 +1,6 @@
 "use client";
-import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
+
 import {
-  useGetAllMilestoneQuery,
   useGetSingleMilestoneQuery,
 } from "@/redux/api/adminApi/milestoneApi";
 import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
@@ -10,6 +9,7 @@ import Link from "next/link";
 import React from "react";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { ENUM_YN } from "@/constants/globalEnums";
+import { ContainerOutlined } from "@ant-design/icons"
 
 const SideModuleList = ({
   milestoneId,
@@ -51,8 +51,8 @@ const SideModuleList = ({
       }}
       className=" lg:border-r-2 border-r-slate-500 h-full"
     >
-      <h2 className="text-[18px] lg:text-[20px] font-[550] ">
-        💥{milestoneData?.title}
+      <h2 className="text-start text-[20px] px-3 flex gap-2 font-semibold font-['Inter'] leading-1 py-4 bg-[#479FEC] text-white">
+        <ContainerOutlined />   <span>{milestoneData?.title}</span>
       </h2>
       {/* <Divider
         style={{
@@ -68,10 +68,11 @@ const SideModuleList = ({
             <Link
               key={index}
               href={`/lesson/module/${module?._id}?module=${module?.title}`}
-              className={`  text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2 text-[#1c1a1a]  py-1 px-1 md:px-3 rounded ${module?._id === moduleId ? "underline" : ""
+              className={`  text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2   py-3 px-1 md:px-3 rounded ${module?._id === moduleId ? "text-[#479FEC]" : "text-black"
                 } `}
             >
-              <span className="rounded-full bg-yellow-400 w-2 h-2 inline-flex items-center justify-center mr-2"></span>
+              <span className={`rounded-full   w-2 h-2 inline-flex items-center justify-center mr-2 ${module?._id === moduleId ? "bg-[#479FEC]" : "bg-black"
+                }`}></span>
               {module?.title}
             </Link>
           );

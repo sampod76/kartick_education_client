@@ -69,7 +69,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   return (
     <div
 
-      className="w-[350px] md:w-full mx-auto  rounded-md shadow-md bg-white relative"
+      className="w-[360px] md:w-full mx-auto  rounded-md shadow-md bg-white relative"
     >
 
       <Link href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title
