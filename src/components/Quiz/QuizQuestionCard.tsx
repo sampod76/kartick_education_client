@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 import DragQUizTest from "../dragCustom/DragQuiz";
+import DndQuizCard from "../dnd/DndBeutyFull";
 const { Option } = Select;
 export default function QuizQuestionCard({
   quiz,
@@ -135,10 +136,29 @@ export default function QuizQuestionCard({
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
     let changedAnswer = [];
-    console.log(answer, 'answer')
+    // console.log(answer, 'answer', questionIndex)
+
+    //! changedAnswer should array of string .
+
 
     if (Array.isArray(answer)) {
       changedAnswer = answer;
+      ///! for drag and drops
+      if (answer[0]?.title) {
+        const imgUrls: string[] = answer.reduce((acc, answer) => {
+          if (answer._id && answer.imgs.length > 0) {
+            acc.push(answer._id);
+          }
+          return acc;
+        }, []);
+        changedAnswer = imgUrls
+      }
+      else {
+        changedAnswer = answer;
+      }
+
+
+
     } else if (typeof answer === "string") {
       changedAnswer.push(answer);
     }
@@ -492,12 +512,21 @@ export default function QuizQuestionCard({
 
 
           <DragQUizTest
-            imageUrl={['image']}
-            defaultValue="yourDefaultValue"
+            // imageUrl={quiz?.answers}
+            defaultValue={submittedDefaultData}
             disabled={IsDisabledQUiz}
             onChange={handleAnswerChange}
             quizIndex={index}
+            quizData={quiz}
           />
+          // <DndQuizCard
+          //   imageUrl={['image']}
+          //   defaultValue="yourDefaultValue"
+          //   disabled={IsDisabledQUiz}
+          //   onChange={handleAnswerChange}
+          //   quizIndex={index}
+          //   card={quiz}
+          // />
         )}
 
 

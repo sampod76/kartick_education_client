@@ -35,11 +35,13 @@
     "jodit-react": "^1.3.39",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "mathjax": "^3.2.2",
     "next": "^14.0.4",
     "owl.carousel": "^2.3.4",
     "rc-tween-one": "^3.0.6",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-countdown-circle-timer": "^3.2.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -62,6 +64,7 @@
     "yup": "^1.3.1"
   },
   "devDependencies": {
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-slick": "^0.23.13",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",

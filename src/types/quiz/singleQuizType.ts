@@ -1,3 +1,4 @@
+import { ICategoryStatus } from "..";
 import { IModuleData } from "./../moduleType";
 export type IAnswer = {
   _id?: string;
@@ -19,7 +20,7 @@ export type ISingleQuizData = {
   _id: string;
   title: string;
   answers: IAnswer[];
-  imgs: [];
+  imgs: string[];
   type: IQuizType;
   serialNumber: 3;
   category: string;
@@ -52,7 +53,7 @@ export type ISingleQuizData = {
     updatedAt: string;
     __v: 0;
   };
-  status: string;
+  status: ICategoryStatus;
   isDelete: string;
   tags: [];
   createdAt: string;
