@@ -116,13 +116,18 @@ export default function QuizTestPage({
     // }
   };
 
-
+  // console.log(userAnswers)
   // ! For disabled Next Button
   const isDisabledNext = useMemo(() => {
 
+    console.log(userAnswers)
     const isSelected = userAnswers.find(
-      (answer: any) => answer?.index === (currentStep < quizData.length - 1 ? currentStep + 1 : currentStep)
+      (answer: any) => 
+      answer?.index === (currentStep < quizData.length - 1 ? currentStep: currentStep+1)
+      
     );
+    console.log(isSelected,currentStep)
+
     // if (currentStep < quizData.length - 1) {
 
     // }

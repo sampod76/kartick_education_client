@@ -136,10 +136,29 @@ export default function QuizQuestionCard({
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
     let changedAnswer = [];
-    console.log(answer, 'answer')
+    // console.log(answer, 'answer', questionIndex)
+
+    //! changedAnswer should array of string .
+
 
     if (Array.isArray(answer)) {
       changedAnswer = answer;
+      ///! for drag and drops
+      if (answer[0]?.title) {
+        const imgUrls: string[] = answer.reduce((acc, answer) => {
+          if (answer._id && answer.imgs.length > 0) {
+            acc.push(answer._id);
+          }
+          return acc;
+        }, []);
+        changedAnswer = imgUrls
+      }
+      else {
+        changedAnswer = answer;
+      }
+
+
+
     } else if (typeof answer === "string") {
       changedAnswer.push(answer);
     }
@@ -492,20 +511,22 @@ export default function QuizQuestionCard({
         {quiz?.type === "drag" && (
 
 
-          // <DragQUizTest
+          <DragQUizTest
+            // imageUrl={quiz?.answers}
+            defaultValue={submittedDefaultData}
+            disabled={IsDisabledQUiz}
+            onChange={handleAnswerChange}
+            quizIndex={index}
+            quizData={quiz}
+          />
+          // <DndQuizCard
           //   imageUrl={['image']}
           //   defaultValue="yourDefaultValue"
           //   disabled={IsDisabledQUiz}
           //   onChange={handleAnswerChange}
           //   quizIndex={index}
+          //   card={quiz}
           // />
-          <DndQuizCard
-            imageUrl={['image']}
-            defaultValue="yourDefaultValue"
-            disabled={IsDisabledQUiz}
-            onChange={handleAnswerChange}
-            quizIndex={index}
-          />
         )}
 
 

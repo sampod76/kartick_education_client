@@ -1,115 +1,107 @@
 "use client";
 
 import ImageNext from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Badge, Image, Space } from 'antd';
+import { IAnswer, ISingleQuizData } from '@/types/quiz/singleQuizType';
+import { ISubmittedUserQuizData } from '@/types/quiz/submittedQuizType';
+
 interface DragAndDropProps {
-  imageUrl: string[];
-  defaultValue: string;  // Change the type as per your data type
+  // imageUrls: IAnswer[];
+  defaultValue: ISubmittedUserQuizData;  // Change the type as per your data type
   disabled: boolean;
   onChange: (questionIndex: number, answer: any) => void;
   quizIndex: number;
+  quizData: ISingleQuizData
 }
 
 
 
-const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disabled, onChange, quizIndex }) => {
+const DragQUizTest: React.FC<DragAndDropProps> = ({ defaultValue, disabled, onChange, quizIndex, quizData }) => {
 
-  console.log(disabled, 'disabled')
+  // console.log(disabled, 'disabled', quizData?.answers, imageUrls)
 
-  const imageUrls = [
-    'https://i.ibb.co/WDzDCFw/nodejs.png',
-    'https://i.ibb.co/tChHPPg/socket.jpg',
-    'https://i.ibb.co/DbWhk5q/prisma-1.jpg',
-    // Add more image URLs as needed
-  ];
+  // const imageUrls = [
+  //   'https://i.ibb.co/WDzDCFw/nodejs.png',
+  //   'https://i.ibb.co/tChHPPg/socket.jpg',
+  //   'https://i.ibb.co/DbWhk5q/prisma-1.jpg',
+  //   // Add more image URLs as needed
+  // ];
+  const [imagesData, setImagesData] = useState<IAnswer[]>(quizData?.answers);
+  const [draggedItems, setDraggedItems] = useState<IAnswer[]>([]);
 
-  const [ImagesData, setImagesData] = useState<string[]>(disabled ? [] : imageUrl)
-  // let ImagesData = [...imageUrls]
-  const [draggedItems, setDraggedItems] = useState<string[]>(disabled ? imageUrls : []);
+  useEffect(() => {
+    if (disabled) {
+      setImagesData([]);
 
+      const quizDefaultData = quizData?.answers?.filter((item: any) => defaultValue?.submitAnswers?.includes(item?._id))
+
+      setDraggedItems(quizDefaultData);
+    }
+  }, [defaultValue?.submitAnswers, disabled, quizData?.answers]);
+
+  // console.log(quizData?.answers)
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-
     const draggedItem = event.dataTransfer.getData('text/plain');
 
-    const currentIndex = ImagesData?.findIndex((item) => item === draggedItem)
+    if (!draggedItems.some((item) => item.title === draggedItem)) {
+      const draggedAnswer = imagesData.find((answer) => answer.title === draggedItem);
 
-
-    const currentImages = ImagesData?.filter((item) => item !== draggedItem)
-
-    setImagesData(currentImages)
-    if (draggedItems?.length > 0) {
-      onChange(quizIndex, ImagesData)
-    }
-
-    setDraggedItems((prevItems) => {
-      if (!prevItems.includes(draggedItem)) {
-        // Update the state with the dropped item
-        return [...prevItems, draggedItem];
+      if (draggedAnswer) {
+        setDraggedItems((prevItems) => [...prevItems, draggedAnswer]);
+        setImagesData((prevData) => prevData.filter((answer) => answer.title !== draggedItem));
+        // console.log('draggedItems',draggedItems,draggedAnswer,'draggedAnswer?.id')
+        onChange(quizIndex, [...draggedItems, draggedAnswer]);
       }
-      return prevItems;
-    });
+    }
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
 
-  const handleRemoveItem = (index: number, item: string) => {
-    setDraggedItems((prevItems) => {
-      const updatedItems = [...prevItems];
-      updatedItems.splice(index, 1);
-      return updatedItems;
-    });
-
-    setImagesData((prev) => [...prev, item])
-
-
+  const handleRemoveItem = (index: number) => {
+    const removedItem = draggedItems[index];
+    setDraggedItems((prevItems) => prevItems.filter((item, i) => i !== index));
+    setImagesData((prevData) => [...prevData, removedItem]);
+    onChange(quizIndex, draggedItems.filter((item, i) => i !== index));
   };
 
-  // if (draggedItems?.length > 0) {
-  //   onChange(quizIndex, ImagesData)
-  // } else {
-  // }
-
-  // console.log(ImagesData, 'draggedItems', draggedItems)
-
+  console.log(quizData?.imgs[0])
   return (
     <div className={`max-w-2xl mx-auto my-3 ${disabled && 'disabled opacity-[0.5] cursor-none '}`}>
-
-      <div style={{ display: 'flex', gap: '10px', }} id="images">
-        {ImagesData.map((imageUrl, index: number) => (
+      <div style={{ display: 'flex', gap: '10px' }} id="images">
+        {imagesData?.map((answer, index: number) => (
           <div
             key={index}
-            draggable
-            onDragStart={(event) => event.dataTransfer.setData('text/plain', imageUrl)}
-            style={{ cursor: 'move' }}
+            draggable={!disabled}
+            onDragStart={(event) => event.dataTransfer.setData('text/plain', answer.title)}
+            style={{ cursor: !disabled ? 'move' : 'not-allowed' }}
           >
-            <ImageNext src={imageUrl} alt={`Image ${index}`} width={100} height={100} />
+            <ImageNext src={answer.imgs ? answer.imgs[0] : ''} alt={`Image ${index}`} width={100} height={100} style={{ height: "80px", width: "80px" }} />
           </div>
         ))}
-        I</div>
+      </div>
       <div
         id="destination"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         className='p-3 text-white min-h-[20rem]'
         style={{
-          border: '2px dashed #000', marginTop: '20px',
-          //  background: `url(${'https://i.ibb.co/RbjJ4Xf/garden1.jpg'})`, backgroundRepeat: "no-repeat",
-          
+          border: '2px dashed #000',
+          marginTop: '20px',
           backgroundSize: "cover",
+          backgroundImage: quizData ? `url(${quizData?.imgs[0]})` : 'none',
+
         }}
       >
-        {/* <strong>Drop Zone</strong> */}
-        <div className='flex gap-3 justify-center items-center' draggable={false} >
-          {draggedItems.map((item, index) => (
-            <div key={index} draggable={false} className=""
-              style={{ cursor: 'zoom-out' }}>
-              <Badge.Ribbon text={<span onClick={() => handleRemoveItem(index, item)}>X</span>} color='red' placement="end">
-                <Image
-                  src={item}
+        <div className='flex gap-3 justify-center items-center'>
+          {draggedItems?.map((item, index) => (
+            <div key={index} style={{ cursor: 'zoom-out' }}>
+              <Badge.Ribbon text={<span onClick={() => handleRemoveItem(index)}>X</span>} color='red' placement="end">
+                <ImageNext
+                  src={item.imgs ? item.imgs[0] : ''}
                   alt={`Image ${index}`}
                   width={100}
                   height={120}
@@ -117,12 +109,8 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disa
                     height: "100px",
                     width: "100px"
                   }}
-
-
                 />
-
               </Badge.Ribbon>
-
             </div>
           ))}
         </div>

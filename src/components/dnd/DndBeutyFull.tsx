@@ -1,148 +1,101 @@
-'use client';
 
+"use client";
 
+import React, { useState } from "react";
+import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 
-import React, { useEffect, useState } from "react";
-import { Draggable, DropResult, Droppable, DragDropContext } from "react-beautiful-dnd";
-import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-// import 'react-beautiful-dnd/style.css';
-// import 'react-beautiful-dnd/style.css';
-// import 'react-beautiful-dnd/dist/react-beautiful-dnd.css';
-// import 'react-beautiful-dnd/dist/styles.css';
-
-
-
-interface Cards {
-    id: number;
+interface Answer {
+    _id?: string;
     title: string;
-    components: {
-        id: number;
-        name: string;
-    }[];
-
+    correct?: boolean;
+    imgs: string[];
+    status: "active" | "deactivate" | "save";
 }
 
-const cardsData = [
-    {
-        id: 0,
-        title: "Component Librarys",
-        components: [
-            {
-                id: 100,
-                name: "material ui"
-            },
-            {
-                id: 200,
-                name: "bootstrap"
-            },
-        ]
-    },
-    {
-        id: 1,
-        title: "Javascript Librarys",
-        components: [
-            {
-                id: 300,
-                name: "react"
-            },
-            {
-                id: 400,
-                name: "node"
-            },
-        ]
-    },
-    {
-        id: 2,
-        title: "react helping Librarys",
-        components: [
-            {
-                id: 500,
-                name: "redux"
-            },
-            {
-                id: 600,
-                name: "recoil"
-            },
-        ]
-    }
-
-
-]
-
+interface Card {
+    _id: string;
+    title: string;
+    answers: Answer[];
+    imgs: string[];
+}
 
 interface DragAndDropProps {
-    imageUrl?: string[];
-    defaultValue?: string;  // Change the type as per your data type
-    disabled?: boolean;
-    onChange?: (questionIndex: number, answer: any) => void;
-    quizIndex?: number;
+    card: Card;
 }
 
+const DndQuizCard: React.FC<DragAndDropProps> = ({ card }) => {
+    const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
-
-const DndQuizCard: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disabled, onChange, quizIndex }) => {
-    const [data, setData] = useState<Cards[] | []>([])
-    const onDragEnd = (result: DropResult) => {
+    const onDragEnd = (result: any) => {
         const { source, destination } = result;
+
         if (!destination) return;
-        if (source.droppableId !== destination.droppableId) {
-            const newData = [...data];
-            const oldDroppableIndex = newData.findIndex((x: any) => x.id == source.droppableId.split("droppable")[1]);
-            const newDroppableIndex = newData.findIndex((x: any) => x.id == destination.droppableId.split("droppable")[1]);
-            const [item] = newData[oldDroppableIndex].components.splice(source.index, 1);
-            newData[newDroppableIndex].components.splice(destination.index, 0, item);
-            setData(newData);
-        } else {
-            const newData = [...data];
-            const droppableIndex = newData.findIndex((x: any) => x.id == source.droppableId.split("droppable")[1]);
-            const [item] = newData[droppableIndex].components.splice(source.index, 1);
-            newData[droppableIndex].components.splice(destination.index, 0, item);
-            setData(newData);
+
+        if (source.droppableId === "images" && destination.droppableId === "dropZone") {
+            const draggedImage = card.answers[source.index]?.imgs?.[0];
+            if (draggedImage) {
+                setSelectedImages((prevSelectedImages) => [...prevSelectedImages, draggedImage]);
+            }
         }
     };
-    useEffect(() => {
-        setData(cardsData)
-    }, [])
-    if (!data.length) {
-        return <LoadingSkeleton />
-    }
+
     return (
         <div>
-            <h1 className="text-center mt-8 mb-3 font-bold text-[25px]">Drag and Drop Application</h1>
+            <h1 className="text-center mt-8 mb-3 font-bold text-[25px]">{card.title}</h1>
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="flex gap-4 justify-between my-20 mx-4 flex-col lg:flex-row">
-                    {data.map((val, index) => (
-                        <Droppable key={index} droppableId={`droppable${index}`}>
-                            {(provided: any) => (
-                                <div
-                                    className="p-5 lg:w-1/3 w-full bg-white border-gray-400 border border-dashed"
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
-                                >
-                                    <h2 className="text-center font-bold mb-6 text-black">{val.title}</h2>
-                                    {val.components?.map((component, index) => (
-                                        <Draggable key={component.id} draggableId={component.id.toString()} index={index}>
-                                            {(provided: any) => (
-                                                <div
-                                                    className="bg-gray-200 mx-1 px-4 py-3 my-3"
-                                                    {...provided.dragHandleProps}
-                                                    {...provided.draggableProps}
-                                                    ref={provided.innerRef}
-                                                >
-                                                    {component.name}
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    ))}
+                <div className="flex gap-4 justify-between my-20 mx-4">
+                    {/* Images Section */}
+                    <Droppable droppableId="images" direction="horizontal">
+                        {(provided: any) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef} className="flex gap-4 mb-8">
+                                {card.answers.map((answer, index) => (
+                                    <Draggable key={answer._id || index} draggableId={`image-${index}`} index={index}>
+                                        {(provided: any) => (
+                                            <div
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                ref={provided.innerRef}
+                                                className={`w-16 h-16 bg-gray-200 ${selectedImages.includes(answer.imgs?.[0] || "") ? "border-2 border-blue-500" : ""
+                                                    }`}
+                                            >
+                                                <img
+                                                    src={answer.imgs?.[0]}
+                                                    alt={`img-${index}`}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+
+                    {/* Drop Zone Section */}
+                    <Droppable droppableId="dropZone">
+                        {(provided: any) => (
+                            <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                className="h-48 bg-gray-300 relative"
+                                style={{ backgroundImage: `url(${card.imgs[0]})`, backgroundSize: "cover" }}
+                            >
+                                {selectedImages.map((img, index) => (
+                                    <div
+                                        key={index}
+                                        className="w-12 h-12 bg-white absolute top-4 left-4"
+                                        style={{ backgroundImage: `url(${img})`, backgroundSize: "cover" }}
+                                    />
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
                 </div>
             </DragDropContext>
         </div>
-    )
+    );
 };
 
 export default DndQuizCard;
