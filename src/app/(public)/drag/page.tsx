@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Avatar, Badge, Space } from 'antd';
+import DndQuizCard from '@/components/dnd/DndBeutyFull';
 interface DragAndDropProps {
   imageUrls: string[];
 }
@@ -61,6 +62,7 @@ export default function DragTest() {
 
   return (
     <div className='max-w-2xl mx-auto my-3'>
+
       <div style={{ display: 'flex', gap: '10px' }} id="images">
         {ImagesData.map((imageUrl, index: number) => (
           <div
@@ -72,7 +74,7 @@ export default function DragTest() {
             <Image src={imageUrl} alt={`Image ${index}`} width={100} height={100} />
           </div>
         ))}
-      </div>
+        DDndQuizCard</div>
       <div
         id="destination"
         onDrop={handleDrop}
@@ -105,6 +107,8 @@ export default function DragTest() {
           ))}
         </div>
       </div>
+
+      <DndQuizCard />
     </div>
   );
 }

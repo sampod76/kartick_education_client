@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 import DragQUizTest from "../dragCustom/DragQuiz";
+import DndQuizCard from "../dnd/DndBeutyFull";
 const { Option } = Select;
 export default function QuizQuestionCard({
   quiz,
@@ -491,7 +492,14 @@ export default function QuizQuestionCard({
         {quiz?.type === "drag" && (
 
 
-          <DragQUizTest
+          // <DragQUizTest
+          //   imageUrl={['image']}
+          //   defaultValue="yourDefaultValue"
+          //   disabled={IsDisabledQUiz}
+          //   onChange={handleAnswerChange}
+          //   quizIndex={index}
+          // />
+          <DndQuizCard
             imageUrl={['image']}
             defaultValue="yourDefaultValue"
             disabled={IsDisabledQUiz}
