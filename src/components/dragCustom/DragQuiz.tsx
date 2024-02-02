@@ -98,15 +98,16 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ imageUrl, defaultValue, disa
         style={{
           border: '2px dashed #000', marginTop: '20px',
           //  background: `url(${'https://i.ibb.co/RbjJ4Xf/garden1.jpg'})`, backgroundRepeat: "no-repeat",
+          
           backgroundSize: "cover",
         }}
       >
         {/* <strong>Drop Zone</strong> */}
-        <div className='flex gap-3 justify-center items-center' >
+        <div className='flex gap-3 justify-center items-center' draggable={false} >
           {draggedItems.map((item, index) => (
-            <div  key={index} className=""
+            <div key={index} draggable={false} className=""
               style={{ cursor: 'zoom-out' }}>
-              <Badge.Ribbon  text={<span onClick={() => handleRemoveItem(index, item)}>X</span>} color='red' placement="end">
+              <Badge.Ribbon text={<span onClick={() => handleRemoveItem(index, item)}>X</span>} color='red' placement="end">
                 <Image
                   src={item}
                   alt={`Image ${index}`}

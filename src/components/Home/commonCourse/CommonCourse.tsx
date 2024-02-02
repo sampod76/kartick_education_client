@@ -12,7 +12,7 @@ import { useAppSelector } from "@/redux/hooks";
 const CommonCourse = () => {
   const [current, setCurrent] = useState(1);
   const [pageCount, setPageCount] = useState(10);
-  const { searchValue } = useAppSelector((state:any) => state.bannerSearch)
+  const { searchValue } = useAppSelector((state: any) => state.bannerSearch)
   const query: Record<string, any> = {};
   query["limit"] = pageCount;
   query["page"] = current;
@@ -43,10 +43,10 @@ const CommonCourse = () => {
     return <CardLoading />;
   }
   return (
-    <div className="mt-[2rem] lg:mt-[6rem]  mx-auto bg-[#A2B0F321] pt-7">
-      <h1 className=" text-center text-gray-800 text-3xl xl:text-5xl font-medium leading-9 tracking-wider">BUILD A HEALTHIER FOUNDATION FOR LIFELONG LEARNING</h1>
-      <div className=" mt-[1rem] md:pt-6 lg:pt-12 px-1 lg:px-3">
-        <div className="max-w-[90% container mx-auto">
+    <div className=" mx-auto bg-[#A2B0F321] pt-[3rem] lg:pt-[6rem] xl:pt-[9rem]">
+      <h1 className=" text-center text-gray-800 text-[20px]  xl:text-5xl font-medium leading-9 tracking-wider"><span className="text-nowrap">BUILD A HEALTHIER FOUNDATION</span> FOR LIFELONG LEARNING</h1>
+      <div className=" mt-[1.3rem] px-1 lg:px-3">
+        <div className="w-full lg:max-w-[96%] containe mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 ">
             {courseData?.map((item: any, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
