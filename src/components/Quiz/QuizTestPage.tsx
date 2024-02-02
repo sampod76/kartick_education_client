@@ -204,8 +204,8 @@ export default function QuizTestPage({
             }
           });
         }
-        console.log(incorrectAnswers, correctAnswersSet)
         else if (singleQuiz?.type === 'input') {
+          console.log(incorrectAnswers, correctAnswersSet)
 
           if (singleQuiz?.single_answer === submitAnswers[0]) {
             correctAnswersSet.add(singleQuiz?._id);
