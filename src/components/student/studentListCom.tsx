@@ -94,7 +94,7 @@ const StudentListCom = ({
           img = "";
         }
 
-      
+
 
         return (
           <>
@@ -126,7 +126,7 @@ const StudentListCom = ({
       dataIndex: "userId",
     },
 
-    
+
     {
       title: "Contact no.",
       // dataIndex: "phoneNumber",
@@ -144,7 +144,7 @@ const StudentListCom = ({
     //     const date = `${data[data.role]?.dateOfBirth}   `;
     //     return date && dayjs(date).format("MMMM D, YYYY");
     //   },
-      
+
     // },
     {
       title: "Gender",
@@ -185,9 +185,9 @@ const StudentListCom = ({
 
                     <Menu.Item
                       key="delete"
-                      // onClick={() => {
-                      //   handleDelete(record._id);
-                      // }}
+                    // onClick={() => {
+                    //   handleDelete(record._id);
+                    // }}
                     >
                       Delete
                     </Menu.Item>
@@ -237,7 +237,7 @@ const StudentListCom = ({
             Success_model("Student Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });

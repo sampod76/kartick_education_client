@@ -38,14 +38,14 @@ const BlogList = () => {
   });
 
   useEffect(() => {
-    setUserInfo({loading:true})
+    setUserInfo({ loading: true })
     // Fetch user info asynchronously on the client side
     const fetchUserInfo = async () => {
       const userInfo = (await getUserInfo()) as any;
       setUserInfo((c: any) => ({ ...c, ...userInfo }));
     };
     fetchUserInfo();
-    setUserInfo({loading:false})
+    setUserInfo({ loading: false })
   }, []);
   const query: Record<string, any> = {};
   const [deleteBlog] = useDeleteBlogMutation();
@@ -85,8 +85,8 @@ const BlogList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteBlog(id).unwrap();
-         
-       
+
+
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -95,7 +95,7 @@ const BlogList = () => {
             Success_model("Service Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -188,7 +188,7 @@ const BlogList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 

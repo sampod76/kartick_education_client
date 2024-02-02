@@ -32,12 +32,12 @@ export default function UploadMultipalDragAndDropImge({
     },
     beforeUpload(file, fileList) {
       if (fileList.length > 10) {
-        message.error("You can only upload up to 10 images.");
+        Error_model_hook("You can only upload up to 10 images.");
         return false; // Cancel the upload
       }
       const maxSize = 5; // Max size in MB
       if (file.size / 1024 / 1024 > maxSize) {
-        message.error(
+        Error_model_hook(
           `${file.name} exceeds the maximum allowed size of ${maxSize} MB.`
         );
         return false; // Cancel the upload
@@ -56,7 +56,7 @@ export default function UploadMultipalDragAndDropImge({
         setImages((c) => [...c, info?.file?.response?.url]);
       } else if (status === "error") {
         setImageLoading(false);
-        message.error(`${info.file.name} file upload failed.`);
+        Error_model_hook(`${info.file.name} file upload failed.`);
       }
     },
     onDrop(e) {

@@ -19,7 +19,7 @@ interface DragAndDropProps {
 
 const DragQUizTest: React.FC<DragAndDropProps> = ({ defaultValue, disabled, onChange, quizIndex, quizData }) => {
 
-  // console.log(disabled, 'disabled', quizData?.answers, imageUrls)
+  // console.log(disabled, 'disabled', quizData?.answers, 'defaultValue', defaultValue)
 
   // const imageUrls = [
   //   'https://i.ibb.co/WDzDCFw/nodejs.png',

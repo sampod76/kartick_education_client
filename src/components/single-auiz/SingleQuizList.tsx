@@ -133,7 +133,7 @@ const SingleQuizList = () => {
             Success_model("SIngle QUiz Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -292,7 +292,7 @@ const SingleQuizList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 

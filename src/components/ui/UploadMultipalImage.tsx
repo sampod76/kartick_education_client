@@ -20,11 +20,11 @@ const beforeUpload = (file: RcFile) => {
     file.type === "image/png" ||
     file.type === "image/jpg";
   if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
+    Error_model_hook("You can only upload JPG/PNG file!");
   }
   // const isLt2M = file.size / 1024 / 1024 < 5;
   // if (!isLt2M) {
-  //   message.error("Image must smaller than 2MB!");
+  //   Error_model_hook("Image must smaller than 2MB!");
   // }
   return isJpgOrPng;
 };
@@ -110,14 +110,14 @@ const UploadMultipalImage = ({
       {defaultImage.length
         ? defaultImage?.map((image, i) => (
           <Image
-          key={i}
-          className=" rounded "
-          src={image}
-          width={300}
-          height={120}
-          alt=""
-        />
-          ))
+            key={i}
+            className=" rounded "
+            src={image}
+            width={300}
+            height={120}
+            alt=""
+          />
+        ))
         : null}
       <Upload
         name={name}

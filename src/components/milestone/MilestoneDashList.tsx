@@ -127,7 +127,7 @@ const MileStoneList = () => {
             Success_model("Milestone Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -263,7 +263,7 @@ const MileStoneList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 

@@ -35,7 +35,7 @@ import { getUserInfo } from "@/services/auth.service";
 
 const AdminPage = () => {
   // const userInfo?.role = USER_ROLE.ADMIN;
-  const userInfo =getUserInfo() as any
+  const userInfo = getUserInfo() as any
   const query: Record<string, any> = {};
   const [deleteUser] = useDeleteUserMutation();
 
@@ -187,7 +187,7 @@ const AdminPage = () => {
             </Link>
             <Button
               onClick={() => deleteUserHandler(data)}
-                type="default"
+              type="default"
               danger
             >
               <DeleteOutlined />
@@ -229,7 +229,7 @@ const AdminPage = () => {
             Success_model("Customer Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -303,6 +303,6 @@ const AdminPage = () => {
 // export default AdminPage;
 
 export default dynamic(() =>
-        Promise.resolve(AdminPage), {
+  Promise.resolve(AdminPage), {
   ssr: false,
 })

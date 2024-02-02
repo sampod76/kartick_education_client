@@ -48,7 +48,7 @@ export default function SUbscriptionForm() {
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 12 }}
           onFinish={onFinish}
-          onFinishFailed={() => message.error("Please fill in the detail")}
+          onFinishFailed={() => Error_model_hook("Please fill in the detail")}
           initialValues={{ remember: true }}
           layout="horizontal"
           style={{
@@ -229,7 +229,7 @@ export default function SUbscriptionForm() {
             style={{}}
             label="Share your Plan Please (optional)"
             name="plan"
-            // rules={[{ required: false, message: "Please enter Teacher" }]}
+          // rules={[{ required: false, message: "Please enter Teacher" }]}
           >
             <Input.TextArea />
           </Form.Item>
