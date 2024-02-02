@@ -36,6 +36,23 @@ export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: str
         modules: moduleData?.data
     }
 
+    // ! uuid for unique color in SIngle Milestone
+    const generateUUID = (): number => {
+        const timestamp = new Date().getTime();
+        const uuidString = `${timestamp.toString(16)}-xxxx-4xxx-xxxx`.replace(/[xy]/g, function (c) {
+            const r = (Math.random() * 16) | 0;
+            const v = c === 'x' ? r : (r & 0x3) | 0x8;
+            return v.toString(16); // Convert each character to a string
+        });
+
+        // Convert the hexadecimal string to a decimal number
+        const uuidNumber = parseInt(uuidString.replace(/[^0-9a-f]/gi, ''), 16);
+
+        return uuidNumber;
+    };
+
+
+
     // console.log(singleMilestoneData)
     return (
         <div>
@@ -66,7 +83,7 @@ export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: str
 
 
                 <div className="max-w-xl">
-                    <SingleMilestone milestoneData={singleMilestoneData} />
+                    <SingleMilestone milestoneData={singleMilestoneData} index={generateUUID()} />
                 </div>
             </div>
         </div>
