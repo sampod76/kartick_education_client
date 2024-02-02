@@ -32,7 +32,7 @@ import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
 import { getUserInfo } from "@/services/auth.service";
 
 const FaqList = () => {
-  const userInfo =getUserInfo() as any
+  const userInfo = getUserInfo() as any
 
   const query: Record<string, any> = {};
   const [deleteFaq] = useDeleteFaqMutation();
@@ -79,7 +79,7 @@ const FaqList = () => {
             Success_model("Service Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -137,12 +137,12 @@ const FaqList = () => {
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                  type="default"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)}   type="default" danger>
+            <Button onClick={() => handleDelete(data)} type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -177,7 +177,7 @@ const FaqList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 
@@ -207,7 +207,7 @@ const FaqList = () => {
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-                type="default"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

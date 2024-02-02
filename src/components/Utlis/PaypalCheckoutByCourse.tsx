@@ -33,7 +33,7 @@ export default function PaypalCheckoutByCourse({ courseData }: any) {
     }
     //@ts-ignore
     if (!courseData?._id) {
-      message.error("Please select any Course");
+      Error_model_hook("Please select any Course");
       return;
     }
     try {
@@ -60,7 +60,7 @@ export default function PaypalCheckoutByCourse({ courseData }: any) {
     }
   };
   return (
-    <div className={`${data?.data?.length || userInfo?.role ===USER_ROLE.SELLER ? "hidden" : "block"}`}>
+    <div className={`${data?.data?.length || userInfo?.role === USER_ROLE.SELLER ? "hidden" : "block"}`}>
       {PaypalPaymentLoading || isLoading ? (
         <Button
           type="default"

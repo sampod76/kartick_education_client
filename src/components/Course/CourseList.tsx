@@ -95,7 +95,7 @@ const CourseList = () => {
           }
         } catch (error: any) {
           console.log("🚀 ~ confirm_modal ~ error:", error);
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -266,7 +266,7 @@ const CourseList = () => {
       }
     } catch (error: any) {
       console.log("🚀 ~ deleteCourseHandler ~ error:", error);
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 

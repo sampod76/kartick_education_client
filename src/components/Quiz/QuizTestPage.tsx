@@ -97,7 +97,7 @@ export default function QuizTestPage({
         Error_model_hook(err?.message || err?.data);
       }
     } else {
-      // message.error("Already submitted the answer");
+      // Error_model_hook("Already submitted the answer");
       if (currentStep + 1 !== quizData?.length) {
         // console.log('equal............')
         return setCurrentStep((prevStep) => prevStep + 1);
@@ -120,13 +120,13 @@ export default function QuizTestPage({
   // ! For disabled Next Button
   const isDisabledNext = useMemo(() => {
 
-    console.log(userAnswers)
+    // console.log(userAnswers)
     const isSelected = userAnswers.find(
-      (answer: any) => 
-      answer?.index === (currentStep < quizData.length - 1 ? currentStep: currentStep+1)
-      
+      (answer: any) =>
+        answer?.index === (currentStep < quizData.length - 1 ? currentStep : currentStep + 1)
+
     );
-    console.log(isSelected,currentStep)
+    console.log(isSelected, currentStep)
 
     // if (currentStep < quizData.length - 1) {
 
@@ -189,16 +189,24 @@ export default function QuizTestPage({
           singleQuiz?.answers?.forEach((answer: any) => {
             if (submitAnswers?.includes(answer?._id)) {
               if (answer?.correct) {
+                // console.log('incorrect',incorrectAnswersSet, incorrectAnswersSet?.has(answer?._id), answer,'correct',correctAnswersSet)
                 //! for incorrect answers push in correctAnswersSet
-                correctAnswersSet.add(singleQuiz?._id);
+                if (!correctAnswersSet?.has(answer?._id) && !incorrectAnswersSet?.has(answer?._id)) {
+                  correctAnswersSet.add(singleQuiz?._id);
+                }
               } else {
                 //! for correct answers push in inCorrectAnswersSet
-                incorrectAnswersSet.add(singleQuiz?._id);
+                if (!correctAnswersSet?.has(answer?._id) && !incorrectAnswersSet?.has(answer?._id)) {
+                  // correctAnswersSet.add(singleQuiz?._id);
+                  incorrectAnswersSet.add(singleQuiz?._id);
+                }
               }
             }
           });
         }
         else if (singleQuiz?.type === 'input') {
+          // console.log(incorrectAnswers, correctAnswersSet)
+
           if (singleQuiz?.single_answer === submitAnswers[0]) {
             correctAnswersSet.add(singleQuiz?._id);
           } else {

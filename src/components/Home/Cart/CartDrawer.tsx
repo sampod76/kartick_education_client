@@ -52,7 +52,7 @@ export default function CartDrawer() {
       }
     } catch (error: any) {
       Error_model_hook(error.data);
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
   const totalPrice: any =

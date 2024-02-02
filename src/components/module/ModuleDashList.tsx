@@ -127,7 +127,7 @@ export default function ModuleDashList() {
             Success_model("Milestone Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -270,7 +270,7 @@ export default function ModuleDashList() {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 

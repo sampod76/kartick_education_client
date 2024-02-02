@@ -81,7 +81,7 @@ const CategoryList = () => {
           }
         } catch (error: any) {
           Error_model_hook(error.data);
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -206,7 +206,7 @@ const CategoryList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 

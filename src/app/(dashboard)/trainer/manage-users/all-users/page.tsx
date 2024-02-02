@@ -229,7 +229,7 @@ const AdminPage = () => {
             Success_model("Customer Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });

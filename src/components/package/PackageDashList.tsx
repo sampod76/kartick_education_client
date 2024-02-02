@@ -127,7 +127,7 @@ export default function PackageDashList() {
             Success_model("Package Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -262,7 +262,7 @@ export default function PackageDashList() {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 
