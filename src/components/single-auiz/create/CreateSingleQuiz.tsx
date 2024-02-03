@@ -285,17 +285,20 @@ const CreateSingleQuiz = () => {
                     required={true}
                   />
                 </Col>
-                <Row gutter={10} align='middle' justify='space-between' style={{
+                {/* <Row gutter={10} align='middle' justify='space-between' style={{
                   // background: "red"
                 }} >
 
 
-                  <Col
+                  
+                </Row> */}
+                <Col
                     className="gutter-row"
                     xs={12}
                     md={8}
                     style={{
-                      marginBottom: "10px",
+                      // marginBottom: "10px",
+
                     }}
                   >
                     <FormInput
@@ -312,7 +315,8 @@ const CreateSingleQuiz = () => {
                     xs={12}
                     md={8}
                     style={{
-                      // marginBottom: "10px",
+                      marginBottom: "10px",
+                      marginTop: "8px",
                     }}
                   >
                     <FormTimePicker name="time_duration" label="Time Duration" />
@@ -324,7 +328,8 @@ const CreateSingleQuiz = () => {
                     xs={12}
                     md={8}
                     style={{
-                      // marginBottom: "10px",
+                      marginBottom: "10px",
+                      marginTop: "8px",
                     }}
                   >
                     <FormSelectField
@@ -337,7 +342,6 @@ const CreateSingleQuiz = () => {
                       required={true}
                     />
                   </Col>
-                </Row>
                 <Col
                   className="gutter-row"
                   xs={24}

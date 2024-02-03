@@ -25,22 +25,22 @@ export const homeNavItems: MenuProps["items"] = [
     ),
     key: "/learning",
   },
-  {
-    label: (
-      <Link className="text-base font-thin font-serif capitalize" href="/">
-        Assessment
-      </Link>
-    ),
-    key: "/assessment",
-  },
-  {
-    label: (
-      <Link className="text-base font-thin font-serif capitalize" href="/">
-        Analysis
-      </Link>
-    ),
-    key: "/analysis",
-  },
+  // {
+  //   label: (
+  //     <Link className="text-base font-thin font-serif capitalize" href="/">
+  //       Assessment
+  //     </Link>
+  //   ),
+  //   key: "/assessment",
+  // },
+  // {
+  //   label: (
+  //     <Link className="text-base font-thin font-serif capitalize" href="/">
+  //       Analysis
+  //     </Link>
+  //   ),
+  //   key: "/analysis",
+  // },
   
   {
     label: (

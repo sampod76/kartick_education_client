@@ -118,15 +118,15 @@ const BannerSection = () => {
         <div className="mt-2 md:mt-[3rem] lg:mt-[5rem] flex flex-col lg:flex-row xl:flex-row gap-3 text-[1.2rem] text-white font-[700] uppercase">
           <Link
             className="w-full lg:w-[13rem] xl:w-[13rem] bg-primary  p-3 rounded-[8px]"
-            href="/"
+            href="/learning"
           >
             Get started new
           </Link>
           <Link
-            className="w-full lg:w-[21rem] xl:w-[21rem] bg-secondary  p-3 rounded-[8px]"
-            href="/"
+            className="w-fit mx-3 bg-secondary  px-5 flex justify-center items-center rounded-[8px]"
+            href="/subscription"
           >
-            FREE READING FOR ANY SEASON
+            Join now 
           </Link>
         </div>
       </section>

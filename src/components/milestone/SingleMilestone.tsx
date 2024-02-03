@@ -14,7 +14,7 @@ export default function SingleMilestone({ milestoneData }: { milestoneData: IMil
                 href={`/module/${milestoneData?._id}`}
                 className="text-start text-gray-800 text-[20px] font-semibold font-['Inter'] leading-1 "
             >
-                💥 {milestoneData?.title}
+               {milestoneData?.title}
                 {/* //! Milestone Title */}
             </Link>
             <div className="py-3 ">
