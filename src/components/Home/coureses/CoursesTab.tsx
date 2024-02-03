@@ -70,9 +70,9 @@ const CoursesTab = () => {
   tabsItems2.unshift({
     label: (
       <button
-        className={activeTabKey === "011allCourses" || activeTabKey === '0' ? activeClass : inactiveClass}
+        className={activeTabKey === "011allCourses"  ? `${activeClass} ml-1` : inactiveClass}
       >
-        <p className="px-1"> {"All"}</p>
+        <p className="px-1 "> All</p>
       </button>
     ),
     key: "011allCourses",
@@ -109,7 +109,7 @@ const CoursesTab = () => {
           animated
           onChange={handleTabClick}
           items={tabsItems2}
-          style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", padding: screens.sm ? "0" : "1em" }}
+          style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
           onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       )}

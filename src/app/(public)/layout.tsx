@@ -33,7 +33,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       {/* <CourseStatistics /> */}
       {/* <CartDrawer /> */}
 
-      <main style={{ minHeight: "100vh" }}>
+      <main className="min-h-screen">
         {children}
       </main>
       <Footer />

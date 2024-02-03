@@ -82,7 +82,8 @@ const CreateSingleQuiz = () => {
     useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
-    removeNullUndefinedAndFalsey(values);
+
+    console.log("🚀 ~ onSubmit ~ values:", values)
     // console.log("🚀 ~ onSubmit ~ values:", values);
     if (!quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");
@@ -115,6 +116,7 @@ const CreateSingleQuiz = () => {
       quiz: quiz?._id,
       type: quizType,
     };
+    console.log("🚀 ~ onSubmit ~ singleQuizDat:", singleQuizDat)
 
     // console.log(singleQuizDat);
 

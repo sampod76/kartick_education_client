@@ -83,7 +83,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="mt-5 lg:mt-7 container mx-auto ">
+    <div className="mt-5 lg:mt-7 max-w-[1990px] mx-auto ">
       <footer className="text-gray-500 bg-white px-4 py-5 max-w-screen- mx-auto md:px-8">
         <div className="gap-6 justify-between md:flex">
           <div className="flex-1">

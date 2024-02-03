@@ -7,6 +7,7 @@ import { Image } from 'antd';
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
+import { Error_model_hook } from "@/utils/modalHook";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -70,6 +71,7 @@ const UploadMultipalImage = ({
       // Get the compressed image URL
       const imgUrl = await uploadImgCloudinary(resizedImage);
       console.log("🚀 ~ handleImageProcessing ~ imgUrl:", imgUrl)
+
 
       setImagesUrl((prevImages) => [...prevImages, imgUrl]);
       setLoading(false);

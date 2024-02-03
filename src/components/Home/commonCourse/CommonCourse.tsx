@@ -43,9 +43,11 @@ const CommonCourse = () => {
     return <CardLoading />;
   }
   return (
-    <div className=" mx-auto bg-[#A2B0F321] pt-[3rem] lg:pt-[6rem] xl:pt-[9rem]">
-      <h1 className=" text-center text-gray-800 text-[20px]  xl:text-5xl font-medium leading-9 tracking-wider"><span className="text-nowrap">BUILD A HEALTHIER FOUNDATION</span> FOR LIFELONG LEARNING</h1>
-      <div className=" mt-[1.3rem] px-1 lg:px-3">
+    <div className=" bg-[#A2B0F321] pt-[3rem] pb-3 lg:pt-[5rem] ">
+      <div className="container mx-auto">
+
+      <h1 className=" text-center text-gray-800 text-[20px]  xl:text-[47px]  font-medium  tracking-wider"><span className="text-nowrap">BUILD A HEALTHIER FOUNDATION</span> FOR LIFELONG LEARNING</h1>
+      <div className=" mt-[3rem] px-1 lg:px-3 ">
         <div className="w-full lg:max-w-[96%] containe mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 ">
             {courseData?.map((item: any, index: number) => {
@@ -65,6 +67,7 @@ const CommonCourse = () => {
           />
 
         </div>
+      </div>
       </div>
     </div>
   );
