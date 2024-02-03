@@ -36,6 +36,7 @@ import ModalComponent from "@/components/Modal/ModalComponents";
 import Registration from "@/app/registration/page";
 import SignUpTeacherAndStudent from "@/app/(public)/signup/page";
 import { usePathname } from "next/navigation";
+import { Error_model_hook } from "@/utils/modalHook";
 
 export default function JoinPackage({
   plan,

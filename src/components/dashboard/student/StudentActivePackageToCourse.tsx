@@ -56,7 +56,7 @@ export default function StudentActivePackageToCourse() {
           {getPackage?.map((item: any, index: number) => {
             return (
               <div
-                key={item._id || index}
+                key={item?._id || index}
                 onClick={() =>
                   navigatePackage(item?.sellerPackageDetails?.categoriesDetails)
                 }

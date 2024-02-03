@@ -213,7 +213,7 @@ export default function LessonList({
           label: (
             <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
               <button className="flex justify-between w-full">
-                <h2 className="text-base text-start font-normal">
+                <h2 className="text-sm md:text-lg font-normal text-start ">
                   <span>Lesson {index + 1}: </span> {lesson?.title}
                 </h2>
                 {isLessonCollapsed ? (

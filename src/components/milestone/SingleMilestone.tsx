@@ -28,20 +28,20 @@ export default function SingleMilestone({ milestoneData, index }: { milestoneDat
                         <Link
                             href={`/lesson/module/${module?._id}?module=${module?.title}`}
                             key={module?._id || index}
-                            className="text-secondary text-start"
+                            className="text-gray-900 text-start flex justify-start  gap-1"
                             // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
-                            style={{
-                                display: "flex",
-                                gap: "0.5rem",
-                                alignItems: "start",
-                                fontWeight: 500,
-                                // color: "grey",
-                                fontSize: "18px",
-                                fontFamily: "Inter",
-                                // marginBlock: "1rem",
-                                textDecoration: "uppercase",
-                                // padding: "2px 16px",
-                            }}
+                            // style={{
+                            //     display: "flex",
+                            //     gap: "0.5rem",
+                            //     alignItems: "start",
+                            //     fontWeight: 500,
+                            //     // color: "grey",
+                            //     fontSize: "18px",
+                            //     fontFamily: "Inter",
+                            //     // marginBlock: "1rem",
+                            //     textDecoration: "uppercase",
+                            //     // padding: "2px 16px",
+                            // }}
                         >
                             {/* //! Modules List  */}
                             {/* <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div> */}
@@ -49,7 +49,7 @@ export default function SingleMilestone({ milestoneData, index }: { milestoneDat
                                 {" "}
                                 <SVGYelloDot />
                             </p>
-                            {module?.title}
+                           <p className='font-bold'> {module?.title}</p>
                         </Link>
                     );
                 })}

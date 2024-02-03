@@ -17,7 +17,7 @@ const MilestonePage = ({
   // console.log(courseId);
 
   return (
-    <div>
+    <div >
       <CourseMilestoneDetails courseId={courseId} />
     </div>
   );

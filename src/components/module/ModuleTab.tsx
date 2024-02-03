@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 import Quizes from "../Quiz/Quizes";
 import GlossaryPage from "../Glossary/Glossary";
+import ResourcePage from "../Resource/ResourceViewForTabs";
 
 export default function ModuleTab({
   moduleId,
@@ -42,7 +43,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />{" "}
-          <h1 className=" text-[1rem] md:text-[1.5rem]">Lesson Summery</h1>
+          <h1 className=" text-sm md:text-lg lg:text-2xl">Lesson Summery</h1>
         </button>
       ),
       key: "1",
@@ -72,7 +73,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />
-          <h1 className=" text-[1rem] md:text-[1.5rem]">Glossary</h1>
+          <h1 className="text-sm md:text-lg lg:text-2xl">Glossary</h1>
         </button>
       ),
       key: "3",
@@ -88,11 +89,11 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />
-          <h1 className=" text-[1rem] md:text-[1.5rem]"> Resources</h1>
+          <h1 className=" text-sm md:text-lg lg:text-2xl"> Resources</h1>
         </button>
       ),
       key: "4",
-      children: <ReviewsPage />,
+      children: <ResourcePage moduleId={moduleId} />,
     },
   ];
   return (

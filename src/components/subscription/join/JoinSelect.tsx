@@ -3,6 +3,7 @@ import { message } from "antd";
 import React from "react";
 import { IPlan } from "./JoinMain";
 import { useSearchParams } from "next/navigation";
+import { Error_model_hook } from "@/utils/modalHook";
 
 export default function JoinSelect({
   plan,

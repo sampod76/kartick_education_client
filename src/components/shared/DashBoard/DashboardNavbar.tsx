@@ -85,6 +85,7 @@ const DashboardNavBar = ({
             router.push("/login");
           }}
           type="dashed"
+          style={{color:'black'}}
         >
           Log out
         </Button>

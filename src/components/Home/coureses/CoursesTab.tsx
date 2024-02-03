@@ -99,7 +99,7 @@ const CoursesTab = () => {
   };
 
   return (
-    <div className=" bg-slate-100 p-3">
+    <div className=" bg-slate-100 p-3 container mx-auto">
       {isLoading ? (
         <TopBarLoading />
       ) : (
@@ -109,7 +109,7 @@ const CoursesTab = () => {
           animated
           onChange={handleTabClick}
           items={tabsItems2}
-          style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
+          // style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
           onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       )}

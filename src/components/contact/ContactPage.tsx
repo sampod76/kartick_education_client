@@ -41,7 +41,7 @@ export default function ContactPage() {
                 />
                 <div className="flex text-2xl flex-col gap-3">
                   <h2 className="text-2xl font-bold">Phone</h2>
-                  <h4 className="text-slate-600  text-xl ">88017820343324</h4>
+                  <h4 className="text-slate-600  text-xl ">1 (888)  2010390</h4>
                 </div>
               </div>
               <div className="flex align-top py-9  pr-5 pl-2  gap-[2rem] text-start ">
@@ -53,7 +53,7 @@ export default function ContactPage() {
                 />
                 <div className="flex text-2xl flex-col gap-3">
                   <h2 className="text-2xl font-bold">Message</h2>
-                  <h4 className="text-slate-600  text-xl ">88017820343324</h4>
+                  <h4 className="text-slate-600  text-xl ">1 (888)  2010390</h4>
                 </div>
               </div>
             </div>

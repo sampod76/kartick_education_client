@@ -123,15 +123,10 @@ export default function QuizTestPage({
     // console.log(userAnswers)
     const isSelected = userAnswers.find(
       (answer: any) =>
-        answer?.index === (currentStep < quizData.length - 1 ? currentStep : currentStep + 1)
+        answer?.index === (currentStep < quizData.length - 1 ? currentStep+1 : currentStep+1)
 
     );
-    console.log(isSelected, currentStep)
-
-    // if (currentStep < quizData.length - 1) {
-
-    // }
-    // console.log(userAnswers, 'isSelected', isSelected, currentStep + 1)
+   
     let disabled = false;
 
     if (currentAnswer?.singleQuiz === submittedDefaultData?.singleQuiz?._id) {

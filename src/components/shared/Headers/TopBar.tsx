@@ -27,9 +27,9 @@ const TopBar = () => {
   }, []);
 
   return (
-    <div className="py-1 lg:py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5">
+    <div className="py-1 lg:py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5 ">
       <section className="hidden lg:flex lg:flex-col">
-        <h2 className="font-[800] text-md lg:text-[17px]">
+        <h2 className="font-[800] text-md lg:text-[17px] ml-1">
           ATTEND ORIENTATION! IBL SCHOOL STORE!{" "}
         </h2>
         <div className="font-[700] flex gap-2 text-[15px]">

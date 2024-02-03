@@ -23,7 +23,7 @@ export default function ResourceCreate({
   moduleId,
 }: {
   moduleId: string;
-  setOpen: React.Dispatch<React.SetStateAction<any>>;
+  setOpen?: React.Dispatch<React.SetStateAction<any>>;
 }) {
   const [isReset, setIsReset] = useState(false);
   const [addResource, { isLoading }] = useAddResourceMutation();

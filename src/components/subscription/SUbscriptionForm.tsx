@@ -6,6 +6,7 @@ import { UserOutlined, FormOutlined, HomeOutlined } from "@ant-design/icons";
 const { Option } = Select;
 // import formBg from "@/assets/BG/fomrBg.png";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import { Error_model_hook } from "@/utils/modalHook";
 
 export default function SUbscriptionForm() {
   //! for Category options selection

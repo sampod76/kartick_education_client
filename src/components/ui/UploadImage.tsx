@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Image as AntImage } from 'antd';
+import { Error_model_hook } from "@/utils/modalHook";
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result as string));

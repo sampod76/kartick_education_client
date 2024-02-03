@@ -83,8 +83,8 @@ const Footer = () => {
   };
 
   return (
-    <div className="mt-5 lg:mt-7 max-w-[1990px] mx-auto ">
-      <footer className="text-gray-500 bg-white px-4 py-5 max-w-screen- mx-auto md:px-8">
+    <div className="mt-5 lg:mt-7  bg-white border-t-2">
+      <footer className="text-gray-500 container  p-5 md:p-2  mx-auto ">
         <div className="gap-6 justify-between md:flex">
           <div className="flex-1">
             <div className="max-w-x">
@@ -127,7 +127,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 py-6 border-t items-center justify-between sm:flex">
-          <div className="mt-4 sm:mt-0">
+          <div className="mt-4 sm:mt-0 ">
             &copy; Ibossomlearn deserve all copyright
           </div>
           <div className="mt-6 sm:mt-0">

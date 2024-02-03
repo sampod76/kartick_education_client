@@ -56,7 +56,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
           style={{
             marginTop: "1.25rem",
           }}
-          className="relative"
+          className="relative min-h-screen container mx-auto"
         >
           <h2
             style={{
@@ -80,7 +80,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
               background: "red",
             }}
           />
-          <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3 max-w-[98%] lg:max-w-[90%] mx-auto my-5">
+          <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3">
             {milestoneData?.map((milestone: IMilestoneData, index: number) => {
               return (
                 <SingleMilestone key={index} milestoneData={milestone} index={index}/>
