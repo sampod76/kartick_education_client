@@ -8,7 +8,7 @@ export default function CourseMilestoneDetails({ courseId }: { courseId: string 
 
   return (
     <div>
-      <section className="-mt-[5.8rem] ">
+      <section className="-mt-[5.8rem] mb-4 lg:mb-6 ">
         <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
         <BannerCourses />
       </section>

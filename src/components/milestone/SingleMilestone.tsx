@@ -16,8 +16,10 @@ export default function SingleMilestone({ milestoneData, index }: { milestoneDat
                 className={`text-start text-[20px] flex gap-2 font-semibold font-['Inter'] leading-1 py-4  ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
                     } ${index % 3 === 1 && "bg-secondary"} text-white px-3 brightness-95`}
             >
+
                 <ContainerOutlined />
                 <span>{milestoneData?.title}</span>
+
                 {/* //! Milestone Title */}
             </Link>
             <div className="py-3 px-2 pl-3">

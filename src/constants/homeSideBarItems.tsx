@@ -41,24 +41,24 @@ const homeSideItems = () => {
       key: "/subscription",
       icon: <EuroOutlined />,
     },
-    {
-      label: (
-        <Link className="text-base font-thin font-serif" href="/">
-          Assessment
-        </Link>
-      ),
-      key: "/assessment",
-      icon: <ControlOutlined />,
-    },
-    {
-      label: (
-        <Link className="text-base font-thin font-serif" href="/">
-          Analysis
-        </Link>
-      ),
-      key: "/analysis",
-      icon: <FundOutlined />,
-    },
+    // {
+    //   label: (
+    //     <Link className="text-base font-thin font-serif" href="/">
+    //       Assessment
+    //     </Link>
+    //   ),
+    //   key: "/assessment",
+    //   icon: <ControlOutlined />,
+    // },
+    // {
+    //   label: (
+    //     <Link className="text-base font-thin font-serif" href="/">
+    //       Analysis
+    //     </Link>
+    //   ),
+    //   key: "/analysis",
+    //   icon: <FundOutlined />,
+    // },
 
     {
       label: (
