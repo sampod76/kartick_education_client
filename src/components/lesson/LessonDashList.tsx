@@ -135,7 +135,7 @@ export default function LessonDashList() {
             Success_model("Lesson Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -275,7 +275,7 @@ export default function LessonDashList() {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
   //---------------------------------

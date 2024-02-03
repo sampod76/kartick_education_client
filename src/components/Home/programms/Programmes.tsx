@@ -6,11 +6,11 @@ import SIngleProgramme from "./SinglePrograme";
 const Programmes = () => {
   return (
     <div className="mt-7  container mx-auto ">
-      <section className="block lg:flex  justify-between py-3 ">
-        <h1 className="text-3xl text-[#282938] font-[600]">
+      <section className="flex  justify-between gap-3 py-3 px-2">
+        <h1 className="text-xl lg:text-3xl text-[#282938] font-[600]">
           Book & Online Programs Grades K-12
         </h1>
-        <button className="p-2 border-2 border-secondary rounded px-3 font-semibold gap-3">
+        <button className="p-2 h-[2.5rem] text-nowrap border-2 border-secondary rounded px-3 font-semibold gap-3 hover:bg-secondary hover:text-white">
           Join Now
         </button>
       </section>

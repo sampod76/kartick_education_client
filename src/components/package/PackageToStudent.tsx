@@ -176,7 +176,7 @@ const PackageToStudent = ({ packageId }: { packageId: string }) => {
             Success_model("Student Deactivate this package");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });

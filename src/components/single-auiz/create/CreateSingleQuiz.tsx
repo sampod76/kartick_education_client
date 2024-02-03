@@ -50,7 +50,7 @@ const CreateSingleQuiz = () => {
 
   const [isReset, setIsReset] = useState(false);
 
-  
+
   // ! For quiz Answer// 
 
 
@@ -458,9 +458,9 @@ const CreateSingleQuiz = () => {
                   )}
                   {/* //! should update cause it is statics */}
                   {quizType === "drag" && (
-                    <AnswerFind
-                      answersFind={answers}
-                      setAnswersFind={setAnswers as any}
+                    <AnswerMultiple
+                      answersMultiple={answers}
+                      setAnswersMultiple={setAnswers as any}
                     />
                   )}
                   {quizType === "input" && (

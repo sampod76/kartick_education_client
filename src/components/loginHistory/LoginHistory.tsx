@@ -171,7 +171,7 @@ export default function LoginHistory() {
             Success_model("Successfully Logout");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });

@@ -138,7 +138,7 @@ const QuizDashList = () => {
             Success_model("Quiz Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -263,7 +263,7 @@ const QuizDashList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
   //----------------------------------------------------------------

@@ -101,7 +101,7 @@ const GeneralUserBooking = () => {
               Success_model("Service Successfully Rejected!");
             }
           } catch (error: any) {
-            message.error(error.message);
+            Error_model_hook(error.message);
           }
         }
       }

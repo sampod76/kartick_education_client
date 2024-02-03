@@ -15,7 +15,7 @@ const SubscriptionLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (userInfo?.role === USER_ROLE.STUDENT) {
-      message.error("Student not available any packages or subscriptions");
+      Error_model_hook("Student not available any packages or subscriptions");
       router.push("/");
     }
     setIsLoading(false);

@@ -62,8 +62,8 @@ export default function LessonList({
           userInfo.role === USER_ROLE.ADMIN
             ? true
             : userInfo.role === "student"
-            ? true
-            : false,
+              ? true
+              : false,
       }
     );
   // for student
@@ -79,8 +79,8 @@ export default function LessonList({
           userInfo.role === USER_ROLE.ADMIN
             ? true
             : userInfo.role === "student"
-            ? false
-            : true,
+              ? false
+              : true,
       }
     );
 
@@ -205,7 +205,7 @@ export default function LessonList({
       );
 
       const isLessonCollapsed = currentCollapse.includes(lesson?._id);
-  
+
       ///! isExist have
       if (IsExistCategoryOrCourse) {
         return {
@@ -245,7 +245,7 @@ export default function LessonList({
                     <Link
                       key={quiz?._id}
                       href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3"
+                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3 text-[#479FEC]"
                     >
                       <h2 className="text-base font-normal">
                         Quiz {index + 1} : <span>{quiz?.title} </span>
@@ -292,7 +292,7 @@ export default function LessonList({
                     <Link
                       key={quiz?._id}
                       href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                      className="text-[14px] flex justify-between w-full mt-3"
+                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3 text-[#479FEC]"
                     >
                       <h2 className="text-base font-normal">
                         Quiz {index + 1} : <span>{quiz?.title} </span>

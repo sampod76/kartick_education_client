@@ -2,22 +2,27 @@ import { SVGYelloDot } from '@/assets/svg/Icon';
 import { IMilestoneData } from '@/types/miestoneType';
 import Link from 'next/link';
 import React from 'react'
+import { ContainerOutlined } from "@ant-design/icons"
 
-export default function SingleMilestone({ milestoneData }: { milestoneData: IMilestoneData }) {
+export default function SingleMilestone({ milestoneData, index }: { milestoneData: IMilestoneData, index: number }) {
     // console.log('milestoneData', milestoneData)
-    
+
     return (
         <div
-            className="border-2 shadow-xl p-2 rounded-xl"
+            className="border-2 shadow-xl  rounded-xl"
         >
             <Link
                 href={`/module/${milestoneData?._id}`}
-                className="text-start text-gray-800 text-[20px] font-semibold font-['Inter'] leading-1 "
+                className={`text-start text-[20px] flex gap-2 font-semibold font-['Inter'] leading-1 py-4  ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
+                    } ${index % 3 === 1 && "bg-secondary"} text-white px-3 brightness-95`}
             >
-               {milestoneData?.title}
+
+                <ContainerOutlined />
+                <span>{milestoneData?.title}</span>
+
                 {/* //! Milestone Title */}
             </Link>
-            <div className="py-3 ">
+            <div className="py-3 px-2 pl-3">
                 {milestoneData?.modules?.map((module: any, index: number) => {
                     return (
                         <Link

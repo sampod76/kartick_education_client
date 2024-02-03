@@ -16,6 +16,7 @@ import { getUserInfo } from "@/services/auth.service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import PaypalCheckoutByCourse from "../Utlis/PaypalCheckoutByCourse";
 import SingleMilestone from "../milestone/SingleMilestone";
+import { IMilestoneData } from "@/types/miestoneType";
 
 const MilestoneList = ({ courseId }: { courseId: string }) => {
   const userInfo = getUserInfo() as any;
@@ -80,9 +81,9 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
             }}
           />
           <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3 max-w-[98%] lg:max-w-[90%] mx-auto my-5">
-            {milestoneData?.map((milestone: any, index: number) => {
+            {milestoneData?.map((milestone: IMilestoneData, index: number) => {
               return (
-                <SingleMilestone key={index} milestoneData={milestone} />
+                <SingleMilestone key={index} milestoneData={milestone} index={index}/>
               );
             })}
           </div>

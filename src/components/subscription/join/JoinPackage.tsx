@@ -96,7 +96,7 @@ export default function JoinPackage({
 
   const makePayment = async (platform?: string) => {
     if (userToGetPurchasePackage?.includes(selectPackage?._id)) {
-      message.error("This package has already purchased");
+      Error_model_hook("This package has already purchased");
       return;
     }
     if (!userInfo?.id) {
@@ -105,7 +105,7 @@ export default function JoinPackage({
       return;
     }
     if (!selectPackage?._id) {
-      message.error("Please select any package");
+      Error_model_hook("Please select any package");
       return;
     }
     if (packName === "family_personal" && quantity > 11) {
@@ -183,7 +183,7 @@ export default function JoinPackage({
         if (redirectResult?.error) {
           console.log(redirectResult?.error);
           //@ts-ignore
-          message.error(redirectResult?.error?.message);
+          Error_model_hook(redirectResult?.error?.message);
         }
       } else {
         const resultPaypal = await createPaypalPayment({
@@ -199,7 +199,7 @@ export default function JoinPackage({
     } catch (error) {
       console.log(error);
       //@ts-ignore
-      message.error(error?.message);
+      Error_model_hook(error?.message);
     }
   };
 
@@ -309,8 +309,8 @@ export default function JoinPackage({
                   </span>
                   <div
                     className={`h-28 ${selectPackage?._id === packages?._id
-                        ? "bg-green-600"
-                        : "bg-gray-700"
+                      ? "bg-green-600"
+                      : "bg-gray-700"
                       } text-center p-4`}
                   >
                     <h3 className="text-2xl text-white uppercase font-semibold mb-1">
@@ -323,8 +323,8 @@ export default function JoinPackage({
                   </div>
                   <div
                     className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${selectPackage?._id === packages?._id
-                        ? "bg-green-600"
-                        : "bg-gray-700"
+                      ? "bg-green-600"
+                      : "bg-gray-700"
                       } text-white border-4 flex flex-col items-center justify-center border-white`}
                   >
                     <h3 className="text-2xl font-semibold">
@@ -467,8 +467,8 @@ export default function JoinPackage({
                         }
                         type="button"
                         className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${selectPackage?._id === packages?._id
-                            ? "bg-green-600 hover:brightness-125"
-                            : "bg-gray-700 hover:bg-gray-800"
+                          ? "bg-green-600 hover:brightness-125"
+                          : "bg-gray-700 hover:bg-gray-800"
                           }  rounded-md static lg:absolute bottom-1 left-0`}
                       >
                         Select

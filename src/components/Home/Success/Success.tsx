@@ -63,7 +63,7 @@ const Success = () => {
               className="w-full lg:max-w-[406px] max-h-[316px] bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
               key={index + 1}
             >
-              <p className="h-10 w-10 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-2 text-white">
+              <p className="h-12 w-12 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-3 text-white hover:text-primary hover:bg-slate-100">
                 {index + 11}
               </p>
               <h2 className="font-[500] text-2xl text-[#282938] ">
@@ -78,7 +78,7 @@ const Success = () => {
       </section>
 
       <Link
-        href="/"
+        href="/subscription"
         className="text-primary uppercase p-2 w-[164px] h-[44px] text-center mx-auto font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white"
       >
         Join Now

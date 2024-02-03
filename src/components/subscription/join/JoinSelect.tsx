@@ -43,7 +43,7 @@ export default function JoinSelect({
     } else if (value === "decrease" && quantity > 1) {
       setQuantity((q) => q - 1);
     } else {
-      message.error("Please chose at least 1 plan ");
+      Error_model_hook("Please chose at least 1 plan ");
     }
   };
 
@@ -61,7 +61,7 @@ export default function JoinSelect({
     } else if (value >= 1) {
       setQuantity(value);
     } else {
-      message.error("Please choose at least 1 plan");
+      Error_model_hook("Please choose at least 1 plan");
     }
   };
 
