@@ -103,7 +103,7 @@ export default function CreateCourseByCategory() {
           <Form  isReset={isReset}
               // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
                submitHandler={onSubmit}>
-            <section
+            <div
               style={{
                 padding: "0.5rem",
                 borderWidth: "2px",
@@ -250,14 +250,14 @@ export default function CreateCourseByCategory() {
                   required
                 />
               </div>
-              <section
+              <div
                 style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
               >
                 <p className="text-center my-3 font-bold text-xl">Description</p>
                 <TextEditor
                  isReset={isReset}
                 />
-              </section>
+              </div>
               {/* <div>
                 <UploadMultpalImage />
               </div> */}
@@ -266,7 +266,7 @@ export default function CreateCourseByCategory() {
               ) : (
                 <ButtonSubmitUI>Create Course</ButtonSubmitUI>
               )}
-            </section>
+            </div>
           </Form>
         </div>
       </div>

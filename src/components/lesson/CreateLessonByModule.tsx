@@ -207,7 +207,7 @@ export default function CreateLessonByModule({moduleId,moduleName}:{moduleId:str
                   style={{}}
                 >
                   {/*//! 3 */}
-                  <section
+                  <div
                     style={{
                       borderTopWidth: "2px",
                     }} /* className=" border-t-2" */
@@ -220,7 +220,7 @@ export default function CreateLessonByModule({moduleId,moduleName}:{moduleId:str
                       // textEditorValue={textEditorValue}
                       // setTextEditorValue={setTextEditorValue}
                     />
-                  </section>
+                  </div>
                 </Col>
                 <Col
                   className="gutter-row"

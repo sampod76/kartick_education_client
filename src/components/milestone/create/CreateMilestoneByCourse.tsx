@@ -183,7 +183,7 @@ export default function CreateMilestoneByCourse() {
                     // lg={8}
                     style={{}}
                   >
-                    <section
+                    <div
                       style={{
                         borderTopWidth: "2px",
                       }} /* className=" border-t-2" */
@@ -192,7 +192,7 @@ export default function CreateMilestoneByCourse() {
                         Description
                       </p>
                       <TextEditor isReset={isReset} />
-                    </section>
+                    </div>
                   </Col>
                 </Row>
               </div>

@@ -44,10 +44,10 @@ const HomePage = () => {
 
       <HomeHeader />
 
-      <section className="-mt-[6rem] bg-[#BEDDF9]">
+      <div className="-mt-[6rem] bg-[#BEDDF9]">
         <div className="w-full min-h-[5rem]"></div>
         <BannerSection />
-      </section>
+      </div>
       <main className="bg-[#A2B0F321] pb-10 min-h-screen">
 
         <CartDrawer />

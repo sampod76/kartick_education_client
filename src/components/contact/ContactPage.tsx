@@ -20,7 +20,7 @@ export default function ContactPage() {
   return (
     <div>
       <div className="container my-24 mx-auto md:px- block lg:flex items-center gap-5 bg-slate-0">
-        <section className="w-full lg:w-[45%]">
+        <div className="w-full lg:w-[45%]">
           <div className="flex flex-wrap">
             <div className="mb-10 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-">
               <h2 className="mb-6 text-3xl lg:text-5xl font-bold">
@@ -110,11 +110,11 @@ export default function ContactPage() {
               }}
             />
           </div>
-        </section>
+        </div>
 
-        <section className="w-full lg:w-[55%] px-2 lg:px-5">
+        <div className="w-full lg:w-[55%] px-2 lg:px-5">
           <ContactForm />
-        </section>
+        </div>
       </div>
     </div>
   );

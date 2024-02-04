@@ -31,7 +31,7 @@ export default function ViewCategory({categoryId}:{categoryId:string}) {
                   "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
               }} /* className="w-full rounded overflow-hidden shadow-lg" */
             >
-              <section className="grid  grid-cols-1 xl:grid-cols-2">
+              <div className="grid  grid-cols-1 xl:grid-cols-2">
                 <div>
                   <Image
                     width={800}
@@ -115,7 +115,7 @@ export default function ViewCategory({categoryId}:{categoryId:string}) {
                     </span>
                   </div>
                 </div>
-              </section>
+              </div>
             </div>
           </div>
         </>

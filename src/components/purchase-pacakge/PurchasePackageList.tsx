@@ -262,13 +262,13 @@ export default function PurchasePackageList() {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "50%",
+              width: "15rem",
             }}
           />
-          <FilterCourse
+          {/* <FilterCourse
             filterValue={filterValue}
             setFilterValue={setFilterValue}
-          />
+          /> */}
         </div>
         <div className="block lg:flex gap-5">
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

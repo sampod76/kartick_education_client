@@ -172,13 +172,19 @@ export default function PackageDashList() {
       ellipsis: true,
     },
     {
-      title: "Monthly Price",
+      title: "Monthly",
       dataIndex: ['monthly', 'price'],
       ellipsis: true,
       width: 100,
     },
     {
-      title: "Yearly Price",
+      title: "Biannual",
+      dataIndex: ['biannual', 'price'],
+      ellipsis: true,
+      width: 100,
+    },
+    {
+      title: "Yearly",
       dataIndex: ['yearly', 'price'],
       ellipsis: true,
       width: 100,
@@ -286,7 +292,7 @@ export default function PackageDashList() {
         padding: "1rem",
       }}
     >
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: `${userInfo?.role}`,
@@ -297,8 +303,8 @@ export default function PackageDashList() {
             link: `/${userInfo?.role}/package`,
           },
         ]}
-      />
-      <HeadingUI>Package List</HeadingUI>
+      /> */}
+      <h1>Package List</h1>
       <ActionBar>
         <div className="block lg:flex gap-5">
           <Input
@@ -306,22 +312,22 @@ export default function PackageDashList() {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "50%",
+              width: "15rem",
             }}
           />
-          <FilterCourse
+          {/* <FilterCourse
             filterValue={filterValue}
             setFilterValue={setFilterValue}
-          />
+          /> */}
         </div>
         <div className="block lg:flex gap-5">
-          <Button
+          {/* <Button
             type="default"
             style={{ marginRight: "5px" }}
             onClick={showDrawer}
           >
             Filter
-          </Button>
+          </Button> */}
 
 
           <Link href={`/${userInfo?.role}/package/create`}>
@@ -357,7 +363,7 @@ export default function PackageDashList() {
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
-      <Drawer
+      {/* <Drawer
         title={
           <div className="flex justify-between items-center ">
             <p>Filter</p>{" "}
@@ -391,7 +397,7 @@ export default function PackageDashList() {
             category?.courses || []
           }
         />
-      </Drawer>
+      </Drawer> */}
       ;
     </div>
   );

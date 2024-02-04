@@ -189,7 +189,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                     // lg={8}
                     style={{}}
                   >
-                    <section
+                    <div
                       style={{
                         borderTopWidth: "2px",
                       }} /* className=" border-t-2" */
@@ -202,7 +202,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                       // textEditorValue={textEditorValue}
                       // setTextEditorValue={setTextEditorValue}
                       />
-                    </section>
+                    </div>
                   </Col>
                 </Row>
               </div>

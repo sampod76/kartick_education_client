@@ -204,7 +204,7 @@ export default function EditMilestone({milestoneId}:{milestoneId:string}) {
                       // lg={8}
                       style={{}}
                     >
-                      <section
+                      <div
                         style={{
                           borderTopWidth: "2px",
                         }} /* className=" border-t-2" */
@@ -217,7 +217,7 @@ export default function EditMilestone({milestoneId}:{milestoneId:string}) {
                           // setTextEditorValue={setTextEditorValue}
                           defaultTextEditorValue={data?.details || ""}
                         />
-                      </section>
+                      </div>
                     </Col>
                   </Row>
                 </div>

@@ -31,7 +31,7 @@ const ProfileTemplate = () => {
 
 
   return (
-    <section>
+    <div>
       <div className="flex justify-end items-end">
         {/* <Button onClick={() => setUpdate(!update)}   type="default">
           {update ? "profile" : "Update/edit profile"}
@@ -100,7 +100,7 @@ const ProfileTemplate = () => {
         <AdminMainProfile />
       }
 
-    </section>
+    </div>
   );
 };
 

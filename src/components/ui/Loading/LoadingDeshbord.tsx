@@ -3,7 +3,7 @@ import React from "react";
 export default function DeshbordLoading() {
   return (
     <>
-      <section className="bg-white ">
+      <div className="bg-white ">
         <div className="container px-6 py-10 mx-auto animate-pulse">
           <h1 className="w-48 h-2 mx-auto bg-gray-200 rounded-lg "></h1>
 
@@ -95,7 +95,7 @@ export default function DeshbordLoading() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }

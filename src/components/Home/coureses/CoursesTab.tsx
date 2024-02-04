@@ -44,9 +44,9 @@ const CoursesTab = () => {
 
   const categoryData = data?.data || [];
   const activeClass =
-    " rounded-[5px] bg-blue-600 text-white text-[14px] lg:text-[18px] font-bold p-1 m-0 ring-4";
+    "   text-[14px] lg:text-[18px] font-bold";
   const inactiveClass =
-    " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[14px] lg:text-[18px] font-bold p-1";
+    "  text-[14px] lg:text-[18px]  ";
 
   const tabsItems2: TabsProps["items"] = categoryData?.map(
     (singleCategory: Record<string, any>, index: number ) => ({
@@ -99,7 +99,7 @@ const CoursesTab = () => {
   };
 
   return (
-    <div className=" bg-slate-100 p-3 container mx-auto">
+    <div className="  p-3 container mx-auto">
       {isLoading ? (
         <TopBarLoading />
       ) : (

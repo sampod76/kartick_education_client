@@ -75,9 +75,9 @@ export default function StudentDashboardMain() {
     <>
       {
         <div className="w-full mx-auto p-4 grid grid-cols-12 gap-2 min-h-screen">
-          <section className="col-span-12 relative top-0 z-10">
+          <div className="col-span-12 relative top-0 z-10">
             {/* <Chart></Chart> */}
-            <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-4 xl:gap-6 text-[30px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-4 xl:gap-6 text-[30px]">
               <div className="border text-white bg-[#4e36e2] w-full p-4 shadow rounded-xl flex justify-between items-center h-28 ">
                 <p className="border-2 border-white rounded-md p-1">
                   <FaUser className="h-7 w-7" />
@@ -118,7 +118,7 @@ export default function StudentDashboardMain() {
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
             <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 ">
               <div className="rounded-lg bg-white max-w-full md:min-h-[40vh] lgg:min-h-[60vh] px-4 py-5 shadow">
                 <div className="py-2 align-middle px-2">
@@ -207,7 +207,7 @@ export default function StudentDashboardMain() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
           {/* <Modal
     closeModal={setOpenModal}
     isOpen={openModal?.link ? true : false}

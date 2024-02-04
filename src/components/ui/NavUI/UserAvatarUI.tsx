@@ -57,7 +57,7 @@ const UserAvatarUI = () => {
     },
   ];
   return (
-    <section
+    <div
       style={{
         display: "flex",
         alignItems: "center",
@@ -90,7 +90,7 @@ const UserAvatarUI = () => {
           />
         </button>
       </Dropdown>
-    </section>
+    </div>
   );
 };
 

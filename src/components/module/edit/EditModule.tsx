@@ -236,7 +236,7 @@ export default function EditModule({moduleId}:{moduleId:string}) {
                       style={{}}
                     >
                       {/*//! 3 */}
-                      <section
+                      <div
                         style={{
                           borderTopWidth: "2px",
                         }} /* className=" border-t-2" */
@@ -249,7 +249,7 @@ export default function EditModule({moduleId}:{moduleId:string}) {
                           // setTextEditorValue={setTextEditorValue}
                           defaultTextEditorValue={data?.details || ""}
                         />
-                      </section>
+                      </div>
                     </Col>
                   </Row>
                 </div>

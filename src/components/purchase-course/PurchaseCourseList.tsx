@@ -235,7 +235,7 @@ export default function PurchaseCourseList() {
         padding: "1rem",
       }}
     >
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: `${userInfo?.role}`,
@@ -246,8 +246,8 @@ export default function PurchaseCourseList() {
             link: `/${userInfo?.role}/purchase-course`,
           },
         ]}
-      />
-      <HeadingUI>Purchased Package List</HeadingUI>
+      /> */}
+      <h1>Purchased Package List</h1>
       <ActionBar>
         <div className="block lg:flex gap-5">
           <Input
@@ -255,13 +255,13 @@ export default function PurchaseCourseList() {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "50%",
+              width: "15rem",
             }}
           />
-          <FilterCourse
+          {/* <FilterCourse
             filterValue={filterValue}
             setFilterValue={setFilterValue}
-          />
+          /> */}
         </div>
         <div className="block lg:flex gap-5">
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

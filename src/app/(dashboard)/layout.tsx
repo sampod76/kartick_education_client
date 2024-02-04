@@ -77,9 +77,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </Drawer>
       ) : (
-        <section>
+        <div>
           <DashboardSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
-        </section>
+        </div>
       )}
 
       <Layout style={{ overflow: "hidden" }}>
