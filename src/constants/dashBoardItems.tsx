@@ -22,7 +22,8 @@ import {
   ContactsOutlined,
   UserSwitchOutlined,
   PayCircleFilled,
-  ThunderboltFilled
+  ThunderboltFilled,
+  PicLeftOutlined
 } from "@ant-design/icons";
 import { PiPackageDuotone } from "react-icons/pi";
 import Link from "next/link";
@@ -458,7 +459,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
     {
       label: "Manage Features",
       key: "manage-features",
-      icon: <ThunderboltFilled />,
+      icon: <PicLeftOutlined />,
       children: [
         {
           label: "Advance Class",
