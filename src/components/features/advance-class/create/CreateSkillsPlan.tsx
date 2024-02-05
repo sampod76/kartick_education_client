@@ -22,6 +22,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import dayjs from "dayjs";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
+import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
 const { RangePicker } = DatePicker;
 // ! for uuid
 const generateUUID = () => {
@@ -35,6 +36,7 @@ export default function CreateSkillsPlan() {
   const [form] = Form.useForm();
 
   const uuid = generateUUID();
+  const [textEditorValue, setTextEditorValue] = useState("");
   // console.log(uuid,"uuiduuid")
   const { data, isLoading, error } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
@@ -61,38 +63,27 @@ export default function CreateSkillsPlan() {
   // };
 
   const onFinish = async (values: any) => {
-
     // console.log("Received values", values);
-    if (values?.img) {
-      const imgUrl = await uploadImgCloudinary(values?.img?.file);
-      // console.log(imgUrl, 'imgUrl')
-      values.img = imgUrl;
+    if (values?.imgs) {
+      const imgUrl = await uploadImgCloudinary(values?.imgs?.file);
+      console.log(imgUrl, 'imgUrl')
+      values.imgs = imgUrl;
     }
-    // console.log("Received values", values);
-    const formattedDateRange = values?.date_range?.map((date: any) =>
-      dayjs(date).format("YYYY-MM-DD")
-    );
-    values.date_range = formattedDateRange;
 
-    const packageData = {
-      membership: {
-        title: values.membership?.title,
-        uid: uuid,
-      },
-      img: values?.img,
-      date_range: values.date_range,
+
+    const skillsPlanData = {
       title: values.title,
-      type: values.type,
-      monthly: values.monthly,
-      biannual: values.biannual,
-      yearly: values.yearly,
-      categories: values.categories,
+      imgs: values?.imgs,
+      imgTitle: values.imgTitle,
+      page: values.page,
+      points: values?.points,
+      details: textEditorValue
     };
-    // console.log("🚀 ~ onFinish ~ packageData:", packageData)
-    // return
+    console.log("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData)
+    return
 
     try {
-      const res = await addPackage(packageData).unwrap();
+      const res = await addPackage(skillsPlanData).unwrap();
       // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
@@ -128,15 +119,13 @@ export default function CreateSkillsPlan() {
         layout="vertical"
       >
         <Form.Item>
-          {/* //! title */}
+          {/* //! 1. title */}
           <Form.Item name="title" label="Title">
             <Input size="large" placeholder="Please enter Skills and Plan title" />
           </Form.Item>
-
-
-
+          {/* //! 2. imgs */}
           <Space style={{}}>
-            <Form.Item name="title" label="Image Title">
+            <Form.Item name="imgTitle" label="Image Title">
               <Input size="large" placeholder="Please enter Skills and Plan imgTitle title" />
             </Form.Item>
             <Form.Item name="imgs" required>
@@ -157,9 +146,14 @@ export default function CreateSkillsPlan() {
           </Space>
 
         </Form.Item>
+        {/* //! 3.page  */}
+        <Form.Item name="page" label="Page">
+          <Input size="large" placeholder="Please enter Skills and Plan page" />
+        </Form.Item>
+        {/* //! 2. add points */}
         <div className="border-2 rounded-lg p-3">
           <LabelUi>Add Points</LabelUi>
-          <Form.List name="categories">
+          <Form.List name="points">
             {(fields, { add, remove }) => {
               // console.log(fields,'fieldsfieldsfieldsfields') ;
 
@@ -192,7 +186,6 @@ export default function CreateSkillsPlan() {
                       }}
                       align="center"
                     >
-                    
                       <Form.Item
                         {...restField}
                         name={[name, "title"]}
@@ -228,6 +221,13 @@ export default function CreateSkillsPlan() {
             }}
           </Form.List>
         </div>
+        <Form.Item>
+          <p className="text-center my-3 font-bold text-xl">Description</p>
+          <TextEditorNotSetValue
+            textEditorValue={textEditorValue}
+            setTextEditorValue={setTextEditorValue}
+          />
+        </Form.Item>
         <Form.Item>
           <div className="flex justify-center items-center mt-3">
             {AddPackageLoading ? (
