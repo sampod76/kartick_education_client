@@ -474,7 +474,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Create Advance Class
                 </Link>
               ),
-              key: `/${role}/features/create`,
+              key: `/${role}/features/advance-class/create`,
             },
             {
               label: (
@@ -485,7 +485,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Advance Class List
                 </Link>
               ),
-              key: `/${role}/features/create`,
+              key: `/${role}/features/advance-class`,
             },
           ]
         },
@@ -502,7 +502,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Create Skills Plan
                 </Link>
               ),
-              key: `/${role}/features/create`,
+              key: `/${role}/features/skills-plan/create`,
             },
             {
               label: (
@@ -513,7 +513,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Skills Plan List
                 </Link>
               ),
-              key: `/${role}/features/create`,
+              key: `/${role}/features/skills-plan`,
             },
           ]
         },
