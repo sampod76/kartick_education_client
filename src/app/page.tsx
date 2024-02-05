@@ -9,6 +9,7 @@ import Programmes from "@/components/Home/programms/Programmes";
 import HomeHeader from "@/components/shared/Headers/HomeHeader";
 import CartDrawer from "@/components/Home/Cart/CartDrawer";
 import React from "react";
+import { EllipsisMiddle } from "@/utils/CutTextElliples";
 
 // const CoursesTab = React.lazy(
 //   () => import("@/components/Home/coureses/CoursesTab")
@@ -59,6 +60,7 @@ const HomePage = () => {
         <Programmes />
       </main>
       <Footer />
+    
     </div>
   );
 };

@@ -66,7 +66,7 @@ const BannerSection = () => {
         <div className="w-full lg:w-[60%] px-5 md:py-[5rem] xl:py-[6rem]">
           <div className=" text-black  uppercase space-y-3 ">
             <h1
-              className=" text-[24px] whitespace-nowrap lg:text-[50px] leading-[1] xl:text-[64px]
+              className=" text-[24px] whitespace-nowrap md:text-[48px] lg:text-[50px]  leading-[1] xl:text-[64px]
               font-[700] lg:font-[800]"
             >
               Feel bored or anxious
@@ -145,7 +145,7 @@ const BannerSection = () => {
 
       <div className="w-full lg:w-[40%]  hidden lg:flex justify-end lg:-mt-[2rem] ">
         <Image
-          className="w-[80%] lg:w-[60%]  h-full lg:h-[38rem] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300  py-2"
+          className="w-[80%] lg:w-[60%]  h-full  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300  py-2"
           src={treeBoy}
           height={602}
           width={510}

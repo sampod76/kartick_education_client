@@ -68,7 +68,7 @@ const SideModuleList = ({
             <Link
               key={index}
               href={`/lesson/module/${module?._id}?module=${module?.title}`}
-              className={`  text-start text-base lg:text-[16px] font-[550] font-['Inter'] leading-2   py-3 px-1 md:px-3 rounded ${module?._id === moduleId ? "text-[#479FEC] " : "text-black font-normal"
+              className={`  text-start text-base lg:text-[16px]  font-['Inter'] leading-2   py-1 px-1 md:px-3 rounded ${module?._id === moduleId ? "text-[#479FEC] font-[550]" : "text-gray-800 font-normal"
                 } `}
             >
               <span className={`rounded-full   w-2 h-2 inline-flex items-center justify-center mr-2 ${module?._id === moduleId ? "bg-[#479FEC]" : "bg-black"

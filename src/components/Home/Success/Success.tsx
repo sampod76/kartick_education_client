@@ -53,8 +53,8 @@ const Success = () => {
   return (
     <AnimatePresenceWrapper>
       <div className=" container mx-auto  ">
-        <div className="bg-[#A2B0F321] mt-5 py-10 lg:py-[100px] flex flex-col mx-2">
-          <h1 className="text-2xl  lg:text-3xl  text-center text-[#282938] font-[600]">
+        <div className="bg-[#A2B0F321] mt-5 py-3 md:py-10 lg:py-[100px] flex flex-col mx-2">
+          <h1 className="text-xl md:text-2xl lg:text-3xl text-start  xl:text-center text-[#282938] font-[600]">
             Discover how <span className="text-secondary">iBlossomLearn </span>{" "}
             success for every learner with <br /> personalized and interactive
             lessons.

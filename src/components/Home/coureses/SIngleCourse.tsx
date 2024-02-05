@@ -34,6 +34,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   // const { title, details, img, demo_video, tags} = course;
   // console.log(course);
   const screens = useBreakpoint();
+ 
 
   // const dispatch = useAppDispatch()
   const userInfo = getUserInfo() as IDecodedInfo;
@@ -104,7 +105,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               </div>
             </div>
           </div>
-          <div className="px-6 py-4 flex flex-col justify-between h-[12rem] ">
+          <div className="px-6 py-4 flex flex-col justify-between h-[13rem] ">
             <div>
               <Typography.Title level={4}>
                 <EllipsisMiddle suffixCount={3} maxLength={90}>
@@ -115,7 +116,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               <p className="text-black text-sm md:text-base">
                 <EllipsisMiddle
                   suffixCount={3}
-                  maxLength={ 220}
+                  maxLength={screens.xxl ? 200 : screens.xl ?170 :200}
                 >
                   {course?.short_description}
                 </EllipsisMiddle>

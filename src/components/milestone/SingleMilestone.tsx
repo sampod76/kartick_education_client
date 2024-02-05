@@ -1,59 +1,62 @@
-import { SVGYelloDot } from '@/assets/svg/Icon';
-import { IMilestoneData } from '@/types/miestoneType';
-import Link from 'next/link';
-import React from 'react'
-import { ContainerOutlined } from "@ant-design/icons"
+import { SVGYelloDot } from "@/assets/svg/Icon";
+import { IMilestoneData } from "@/types/miestoneType";
+import Link from "next/link";
+import React from "react";
+import { ContainerOutlined } from "@ant-design/icons";
+import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 
-export default function SingleMilestone({ milestoneData, index }: { milestoneData: IMilestoneData, index: number }) {
-    // console.log('milestoneData', milestoneData)
+export default function SingleMilestone({
+  milestoneData,
+  index,
+}: {
+  milestoneData: IMilestoneData;
+  index: number;
+}) {
+  // console.log('milestoneData', milestoneData)
 
-    return (
-        <div
-            className="border-2 shadow-xl  rounded-xl"
-        >
+  return (
+    <div className="border-2 shadow-xl  rounded-xl">
+      <Link
+        href={`/module/${milestoneData?._id}`}
+        className={`text-start text-[20px] flex gap-2 font-semibold font-['Inter'] leading-1 py-4  ${
+          index % 8 === 0
+            ? "bg-[#2c92a8]"
+            :index % 7 === 0
+            ? "bg-[#0374d4]"
+            :index % 6 === 0
+            ? "bg-[#159f85]"
+            : index % 5 === 0
+            ? "bg-[#a95fdc]"
+            : index % 4 === 0
+            ? "bg-[#2c92a8]"
+            : index % 3 === 0
+            ? "bg-[#5a9b33]"
+            : index % 2 === 0
+            ? "bg-[#2c38a8]"
+            : "bg-[#215461]"
+        }  text-white px-3 brightness-95 rounded-t-md`}
+      >
+        <ContainerOutlined />
+        <span>{milestoneData?.title}</span>
+
+        {/* //! Milestone Title */}
+      </Link>
+      <div className="py-3 px-2 pl-3 flex flex-wrap gap-x-2 gap-y-1">
+        {milestoneData?.modules?.map((module: any, index: number) => {
+          return (
             <Link
-                href={`/module/${milestoneData?._id}`}
-                className={`text-start text-[20px] flex gap-2 font-semibold font-['Inter'] leading-1 py-4  ${index % 2 === 0 ? "bg-green-500" : "bg-teal-500"
-                    } ${index % 3 === 1 && "bg-blue-500"} text-white px-3 brightness-95 rounded-t-md`}
+              href={`/lesson/module/${module?._id}?module=${module?.title}`}
+              key={module?._id || index}
+              className="text-gray-900 text-start flex justify-start  gap-1"
             >
-
-                <ContainerOutlined />
-                <span>{milestoneData?.title}</span>
-
-                {/* //! Milestone Title */}
+              <p className="mt-1">
+                <HiOutlineClipboardDocumentList />
+              </p>
+              <p className=" "> {module?.title}</p>
             </Link>
-            <div className="py-3 px-2 pl-3">
-                {milestoneData?.modules?.map((module: any, index: number) => {
-                    return (
-                        <Link
-                            href={`/lesson/module/${module?._id}?module=${module?.title}`}
-                            key={module?._id || index}
-                            className="text-gray-900 text-start flex justify-start  gap-1"
-                            // className="text-sky-950 text-opacity-90 text-[18px] font-medium font-['Inter'] leading-2 flex gap-2 items-center"
-                            // style={{
-                            //     display: "flex",
-                            //     gap: "0.5rem",
-                            //     alignItems: "start",
-                            //     fontWeight: 500,
-                            //     // color: "grey",
-                            //     fontSize: "18px",
-                            //     fontFamily: "Inter",
-                            //     // marginBlock: "1rem",
-                            //     textDecoration: "uppercase",
-                            //     // padding: "2px 16px",
-                            // }}
-                        >
-                            {/* //! Modules List  */}
-                            {/* <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div> */}
-                            <p className="mt-2">
-                                {" "}
-                                <SVGYelloDot />
-                            </p>
-                           <p className='font-bold'> {module?.title}</p>
-                        </Link>
-                    );
-                })}
-            </div>
-        </div>
-    )
+          );
+        })}
+      </div>
+    </div>
+  );
 }
