@@ -432,7 +432,7 @@ export default function EditSingleQuiz({
                 style={{}}
               >
                 {/*//! 3 */}
-                <section
+                <div
                   style={{
                     borderTopWidth: "2px",
                   }} /* className=" border-t-2" */
@@ -445,7 +445,7 @@ export default function EditSingleQuiz({
                   // textEditorValue={textEditorValue}
                   // setTextEditorValue={setTextEditorValue}
                   />
-                </section>
+                </div>
               </Col>
 
               <Row

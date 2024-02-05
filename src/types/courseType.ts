@@ -2,7 +2,8 @@ import { ICategoryStatus, IPriceTypes } from "@/types";
 import { IUserData } from "./userType";
 
 export type ICourseData = {
-  _id: string;
+  _id:string;
+  programme: string;
   title: string;
   img: string;
   snid: string;

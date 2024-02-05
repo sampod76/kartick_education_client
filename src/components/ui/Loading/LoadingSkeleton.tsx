@@ -7,7 +7,7 @@ const LoadingSkeleton = ({
   number?: number;
   sectionNumber?: number;
 }) => (
-  <div className="">
+  <div className="container mx-auto">
     <Skeleton
       avatar
       style={{ marginTop: "1rem" }}

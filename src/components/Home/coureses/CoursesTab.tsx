@@ -44,9 +44,9 @@ const CoursesTab = () => {
 
   const categoryData = data?.data || [];
   const activeClass =
-    " rounded-[5px] bg-blue-600 text-white text-[14px] lg:text-[18px] font-bold p-1 m-0 ring-4";
+    "   text-[14px] lg:text-[18px] font-bold";
   const inactiveClass =
-    " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[14px] lg:text-[18px] font-bold p-1";
+    "  text-[14px] lg:text-[18px]  ";
 
   const tabsItems2: TabsProps["items"] = categoryData?.map(
     (singleCategory: Record<string, any>, index: number ) => ({
@@ -70,9 +70,9 @@ const CoursesTab = () => {
   tabsItems2.unshift({
     label: (
       <button
-        className={activeTabKey === "011allCourses" || activeTabKey === '0' ? activeClass : inactiveClass}
+        className={activeTabKey === "011allCourses"  ? `${activeClass} ml-1` : inactiveClass}
       >
-        <p className="px-1"> {"All"}</p>
+        <p className="px-1 "> All</p>
       </button>
     ),
     key: "011allCourses",
@@ -99,7 +99,7 @@ const CoursesTab = () => {
   };
 
   return (
-    <div className=" bg-slate-100 p-3">
+    <div className="  p-3 container mx-auto">
       {isLoading ? (
         <TopBarLoading />
       ) : (
@@ -109,7 +109,7 @@ const CoursesTab = () => {
           animated
           onChange={handleTabClick}
           items={tabsItems2}
-          style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", padding: screens.sm ? "0" : "1em" }}
+          // style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
           onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       )}

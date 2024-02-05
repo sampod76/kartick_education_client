@@ -1,7 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, InputNumber, Upload, DatePicker } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Space,
+  InputNumber,
+  Upload,
+  DatePicker,
+} from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -12,7 +20,8 @@ import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
+import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 const { RangePicker } = DatePicker;
 // ! for uuid
 const generateUUID = () => {
@@ -39,7 +48,8 @@ export default function CreatePackage() {
   }));
 
   const [addPackage, { isLoading: AddPackageLoading }] =
-    useAddPackageMutation();
+  useAddPackageMutation();
+  console.log("🚀 ~ CreatePackage ~ AddPackageLoading:", AddPackageLoading)
 
   // const [imgUrl, setImgUrl] = useState(null);
   // const handleChange = async (info) => {
@@ -51,15 +61,18 @@ export default function CreatePackage() {
   // };
 
   const onFinish = async (values: any) => {
+
     // console.log("Received values", values);
     if (values?.img) {
       const imgUrl = await uploadImgCloudinary(values?.img?.file);
       // console.log(imgUrl, 'imgUrl')
-      values.img = imgUrl
+      values.img = imgUrl;
     }
     // console.log("Received values", values);
-    const formattedDateRange = values.date_range.map((date: any) => dayjs(date).format('YYYY-MM-DD'));
-    values.date_range = formattedDateRange
+    const formattedDateRange = values?.date_range?.map((date: any) =>
+      dayjs(date).format("YYYY-MM-DD")
+    );
+    values.date_range = formattedDateRange;
 
     const packageData = {
       membership: {
@@ -87,13 +100,14 @@ export default function CreatePackage() {
         Success_model("Successfully added Package");
         form.resetFields();
       }
+   
       // console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
       console.log(error);
     }
   };
-  const [dynamicOption, setDynamicOption] = useState(options)
+  const [dynamicOption, setDynamicOption] = useState(options);
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
@@ -156,7 +170,7 @@ export default function CreatePackage() {
                   name="price"
                   type="number"
                   placeholder="Monthly Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -190,7 +204,7 @@ export default function CreatePackage() {
                   name="price"
                   type="number"
                   placeholder="Biannual Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -224,7 +238,7 @@ export default function CreatePackage() {
                   name="price"
                   type="number"
                   placeholder="yearly Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -247,24 +261,18 @@ export default function CreatePackage() {
               </Form.Item>
             </Space.Compact>
           </div>
-          <Space.Compact>
-
-
-          </Space.Compact>
-          <Space.Compact style={{
-
-          }}>
+          <Space.Compact></Space.Compact>
+          <Space.Compact style={{}}>
             <Form.Item name="img" required>
               <Upload
                 listType="picture-circle"
                 beforeUpload={async (file) => {
                   // console.log(file)
                   // const imgUrl = await uploadImgCloudinary(file);
-                  form.setFieldsValue({ imgs: '' }); // Set imgUrl in Form values
+                  form.setFieldsValue({ imgs: "" }); // Set imgUrl in Form values
                   return false; // Prevent default upload behavior
                   // return true
                 }}
-
               >
                 Upload
               </Upload>
@@ -292,9 +300,9 @@ export default function CreatePackage() {
               // };
 
               const handleRemove = (value: any) => {
-                console.log(value, 'handleRemove');
-                remove(value)
-              }
+                console.log(value, "handleRemove");
+                remove(value);
+              };
 
               return (
                 <>
@@ -368,13 +376,17 @@ export default function CreatePackage() {
         </div>
         <Form.Item>
           <div className="flex justify-center items-center mt-3">
-            <Button
-              loading={AddPackageLoading}
-              type="default"
-              htmlType="submit"
-            >
-              Create
-            </Button>
+            {AddPackageLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button
+                loading={AddPackageLoading}
+                type="default"
+                htmlType="submit"
+              >
+                Create
+              </Button>
+            )}
           </div>
         </Form.Item>
       </Form>

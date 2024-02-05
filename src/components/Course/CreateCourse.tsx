@@ -152,7 +152,7 @@ const CreateCourse = ({ setOpen }: any) => {
           Create a new course
         </Typography.Title>
 
-        <section
+        <div
           style={{
             padding: "0.5rem",
             borderWidth: "2px",
@@ -409,7 +409,7 @@ const CreateCourse = ({ setOpen }: any) => {
               />
             </Form.Item>
           </div>
-          <section
+          <div
             style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
           >
             <p className="text-center my-3 font-bold text-xl">Description</p>
@@ -417,7 +417,7 @@ const CreateCourse = ({ setOpen }: any) => {
               textEditorValue={textEditorValue}
               setTextEditorValue={setTextEditorValue}
             />
-          </section>
+          </div>
           {/* <div>
               <UploadMultpalImage />
             </div> */}
@@ -435,7 +435,7 @@ const CreateCourse = ({ setOpen }: any) => {
               </Button>
             )}
           </div>
-        </section>
+        </div>
       </Form>
     </div>
   );

@@ -25,7 +25,7 @@ export default function ModuleTop({ moduleData }: { moduleData: any }) {
         // fontSize: "2rem",
       }}
     >
-      <h2 className="text-xl lg:text-2xl">{moduleData?.title}</h2>
+      <h2 className="text-sm md:text-lg lg:text-2xl">{moduleData?.title}</h2>
     </div>
   );
 }

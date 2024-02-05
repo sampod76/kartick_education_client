@@ -73,11 +73,13 @@ export default function QuizQuestionCard({
 
   //// ! for getting single or select answer
   const isCorrectAnswer = checkAnswers(submittedDefaultData);
+  console.log("🚀 ~ isCorrectAnswer:", isCorrectAnswer)
   // console.log(submittedDefaultData);
 
   const getCorrectAnswerIdsHandler = (responseData: any): string[] => {
+    console.log("🚀 ~ getCorrectAnswerIdsHandler ~ responseData:", responseData)
     // Existing functionality for single select answer
-    console.log(responseData?.submitAnswers, "responseData?.submitAnswers");
+    
     const correctAnswerIds: string[] = responseData?.submitAnswers.reduce(
       (acc: string[], answerId: string) => {
         console.log(answerId, "answerId");
@@ -92,6 +94,7 @@ export default function QuizQuestionCard({
       },
       []
     );
+   
 
     // Check if submitAnswers length is greater than 1
     if (responseData?.submitAnswers.length > 1) {
@@ -119,6 +122,7 @@ export default function QuizQuestionCard({
 
     return correctAnswerIds;
   };
+  console.log(getCorrectAnswerIdsHandler(submittedDefaultData));
   // const correctId = getCorrectAnswerIdsHandler(submittedDefaultData);
 
   const allCorrectAnsweredIdHanlder = (responseData: any) => {
@@ -132,11 +136,11 @@ export default function QuizQuestionCard({
 
   const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData);
 
-  // console.log('c',correctId,allCorrectAnswer)
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
+    console.log("🚀 ~ handleAnswerChange ~ answer:", answer)
     let changedAnswer = [];
-    // console.log(answer, 'answer', questionIndex)
+    console.log('answer', questionIndex)
 
     //! changedAnswer should array of string .
 
@@ -144,7 +148,7 @@ export default function QuizQuestionCard({
     if (Array.isArray(answer)) {
       changedAnswer = answer;
       ///! for drag and drops
-      if (answer[0]?.title) {
+      if (answer[0]?._id) {
         const imgUrls: string[] = answer.reduce((acc, answer) => {
           if (answer._id && answer.imgs.length > 0) {
             acc.push(answer._id);
@@ -237,10 +241,11 @@ export default function QuizQuestionCard({
 
         </div>
         <div className="flex flex-wrap mx-5">
-          {quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
+          {quiz.type !== 'drag' && quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
             <Image
               key={key}
               src={img}
+       
               width={700}
               height={700}
               className={"w-96 lg:w-full max-h-44 lg:max-h-48 m-3"}
@@ -303,7 +308,7 @@ export default function QuizQuestionCard({
                   >
                     <div className="flex gap-1">
                       {option?.title && <TextToSpeech text={option?.title} />}
-                      {/* <p>{option?.title}</p> */}
+                      <p>{option?.title}</p>
                     </div>
                     <div className="flex flex-wrap w-full">
                       {option?.imgs?.map(
@@ -516,8 +521,9 @@ export default function QuizQuestionCard({
             defaultValue={submittedDefaultData}
             disabled={IsDisabledQUiz}
             onChange={handleAnswerChange}
-            quizIndex={index}
+            quizIndex={index +1}
             quizData={quiz}
+            // isCorrectAnswer={isCorrectAnswer}
           />
           // <DndQuizCard
           //   imageUrl={['image']}

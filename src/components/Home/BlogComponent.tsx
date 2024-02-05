@@ -46,7 +46,7 @@ const AllBlogs = () => {
             
 
               <div className="w-full rounded overflow-hidden ">
-                <section className="flex justify-between items-center">
+                <div className="flex justify-between items-center">
                 <h1 className="text-center text-lg">Title : {item?.title}</h1>
                   <div>
                     <Image
@@ -59,7 +59,7 @@ const AllBlogs = () => {
                   </div>
                   
                   
-                </section>
+                </div>
                 <div>
                    <p>{item?.content && CutText(item?.content,300)}</p>
                   </div>

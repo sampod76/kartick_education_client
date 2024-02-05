@@ -82,7 +82,8 @@ const CreateSingleQuiz = () => {
     useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
-    removeNullUndefinedAndFalsey(values);
+
+    console.log("🚀 ~ onSubmit ~ values:", values)
     // console.log("🚀 ~ onSubmit ~ values:", values);
     if (!quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");
@@ -115,6 +116,7 @@ const CreateSingleQuiz = () => {
       quiz: quiz?._id,
       type: quizType,
     };
+    console.log("🚀 ~ onSubmit ~ singleQuizDat:", singleQuizDat)
 
     // console.log(singleQuizDat);
 
@@ -409,7 +411,7 @@ const CreateSingleQuiz = () => {
                 style={{}}
               >
                 {/*//! 3 */}
-                <section
+                <div
                   style={{
                     borderTopWidth: "2px",
                   }} /* className=" border-t-2" */
@@ -422,7 +424,7 @@ const CreateSingleQuiz = () => {
                   // textEditorValue={textEditorValue}
                   // setTextEditorValue={setTextEditorValue}
                   />
-                </section>
+                </div>
               </Col>
 
               <Row

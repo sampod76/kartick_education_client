@@ -279,7 +279,7 @@ const CreateQuizByLesson = () => {
                     style={{}}
                   >
                     {/*//! 3 */}
-                    <section
+                    <div
                       style={{
                         borderTopWidth: "2px",
                       }} /* className=" border-t-2" */
@@ -292,7 +292,7 @@ const CreateQuizByLesson = () => {
                         // textEditorValue={textEditorValue}
                         // setTextEditorValue={setTextEditorValue}
                       />
-                    </section>
+                    </div>
                   </Col>
                 </Row>
               </div>

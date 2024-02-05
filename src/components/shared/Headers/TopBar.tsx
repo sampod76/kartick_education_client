@@ -27,9 +27,9 @@ const TopBar = () => {
   }, []);
 
   return (
-    <div className="py-1 lg:py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5">
-      <section className="hidden lg:flex lg:flex-col">
-        <h2 className="font-[800] text-md lg:text-[17px]">
+    <div className="py-1 lg:py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5 ">
+      <div className="hidden lg:flex lg:flex-col">
+        <h2 className="font-[800] text-md lg:text-[17px] ml-1">
           ATTEND ORIENTATION! IBL SCHOOL STORE!{" "}
         </h2>
         <div className="font-[700] flex gap-2 text-[15px]">
@@ -38,8 +38,8 @@ const TopBar = () => {
             info.iblossomelearn@gmail.com
           </h4>
         </div>
-      </section>
-      <section className="flex justify-between gap-3 lg:mt-0 ">
+      </div>
+      <div className="flex justify-between gap-3 lg:mt-0 ">
         <SocialGroup />
         {userInfoLoading ? (
           <div className="bg-white w-[50px] h-[50px] rounded-full shadow-md animate-pulse"></div>
@@ -64,7 +64,7 @@ const TopBar = () => {
             </Link>
           </div>
         )}
-      </section>
+      </div>
     </div>
   );
 };

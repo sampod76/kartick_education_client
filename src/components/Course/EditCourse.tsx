@@ -117,7 +117,7 @@ return (
             : {}
         }
       >
-        <section
+        <div
           style={{
             padding: "0.5rem",
             borderWidth: "2px",
@@ -292,7 +292,7 @@ return (
               required
             />
           </div>
-          <section
+          <div
             style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
           >
             <p className="text-center my-3 font-bold text-xl">Description</p>
@@ -302,7 +302,7 @@ return (
               
               defaultTextEditorValue={getCourse?.details}
             />
-          </section>
+          </div>
           {/* <div>
             <UploadMultpalImage />
           </div> */}
@@ -311,7 +311,7 @@ return (
           ) : (
             <ButtonSubmitUI>Update Course</ButtonSubmitUI>
           )}
-        </section>
+        </div>
       </Form>
     </div>
   </div>

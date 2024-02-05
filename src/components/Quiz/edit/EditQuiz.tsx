@@ -297,7 +297,7 @@ export default function EditQuiz({quizId}:{quizId:string}) {
                       style={{}}
                     >
                       {/*//! 3 */}
-                      <section
+                      <div
                         style={{
                           borderTopWidth: "2px",
                         }} /* className=" border-t-2" */
@@ -310,7 +310,7 @@ export default function EditQuiz({quizId}:{quizId:string}) {
                           // setTextEditorValue={setTextEditorValue}
                           defaultTextEditorValue={data.details || ""}
                         />
-                      </section>
+                      </div>
                     </Col>
                   </Row>
                 </div>

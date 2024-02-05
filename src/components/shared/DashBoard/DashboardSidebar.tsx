@@ -63,7 +63,7 @@ const DashboardSidebar = ({
       }}
     >
       {/* {!collapsed ? (
-        <section className="ml-6 text-3xl mt-3 flex gap-2 items-center">
+        <div className="ml-6 text-3xl mt-3 flex gap-2 items-center">
           <UserOutlined className="text-2xl " />
           <Link
             href={`/admin/`}
@@ -71,7 +71,7 @@ const DashboardSidebar = ({
           >
             E.D.M
           </Link>
-        </section>
+        </div>
       ) : (
         <UserOutlined className="text-2xl ml-7 mt-3" />
       )} */}

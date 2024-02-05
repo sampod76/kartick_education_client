@@ -1,24 +1,28 @@
 "use client";
 
-import ImageNext from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { Avatar, Badge, Image, Space } from 'antd';
-import { IAnswer, ISingleQuizData } from '@/types/quiz/singleQuizType';
-import { ISubmittedUserQuizData } from '@/types/quiz/submittedQuizType';
+import ImageNext from "next/image";
+import React, { useEffect, useState } from "react";
+import { Avatar, Badge, Image, Space } from "antd";
+import { IAnswer, ISingleQuizData } from "@/types/quiz/singleQuizType";
+import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
+import { IQuizAnswer } from "@/redux/features/quizSlice";
 
 interface DragAndDropProps {
   // imageUrls: IAnswer[];
-  defaultValue: ISubmittedUserQuizData;  // Change the type as per your data type
+  defaultValue: ISubmittedUserQuizData; // Change the type as per your data type
   disabled: boolean;
   onChange: (questionIndex: number, answer: any) => void;
   quizIndex: number;
-  quizData: ISingleQuizData
+  quizData: ISingleQuizData;
 }
 
-
-
-const DragQUizTest: React.FC<DragAndDropProps> = ({ defaultValue, disabled, onChange, quizIndex, quizData }) => {
-
+const DragQUizTest: React.FC<DragAndDropProps> = ({
+  defaultValue,
+  disabled,
+  onChange,
+  quizIndex,
+  quizData,
+}) => {
   // console.log(disabled, 'disabled', quizData?.answers, 'defaultValue', defaultValue)
 
   // const imageUrls = [
@@ -28,29 +32,41 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ defaultValue, disabled, onCh
   //   // Add more image URLs as needed
   // ];
   const [imagesData, setImagesData] = useState<IAnswer[]>(quizData?.answers);
+
   const [draggedItems, setDraggedItems] = useState<IAnswer[]>([]);
+  console.log("🚀 ~ draggedItems:", draggedItems);
 
   useEffect(() => {
     if (disabled) {
       setImagesData([]);
 
-      const quizDefaultData = quizData?.answers?.filter((item: any) => defaultValue?.submitAnswers?.includes(item?._id))
+      const quizDefaultData = quizData?.answers?.filter((item: any) =>
+        defaultValue?.submitAnswers?.includes(item?._id)
+      );
 
       setDraggedItems(quizDefaultData);
+    } else {
+      setImagesData(quizData?.answers);
     }
   }, [defaultValue?.submitAnswers, disabled, quizData?.answers]);
 
   // console.log(quizData?.answers)
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    const draggedItem = event.dataTransfer.getData('text/plain');
+    const draggedItem = event.dataTransfer.getData("text/plain");
+    console.log("🚀 ~ handleDrop ~ draggedItem:", draggedItem);
 
-    if (!draggedItems.some((item) => item.title === draggedItem)) {
-      const draggedAnswer = imagesData.find((answer) => answer.title === draggedItem);
+    if (!draggedItems.some((item) => item?._id === draggedItem)) {
+      const draggedAnswer = imagesData.find(
+        (answer) => answer._id === draggedItem
+      );
+      console.log("🚀 ~ handleDrop ~ draggedAnswer:", draggedAnswer);
 
       if (draggedAnswer) {
         setDraggedItems((prevItems) => [...prevItems, draggedAnswer]);
-        setImagesData((prevData) => prevData.filter((answer) => answer.title !== draggedItem));
+        setImagesData((prevData) =>
+          prevData.filter((answer) => answer?._id !== draggedItem)
+        );
         // console.log('draggedItems',draggedItems,draggedAnswer,'draggedAnswer?.id')
         onChange(quizIndex, [...draggedItems, draggedAnswer]);
       }
@@ -65,21 +81,40 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ defaultValue, disabled, onCh
     const removedItem = draggedItems[index];
     setDraggedItems((prevItems) => prevItems.filter((item, i) => i !== index));
     setImagesData((prevData) => [...prevData, removedItem]);
-    onChange(quizIndex, draggedItems.filter((item, i) => i !== index));
+    onChange(
+      quizIndex,
+      draggedItems.filter((item, i) => i !== index)
+    );
   };
 
-  console.log(quizData?.imgs[0])
+  const correctAnswer = defaultValue?._id
+    ? quizData.answers.filter((item) => item?.correct)
+    : [];
+  console.log("🚀 ~ correctAnswer:", correctAnswer);
+
   return (
-    <div className={`max-w-2xl mx-auto my-3 ${disabled && 'disabled opacity-[0.5] cursor-none '}`}>
-      <div style={{ display: 'flex', gap: '10px' }} id="images">
-        {imagesData?.map((answer, index: number) => (
+    <div
+      className={`max-w-2xl mx-auto my-3 ${
+        disabled && "disabled opacity-[0.5] cursor-none "
+      }`}
+    >
+      <div style={{ display: "flex", gap: "10px" }} id="images">
+        {imagesData?.map((answer: any, index: number) => (
           <div
             key={index}
             draggable={!disabled}
-            onDragStart={(event) => event.dataTransfer.setData('text/plain', answer.title)}
-            style={{ cursor: !disabled ? 'move' : 'not-allowed' }}
+            onDragStart={(event) =>
+              event.dataTransfer.setData("text/plain", answer?._id)
+            }
+            style={{ cursor: !disabled ? "move" : "not-allowed" }}
           >
-            <ImageNext src={answer.imgs ? answer.imgs[0] : ''} alt={`Image ${index}`} width={100} height={100} style={{ height: "80px", width: "80px" }} />
+            <ImageNext
+              src={answer.imgs ? answer?.imgs[0] : ""}
+              alt={`Image ${index}`}
+              width={100}
+              height={100}
+              style={{ height: "80px", width: "80px" }}
+            />
           </div>
         ))}
       </div>
@@ -87,27 +122,30 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ defaultValue, disabled, onCh
         id="destination"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className='p-3 text-white min-h-[20rem]'
+        className="p-3 text-white min-h-[20rem]"
         style={{
-          border: '2px dashed #000',
-          marginTop: '20px',
+          border: "2px dashed #000",
+          marginTop: "20px",
           backgroundSize: "cover",
-          backgroundImage: quizData ? `url(${quizData?.imgs[0]})` : 'none',
-
+          backgroundImage: quizData ? `url(${quizData?.imgs[0]})` : "none",
         }}
       >
-        <div className='flex gap-3 justify-center items-center'>
+        <div className="flex gap-3 justify-center items-center">
           {draggedItems?.map((item, index) => (
-            <div key={index} style={{ cursor: 'zoom-out' }}>
-              <Badge.Ribbon text={<span onClick={() => handleRemoveItem(index)}>X</span>} color='red' placement="end">
+            <div key={index} style={{ cursor: "zoom-out" }}>
+              <Badge.Ribbon
+                text={<span onClick={() => handleRemoveItem(index)}>X</span>}
+                color="red"
+                placement="end"
+              >
                 <ImageNext
-                  src={item.imgs ? item.imgs[0] : ''}
+                  src={item.imgs ? item.imgs[0] : ""}
                   alt={`Image ${index}`}
                   width={100}
                   height={120}
                   style={{
                     height: "100px",
-                    width: "100px"
+                    width: "100px",
                   }}
                 />
               </Badge.Ribbon>
@@ -115,9 +153,44 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({ defaultValue, disabled, onCh
           ))}
         </div>
       </div>
+      <div>
+        {correctAnswer.length ? (
+          <>
+            <p className="my-2 ">Correct answer :</p>
+            <div
+              className="p-3 text-white min-h-[20rem]"
+              style={{
+                border: "2px dashed #000",
+                marginTop: "20px",
+                backgroundSize: "cover",
+                backgroundImage: quizData
+                  ? `url(${quizData?.imgs[0]})`
+                  : "none",
+              }}
+            >
+              <div className="flex gap-3 justify-center items-center">
+                {correctAnswer.length &&
+                  correctAnswer?.map((item: any, index: number) => (
+                    <div key={index} style={{ cursor: "zoom-out" }}>
+                      <ImageNext
+                        src={item.imgs ? item.imgs[0] : ""}
+                        alt={`Image ${index}`}
+                        width={100}
+                        height={120}
+                        style={{
+                          height: "100px",
+                          width: "100px",
+                        }}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </>
+        ):""}
+      </div>
     </div>
   );
-}
-
+};
 
 export default DragQUizTest;

@@ -226,7 +226,7 @@ export default function ModuleDashList() {
                   </Menu.Item>
                   <div className="flex flex-col justify-center items-center gap-1">
                     <ModalComponent buttonText="Add/edit Resource">
-                      <ResourceCreate moduleId={record._id} />
+                      <ResourceCreate  moduleId={record._id} />
                     </ModalComponent>
 
                     <ModalComponent buttonText="Add/edit Glossary">

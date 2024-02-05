@@ -34,7 +34,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
         padding: "18px 16px",
       }}
     >
-      <section
+      <div
         style={{
           display: "flex",
 
@@ -68,9 +68,9 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
             Subscribe
           </button>
         </div>
-      </section>
+      </div>
 
-      <section
+      <div
         style={{ display: "flex", alignItems: "center", gap: "8px" }}
         className="mt-5 lg:mt-0"
       >
@@ -118,7 +118,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           <ShareAltOutlined />
           <h1 className="text-base font-normal">1453</h1>
         </button>
-      </section>
+      </div>
     </div>
   );
 };

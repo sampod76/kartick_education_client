@@ -20,7 +20,7 @@ export default function ContactPage() {
   return (
     <div>
       <div className="container my-24 mx-auto md:px- block lg:flex items-center gap-5 bg-slate-0">
-        <section className="w-full lg:w-[45%]">
+        <div className="w-full lg:w-[45%]">
           <div className="flex flex-wrap">
             <div className="mb-10 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-">
               <h2 className="mb-6 text-3xl lg:text-5xl font-bold">
@@ -41,7 +41,7 @@ export default function ContactPage() {
                 />
                 <div className="flex text-2xl flex-col gap-3">
                   <h2 className="text-2xl font-bold">Phone</h2>
-                  <h4 className="text-slate-600  text-xl ">88017820343324</h4>
+                  <h4 className="text-slate-600  text-xl ">1 (888)  2010390</h4>
                 </div>
               </div>
               <div className="flex align-top py-9  pr-5 pl-2  gap-[2rem] text-start ">
@@ -53,7 +53,7 @@ export default function ContactPage() {
                 />
                 <div className="flex text-2xl flex-col gap-3">
                   <h2 className="text-2xl font-bold">Message</h2>
-                  <h4 className="text-slate-600  text-xl ">88017820343324</h4>
+                  <h4 className="text-slate-600  text-xl ">1 (888)  2010390</h4>
                 </div>
               </div>
             </div>
@@ -110,11 +110,11 @@ export default function ContactPage() {
               }}
             />
           </div>
-        </section>
+        </div>
 
-        <section className="w-full lg:w-[55%] px-2 lg:px-5">
+        <div className="w-full lg:w-[55%] px-2 lg:px-5">
           <ContactForm />
-        </section>
+        </div>
       </div>
     </div>
   );

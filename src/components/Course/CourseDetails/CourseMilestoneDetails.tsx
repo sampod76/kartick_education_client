@@ -8,10 +8,10 @@ export default function CourseMilestoneDetails({ courseId }: { courseId: string 
 
   return (
     <div>
-      <section className="-mt-[5.8rem] mb-4 lg:mb-6 ">
+      <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
         <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
         <BannerCourses />
-      </section>
+      </div>
       <CourseStatistics courseId={courseId} />
       <MilestoneList courseId={courseId} />
     </div>

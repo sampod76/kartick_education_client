@@ -13,8 +13,8 @@ export function removeNullUndefinedAndFalsey(obj: { [x: string]: any }) {
         } else if (Array.isArray(obj[key])) {
           // Remove null, undefined, and falsey values from arrays
           obj[key] = obj[key].filter(
-            (item: boolean | null | undefined) =>
-              item !== null && item !== undefined && item !== false
+            (item:  null | undefined) =>
+              item !== null && item !== undefined 
           );
 
           // After filtering, check if the array is empty

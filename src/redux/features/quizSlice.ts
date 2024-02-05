@@ -22,7 +22,7 @@ const quizSlice = createSlice({
   reducers: {
     addAnswer: (state, { payload }) => {
       const existingAnswerIndex = state.userAnswers.findIndex(
-        (answer) => answer._id === payload?._id
+        (answer) => answer?._id === payload?._id
       );
 
       if (existingAnswerIndex !== -1) {

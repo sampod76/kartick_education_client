@@ -48,7 +48,8 @@ const UserAvatarUI = () => {
             removeUserInfo(authKey);
             router.push("/login");
           }}
-          type="dashed"
+          type="default"
+          style={{color:'black'}}
         >
           Log out
         </Button>
@@ -56,7 +57,7 @@ const UserAvatarUI = () => {
     },
   ];
   return (
-    <section
+    <div
       style={{
         display: "flex",
         alignItems: "center",
@@ -89,7 +90,7 @@ const UserAvatarUI = () => {
           />
         </button>
       </Dropdown>
-    </section>
+    </div>
   );
 };
 

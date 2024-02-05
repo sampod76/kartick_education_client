@@ -20,6 +20,7 @@ import {
   useGetAllPurchaseAcceptedPackageQuery,
   useGetAllPurchasePendingAndAcceptedCourseQuery,
 } from "@/redux/api/public/purchaseAPi";
+import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
 
 type ICard = {
   _id: string;
@@ -96,23 +97,26 @@ export default function TopDashStatistics() {
       <>
         {
           <div className="w-full mx-auto p-4 grid grid-cols-12 gap-2 min-h-screen">
-            <section className="col-span-12 relative top-0 z-10">
+            <div className="col-span-12 relative top-0 z-10">
               {/* <Chart></Chart> */}
-              <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-4 xl:gap-6 text-[30px]">
-                <div className="border text-white bg-[#4e36e2] w-full p-4 shadow rounded-xl flex justify-between items-center h-28 ">
-                  <p className="border-2 border-white rounded-md p-1">
-                    <FaUser className="h-7 w-7" />
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-end font-normal text-base lggg:text-lg">
-                      Total Users
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-4 xl:gap-6 text-[30px]">
+                <AnimatePresenceWrapper>
+                  <div className="border text-white bg-[#4e36e2] w-full p-4 shadow rounded-xl flex justify-between items-center h-28 ">
+                    <p className="border-2 border-white rounded-md p-1">
+                      <FaUser className="h-7 w-7" />
                     </p>
+                    <div className="space-y-2">
+                      <p className="text-end font-normal text-base lggg:text-lg">
+                        Total Users
+                      </p>
 
-                    <div className="font-bold font-sans text-end text-2xl">
-                      <span>{userNumber || 0}</span>
+                      <div className="font-bold font-sans text-end text-2xl">
+                        <span>{userNumber || 0}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </AnimatePresenceWrapper>
+                <AnimatePresenceWrapper>
                 <div className="border text-white bg-[#1ad588] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
                   <p className="border-2 border-white rounded-md p-1">
                     <GiBookCover className="h-7 w-7" />
@@ -126,6 +130,8 @@ export default function TopDashStatistics() {
                     </div>
                   </div>
                 </div>
+                </AnimatePresenceWrapper>
+                <AnimatePresenceWrapper>
                 <div className="border text-white bg-[#60803b] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
                   <p className="border-2 border-white rounded-md p-1">
                     <MdAccountBalance className="h-7 w-7" />
@@ -143,6 +149,8 @@ export default function TopDashStatistics() {
                     </div>
                   </div>
                 </div>
+                </AnimatePresenceWrapper>
+                <AnimatePresenceWrapper>
                 <div className="border text-white bg-[#508baa] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
                   <p className="border-2 border-white rounded-md p-1">
                     <SiSellfy className="h-7 w-7" />
@@ -156,6 +164,8 @@ export default function TopDashStatistics() {
                     </div>
                   </div>
                 </div>
+                </AnimatePresenceWrapper>
+                <AnimatePresenceWrapper>
                 <div className="border text-white bg-[#5eacd6] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
                   <p className="border-2 border-white rounded-md p-1">
                     <SiSellfy className="h-7 w-7" />
@@ -169,6 +179,8 @@ export default function TopDashStatistics() {
                     </div>
                   </div>
                 </div>
+                </AnimatePresenceWrapper>
+                <AnimatePresenceWrapper>
                 <div className="border text-white bg-[#1d7ca5] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
                   <p className="border-2 border-white rounded-md">
                     <FaUserTimes className="h-7 w-7" />
@@ -182,7 +194,9 @@ export default function TopDashStatistics() {
                     </div>
                   </div>
                 </div>
-              </section>
+                </AnimatePresenceWrapper>
+              </div>
+              
               <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3">
                 <div className="rounded-lg bg-white max-w-full md:min-h-[40vh] lgg:min-h-[60vh] px-4 py-5 shadow">
                   <div className="py-2 align-middle px-2">
@@ -336,7 +350,7 @@ export default function TopDashStatistics() {
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
             {/* <Modal
           closeModal={setOpenModal}
           isOpen={openModal?.link ? true : false}

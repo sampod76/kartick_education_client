@@ -1,8 +1,8 @@
 export const EllipsisMiddle: React.FC<{
-  suffixCount: number;
+  suffixCount?: number;
   maxLength: number;
   children: string;
-}> = ({ suffixCount, children, maxLength }) => {
+}> = ({ suffixCount =3, children, maxLength }) => {
   const maxLengthString = maxLength;
   let start, suffix;
   if (typeof children !== "string") {
@@ -12,7 +12,8 @@ export const EllipsisMiddle: React.FC<{
     start = children;
     suffix = "";
   } else {
-    const startLength = Math.floor((maxLengthString - suffixCount) / 2);
+    const startLength = Math.floor((maxLengthString - suffixCount) );
+    console.log("🚀 ~ startLength:", startLength)
     start = children.slice(0, startLength).trim();
     suffix = children.slice(-suffixCount).trim();
   }

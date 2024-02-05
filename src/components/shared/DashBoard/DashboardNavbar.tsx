@@ -85,6 +85,7 @@ const DashboardNavBar = ({
             router.push("/login");
           }}
           type="dashed"
+          style={{color:'black'}}
         >
           Log out
         </Button>
@@ -109,7 +110,7 @@ const DashboardNavBar = ({
           borderRadius: "0 0.5rem 0.5rem",
         }}
       >
-        <section style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -122,9 +123,9 @@ const DashboardNavBar = ({
           />
 
           {/* <Logo></Logo> */}
-        </section>
+        </div>
 
-        <section
+        <div
 
         // style={{
         //   display: "flex",
@@ -133,7 +134,7 @@ const DashboardNavBar = ({
         // }}
         >
           <UserAvatarUI />
-        </section>
+        </div>
       </Header>
     </nav>
   );

@@ -3,6 +3,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import { Image, message, type UploadProps } from "antd";
 import Dragger from "antd/es/upload/Dragger";
 import { getCloudinaryEnv } from "@/helpers/config/envConfig";
+import { Error_model_hook } from "@/utils/modalHook";
 export default function UploadMultipalDragAndDropImge({
   images = [],
   setImages,
