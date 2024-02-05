@@ -6,16 +6,13 @@ import {
   Form,
   Input,
   Space,
-  InputNumber,
   Upload,
-  DatePicker,
+
 } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
-import { Select } from "antd";
-import type { SelectProps } from "antd";
 
-const { Option } = Select;
+import type { SelectProps } from "antd";
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -23,73 +20,62 @@ import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import dayjs from "dayjs";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
-const { RangePicker } = DatePicker;
-// ! for uuid
-const generateUUID = () => {
-  return "xxxxxxxx-xxxx-4xxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0;
-    const v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
+import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
+
+
 export default function CreateAdvanceClass() {
   const [form] = Form.useForm();
 
-  const uuid = generateUUID();
   const [textEditorValue, setTextEditorValue] = useState("");
-  // console.log(uuid,"uuiduuid")
-  const { data, isLoading, error } = useGetAllCategoryQuery({
-    status: ENUM_STATUS.ACTIVE,
-    isDelete: ENUM_YN.NO,
-    limit: 9999,
-  });
-  let options: SelectProps["options"] = [];
-  options = data?.data?.map((select: any) => ({
-    label: select.title,
-    value: select._id,
-  }));
+
+  const [shortDescription, setShortDescription] = useState("");
+
+
+  ////! for filtering
+  const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+    {}
+  );
+  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+  const queryCategory: Record<string, any> = {};
+  queryCategory["children"] = "course";
+  //! for Category options selection
+  const { data: Category, isLoading: categoryLoading } =
+    useGetAllCategoryChildrenQuery({
+      ...queryCategory,
+    });
+  const categoryData: any = Category?.data;
 
   const [addPackage, { isLoading: AddPackageLoading }] =
     useAddPackageMutation();
-  console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
+  // console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
 
-  // const [imgUrl, setImgUrl] = useState(null);
-  // const handleChange = async (info) => {
-  //   if (info.file.status === 'done') {
-  //     // Set the imgUrl to the Form values
-  //     setImgUrl(info.file.response);
-  //     form.setFieldsValue({ img: info.file.response });
-  //   }
-  // };
-
+  console.log(course, 'course')
   const onFinish = async (values: any) => {
-    // console.log("Received values", values);
-    if (values?.imgs) {
-      const imgUrl = await uploadImgCloudinary(values?.imgs?.file);
-      console.log(imgUrl, 'imgUrl')
-      values.imgs = imgUrl;
-    }
+    console.log("🚀 ~ file: CreateAdvanceClass.tsx:55 ~ onFinish ~ values:", values)
 
 
-    const skillsPlanData = {
-      title: values.title,
-      imgs: values?.imgs,
-      imgTitle: values.imgTitle,
-      page: values.page,
-      points: values?.points,
-      details: textEditorValue
-    };
-    console.log("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData)
+
     return
+    const advancePlanData = {
+      title: values.title,
+      buttonLink: values.buttonLink,
+      page: values.page,
+      classes: values?.classes,
+
+    };
+    console.log("🚀 ~ onFinish ~ advancePlanData:", advancePlanData)
+    // return
 
     try {
-      const res = await addPackage(skillsPlanData).unwrap();
+      const res = await addPackage(advancePlanData).unwrap();
       // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Package");
         form.resetFields();
+        setTextEditorValue("")
       }
 
       // console.log(res);
@@ -98,14 +84,14 @@ export default function CreateAdvanceClass() {
       console.log(error);
     }
   };
-  const [dynamicOption, setDynamicOption] = useState(options);
+
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
-        Create Skills and Plan
+        Create Advance Class
       </h1>
       <Form
-        name="Skills_Plan_create"
+        name="Skills_Advance_Class"
         onFinish={onFinish}
         form={form}
         style={{
@@ -123,49 +109,22 @@ export default function CreateAdvanceClass() {
           <Form.Item name="title" label="Title">
             <Input size="large" placeholder="Please enter Skills and Plan title" />
           </Form.Item>
-          {/* //! 2. imgs */}
-          <Space style={{}}>
-            <Form.Item name="imgTitle" label="Image Title">
-              <Input size="large" placeholder="Please enter Skills and Plan imgTitle title" />
-            </Form.Item>
-            <Form.Item name="imgs" required>
-              <Upload
-                listType="picture-circle"
-                beforeUpload={async (file) => {
-                  // console.log(file)
-                  // const imgUrl = await uploadImgCloudinary(file);
-                  form.setFieldsValue({ imgExtra: "" }); // Set imgUrl in Form values
-                  return false; // Prevent default upload behavior
-                  // return true
-                }}
-              >
-                Upload
-              </Upload>
-            </Form.Item>
-
-          </Space>
-
+          {/* //! 2. buttonLink */}
+          <Form.Item name="buttonLink" label="Button Link">
+            <Input size="large" type="url" placeholder="Please enter Skills and Plan buttonLink" />
+          </Form.Item>
         </Form.Item>
         {/* //! 3.page  */}
         <Form.Item name="page" label="Page">
-          <Input size="large" placeholder="Please enter Skills and Plan page" />
+          <Input size="large" placeholder="Please enter Advance Class" />
         </Form.Item>
-        {/* //! 2. add points */}
+        {/* //! 3. add classes */}
         <div className="border-2 rounded-lg p-3">
-          <LabelUi>Add Points</LabelUi>
-          <Form.List name="points">
+          <LabelUi>Add Classes</LabelUi>
+          <Form.List name="classes">
             {(fields, { add, remove }) => {
               // console.log(fields,'fieldsfieldsfieldsfields') ;
 
-              // const handleChange = (value: any) => {
-              //   console.log(value, 'value');
-              //   const updatedOptions = options?.filter(
-              //     (item) => item?.value !== value
-              //   );
-              //   // console.log(updatedOptions)
-              //   options = updatedOptions;
-              //   // console.log(options)
-              // };
 
               const handleRemove = (value: any) => {
                 console.log(value, "handleRemove");
@@ -178,11 +137,12 @@ export default function CreateAdvanceClass() {
                     <Space
                       key={key}
                       style={{
-                        display: "flex",
+                        display: "grid",
                         // flexDirection: "column", // Stack items vertically on smaller screens
                         margin: "8px auto",
-                        // background: "blue",
-                        // width: "100%",
+                        width: "100%",
+                        gridTemplateColumns: 'repeat(1 ,1fr)',
+                        // background:"#BECBD6"
                       }}
                       align="center"
                     >
@@ -190,15 +150,89 @@ export default function CreateAdvanceClass() {
                         {...restField}
                         name={[name, "title"]}
                         style={{
-                          width: "",
+                          width: "100%",
                           marginBottom: "8px",
-                          maxWidth: "200px",
+                          // maxWidth: "200px",
                         }}
                         rules={[
-                          { required: true, message: "Missing Points Label" },
+                          { required: true, message: "Missing Class Title" },
                         ]}
                       >
                         <Input size="large" placeholder="label" />
+                      </Form.Item>
+
+                      <Form.Item
+                        {...restField}
+                        name={[name, "imgs"]}
+                        style={{
+                          width: "100%",
+                          marginBottom: "8px",
+                          // maxWidth: "200px",
+                          display: "flex",
+                          // backgroundColor:"violet"
+
+                        }}
+                        rules={[
+                          { required: true, message: "Missing Class Label" },
+                        ]}
+                      >
+                        <Upload
+                          listType="picture-card"
+                          beforeUpload={async (file) => {
+                            // console.log(file)
+                            // const imgUrl = await uploadImgCloudinary(file);
+                            form.setFieldsValue({ imgExtra: "" }); // Set imgUrl in Form values
+                            return false; // Prevent default upload behavior
+
+                          }}
+
+                        >
+                          Upload
+                        </Upload>
+                      </Form.Item>
+                      <div >
+
+                        <SelectCategoryChildren
+                          lableText="Select category"
+                          setState={setCategory}
+                          isLoading={categoryLoading}
+                          categoryData={categoryData}
+                        />
+
+                        <SelectCategoryChildren
+                          lableText="Select courses"
+                          setState={setCourse}
+                          categoryData={
+                            //@ts-ignore
+                            category?.courses || []
+                          }
+
+                        />
+                      </div>
+
+                      <Form.Item    {...restField}
+                        name={[name, "buttonLink"]} label="Button Link" rules={[
+                          { required: true, message: "Missing Class Class Button Link" },
+                        ]}>
+                        <Input size="large" type="url" placeholder="Please enter Skills and Plan Button Link" />
+                      </Form.Item>
+
+
+                      <Form.Item
+                        {...restField}
+                        name={[name, "short_description"]}
+                        style={{
+                          width: "100%",
+                          marginBottom: "8px",
+                          // maxWidth: "200px",
+                        }}
+                        rules={[
+                          { required: true, message: "Missing Class Descriptions" },
+                        ]}
+                      >
+                        <Input.TextArea showCount
+                          maxLength={3000}
+                          rows={3} size="large" placeholder="label" />
                       </Form.Item>
                       <MinusCircleOutlined
                         onClick={() => handleRemove(name)}
@@ -213,7 +247,7 @@ export default function CreateAdvanceClass() {
                       block
                       icon={<PlusOutlined />}
                     >
-                      Add points
+                      Add Classes
                     </Button>
                   </Form.Item>
                 </>
