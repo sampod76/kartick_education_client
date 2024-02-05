@@ -1,4 +1,5 @@
-import CreateSkillsPlan from '@/components/features/advance-class/create/CreateSkillsPlan'
+
+import CreateSkillsPlan from '@/components/features/skills-plan/create/CreateSkillsPlan'
 import React from 'react'
 
 export default function CreateSkillsPlanPage() {

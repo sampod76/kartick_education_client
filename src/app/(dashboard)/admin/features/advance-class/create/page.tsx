@@ -1,7 +1,8 @@
+import CreateAdvanceClass from '@/components/features/advance-class/create/CreateAdvanceClass'
 import React from 'react'
 
-export default function AdvanceFeaturesPage() {
+export default function CreateAdvanceClassPage() {
     return (
-        <div>AdvanceFeaturesPage</div>
+        <div><CreateAdvanceClass /></div>
     )
 }

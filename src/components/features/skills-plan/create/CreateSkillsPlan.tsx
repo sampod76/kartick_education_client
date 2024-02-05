@@ -6,36 +6,23 @@ import {
   Form,
   Input,
   Space,
-  InputNumber,
   Upload,
-  DatePicker,
 } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
-
-const { Option } = Select;
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
-import dayjs from "dayjs";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
-const { RangePicker } = DatePicker;
-// ! for uuid
-const generateUUID = () => {
-  return "xxxxxxxx-xxxx-4xxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0;
-    const v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
+
 export default function CreateSkillsPlan() {
   const [form] = Form.useForm();
 
-  const uuid = generateUUID();
+
   const [textEditorValue, setTextEditorValue] = useState("");
   // console.log(uuid,"uuiduuid")
   const { data, isLoading, error } = useGetAllCategoryQuery({
@@ -53,14 +40,7 @@ export default function CreateSkillsPlan() {
     useAddPackageMutation();
   console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
 
-  // const [imgUrl, setImgUrl] = useState(null);
-  // const handleChange = async (info) => {
-  //   if (info.file.status === 'done') {
-  //     // Set the imgUrl to the Form values
-  //     setImgUrl(info.file.response);
-  //     form.setFieldsValue({ img: info.file.response });
-  //   }
-  // };
+
 
   const onFinish = async (values: any) => {
     // console.log("Received values", values);
@@ -98,7 +78,7 @@ export default function CreateSkillsPlan() {
       console.log(error);
     }
   };
-  const [dynamicOption, setDynamicOption] = useState(options);
+
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
