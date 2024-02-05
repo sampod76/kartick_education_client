@@ -21,7 +21,8 @@ import {
   ShoppingCartOutlined,
   ContactsOutlined,
   UserSwitchOutlined,
-  PayCircleFilled
+  PayCircleFilled,
+  ThunderboltFilled
 } from "@ant-design/icons";
 import { PiPackageDuotone } from "react-icons/pi";
 import Link from "next/link";
@@ -250,7 +251,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
     {
       label: " Single Quiz",
       key: "manage-single-quiz",
-      icon: <ThunderboltOutlined />,
+      icon: <ThunderboltFilled />,
       children: [
         {
           label: (
@@ -453,6 +454,69 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       key: "Manage-pouches-course",
       icon: <PayCircleFilled />,
 
+    },
+    {
+      label: "Manage Features",
+      key: "manage-features",
+      icon: <ThunderboltFilled />,
+      children: [
+        {
+          label: "Advance Class",
+          key: `/${role}/features/advance-class`,
+          children: [
+            {
+              label: (
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/features/advance-class/create`}
+                >
+                  Create Advance Class
+                </Link>
+              ),
+              key: `/${role}/features/create`,
+            },
+            {
+              label: (
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/features/advance-class`}
+                >
+                  Advance Class List
+                </Link>
+              ),
+              key: `/${role}/features/create`,
+            },
+          ]
+        },
+        {
+          label: "Skills Plan",
+          key: `/${role}/features/skills-plan`,
+          children: [
+            {
+              label: (
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/features/skills-plan/create`}
+                >
+                  Create Skills Plan
+                </Link>
+              ),
+              key: `/${role}/features/create`,
+            },
+            {
+              label: (
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/features/skills-plan`}
+                >
+                  Skills Plan List
+                </Link>
+              ),
+              key: `/${role}/features/create`,
+            },
+          ]
+        },
+      ],
     },
   ];
 
