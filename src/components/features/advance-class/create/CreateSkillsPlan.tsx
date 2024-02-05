@@ -111,10 +111,10 @@ export default function CreateSkillsPlan() {
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
-        Create Package
+        Create Skills and Plan
       </h1>
       <Form
-        name="package_create"
+        name="Skills_Plan_create"
         onFinish={onFinish}
         form={form}
         style={{
@@ -128,148 +128,24 @@ export default function CreateSkillsPlan() {
         layout="vertical"
       >
         <Form.Item>
+          {/* //! title */}
           <Form.Item name="title" label="Title">
-            <Input size="large" placeholder="Please enter package title" />
+            <Input size="large" placeholder="Please enter Skills and Plan title" />
           </Form.Item>
-          <Space>
-            <Form.Item name="type" label="Select Types">
-              {/* <LabelUi>Select Types </LabelUi> */}
-              <Select
-                style={{ maxWidth: "100%" }}
-                placeholder="Select Types"
-                size="large"
-              >
-                <Option value="bundle">Bundle</Option>
-                <Option value="select">Select</Option>
-                <Option value="multiple_select">Multiple Select</Option>
-              </Select>
+
+
+
+          <Space style={{}}>
+            <Form.Item name="title" label="Image Title">
+              <Input size="large" placeholder="Please enter Skills and Plan imgTitle title" />
             </Form.Item>
-            <Form.Item name={["membership", "title"]} label="Select Membership">
-              {/* <LabelUi>Select Membership </LabelUi> */}
-              <Select
-                style={{ width: "100%" }}
-                placeholder="Select Membership"
-                size="large"
-              >
-                <Option value="family & personal">Family & Personal</Option>
-                <Option value="school & teacher">School & Teacher</Option>
-              </Select>
-            </Form.Item>
-          </Space>
-          <div className="">
-            {/*//!  monthly */}
-            <Space.Compact>
-              <Form.Item
-                name={["monthly", "price"]}
-                // noStyle
-
-                label="Monthly Price"
-                rules={[{ required: true, message: "Province is required" }]}
-              >
-                <InputNumber
-                  name="price"
-                  type="number"
-                  placeholder="Monthly Price"
-                // style={{ width: "70%" }}
-                />
-              </Form.Item>
-
-              <Form.Item
-                name={["monthly", "each_student_increment"]}
-                // noStyle
-                label="Each Student price"
-                rules={[
-                  {
-                    required: true,
-                    message: "Each Student Price is required",
-                  },
-                ]}
-              >
-                <InputNumber
-                  style={{ width: "70%" }}
-                  type="number"
-                  placeholder="Input Each Student Price"
-                />
-              </Form.Item>
-            </Space.Compact>
-            <Space.Compact>
-              {/*//!  biannual */}
-              <Form.Item
-                name={["biannual", "price"]}
-                // noStyle
-                label="Biannual Price"
-                rules={[{ required: true, message: "Province is required" }]}
-              >
-                <InputNumber
-                  name="price"
-                  type="number"
-                  placeholder="Biannual Price"
-                // style={{ width: "70%" }}
-                />
-              </Form.Item>
-
-              <Form.Item
-                name={["biannual", "each_student_increment"]}
-                // noStyle
-                label="Each Student price"
-                rules={[
-                  {
-                    required: true,
-                    message: "Each Student Price is required",
-                  },
-                ]}
-              >
-                <InputNumber
-                  style={{ width: "70%" }}
-                  type="number"
-                  placeholder="Input Each Student Price"
-                />
-              </Form.Item>
-            </Space.Compact>
-            <Space.Compact>
-              {/*//!  yearly */}
-              <Form.Item
-                name={["yearly", "price"]}
-                // noStyle
-                label="Yearly Price"
-                rules={[{ required: true, message: "Province is required" }]}
-              >
-                <InputNumber
-                  name="price"
-                  type="number"
-                  placeholder="yearly Price"
-                // style={{ width: "70%" }}
-                />
-              </Form.Item>
-
-              <Form.Item
-                name={["yearly", "each_student_increment"]}
-                // noStyle
-                label="Each Student price"
-                rules={[
-                  {
-                    required: true,
-                    message: "Each Student Price is required",
-                  },
-                ]}
-              >
-                <InputNumber
-                  style={{ width: "70%" }}
-                  type="number"
-                  placeholder="Input Each Student Price"
-                />
-              </Form.Item>
-            </Space.Compact>
-          </div>
-          <Space.Compact></Space.Compact>
-          <Space.Compact style={{}}>
-            <Form.Item name="img" required>
+            <Form.Item name="imgs" required>
               <Upload
                 listType="picture-circle"
                 beforeUpload={async (file) => {
                   // console.log(file)
                   // const imgUrl = await uploadImgCloudinary(file);
-                  form.setFieldsValue({ imgs: "" }); // Set imgUrl in Form values
+                  form.setFieldsValue({ imgExtra: "" }); // Set imgUrl in Form values
                   return false; // Prevent default upload behavior
                   // return true
                 }}
@@ -278,13 +154,11 @@ export default function CreateSkillsPlan() {
               </Upload>
             </Form.Item>
 
-            <Form.Item name="date_range" label="Package duration" required>
-              <RangePicker format="YYYY-MM-DD" />
-            </Form.Item>
-          </Space.Compact>
+          </Space>
+
         </Form.Item>
         <div className="border-2 rounded-lg p-3">
-          <LabelUi>Add Category</LabelUi>
+          <LabelUi>Add Points</LabelUi>
           <Form.List name="categories">
             {(fields, { add, remove }) => {
               // console.log(fields,'fieldsfieldsfieldsfields') ;
@@ -318,37 +192,17 @@ export default function CreateSkillsPlan() {
                       }}
                       align="center"
                     >
+                    
                       <Form.Item
                         {...restField}
-                        style={{ width: "", marginBottom: "8px" }}
-                        name={[name, "category"]}
-                        rules={[
-                          { required: true, message: "Missing Category" },
-                        ]}
-                      >
-                        <Select
-                          // onChange={handleChange}
-                          // onBlur={() => handleChange(restField.value, name)}
-                          loading={isLoading}
-                          style={{ width: "" }}
-                          placeholder="Select category"
-                          size="large"
-                          options={options}
-                          listHeight={200}
-                          popupMatchSelectWidth
-                          dropdownStyle={{ minWidth: "250px" }}
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "label"]}
+                        name={[name, "title"]}
                         style={{
                           width: "",
                           marginBottom: "8px",
                           maxWidth: "200px",
                         }}
                         rules={[
-                          { required: true, message: "Missing Category Label" },
+                          { required: true, message: "Missing Points Label" },
                         ]}
                       >
                         <Input size="large" placeholder="label" />
@@ -366,7 +220,7 @@ export default function CreateSkillsPlan() {
                       block
                       icon={<PlusOutlined />}
                     >
-                      Add Subject/category
+                      Add points
                     </Button>
                   </Form.Item>
                 </>
