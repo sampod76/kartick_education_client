@@ -183,9 +183,6 @@ export default function CreateAdvanceClass() {
                               setLoading(true);
                               // Upload image to Cloudinary
                               const imgUrl = await uploadImgCloudinary(file);
-                              console.log("🚀 ~ beforeUpload={ ~ imgUrl:", imgUrl)
-
-                             
 
                               // Set the new value of imgs by appending the imgUrl
                               form.setFieldsValue({
