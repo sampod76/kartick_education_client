@@ -57,7 +57,7 @@ export default function CreateAdvanceClass() {
       classes: values?.classes,
     };
     console.log("🚀 ~ onFinish ~ advancePlanData:", advancePlanData);
-
+    return
     try {
       const res = await addShowAdvance(advancePlanData).unwrap();
       // console.log(res);
@@ -185,7 +185,6 @@ export default function CreateAdvanceClass() {
                               const imgUrl = await uploadImgCloudinary(file);
                               console.log("🚀 ~ beforeUpload={ ~ imgUrl:", imgUrl)
 
-                             
 
                               // Set the new value of imgs by appending the imgUrl
                               form.setFieldsValue({
@@ -247,9 +246,9 @@ export default function CreateAdvanceClass() {
                         {...restField}
                         name={[name, "buttonLink"]}
                         label="Button Link"
-                        //  rules={[
-                        //   { required: true, message: "Missing Class Class Button Link" },
-                        // ]}
+                      //  rules={[
+                      //   { required: true, message: "Missing Class Class Button Link" },
+                      // ]}
                       >
                         <Input
                           size="large"
