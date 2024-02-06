@@ -13,7 +13,7 @@ import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresen
 
 const { Meta, Grid } = Card;
 
-const SIngleProgramme = ({ programme }: { programme: IClassTypes }) => {
+const SIngleAdvanceClass = ({ programme }: { programme: IClassTypes }) => {
   // console.log(programme);
   // const { title, details, img, demo_video, tags} = programme;
   let buttonLinkId = "";
@@ -25,7 +25,7 @@ const SIngleProgramme = ({ programme }: { programme: IClassTypes }) => {
 
   return (
     <AnimatePresenceWrapper>
-      <div className="max-w-sm min-w-full mx-auto h-full flex flex-col justify-between  shadow-md p-2  text-start bg-white">
+      <div className="w-[360px] md:w-full mx-auto h-full flex flex-col justify-between  shadow-md p-2  text-start bg-white">
         <div className="">
           <Image
             src={programme?.img}
@@ -56,4 +56,4 @@ const SIngleProgramme = ({ programme }: { programme: IClassTypes }) => {
   );
 };
 
-export default SIngleProgramme;
+export default SIngleAdvanceClass;

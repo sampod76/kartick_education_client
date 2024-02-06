@@ -5,12 +5,13 @@ import SupportHero from "@/components/Home/Heros/SupportHero";
 import TestimonialMain from "@/components/Home/Testimonial/TestimonialMain";
 import CommonCourse from "@/components/Home/commonCourse/CommonCourse";
 import CoursesTab from "@/components/Home/coureses/CoursesTab";
-import Programmes from "@/components/Home/programms/Programmes";
+import Programmes from "@/components/Home/AdvanceClass/AdvanceClassHome";
 import HomeHeader from "@/components/shared/Headers/HomeHeader";
 import CartDrawer from "@/components/Home/Cart/CartDrawer";
 import React from "react";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import ShortOverViewHomePage from "@/components/Home/ShortOverView/ShortOverView";
+import AdvanceHomeClass from "@/components/Home/AdvanceClass/AdvanceClassHome";
 
 
 // const CoursesTab = React.lazy(
@@ -59,7 +60,8 @@ const HomePage = () => {
         <SupportHero />
         <ShortOverViewHomePage />
         <TestimonialMain />
-        <Programmes />
+        {/* <Programmes /> */}
+        <AdvanceHomeClass/>
       </main>
       <Footer />
 

@@ -1,14 +1,15 @@
 "use client";
 import onlineProgramsData from "@/db/programmes";
 import React from "react";
-import SIngleProgramme from "./SinglePrograme";
+
 
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import NotFound from "@/app/not-found";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { useGetAllShowAdvanceClassesQuery } from "@/redux/api/adminApi/features/showAdvanceClassApi";
+import SIngleAdvanceClass from "./SingleAdvanceClass";
 
-const Programmes = () => {
+const AdvanceHomeClass = () => {
   const query: Record<string, any> = {};
   query["limit"] = 1;
   query["status"] = ENUM_STATUS.ACTIVE;
@@ -39,11 +40,11 @@ const Programmes = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 first-letter:">
         {classData?.classes?.map((item: any, index: number) => {
-          return <SIngleProgramme programme={item} key={index + 1} />;
+          return <SIngleAdvanceClass programme={item} key={index + 1} />;
         })}
       </div>
     </div>
   );
 };
 
-export default Programmes;
+export default AdvanceHomeClass;
