@@ -1,4 +1,5 @@
 "use client";
+import { AllImage } from '@/assets/AllImge';
 import { AnimatePresenceWrapper } from '@/components/framer_motion/AnimatePresence';
 import LoadingSkeleton from '@/components/ui/Loading/LoadingSkeleton';
 import { useGetSingleSkills_planQuery } from '@/redux/api/adminApi/features/skillsPlanApi';
