@@ -491,29 +491,29 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         },
         {
           label: "Skills Plan",
-          key: `/${role}/features/short-overview`,
+          key: `/${role}/features/skills-plan`,
           children: [
             {
               label: (
                 <Link
                   onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/features/short-overview/create`}
+                  href={`/${role}/features/skills-plan/create`}
                 >
                   Create Skills Plan
                 </Link>
               ),
-              key: `/${role}/features/short-overview/create`,
+              key: `/${role}/features/skills-plan/create`,
             },
             {
               label: (
                 <Link
                   onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/features/short-overview`}
+                  href={`/${role}/features/skills-plan`}
                 >
                   Skills Plan List
                 </Link>
               ),
-              key: `/${role}/features/short-overview`,
+              key: `/${role}/features/skills-plan`,
             },
           ]
         },

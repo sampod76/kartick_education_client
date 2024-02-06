@@ -97,7 +97,7 @@ export default function ShortOverview() {
   // console.log("🚀 ~ file: page.tsx:68 ~ skillsPlanData ~ data:", data);
 
   //@ts-ignore
-  const skillsPlanData = data?.data || [];
+  const shortOverviewData = data?.data || [];
   // console.log(skillsPlanData, 'skillsPlanData')
   //@ts-ignore
   const meta = data?.meta;
@@ -308,7 +308,7 @@ export default function ShortOverview() {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={skillsPlanData}
+        dataSource={shortOverviewData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

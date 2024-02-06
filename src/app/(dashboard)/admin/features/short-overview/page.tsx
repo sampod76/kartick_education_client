@@ -1,4 +1,4 @@
-import ShortOverview from '@/components/features/overview/ShortOverview'
+import ShortOverview from '@/components/features/overview/ShortOverviewDashList'
 import SkillsPlanDashList from '@/components/features/skills-plan/SkillsPlanDashList'
 import React from 'react'
 

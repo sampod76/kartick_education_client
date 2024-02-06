@@ -1,8 +1,14 @@
 export type IShort_overviewData = {
   title: string;
-  _id:string;
+  _id: string;
   page?: string;
-  cards: [{ title: string; countNumber: string; short_description: string }];
+  cards: [
+    {
+      title: string;
+      countNumber: string;
+      short_description: string;
+    }
+  ];
   details?: string;
   short_description?: string;
   author: string;
