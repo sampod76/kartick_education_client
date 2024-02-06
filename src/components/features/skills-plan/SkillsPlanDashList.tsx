@@ -77,7 +77,7 @@ export default function SkillsPlanDashList() {
   const [filterValue, setFilterValue] = useState("");
 
   query["limit"] = size;
-  query["page"] = page;
+  // query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
@@ -98,11 +98,11 @@ export default function SkillsPlanDashList() {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllSkills_planQuery({ ...query });
-  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+  // console.log("🚀 ~ file: page.tsx:68 ~ skillsPlanData ~ data:", data);
 
   //@ts-ignore
   const skillsPlanData = data?.data || [];
-
+  // console.log(skillsPlanData, 'skillsPlanData')
   //@ts-ignore
   const meta = data?.meta;
 
@@ -296,7 +296,7 @@ export default function SkillsPlanDashList() {
 
 
           <Link href={`/${userInfo?.role}/features/skills-plan/create`}>
-            <Button type="default">Create Package</Button>
+            <Button type="default">Create Skill&Plan</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -363,7 +363,7 @@ export default function SkillsPlanDashList() {
           }
         />
       </Drawer> */}
-      ;
+
     </div>
   );
 }

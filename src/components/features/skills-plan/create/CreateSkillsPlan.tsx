@@ -54,7 +54,7 @@ export default function CreateSkillsPlan() {
 
     const skillsPlanData = {
       title: values.title,
-      imgs: values?.imgs,
+      imgs: [values?.imgs],
       imgTitle: values.imgTitle,
       page: values.page,
       points: values?.points,
