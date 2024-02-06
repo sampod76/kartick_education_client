@@ -2,7 +2,7 @@
 import React from "react";
 import supportImage from "@/assets/SideImage/supporthero.png";
 import Image from "next/image";
-import { useGetAllSkills_planQuery } from "@/redux/api/adminApi/skillsPlanApi";
+import { useGetAllSkills_planQuery } from "@/redux/api/adminApi/features/skillsPlanApi";
 import { AllImage } from "@/assets/AllImge";
 import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";

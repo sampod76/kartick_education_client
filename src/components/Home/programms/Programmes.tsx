@@ -2,10 +2,11 @@
 import onlineProgramsData from "@/db/programmes";
 import React from "react";
 import SIngleProgramme from "./SinglePrograme";
-import { useGetAllShowAdvanceClassesQuery } from "@/redux/api/adminApi/showAdvanceClassApi";
+
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import NotFound from "@/app/not-found";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import { useGetAllShowAdvanceClassesQuery } from "@/redux/api/adminApi/features/showAdvanceClassApi";
 
 const Programmes = () => {
   const query: Record<string, any> = {};

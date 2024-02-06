@@ -517,6 +517,34 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
             },
           ]
         },
+        {
+          label: "Short Overview",
+          key: `/${role}/features/short-overview`,
+          children: [
+            {
+              label: (
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/features/short-overview/create`}
+                >
+                  Create Short Overview
+                </Link>
+              ),
+              key: `/${role}/features/short-overview/create`,
+            },
+            {
+              label: (
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/features/short-overview`}
+                >
+                  Short Overview List
+                </Link>
+              ),
+              key: `/${role}/features/short-overview`,
+            },
+          ]
+        },
       ],
     },
   ];

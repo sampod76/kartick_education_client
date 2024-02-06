@@ -1,9 +1,9 @@
 // import { tagTypes.courseg-types";
 import { IMeta } from "@/types";
-import { baseApi } from "../baseApi";
+import { baseApi } from "../../baseApi";
 import { tagTypes } from "@/redux/tag-types";
 
-import { ISkills_plan } from "@/types/skillPlan";
+import { ISkills_plan } from "@/types/features/skillPlan";
 
 const SKILLS_PLAN = "/skills_plan";
 

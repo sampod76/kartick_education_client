@@ -1,9 +1,9 @@
 // import { tagTypes.courseg-types";
 import { IMeta } from "@/types";
-import { baseApi } from "../baseApi";
-import { tagTypes } from "@/redux/tag-types";
 
-import { IShow_advance_classes } from "@/types/showAdvanceClassType";
+import { tagTypes } from "@/redux/tag-types";
+import { baseApi } from "../../baseApi";
+import { IShow_advance_classes } from "@/types/features/showAdvanceClassType";
 
 const SHOW_ADVANCE_CLASSES = "/show_advance_classes";
 
