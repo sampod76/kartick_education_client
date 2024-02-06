@@ -10,7 +10,7 @@ import HomeHeader from "@/components/shared/Headers/HomeHeader";
 import CartDrawer from "@/components/Home/Cart/CartDrawer";
 import React from "react";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import ShortOverViewHomePage from "@/components/Home/ShortOverView/ShortOverView";
+import ShortOverViewHomePage from "@/components/Home/ShortOverView/ShortOverViewHome";
 import AdvanceHomeClass from "@/components/Home/AdvanceClass/AdvanceClassHome";
 
 
