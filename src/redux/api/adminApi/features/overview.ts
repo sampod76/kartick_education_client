@@ -19,10 +19,10 @@ export const ShortOverviewApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: IShort_overviewData[], meta: IMeta) => {
-        // console.log(response);
+      transformResponse: (data: IShort_overviewData[], meta: IMeta) => {
+        // console.log(data);
         return {
-          data: response,
+          data: data,
           meta,
         };
       },
