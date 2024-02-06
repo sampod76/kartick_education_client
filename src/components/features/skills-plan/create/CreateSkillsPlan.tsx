@@ -18,6 +18,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
+import { useAddSkills_planMutation } from "@/redux/api/adminApi/skillsPlanApi";
 
 export default function CreateSkillsPlan() {
   const [form] = Form.useForm();
@@ -36,9 +37,9 @@ export default function CreateSkillsPlan() {
     value: select._id,
   }));
 
-  const [addPackage, { isLoading: AddPackageLoading }] =
-    useAddPackageMutation();
-  console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
+  const [addSkills_plan, { isLoading: AddPackageLoading }] =
+    useAddSkills_planMutation();
+  // console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
 
 
 
@@ -60,11 +61,11 @@ export default function CreateSkillsPlan() {
       details: textEditorValue
     };
     console.log("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData)
-    return
+    // return
 
     try {
-      const res = await addPackage(skillsPlanData).unwrap();
-      // console.log(res);
+      const res = await addSkills_plan(skillsPlanData).unwrap();
+      console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
