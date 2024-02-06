@@ -25,7 +25,7 @@ import { addToCart } from "@/redux/features/cartSlice";
 import { useAddCartMutation } from "@/redux/api/userApi/cartAPi";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import "aos";
+
 import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
 const { Text } = Typography;
 
