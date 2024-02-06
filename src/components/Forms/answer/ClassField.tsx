@@ -10,50 +10,62 @@ import SubHeadingUI from "../../ui/dashboardUI/SubHeadingUI";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import { Image } from 'antd';
+import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 
 interface Answer {
     title: string;
     short_description: string;
-    imgs: string[];
+    img: string;
     course?: string
     buttonLink: string;
 }
 
-interface AnswerInputListProps {
-    answersMultiple: Answer[];
-    setAnswersMultiple: React.Dispatch<React.SetStateAction<Answer[]>>;
+interface ClassFieldProps {
+    ClassData: Answer[];
+    setClassData: React.Dispatch<React.SetStateAction<Answer[]>>;
 }
 
-const CLassField: React.FC<AnswerInputListProps> = ({
-    answersMultiple,
-    setAnswersMultiple,
+const CLassField: React.FC<ClassFieldProps> = ({
+    ClassData,
+    setClassData,
 }) => {
-    // console.log("🚀 ~ answersMultiple:", answersMultiple)
 
+    const queryCategory: Record<string, any> = {};
+    queryCategory["isDelete"] = ENUM_YN.NO;
+    queryCategory["title"] = ENUM_STATUS.ACTIVE;
+    //! for Category options selection
+    const { data: Category, isLoading: categoryLoading } = useGetAllCourseQuery({
+        ...queryCategory,
+    });
+
+    const categoryData: any = Category?.data;
+    // console.log("🚀 ~ ClassData:", ClassData)
 
     const handleAdd = () => {
-        setAnswersMultiple([
-            ...answersMultiple,
-            { title: "", imgs: [], short_description: "", buttonLink: "" },
+        setClassData([
+            ...ClassData,
+            { title: "", img: '', short_description: "", buttonLink: "" },
         ]);
     };
 
     const handleRemove = (index: number) => {
-        const updatedAnswersMultiple = [...answersMultiple];
-        updatedAnswersMultiple.splice(index, 1);
-        setAnswersMultiple(updatedAnswersMultiple);
+        const updatedClassData = [...ClassData];
+        updatedClassData.splice(index, 1);
+        setClassData(updatedClassData);
     };
 
     const handleChange = (index: number, updatedAnswer: Answer) => {
-        let updatedAnswersMultiple = [...answersMultiple];
-        updatedAnswersMultiple[index] = updatedAnswer;
-        setAnswersMultiple(updatedAnswersMultiple);
+        let updatedClassData = [...ClassData];
+        updatedClassData[index] = updatedAnswer;
+        setClassData(updatedClassData);
     };
+
 
     return (
         <div className="">
             <SubHeadingUI>Add Answer </SubHeadingUI>
-            {answersMultiple?.map((answer, index) => (
+            {ClassData?.map((answer, index) => (
                 <Space
                     key={index}
                     style={{
@@ -81,11 +93,11 @@ const CLassField: React.FC<AnswerInputListProps> = ({
                         }}
                         align="start"
                     >
-                        {/* quiz option */}
+                        {/*//! 1. class title */}
                         <Input
                             placeholder="Option Title"
                             style={{
-                                width: "70vw",
+                                width: "70%",
                                 height: "2.7rem"
                             }}
                             // width={500}
@@ -95,16 +107,17 @@ const CLassField: React.FC<AnswerInputListProps> = ({
                             }
                         // defaultValue={index + 1}
                         />
+
                         <Input
-                            placeholder="Option Title"
+                            placeholder="Button Link"
                             style={{
-                                width: "70vw",
+                                width: "70%",
                                 height: "2.7rem"
                             }}
                             // width={500}
-                            value={answer.title}
+                            value={answer.buttonLink}
                             onChange={(e) =>
-                                handleChange(index, { ...answer, title: e.target.value })
+                                handleChange(index, { ...answer, buttonLink: e.target.value })
                             }
                         // defaultValue={index + 1}
                         />
@@ -113,7 +126,31 @@ const CLassField: React.FC<AnswerInputListProps> = ({
                             maxLength={3000}
                             rows={3}
                             size="large"
+                            value={answer.short_description}
+                            onChange={(e) =>
+                                handleChange(index, { ...answer, short_description: e.target.value })
+                            }
                             placeholder="Please enter details"
+                        />
+                        <Select
+                            // onChange={handleChange}
+                            // onBlur={() => handleChange(restField.value, name)}
+                            loading={categoryLoading}
+                            // style={{ width: "" }}
+                            onChange={(value) =>
+                                handleChange(index, { ...answer, course: value })
+                            }
+
+                            placeholder="Select subject"
+                            size="large"
+                            options={categoryData.map((data: any) => ({
+                                label: data.title,
+                                value: data._id,
+                            }))}
+                            showSearch
+                            listHeight={200}
+                            popupMatchSelectWidth
+                            dropdownStyle={{ minWidth: "250px" }}
                         />
                         {/* Quiz radio select */}
 
@@ -131,50 +168,32 @@ const CLassField: React.FC<AnswerInputListProps> = ({
                                     //   file
                                     // );
                                     // You can add custom logic before uploading, e.g., checking file type or size
-                                    const images = answer?.imgs
+
                                     const imgUrl = await uploadImgCloudinary(file);
 
-                                    if (imgUrl) {
-                                        images.push(imgUrl);
-                                    }
                                     // console.log(images,imgUrl, answer);
 
                                     handleChange(index, {
                                         ...answer,
-                                        // imgs: [...answer.imgs,imgUrl],
-                                        imgs: images,
+                                        // img: [...answer.img,imgUrl],
+                                        img: imgUrl,
                                     });
                                     return false; // Prevent default upload behavior
                                 }}
                             >
                                 <Button style={{ textAlign: "start" }}>Class Image +</Button>
                             </Upload>
-                            {answer.imgs.map((img, key) => (<Image
-                                key={key}
-                                className="w-10 h-10 rounded"
-                                src={img}
-                                width={50}
-                                height={40}
-                                alt=""
-                            />))}
+                            {
+                                answer?.img && <Image
+                                    className="w-10 h-10 rounded"
+                                    src={answer?.img}
+                                    width={50}
+                                    height={40}
+                                    alt=""
+                                />
+                            }
                         </div>
 
-                        {/* serial number */}
-                        <div className="text-start ">
-                            <label>Serial number</label>
-                            <Input
-                                placeholder="Serial Number"
-                                type="text"
-                                value={answer.buttonLink}
-                                defaultValue={index + 1}
-                                onChange={(e) =>
-                                    handleChange(index, {
-                                        ...answer,
-                                        buttonLink: e.target.value,
-                                    })
-                                }
-                            />
-                        </div>
 
                         {/* select status */}
 
@@ -187,12 +206,12 @@ const CLassField: React.FC<AnswerInputListProps> = ({
             ))}
             <Button
                 type="dashed"
-                // disabled={answersMultiple?.length > 6 ? true : false}
+                // disabled={ClassData?.length > 6 ? true : false}
                 onClick={handleAdd}
                 // block
                 icon={<PlusOutlined />}
             >
-                {/* {answersMultiple?.length < 7 ? "Add Answer" : "Already added 6"} */}
+                {/* {ClassData?.length < 7 ? "Add Answer" : "Already added 6"} */}
                 Add Class
             </Button>
         </div>

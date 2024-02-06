@@ -21,6 +21,7 @@ import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCatego
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useAddShowAdvanceClassesMutation } from "@/redux/api/adminApi/features/showAdvanceClassApi";
+import CLassField from "@/components/Forms/answer/ClassField";
 
 export default function CreateAdvanceClass() {
   const [form] = Form.useForm();
@@ -38,12 +39,15 @@ export default function CreateAdvanceClass() {
   });
   const categoryData: any = Category?.data;
 
+  const [ClassData, setClassData] = useState<any>([])
+
+  console.log(ClassData, 'ClassData')
   const [addShowAdvance, { isLoading: ShowAdvanceLoading }] =
     useAddShowAdvanceClassesMutation();
 
   // console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
 
-  console.log(course, "course");
+  // console.log(course, "course");
   const onFinish = async (values: any) => {
     console.log(
       "🚀 ~ file: CreateAdvanceClass.tsx:55 ~ onFinish ~ values:",
@@ -54,10 +58,10 @@ export default function CreateAdvanceClass() {
       title: values.title,
       buttonLink: values.buttonLink,
       page: values.page,
-      classes: values?.classes,
+      classes: ClassData,
     };
     console.log("🚀 ~ onFinish ~ advancePlanData:", advancePlanData);
-    return
+    // return
     try {
       const res = await addShowAdvance(advancePlanData).unwrap();
       // console.log(res);
@@ -121,7 +125,7 @@ export default function CreateAdvanceClass() {
         </Form.Item>
         {/* //! 3. add classes */}
         <div className="border-2 rounded-lg p-3 ">
-          <h3 className="text-center ">Add Classes</h3>
+          {/* <h3 className="text-center ">Add Classes</h3>
           <Form.List name="classes">
             {(fields, { add, remove }) => {
               // console.log(fields,'fieldsfieldsfieldsfields') ;
@@ -301,7 +305,9 @@ export default function CreateAdvanceClass() {
                 </>
               );
             }}
-          </Form.List>
+          </Form.List> */}
+
+          <CLassField ClassData={ClassData} setClassData={setClassData} />
         </div>
         <Form.Item>
           <p className="text-center my-3 font-bold text-xl">Description</p>
