@@ -20,7 +20,7 @@ import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotS
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useAddShowAdvanceClassesMutation } from "@/redux/api/adminApi/showAdvanceClassApi";
+import { useAddShowAdvanceClassesMutation } from "@/redux/api/adminApi/features/showAdvanceClassApi";
 
 export default function CreateAdvanceClass() {
   const [form] = Form.useForm();
@@ -57,7 +57,7 @@ export default function CreateAdvanceClass() {
       classes: values?.classes,
     };
     console.log("🚀 ~ onFinish ~ advancePlanData:", advancePlanData);
-
+    return
     try {
       const res = await addShowAdvance(advancePlanData).unwrap();
       // console.log(res);
@@ -184,6 +184,7 @@ export default function CreateAdvanceClass() {
                               // Upload image to Cloudinary
                               const imgUrl = await uploadImgCloudinary(file);
 
+
                               // Set the new value of imgs by appending the imgUrl
                               form.setFieldsValue({
                                 [name]: {
@@ -191,6 +192,7 @@ export default function CreateAdvanceClass() {
                                   img: imgUrl,
                                 },
                               });
+                              
 
                               // Prevent default upload behavior
                               setLoading(false);
@@ -244,9 +246,9 @@ export default function CreateAdvanceClass() {
                         {...restField}
                         name={[name, "buttonLink"]}
                         label="Button Link"
-                        //  rules={[
-                        //   { required: true, message: "Missing Class Class Button Link" },
-                        // ]}
+                      //  rules={[
+                      //   { required: true, message: "Missing Class Class Button Link" },
+                      // ]}
                       >
                         <Input
                           size="large"

@@ -1,4 +1,4 @@
-import { ICourseData } from "./courseType";
+import { ICourseData } from "../courseType";
 export type IClassTypes = {
   title: string;
   img: string;
