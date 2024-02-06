@@ -14,7 +14,7 @@ const SupportHero = () => {
   query["page"] = "home";
   const { data, isLoading, error } = useGetAllSkills_planQuery({ ...query });
   const skillData = data?.data[0];
-  console.log("🚀 ~ SupportHero ~ skillData:", skillData)
+  // console.log("🚀 ~ SupportHero ~ skillData:", skillData)
   if (isLoading) {
     return <LoadingSkeleton />;
   }
