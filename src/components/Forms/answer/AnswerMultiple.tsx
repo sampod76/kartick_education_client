@@ -28,7 +28,7 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
   answersMultiple,
   setAnswersMultiple,
 }) => {
-  console.log("🚀 ~ answersMultiple:", answersMultiple)
+  // console.log("🚀 ~ answersMultiple:", answersMultiple)
 
 
   const handleAdd = () => {
