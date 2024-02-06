@@ -173,12 +173,12 @@ export default function ShortOverview() {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${userInfo?.role}/features/skills-plan/details/${record._id}`}>
+                    <Link href={`/${userInfo?.role}/features/short-overview/details/${record._id}`}>
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/features/skills-plan/edit/${record._id}`}>
+                    <Link href={`/${userInfo?.role}/features/short-overview/edit/${record._id}`}>
                       Edit
                     </Link>
                   </Menu.Item>
@@ -261,7 +261,7 @@ export default function ShortOverview() {
           },
           {
             label: `Package`,
-            link: `/${userInfo?.role}/features/skills-plan`,
+            link: `/${userInfo?.role}/features/short-overview`,
           },
         ]}
       /> */}
@@ -291,7 +291,7 @@ export default function ShortOverview() {
           </Button> */}
 
 
-          <Link href={`/${userInfo?.role}/features/skills-plan/create`}>
+          <Link href={`/${userInfo?.role}/features/short-overview/create`}>
             <Button type="default">Create ShortOverView</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
