@@ -491,29 +491,57 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         },
         {
           label: "Skills Plan",
-          key: `/${role}/features/skills-plan`,
+          key: `/${role}/features/short-overview`,
           children: [
             {
               label: (
                 <Link
                   onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/features/skills-plan/create`}
+                  href={`/${role}/features/short-overview/create`}
                 >
                   Create Skills Plan
                 </Link>
               ),
-              key: `/${role}/features/skills-plan/create`,
+              key: `/${role}/features/short-overview/create`,
             },
             {
               label: (
                 <Link
                   onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/features/skills-plan`}
+                  href={`/${role}/features/short-overview`}
                 >
                   Skills Plan List
                 </Link>
               ),
-              key: `/${role}/features/skills-plan`,
+              key: `/${role}/features/short-overview`,
+            },
+          ]
+        },
+        {
+          label: "Short Overview",
+          key: `/${role}/features/short-overview`,
+          children: [
+            {
+              label: (
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/features/short-overview/create`}
+                >
+                  Create Short Overview
+                </Link>
+              ),
+              key: `/${role}/features/short-overview/create`,
+            },
+            {
+              label: (
+                <Link
+                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+                  href={`/${role}/features/short-overview`}
+                >
+                  Short Overview List
+                </Link>
+              ),
+              key: `/${role}/features/short-overview`,
             },
           ]
         },

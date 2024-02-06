@@ -18,9 +18,10 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
-import { useAddSkills_planMutation } from "@/redux/api/adminApi/features/skillsPlanApi";
+import { useAddShortOverViewMutation } from "@/redux/api/adminApi/features/overview";
 
-export default function CreateSkillsPlan() {
+
+export default function CreateShortOverview() {
   const [form] = Form.useForm();
 
 
@@ -37,39 +38,34 @@ export default function CreateSkillsPlan() {
     value: select._id,
   }));
 
-  const [addSkills_plan, { isLoading: AddPackageLoading }] =
-    useAddSkills_planMutation();
+  const [addShortOverView, { isLoading: shortOverviewLoading }] =
+    useAddShortOverViewMutation();
   // console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
 
 
 
   const onFinish = async (values: any) => {
     // console.log("Received values", values);
-    if (values?.imgs) {
-      const imgUrl = await uploadImgCloudinary(values?.imgs?.file);
-      console.log(imgUrl, 'imgUrl')
-      values.imgs = imgUrl;
-    }
 
 
-    const skillsPlanData = {
+    const shortOverView = {
       title: values.title,
-      imgs: [values?.imgs],
-      imgTitle: values.imgTitle,
+
       page: values.page,
-      points: values?.points,
-      details: textEditorValue
+      details: textEditorValue,
+
+      cards: values?.cards,
     };
-    console.log("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData)
+    console.log("🚀 ~ onFinish ~ shortOverView:", shortOverView)
     // return
 
     try {
-      const res = await addSkills_plan(skillsPlanData).unwrap();
+      const res = await addShortOverView(shortOverView).unwrap();
       console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Package");
+        Success_model("Successfully added Short Overview");
         form.resetFields();
       }
 
@@ -83,10 +79,10 @@ export default function CreateSkillsPlan() {
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
-        Create Skills and Plan
+        Create Short Overview
       </h1>
       <Form
-        name="Skills_Plan_create"
+        name="ShortOverView_create"
         onFinish={onFinish}
         form={form}
         style={{
@@ -99,42 +95,22 @@ export default function CreateSkillsPlan() {
         autoComplete="off"
         layout="vertical"
       >
-        <Form.Item>
-          {/* //! 1. title */}
-          <Form.Item name="title" label="Title">
-            <Input size="large" placeholder="Please enter Skills and Plan title" />
-          </Form.Item>
-          {/* //! 2. imgs */}
-          <Space style={{}}>
-            <Form.Item name="imgTitle" label="Image Title">
-              <Input size="large" placeholder="Please enter Skills and Plan imgTitle title" />
-            </Form.Item>
-            <Form.Item name="imgs" required>
-              <Upload
-                listType="picture-circle"
-                beforeUpload={async (file) => {
-                  // console.log(file)
-                  // const imgUrl = await uploadImgCloudinary(file);
-                  form.setFieldsValue({ imgExtra: "" }); // Set imgUrl in Form values
-                  return false; // Prevent default upload behavior
-                  // return true
-                }}
-              >
-                Upload
-              </Upload>
-            </Form.Item>
 
-          </Space>
-
+        {/* //! 1. title */}
+        <Form.Item name="title" label="Title">
+          <Input size="large" placeholder="Please enter Short Overview title" />
         </Form.Item>
+
+
+
         {/* //! 3.page  */}
         <Form.Item name="page" label="Page">
-          <Input size="large" placeholder="Please enter Skills and Plan page" />
+          <Input size="large" placeholder="Please enter Short Overview page" />
         </Form.Item>
-        {/* //! 2. add points */}
+        {/* //! 2. add cards */}
         <div className="border-2 rounded-lg p-3">
-          <LabelUi>Add Points</LabelUi>
-          <Form.List name="points">
+          <LabelUi>Add cards</LabelUi>
+          <Form.List name="cards">
             {(fields, { add, remove }) => {
               // console.log(fields,'fieldsfieldsfieldsfields') ;
 
@@ -176,10 +152,38 @@ export default function CreateSkillsPlan() {
                           maxWidth: "200px",
                         }}
                         rules={[
-                          { required: true, message: "Missing Points Label" },
+                          { required: true, message: "Missing cards Label" },
                         ]}
                       >
                         <Input size="large" placeholder="label" />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        name={[name, "countNumber"]}
+                        style={{
+                          width: "",
+                          marginBottom: "8px",
+                          maxWidth: "200px",
+                        }}
+                        rules={[
+                          { required: true, message: "Missing cards count Number" },
+                        ]}
+                      >
+                        <Input size="large" placeholder="count Number" />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        name={[name, "short_description"]}
+                        style={{
+                          width: "",
+                          marginBottom: "8px",
+                          maxWidth: "200px",
+                        }}
+                        rules={[
+                          { required: true, message: "Missing cards short_description" },
+                        ]}
+                      >
+                        <Input.TextArea size="large" placeholder="short_description" />
                       </Form.Item>
                       <MinusCircleOutlined
                         onClick={() => handleRemove(name)}
@@ -194,7 +198,7 @@ export default function CreateSkillsPlan() {
                       block
                       icon={<PlusOutlined />}
                     >
-                      Add points
+                      Add cards
                     </Button>
                   </Form.Item>
                 </>
@@ -211,11 +215,11 @@ export default function CreateSkillsPlan() {
         </Form.Item>
         <Form.Item>
           <div className="flex justify-center items-center mt-3">
-            {AddPackageLoading ? (
+            {shortOverviewLoading ? (
               <ButtonLoading />
             ) : (
               <Button
-                loading={AddPackageLoading}
+                loading={shortOverviewLoading}
                 type="default"
                 htmlType="submit"
               >

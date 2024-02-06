@@ -35,10 +35,11 @@ import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 // import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { useDeleteShortOverViewMutation, useGetAllShortOverViewQuery } from "@/redux/api/adminApi/features/overview";
 
-import { useDeleteSkills_planMutation, useGetAllSkills_planQuery } from "@/redux/api/adminApi/features/skillsPlanApi";
 
-export default function SkillsPlanDashList() {
+
+export default function ShortOverview() {
   //
   const [openDrawer, setOpenDrawer] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -52,12 +53,7 @@ export default function SkillsPlanDashList() {
 
   const queryCategory: Record<string, any> = {};
   queryCategory["children"] = "course";
-  //! for Category options selection
-  const { data: Category, isLoading: categoryLoading } =
-    useGetAllCategoryChildrenQuery({
-      ...queryCategory,
-    });
-  const categoryData: any = Category?.data;
+
   //----------------------------------------------------------------
 
   const query: Record<string, any> = {};
@@ -65,7 +61,7 @@ export default function SkillsPlanDashList() {
   // const SUPER_ADMIN=USER_ROLE.ADMIN
   const userInfo = getUserInfo() as IDecodedInfo
 
-  const [deleteSkills_plan] = useDeleteSkills_planMutation();
+  const [deleteShortOverView] = useDeleteShortOverViewMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -97,7 +93,7 @@ export default function SkillsPlanDashList() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllSkills_planQuery({ ...query });
+  const { data = [], isLoading } = useGetAllShortOverViewQuery({ ...query });
   // console.log("🚀 ~ file: page.tsx:68 ~ skillsPlanData ~ data:", data);
 
   //@ts-ignore
@@ -112,7 +108,7 @@ export default function SkillsPlanDashList() {
         try {
           console.log(id);
 
-          const res = await deleteSkills_plan(id).unwrap();
+          const res = await deleteShortOverView(id).unwrap();
 
           console.log(res, "response for delete SKillsPlan");
           if (res?.success == false) {
@@ -227,9 +223,9 @@ export default function SkillsPlanDashList() {
   const deleteAdminHandler = async (id: string) => {
     // console.log(id);
     try {
-      const res = await deleteSkills_plan(id);
+      const res = await deleteShortOverView(id);
       if (res) {
-        message.success("Package Successfully Deleted!");
+        message.success("SHortOverview Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
@@ -269,7 +265,7 @@ export default function SkillsPlanDashList() {
           },
         ]}
       /> */}
-      <h1>Skill Plan List</h1>
+      <h1>ShortOverView List</h1>
       <ActionBar>
         <div className="block lg:flex gap-5">
           <Input
@@ -296,7 +292,7 @@ export default function SkillsPlanDashList() {
 
 
           <Link href={`/${userInfo?.role}/features/skills-plan/create`}>
-            <Button type="default">Create Skill&Plan</Button>
+            <Button type="default">Create ShortOverView</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button

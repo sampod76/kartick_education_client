@@ -20,7 +20,7 @@ import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotS
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useAddShowAdvanceClassesMutation } from "@/redux/api/adminApi/showAdvanceClassApi";
+import { useAddShowAdvanceClassesMutation } from "@/redux/api/adminApi/features/showAdvanceClassApi";
 
 export default function CreateAdvanceClass() {
   const [form] = Form.useForm();
@@ -183,14 +183,21 @@ export default function CreateAdvanceClass() {
                               setLoading(true);
                               // Upload image to Cloudinary
                               const imgUrl = await uploadImgCloudinary(file);
+                              console.log("🚀 ~ beforeUpload={ ~ imgUrl:", imgUrl)
 
-                              // Set the imgUrl in the "img" property of the entire form
+
+                              // Set the new value of imgs by appending the imgUrl
                               form.setFieldsValue({
-                                img: imgUrl,
+                                [name]: {
+                                  ...form.getFieldValue(name),
+                                  img: imgUrl,
+                                },
                               });
+                              
 
+                              // Prevent default upload behavior
                               setLoading(false);
-                              return false; // Prevent default upload behavior
+                              return false;
                             } catch (error) {
                               console.error("Error uploading image:", error);
                               setLoading(false);
@@ -207,7 +214,6 @@ export default function CreateAdvanceClass() {
                           )}
                         </Upload>
                       </Form.Item>
-
 
                       <Form.Item
                         {...restField}

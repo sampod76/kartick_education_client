@@ -12,25 +12,26 @@ import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { useGetSingleSkills_planQuery, useUpdateSkills_planMutation } from "@/redux/api/adminApi/features/skillsPlanApi";
-import { ISkillsPlanData } from "@/types/features/SkillsAndPlanDataType";
 import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
+import { IShort_overviewData } from "@/types/features/shortOverviewType";
+import { useGetSingleShortOverViewQuery, useUpdateShortOverViewMutation } from "@/redux/api/adminApi/features/overview";
 
 
-export default function EditSKillsAndPlan({ planId }: { planId: string }) {
-    // console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ planId:", planId)
+
+export default function EditShortOverview({ overviewId }: { overviewId: string }) {
+    // console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ overviewId:", overviewId)
     const { data = {}, isLoading: defaultLoading } =
-        useGetSingleSkills_planQuery(planId, {
-            skip: !Boolean(planId),
+        useGetSingleShortOverViewQuery(overviewId, {
+            skip: !Boolean(overviewId),
         });
-    const defaultSkillPlanData: ISkillsPlanData = data
+    const defaultSkillPlanData: IShort_overviewData = data
 
     // console.log(defaultSkillPlanData, 'defaultSkillPlanDatadefaultSkillPlanData')
 
-    const [updateSkills_plan, { isLoading: UpdatePackageLoading }] =
-        useUpdateSkills_planMutation();
+    const [updateShortOverView, { isLoading: UpdatePackageLoading }] =
+        useUpdateShortOverViewMutation();
     const [textEditorValue, setTextEditorValue] = useState(defaultSkillPlanData?.details || "");
 
     const [form] = Form.useForm();
@@ -39,34 +40,28 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
     // const [addPackage, { isLoading: UpdatePackageLoading }] =
     //     useAddPackageMutation();
     const onFinish = async (values: any) => {
-        if (typeof (values?.imgs) !== 'string') {
-            const imgUrl = await uploadImgCloudinary(values?.imgs?.file);
-            // console.log(imgUrl, 'imgUrl')
-            values.imgs = imgUrl;
-        }
+    
 
-        const skillsPlanData: Partial<ISkillsPlanData> = {
+        const shortOverview: Partial<IShort_overviewData> = {
 
             title: values.title || defaultSkillPlanData?.title,
-            imgTitle: values.imgTitle || defaultSkillPlanData?.imgTitle,
-            imgs: [values?.imgs] || defaultSkillPlanData?.imgs[0],
             page: values.page || defaultSkillPlanData?.page,
             details: textEditorValue || defaultSkillPlanData?.details,
-            points: values.points || defaultSkillPlanData?.points,
+            cards: values.cards || defaultSkillPlanData?.cards,
         };
         // console.log("Received values of form:", values);
-        // console.log("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData);
+        // console.log("🚀 ~ onFinish ~ shortOverview:", shortOverview);
         // return
         try {
-            const res = await updateSkills_plan({
-                id: planId,
-                data: skillsPlanData,
+            const res = await updateShortOverView({
+                id: overviewId,
+                data: shortOverview,
             }).unwrap();
             // console.log(res);
             if (res?.success == false) {
                 Error_model_hook(res?.message);
             } else {
-                Success_model("Successfully Updated SkillsANdPlan");
+                Success_model("Successfully Updated ShortOverview");
                 // form.resetFields();
             }
             // console.log(res);
@@ -81,24 +76,23 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
     }
 
 
-    const initialSkillsANdPlanFormData = {
+    const initialShortOverviewFormData = {
         title: defaultSkillPlanData?.title,
-        imgTitle: defaultSkillPlanData?.imgTitle,
-        imgs: defaultSkillPlanData?.imgs[0],
+
         page: defaultSkillPlanData?.page,
         // details: defaultSkillPlanData?.details,
-        points: defaultSkillPlanData?.points,
+        cards: defaultSkillPlanData?.cards,
     };
 
-    // console.log(initialSkillsANdPlanFormData, 'initialSkillsANdPlanFormData..........')
+    // console.log(initialShortOverviewFormData, 'initialShortOverviewFormData..........')
     // console.log('defaultCategory7', defaultCategory[1].value)
     return (
         <div className="bg-white shadow-lg p-5 rounded-xl">
             <h1 className="text-xl text-center font-bold border-b-2 border-spacing-4 mb-2  ">
-                Update SkillsANdPlan
+                Update ShortOverview
             </h1>
             <Form
-                name="SkillsANdPlan_Update"
+                name="ShortOverview_Update"
                 onFinish={onFinish}
                 form={form}
                 style={{
@@ -109,46 +103,24 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
                     borderRadius: "5px",
                 }}
                 // autoComplete="off"
-                initialValues={initialSkillsANdPlanFormData}
+                initialValues={initialShortOverviewFormData}
                 layout="vertical"
             >
-                <Form.Item>
-                    {/* //! 1. title */}
-                    <Form.Item name="title" label="Title">
-                        <Input size="large" placeholder="Please enter Skills and Plan title" />
-                    </Form.Item>
-                    {/* //! 2. imgs */}
-                    <Space style={{}}>
-                        <Form.Item name="imgTitle" label="Image Title">
-                            <Input size="large" placeholder="Please enter Skills and Plan imgTitle title" />
-                        </Form.Item>
-                        <Form.Item name="imgs" initialValue={{ imgs: defaultSkillPlanData?.imgs[0] || [] }} required>
-                            <Upload
-                                listType="picture-circle"
-                                // defaultFileList={defaultSkillPlanData?.imgs[0]}
-                                beforeUpload={async (file) => {
-                                    // console.log(file)
-                                    // const imgUrl = await uploadImgCloudinary(file);
-                                    form.setFieldsValue({ imgExtra: "" }); // Set imgUrl in Form values
-                                    return false; // Prevent default upload behavior
-                                    // return true
-                                }}
-                            >
-                                Upload
-                            </Upload>
-                        </Form.Item>
-
-                    </Space>
-
+                {/* //! 1. title */}
+                <Form.Item name="title" label="Title">
+                    <Input size="large" placeholder="Please enter Short Overview title" />
                 </Form.Item>
+
+
+
                 {/* //! 3.page  */}
                 <Form.Item name="page" label="Page">
-                    <Input size="large" placeholder="Please enter Skills and Plan page" />
+                    <Input size="large" placeholder="Please enter Short Overview page" />
                 </Form.Item>
-                {/* //! 2. add points */}
+                {/* //! 2. add cards */}
                 <div className="border-2 rounded-lg p-3">
-                    <LabelUi>Add Points</LabelUi>
-                    <Form.List name="points">
+                    <LabelUi>Add cards</LabelUi>
+                    <Form.List name="cards">
                         {(fields, { add, remove }) => {
                             // console.log(fields,'fieldsfieldsfieldsfields') ;
 
@@ -190,10 +162,38 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
                                                     maxWidth: "200px",
                                                 }}
                                                 rules={[
-                                                    { required: true, message: "Missing Points Label" },
+                                                    { required: true, message: "Missing cards Label" },
                                                 ]}
                                             >
                                                 <Input size="large" placeholder="label" />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...restField}
+                                                name={[name, "countNumber"]}
+                                                style={{
+                                                    width: "",
+                                                    marginBottom: "8px",
+                                                    maxWidth: "200px",
+                                                }}
+                                                rules={[
+                                                    { required: true, message: "Missing cards count Number" },
+                                                ]}
+                                            >
+                                                <Input size="large" placeholder="count Number" />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...restField}
+                                                name={[name, "short_description"]}
+                                                style={{
+                                                    width: "",
+                                                    marginBottom: "8px",
+                                                    maxWidth: "200px",
+                                                }}
+                                                rules={[
+                                                    { required: true, message: "Missing cards short_description" },
+                                                ]}
+                                            >
+                                                <Input.TextArea size="large" placeholder="short_description" />
                                             </Form.Item>
                                             <MinusCircleOutlined
                                                 onClick={() => handleRemove(name)}
@@ -208,7 +208,7 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
                                             block
                                             icon={<PlusOutlined />}
                                         >
-                                            Add points
+                                            Add cards
                                         </Button>
                                     </Form.Item>
                                 </>
@@ -221,7 +221,6 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
                     <TextEditorNotSetValue
                         textEditorValue={textEditorValue}
                         setTextEditorValue={setTextEditorValue}
-                        defaultTextEditorValue={defaultSkillPlanData?.details}
                     />
                 </Form.Item>
                 <Form.Item>

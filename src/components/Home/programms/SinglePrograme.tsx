@@ -8,7 +8,7 @@ import { Avatar, Card, Rate } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import { IClassTypes } from "../../../types/showAdvanceClassType";
+import { IClassTypes } from "../../../types/features/showAdvanceClassType";
 import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
 
 const { Meta, Grid } = Card;
@@ -21,7 +21,7 @@ const SIngleProgramme = ({ programme }: { programme: IClassTypes }) => {
     buttonLinkId = programme?.course;
   } else if (typeof programme?.course === "object") {
     buttonLinkId = programme.course?._id;
-  } 
+  }
 
   return (
     <AnimatePresenceWrapper>
