@@ -59,7 +59,7 @@ const ShortOverViewHomePage = () => {
   query["status"] = "active";
 
   const { data = [], isLoading } = useGetAllShortOverViewQuery({ ...query });
-  const shortOverviewData: IShort_overviewData[] = data?.data || [];
+  const shortOverviewData: IShort_overviewData[] = data?.data
   console.log(shortOverviewData, 'shortOverviewData')
 
   if (isLoading) {
@@ -77,7 +77,7 @@ const ShortOverViewHomePage = () => {
           </h1>
 
           <div className="my-[6rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-7 w-full lg:max-w-[90%] mx-auto">
-            {ShortOverViewHomePageHistoryData?.map((item: any, index: any) => {
+            {shortOverviewData[0]?.cards?.map((item: any, index: any) => {
               return (
                 <AnimatePresenceWrapper key={index} delay={0.24 + (index / 100)}>
                   <div
@@ -85,10 +85,10 @@ const ShortOverViewHomePage = () => {
                     key={index + 1}
                   >
                     <p className="h-12 w-12 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-3 text-white hover:text-primary hover:bg-slate-100">
-                      {index + 11}
+                      {item?.countNumber}
                     </p>
-                    <h2 className="font-[500] text-2xl text-[#282938] ">
-                      {item?.name}
+                    <h2 className="font-[500] text-xl  lg:text-2xl text-[#282938] text-nowrap">
+                      {item?.title}
                     </h2>
                     <p className="text-[#1f1f2b] font[400] text-[16px]">
 
@@ -96,7 +96,7 @@ const ShortOverViewHomePage = () => {
                         suffixCount={3}
                         maxLength={180}
                       >
-                        {item?.description}
+                        {item?.short_description}
                       </EllipsisMiddle>
                     </p>
                   </div>
