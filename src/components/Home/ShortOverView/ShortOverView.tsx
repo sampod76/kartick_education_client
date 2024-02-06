@@ -58,9 +58,9 @@ const ShortOverViewHomePage = () => {
   let query: any = {}
   query["status"] = "active";
 
-  const { data = [], isLoading } = useGetAllShortOverViewQuery({ ...query });
+  const { data = [], isLoading } = useGetAllShortOverViewQuery({ ...query }) as any
   const shortOverviewData: IShort_overviewData[] = data?.data
-  console.log(shortOverviewData, 'shortOverviewData')
+  // console.log(shortOverviewData, 'shortOverviewData')
 
   if (isLoading) {
     return <>
