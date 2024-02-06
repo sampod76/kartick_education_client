@@ -45,7 +45,7 @@ export default function QuizTestPage({
 
   // ! For Test is submitted Answer is CorrectAnswer;
 
-  const checkAnswers = (responseData: any) => {
+  const checkAnswers = (responseData: ISubmittedUserQuizData): boolean => {
     const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
       const submittedAnswer = responseData?.singleQuiz?.answers?.find(
         (answer: any) => answer.id === answerId
@@ -66,6 +66,14 @@ export default function QuizTestPage({
 
   const submitAnswer = async () => {
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
+
+      const isBeforeCorrect = checkAnswers(currentAnswer);
+      if (isBeforeCorrect) {
+        currentAnswer['isCorrect'] = true
+      } else {
+        currentAnswer['isCorrect'] = false
+      }
+      
       try {
         const res = await submitQuiz(currentAnswer).unwrap();
         console.log(res, "response");
@@ -123,10 +131,10 @@ export default function QuizTestPage({
     // console.log(userAnswers)
     const isSelected = userAnswers.find(
       (answer: any) =>
-        answer?.index === (currentStep < quizData.length - 1 ? currentStep+1 : currentStep+1)
+        answer?.index === (currentStep < quizData.length - 1 ? currentStep + 1 : currentStep + 1)
 
     );
-   
+
     let disabled = false;
 
     if (currentAnswer?.singleQuiz === submittedDefaultData?.singleQuiz?._id) {

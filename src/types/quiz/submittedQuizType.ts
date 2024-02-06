@@ -11,6 +11,7 @@ export type ISubmittedUserQuizData = {
   status: string;
   quiz: string;
   isDelete: string;
+  isCorrect: "yes" | "no";
   singleQuiz: {
     _id: string;
     title: string;

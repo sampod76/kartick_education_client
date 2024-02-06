@@ -138,7 +138,7 @@ export default function QuizQuestionCard({
 
 
   const handleAnswerChange = (questionIndex: number, answer: any) => {
-    console.log("🚀 ~ handleAnswerChange ~ answer:", answer)
+    // console.log("🚀 ~ handleAnswerChange ~ answer:", answer)
     let changedAnswer = [];
     console.log('answer', questionIndex)
 
