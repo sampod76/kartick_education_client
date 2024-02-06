@@ -183,20 +183,14 @@ export default function CreateAdvanceClass() {
                               setLoading(true);
                               // Upload image to Cloudinary
                               const imgUrl = await uploadImgCloudinary(file);
-                              console.log("🚀 ~ beforeUpload={ ~ imgUrl:", imgUrl)
 
-
-                              // Set the new value of imgs by appending the imgUrl
+                              // Set the imgUrl in the "img" property of the entire form
                               form.setFieldsValue({
-                                [name]: {
-                                  ...form.getFieldValue(name),
-                                  img: imgUrl,
-                                },
+                                img: imgUrl,
                               });
 
-                              // Prevent default upload behavior
                               setLoading(false);
-                              return false;
+                              return false; // Prevent default upload behavior
                             } catch (error) {
                               console.error("Error uploading image:", error);
                               setLoading(false);
@@ -213,6 +207,7 @@ export default function CreateAdvanceClass() {
                           )}
                         </Upload>
                       </Form.Item>
+
 
                       <Form.Item
                         {...restField}
