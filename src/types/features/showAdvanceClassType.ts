@@ -6,6 +6,8 @@ export type IClassTypes = {
   buttonLink?: string;
   course?: string | ICourseData;
 };
+
+
 export type IShow_advance_classes = {
   _id: string;
   title: string;
@@ -20,4 +22,6 @@ export type IShow_advance_classes = {
   demo_video?: Record<string, string>;
   tags?: string[];
   isDelete: string;
+  
 };
+

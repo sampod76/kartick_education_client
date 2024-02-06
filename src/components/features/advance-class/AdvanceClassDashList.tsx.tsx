@@ -146,6 +146,16 @@ export default function AdvanceClassList() {
       dataIndex: "title",
       ellipsis: true,
     },
+    {
+      title: "Details",
+      dataIndex: "details",
+      ellipsis: true,
+    },
+    {
+      title: "Page",
+      dataIndex: "page",
+      ellipsis: true,
+    },
 
     {
       title: "Created at",
@@ -259,7 +269,7 @@ export default function AdvanceClassList() {
           },
         ]}
       /> */}
-      <h1>ShortOverView List</h1>
+      <h1>Advance Class List</h1>
       <ActionBar>
         <div className="block lg:flex gap-5">
           <Input

@@ -265,7 +265,7 @@ export default function ShortOverview() {
           },
         ]}
       /> */}
-      <h1>ShortOverView List</h1>
+      <h1>Short OverView List</h1>
       <ActionBar>
         <div className="block lg:flex gap-5">
           <Input

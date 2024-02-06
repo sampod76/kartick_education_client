@@ -59,6 +59,7 @@ export default function CreateAdvanceClass() {
       buttonLink: values.buttonLink,
       page: values.page,
       classes: ClassData,
+      details: textEditorValue
     };
     console.log("🚀 ~ onFinish ~ advancePlanData:", advancePlanData);
     // return

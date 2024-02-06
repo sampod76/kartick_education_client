@@ -111,7 +111,7 @@ const CLassField: React.FC<ClassFieldProps> = ({
                         <Input
                             placeholder="Button Link"
                             style={{
-                                width: "70%",
+                                width: "100%",
                                 height: "2.7rem"
                             }}
                             // width={500}
@@ -124,7 +124,7 @@ const CLassField: React.FC<ClassFieldProps> = ({
                         <Input.TextArea
                             showCount
                             maxLength={3000}
-                            rows={3}
+                            rows={5}
                             size="large"
                             value={answer.short_description}
                             onChange={(e) =>
@@ -140,10 +140,10 @@ const CLassField: React.FC<ClassFieldProps> = ({
                             onChange={(value) =>
                                 handleChange(index, { ...answer, course: value })
                             }
-
+                            defaultValue={answer?.course}
                             placeholder="Select subject"
                             size="large"
-                            options={categoryData.map((data: any) => ({
+                            options={categoryData?.map((data: any) => ({
                                 label: data.title,
                                 value: data._id,
                             }))}
