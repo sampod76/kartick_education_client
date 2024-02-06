@@ -21,7 +21,7 @@ const SIngleProgramme = ({ programme }: { programme: IClassTypes }) => {
     buttonLinkId = programme?.course;
   } else if (typeof programme?.course === "object") {
     buttonLinkId = programme.course?._id;
-  }
+  } 
 
   return (
     <AnimatePresenceWrapper>

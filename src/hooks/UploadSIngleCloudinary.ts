@@ -5,7 +5,7 @@ import { getFromLocalStorage } from "@/utils/local-storage";
 import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
 import { Error_model_hook } from "@/utils/modalHook";
 
-const url = `${getBaseUrl()}/upload/upload-profile-image`;
+const url = `${getBaseUrl()}/upload/upload-single-image`;
 
 const uploadImgCloudinary = async (file: any) => {
   console.log("🚀 ~ uploadImgCloudinary ~ file:", file);
