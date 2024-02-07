@@ -12,10 +12,10 @@ export default function AnalyticsTab() {
         <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r-2 border-slate-600">
           <UserSwitchOutlined
             style={{
-              fontSize: "1.5rem",
+              fontSize: "1.4rem",
             }}
           />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-2xl">Usage</h1>
+          <h1 className=" text-sm md:text-lg lg:text-xl">Usage</h1>
         </button>
       ),
       key: "1",
@@ -26,10 +26,10 @@ export default function AnalyticsTab() {
         <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r-2 border-slate-600">
           <DiffOutlined
             style={{
-              fontSize: "1.5rem",
+              fontSize: "1.4rem",
             }}
           />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-2xl">Scores Section</h1>
+          <h1 className=" text-sm md:text-lg lg:text-xl">Scores Section</h1>
         </button>
       ),
       key: "Scores",
@@ -40,10 +40,10 @@ export default function AnalyticsTab() {
         <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r- border-slate-600">
           <PicRightOutlined
             style={{
-              fontSize: "1.5rem",
+              fontSize: "1.4rem",
             }}
           />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-2xl">Progress Section</h1>
+          <h1 className=" text-sm md:text-lg lg:text-xl">Progress Section</h1>
         </button>
       ),
       key: "Progress",

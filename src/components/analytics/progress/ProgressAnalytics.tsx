@@ -9,7 +9,7 @@ import {
     EyeInvisibleOutlined,
     SearchOutlined,
     PrinterOutlined,
-    
+
 } from "@ant-design/icons";
 import Link from 'next/link';
 import { useGetAllCartQuery } from '@/redux/api/userApi/cartAPi';
@@ -17,35 +17,47 @@ import { ENUM_STATUS, ENUM_YN } from '@/constants/globalEnums';
 import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
 import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
 import { EllipsisMiddle } from '@/utils/CutTextElliples';
+import SelectCategoryChildren from '@/components/Forms/GeneralField/SelectCategoryChildren';
+import { Select } from 'antd';
+import TopFilterSelect from '../TopFilterSelect';
+
 const { Panel } = Collapse
+
+
+
 export default function ProgressAnalytics() {
 
     const { data: CategoryData, isLoading } = useGetAllCategoryChildrenQuery({ status: ENUM_STATUS.ACTIVE, isDelete: ENUM_YN.NO, children: 'course-milestone-module' })
-
-
+    //! collapse section ////
     const [currentCollapse, setCurrentCollapse] = useState<string[]>([]);
     const handleChange = (key: any) => {
         console.log(key, 'key')
 
         setCurrentCollapse(key);
-    }; //! collapse data ////
+    };
 
-    // console.log(CategoryData)
+
+
+
+
+
+    const [category, setCategory] = useState<{ _id?: string; title?: string }>(
+        {}
+    );
+    const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
+    const [time, setTime] = useState<{ _id?: string; title?: string }>({});
+
 
     if (isLoading) {
         return <LoadingForDataFetch />
     }
 
-
     return (
         <div>
 
-            {/* /! sort Section */}
-            <div className="">
-                sort section
-            </div>
+            <TopFilterSelect setCourse={setCourse} setCategory={setCategory} setTime={setTime} category={category} />
             {/* //! progress Section */}
-            <div className="">
+            <div className="mt-5">
 
                 <h1 className='text-2xl lg:text-3xl font my-2 text-slate-700 uppercase'>Progress and Improvement <PrinterOutlined /></h1>
 
