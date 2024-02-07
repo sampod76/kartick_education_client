@@ -37,11 +37,16 @@ export default function TopFilterSelect({ setCategory, setCourse, setTime, categ
     if (categoryLoading) {
         return <LoadingSkeleton />
     }
+
+    const onChangeTime = (time: string) => {
+        // console.log(time,'on time')
+        setTime(time)
+    }
     return (
         <div>  {/* /! sort Section */}
-            <div className="flex gap-5 items-center my-2 ">
+            <div className="block lg:flex  gap-5 items-center my-2 px-2">
 
-                <div className="flex gap-2 items-center text-xl">
+                <div className="flex gap-2 items-center text-xl my-3 lg:my-0">
                     <h5 className='text-gray-600 uppercase '>Category</h5>
                     <SelectCategoryChildren
 
@@ -50,7 +55,7 @@ export default function TopFilterSelect({ setCategory, setCourse, setTime, categ
                         categoryData={categoryData}
                     />
                 </div>
-                <div className="flex gap-2 items-center text-xl">
+                <div className="flex gap-2 items-center text-xl my-2 lg:my-0">
                     <h5 className='text-gray-600 uppercase '>Course</h5>
                     <SelectCategoryChildren
 
@@ -61,9 +66,9 @@ export default function TopFilterSelect({ setCategory, setCourse, setTime, categ
                         }
                     />
                 </div>
-                <div className="flex gap-2 items-center text-xl">
+                <div className="flex gap-2 items-center text-xl my-2 lg:my-0">
                     <h5 className='text-gray-600 uppercase '>Date Range</h5>
-                    <Select dropdownStyle={{ minWidth: "180px" }} placeholder="Select time duration">
+                    <Select onChange={onChangeTime} dropdownStyle={{ minWidth: "180px" }} placeholder="Select time duration">
                         {timeOptions.map((option) => (
                             <Option key={option.value} value={option.value}>
                                 {option.label}

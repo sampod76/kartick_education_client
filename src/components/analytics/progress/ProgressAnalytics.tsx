@@ -45,8 +45,7 @@ export default function ProgressAnalytics() {
         {}
     );
     const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
-    const [time, setTime] = useState<{ _id?: string; title?: string }>({});
-
+    const [time, setTime] = useState<string>('Today');
 
     if (isLoading) {
         return <LoadingForDataFetch />
@@ -57,9 +56,9 @@ export default function ProgressAnalytics() {
 
             <TopFilterSelect setCourse={setCourse} setCategory={setCategory} setTime={setTime} category={category} />
             {/* //! progress Section */}
-            <div className="mt-5">
+            <div className="mt-5 px-2">
 
-                <h1 className='text-2xl lg:text-3xl font-semibold my-2 text-slate-700 uppercase'>Progress and Improvement <PrinterOutlined /></h1>
+                <h1 className='text-2xl lg:text-3xl font-semibold my-5 text-slate-700 uppercase'>Progress and Improvement <PrinterOutlined /></h1>
 
                 <Collapse onChange={handleChange} style={{
                     backgroundColor: '#298BA0',
@@ -68,7 +67,7 @@ export default function ProgressAnalytics() {
                     {CategoryData?.data?.map((category: any) => (
                         <Panel header={<h2 className='text-white font-normal bg-[#b0d9e2'>{category?.title}</h2>} key={category?._id}>
                             <Collapse style={{
-                                backgroundColor: '#b0d9e2'
+                                backgroundColor: '#b0d9e'
                             }} defaultActiveKey="1"
                                 bordered={false}
                             //  ghost={true}

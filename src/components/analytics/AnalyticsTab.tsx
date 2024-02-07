@@ -20,7 +20,7 @@ export default function AnalyticsTab() {
           <h1 className=" text-sm md:text-lg lg:text-xl">Usage</h1>
         </button>
       ),
-      key: "1",
+      key: "usage",
       children: <UsageAnlytics />
     },
     {
