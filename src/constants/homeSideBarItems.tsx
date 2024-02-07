@@ -12,8 +12,10 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 
-const homeSideItems = () => {
-  const homeSIdeItems: MenuProps["items"] = [
+const homeSideItems = (role: string | null): MenuProps["items"] => {
+
+
+  const defaultSideItems: MenuProps["items"] = [
     {
       label: (
         <Link href="/">
@@ -98,7 +100,26 @@ const homeSideItems = () => {
     },
   ];
 
-  return homeSIdeItems;
+  // return defaultSideItems;
+
+  const loginUserNavItem = [
+    ...defaultSideItems,
+    {
+      label: (
+        <Link className="text-base font-thin font-serif capitalize" href="/">
+          Analysis
+        </Link>
+      ),
+      key: "/analysis",
+      icon: <ControlOutlined />
+    },
+  ]
+  if (role) {
+    return loginUserNavItem
+  }
+  else {
+    return defaultSideItems
+  }
 };
 
 export default homeSideItems;

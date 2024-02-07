@@ -303,7 +303,7 @@ export default function CreateAdvanceClass() {
               );
             }}
           </Form.List> */}
-          {/*//! Created Dynamci */}
+          {/*//! Created Dynamic */}
 
           <CLassField ClassData={ClassData} setClassData={setClassData} />
         </div>
