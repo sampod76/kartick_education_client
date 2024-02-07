@@ -303,8 +303,9 @@ export default function CreateAdvanceClass() {
               );
             }}
           </Form.List> */}
+          {/*//! Created Dynamci */}
 
-          <CLassField  ClassData={ClassData} setClassData={setClassData} />
+          <CLassField ClassData={ClassData} setClassData={setClassData} />
         </div>
         <Form.Item>
           <p className="text-center my-3 font-bold text-xl">Description</p>
