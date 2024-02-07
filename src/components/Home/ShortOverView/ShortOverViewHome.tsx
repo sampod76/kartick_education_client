@@ -93,8 +93,8 @@ const ShortOverViewHomePage = () => {
                     <p className="text-[#1f1f2b] font[400] text-[16px]">
 
                       <EllipsisMiddle
-                        suffixCount={3}
-                        maxLength={180}
+                        suffixCount={5}
+                        maxLength={64}
                       >
                         {item?.short_description}
                       </EllipsisMiddle>
@@ -106,12 +106,12 @@ const ShortOverViewHomePage = () => {
           </div>
 
           <div className="flex justify-center items-center">
-          <Link
-            href="/subscription"
-            className="text-primary uppercase p-2 w-[164px] h-[44px] text-center font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white mx-3"
-          >
-            Join Now
-          </Link>
+            <Link
+              href="/subscription"
+              className="text-primary uppercase p-2 w-[164px] h-[44px] text-center font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white mx-3"
+            >
+              Join Now
+            </Link>
           </div>
         </div>
       </div>
