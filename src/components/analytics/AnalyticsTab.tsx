@@ -2,6 +2,7 @@
 import React from 'react';
 import { AndroidOutlined, AppleOutlined, UserSwitchOutlined, DiffOutlined, PicRightOutlined } from '@ant-design/icons';
 import { Tabs, TabsProps } from 'antd';
+import ProgressAnalytics from './progress/ProgressAnalytics';
 
 export default function AnalyticsTab() {
 
@@ -18,7 +19,7 @@ export default function AnalyticsTab() {
         </button>
       ),
       key: "1",
-      children: 'Usage section'
+      children: 'Usage sections'
     },
     {
       label: (
@@ -46,7 +47,7 @@ export default function AnalyticsTab() {
         </button>
       ),
       key: "Progress",
-      children: 'Progress'
+      children: <ProgressAnalytics />
     },
 
   ]
