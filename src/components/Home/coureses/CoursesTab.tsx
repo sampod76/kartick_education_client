@@ -66,7 +66,7 @@ const CoursesTab = () => {
     })
   );
 
-  console.log('activeTabKey', activeTabKey)
+  // console.log('activeTabKey', activeTabKey)
   tabsItems2.unshift({
     label: (
       <button

@@ -42,7 +42,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     //       Analysis
     //     </Link>
     //   ),
-    //   key: "/analysis",
+    //   key: "/analytics",
     // },
 
     {
@@ -68,11 +68,11 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     ...defaultNavItem,
     {
       label: (
-        <Link className="text-base font-thin font-serif capitalize" href="/">
+        <Link className="text-base font-thin font-serif capitalize" href="/analytics">
           Analysis
         </Link>
       ),
-      key: "/analysis",
+      key: "/analytics",
     },
 
   ]
@@ -123,7 +123,7 @@ export const homeNavItem: MenuProps["items"] =
     //       Analysis
     //     </Link>
     //   ),
-    //   key: "/analysis",
+    //   key: "/analytics",
     // },
 
     {

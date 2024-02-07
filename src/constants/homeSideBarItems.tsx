@@ -58,7 +58,7 @@ const homeSideItems = (role: string | null): MenuProps["items"] => {
     //       Analysis
     //     </Link>
     //   ),
-    //   key: "/analysis",
+    //   key: "/analytics",
     //   icon: <FundOutlined />,
     // },
 
@@ -106,11 +106,11 @@ const homeSideItems = (role: string | null): MenuProps["items"] => {
     ...defaultSideItems,
     {
       label: (
-        <Link className="text-base font-thin font-serif capitalize" href="/">
+        <Link className="text-base font-thin font-serif capitalize" href="/analytics">
           Analysis
         </Link>
       ),
-      key: "/analysis",
+      key: "/analytics",
       icon: <ControlOutlined />
     },
   ]
