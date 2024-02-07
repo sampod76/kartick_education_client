@@ -46,8 +46,9 @@ const SIngleAdvanceClass = ({ programme }: { programme: IClassTypes }) => {
           </div>
         </div>
         <Link
-          href={`/course/milestone/${buttonLinkId}`}
-          className="p-2 ml-3 text-nowrap  my-2 w-[6.5rem] border-2 border-primary rounded  font-semibold gap-3 hover:bg-primary hover:text-white"
+        
+          href={programme.buttonLink || `/course/milestone/${buttonLinkId}`}
+          className="p-2  text-nowrap  my-2 w-[6.5rem] border-2 border-primary rounded  font-semibold gap-3 hover:bg-primary hover:text-white"
         >
           Enroll Now
         </Link>
