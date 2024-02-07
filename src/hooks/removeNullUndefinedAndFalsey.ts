@@ -1,7 +1,7 @@
 export function removeNullUndefinedAndFalsey(obj: { [x: string]: any }) {
     for (let key in obj) {
       if (!Boolean(obj[key])) {
-        if (obj[key] === null || obj[key] === undefined) {
+        if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
           delete obj[key];
         } else if (typeof obj[key] === "object") {
           // Recursively remove null, undefined, and falsey values from nested objects

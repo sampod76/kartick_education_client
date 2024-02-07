@@ -13,7 +13,7 @@ export const EllipsisMiddle: React.FC<{
     suffix = "";
   } else {
     const startLength = Math.floor((maxLengthString - suffixCount) );
-    console.log("🚀 ~ startLength:", startLength)
+   
     start = children.slice(0, startLength).trim();
     suffix = children.slice(-suffixCount).trim();
   }

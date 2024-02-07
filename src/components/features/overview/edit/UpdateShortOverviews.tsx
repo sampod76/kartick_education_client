@@ -17,6 +17,7 @@ import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import { IShort_overviewData } from "@/types/features/shortOverviewType";
 import { useGetSingleShortOverViewQuery, useUpdateShortOverViewMutation } from "@/redux/api/adminApi/features/overview";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 
 
 
@@ -72,7 +73,7 @@ export default function EditShortOverview({ overviewId }: { overviewId: string }
     };
 
     if (defaultLoading) {
-        return <div>Loading ..........</div>;
+        return <LoadingSkeleton />
     }
 
 
@@ -229,7 +230,7 @@ export default function EditShortOverview({ overviewId }: { overviewId: string }
                             <ButtonLoading />
                         ) : (
                             <Button
-                                loading={defaultLoading}
+                                loading={UpdatePackageLoading}
                                 type="default"
                                 htmlType="submit"
                             >

@@ -8,6 +8,7 @@ import NotFound from "@/app/not-found";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { useGetAllShowAdvanceClassesQuery } from "@/redux/api/adminApi/features/showAdvanceClassApi";
 import SIngleAdvanceClass from "./SingleAdvanceClass";
+import { Button } from "antd";
 
 const AdvanceHomeClass = () => {
   const query: Record<string, any> = {};
@@ -20,22 +21,22 @@ const AdvanceHomeClass = () => {
     ...query,
   });
   const classData = data?.data[0];
+  console.log("🚀 ~ AdvanceHomeClass ~ classData:", classData)
   if (isLoading) {
     return <LoadingSkeleton />;
   }
-  if (!classData?._id) {
-    return <NotFound />;
-  }
+ 
 
+  console.log("🚀 ~ AdvanceHomeClass ~ data:", data)
   return (
     <div className="mt-7  container mx-auto ">
       <div className="flex  justify-between gap-3 py-3 px-2">
-        <h1 className="text-xl lg:text-3xl text-[#282938] font-[600]">
+        <h1 className="pl-2 lg:pl-0 text-xl lg:text-3xl my-2 text-[#282938] font-[600]">
           {classData?.title}
         </h1>
-        <button className="p-2 text-nowrap border-2 border-primary rounded px-3 font-semibold gap-3 hover:bg-primary hover:text-white">
+        <Button type="default" className="p-2 mt-3 h-10 text-nowrap border-2 border-primary rounded px-3 font-semibold gap-3 hover:bg-primary hover:text-white">
           Join Now
-        </button>
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 first-letter:">

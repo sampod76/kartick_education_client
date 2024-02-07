@@ -22,26 +22,22 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useAddShowAdvanceClassesMutation } from "@/redux/api/adminApi/features/showAdvanceClassApi";
 import CLassField from "@/components/Forms/answer/ClassField";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 export default function CreateAdvanceClass() {
   const [form] = Form.useForm();
 
   const [textEditorValue, setTextEditorValue] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isReset, setIsReset] = useState(false);
 
-  const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
   const queryCategory: Record<string, any> = {};
   queryCategory["isDelete"] = ENUM_YN.NO;
   queryCategory["title"] = ENUM_STATUS.ACTIVE;
-  //! for Category options selection
-  const { data: Category, isLoading: categoryLoading } = useGetAllCourseQuery({
-    ...queryCategory,
-  });
-  const categoryData: any = Category?.data;
 
-  const [ClassData, setClassData] = useState<any>([])
+  const [ClassData, setClassData] = useState<any>([]);
 
-  console.log(ClassData, 'ClassData')
+  console.log(ClassData, "ClassData");
   const [addShowAdvance, { isLoading: ShowAdvanceLoading }] =
     useAddShowAdvanceClassesMutation();
 
@@ -55,13 +51,12 @@ export default function CreateAdvanceClass() {
     );
 
     const advancePlanData = {
-      title: values.title,
-      buttonLink: values.buttonLink,
-      page: values.page,
+      ...values,
       classes: ClassData,
-      details: textEditorValue
+      details: textEditorValue,
     };
-    console.log("🚀 ~ onFinish ~ advancePlanData:", advancePlanData);
+    removeNullUndefinedAndFalsey(advancePlanData);
+
     // return
     try {
       const res = await addShowAdvance(advancePlanData).unwrap();
@@ -71,7 +66,9 @@ export default function CreateAdvanceClass() {
       } else {
         Success_model("Successfully added Package");
         form.resetFields();
+        setClassData([])
         setTextEditorValue("");
+        setIsReset(true);
       }
 
       // console.log(res);
@@ -115,15 +112,15 @@ export default function CreateAdvanceClass() {
         <Form.Item name="buttonLink" label="Button Link">
           <Input
             size="large"
-            type="url"
+            type="text"
             placeholder="Please enter Skills and Plan buttonLink"
           />
         </Form.Item>
 
         {/* //! 3.page  */}
-        <Form.Item name="page" label="Enter page ">
-          <Input size="large" placeholder="Please enter page" />
-        </Form.Item>
+        {/* <Form.Item name="page"   label="Enter page (optional)">
+          <Input size="large" value={'home'} defaultValue={"home"} placeholder="Please enter page" />
+        </Form.Item> */}
         {/* //! 3. add classes */}
         <div className="border-2 rounded-lg p-3 ">
           {/* <h3 className="text-center ">Add Classes</h3>
@@ -308,7 +305,7 @@ export default function CreateAdvanceClass() {
             }}
           </Form.List> */}
 
-          <CLassField ClassData={ClassData} setClassData={setClassData} />
+          <CLassField  ClassData={ClassData} setClassData={setClassData} />
         </div>
         <Form.Item>
           <p className="text-center my-3 font-bold text-xl">Description</p>
@@ -317,21 +314,20 @@ export default function CreateAdvanceClass() {
             setTextEditorValue={setTextEditorValue}
           />
         </Form.Item>
-        <Form.Item>
-          <div className="flex justify-center items-center mt-3 ">
-            {ShowAdvanceLoading ? (
-              <ButtonLoading />
-            ) : (
-              <Button
-                loading={ShowAdvanceLoading}
-                type="default"
-                htmlType="submit"
-              >
-                Create
-              </Button>
-            )}
-          </div>
-        </Form.Item>
+
+        <div className="flex justify-center items-center mt-3 ">
+          {ShowAdvanceLoading ? (
+            <ButtonLoading />
+          ) : (
+            <Button
+              loading={ShowAdvanceLoading}
+              type="default"
+              htmlType="submit"
+            >
+              Create
+            </Button>
+          )}
+        </div>
       </Form>
     </div>
   );

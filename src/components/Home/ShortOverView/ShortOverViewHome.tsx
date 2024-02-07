@@ -71,17 +71,17 @@ const ShortOverViewHomePage = () => {
   return (
     <AnimatePresenceWrapper>
       <div className=" container mx-auto  ">
-        <div className="bg-[#A2B0F321] mt-5 py-3 md:py-10 lg:py-[100px] flex flex-col mx-2">
-          <h1 className="text-xl md:text-2xl lg:text-3xl text-start  xl:text-center text-[#282938] font-[600]">
+        <div className="bg-[#A2B0F321] mt-5 py-3 md:py-10  ">
+          <h1 className="text-xl md:text-2xl lg:text-3xl text-center w-[80%] mx-auto text-[#282938] font-[600]">
             {shortOverviewData[0]?.title}
           </h1>
 
-          <div className="my-[6rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-7 w-full lg:max-w-[90%] mx-auto">
+          <div className="my-[3rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-3 lg:px-0  mx-3">
             {shortOverviewData[0]?.cards?.map((item: any, index: any) => {
               return (
                 <AnimatePresenceWrapper key={index} delay={0.24 + (index / 100)}>
                   <div
-                    className="w-full lg:max-w-[406px] max-h-[316px] bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
+                    className="w-full  bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
                     key={index + 1}
                   >
                     <p className="h-12 w-12 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-3 text-white hover:text-primary hover:bg-slate-100">
@@ -105,12 +105,14 @@ const ShortOverViewHomePage = () => {
             })}
           </div>
 
+          <div className="flex justify-center items-center">
           <Link
             href="/subscription"
-            className="text-primary uppercase p-2 w-[164px] h-[44px] text-center mx-auto font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white"
+            className="text-primary uppercase p-2 w-[164px] h-[44px] text-center font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white mx-3"
           >
             Join Now
           </Link>
+          </div>
         </div>
       </div>
     </AnimatePresenceWrapper>

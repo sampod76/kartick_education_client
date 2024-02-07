@@ -20,6 +20,7 @@ import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 import { useGetSingleShowAdvanceClassesQuery, useUpdateShowAdvanceClassesMutation } from "@/redux/api/adminApi/features/showAdvanceClassApi";
 import CLassField from "@/components/Forms/answer/ClassField";
 import { IShow_advance_classes } from "@/types/features/showAdvanceClassType";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 
 export default function EditAdvanceClass({ classId }: { classId: string }) {
     // console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ classId:", classId)
@@ -49,7 +50,7 @@ export default function EditAdvanceClass({ classId }: { classId: string }) {
     }, [UpdatePackageLoading, defaultAdvanceClassData?.classes, defaultAdvanceClassData?.details])
 
     if (defaultLoading) {
-        return <div>Loading ..........</div>;
+        return <LoadingSkeleton></LoadingSkeleton>;
     }
     // const [addPackage, { isLoading: UpdatePackageLoading }] =
     //     useAddPackageMutation();
@@ -143,8 +144,8 @@ export default function EditAdvanceClass({ classId }: { classId: string }) {
                 </Form.Item>
 
                 {/* //! 3.page  */}
-                <Form.Item name="page" label="Enter page ">
-                    <Input size="large" placeholder="Please enter page" />
+                <Form.Item name="page"  label="Enter page (optional)">
+                    <Input size="large" defaultValue={'home'} placeholder="Please enter page" />
                 </Form.Item>
                 {/* //! 3. add classes */}
                 <div className="border-2 rounded-lg p-3 ">
@@ -161,11 +162,11 @@ export default function EditAdvanceClass({ classId }: { classId: string }) {
                 </Form.Item>
                 <Form.Item>
                     <div className="flex justify-center items-center mt-3">
-                        {defaultLoading ? (
+                        {UpdatePackageLoading ? (
                             <ButtonLoading />
                         ) : (
                             <Button
-                                loading={defaultLoading}
+                                loading={UpdatePackageLoading}
                                 type="default"
                                 htmlType="submit"
                             >

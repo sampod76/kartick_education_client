@@ -39,17 +39,18 @@ const SupportHero = () => {
             </ul>
           </div>
           <div className="mt-5 lg:mt-0">
-            <h1 className="text-[#31576A] capitalize text-[2vw] md:text-[3vw] xl:text-3xl font-[500]">
+            <h1 className="text-[#31576A] capitalize text-[5vw] md:text-[3vw] xl:text-3xl font-[500]">
               {skillData?.imgTitle}
             </h1>
 
-            <Image
+           {skillData?.imgs[0] && <Image
               src={skillData?.imgs[0] || AllImage.notFoundImage}
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: "10px" ,}}
               height={332}
               width={570}
               alt="support"
-            />
+className="w-full md:w-[500px]"
+            />}
           </div>
         </div>
       </div>

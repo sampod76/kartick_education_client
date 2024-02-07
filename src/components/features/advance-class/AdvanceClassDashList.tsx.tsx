@@ -37,6 +37,7 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { useDeleteShortOverViewMutation, useGetAllShortOverViewQuery } from "@/redux/api/adminApi/features/overview";
 import { useDeleteShowAdvanceClassesMutation, useGetAllShowAdvanceClassesQuery } from "@/redux/api/adminApi/features/showAdvanceClassApi";
+import { ENUM_YN } from "@/constants/globalEnums";
 
 
 
@@ -55,7 +56,7 @@ export default function AdvanceClassList() {
   // const SUPER_ADMIN=USER_ROLE.ADMIN
   const userInfo = getUserInfo() as IDecodedInfo
 
-  const [deleteShowAdvanceClasses] = useDeleteShowAdvanceClassesMutation();
+  const [deleteShowAdvanceClasses,{isLoading:deleteLoading}] = useDeleteShowAdvanceClassesMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -71,6 +72,7 @@ export default function AdvanceClassList() {
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
+  // query["isDelete"] = ENUM_YN.YES
   //
   // query["category"] = category?._id;
 
