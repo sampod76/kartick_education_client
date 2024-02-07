@@ -21,11 +21,11 @@ const AdvanceHomeClass = () => {
     ...query,
   });
   const classData = data?.data[0];
-  console.log("🚀 ~ AdvanceHomeClass ~ classData:", classData)
+  // console.log("🚀 ~ AdvanceHomeClass ~ classData:", classData)
   if (isLoading) {
     return <LoadingSkeleton />;
   }
- 
+
 
   console.log("🚀 ~ AdvanceHomeClass ~ data:", data)
   return (
