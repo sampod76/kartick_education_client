@@ -193,6 +193,8 @@ export default function QuizTestPage({
             if (submitAnswers?.includes(answer?._id)) {
               if (answer?.correct) {
                 // console.log('incorrect',incorrectAnswersSet, incorrectAnswersSet?.has(answer?._id), answer,'correct',correctAnswersSet)
+
+                
                 //! for incorrect answers push in correctAnswersSet
                 if (!correctAnswersSet?.has(answer?._id) && !incorrectAnswersSet?.has(answer?._id)) {
                   correctAnswersSet.add(singleQuiz?._id);
