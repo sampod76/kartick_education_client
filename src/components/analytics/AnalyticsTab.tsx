@@ -3,7 +3,8 @@ import React from 'react';
 import { AndroidOutlined, AppleOutlined, UserSwitchOutlined, DiffOutlined, PicRightOutlined } from '@ant-design/icons';
 import { Tabs, TabsProps } from 'antd';
 import ProgressAnalytics from './progress/ProgressAnalytics';
-import UsageAnlytics from './progress/usage/UseAnalytics';
+import UsageAnlytics from './usage/UsageAnalytics';
+import ScoreAnalytics from './scores/ScoreAnalytics';
 
 export default function AnalyticsTab() {
 
@@ -30,11 +31,11 @@ export default function AnalyticsTab() {
               fontSize: "1.4rem",
             }}
           />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-xl">Scores Section</h1>
+          <h1 className=" text-sm md:text-lg lg:text-xl">Scores </h1>
         </button>
       ),
       key: "Scores",
-      children: 'Scores'
+      children: <ScoreAnalytics />
     },
     {
       label: (
@@ -44,7 +45,7 @@ export default function AnalyticsTab() {
               fontSize: "1.4rem",
             }}
           />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-xl">Progress Section</h1>
+          <h1 className=" text-sm md:text-lg lg:text-xl">Progress </h1>
         </button>
       ),
       key: "Progress",

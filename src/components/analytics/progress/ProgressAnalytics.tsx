@@ -59,7 +59,7 @@ export default function ProgressAnalytics() {
             {/* //! progress Section */}
             <div className="mt-5">
 
-                <h1 className='text-2xl lg:text-3xl font my-2 text-slate-700 uppercase'>Progress and Improvement <PrinterOutlined /></h1>
+                <h1 className='text-2xl lg:text-3xl font-semibold my-2 text-slate-700 uppercase'>Progress and Improvement <PrinterOutlined /></h1>
 
                 <Collapse onChange={handleChange} style={{
                     backgroundColor: '#298BA0',
