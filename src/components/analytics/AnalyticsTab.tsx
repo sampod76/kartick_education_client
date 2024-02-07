@@ -3,6 +3,7 @@ import React from 'react';
 import { AndroidOutlined, AppleOutlined, UserSwitchOutlined, DiffOutlined, PicRightOutlined } from '@ant-design/icons';
 import { Tabs, TabsProps } from 'antd';
 import ProgressAnalytics from './progress/ProgressAnalytics';
+import UsageAnlytics from './progress/usage/UseAnalytics';
 
 export default function AnalyticsTab() {
 
@@ -19,7 +20,7 @@ export default function AnalyticsTab() {
         </button>
       ),
       key: "1",
-      children: 'Usage sections'
+      children: <UsageAnlytics />
     },
     {
       label: (
