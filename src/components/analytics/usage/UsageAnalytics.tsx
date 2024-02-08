@@ -76,7 +76,7 @@ export default function UsageAnlytics() {
     }
 
     return (
-        <div className='mt-7'>
+        <div className='mt-7 px-3'>
             {/*// ! --- top usage------ */}
             <div className="">
                 <TopFilterSelect setCourse={setCourse} setCategory={setCategory} setTime={setTime} category={category} />
@@ -88,7 +88,7 @@ export default function UsageAnlytics() {
 
                 <h1 className='text-2xl lg:text-2xl font-normal my-2 mt-5 text-slate-600  '>In the  {time} with {course?.title}</h1>
 
-                <div className='grid grid-cols-2 lg:grid-cols-3 gap-4'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                     {/*Answered card- */}
                     <div className="max-w-[18rem] max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
                         <EditOutlined style={{
