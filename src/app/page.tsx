@@ -28,7 +28,7 @@ const HomePage = () => {
         <CoursesTab />
         <SupportHero />
         <ShortOverViewHomePage />
-        {/* <TestimonialMain /> */}
+        <TestimonialMain />
         {/* <Programmes /> */}
         <AdvanceHomeClass />
       </main>
