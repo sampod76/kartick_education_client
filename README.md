@@ -139,8 +139,9 @@ password : 11223344
 
 # 9 february
 
-1. Analytics ui designed
+1. Analytics ui designed (need improve and api)
 2. fixed action
 3. fixed search button
 4. fixed search loading
-5. module No fixed
+5. module No alignment and default fixed
+6. replaced loading .... with Spin

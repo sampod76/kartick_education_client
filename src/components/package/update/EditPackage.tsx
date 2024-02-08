@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, InputNumber } from "antd";
+import { Button, Form, Input, Space, InputNumber, Spin } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -91,7 +91,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
   };
 
   if (defaultLoading) {
-    return <div>Loading ..........</div>;
+    return <div className="w-[50%] mx-auto"><Spin size="large" /></div>;
   }
 
   const defaultCategory = defaultPackageData?.categories?.map(
@@ -181,7 +181,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                   name="price"
                   type="number"
                   placeholder="Monthly Price"
-                  // style={{ width: "70%" }}
+                // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -215,7 +215,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                   name="price"
                   type="number"
                   placeholder="Biannual Price"
-                  // style={{ width: "70%" }}
+                // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -249,7 +249,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                   name="price"
                   type="number"
                   placeholder="yearly Price"
-                  // style={{ width: "70%" }}
+                // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -313,10 +313,10 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                         {...restField}
                         style={{ width: "", marginBottom: "8px" }}
                         name={[name, "category"]}
-                        // rules={[
-                        //     { required: true, message: "Missing Category" },
-                        // ]}
-                        // initialValue={defaultCategory[name]}
+                      // rules={[
+                      //     { required: true, message: "Missing Category" },
+                      // ]}
+                      // initialValue={defaultCategory[name]}
                       >
                         <Select
                           // onChange={handleChange}

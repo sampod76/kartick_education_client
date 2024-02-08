@@ -53,7 +53,7 @@ export default function CreateModule() {
   //
   // const [textEditorValue, setTextEditorValue] = useState("");
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
-  const { data: existModule, isLoading: ModuleNumLoadingg } = useGetAllModuleQuery({ status: ENUM_STATUS.ACTIVE, isDelete: ENUM_YN.NO });
+  const { data: existModule, isLoading: ModuleNumLoadingg } = useGetAllModuleQuery({ status: ENUM_STATUS.ACTIVE, isDelete: ENUM_YN.NO, sortOrder: "desc" });
 
   const onSubmit = async (values: any) => {
     if (!milestone?._id && !course?._id) {
