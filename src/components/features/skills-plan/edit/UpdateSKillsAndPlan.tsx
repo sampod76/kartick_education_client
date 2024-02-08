@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, InputNumber, Upload } from "antd";
+import { Button, Form, Input, Space, InputNumber, Upload, Spin } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -77,7 +77,7 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
     };
 
     if (defaultLoading) {
-        return <div>Loading ..........</div>;
+        return <div className="w-[50%] mx-auto"><Spin size="large" /></div>;
     }
 
 

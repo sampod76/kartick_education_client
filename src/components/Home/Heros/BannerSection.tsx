@@ -91,7 +91,7 @@ const BannerSection = () => {
           <p className="text-[20px] lg:text-[2rem] xl:text-[2rem] leading-[1.3] lg:whitespace-nowrap">
             Your adventure in learning awaits!
           </p>
-          <div className="mt-2 md:mt-[1.5rem] max-h-[3.8rem] flex">
+          <div className="mt-2 md:mt-[1.5rem] h-[3.8rem] flex">
             <input
               type="text"
               value={searchTerm}
@@ -113,7 +113,7 @@ const BannerSection = () => {
             {resetValue && searchValue?.length > 0 && (
               <button
                 onClick={handleReset}
-                className="bg-white p-[16px] rounded-r-[8px] max-w-[3.7rem] h-[3.8rem]"
+                className="bg-white p-[16px] rounded-r-[8px] max-w-[3.7rem] h-[2.8rem] lg:h-[3.8rem]"
               >
                 <ReloadOutlined
                   style={{

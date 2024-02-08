@@ -42,7 +42,6 @@ export default function DetailsModuleDash({ moduleId }: { moduleId: string }) {
 
                         <div className="flex item-center justify-between mt-3">
                             <h1 className="text-gray-700 font-bold text-xl">Module No : {moduleData?.module_number}</h1>
-
                         </div>
                     </div>
                 </div>

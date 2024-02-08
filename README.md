@@ -114,7 +114,6 @@ password : 11223344
 6. Package select and card designed . but should be dynamic
 7. Topbar Social icon updated
 
-
 # Bug fixing
 
 1. solved default active all in courseTab
@@ -124,16 +123,25 @@ password : 11223344
 5. solved back to module
 6. solved ok button
 7. TextEditor toggle
-8. 
-
+8.
 
 # drag
+
 1. target background image (1 string in array)
 2. Answer: uploaded
-ans
+   ans
 
 # Home UI Updates:
 
 1. fixed common course margin and text responsive
 2. bottom join Now course buttons
-3. 
+3.
+
+# 9 february
+
+1. Analytics ui designed (need improve and api)
+2. fixed action
+3. fixed search button
+4. fixed search loading
+5. module No alignment and default fixed
+6. replaced loading .... with Spin

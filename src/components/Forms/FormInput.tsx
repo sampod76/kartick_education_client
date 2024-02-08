@@ -25,7 +25,7 @@ const FormInput = ({
   size = "large",
   value,
   id,
-  placeholder='Please enter..',
+  placeholder = 'Please enter..',
   validation,
   label,
   required,
@@ -73,24 +73,22 @@ const FormInput = ({
             />
           ) : type === "number" ? (
             <div className="">
-              <h1 className="">
-                <LabelUi>
-                  {label}{" "}
-                  {required ? (
-                    <span
-                      style={{
-                        color: "red",
-                        textAlign: "start",
-                      }}
-                    >
-                      *
-                    </span>
-                  ) : null}
-                </LabelUi>
-              </h1>
+              <LabelUi>
+                {label}{" "}
+                {required ? (
+                  <span
+                    style={{
+                      color: "red",
+                      textAlign: "start",
+                    }}
+                  >
+                    *
+                  </span>
+                ) : null}
+              </LabelUi>
               <InputNumber
                 type={type}
-                style={{ width: "100%",  }}
+                style={{ width: "100%" }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}
@@ -107,7 +105,7 @@ const FormInput = ({
               disabled={disabled}
               type={type}
               size={size}
-  
+
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
