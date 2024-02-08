@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Input, message } from "antd";
+import { Button, Dropdown, Input, Menu, Space, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -161,41 +161,43 @@ const AdminPage = () => {
     },
     {
       title: "Action",
-      width: 130,
-      dataIndex: "_id",
-      render: function (data: any) {
-        // console.log(data);
-        return (
-          <>
-            <Link
-              href={`/${userInfo?.role}/manage-users/all-users/details/${data}`}
+      // fixed: "right",
+      width: 100,
+      render: (record: any) => (
+        <>
+          <Space size="middle">
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="view">
+                    <Link
+                      href={`/${userInfo?.role}/manage-users/all-users/details/${data}`}
+                    >
+                      View
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="edit">
+                    <Link href={`/${userInfo?.role}/manage-users/all-users/edit/${data}`}>
+                      Edit
+                    </Link>
+                  </Menu.Item>
+
+                  <Menu.Item
+                    key="delete"
+                    onClick={() => deleteUserHandler(record)}
+                  >
+                    Delete
+                  </Menu.Item>
+                </Menu>
+              }
             >
-              <Button onClick={() => console.log(data)} type="default">
-                <EyeOutlined />
-              </Button>
-            </Link>
-            <Link href={`/${userInfo?.role}/manage-users/all-users/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="default"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button
-              onClick={() => deleteUserHandler(data)}
-              type="default"
-              danger
-            >
-              <DeleteOutlined />
-            </Button>
-          </>
-        );
-      },
+              <a>Action</a>
+            </Dropdown>
+          </Space>
+        </>
+      ),
     },
+
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
     //  // console.log("Page:", page, "PageSize:", pageSize);
