@@ -56,7 +56,7 @@ export default function EditModule({moduleId}:{moduleId:string}) {
     const { data = {}, isLoading } = useGetSingleModuleQuery(moduleId, {
       skip: !Boolean(moduleId),
     });
-    console.log("🚀 ~ file: page.tsx:57 ~ EditModule ~ data:", data);
+    // console.log("🚀 ~ file: page.tsx:57 ~ EditModule ~ data:", data);
   
     const onSubmit = async (values: any) => {
       if (milestone?._id) {
