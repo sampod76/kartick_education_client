@@ -14,7 +14,7 @@ const MilestonePage = ({
   params: { courseId: string };
 }) => {
 
-  // console.log(courseId);
+  console.log(courseId);
 
   return (
     <div >

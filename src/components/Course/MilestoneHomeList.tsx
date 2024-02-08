@@ -19,12 +19,13 @@ import SingleMilestone from "../milestone/SingleMilestone";
 import { IMilestoneData } from "@/types/miestoneType";
 
 const MilestoneList = ({ courseId }: { courseId: string }) => {
-  const userInfo = getUserInfo() as any;
+  // const userInfo = getUserInfo() as any;
   const {
     data: courseData = {},
     isLoading: courseLoading,
     error,
   } = useGetSingleCourseQuery(courseId);
+  console.log("🚀 ~ MilestoneList ~ courseData:", courseData)
 
   const query: Record<string, any> = {};
   query["limit"] = 999999;
@@ -40,6 +41,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
     module: "yes",
     ...query,
   })
+    console.log("🚀 ~ MilestoneList ~ data:", data)
   // console.log(data,"courseId");
   const milestoneData = data?.data || [];
 

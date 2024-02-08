@@ -41,7 +41,7 @@ export default function SingleMilestone({
 
         {/* //! Milestone Title */}
       </Link>
-      <div className="py-3 px-2 pl-3 flex flex-wrap gap-x-2 gap-y-1">
+      <div className="py-3 px-2 pl-3 flex flex-col gap-x-2 gap-y-1">
         {milestoneData?.modules?.map((module: any, index: number) => {
           return (
             <Link
