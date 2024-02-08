@@ -2,9 +2,9 @@
 import React, { useState } from 'react'
 import { PrinterOutlined } from "@ant-design/icons"
 import TopFilterSelect from '../TopFilterSelect';
+import { Progress, Space } from 'antd';
 import { Line } from '@ant-design/charts';
-
-
+import { EditOutlined, ClockCircleOutlined, SettingOutlined } from "@ant-design/icons"
 
 export default function UsageAnlytics() {
 
@@ -44,7 +44,7 @@ export default function UsageAnlytics() {
                     total: "18"
                 },
                 progress: {
-                    title: "Made Progress in ",
+                    title: "skills ",
                     name: "skills",
                     total: "18"
                 },
@@ -69,21 +69,80 @@ export default function UsageAnlytics() {
         data: usageDetailsData[0].practiceByDay,
         xField: 'day',
         yField: 'value',
+        height: 300,
+        width: 1090,
+        responsive: true,
 
     }
 
     return (
-        <div>
+        <div className='mt-7'>
             {/*// ! --- top usage------ */}
             <div className="">
                 <TopFilterSelect setCourse={setCourse} setCategory={setCategory} setTime={setTime} category={category} />
-                <h1 className='text-2xl lg:text-3xl font-semibold my-2 mt-5 text-slate-700 uppercase'>Usage Details <PrinterOutlined /></h1>
-            </div>
 
+            </div>
+            <h1 className='text-2xl lg:text-3xl font-semibold my-2 mt-12 text-slate-700 uppercase'>Usage Details <PrinterOutlined /></h1>
+            {/* main Usage Sections */}
             <div className="bg-white">
+
                 <h1 className='text-2xl lg:text-2xl font-normal my-2 mt-5 text-slate-600  '>In the  {time} with {course?.title}</h1>
 
-                <Line {...config} />
+                <div className='grid grid-cols-2 lg:grid-cols-3 gap-4'>
+                    {/*Answered card- */}
+                    <div className="max-w-[18rem] max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
+                        <EditOutlined style={{
+                            fontSize: "2rem",
+                            color: "green",
+                        }} />
+                        <div className="text-lg lg:text-[18px] font-normal uppercase text-slate-600">
+                            <h6 className=''>Answered </h6>
+                            <h6>{usageDetailsData[0].quizData?.answered.total}</h6>
+                            <h6>{usageDetailsData[0].quizData?.answered.title}</h6>
+                        </div>
+                    </div>
+                    { }
+                    <div className="max-w-[18rem] max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
+                        <EditOutlined style={{
+                            fontSize: "2rem",
+                            color: "blue",
+                        }} />
+                        <div className="text-lg lg:text-[18px] font-normal uppercase text-slate-600">
+                            <h6 className=''>Spent </h6>
+                            <h6>{usageDetailsData[0].quizData?.spent.total}</h6>
+                            <h6>{usageDetailsData[0].quizData?.spent.title}</h6>
+                        </div>
+                    </div>
+                    {/*Made Progress in  card- */}
+                    <div className="max-w-[18rem] max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
+                        <EditOutlined style={{
+                            fontSize: "2rem",
+                            color: "yellow",
+                        }} />
+                        <div className="text-lg lg:text-[18px] font-normal uppercase text-slate-600">
+                            <h6 className=''>Made Progress in </h6>
+                            <h6>{usageDetailsData[0].quizData?.progress.total}</h6>
+                            <h6>{usageDetailsData[0].quizData?.progress.title}</h6>
+                        </div>
+                    </div>
+
+                </div>
+
+                {/*  progress and chart sections */}
+                <div className="block lg:flex justify-between items-start mt-5 pt-3 ">
+                    {/* progress category */}
+                    <div className="">
+                        <h2 className='text-xl font-semibold my-2 text-slate-700'>Practice by category</h2>
+                        <Progress type="dashboard" percent={94} gapDegree={30} />
+                    </div>
+
+                    {/* chart sections */}
+                    <div className="max-w-[38rem] relative max-h-[18rem] ">
+                        <Line {...config} />
+                    </div>
+                </div>
+
+
 
             </div>
         </div>
