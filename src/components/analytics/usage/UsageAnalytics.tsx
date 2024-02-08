@@ -90,7 +90,7 @@ export default function UsageAnlytics() {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                     {/*Answered card- */}
-                    <div className="max-w-[18rem] max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
+                    <div className="w-[18rem] mx-auto  max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
                         <EditOutlined style={{
                             fontSize: "2rem",
                             color: "green",
@@ -102,7 +102,7 @@ export default function UsageAnlytics() {
                         </div>
                     </div>
                     { }
-                    <div className="max-w-[18rem] max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
+                    <div className="w-[18rem] mx-auto max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
                         <EditOutlined style={{
                             fontSize: "2rem",
                             color: "blue",
@@ -114,7 +114,7 @@ export default function UsageAnlytics() {
                         </div>
                     </div>
                     {/*Made Progress in  card- */}
-                    <div className="max-w-[18rem] max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
+                    <div className="w-[18rem] mx-auto max-h-[10rem] flex  gap-4 items-start justify-center shadow-md px-3 py-5 bg-white rounded-md">
                         <EditOutlined style={{
                             fontSize: "2rem",
                             color: "yellow",
@@ -133,7 +133,7 @@ export default function UsageAnlytics() {
                     {/* progress category */}
                     <div className="">
                         <h2 className='text-xl font-semibold my-2 text-slate-700'>Practice by category</h2>
-                        <Progress type="dashboard" percent={94} gapDegree={30} />
+                        <Progress type="circle" percent={80} strokeColor={{ '0%': '#5371FF', '100%': '#87d068' }} gapDegree={30} />
                     </div>
 
                     {/* chart sections */}
