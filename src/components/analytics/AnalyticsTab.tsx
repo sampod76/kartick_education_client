@@ -11,7 +11,7 @@ export default function AnalyticsTab() {
   const tabsItems: TabsProps["items"] = [
     {
       label: (
-        <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r-2 border-slate-600">
+        <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r- border-slate-00">
           <UserSwitchOutlined
             style={{
               fontSize: "1.4rem",
@@ -25,7 +25,7 @@ export default function AnalyticsTab() {
     },
     {
       label: (
-        <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r-2 border-slate-600">
+        <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r- border-slate-00">
           <DiffOutlined
             style={{
               fontSize: "1.4rem",
