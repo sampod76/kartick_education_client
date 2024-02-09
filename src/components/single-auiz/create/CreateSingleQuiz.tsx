@@ -287,65 +287,60 @@ const CreateSingleQuiz = () => {
                     required={true}
                   />
                 </Col>
-                {/* <Row gutter={10} align='middle' justify='space-between' style={{
-                  // background: "red"
-                }} >
 
-
-                  
-                </Row> */}
-                <Col
-                    className="gutter-row"
-                    xs={12}
-                    md={8}
-                    style={{
-                      // marginBottom: "10px",
-
-                    }}
-                  >
-                    <FormInput
-                      type="number"
-                      name="serialNumber"
-                      size="large"
-                      label="Serial number"
-                    // required={true}
-                    />
-                  </Col>
-
-                  <Col
-                    className="gutter-row"
-                    xs={12}
-                    md={8}
-                    style={{
-                      marginBottom: "10px",
-                      marginTop: "8px",
-                    }}
-                  >
-                    <FormTimePicker name="time_duration" label="Time Duration" />
-                  </Col>
-
-
-                  <Col
-                    className="gutter-row"
-                    xs={12}
-                    md={8}
-                    style={{
-                      marginBottom: "10px",
-                      marginTop: "8px",
-                    }}
-                  >
-                    <FormSelectField
-                      size="large"
-                      name="status"
-                      options={courseStatusOptions as any}
-                      // defaultValue={priceTypeOptions[0]}
-                      label="status"
-                      // placeholder="Select"
-                      required={true}
-                    />
-                  </Col>
                 <Col
                   className="gutter-row"
+                  xs={12}
+                  md={8}
+                  style={{
+                    // marginBottom: "10px",
+
+                  }}
+                >
+                  <FormInput
+                    type="number"
+                    name="serialNumber"
+                    size="large"
+                    label="Serial number"
+                  // required={true}
+                  />
+                </Col>
+
+                <Col
+                  className="gutter-row"
+                  xs={12}
+                  md={8}
+                  style={{
+                    marginBottom: "10px",
+                    marginTop: "8px",
+                  }}
+                >
+                  <FormTimePicker name="time_duration" label="Time Duration" />
+                </Col>
+
+
+                <Col
+                  className="gutter-row"
+                  xs={12}
+                  md={8}
+                  style={{
+                    marginBottom: "10px",
+                    marginTop: "8px",
+                  }}
+                >
+                  <FormSelectField
+                    size="large"
+                    name="status"
+                    options={courseStatusOptions as any}
+                    // defaultValue={priceTypeOptions[0]}
+                    label="status"
+                    // placeholder="Select"
+                    required={true}
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  hidden={quizType === "audio" ? true : false}
                   xs={24}
                   style={{
                     marginBottom: "10px",
@@ -361,6 +356,7 @@ const CreateSingleQuiz = () => {
                   />
                 </Col>
                 <Col
+                  hidden={quizType === "audio" ? true : false}
                   className="gutter-row"
                   xs={24}
                   style={{
@@ -369,13 +365,19 @@ const CreateSingleQuiz = () => {
                 >
                   <TagsSelectUI />
                 </Col>
+                {
+
+
+                }
                 <Col
+                  hidden={quizType === "audio" ? true : false}
                   className="gutter-row"
                   xs={24}
                   style={{
                     margin: "20px 0",
                   }}
                 >
+                  
                   <LabelUi>Select Quiz Question images (optional)</LabelUi>
                   <UploadMultipalImage isReset={isReset} name="imgs" />
                 </Col>
@@ -460,6 +462,12 @@ const CreateSingleQuiz = () => {
                   )}
                   {/* //! should update cause it is statics */}
                   {quizType === "drag" && (
+                    <AnswerMultiple
+                      answersMultiple={answers}
+                      setAnswersMultiple={setAnswers as any}
+                    />
+                  )}
+                  {quizType === "audio" && (
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}

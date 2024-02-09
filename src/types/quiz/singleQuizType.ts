@@ -16,6 +16,7 @@ export type IQuizType =
   | "text"
   | "find"
   | 'drag'
+  | 'audio'
 export type ISingleQuizData = {
   _id: string;
   title: string;

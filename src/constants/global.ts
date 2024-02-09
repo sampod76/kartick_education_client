@@ -157,4 +157,5 @@ export const singleQuizTypes = [
   "input",
   "find",
   "drag",
+  "audio",
 ];
