@@ -34,6 +34,7 @@ import { ENUM_STATUS } from "@/constants/globalEnums";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { IQuizType } from "@/types/quiz/singleQuizType";
 import AnswerFind from "@/components/Forms/answer/AnswerFind";
+import UploadAudioFile from "@/components/ui/UploadAudio";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -377,9 +378,21 @@ const CreateSingleQuiz = () => {
                     margin: "20px 0",
                   }}
                 >
-                  
+
                   <LabelUi>Select Quiz Question images (optional)</LabelUi>
                   <UploadMultipalImage isReset={isReset} name="imgs" />
+                </Col>
+                <Col
+                  hidden={quizType !== "audio" ? true : false}
+                  className="gutter-row"
+                  xs={24}
+                  style={{
+                    margin: "20px 0",
+                  }}
+                >
+
+                  <LabelUi>Add Your Audio Quiz</LabelUi>
+                  <UploadAudioFile isReset={isReset} fileType="audio" name="quizData.link" />
                 </Col>
               </Row>
               <Col

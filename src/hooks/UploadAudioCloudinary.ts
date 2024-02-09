@@ -1,17 +1,21 @@
 import { authKey } from "@/constants/storageKey";
 import { axiosBaseQuery } from "@/helpers/axios/axiosBaseQuery";
-import { getBaseUrl, getCloudinaryEnv } from "@/helpers/config/envConfig";
+import {
+  getBaseOnlyUrl,
+  getBaseUrl,
+  getCloudinaryEnv,
+} from "@/helpers/config/envConfig";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
 import { Error_model_hook } from "@/utils/modalHook";
 
-const url = `${getBaseUrl()}/upload/upload-single-image`;
+const url = `${getBaseUrl()}/upload/upload-audio`;
 
-const uploadImgCloudinary = async (file: any) => {
-  console.log("🚀 ~ uploadImgCloudinary ~ file:", file);
+const uploadAudioCloudinary = async (file: any) => {
+  console.log("🚀 ~ uploadAudioCloudinary ~ file:", file);
   try {
     const formData = new FormData();
-    formData.append("image", file as Blob);
+    formData.append("audio", file as Blob);
 
     const response = await axiosInstance({
       url: url,
@@ -24,8 +28,8 @@ const uploadImgCloudinary = async (file: any) => {
     });
     console.log(response);
 
-    if (response.data.url) {
-      return response?.data?.secure_url;
+    if (response.data.original_filename) {
+      return getBaseOnlyUrl() + `/audios/${response?.data?.original_filename}`;
     } else {
       console.error("Failed to upload image to Cloudinary");
       Error_model_hook("Failed to upload image to Cloudinary");
@@ -36,4 +40,4 @@ const uploadImgCloudinary = async (file: any) => {
   }
 };
 
-export default uploadImgCloudinary;
+export default uploadAudioCloudinary;
