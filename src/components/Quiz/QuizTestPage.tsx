@@ -46,14 +46,29 @@ export default function QuizTestPage({
   // ! For Test is submitted Answer is CorrectAnswer;
 
   const checkAnswers = (responseData: ISubmittedUserQuizData): boolean => {
-    const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
-      const submittedAnswer = responseData?.singleQuiz?.answers?.find(
-        (answer: any) => answer.id === answerId
-      );
-      return submittedAnswer && submittedAnswer.correct;
-    });
+    // const allCorrect = responseData?.submitAnswers.every((answerId: string) => {
+    //   const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+    //     (answer: any) => answer.id === answerId
+    //   );
+    //   return submittedAnswer && submittedAnswer.correct;
+    // });
 
-    return allCorrect;
+    // return allCorrect;
+    if (responseData?.singleQuiz?.type === 'input') {
+      const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
+      return isCorrectInput
+    }
+    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find" || responseData?.singleQuiz?.type === "drag" || responseData?.singleQuiz?.type === "audio") {
+      const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
+        const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+          (answer: any) => answer.id === answerId && answer.correct
+        );
+        return submittedAnswer && submittedAnswer.correct;
+      });
+      return allCorrectSelect;
+    }
+
+    return false
   };
 
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
@@ -68,12 +83,13 @@ export default function QuizTestPage({
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
 
       const isBeforeCorrect = checkAnswers(currentAnswer);
+      // console.log(isBeforeCorrect, 'isBeforeCorrect')
       if (isBeforeCorrect) {
-        currentAnswer['isCorrect'] = true
+        currentAnswer['isCorrect'] = 'yes'
       } else {
-        currentAnswer['isCorrect'] = false
+        currentAnswer['isCorrect'] = 'no'
       }
-      
+
       try {
         const res = await submitQuiz(currentAnswer).unwrap();
         console.log(res, "response");
@@ -187,30 +203,28 @@ export default function QuizTestPage({
       const { singleQuiz, submitAnswers } = submission;
 
       if (singleQuiz && submitAnswers) {
-        if (singleQuiz?.type === "select" || singleQuiz?.type === "multiple_select" || singleQuiz?.type === "find" || singleQuiz?.type === "drag"|| singleQuiz?.type === "audio") {
+        if (
+          singleQuiz?.type === "select" ||
+          singleQuiz?.type === "multiple_select" ||
+          singleQuiz?.type === "find" ||
+          singleQuiz?.type === "drag" ||
+          singleQuiz?.type === "audio"
+        ) {
           // For "select" and "multiple_select" types
           singleQuiz?.answers?.forEach((answer: any) => {
             if (submitAnswers?.includes(answer?._id)) {
               if (answer?.correct) {
-                // console.log('incorrect',incorrectAnswersSet, incorrectAnswersSet?.has(answer?._id), answer,'correct',correctAnswersSet)
-
-                
-                //! for incorrect answers push in correctAnswersSet
-                if (!correctAnswersSet?.has(answer?._id) && !incorrectAnswersSet?.has(answer?._id)) {
+                if (!correctAnswersSet?.has(singleQuiz?._id) && !incorrectAnswersSet?.has(singleQuiz?._id)) {
                   correctAnswersSet.add(singleQuiz?._id);
                 }
               } else {
-                //! for correct answers push in inCorrectAnswersSet
-                if (!correctAnswersSet?.has(answer?._id) && !incorrectAnswersSet?.has(answer?._id)) {
-                  // correctAnswersSet.add(singleQuiz?._id);
+                if (!correctAnswersSet?.has(singleQuiz?._id) && !incorrectAnswersSet?.has(singleQuiz?._id)) {
                   incorrectAnswersSet.add(singleQuiz?._id);
                 }
               }
             }
-          })
-        }
-        else if (singleQuiz?.type === 'input') {
-          // console.log(incorrectAnswers, correctAnswersSet)
+          });
+        } else if (singleQuiz?.type === "input") {
           if (singleQuiz?.single_answer === submitAnswers[0]) {
             correctAnswersSet.add(singleQuiz?._id);
           } else {
@@ -225,6 +239,7 @@ export default function QuizTestPage({
 
     return { correctAnswers, incorrectAnswers };
   }
+
 
 
   // console.log(userSubmitData)

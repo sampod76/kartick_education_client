@@ -58,7 +58,7 @@ export default function QuizQuestionCard({
       const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
       return isCorrectInput
     }
-    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find" || responseData?.singleQuiz?.type === "drag"|| responseData?.singleQuiz?.type === "audio") {
+    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find" || responseData?.singleQuiz?.type === "drag" || responseData?.singleQuiz?.type === "audio") {
       const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
         const submittedAnswer = responseData?.singleQuiz?.answers?.find(
           (answer: any) => answer.id === answerId && answer.correct
@@ -76,13 +76,13 @@ export default function QuizQuestionCard({
 
   //// ! for getting single or select answer
   const isCorrectAnswer = checkAnswers(submittedDefaultData);
-  console.log("🚀 ~ isCorrectAnswer:", isCorrectAnswer)
+  // console.log("🚀 ~ isCorrectAnswer:", isCorrectAnswer)
   // console.log(submittedDefaultData);
 
   const getCorrectAnswerIdsHandler = (responseData: any): string[] => {
-    console.log("🚀 ~ getCorrectAnswerIdsHandler ~ responseData:", responseData)
+    // console.log("🚀 ~ getCorrectAnswerIdsHandler ~ responseData:", responseData)
     // Existing functionality for single select answer
-    
+
     const correctAnswerIds: string[] = responseData?.submitAnswers.reduce(
       (acc: string[], answerId: string) => {
         console.log(answerId, "answerId");
@@ -97,7 +97,7 @@ export default function QuizQuestionCard({
       },
       []
     );
-   
+
 
     // Check if submitAnswers length is greater than 1
     if (responseData?.submitAnswers.length > 1) {
@@ -125,7 +125,7 @@ export default function QuizQuestionCard({
 
     return correctAnswerIds;
   };
-  console.log(getCorrectAnswerIdsHandler(submittedDefaultData));
+  // console.log(getCorrectAnswerIdsHandler(submittedDefaultData));
   // const correctId = getCorrectAnswerIdsHandler(submittedDefaultData);
 
   const allCorrectAnsweredIdHanlder = (responseData: any) => {
@@ -208,7 +208,7 @@ export default function QuizQuestionCard({
     ? true
     : false
 
-    console.log(quiz,'quzzzzzzzzz')
+  console.log(quiz, 'quzzzzzzzzz')
   return (
     <div>
       <div key={quiz?._id} className={`my-4 w-full relative px-2 lg:pl-3 `}>
@@ -240,20 +240,20 @@ export default function QuizQuestionCard({
         <div className="flex justify-between items-center my-2 pr-4">
           <p className={`lg:text-lg font-[550] mb-2 text-base mx-2`}>
             <TextToSpeech text={quiz?.title} />
-            Question {index + 1} : {quiz?.title} 
+            Question {index + 1} : {quiz?.title}
           </p>
-             {quiz?.type === "audio"&&
-             <Link href={quiz?.quizData?.link} rel="noopener noreferrer" target="_blank">
-              <PlayCircleOutlined  style={{fontSize:"3rem"}}/>
-             </Link>
-             }
+          {quiz?.type === "audio" &&
+            <Link href={quiz?.quizData?.link} rel="noopener noreferrer" target="_blank">
+              Play Audio  <PlayCircleOutlined style={{ fontSize: "1.5rem" }} />
+            </Link>
+          }
         </div>
         <div className="flex flex-wrap mx-5">
           {quiz.type !== 'drag' && quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
             <Image
               key={key}
               src={img}
-       
+
               width={700}
               height={700}
               className={"w-96 lg:w-full max-h-44 lg:max-h-48 m-3"}
@@ -340,7 +340,7 @@ export default function QuizQuestionCard({
         )}
 
         {/* // !for multiple select */}
-        {(quiz?.type === "multiple_select" ||quiz?.type === "audio") && (
+        {(quiz?.type === "multiple_select" || quiz?.type === "audio") && (
           <Checkbox.Group
             defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
             // disabled={isDefaultValue?.is_time_up ? true : false}
@@ -529,9 +529,9 @@ export default function QuizQuestionCard({
             defaultValue={submittedDefaultData}
             disabled={IsDisabledQUiz}
             onChange={handleAnswerChange}
-            quizIndex={index +1}
+            quizIndex={index + 1}
             quizData={quiz}
-            // isCorrectAnswer={isCorrectAnswer}
+          // isCorrectAnswer={isCorrectAnswer}
           />
           // <DndQuizCard
           //   imageUrl={['image']}
