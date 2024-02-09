@@ -18,30 +18,29 @@ export default function SingleMilestone({
     <div className="border-2 shadow-xl  rounded-xl">
       <Link
         href={`/module/${milestoneData?._id}`}
-        className={`text-start text-[20px] flex gap-2 font-semibold font-['Inter'] leading-1 py-4  ${
-          index % 8 === 0
-            ? "bg-[#2c92a8]"
-            :index % 7 === 0
+        className={`text-start text-[20px] flex gap-2 font-semibold font-['Inter'] leading-1 py-4  ${index % 8 === 0
+          ? "bg-[#2c92a8]"
+          : index % 7 === 0
             ? "bg-[#0374d4]"
-            :index % 6 === 0
-            ? "bg-[#159f85]"
-            : index % 5 === 0
-            ? "bg-[#a95fdc]"
-            : index % 4 === 0
-            ? "bg-[#2c92a8]"
-            : index % 3 === 0
-            ? "bg-[#5a9b33]"
-            : index % 2 === 0
-            ? "bg-[#2c38a8]"
-            : "bg-[#215461]"
-        }  text-white px-3 brightness-95 rounded-t-md`}
+            : index % 6 === 0
+              ? "bg-[#159f85]"
+              : index % 5 === 0
+                ? "bg-[#a95fdc]"
+                : index % 4 === 0
+                  ? "bg-[#2c92a8]"
+                  : index % 3 === 0
+                    ? "bg-[#5a9b33]"
+                    : index % 2 === 0
+                      ? "bg-[#2c38a8]"
+                      : "bg-[#215461]"
+          }  text-white px-3 brightness-95 rounded-t-md`}
       >
         <ContainerOutlined />
         <span>{milestoneData?.title}</span>
 
         {/* //! Milestone Title */}
       </Link>
-      <div className="py-3 px-2 pl-3 flex flex-wrap gap-x-2 gap-y-1">
+      <div className="py-3 px-2 pl-3  gap-x-2 gap-y-1">
         {milestoneData?.modules?.map((module: any, index: number) => {
           return (
             <Link
