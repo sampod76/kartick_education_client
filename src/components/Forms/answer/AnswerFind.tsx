@@ -54,7 +54,7 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
         <div className="">
             <SubHeadingUI>Add Answer </SubHeadingUI>
             {answersFind?.map((answer, index) => (
-                <Space
+                <div
                     key={index}
                     style={{
                         display: "flex",
@@ -68,7 +68,7 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                     }}
                     className="shadow-1 "
                 >
-                    <Space
+                    <div
                         // style={{ display: "flex", marginBottom: 8 }}
 
                         style={{
@@ -77,15 +77,20 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                             gap: "18px",
                             width: "100%",
                             alignItems: "start",
-                            // background:"red"
+                            // background:"red",
+                            position: "relative",
                         }}
-                        align="start"
+                        // align="start"
                     >
+                        <MinusCircleOutlined
+                            style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
+                            onClick={() => handleRemove(index)}
+                        />
                         {/* quiz option */}
                         <Input
                             placeholder="Option Title"
                             style={{
-                                width: "30vw",
+                                width: "100%",
                                 height: "2.7rem"
                             }}
                             // width={500}
@@ -150,7 +155,7 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
 
                         {/*//! serial number */}
                         <div className="text-start">
-                            <label>Serial number</label>
+                            <p>Serial number</p>
                             <Input
                                 placeholder="Serial Number"
                                 type="number"
@@ -180,12 +185,9 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                             <Select.Option value="active">Active</Select.Option>
                             <Select.Option value="deactivate">Deactivate</Select.Option>
                         </Select>
-                    </Space>
-                    <MinusCircleOutlined
-                        style={{ fontSize: "1.5rem" }}
-                        onClick={() => handleRemove(index)}
-                    />
-                </Space>
+                    </div>
+
+                </div>
             ))}
             <Button
                 type="dashed"
