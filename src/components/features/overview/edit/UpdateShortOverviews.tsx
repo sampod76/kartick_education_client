@@ -41,12 +41,12 @@ export default function EditShortOverview({ overviewId }: { overviewId: string }
     // const [addPackage, { isLoading: UpdatePackageLoading }] =
     //     useAddPackageMutation();
     const onFinish = async (values: any) => {
-    
+
 
         const shortOverview: Partial<IShort_overviewData> = {
 
             title: values.title || defaultSkillPlanData?.title,
-            page: values.page || defaultSkillPlanData?.page,
+            page: values.page || defaultSkillPlanData?.page || 'page',
             details: textEditorValue || defaultSkillPlanData?.details,
             cards: values.cards || defaultSkillPlanData?.cards,
         };
@@ -115,9 +115,9 @@ export default function EditShortOverview({ overviewId }: { overviewId: string }
 
 
                 {/* //! 3.page  */}
-                <Form.Item name="page" label="Page">
+                {/* <Form.Item name="page" label="Page">
                     <Input size="large" placeholder="Please enter Short Overview page" />
-                </Form.Item>
+                </Form.Item> */}
                 {/* //! 2. add cards */}
                 <div className="border-2 rounded-lg p-3">
                     <LabelUi>Add cards</LabelUi>
