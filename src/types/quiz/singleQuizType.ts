@@ -30,6 +30,7 @@ export type ISingleQuizData = {
   module: IModuleData;
   lesson: string;
   time_duration:number;
+  quizData:{link:string};
   quiz: {
     _id: string;
     title: string;

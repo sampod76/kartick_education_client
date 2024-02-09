@@ -187,7 +187,7 @@ export default function QuizTestPage({
       const { singleQuiz, submitAnswers } = submission;
 
       if (singleQuiz && submitAnswers) {
-        if (singleQuiz?.type === "select" || singleQuiz?.type === "multiple_select" || singleQuiz?.type === "find" || singleQuiz?.type === "drag") {
+        if (singleQuiz?.type === "select" || singleQuiz?.type === "multiple_select" || singleQuiz?.type === "find" || singleQuiz?.type === "drag"|| singleQuiz?.type === "audio") {
           // For "select" and "multiple_select" types
           singleQuiz?.answers?.forEach((answer: any) => {
             if (submitAnswers?.includes(answer?._id)) {

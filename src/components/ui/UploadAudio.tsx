@@ -1,10 +1,11 @@
-import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
+import { LoadingOutlined, UploadOutlined,PlayCircleOutlined } from "@ant-design/icons";
 import { Upload, Button, Space } from "antd";
 import type { UploadChangeParam, RcFile, UploadFile, UploadProps } from "antd/es/upload";
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Error_model_hook } from "@/utils/modalHook";
 import uploadAudioCloudinary from "@/hooks/UploadAudioCloudinary";
+import Link from "next/link";
 
 type UploadAudioFileProps = {
     name: string;
@@ -37,7 +38,7 @@ const UploadAudioFile = ({
             console.log("File URL:", file);
             if (file) {
                 const audioURL = await uploadAudioCloudinary(file)
-                console.log('audioURL', audioURL)
+                // console.log('audioURL', audioURL)
                 file = audioURL
             }
             setFiles(file);
@@ -74,13 +75,24 @@ const UploadAudioFile = ({
         }
     }, [isReset]);
 
+
+    // console.log('defaultFiles', defaultFiles)
     return (
         <div className="flex justify-center items-center border p-5 rounded-lg my-2 gap-3">
+           
             {defaultFiles.length
-                ? <audio controls>
-                    <source src={defaultFiles} type={`audio/${fileType}`} />
-                    Your browser does not support the audio element.
-                </audio>
+                ?
+                <Link href={defaultFiles} rel="noopener noreferrer" target="_blank"> 
+                    {/* <audio controls> */}
+                    {/* <source src={defaultFiles} type={`audio/${fileType}`} /> */}
+                 
+                  <span className="mx-2">
+                        Play
+                  </span>
+                    <PlayCircleOutlined />
+                {/* </audio> */}
+                </Link>
+             
                 : null}
             <Upload
                 name={name}

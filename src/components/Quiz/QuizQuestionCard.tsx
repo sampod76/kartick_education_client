@@ -10,6 +10,9 @@ import { useRouter } from "next/navigation";
 import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 import DragQUizTest from "../dragCustom/DragQuiz";
 import DndQuizCard from "../dnd/DndBeutyFull";
+// import {PauseCircleOutlined} from "@and"
+import { PlayCircleOutlined } from "@ant-design/icons";
+import Link from "next/link";
 const { Option } = Select;
 export default function QuizQuestionCard({
   quiz,
@@ -55,7 +58,7 @@ export default function QuizQuestionCard({
       const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
       return isCorrectInput
     }
-    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find" || responseData?.singleQuiz?.type === "drag") {
+    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find" || responseData?.singleQuiz?.type === "drag"|| responseData?.singleQuiz?.type === "audio") {
       const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
         const submittedAnswer = responseData?.singleQuiz?.answers?.find(
           (answer: any) => answer.id === answerId && answer.correct
@@ -205,6 +208,7 @@ export default function QuizQuestionCard({
     ? true
     : false
 
+    console.log(quiz,'quzzzzzzzzz')
   return (
     <div>
       <div key={quiz?._id} className={`my-4 w-full relative px-2 lg:pl-3 `}>
@@ -236,9 +240,13 @@ export default function QuizQuestionCard({
         <div className="flex justify-between items-center my-2 pr-4">
           <p className={`lg:text-lg font-[550] mb-2 text-base mx-2`}>
             <TextToSpeech text={quiz?.title} />
-            Question {index + 1} : {quiz?.title}
+            Question {index + 1} : {quiz?.title} 
           </p>
-
+             {quiz?.type === "audio"&&
+             <Link href={quiz?.quizData?.link} rel="noopener noreferrer" target="_blank">
+              <PlayCircleOutlined  style={{fontSize:"3rem"}}/>
+             </Link>
+             }
         </div>
         <div className="flex flex-wrap mx-5">
           {quiz.type !== 'drag' && quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
@@ -332,7 +340,7 @@ export default function QuizQuestionCard({
         )}
 
         {/* // !for multiple select */}
-        {quiz?.type === "multiple_select" && (
+        {(quiz?.type === "multiple_select" ||quiz?.type === "audio") && (
           <Checkbox.Group
             defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
             // disabled={isDefaultValue?.is_time_up ? true : false}
