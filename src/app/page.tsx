@@ -13,39 +13,9 @@ import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import ShortOverViewHomePage from "@/components/Home/ShortOverView/ShortOverViewHome";
 import AdvanceHomeClass from "@/components/Home/AdvanceClass/AdvanceClassHome";
 
-
-// const CoursesTab = React.lazy(
-//   () => import("@/components/Home/coureses/CoursesTab")
-// );
-// const HomeHeader = React.lazy(
-//   () => import("@/components/shared/Headers/HomeHeader")
-// );
-// const BannerSection = React.lazy(
-//   () => import("@/components/Home/Heros/BannerSection")
-// );
-// const SupportHero = React.lazy(
-//   () => import("@/components/Home/Heros/SupportHero")
-// );
-// const Success = React.lazy(
-//   () => import("@/components/Home/Success/Success")
-// );
-// const Programmes = React.lazy(
-//   () => import("@/components/Home/programms/Programmes")
-// );
-// const TestimonialMain = React.lazy(
-//   () => import("@/components/Home/Testimonial/TestimonialMain")
-// );
-// const CommonCourse = React.lazy(
-//   () => import("@/components/Home/commonCourse/CommonCourse")
-// );
-// const Footer = React.lazy(
-//   () => import("@/components/Home/Footer")
-// );
 const HomePage = () => {
-
   return (
     <div className="">
-
       <HomeHeader />
 
       <div className="-mt-[6rem] bg-[#BEDDF9]">
@@ -53,7 +23,6 @@ const HomePage = () => {
         <BannerSection />
       </div>
       <main className="bg-[#A2B0F321] pb-10 min-h-screen">
-
         <CartDrawer />
         <CommonCourse />
         <CoursesTab />
@@ -61,10 +30,9 @@ const HomePage = () => {
         <ShortOverViewHomePage />
         <TestimonialMain />
         {/* <Programmes /> */}
-        <AdvanceHomeClass/>
+        <AdvanceHomeClass />
       </main>
       <Footer />
-
     </div>
   );
 };

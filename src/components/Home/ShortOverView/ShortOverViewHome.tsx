@@ -81,7 +81,7 @@ const ShortOverViewHomePage = () => {
               return (
                 <AnimatePresenceWrapper key={index} delay={0.24 + (index / 100)}>
                   <div
-                    className="w-full  bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
+                    className="w-full h-full bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
                     key={index + 1}
                   >
                     <p className="h-12 w-12 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-3 text-white hover:text-primary hover:bg-slate-100">
@@ -94,7 +94,7 @@ const ShortOverViewHomePage = () => {
 
                       <EllipsisMiddle
                         suffixCount={5}
-                        maxLength={64}
+                        maxLength={120}
                       >
                         {item?.short_description}
                       </EllipsisMiddle>
