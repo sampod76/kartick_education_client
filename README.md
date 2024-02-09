@@ -147,3 +147,4 @@ password : 11223344
 6. replaced loading .... with Spin
 7. fixed add class responsived
 8. responsived all dynamic Answer, class
+9. removed page and responsive add points

@@ -131,6 +131,14 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
                                 return false; // Prevent default upload behavior
                                 // return true
                             }}
+                            defaultFileList={defaultSkillPlanData?.imgs?.map((img: string) => ({
+                                uid: img, // Convert index to string for uid
+                                name: img,
+                                status: 'done',
+                                url: img,
+                            }))}
+
+
                         >
                             <div className="flex flex-col">
                                 {/* <h1>+</h1> */}
@@ -247,6 +255,6 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
                     </div>
                 </Form.Item>
             </Form>
-        </div>
+        </div >
     );
 }
