@@ -146,4 +146,4 @@ password : 11223344
 5. module No alignment and default fixed
 6. replaced loading .... with Spin
 7. fixed add class responsived
-8.
+8. responsived all dynamic Answer, class
