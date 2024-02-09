@@ -16,13 +16,14 @@ import {
   useGetAllModuleQuery,
 } from "@/redux/api/adminApi/moduleApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { Button, Col, Row, Spin, message } from "antd";
+import { Button, Col, Row, Space, Spin, message } from "antd";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -52,7 +53,7 @@ export default function CreateModule() {
   //
   // const [textEditorValue, setTextEditorValue] = useState("");
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
-  const { data: existModule } = useGetAllModuleQuery({});
+  const { data: existModule, isLoading: ModuleNumLoadingg } = useGetAllModuleQuery({ status: ENUM_STATUS.ACTIVE, isDelete: ENUM_YN.NO, sortOrder: "desc" });
 
   const onSubmit = async (values: any) => {
     if (!milestone?._id && !course?._id) {
@@ -83,14 +84,17 @@ export default function CreateModule() {
     }
   };
 
-  // if (serviceLoading) {
-  //   return message.loading("Loading...");
-  // }
-  const roundedNumber = Number(
+  if (ModuleNumLoadingg) {
+    return <div>
+
+      <Spin />
+    </div>
+  }
+  const roundedModuleNumber = Number(
     existModule?.data[0]?.module_number || 1
-  ).toFixed(1);
+  ).toFixed(2);
   // Add 0.1 to the rounded number and use toFixed again when logging
-  const preModule_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
+  // const preModule_number = (parseFloat(roundedModuleNumber) + 0.1).toFixed(1);
   // console.log(preModule_number);
 
   return (
@@ -155,7 +159,7 @@ export default function CreateModule() {
             <Form
               isReset={isReset}
               submitHandler={onSubmit}
-              defaultValues={{ module_number: Number(preModule_number) }}
+            // defaultValues={{ module_number: Number(preModule_number) }}
             >
               <div
                 style={{
@@ -189,14 +193,25 @@ export default function CreateModule() {
                       required={true}
                     />
                   </Col>
-                  <Col className="gutter-row" xs={4} style={{}}>
+                  <Col className="gutter-row" xs={4} style={{
+                    // backgroundColor: 'red',
+                    // display: "flex",
+
+                  }} >
+                    {/* <Space.Compact>
+                      
+                    </Space.Compact> */}
                     <FormInput
                       type="number"
                       name="module_number"
                       size="large"
-                      label="Module No"
+                      label={`Module No ${roundedModuleNumber}`}
                       required={true}
                     />
+                    {/* <span>
+                      {roundedModuleNumber}
+                    </span> */}
+
                   </Col>
 
                   {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
@@ -248,8 +263,8 @@ export default function CreateModule() {
                       </p>
                       <TextEditor
                         isReset={isReset}
-                        // textEditorValue={textEditorValue}
-                        // setTextEditorValue={setTextEditorValue}
+                      // textEditorValue={textEditorValue}
+                      // setTextEditorValue={setTextEditorValue}
                       />
                     </div>
                   </Col>

@@ -1,5 +1,5 @@
 'use client'
-import { Collapse } from 'antd'
+import { Collapse, Progress } from 'antd'
 import React, { useState } from 'react'
 import {
     CaretRightOutlined,
@@ -20,6 +20,7 @@ import { EllipsisMiddle } from '@/utils/CutTextElliples';
 import SelectCategoryChildren from '@/components/Forms/GeneralField/SelectCategoryChildren';
 import { Select } from 'antd';
 import TopFilterSelect from '../TopFilterSelect';
+// import { Line, } from '@ant-design/charts';
 
 const { Panel } = Collapse
 
@@ -58,11 +59,24 @@ export default function ProgressAnalytics() {
             {/* //! progress Section */}
             <div className="mt-5 px-2">
 
-                <h1 className='text-2xl lg:text-3xl font-semibold my-5 text-slate-700 uppercase'>Progress and Improvement <PrinterOutlined /></h1>
+                <h1 className='text-2xl lg:text-3xl font-semibold mt-9 mb-3 text-slate-700 uppercase'>Progress and Improvement <PrinterOutlined /></h1>
 
+                {/* top header section */}
+                <div className="flex justify-between uppercase bg-blue-500 text-white font-semibold py-3 px-2 rounded-md">
+
+                    <h3 className='text-nowrap w-[40%]'>Course</h3>
+                    <div className="w-[60%] grid grid-cols-1 lg:grid-cols-3">
+                        <h3 className='text-nowrap'>Time Spent</h3>
+                        <h3 className='text-nowrap'>Questions</h3>
+                        <h3 className='text-nowrap'>Score Improvement</h3>
+
+                    </div>
+
+                </div>
                 <Collapse onChange={handleChange} style={{
                     backgroundColor: '#298BA0',
-                    color: "white"
+                    color: "white",
+                    marginTop: "0px",
                 }}>
                     {CategoryData?.data?.map((category: any) => (
                         <Panel header={<h2 className='text-white font-normal bg-[#b0d9e2'>{category?.title}</h2>} key={category?._id}>
@@ -77,17 +91,17 @@ export default function ProgressAnalytics() {
                                         {
                                             course?.milestones?.map((milestone: any, milestoneIndex: number) => {
                                                 return <div className="flex justify-between items-center" key={milestone?._id}>
-                                                    <section className='flex gap-1'>
+                                                    <section className='flex gap-1 w-[40%]'>
                                                         <SearchOutlined />
                                                         <span>{milestone?.milestone_number}</span>
-
                                                         <EllipsisMiddle suffixCount={5} maxLength={64}>
                                                             {milestone?.title}
                                                         </EllipsisMiddle>
-
                                                     </section>
-                                                    <section>
-                                                        <span className='text-sm text-slate-600'>   module: {milestone?.modules?.length}</span>
+                                                    <section className='w-[60%] grid grid-cols-1 lg:grid-cols-3 gap-3 items-center'>
+                                                        <h3 className='text-sm text-slate-600'>   module: {milestone?.modules?.length} min </h3>
+                                                        <h3 className='text-nowrap'>{10 + milestoneIndex}</h3>
+                                                        <h3 className='text-nowrap'>   <Progress percent={90} status="active" strokeColor={{ from: '#108ee9', to: '#87d068' }} /></h3>
                                                     </section>
 
                                                 </div>

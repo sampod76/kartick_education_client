@@ -62,7 +62,7 @@ const SideModuleList = ({
         }}
       /> */}
 
-      <div className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2]">
+      <div className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2">
         {modulesData?.map((module: any, index: number) => {
           return (
             <Link
