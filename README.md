@@ -148,3 +148,6 @@ password : 11223344
 7. fixed add class responsived
 8. responsived all dynamic Answer, class
 9. removed page and responsive add points
+10. default image fixed
+11. fixed category list
+12. 
