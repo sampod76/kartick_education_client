@@ -1,7 +1,7 @@
 import BannerCourses from '@/components/Home/Heros/BannerCourses'
 import React from 'react'
 import CourseStatistics from '../CourseStatistics'
-import MilestoneList from '../MilestoneHomeList'
+import MilestoneHomeList from '../MilestoneHomeList'
 
 export default function CourseMilestoneDetails({ courseId }: { courseId: string }) {
 
@@ -13,7 +13,7 @@ export default function CourseMilestoneDetails({ courseId }: { courseId: string 
         <BannerCourses />
       </div>
       <CourseStatistics courseId={courseId} />
-      <MilestoneList courseId={courseId} />
+      <MilestoneHomeList courseId={courseId} />
     </div>
   )
 }

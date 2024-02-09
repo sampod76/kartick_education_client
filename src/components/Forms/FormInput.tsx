@@ -88,7 +88,7 @@ const FormInput = ({
               </LabelUi>
               <InputNumber
                 type={type}
-                style={{ width: "100%" }}
+                style={{ width: "100%", minWidth: "5rem" }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}

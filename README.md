@@ -145,3 +145,5 @@ password : 11223344
 4. fixed search loading
 5. module No alignment and default fixed
 6. replaced loading .... with Spin
+7. fixed add class responsived
+8.
