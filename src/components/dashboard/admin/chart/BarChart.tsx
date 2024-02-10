@@ -98,17 +98,17 @@ export default function BarChart() {
 
     // ! for download charts
     function handleDownload() {
-        if (chartRef.current) {
-            const file = chartRef.current.toDataURL("image/png");
-            const link = document.createElement("a");
-            link.href = file;
-            link.download = "barChart.png";
-            link.click();
-        }
+        // if (chartRef.current) {
+        //     const file = chartRef.current.toDataURL("image/png");
+        //     const link = document.createElement("a");
+        //     link.href = file;
+        //     link.download = "barChart.png";
+        //     link.click();
+        // }
     }
     return (
         <div style={{ position: "relative" }} className="h-[80vh w-[40vw ">
-            <canvas ref={chartRef} />
+            {/* <canvas ref={chartRef} /> */}
             <button
                 onClick={handleDownload}
                 className="rounded-md bg-primary bg-opacity-25 p-3  border border-secondary"
