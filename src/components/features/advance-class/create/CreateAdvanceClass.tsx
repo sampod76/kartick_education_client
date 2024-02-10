@@ -64,9 +64,9 @@ export default function CreateAdvanceClass() {
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Package");
+        Success_model("Successfully Create Advance class");
         form.resetFields();
-        setClassData([])
+        setClassData([]);
         setTextEditorValue("");
         setIsReset(true);
       }

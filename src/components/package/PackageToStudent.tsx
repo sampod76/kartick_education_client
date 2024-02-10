@@ -157,29 +157,31 @@ const PackageToStudent = ({ packageId }: { packageId: string }) => {
     setSearchTerm("");
   };
   const handleDelete = (data: Record<string, any>) => {
-    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-      if (res.isConfirmed) {
-        try {
-          const res = await updatePackageToStudent({
-            id: data._id,
-            data: {
-              status: data.status === "active" ? "deactivate" : "active",
-            },
-          }).unwrap();
+    confirm_modal(`Are you sure you want to change status`).then(
+      async (res) => {
+        if (res.isConfirmed) {
+          try {
+            const res = await updatePackageToStudent({
+              id: data._id,
+              data: {
+                status: data.status === "active" ? "deactivate" : "active",
+              },
+            }).unwrap();
 
-          console.log(res, "response for delete Lesson");
-          if (res?.success == false) {
-            // message.success("Admin Successfully Deleted!");
-            // setOpen(false);
-            Error_model_hook(res?.message);
-          } else {
-            Success_model("Student Deactivate this package");
+            console.log(res, "response for delete Lesson");
+            if (res?.success == false) {
+              // message.success("Admin Successfully Deleted!");
+              // setOpen(false);
+              Error_model_hook(res?.message);
+            } else {
+              Success_model("Successfully change status!");
+            }
+          } catch (error: any) {
+            Error_model_hook(error.message);
           }
-        } catch (error: any) {
-          Error_model_hook(error.message);
         }
       }
-    });
+    );
   };
 
   // if (isLoading) {

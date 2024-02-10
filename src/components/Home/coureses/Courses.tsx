@@ -19,7 +19,7 @@ interface ICourseItemType {
   [key: string]: string | undefined;
 }
 
-const Courses = ({ query }: { query: ICourseItemType }) => {
+const Courses = ({ query ,width='container'}: { query: ICourseItemType, width?:string}) => {
   // console.log("🚀 ~ Courses ~ query:", query)
 
 
@@ -91,8 +91,8 @@ const Courses = ({ query }: { query: ICourseItemType }) => {
       ) : courseData?.length === 0 ? (
         <NotFoundCourse />
       ) : (
-        <div className="mt-3 container mx-auto ">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className={`mt-3 ${width ==="container" ?"container" : "w-full"} mx-auto `}>
+          <div className="grid grid-cols-1 lg:grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-5">
             {courseData?.map((item: ICourseData, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}

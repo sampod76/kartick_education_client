@@ -111,7 +111,7 @@ export default function SellerDashboardMain() {
               <div className="rounded-lg bg-white max-w-full md:min-h-[40vh] lgg:min-h-[60vh] px-4 py-5 shadow">
                 <div className="py-2 align-middle px-2">
                   <h3 className="text-base font-medium underline underline-offset-2">
-                    Recent registrar student
+                    Recent register student
                   </h3>
                   <div className="w-full divide-y divide-gray-300">
                     <div className="flex justify-between">

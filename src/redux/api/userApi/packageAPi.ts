@@ -23,7 +23,7 @@ export const packageApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.package],
+      providesTags: [tagTypes.package,tagTypes.addPackageAndcourseTag],
     }),
     // get single academic department
     getSinglePackage: build.query({
@@ -31,7 +31,7 @@ export const packageApi = baseApi.injectEndpoints({
         url: `${PACKAGE_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.package],
+      providesTags: [tagTypes.package,tagTypes.addPackageAndcourseTag],
     }),
     // create a new academic department
     addPackage: build.mutation({
@@ -40,7 +40,7 @@ export const packageApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
-      invalidatesTags: [tagTypes.package, tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.package,tagTypes.addPackageAndcourseTag],
     }),
     // update ac department
     updatePackage: build.mutation({
@@ -49,7 +49,7 @@ export const packageApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data,
       }),
-      invalidatesTags: [tagTypes.package],
+      invalidatesTags: [tagTypes.package,tagTypes.addPackageAndcourseTag],
     }),
     updateIncreaseStudentPackage: build.mutation({
       query: ({ data, id }) => ({
@@ -57,7 +57,7 @@ export const packageApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data,
       }),
-      invalidatesTags: [tagTypes.package],
+      invalidatesTags: [tagTypes.package,tagTypes.addPackageAndcourseTag],
     }),
 
     // delete ac department
@@ -66,7 +66,7 @@ export const packageApi = baseApi.injectEndpoints({
         url: `${PACKAGE_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.package],
+      invalidatesTags: [tagTypes.package,tagTypes.addPackageAndcourseTag],
     }),
   }),
 });

@@ -69,7 +69,7 @@ export default function CreateSkillsPlan() {
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Package");
+        Success_model("Successfully Create skill plan");
         form.resetFields();
       }
 
