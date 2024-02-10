@@ -49,7 +49,7 @@ const UserAvatarUI = () => {
             router.push("/login");
           }}
           type="default"
-          style={{color:'black'}}
+          style={{ color: 'black' }}
         >
           Log out
         </Button>
@@ -83,8 +83,8 @@ const UserAvatarUI = () => {
           /> */}
           <Image
             src={AllImage.profileAvater || ""}
-            width={300}
-            height={300}
+            width={50}
+            height={50}
             className="w-12  h-12 rounded-full"
             alt=""
           />
@@ -98,5 +98,5 @@ const UserAvatarUI = () => {
 
 
 export default dynamic(() => Promise.resolve(UserAvatarUI), {
-  ssr: false,
+  ssr: false,
 });
