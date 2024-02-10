@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 export const confirm_modal = (
   message: string,
-  confirmText: string = "Yes, delete it!"
+  confirmText: string = "Yes"
 ) => {
   return Swal.fire({
     title: "Are you sure?",

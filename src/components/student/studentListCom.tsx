@@ -35,7 +35,11 @@ import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import Image from "next/image";
 import { AllImage } from "@/assets/AllImge";
 import SellerAddPackageStudent from "../package/SellerAddPackageStudent";
-import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
+import {
+  useGetAllUsersQuery,
+  useUpdateUserMutation,
+} from "@/redux/api/adminApi/usersApi";
+import SellerDeactivedStudentPackage from "../package/SellerDeactiveStudentPackage";
 
 const StudentListCom = ({
   setOpen,
@@ -47,7 +51,8 @@ const StudentListCom = ({
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
   const userInfo = getUserInfo() as any;
   const query: Record<string, any> = {};
-  const [deleteStudent] = useDeleteStudentMutation();
+  const [updateStudent, { isLoading: updateUserLoading }] =
+    useUpdateUserMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -59,7 +64,7 @@ const StudentListCom = ({
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  query["status"] = ENUM_STATUS.ACTIVE;
+  // query["status"] = ENUM_STATUS.ACTIVE;
   query["isDelete"] = ENUM_YN.NO;
   if (author) {
     query["author"] = author;
@@ -80,7 +85,6 @@ const StudentListCom = ({
   //@ts-ignore
   const StudentData = data?.data;
 
-
   //@ts-ignore
   const meta = data?.meta;
 
@@ -93,8 +97,6 @@ const StudentListCom = ({
         if (img === "undefined" || img === "undefined ") {
           img = "";
         }
-
-
 
         return (
           <>
@@ -113,7 +115,9 @@ const StudentListCom = ({
       title: "Name",
       render: function (data: any) {
         // console.log(data);
-        const fullName = `${data[data.role]?.name?.firstName} ${data[data.role]?.name?.lastName}  `;
+        const fullName = `${data[data.role]?.name?.firstName} ${
+          data[data.role]?.name?.lastName
+        }  `;
         return <>{fullName}</>;
       },
     },
@@ -125,7 +129,6 @@ const StudentListCom = ({
       title: "UserId",
       dataIndex: "userId",
     },
-
 
     {
       title: "Contact no.",
@@ -152,18 +155,19 @@ const StudentListCom = ({
       render: function (data: any) {
         // console.log(data);
         const gender = `${data[data.role]?.gender}   `;
-        return <>{gender}</>
+        return <>{gender}</>;
       },
     },
     {
       title: "Status",
       dataIndex: "status",
+      
     },
     {
       title: "Action",
       dataIndex: "_id",
       width: 130,
-      render: function (data: any) {
+      render: function (id: string, data: any) {
         return (
           <>
             <Space size="middle">
@@ -171,28 +175,34 @@ const StudentListCom = ({
                 overlay={
                   <Menu>
                     <Menu.Item key="details">
-                      <Link
-                        href={`/${userInfo?.role}/students/details/${data}`}
-                      >
+                      <Link href={`/${userInfo?.role}/students/details/${id}`}>
                         View
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="edit">
-                      <Link href={`/${userInfo?.role}/students/edit/${data}`}>
+                      <Link href={`/${userInfo?.role}/students/edit/${id}`}>
                         Edit
                       </Link>
                     </Menu.Item>
 
                     <Menu.Item
                       key="delete"
-                    // onClick={() => {
-                    //   handleDelete(record._id);
-                    // }}
+                      onClick={() => {
+                        handleDeactivate(id, data);
+                      }}
                     >
-                      Delete
+                      {data.status === ENUM_STATUS.ACTIVE
+                        ? "Deactivate"
+                        : "Active"}{" "}
+                      User
                     </Menu.Item>
                     <ModalComponent buttonText="Add package">
-                      <SellerAddPackageStudent userId={data} />
+                      <SellerAddPackageStudent userId={id} />
+                    </ModalComponent>
+                    <p className="mt-1"></p>
+
+                    <ModalComponent buttonText="Package List">
+                      <SellerDeactivedStudentPackage userId={id} />
                     </ModalComponent>
                   </Menu>
                 }
@@ -223,24 +233,34 @@ const StudentListCom = ({
     setSearchTerm("");
   };
 
-  const deleteStudentHandler = async (id: string) => {
+  const handleDeactivate = async (id: string, data: any) => {
     console.log(id);
-    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-      if (res.isConfirmed) {
-        try {
-          const res = await deleteStudent(id).unwrap();
-          if (res?.success == false) {
-            // message.success("Admin Successfully Deleted!");
-            Error_model_hook(res?.message);
-          } else {
-            setOpen(false);
-            Success_model("Student Successfully Deleted");
+    confirm_modal(`Are you sure you want to Update status`, "Yes").then(
+      async (res) => {
+        if (res.isConfirmed) {
+          try {
+            const res = await updateStudent({
+              id: id,
+              body: {
+                status:
+                  data?.status === ENUM_STATUS.ACTIVE
+                    ? ENUM_STATUS.DEACTIVATE
+                    : ENUM_STATUS.ACTIVE,
+              },
+            }).unwrap();
+            if (res?.success == false) {
+              // message.success("Admin Successfully Deleted!");
+              Error_model_hook(res?.message);
+            } else {
+              setOpen(false);
+              Success_model("Successfully Update Account status");
+            }
+          } catch (error: any) {
+            Error_model_hook(error.message);
           }
-        } catch (error: any) {
-          Error_model_hook(error.message);
         }
       }
-    });
+    );
   };
   // if (isLoading) {
   //   return <LoadingForDataFetch />;

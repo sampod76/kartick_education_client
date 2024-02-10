@@ -52,11 +52,12 @@ export default function StudentDashboardMain() {
   } = useGetAllPackageAndCourseQuery(
     {
       isDelete: ENUM_YN.NO,
-      status: "active",
+      // status: "active",
       user: userInfo?.id,
     },
     { skip: !Boolean(userInfo?.id) }
   );
+  console.log(allPurchasePackage)
   const {
     data: allSingleQuiz,
     error: allSingleQuizError,

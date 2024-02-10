@@ -53,7 +53,7 @@ export const paymentApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.userPurchaseCourse],
+      providesTags: [tagTypes.userPurchaseCourse,tagTypes.addPackageAndcourseTag],
     }),
 
     getSinglePurchasePackage: build.query({

@@ -43,7 +43,7 @@ const UMTable = ({
        
       }}
       loading={loading}
-      scroll={{ x: 1200 }}
+      scroll={{ x: 1000 }}
       columns={columns}
       bordered
       

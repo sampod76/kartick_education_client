@@ -22,6 +22,7 @@ const HomePage = () => {
         <div className="w-full min-h-[5rem]"></div>
         <BannerSection />
       </div>
+      
       <main className="bg-[#A2B0F321] pb-10 min-h-screen">
         <CartDrawer />
         <CommonCourse />

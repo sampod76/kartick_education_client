@@ -1,8 +1,10 @@
 export const getBaseUrl = (): string => {
   return process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1";
 };
-export const getBaseOnlyUrl = (): string => {
-  return process.env.NEXT_PUBLIC_API_BASE_ONLY_URL || "http://localhost:5000";
+
+export const getOnlyBaseUrl = (): string => {
+  return process.env.NEXT_PUBLIC_API_ONLY_BASE_URL || "http://localhost:5000";
+
 };
 
 export const getCloudinaryEnv = (): {

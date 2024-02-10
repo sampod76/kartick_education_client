@@ -66,7 +66,7 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
             if (res?.success == false) {
                 Error_model_hook(res?.message);
             } else {
-                Success_model("Successfully Updated SkillsANdPlan");
+                Success_model("Successfully Updated Skills Plan");
                 // form.resetFields();
             }
             // console.log(res);

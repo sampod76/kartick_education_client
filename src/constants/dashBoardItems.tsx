@@ -23,7 +23,7 @@ import {
   UserSwitchOutlined,
   PayCircleFilled,
   ThunderboltFilled,
-  PicLeftOutlined
+  PicLeftOutlined,
 } from "@ant-design/icons";
 import { PiPackageDuotone } from "react-icons/pi";
 import Link from "next/link";
@@ -435,26 +435,28 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: <Link
-        onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-        href={`/${role}/purchase-package`}
-      >
-        Purchase Package History
-      </Link>,
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/purchase-package`}
+        >
+          Purchase Package History
+        </Link>
+      ),
       key: "Manage-pouches-package",
       icon: <PayCircleFilled />,
-
     },
     {
-      label: <Link
-        onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-        href={`/${role}/purchase-course`}
-      >
-        Purchase  course  History
-      </Link>,
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/purchase-course`}
+        >
+          Purchase course History
+        </Link>
+      ),
       key: "Manage-pouches-course",
       icon: <PayCircleFilled />,
-
     },
     {
       label: "Manage Features",
@@ -487,7 +489,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
               ),
               key: `/${role}/features/advance-class`,
             },
-          ]
+          ],
         },
         {
           label: "Skills Plan",
@@ -515,7 +517,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
               ),
               key: `/${role}/features/skills-plan`,
             },
-          ]
+          ],
         },
         {
           label: "Short Overview",
@@ -543,7 +545,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
               ),
               key: `/${role}/features/short-overview`,
             },
-          ]
+          ],
         },
       ],
     },
@@ -569,7 +571,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/activeCourse`}
         >
-          Active Courses
+          Courses List
         </Link>
       ),
       icon: <CalendarOutlined />,
@@ -581,7 +583,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/activePackage`}
         >
-          Active Package
+          Package List
         </Link>
       ),
       icon: <PiPackageDuotone />,
