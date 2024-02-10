@@ -6,6 +6,7 @@ import { useFormContext } from "react-hook-form";
 import { Error_model_hook } from "@/utils/modalHook";
 import uploadAudioCloudinary from "@/hooks/UploadAudioCloudinary";
 import Link from "next/link";
+import uploadAudioInServer from "@/hooks/uploadAudio";
 
 type UploadAudioFileProps = {
     name: string;
@@ -37,7 +38,7 @@ const UploadAudioFile = ({
             console.log("File Type:", fileType);
             console.log("File URL:", file);
             if (file) {
-                const audioURL = await uploadAudioCloudinary(file)
+                const audioURL = await uploadAudioInServer(file)
                 // console.log('audioURL', audioURL)
                 file = audioURL
             }
@@ -63,9 +64,9 @@ const UploadAudioFile = ({
     };
 
     const uploadButton = (
-        <div>
+        <div className="flex flex-col justify-center items-start">
             {loading ? <LoadingOutlined /> : <UploadOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
+            <div style={{ marginTop: 8 }} className="-ml-3">Upload</div>
         </div>
     );
 
