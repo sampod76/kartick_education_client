@@ -56,12 +56,12 @@ const BannerSection = () => {
 
   return (
     <div
-    className="-mt-[3.5rem] min-h-[50rem] w-full"
-style={{
-  backgroundImage: `url('/banner/v2Banner.png')`,
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover", // or "contain"
-}}
+      className="-mt-[3.5rem] min-h-[50rem] w-full relative"
+      style={{
+        backgroundImage: `url('/banner/v2Banner.png')`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover", // or "contain"
+      }}
     >
       {/* <AnimatePresenceWrapper>
         <div className="w-full lg:w-[60%] px-5 md:py-[5rem] xl:py-[6rem]">
@@ -153,6 +153,9 @@ style={{
           alt="treeboy"
         />
       </div> */}
+      <div className="bg-transparen bg-gradient-to-b from-[#1C478D] to-white backdrop-blur-md font-bold text-[3vw] lg:text-[1vw] text-nowrap text-white absolute -bottom-[2rem]  right-[40%] px-5  lg:px-9  py-7 rounded-full cursor-pointer">
+        CULTIVATING CONFIDENCE CULTIVATING SUCCESS
+      </div>
     </div>
   );
 };
