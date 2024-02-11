@@ -6,7 +6,7 @@ import { Avatar, Badge, Image, Space } from "antd";
 import { IAnswer, ISingleQuizData } from "@/types/quiz/singleQuizType";
 import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 import { IQuizAnswer } from "@/redux/features/quizSlice";
-
+import { CiCircleRemove } from "react-icons/ci";
 interface DragAndDropProps {
   // imageUrls: IAnswer[];
   defaultValue: ISubmittedUserQuizData; // Change the type as per your data type
@@ -133,10 +133,8 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
         <div className="flex gap-3 justify-center items-center">
           {draggedItems?.map((item, index) => (
             <div key={index} style={{ cursor: "zoom-out" }}>
-              <Badge.Ribbon
-                text={<span onClick={() => handleRemoveItem(index)}>x</span>}
-                color="blue"
-                placement="end"
+              <div
+              className="relative"
               >
                 <ImageNext
                   src={item.imgs ? item.imgs[0] : ""}
@@ -148,7 +146,12 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
                     width: "100px",
                   }}
                 />
-              </Badge.Ribbon>
+                <span hidden={correctAnswer.length ? true : false} className="absolute -top-3 -right-3  text-lg rounded-full px-1" onClick={() => {
+                      if (!correctAnswer.length) {
+                       return handleRemoveItem(index);
+                      }
+                    }}><CiCircleRemove className=" text-3xl text-red-600 font-bold "/></span>
+              </div>
             </div>
           ))}
         </div>
@@ -187,7 +190,9 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
               </div>
             </div>
           </>
-        ):""}
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
