@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import bannerBG from "@/assets/banner/bannerBG.png";
+// import bannerBG from "@/assets/banner/bannerBG.png";
+import bannerBG from "@/assets/banner/v2Banner.png";
 import treeBoy from "@/assets/banner/treeBoy.png";
 import Image from "next/image";
 import { SearchOutlined, ReloadOutlined } from "@ant-design/icons";
@@ -55,14 +56,14 @@ const BannerSection = () => {
 
   return (
     <div
-      className="block  lg:flex justify-between place-items-end bg-blue-20 py-10 mt-4 text-left pt-[1rem]  "
-      style={{
-        backgroundImage: `url('/banner/bannerBG.png')`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
+    className="-mt-[3.5rem] min-h-[50rem] w-full"
+style={{
+  backgroundImage: `url('/banner/v2Banner.png')`,
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover", // or "contain"
+}}
     >
-      <AnimatePresenceWrapper>
+      {/* <AnimatePresenceWrapper>
         <div className="w-full lg:w-[60%] px-5 md:py-[5rem] xl:py-[6rem]">
           <div className=" text-black  uppercase space-y-3 ">
             <h1
@@ -141,9 +142,9 @@ const BannerSection = () => {
             </Link>
           </div>
         </div>
-      </AnimatePresenceWrapper>
+      </AnimatePresenceWrapper> */}
 
-      <div className="w-full lg:w-[40%]  hidden lg:flex justify-end lg:-mt-[2rem] ">
+      {/* <div className="w-full lg:w-[40%]  hidden lg:flex justify-end lg:-mt-[2rem] ">
         <Image
           className="w-[80%] lg:w-[60%]  h-full  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300  py-2"
           src={treeBoy}
@@ -151,7 +152,7 @@ const BannerSection = () => {
           width={510}
           alt="treeboy"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

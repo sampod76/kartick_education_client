@@ -52,7 +52,7 @@ const NavbarPublic = () => {
   const navItemsHome = homeNavItems(userInfo?.role ? userInfo.role : null)
   // console.log(homeNavItems(userInfo?.role ? userInfo.role : null), 'iiiiiiii')
   return (
-    <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
+    <div className="w-full lg:w-[80%] mx-auto bg- rounded-b-[50px]  backdrop-blur  block lg:flex  items-center justify-between">
       <nav
         className=" text-black py-[3px] md:pt-[0.9em] px-[1em] 
     flex align-center justify-between gap-[5rem] "
@@ -74,6 +74,8 @@ const NavbarPublic = () => {
             background: "none",
             backdropFilter: "blur(8px)",
             boxShadow: "none",
+            color:"white",
+            fontWeight:"700"
           }}
           disabledOverflow
 
@@ -96,13 +98,13 @@ const NavbarPublic = () => {
       <div className="hidden lg:flex mr-2">
         <Link
           href="/subscription"
-          className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-primary group px-8 py-3 bg-white rounded"
+          className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-8 py-3 bg-white rounded-[36px] "
         >
-          <span className="relative z-10 text-primary group-hover:text-white text-xl duration-500">
+          <span className="relative z-10 text-[#5F8122] group-hover:text-white text-xl duration-500">
             Membership
           </span>
-          <span className="absolute w-full h-full bg-primary -left-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
-          <span className="absolute w-full h-full bg-primary -right-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+          <span className="absolute w-full h-full bg-[#5F8122] -left-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
+          <span className="absolute w-full h-full bg-[#5F8122] -right-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
         </Link>
       </div>
     </div>
