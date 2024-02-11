@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import TopFilterSelect from '../TopFilterSelect';
 import { PrinterOutlined } from "@ant-design/icons"
 import { Pie } from '@ant-design/plots';
+import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
 
 export default function ScoreAnalytics() {
     const [category, setCategory] = useState<{ _id?: string; title?: string }>(
@@ -32,17 +33,50 @@ export default function ScoreAnalytics() {
     ];
 
 
+    // const config = {
+    //     appendPadding: 10,
+    //     data,
+    //     angleField: 'value',
+    //     colorField: 'type',
+    //     radius: 0.75,
+    //     label: {
+    //         type: 'spider',
+    //         labelHeight: 28,
+    //         content: '{name}\n{percentage}',
+    //     },
+    //     interactions: [
+    //         {
+    //             type: 'element-selected',
+    //         },
+    //         {
+    //             type: 'element-active',
+    //         },
+    //     ],
+    //     legend: {
+    //         layout: 'vertical',
+    //         position: 'right',
+    //     },
+    //     responsive: true,
+
+    // };
+
+    if (!data?.length) {
+        return (<div>
+
+            <LoadingForDataFetch />
+        </div>)
+    }
     const config = {
         appendPadding: 10,
         data,
         angleField: 'value',
         colorField: 'type',
         radius: 0.75,
-        label: {
-            type: 'spider',
-            labelHeight: 28,
-            content: '{name}\n{percentage}',
-        },
+        // label: {
+        //     type: 'spider', // Change 'shape.spider' to 'spider'
+        //     labelHeight: 28,
+        //     content: '{name}\n{percentage}',
+        // },
         interactions: [
             {
                 type: 'element-selected',
@@ -56,7 +90,6 @@ export default function ScoreAnalytics() {
             position: 'right',
         },
         responsive: true,
-
     };
 
     return (

@@ -1,3 +1,4 @@
+'use client'
 import AnalyticsMain from '@/components/analytics/AnalyticsMain'
 import React from 'react'
 
