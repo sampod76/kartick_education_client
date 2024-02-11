@@ -29,7 +29,13 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
     setAnswersFind,
 }) => {
     // console.log("🚀 ~ answersFind:", answersFind)
-
+    const [isLoading, setIsLoading] = useState<{
+        loading: boolean;
+        index: number;
+      }>({
+        loading: false,
+        index: 50000,
+      });
 
     const handleAdd = () => {
         setAnswersFind([
@@ -117,9 +123,10 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                                 listType="picture"
                                 style={{ textAlign: "start" }}
                                 showUploadList={true}
-                                multiple={true}
+                                multiple={false}
                                 // multiple
                                 beforeUpload={async (file) => {
+                                    setIsLoading({ loading: true, index: index });
                                     // console.log(
                                     //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
                                     //   file
@@ -127,6 +134,7 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                                     // You can add custom logic before uploading, e.g., checking file type or size
                                     const images = answer?.imgs
                                     const imgUrl = await uploadImgCloudinary(file);
+                                    setIsLoading({ loading: false, index: index });
                                     console.log('imgUrl', imgUrl)
                                     if (imgUrl) {
                                         images.push(imgUrl);
@@ -141,7 +149,7 @@ const AnswerFind: React.FC<AnswerInputListProps> = ({
                                     return false; // Prevent default upload behavior
                                 }}
                             >
-                                <Button style={{ textAlign: "start" }}>Answer Image +</Button>
+                                <Button  loading={isLoading.index === index && isLoading.loading} style={{ textAlign: "start" }}>Answer Image +</Button>
                             </Upload>
                             {answer.imgs.map((img, key) => (<Image
                                 key={key}

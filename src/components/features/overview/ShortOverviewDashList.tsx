@@ -93,7 +93,7 @@ export default function ShortOverview() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllShortOverViewQuery({ ...query });
+  const { data, isLoading } = useGetAllShortOverViewQuery({ ...query });
   // console.log("🚀 ~ file: page.tsx:68 ~ skillsPlanData ~ data:", data);
 
   //@ts-ignore

@@ -1,3 +1,4 @@
+'use client'
 import Footer from "@/components/Home/Footer";
 import BannerSection from "@/components/Home/Heros/BannerSection";
 import SupportHero from "@/components/Home/Heros/SupportHero";
@@ -17,7 +18,7 @@ const HomePage = () => {
   return (
     <div className="">
       <HomeHeader />
-
+      
       <div className="-mt-[6rem] bg-[#BEDDF9]">
         <div className="w-full min-h-[5rem]"></div>
         <BannerSection />

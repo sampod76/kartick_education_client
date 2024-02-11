@@ -1,7 +1,7 @@
 import { authKey } from "@/constants/storageKey";
 import { axiosBaseQuery } from "@/helpers/axios/axiosBaseQuery";
 import {
-  getBaseOnlyUrl,
+  getOnlyBaseUrl,
   getBaseUrl,
   getCloudinaryEnv,
 } from "@/helpers/config/envConfig";
@@ -29,7 +29,8 @@ const uploadAudioCloudinary = async (file: any) => {
     console.log(response);
 
     if (response.data.original_filename) {
-      return getBaseOnlyUrl() + `/audios/${response?.data?.original_filename}`;
+    
+      return   `${getOnlyBaseUrl()}/audios/${response?.data?.original_filename}`;
     } else {
       console.error("Failed to upload image to Cloudinary");
       Error_model_hook("Failed to upload image to Cloudinary");

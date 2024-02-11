@@ -9,7 +9,7 @@ import HeadingUI from "../../ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "../../ui/dashboardUI/SubHeadingUI";
 import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
-import { Image } from 'antd';
+import { Image } from "antd";
 
 interface Answer {
   title: string;
@@ -29,12 +29,23 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
   setAnswersMultiple,
 }) => {
   // console.log("🚀 ~ answersMultiple:", answersMultiple)
-
-
+  const [isLoading, setIsLoading] = useState<{
+    loading: boolean;
+    index: number;
+  }>({
+    loading: false,
+    index: 50000,
+  });
   const handleAdd = () => {
     setAnswersMultiple([
       ...answersMultiple,
-      { title: "", correct: false, imgs: [], serialNumber: 0, status: "active" },
+      {
+        title: "",
+        correct: false,
+        imgs: [],
+        serialNumber: 0,
+        status: "active",
+      },
     ]);
   };
 
@@ -78,12 +89,17 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
               width: "100%",
               alignItems: "start",
               // background:"red",
-              position: "relative"
+              position: "relative",
             }}
-          // align="start"
+            // align="start"
           >
             <MinusCircleOutlined
-              style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
+              style={{
+                fontSize: "1.5rem",
+                position: "absolute",
+                right: 0,
+                top: 0,
+              }}
               onClick={() => handleRemove(index)}
             />
             {/* quiz option */}
@@ -91,14 +107,14 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
               placeholder="Option Title"
               style={{
                 width: "100%",
-                height: "2.7rem"
+                height: "2.7rem",
               }}
               // width={500}
               value={answer.title}
               onChange={(e) =>
                 handleChange(index, { ...answer, title: e.target.value })
               }
-            // defaultValue={index + 1}
+              // defaultValue={index + 1}
             />
             {/* Quiz radio select */}
 
@@ -117,17 +133,18 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
                 listType="picture"
                 style={{ textAlign: "start" }}
                 showUploadList={true}
-                multiple={true}
+                multiple={false}
                 // multiple
                 beforeUpload={async (file) => {
+                  setIsLoading({ loading: true, index: index });
                   // console.log(
                   //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
                   //   file
                   // );
                   // You can add custom logic before uploading, e.g., checking file type or size
-                  const images = answer?.imgs
+                  const images = answer?.imgs;
                   const imgUrl = await uploadImgCloudinary(file);
-
+                  setIsLoading({ loading: false, index: index });
                   if (imgUrl) {
                     images.push(imgUrl);
                   }
@@ -141,24 +158,30 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
                   return false; // Prevent default upload behavior
                 }}
               >
-                <Button style={{ textAlign: "start" }}>Answer Image +</Button>
+                <Button
+                  loading={isLoading.index === index && isLoading.loading}
+                  style={{ textAlign: "start" }}
+                >
+                  Answer Image +
+                </Button>
               </Upload>
-              {answer.imgs.map((img, key) => (<Image
+              {/* {answer.imgs.map((img, key) => (<Image
                 key={key}
-                className="w-10 h-10 rounded"
+                className="w-10 h-10 rounded mt-4"
                 src={img}
                 width={50}
                 height={40}
                 alt=""
-              />))}
+              />))} */}
             </div>
 
             {/* serial number */}
-            <div className="text-start ">
+            <div className="text-start flex flex-col justify-start">
               <label>Serial number</label>
               <Input
                 placeholder="Serial Number"
                 type="number"
+                style={{ width: "8.5rem" }}
                 value={answer.serialNumber}
                 defaultValue={index + 1}
                 onChange={(e) =>
@@ -171,8 +194,8 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
             </div>
 
             {/* select status */}
-            <Select
-              style={{ width: 120 }}
+            {/* <Select
+             style={{width:"8.5rem"}}
               onChange={(value) =>
                 handleChange(index, { ...answer, status: value })
               }
@@ -180,19 +203,19 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
             >
               <Select.Option value="active">Active</Select.Option>
               <Select.Option value="deactivate">Deactivate</Select.Option>
-            </Select>
+            </Select> */}
           </div>
-
         </div>
       ))}
       <Button
         type="dashed"
-        disabled={answersMultiple?.length > 6 ? true : false}
+        // disabled={answersMultiple?.length > 6 ? true : false}
         onClick={handleAdd}
         // block
         icon={<PlusOutlined />}
       >
-        {answersMultiple?.length < 7 ? "Add Answer" : "Already added 6"}
+        {/* {answersMultiple?.length < 7 ? "Add Answer" : "Already added 6"} */}
+        Add Answer
       </Button>
     </div>
   );

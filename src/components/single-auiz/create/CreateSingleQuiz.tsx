@@ -294,7 +294,7 @@ const CreateSingleQuiz = () => {
                   xs={12}
                   md={8}
                   style={{
-                    // marginBottom: "10px",
+                    marginTop: "8px",
 
                   }}
                 >

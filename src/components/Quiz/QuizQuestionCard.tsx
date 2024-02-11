@@ -11,6 +11,8 @@ import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 import DragQUizTest from "../dragCustom/DragQuiz";
 import DndQuizCard from "../dnd/DndBeutyFull";
 // import {PauseCircleOutlined} from "@and"
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 import { PlayCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 const { Option } = Select;
@@ -237,15 +239,24 @@ export default function QuizQuestionCard({
             ""
           )}
         </div>
-        <div className="flex justify-between items-center my-2 pr-4">
+        <div className=" my-2 pr-4">
           <p className={`lg:text-lg font-[550] mb-2 text-base mx-2`}>
             <TextToSpeech text={quiz?.title} />
             Question {index + 1} : {quiz?.title}
           </p>
           {quiz?.type === "audio" &&
-            <Link href={quiz?.quizData?.link} rel="noopener noreferrer" target="_blank">
-              Play Audio  <PlayCircleOutlined style={{ fontSize: "1.5rem" }} />
-            </Link>
+            // <Link className="flex justify-start items-center gap-2 ml-2" href={quiz?.quizData?.link} rel="noopener noreferrer" target="_blank">
+            //  <PlayCircleOutlined style={{ fontSize: "1.5rem" }} /> Play Audio  
+            // </Link>
+            <AudioPlayer
+            autoPlay={false}
+            src={quiz?.quizData?.link}
+            // onPlay={e => console.log("onPlay")}
+            crossOrigin="anonymous"
+            preload="auto"
+            // onLoadedMetaData={}
+            // other props here
+          />
           }
         </div>
         <div className="flex flex-wrap mx-5">
@@ -269,6 +280,7 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
+         
             name="radiogroup"
             disabled={
               isDefaultValue?.is_time_up ||

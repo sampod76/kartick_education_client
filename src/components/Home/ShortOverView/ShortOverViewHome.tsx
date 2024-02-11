@@ -58,8 +58,8 @@ const ShortOverViewHomePage = () => {
   let query: any = {}
   query["status"] = "active";
 
-  const { data = [], isLoading } = useGetAllShortOverViewQuery({ ...query }) as any
-  const shortOverviewData: IShort_overviewData[] = data?.data
+  const { data , isLoading } = useGetAllShortOverViewQuery({ ...query }) as any
+  const shortOverviewData: IShort_overviewData[] = data?.data || []
   // console.log(shortOverviewData, 'shortOverviewData')
 
   if (isLoading) {
@@ -73,11 +73,11 @@ const ShortOverViewHomePage = () => {
       <div className=" container mx-auto  ">
         <div className="bg-[#A2B0F321] mt-5 py-3 md:py-10  ">
           <h1 className="text-xl md:text-2xl lg:text-3xl text-center w-[80%] mx-auto text-[#282938] font-[600]">
-            {shortOverviewData[0]?.title}
+            {shortOverviewData.length && shortOverviewData[0]?.title}
           </h1>
 
           <div className="my-[3rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-3 lg:px-0  mx-3">
-            {shortOverviewData[0]?.cards?.map((item: any, index: any) => {
+            {shortOverviewData.length && shortOverviewData[0]?.cards?.map((item: any, index: any) => {
               return (
                 <AnimatePresenceWrapper key={index} delay={0.24 + (index / 100)}>
                   <div
