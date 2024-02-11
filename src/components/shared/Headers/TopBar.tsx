@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import Link from "next/link";
 
@@ -16,15 +16,19 @@ const TopBar = () => {
     role: undefined,
   });
 
-  useEffect(() => {
-    // Fetch user info asynchronously on the client side
-    const fetchUserInfo = async () => {
-      const userInfo = (await getUserInfo()) as any;
+  const memoizedFetchUserInfo = useMemo(
+    () => async () => {
+      const userInfo = await getUserInfo();
       setUserInfo(userInfo);
-    };
-    fetchUserInfo();
-    setUserInfoLoading(false);
-  }, []);
+      setUserInfoLoading(false);
+    },
+    []
+  ); // Empty dependency array means this function will be memoized once
+
+  useEffect(() => {
+    // Call the memoized function to fetch user info asynchronously
+    memoizedFetchUserInfo();
+  }, [memoizedFetchUserInfo]);
 
   return (
     <div className="py-1 lg:py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5 ">

@@ -36,6 +36,7 @@ import timeDurationToMilliseconds, {
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import AnswerFind from "@/components/Forms/answer/AnswerFind";
 import { IQuizType } from "@/types/quiz/singleQuizType";
+import UploadAudioFile from "@/components/ui/UploadAudio";
 
 export default function EditSingleQuiz({
   singleQuizId,
@@ -389,6 +390,7 @@ export default function EditSingleQuiz({
                   <TagsSelectUI defaultTags={data.tags || []} />
                 </Col>
                 <Col
+                  hidden={quizType === "audio" ? true : false}
                   className="gutter-row"
                   xs={24}
                   style={{
@@ -400,8 +402,22 @@ export default function EditSingleQuiz({
                     name="imgs"
                   />
                 </Col>
+                <Col
+                  hidden={quizType !== "audio" ? true : false}
+                  className="gutter-row"
+                  xs={24}
+                  style={{
+                    margin: "20px 0",
+                  }}
+
+                >
+
+                  <LabelUi>Add Your Audio Quiz</LabelUi>
+                  <UploadAudioFile defaultFiles={data?.quizData?.link} isReset={isReset} fileType="audio" name="quizData.link" />
+                </Col>
               </Row>
               <Col
+              
                 className="gutter-row"
                 xs={24}
                 style={{

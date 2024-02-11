@@ -97,20 +97,21 @@ const CategoryList = () => {
               <Image
                 src={data?.img || AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
-                width={50}
-                height={50}
+                width={80}
+                height={80}
                 alt="dd"
               />
             }
           </>
         );
       },
-      width: 100,
+      width: 130,
     },
     {
       title: "Name",
       dataIndex: "title",
       ellipsis: true,
+      //  width: 130,
     },
     {
       title: "Created at",
@@ -119,6 +120,7 @@ const CategoryList = () => {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
+      width: 220,
     },
     // {
     //   title: "Contact no.",

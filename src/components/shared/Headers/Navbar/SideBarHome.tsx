@@ -7,7 +7,7 @@ import Logo from "../../Logo";
 import MenuUI from "@/components/ui/NavUI/MenuUI";
 import homeSIdeItems from "@/constants/homeSideBarItems";
 
-const SideBarHome = () => {
+const SideBarHome = ({ userInfo }: { userInfo: any }) => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -19,7 +19,7 @@ const SideBarHome = () => {
   };
 
   // const [selectedItem, setSelectedItem] = useState<null | any>(null);
-
+  const sideItemsHome = homeSIdeItems(userInfo?.role ? userInfo.role : null)
   return (
     <>
       <Space className="text-2xl ">
@@ -41,7 +41,7 @@ const SideBarHome = () => {
           </div>
         }
       >
-        <MenuUI itemData={homeSIdeItems()} setOpen={setOpen} />
+        <MenuUI itemData={sideItemsHome} setOpen={setOpen} />
       </Drawer>
     </>
   );

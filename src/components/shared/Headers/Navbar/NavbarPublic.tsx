@@ -4,7 +4,7 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import Logo from "../../Logo";
 import React, { useEffect, useState } from "react";
 import SideBarHome from "./SideBarHome";
-import { homeNavItems } from "@/constants/homeNabItems";
+import { homeNavItems } from "@/constants/HomeNabItems";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 import Link from "next/link";
 import { ShoppingCartOutlined } from "@ant-design/icons"
@@ -35,6 +35,22 @@ const NavbarPublic = () => {
   const dispatch = useAppDispatch()
   const { cartModal } = useAppSelector(state => state.cart)
 
+  // if (userInfo?.id) {
+  //   homeNavItems?.push({
+  //     label: (
+  //       <Link className="text-base font-thin font-serif capitalize" href="/">
+  //         Analytic
+  //       </Link>
+  //     ),
+  //     key: "Analytic",
+  //   },)
+
+  // }
+
+  // console.log(homeNavItems, 'homeNavItems')
+
+  const navItemsHome = homeNavItems(userInfo?.role ? userInfo.role : null)
+  // console.log(homeNavItems(userInfo?.role ? userInfo.role : null), 'iiiiiiii')
   return (
     <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
       <nav
@@ -60,8 +76,10 @@ const NavbarPublic = () => {
             boxShadow: "none",
           }}
           disabledOverflow
-          // items={sidebarItems("homeNav")}
-          items={homeNavItems}
+
+          items={navItemsHome}
+        // items={() => userInfo?.role ? userInfo.role : null)}
+        // items={() => homeNavItems(userInfo?.role ? userInfo.role : null)}
         />
 
 
@@ -71,7 +89,7 @@ const NavbarPublic = () => {
         //   display: `${screens.sm ? "none" : "flex"}`,
         // }}
         >
-          <SideBarHome></SideBarHome>
+          <SideBarHome userInfo={userInfo}></SideBarHome>
         </div>
       </nav>
 

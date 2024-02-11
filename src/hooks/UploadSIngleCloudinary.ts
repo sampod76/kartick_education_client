@@ -28,11 +28,11 @@ const uploadImgCloudinary = async (file: any) => {
       return response?.data?.secure_url;
     } else {
       console.error("Failed to upload image to Cloudinary");
-      Error_model_hook("Failed to upload image to Cloudinary")
+      Error_model_hook("Failed to upload image to Cloudinary");
     }
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error, "error");
-    Error_model_hook(error?.message)
+    Error_model_hook(error?.message);
   }
 };
 

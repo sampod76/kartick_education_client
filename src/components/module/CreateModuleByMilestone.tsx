@@ -47,9 +47,9 @@ export default function CreateModuleByMilestone() {
   });
   const categoryData: any = Category?.data;
   //
- 
+
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
-  const { data: existModule } = useGetAllModuleQuery({
+  const { data: existModule, isLoading: moduleNOLOading } = useGetAllModuleQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
     milestone: milestone?._id,
@@ -83,14 +83,16 @@ export default function CreateModuleByMilestone() {
     }
   };
 
-  // if (serviceLoading) {
-  //   return message.loading("Loading...");
-  // }
-  const roundedNumber = Number(
+  if (moduleNOLOading) {
+    return <div>
+      <Spin />
+    </div>
+  }
+  const roundedModuleNoNumber = Number(
     existModule?.data[0]?.module_number || 1
   ).toFixed(1);
   // Add 0.1 to the rounded number and use toFixed again when logging
-  const preModule_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
+  const preModule_number = (parseFloat(roundedModuleNoNumber) + 0.1).toFixed(1);
   // console.log(preModule_number);
 
   return (
@@ -155,7 +157,7 @@ export default function CreateModuleByMilestone() {
             <Form
               isReset={isReset}
               submitHandler={onSubmit}
-              defaultValues={{ module_number: Number(preModule_number) }}
+            // defaultValues={{ module_number: Number(preModule_number) }}
             >
               <div
                 style={{
@@ -194,7 +196,7 @@ export default function CreateModuleByMilestone() {
                       type="number"
                       name="module_number"
                       size="large"
-                      label="Module No"
+                      label={`Module No ${roundedModuleNoNumber}`}
                       required={true}
                     />
                   </Col>
@@ -218,7 +220,7 @@ export default function CreateModuleByMilestone() {
                     <TagsSelectUI />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage   isReset={isReset} name="imgs" />
+                    <UploadMultipalImage isReset={isReset} name="imgs" />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>
@@ -248,8 +250,8 @@ export default function CreateModuleByMilestone() {
                       </p>
                       <TextEditor
                         isReset={isReset}
-                        // textEditorValue={textEditorValue}
-                        // setTextEditorValue={setTextEditorValue}
+                      // textEditorValue={textEditorValue}
+                      // setTextEditorValue={setTextEditorValue}
                       />
                     </div>
                   </Col>

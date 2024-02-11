@@ -21,7 +21,7 @@ const PurchaseCategoryTab = () => {
   console.log("🚀 ~ PurchaseCategoryTab ~ data:", data);
 
   const activeClass =
-    " rounded-[5px] bg-blue-600 text-white text-[18px] font-bold p-1 m-0 ring-4";
+    " rounded-[5px] bg-blue-600 text-white text-[18px] font-bold p-1 m-0 ring-4 ml-1";
   const inactiveClass =
     " rounded-[5px] border-2 border-[#A7D5FF] bg-white text-black  text-[18px] font-bold p-1";
 
@@ -42,6 +42,7 @@ const PurchaseCategoryTab = () => {
       key: String(index),
       children: (
         <Courses
+        width="full"
           query={{
             status: "active",
             // singleData?.category?._id must be first because it  is first
@@ -66,7 +67,7 @@ const PurchaseCategoryTab = () => {
           animated
           onChange={handleTabClick}
           items={tabsItems2}
-          style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto" }}
+          // style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto" }}
           onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       }

@@ -51,7 +51,7 @@ export default function CreateShortOverview() {
     const shortOverView = {
       title: values.title,
 
-      page: values.page,
+      page: values.page || 'page',
       details: textEditorValue,
 
       cards: values?.cards,
@@ -104,9 +104,9 @@ export default function CreateShortOverview() {
 
 
         {/* //! 3.page  */}
-        <Form.Item name="page" label="Page">
+        {/* <Form.Item name="page" label="Page">
           <Input size="large" placeholder="Please enter Short Overview page" />
-        </Form.Item>
+        </Form.Item> */}
         {/* //! 2. add cards */}
         <div className="border-2 rounded-lg p-3">
           <LabelUi>Add cards</LabelUi>

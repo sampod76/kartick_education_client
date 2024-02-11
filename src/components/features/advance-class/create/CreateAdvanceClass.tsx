@@ -64,9 +64,9 @@ export default function CreateAdvanceClass() {
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Package");
+        Success_model("Successfully Create Advance class");
         form.resetFields();
-        setClassData([])
+        setClassData([]);
         setTextEditorValue("");
         setIsReset(true);
       }
@@ -303,8 +303,9 @@ export default function CreateAdvanceClass() {
               );
             }}
           </Form.List> */}
+          {/*//! Created Dynamic */}
 
-          <CLassField  ClassData={ClassData} setClassData={setClassData} />
+          <CLassField ClassData={ClassData} setClassData={setClassData} />
         </div>
         <Form.Item>
           <p className="text-center my-3 font-bold text-xl">Description</p>

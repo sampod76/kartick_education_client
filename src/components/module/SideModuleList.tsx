@@ -62,13 +62,13 @@ const SideModuleList = ({
         }}
       /> */}
 
-      <div className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2]">
+      <div className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2">
         {modulesData?.map((module: any, index: number) => {
           return (
             <Link
               key={index}
               href={`/lesson/module/${module?._id}?module=${module?.title}`}
-              className={`  text-start text-base lg:text-[16px]  font-['Inter'] leading-2   py-1 px-1 md:px-3 rounded ${module?._id === moduleId ? "text-[#479FEC] font-[550]" : "text-gray-800 font-normal"
+              className={`  text-start text-base lg:text-text-lg  leading-2   py-1 px-1 md:px-3 rounded ${module?._id === moduleId ? "text-[#479FEC] front-bold" : "text-gray-800 font-normal"
                 } `}
             >
               <span className={`rounded-full   w-2 h-2 inline-flex items-center justify-center mr-2 ${module?._id === moduleId ? "bg-[#479FEC]" : "bg-black"

@@ -68,39 +68,50 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
     updatedClassData[index] = updatedAnswer;
     setClassData(updatedClassData);
   };
-  
+
 
   return (
     <div className="">
-      <SubHeadingUI>Add Answer </SubHeadingUI>
+      <SubHeadingUI>Add Class </SubHeadingUI>
       {ClassData?.map((answer, index) => (
-        <Space
+        <div
           key={index}
           style={{
-            display: "flex",
-            alignItems: "start",
-            justifyContent: "space-between",
+            // display: "flex",
+            // alignItems: "start",
+            // justifyContent: "space-between",
             margin: "10px 0",
             border: "1px solid gray",
             padding: "10px 8px",
             borderRadius: "4px",
             width: "100%",
+            // background: 'blue',
+
           }}
           className="shadow-1 "
         >
-          <Space
+          <div
+            className="w-full mx-auto"
             // style={{ display: "flex", marginBottom: 8 }}
 
             style={{
               display: "flex",
               flexDirection: "column",
               gap: "18px",
+              // minWidth: "100%",
+              // alignItems: "start",
+              // background: "red",
               width: "100%",
-              alignItems: "start",
-              // background:"red"
+              position: "relative",
+              // boxSizing: "border-box",
+              // width: 100 %;
             }}
-            align="start"
+          // align="start"
           >
+            <MinusCircleOutlined
+              style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
+              onClick={() => handleRemove(index)}
+            />
             {/*//! 1. class title */}
             <p>
               Title <span className="text-red-600">*</span>
@@ -109,20 +120,20 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
               placeholder="Option Title"
               size="large"
               style={{
-                width: "39vw",
+                width: "90%",
               }}
               value={answer.title}
               onChange={(e) =>
                 handleChange(index, { ...answer, title: e.target.value })
               }
-              // defaultValue={index + 1}
+            // defaultValue={index + 1}
             />
             <p className="-mb-3">Select Course </p>
             <Select
               // onChange={handleChange}
               // onBlur={() => handleChange(restField.value, name)}
               loading={categoryLoading}
-              style={{ width: "350px" }}
+              style={{ width: "80%" }}
               onChange={(value) =>
                 handleChange(index, { ...answer, course: value })
               }
@@ -142,14 +153,14 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
             <Input
               placeholder="Button Link"
               style={{
-                width: "39vw",
+                width: "100%",
               }}
               // width={500}
               value={answer.buttonLink}
               onChange={(e) =>
                 handleChange(index, { ...answer, buttonLink: e.target.value })
               }
-              // defaultValue={index + 1}
+            // defaultValue={index + 1}
             />
             <p className="-mb-3">
               Short description <span className="text-red-600">*</span>
@@ -160,7 +171,7 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
               rows={5}
               size="large"
               style={{
-                width: "39vw",
+                width: "100%",
               }}
               value={answer.short_description}
               onChange={(e) =>
@@ -220,16 +231,14 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
             </div>
 
             {/* select status */}
-          </Space>
-          <MinusCircleOutlined
-            style={{ fontSize: "1.5rem" }}
-            onClick={() => handleRemove(index)}
-          />
-        </Space>
-      ))}
+          </div>
+
+        </div>
+      ))
+      }
       <Button
         type="dashed"
-     
+
         // disabled={ClassData?.length > 6 ? true : false}
         onClick={handleAdd}
         // block
@@ -238,7 +247,7 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
         {/* {ClassData?.length < 7 ? "Add Answer" : "Already added 6"} */}
         Add Class
       </Button>
-    </div>
+    </div >
   );
 };
 

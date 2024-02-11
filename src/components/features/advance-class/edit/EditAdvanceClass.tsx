@@ -60,7 +60,7 @@ export default function EditAdvanceClass({ classId }: { classId: string }) {
 
             title: values.title || defaultAdvanceClassData?.title,
 
-            page: values.page || defaultAdvanceClassData?.page,
+            page: values.page || defaultAdvanceClassData?.page || 'home',
 
             buttonLink: values.buttonLink || defaultAdvanceClassData?.buttonLink,
             classes: ClassData || defaultAdvanceClassData?.classes,
@@ -144,9 +144,9 @@ export default function EditAdvanceClass({ classId }: { classId: string }) {
                 </Form.Item>
 
                 {/* //! 3.page  */}
-                <Form.Item name="page"  label="Enter page (optional)">
+                {/* <Form.Item name="page"  label="Enter page (optional)">
                     <Input size="large" defaultValue={'home'} placeholder="Please enter page" />
-                </Form.Item>
+                </Form.Item> */}
                 {/* //! 3. add classes */}
                 <div className="border-2 rounded-lg p-3 ">
 

@@ -2,7 +2,7 @@ import styles from './loading.module.css';
 
 const LoadingForDataFetch = () => {
     return (
-        <div className='flex justify-center items-center min-h-[90vh] w-full'>
+        <div className='flex justify-center items-center min-h-[80vh] w-full'>
 
             <div id={styles.page}>
                 <div id={styles.container}>
@@ -18,7 +18,7 @@ const LoadingForDataFetch = () => {
                         <span className="animate-pulse">I</span>
                         <span className="animate-pulse">N</span>
                         <span className="animate-pulse">G</span>
-                       
+
                     </div></div>
                 </div>
             </div>

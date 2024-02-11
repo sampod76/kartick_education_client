@@ -19,7 +19,7 @@ const SelectCategoryChildren = ({
   disable?: boolean;
   isLoading?: boolean;
   children?: string;
-  lableText: string;
+  lableText?: string;
   setState: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const [render, setRender] = useState(false);
@@ -55,15 +55,20 @@ const SelectCategoryChildren = ({
 
   return (
     <div>
-      <LabelUi>{lableText}</LabelUi>
+      {lableText &&
+        <LabelUi>{lableText}</LabelUi>
+      }
       <Select
         size="large"
         // onChange={handleChange ? handleChange : onChange}
         onChange={(val, fullValue: any) => {
           setState(fullValue?.data);
         }}
+        // listHeight={200}
         disabled={disable}
         // defaultActiveFirstOption
+        popupMatchSelectWidth
+        dropdownStyle={{ minWidth: "200px" }}
         defaultValue={{ label: lableText || "Select", value: "" }}
         options={CategoryOptions}
         style={{ width: "100%" }}
@@ -74,7 +79,7 @@ const SelectCategoryChildren = ({
         loading={isLoading}
         allowClear
 
-        // placeholder={placeholder}
+      // placeholder={placeholder}
       />
     </div>
   );

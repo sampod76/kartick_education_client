@@ -34,7 +34,6 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   // const { title, details, img, demo_video, tags} = course;
   // console.log(course);
   const screens = useBreakpoint();
- 
 
   // const dispatch = useAppDispatch()
   const userInfo = getUserInfo() as IDecodedInfo;
@@ -76,7 +75,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
           }`}
         >
           <div className="overflow-hidden  ">
-            <div  className="relative">
+            <div className="relative">
               <div>
                 <Image
                   height={350}
@@ -113,10 +112,13 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 </EllipsisMiddle>
               </Typography.Title>
 
-              <p className="text-black text-sm md:text-base">
+              <p
+                style={{ overflow: "hidden" }}
+                className="text-black text-sm md:text-base"
+              >
                 <EllipsisMiddle
                   suffixCount={3}
-                  maxLength={screens.xxl ? 200 : screens.xl ?170 :200}
+                  maxLength={screens.xxl ? 200 : screens.xl ? 170 : 200}
                 >
                   {course?.short_description}
                 </EllipsisMiddle>

@@ -28,6 +28,13 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
   answers,
   setAnswers,
 }) => {
+  const [isLoading, setIsLoading] = useState<{
+    loading: boolean;
+    index: number;
+  }>({
+    loading: false,
+    index: 50000,
+  });
   const handleAdd = () => {
     setAnswers([
       ...answers,
@@ -69,7 +76,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
     <div className="">
       <SubHeadingUI>Add Answer </SubHeadingUI>
       {answers?.map((answer, index) => (
-        <Space
+        <div
           key={index}
           style={{
             display: "flex",
@@ -83,7 +90,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
           }}
           className="shadow-1 "
         >
-          <Space
+          <div
             // style={{ display: "flex", marginBottom: 8 }}
 
             style={{
@@ -92,16 +99,24 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               gap: "18px",
               width: "100%",
               alignItems: "start",
-              // background:"red"
+              position: "relative",
+              // background: "red",
             }}
-            align="start"
+          // align="start"
           >
+            <MinusCircleOutlined
+              style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
+              onClick={() => handleRemove(index)}
+            />
             {/* quiz option */}
             <Input
               placeholder="Option Title"
               style={{
-                width: "15rem",
+                minWidth: "90%",
                 height: "2.7rem",
+                // background: "blue",
+                // boxSizing: "border-box",
+
               }}
               // width={500}
               value={answer.title}
@@ -127,9 +142,11 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                 listType="picture"
                 style={{ textAlign: "start" }}
                 showUploadList={true}
-                multiple={true}
+                multiple={false}
+                
                 // multiple
                 beforeUpload={async (file) => {
+                  setIsLoading({ loading: true, index: index });
                   // console.log(
                   //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
                   //   file
@@ -137,7 +154,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                   // You can add custom logic before uploading, e.g., checking file type or size
                   const images = answer?.imgs;
                   const imgUrl = await uploadImgCloudinary(file);
-
+                  setIsLoading({ loading: false, index: index });
                   if (imgUrl) {
                     images.push(imgUrl);
                   }
@@ -151,7 +168,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                   return false; // Prevent default upload behavior
                 }}
               >
-                <Button style={{ textAlign: "start" }}>Answer Image +</Button>
+                <Button  loading={isLoading.index === index && isLoading.loading} style={{ textAlign: "start" }}>Answer Image +</Button>
               </Upload>
               {answer?.imgs?.map((img, key) => (
                 <Image
@@ -166,7 +183,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
             </div>
             {/* serial number */}
             <div className="text-start ">
-              <label>Serial number</label>
+              <p>Serial number</p>
               <Input
                 placeholder="Serial Number"
                 type="number"
@@ -196,12 +213,9 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               <Select.Option value="active">Active</Select.Option>
               <Select.Option value="deactivate">Deactivate</Select.Option>
             </Select>
-          </Space>
-          <MinusCircleOutlined
-            style={{ fontSize: "1.5rem" }}
-            onClick={() => handleRemove(index)}
-          />
-        </Space>
+          </div>
+
+        </div>
       ))}
       <Button
         type="dashed"

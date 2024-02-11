@@ -56,11 +56,11 @@ export default function CreateSkillsPlan() {
       title: values.title,
       imgs: [values?.imgs],
       imgTitle: values.imgTitle,
-      page: values.page,
+      page: values.page || 'home',
       points: values?.points,
       details: textEditorValue
     };
-    console.log("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData)
+    // console.count("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData)
     // return
 
     try {
@@ -69,7 +69,7 @@ export default function CreateSkillsPlan() {
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Package");
+        Success_model("Successfully Create skill plan");
         form.resetFields();
       }
 
@@ -105,32 +105,36 @@ export default function CreateSkillsPlan() {
             <Input size="large" placeholder="Please enter Skills and Plan title" />
           </Form.Item>
           {/* //! 2. imgs */}
-          <Space style={{}}>
-            <Form.Item name="imgTitle" label="Image Title">
-              <Input size="large" placeholder="Please enter Skills and Plan imgTitle title" />
-            </Form.Item>
-            <Form.Item name="imgs" required>
-              <Upload
-                listType="picture-circle"
-                beforeUpload={async (file) => {
-                  // console.log(file)
-                  // const imgUrl = await uploadImgCloudinary(file);
-                  form.setFieldsValue({ imgExtra: "" }); // Set imgUrl in Form values
-                  return false; // Prevent default upload behavior
-                  // return true
-                }}
-              >
-                Upload
-              </Upload>
-            </Form.Item>
+          {/* <Space style={{}}> */}
+          <Form.Item name="imgTitle" label="Image Title" >
+            <Input size="large" placeholder="Please enter Skills and Plan imgTitle title" width={"100%"} />
+          </Form.Item>
+          <Form.Item name="imgs" required>
+            <Upload
+              listType="picture-card"
+              beforeUpload={async (file) => {
+                // console.table(file)
+                // const imgUrl = await uploadImgCloudinary(file);
+                form.setFieldsValue({ imgExtra: "" }); // Set imgUrl in Form values
+                return false; // Prevent default upload behavior
+                // return true
+              }}
+            >
+              <div className="flex flex-col">
+                {/* <h1>+</h1> */}
+                <h4>Upload</h4>
 
-          </Space>
+              </div>
+            </Upload>
+          </Form.Item>
+
+          {/* </Space> */}
 
         </Form.Item>
         {/* //! 3.page  */}
-        <Form.Item name="page" label="Page">
+        {/* <Form.Item name="page" label="Page">
           <Input size="large" placeholder="Please enter Skills and Plan page" />
-        </Form.Item>
+        </Form.Item> */}
         {/* //! 2. add points */}
         <div className="border-2 rounded-lg p-3">
           <LabelUi>Add Points</LabelUi>
@@ -156,24 +160,30 @@ export default function CreateSkillsPlan() {
               return (
                 <>
                   {fields.map(({ key, name, ...restField }) => (
-                    <Space
+                    <div
                       key={key}
                       style={{
                         display: "flex",
+                        justifyContent: "start",
+                        alignItems: "flex-start",
                         // flexDirection: "column", // Stack items vertically on smaller screens
+
                         margin: "8px auto",
                         // background: "blue",
                         // width: "100%",
+                        // position: "relative",
+
                       }}
-                      align="center"
+                    // align="center"
                     >
+
                       <Form.Item
                         {...restField}
                         name={[name, "title"]}
                         style={{
-                          width: "",
+                          width: "100%",
                           marginBottom: "8px",
-                          maxWidth: "200px",
+                          // maxWidth: "200px",
                         }}
                         rules={[
                           { required: true, message: "Missing Points Label" },
@@ -183,9 +193,9 @@ export default function CreateSkillsPlan() {
                       </Form.Item>
                       <MinusCircleOutlined
                         onClick={() => handleRemove(name)}
-                        style={{ marginInline: "3px" }}
+                      // style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
                       />
-                    </Space>
+                    </div>
                   ))}
                   <Form.Item>
                     <Button

@@ -49,7 +49,7 @@ export const UserApi = baseApi.injectEndpoints({
     }),
     updateUser: build.mutation({
       query: (data) => ({
-        url: `${User_URL}/${data.id}?stat`,
+        url: `${User_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
       }),

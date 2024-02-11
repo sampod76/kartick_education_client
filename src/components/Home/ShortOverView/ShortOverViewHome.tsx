@@ -58,8 +58,8 @@ const ShortOverViewHomePage = () => {
   let query: any = {}
   query["status"] = "active";
 
-  const { data = [], isLoading } = useGetAllShortOverViewQuery({ ...query }) as any
-  const shortOverviewData: IShort_overviewData[] = data?.data
+  const { data , isLoading } = useGetAllShortOverViewQuery({ ...query }) as any
+  const shortOverviewData: IShort_overviewData[] = data?.data || []
   // console.log(shortOverviewData, 'shortOverviewData')
 
   if (isLoading) {
@@ -73,15 +73,15 @@ const ShortOverViewHomePage = () => {
       <div className=" container mx-auto  ">
         <div className="bg-[#A2B0F321] mt-5 py-3 md:py-10  ">
           <h1 className="text-xl md:text-2xl lg:text-3xl text-center w-[80%] mx-auto text-[#282938] font-[600]">
-            {shortOverviewData[0]?.title}
+            {shortOverviewData.length && shortOverviewData[0]?.title}
           </h1>
 
           <div className="my-[3rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-3 lg:px-0  mx-3">
-            {shortOverviewData[0]?.cards?.map((item: any, index: any) => {
+            {shortOverviewData.length && shortOverviewData[0]?.cards?.map((item: any, index: any) => {
               return (
                 <AnimatePresenceWrapper key={index} delay={0.24 + (index / 100)}>
                   <div
-                    className="w-full  bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
+                    className="w-full h-full bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
                     key={index + 1}
                   >
                     <p className="h-12 w-12 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-3 text-white hover:text-primary hover:bg-slate-100">
@@ -93,8 +93,8 @@ const ShortOverViewHomePage = () => {
                     <p className="text-[#1f1f2b] font[400] text-[16px]">
 
                       <EllipsisMiddle
-                        suffixCount={3}
-                        maxLength={180}
+                        suffixCount={5}
+                        maxLength={120}
                       >
                         {item?.short_description}
                       </EllipsisMiddle>
@@ -106,12 +106,12 @@ const ShortOverViewHomePage = () => {
           </div>
 
           <div className="flex justify-center items-center">
-          <Link
-            href="/subscription"
-            className="text-primary uppercase p-2 w-[164px] h-[44px] text-center font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white mx-3"
-          >
-            Join Now
-          </Link>
+            <Link
+              href="/subscription"
+              className="text-primary uppercase p-2 w-[164px] h-[44px] text-center font-bold border-primary border-2 rounded-[10px] text-[18px] hover:bg-primary hover:text-white mx-3"
+            >
+              Join Now
+            </Link>
           </div>
         </div>
       </div>
