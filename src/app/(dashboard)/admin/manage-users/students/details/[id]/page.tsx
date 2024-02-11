@@ -3,14 +3,12 @@
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 import { useGetSingleStudentQuery } from "@/redux/api/adminApi/moderatorApi";
-import StudentProfile from "@/components/profile/StudentProfile";
+import UserProfile from "@/components/profile/UserProfile";
 
 const StudentDetailsPage = ({ params }: any) => {
   const id = params.id;
-  console.log(id);
-  const { data: userData, isLoading: loading } = useGetSingleStudentQuery(id);
 
-  console.log(userData);
+  const { data: userData, isLoading: loading } = useGetSingleStudentQuery(id);
 
   if (loading) {
     return <LoadingForDataFetch />;
@@ -18,7 +16,7 @@ const StudentDetailsPage = ({ params }: any) => {
 
   return (
     <div>
-      <StudentProfile userData={userData}></StudentProfile>
+      <UserProfile userData={userData}></UserProfile>
     </div>
   );
 };

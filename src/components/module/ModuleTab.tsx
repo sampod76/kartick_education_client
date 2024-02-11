@@ -5,6 +5,7 @@ import ModuleList from "./ModuleList";
 import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
 import Courses from "../Home/coureses/Courses";
 import LessonList from "../lesson/LessonList";
+// import GlossaryPage from "../"
 import {
   BookOutlined,
   QuestionOutlined,
@@ -12,8 +13,20 @@ import {
   BlockOutlined,
 } from "@ant-design/icons";
 import Quizes from "../Quiz/Quizes";
+import GlossaryPage from "../Glossary/Glossary";
+import ResourcePage from "../Resource/ResourceViewForTabs";
 
-export default function ModuleTab({ moduleId }: { moduleId: string }) {
+export default function ModuleTab({
+  moduleId,
+  moduleData,
+}: {
+  moduleId: string;
+  moduleData: any[];
+}) {
+ 
+  // console.log(moduleData)
+
+  // const {data:QuizData} = useGetQui
 
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
@@ -30,25 +43,41 @@ export default function ModuleTab({ moduleId }: { moduleId: string }) {
               fontSize: "1.5rem",
             }}
           />{" "}
-          <h1>Lesson Summery</h1>
+          <h1 className=" text-sm md:text-lg lg:text-2xl">Lesson Summery</h1>
         </button>
       ),
       key: "1",
-      children: <LessonList moduleId={moduleId} />,
+      children: <LessonList moduleId={moduleId} moduleData={moduleData}/>,
     },
+
+    // {
+    //   label: (
+    //     <button className="text-xl font-bold ">
+    //       <QuestionOutlined
+    //         style={{
+    //           fontSize: "1.5rem",
+    //         }}
+    //       />
+    //       <h1 className="text-base font-normal">Quiz</h1>
+    //     </button>
+    //   ),
+    //   key: "2",
+    //   // children: <Quizes quizeId=""/>,
+    // },
+
     {
       label: (
         <button className="text-xl font-bold ">
-          <QuestionOutlined
+          <BookOutlined
             style={{
               fontSize: "1.5rem",
             }}
-          />{" "}
-          <h1>Quiz</h1>
+          />
+          <h1 className="text-sm md:text-lg lg:text-2xl">Glossary</h1>
         </button>
       ),
-      key: "2",
-      // children: <Quizes quizeId=""/>,
+      key: "3",
+      children: <GlossaryPage moduleId={moduleId} />,
     },
 
     {
@@ -60,16 +89,15 @@ export default function ModuleTab({ moduleId }: { moduleId: string }) {
               fontSize: "1.5rem",
             }}
           />
-          <h1> Reviews</h1>
+          <h1 className=" text-sm md:text-lg lg:text-2xl"> Resources</h1>
         </button>
       ),
-      key: "3",
-      children: <ReviewsPage />,
+      key: "4",
+      children: <ResourcePage moduleId={moduleId} />,
     },
   ];
   return (
     <div className="mt-5">
-      
       <Tabs
         defaultActiveKey="1"
         centered

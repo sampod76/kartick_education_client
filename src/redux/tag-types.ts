@@ -12,9 +12,22 @@ export enum tagTypes {
   course = "course",
   service = "service",
   booking = "booking",
+  glossary = "glossary",
   faq = "faq",
   rating = "rating",
-  
+  resource = "resource",
+  categoryChildren = "categoryChildren",
+  submitQuiz = "submitQuiz",
+  package = "package",
+  userPurchaseCourse = "userPurchaseCourse",
+  userPurchaseCategory = "userPurchaseCategory",
+  addPackageAndcourseTag = "addPackageAndcourseTag",
+  LoginHistory = "LoginHistory",
+  profile = "profile",
+  cart = "cart",
+  ShowAdvanceClasses = "ShowAdvanceClasses",
+  Skills_plan = "Skills_plan",
+  overview = "overview",
 }
 
 export const tagTypesList = [
@@ -33,4 +46,19 @@ export const tagTypesList = [
   tagTypes.rating,
   tagTypes.rating,
   tagTypes.course,
+  tagTypes.resource,
+  tagTypes.glossary,
+  tagTypes.categoryChildren,
+  tagTypes.submitQuiz,
+
+  tagTypes.package,
+  tagTypes.userPurchaseCourse,
+  tagTypes.userPurchaseCategory,
+  tagTypes.addPackageAndcourseTag,
+  tagTypes.LoginHistory,
+  tagTypes.profile,
+  tagTypes.cart,
+  tagTypes.ShowAdvanceClasses,
+  tagTypes.Skills_plan,
+  tagTypes.overview,
 ];

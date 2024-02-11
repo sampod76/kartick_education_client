@@ -11,6 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
@@ -33,6 +34,7 @@ const EditUserData = ({ params }: any) => {
       ...values,
   
     };
+    removeNullUndefinedAndFalsey(UpdateValues);
     try {
       const res = await updateService({
         id: params?.id,
@@ -45,7 +47,8 @@ const EditUserData = ({ params }: any) => {
         Success_model("successfully updated data");
       }
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (isLoading || updateLoading) {
@@ -74,7 +77,7 @@ const EditUserData = ({ params }: any) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form submitHandler={onSubmit} defaultValues={defaultValues} >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -281,7 +284,7 @@ const EditUserData = ({ params }: any) => {
               alignItems: "center",
             }}
           >
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit"   type="default">
               Update
             </Button>
           </div>

@@ -1,66 +1,75 @@
 "use client";
-import React from "react";
-import {
-  FacebookFilled,
-  TwitterCircleFilled,
-  PlusOutlined,
-  MinusOutlined,
-  // LinkedInCircleFilled
-  LinkedinFilled,
-  LinkedinOutlined,
-  YoutubeOutlined,
-} from "@ant-design/icons";
+
+import React, { useEffect, useState } from "react";
+
 import Link from "next/link";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import { USER_ROLE } from "@/constants/role";
+
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import SocialGroup from "../socialIcon/SocialGroup";
 
 const TopBar = () => {
-  const userLoggedIn = USER_ROLE.ADMIN;
+  const [userInfoLoading, setUserInfoLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState<Partial<IDecodedInfo>>({
+    email: "",
+    id: "",
+    role: undefined,
+  });
+
+  useEffect(() => {
+    // Fetch user info asynchronously on the client side
+    const fetchUserInfo = async () => {
+      const userInfo = (await getUserInfo()) as any;
+      setUserInfo(userInfo);
+    };
+    fetchUserInfo();
+    setUserInfoLoading(false);
+  }, []);
 
   return (
-    <div className="py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5">
-      <section>
-        <h2 className="font-[800] text-md lg:text-[17px]">
+    <div className="py-1 lg:py-2 bg-primary text-white px-2 lg:px-4 block lg:flex items-center justify-between gap-5 ">
+      <div className="hidden lg:flex lg:flex-col">
+        <h2 className="font-[800] text-md lg:text-[17px] ml-1">
           ATTEND ORIENTATION! IBL SCHOOL STORE!{" "}
         </h2>
         <div className="font-[700] flex gap-2 text-[15px]">
           <h4 className=" "> 1866 303121 231</h4>
-          <h4>info.iblossomelearn@gmail.com</h4>
+          <h4 className="text-base font-normal">
+            info.iblossomelearn@gmail.com
+          </h4>
         </div>
-      </section>
-      <section className="flex justify-between gap-3 mt-5 lg:mt-0 ">
-        <div className="flex gap-2 text-2xl">
-          <FacebookFilled />
-          <TwitterCircleFilled />
-          <LinkedinFilled />
-          {/* <LinkedinOutlined /> */}
-          <YoutubeOutlined
-            style={{
-              color: "red",
-            }}
-          />
-        </div>
-        <div>
+      </div>
+      <div className="flex justify-between gap-3 lg:mt-0 ">
+        <SocialGroup />
+        {userInfoLoading ? (
+          <div className="bg-white w-[50px] h-[50px] rounded-full shadow-md animate-pulse"></div>
+        ) : userInfo?.email ? (
           <UserAvatarUI />
-        </div>
-        <div className="flex gap-3 font-[700]">
-          <Link
-            className="py-3 px-5 lg:px-7  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white"
-            href="/"
+        ) : (
+          <div
+            className="flex gap-3 font-[700]  max-h-[2.7rem] lg:max-h-[3.3rem]
+         "
           >
-            Register
-          </Link>
-          <Link
-            className="py-3 px-5 lg:px-7 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1"
-            href="/login"
-          >
-            Login
-          </Link>
-        </div>
-      </section>
+            <Link
+              className="py-2 lg:py-3 px-2 w-[5rem] lg:w-[6rem]  lg:px-3  rounded-tl-[20px] rounded-br-[20px] bg-secondary border-2 border-white text-center"
+              href="/signup"
+            >
+              Register
+            </Link>
+            <Link
+              className="py-2 lg:py-3 px-3 w-[5rem] lg:w-[6rem]  lg:px-3 rounded-tl-[20px] rounded-br-[20px] bg-white text-secondary border-2 border-secondary ms-1 text-center"
+              href="/login"
+            >
+              Login
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default TopBar;
+// export default dynamic(() => Promise.resolve(TopBar), {
+//   ssr: false,
+// });

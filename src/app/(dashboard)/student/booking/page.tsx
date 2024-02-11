@@ -29,12 +29,13 @@ import {
 } from "@/redux/api/bookingApi";
 import { USER_ROLE } from "@/constants/role";
 import { ENUM_BOOKING_STATUS } from "../../../../constants/globalEnums";
-import { getUserInfo } from "@/services/auth.service";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 const GeneralUserBooking = () => {
   //
-  const ROLE = USER_ROLE.STUDENT;
+  // const ROLE = USER_ROLE.STUDENT;
+  const userInfo =getUserInfo() as IDecodedInfo
   //
   const query: Record<string, any> = {};
 
@@ -92,7 +93,7 @@ const GeneralUserBooking = () => {
               id,
               body: { status: ENUM_BOOKING_STATUS.REJECT },
             }).unwrap();
-            if (res.success == false) {
+            if (res?.success == false) {
               // message.success("Admin Successfully Deleted!");
               // setOpen(false);
               Error_model_hook(res?.message);
@@ -100,7 +101,7 @@ const GeneralUserBooking = () => {
               Success_model("Service Successfully Rejected!");
             }
           } catch (error: any) {
-            message.error(error.message);
+            Error_model_hook(error.message);
           }
         }
       }
@@ -186,7 +187,7 @@ const GeneralUserBooking = () => {
       title: "Payment",
       dataIndex: "payment",
       render: function (data: any) {
-        return <>{data ? <h1>Done</h1> : <h1>Not payment</h1>}</>;
+        return <>{data ? <h1 className="text-base font-normal">Done</h1> : <h1 className="text-base font-normal">Not payment</h1>}</>;
       },
     },
     {
@@ -204,7 +205,7 @@ const GeneralUserBooking = () => {
                     // Handle view logic here
                   }}
                 >
-                  <Link href={`/${ROLE}/booking/details/${_id}`}>View</Link>
+                  <Link href={`/${userInfo?.role}/booking/details/${_id}`}>View</Link>
                 </Menu.Item>
                 <Menu.Item
                   key="edit"
@@ -212,7 +213,7 @@ const GeneralUserBooking = () => {
                     // Handle edit logic here
                   }}
                 >
-                  <Link href={`/${ROLE}/booking/edit/${_id}`}>Edit</Link>
+                  <Link href={`/${userInfo?.role}/booking/edit/${_id}`}>Edit</Link>
                 </Menu.Item>
 
                 <Menu.Item
@@ -259,8 +260,8 @@ const GeneralUserBooking = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${ROLE}",
-            link: "/${ROLE}",
+            label: "${userInfo?.role}",
+            link: "/${userInfo?.role}",
           },
         ]}
       /> */}
@@ -274,13 +275,13 @@ const GeneralUserBooking = () => {
           }}
         />
         <div>
-          {/* <Link href={`/${ROLE}/service/create`}>
+          {/* <Link href={`/${userInfo?.role}/service/create`}>
             <Button type="primary">Create service</Button>
           </Link> */}
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+                type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

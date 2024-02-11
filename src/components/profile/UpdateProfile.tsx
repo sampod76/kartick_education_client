@@ -21,7 +21,7 @@ import {
 } from "@/redux/api/adminApi/userManageApi";
 
 
-import { getUserInfo, storeUserInfo } from "@/services/auth.service";
+import { IDecodedInfo, getUserInfo, storeUserInfo } from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -32,10 +32,12 @@ import { useEffect, useState } from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import { NO_IMAGE } from "@/constants/filePatch";
 import { useUpdateSuperAdminMutation } from "@/redux/api/superAdminApi";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const UpdateProfile = () => {
   const [user, setUserData] = useState<any>({});
   const [userLoading, setUserLoading] = useState<boolean>(true);
+  const userInfo =getUserInfo() as IDecodedInfo
   useEffect(() => {
     setUserData(getUserInfo() as any);
     setUserLoading(false);
@@ -52,7 +54,7 @@ const UpdateProfile = () => {
 
   const onSubmit = async (values: any) => {
     console.log(user);
-
+    removeNullUndefinedAndFalsey(values);
     try {
       let res;
       if (user?.role === USER_ROLE.STUDENT) {
@@ -79,7 +81,8 @@ const UpdateProfile = () => {
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (
@@ -228,7 +231,7 @@ const UpdateProfile = () => {
                 }}
               >
                 <FormInput
-                  type="text"
+                   type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
@@ -270,7 +273,7 @@ const UpdateProfile = () => {
             {isLoading ? (
               <Spin tip="Loading data..........."></Spin>
             ) : (
-              <Button size="large" htmlType="submit" type="primary">
+              <Button size="large" htmlType="submit"   type="default">
                 Update
               </Button>
             )}

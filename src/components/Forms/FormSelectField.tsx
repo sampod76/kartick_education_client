@@ -38,11 +38,11 @@ const FormSelectField = ({
   loading = false,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
-  const [selectedValue, setSelectedValue] = useState("");
+
 
   return (
     <>
-     {label ? (
+      {label ? (
         <LabelUi>
           {label}
           {required && <span className="text-red-400"> *</span>}
@@ -55,7 +55,6 @@ const FormSelectField = ({
           <Select
             // onChange={handleChange ? handleChange : onChange}
             onChange={(val) => {
-              setSelectedValue(val);
               onChange(val);
             }}
             disabled={disabled}
@@ -63,7 +62,7 @@ const FormSelectField = ({
             // defaultActiveFirstOption
             defaultValue={defaultValue ? defaultValue : ""}
             options={options}
-            value={selectedValue || value}
+            value={value}
             style={{ width: "100%" }}
             loading={loading}
             // placeholder={placeholder}

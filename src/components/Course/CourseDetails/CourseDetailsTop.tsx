@@ -7,14 +7,14 @@ import { CutText } from "@/utils/CutText";
 import VimeoPlayer from "@/utils/vimoPlayer";
 import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
-  console.log(
-    "🚀 ~ file: CourseDetailsTop.tsx:6 ~ CourseDetailsTop ~ courseData:",
-    courseData
-  );
+  // console.log(
+  //   "🚀 ~ file: CourseDetailsTop.tsx:6 ~ CourseDetailsTop ~ courseData:",
+  //   courseData
+  // );
 
   return (
     <div className="bg-[#333333] block lg:flex gap-3">
-      <section className="w-full lg:w-[40%]">
+      <div className="w-full lg:w-[40%]">
         <iframe
           style={{
             height: "25rem",
@@ -33,7 +33,7 @@ const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
         {/* {lesson?.videos?.length && lesson?.videos[0]?.platform === ENUM_VIDEO_PLATFORM.VIMEO && (
                 <VimeoPlayer link={lesson?.videos[0]?.link} />
               )} */}
-      </section>
+      </div>
       <aside
         className="w-full lg:w-[60%]"
         style={{
@@ -65,7 +65,7 @@ const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
           }}
         >
   
-          {courseData?.details && CutText(parse(courseData?.details) as string, 90)}
+          {courseData?.details && CutText(courseData?.short_description, 90)}
         </p>
 
         <p
@@ -127,7 +127,7 @@ const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
         </div>
         <p>Last updated {formatMongoCreatedAtDate(courseData?.updatedAt)}</p>
 
-        <section style={{ display: "flex ", gap: "1em" }}>
+        <div style={{ display: "flex ", gap: "1em" }}>
           <button
             className="bg-primary"
             style={{
@@ -150,7 +150,7 @@ const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
           >
             Buy Now
           </button>
-        </section>
+        </div>
         <p>30-Day Money-Back-Guarantee</p>
       </aside>
     </div>

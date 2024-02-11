@@ -14,8 +14,18 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary:"#5371FF",
-              colorTextSecondary:"#5371FF"
+              colorPrimary: "#5371FF",
+              colorTextSecondary: "#5371FF",
+              // colorBgContainer: "#f6ffed",
+            },
+            components: {
+              Button: {
+                colorPrimary: "#5371FF",
+                // // algorithm: true,
+                // // colorBgContainer: "#5371FF",
+                // colorPrimaryBg:"#535BE5",
+                defaultBg: '#5371FF'
+              },
             },
           }}
         >

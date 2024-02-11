@@ -8,6 +8,7 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAddServiceWithFormDataMutation } from "@/redux/api/serviceApi";
@@ -20,16 +21,18 @@ import React, { useState } from "react";
 const CreateService = () => {
   const [addService, { isLoading: serviceLoading }] =
     useAddServiceWithFormDataMutation();
+    const [isReset, setIsReset] = useState(false);
   const { data = [], isLoading } = useGetAllCategoryQuery({});
   const onSubmit = async (values: any) => {
     console.log(values);
-
+    removeNullUndefinedAndFalsey(values);
     try {
       const res = await addService(values).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added service");
+        setIsReset(true)
       }
       console.log(res);
     } catch (error: any) {
@@ -47,7 +50,7 @@ const CreateService = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -239,7 +242,7 @@ const CreateService = () => {
             </Row>
           </div>
 
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit"   type="default">
             Create
           </Button>
         </Form>

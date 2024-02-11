@@ -11,38 +11,37 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useGetSingleStudentQuery, useUpdateStudentMutation } from "@/redux/api/adminApi/studentApi";
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
-import {
-  useGetSingleServiceQuery,
-  useUpdateServiceMutation,
-} from "@/redux/api/serviceApi";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useUpdateAdminMutation } from "@/redux/api/adminApi";
+import { useGetSingleAdminQuery } from "@/redux/api/adminApi/adminApi";
 
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
+import { useState } from "react";
 
-const EditStudentPage = ({ params }: any) => {
-  const { data: singleStudent, isLoading } = useGetSingleStudentQuery(
-    params?.id
-  );
-  const studentData = singleStudent
+const EditAdminPage = ({ params }: any) => {
+  const { data: singleAdmin, isLoading } = useGetSingleAdminQuery(params?.id);
+  const AdminData = singleAdmin;
 
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
-  // console.log(studentData, "student data");
+  const [isReset, setIsReset] = useState(false);
+  // console.log(AdminData, "Admin data");
 
-  const [updateStudent, { isLoading: updateLoading, error }] =
-    useUpdateStudentMutation();
+  const [updateAdmin, { isLoading: updateLoading, error }] =
+    useUpdateAdminMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     const UpdateValues = {
       ...values,
     };
-    console.log(UpdateValues);
+    // console.log(UpdateValues);
     try {
-      const res = await updateStudent({
+      const res = await updateAdmin({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
@@ -51,9 +50,11 @@ const EditStudentPage = ({ params }: any) => {
         Error_model_hook(res?.message);
       } else {
         Success_model("successfully updated data");
+        setIsReset(true)
       }
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (isLoading || updateLoading) {
@@ -63,21 +64,21 @@ const EditStudentPage = ({ params }: any) => {
     console.log(error);
   }
 
-  console.log(studentData);
+  console.log(AdminData);
 
   const defaultValues = {
     name: {
-      firstName: studentData?.name.firstName || "",
-      lastName: studentData?.name.lastName || "",
-      middleName: studentData?.middleName || "",
+      firstName: AdminData?.name.firstName || "",
+      lastName: AdminData?.name.lastName || "",
+      middleName: AdminData?.middleName || "",
     },
-    gender: studentData?.gender || "",
-    // dateOfBirth: studentData?.dateOfBirth || "",
-    email: studentData?.email || "",
-    phoneNumber: studentData?.phoneNumber || "",
-    bloodGroup: studentData?.bloodGroup || "", // Optional blood group
-    address: studentData?.address || "",
-    img: studentData?.img || "",
+    gender: AdminData?.gender || "",
+    // dateOfBirth: AdminData?.dateOfBirth || "",
+    email: AdminData?.email || "",
+    phoneNumber: AdminData?.phoneNumber || "",
+    bloodGroup: AdminData?.bloodGroup || "", // Optional blood group
+    address: AdminData?.address || "",
+    img: AdminData?.img || "",
   };
 
   console.log(defaultValues);
@@ -87,7 +88,7 @@ const EditStudentPage = ({ params }: any) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form submitHandler={onSubmit} defaultValues={defaultValues} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -102,7 +103,7 @@ const EditStudentPage = ({ params }: any) => {
                 marginBottom: "10px",
               }}
             >
-              Student Information
+              Admin Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -163,7 +164,7 @@ const EditStudentPage = ({ params }: any) => {
                 }}
               >
                 <FormInput
-                  type="text"
+                   type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
@@ -193,7 +194,6 @@ const EditStudentPage = ({ params }: any) => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -304,7 +304,7 @@ const EditStudentPage = ({ params }: any) => {
   );
 };
 
-export default EditStudentPage;
+export default EditAdminPage;
 
 {
   /* <FormSelectField

@@ -63,6 +63,7 @@ const FormInput = ({
           type === "password" ? (
             <Input.Password
               disabled={disabled}
+              required={required}
               type={type}
               size={size}
               readOnly={readOnly}
@@ -71,7 +72,7 @@ const FormInput = ({
               value={value ? value : field.value}
             />
           ) : type === "number" ? (
-            <div className="flex flex-col">
+            <div className="">
               <h1 className="">
                 <LabelUi>
                   {label}{" "}
@@ -88,8 +89,8 @@ const FormInput = ({
                 </LabelUi>
               </h1>
               <InputNumber
-                // type={type}
-                style={{ width: "100%", marginRight: "2px" }}
+                type={type}
+                style={{ width: "100%",  }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}
@@ -97,6 +98,7 @@ const FormInput = ({
                 placeholder={placeholder}
                 {...field}
                 value={value ? value : field.value}
+                required={required}
               />
             </div>
           ) : (
@@ -105,6 +107,7 @@ const FormInput = ({
               disabled={disabled}
               type={type}
               size={size}
+  
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}

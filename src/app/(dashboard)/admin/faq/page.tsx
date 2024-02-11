@@ -26,11 +26,13 @@ import {
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
+
 import { USER_ROLE } from "@/constants/role";
+import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
+import { getUserInfo } from "@/services/auth.service";
 
 const FaqList = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as any
 
   const query: Record<string, any> = {};
   const [deleteFaq] = useDeleteFaqMutation();
@@ -69,7 +71,7 @@ const FaqList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteFaq(id).unwrap();
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
@@ -77,7 +79,7 @@ const FaqList = () => {
             Success_model("Service Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -120,26 +122,27 @@ const FaqList = () => {
     {
       title: "Action",
       dataIndex: "_id",
+      width: 130,
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/faq/details/${data}`}>
+            <Link href={`/${userInfo?.role}/faq/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/faq/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/faq/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button onClick={() => handleDelete(data)} type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -174,7 +177,7 @@ const FaqList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 
@@ -183,8 +186,8 @@ const FaqList = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "super_admin",
-            link: "/super_admin",
+            label: "userInfo?.role",
+            link: "/userInfo?.role",
           },
         ]}
       /> */}
@@ -198,13 +201,13 @@ const FaqList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/faq/create`}>
+          <Link href={`/${userInfo?.role}/faq/create`}>
             <Button type="primary">Create Faq</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

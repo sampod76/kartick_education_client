@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 
 import Link from "next/link";
@@ -7,6 +7,7 @@ import { USER_ROLE } from "@/constants/role";
 
 import { ProfileOutlined, UserOutlined } from "@ant-design/icons";
 import Logo from "../Logo";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const { Sider } = Layout;
 
@@ -17,14 +18,24 @@ const DashboardSidebar = ({
   collapsed: boolean;
   setCollapsed: any;
 }) => {
-  
+  const userInfo = getUserInfo() as any
+  const [selectedKey, setSelectedKey] = useState('1');
+
+  const handleMenuSelect = ({ key }: { key: string }) => {
+    setSelectedKey(key);
+  };
+  const clipPathStyle = {
+    clipPath: selectedKey === '1' ? 'polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%)' : 'none',
+    // background: "white"
+  };
+
   return (
     <Sider
       // collapsible
       className="bg-primar"
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
-      width={250}
+      width={300}
       style={{
         overflow: "auto",
         height: "110vh",
@@ -38,7 +49,7 @@ const DashboardSidebar = ({
         padding: "8px 0 0 0",
         marginRight: "10px",
         // width: "70vw",
-        background: "white",
+        // background: "white",
         // background:"",
         // overflow: "auto",
         // height: "100vh",
@@ -46,10 +57,13 @@ const DashboardSidebar = ({
         // left: 0,
         // top: 0,
         // bottom: 0,
+        // background: "#1D2327",
+        color: "white",
+
       }}
     >
       {/* {!collapsed ? (
-        <section className="ml-6 text-3xl mt-3 flex gap-2 items-center">
+        <div className="ml-6 text-3xl mt-3 flex gap-2 items-center">
           <UserOutlined className="text-2xl " />
           <Link
             href={`/admin/`}
@@ -57,7 +71,7 @@ const DashboardSidebar = ({
           >
             E.D.M
           </Link>
-        </section>
+        </div>
       ) : (
         <UserOutlined className="text-2xl ml-7 mt-3" />
       )} */}
@@ -70,10 +84,24 @@ const DashboardSidebar = ({
         defaultSelectedKeys={["1"]}
         style={{
           overflowY: "auto",
+          // background: "#1D2327",
+          // color: "white",
+          fontWeight: "500",
+          marginTop: "36px",
+          fontSize: "16px",
+          paddingInline:'10px',
+          
+          // ...clipPathStyle,
         }}
         mode="inline"
-        items={dashboardItems(USER_ROLE.ADMIN)}
+        theme="dark"
+        items={dashboardItems(userInfo?.role)}
+        onSelect={handleMenuSelect}
+      // items={dashboardItems(USER_ROLE.SELLER)}
       />
+      <div style={{ ...clipPathStyle }}>
+      
+      </div>
     </Sider>
   );
 };

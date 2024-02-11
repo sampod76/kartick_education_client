@@ -45,7 +45,7 @@ const ServiceDetiles = ({ params }: any) => {
     <>
       <div className="container mx-auto mt-10">
         <div className="w-full rounded overflow-hidden shadow-lg">
-          <section className="grid  grid-cols-1 xl:grid-cols-2">
+          <div className="grid  grid-cols-1 xl:grid-cols-2">
             <div>
               <Image
                 width={800}
@@ -83,7 +83,7 @@ const ServiceDetiles = ({ params }: any) => {
                 </span>
               </div>
             </div>
-          </section>
+          </div>
         </div>
         <h1 className="text-center p-2 text-xl border-2 rounded-lg">User rating</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2">

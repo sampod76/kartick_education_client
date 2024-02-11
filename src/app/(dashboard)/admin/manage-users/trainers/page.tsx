@@ -28,11 +28,15 @@ import {
   useDeleteStudentMutation,
   useGetAllStudentsQuery,
 } from "@/redux/api/adminApi/studentApi";
+import ModalComponent from "@/components/Modal/ModalComponents";
+import CreateTrainer from "@/components/registionfrom/trainer";
+import { useDeleteTrainerMutation, useGetAllTrainersQuery } from "@/redux/api/adminApi/trainerApi";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const TrainerListPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as IDecodedInfo
   const query: Record<string, any> = {};
-  const [deleteStudent] = useDeleteStudentMutation();
+  const [deleteTrainer, { isLoading: trainerDeleteLoading }] = useDeleteTrainerMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -46,24 +50,24 @@ const TrainerListPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  query["status"] = "active";
+  // query["status"] = "active";
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
   });
-  console.log(query, "query");
+
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllStudentsQuery({
+  const { data = [], isLoading } = useGetAllTrainersQuery({
     ...query,
   });
 
   //@ts-ignore
-  const StudentData = data?.data;
+  const TrainerData = data?.data;
+  console.log("🚀 ~ file: page.tsx:68 ~ TrainerListPage ~ TrainerData:", TrainerData)
 
-  console.log(StudentData, "student data");
 
   //@ts-ignore
   const meta = data?.meta;
@@ -109,15 +113,16 @@ const TrainerListPage = () => {
     {
       title: "Action",
       dataIndex: "_id",
+      width: 130,
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/manage-users/trainers/details/${data}`}>
+            <Link href={`/${userInfo?.role}/manage-users/trainers/details/${data}`}>
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/manage-users/students/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/manage-users/trainers/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -163,8 +168,8 @@ const TrainerListPage = () => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          const res = await deleteStudent(id).unwrap();
-          if (res.success == false) {
+          const res = await deleteTrainer(id).unwrap();
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
@@ -172,7 +177,7 @@ const TrainerListPage = () => {
             Success_model("Student Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -200,9 +205,9 @@ const TrainerListPage = () => {
           }}
         />
         <div>
-          <Link href={`/admin/manage-users/students/create`}>
-            <Button type="default">Create Student</Button>
-          </Link>
+          <ModalComponent buttonText="Create trainer">
+            <CreateTrainer />
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
@@ -218,7 +223,7 @@ const TrainerListPage = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={StudentData}
+        dataSource={TrainerData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

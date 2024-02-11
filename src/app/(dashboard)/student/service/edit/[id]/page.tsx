@@ -11,6 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
@@ -29,6 +30,7 @@ const EditServicePage = ({ params }: any) => {
     useUpdateServiceMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     const UpdateValues = {
       ...values,
       availableTickets: Number(values?.availableTickets || 0),
@@ -46,7 +48,8 @@ const EditServicePage = ({ params }: any) => {
         Success_model("successfully updated data");
       }
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (isLoading || updateLoading) {
@@ -282,7 +285,7 @@ const EditServicePage = ({ params }: any) => {
               alignItems: "center",
             }}
           >
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit"   type="default">
               Update
             </Button>
           </div>

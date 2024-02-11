@@ -31,19 +31,17 @@ const SideBarHome = () => {
       </Space>
       <Drawer
         // title="Drawer with extra actions"
-        placement={"left"}
-        width={320}
+        placement={"right"}
+        width={300}
         onClose={onClose}
         open={open}
         extra={
-          <Space>
-            <Button className="bg-secondary border-none " onClick={onClose}>
-              <Logo />
-            </Button>
-          </Space>
+          <div className="" onClick={onClose}>
+            <Logo />
+          </div>
         }
       >
-        <MenuUI itemData={homeSIdeItems(onClose)} />
+        <MenuUI itemData={homeSIdeItems()} setOpen={setOpen} />
       </Drawer>
     </>
   );

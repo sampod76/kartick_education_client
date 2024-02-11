@@ -11,14 +11,23 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: loginData,
       }),
-      invalidatesTags:[tagTypes.student]
+      invalidatesTags: [tagTypes.LoginHistory],
+    }),
+    userLogOut: build.mutation({
+      query: ({ id, data }) => ({
+        url: `${AUTH_URL}/log-out-history/${id}`,
+        method: "POST",
+        data: {},
+        withCredentials: true,
+      }),
+      invalidatesTags: [tagTypes.LoginHistory],
     }),
     getProfile: build.query({
       query: () => ({
-        url: `/users/profile`,
+        url: `${AUTH_URL}/profile`,
         method: "GET",
       }),
-      providesTags: [tagTypes.student],
+      providesTags: [tagTypes.profile],
     }),
     updateRole: build.mutation({
       query: (data) => ({
@@ -26,13 +35,24 @@ export const authApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data.body,
       }),
-      invalidatesTags: [tagTypes.student],
+      invalidatesTags: [tagTypes.profile],
+    }),
+    forgetPassword: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/forgot-password`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.profile],
     }),
   }),
+  overrideExisting: true
 });
 
 export const {
   useUserLoginMutation,
   useGetProfileQuery,
   useUpdateRoleMutation,
+  useForgetPasswordMutation,
+  useUserLogOutMutation,
 } = authApi;

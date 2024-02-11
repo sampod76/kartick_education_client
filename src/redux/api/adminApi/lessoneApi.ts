@@ -16,9 +16,6 @@ export const lessonApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-
-        // console.log(response);
-
         return {
           data: response,
           meta,
@@ -30,8 +27,6 @@ export const lessonApi = baseApi.injectEndpoints({
     getSingleLesson: build.query({
       query: (id: string | string[] | undefined) => {
 
-        // console.log(id);
-
         return {
           url: `${LESSON_URL}/${id}`,
           method: "GET",
@@ -42,15 +37,14 @@ export const lessonApi = baseApi.injectEndpoints({
     // create a new academic department
     addLesson: build.mutation({
       query: (data) => {
-        // 
-
+ 
         return {
           url: LESSON_URL,
           method: "POST",
           data,
         };
       },
-      invalidatesTags: [tagTypes.lesson],
+      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
     }),
     // update ac department
     updateLesson: build.mutation({
@@ -62,7 +56,7 @@ export const lessonApi = baseApi.injectEndpoints({
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.lesson],
+      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
     }),
 
     // delete ac department
@@ -71,7 +65,7 @@ export const lessonApi = baseApi.injectEndpoints({
         url: `${LESSON_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.lesson],
+      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
     }),
   }),
 });

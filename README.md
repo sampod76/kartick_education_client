@@ -79,11 +79,61 @@ password : 11223344
 1. category in courses list in dashboard;
 2. course action with add new milestone .
 3. details course with skelton in dashboard.
-4. 
-
+4.
 
 ### 3 January
 
 1. registration from for student
 2. update in dashboard
+3.
+
+## 9 January
+
+1. Answer input fixed
+2. collapse of lesson
+3. dashboard of role based
+4.
+
+### 11 January
+
+1. fixed dashboard seller course
+2. create seller dashboard items
+3. fixed course statistics responsive
+4. create ICourse and IUser
+5. logo size fixed in navbar
+6. fixed learning course MilestoneList
+7. fixed dashboard statistics
+
+### 13 January
+
+1. solved multiple Image in create answer
+2. fixed list item black boll
+3. time_duration fixed in update
+4. collapse quiz in lesson (discusss)
+5. !!!!!!!! Quiz Test data is not find (discuss)
+6. Package select and card designed . but should be dynamic
+7. Topbar Social icon updated
+
+
+# Bug fixing
+
+1. solved default active all in courseTab
+2. solved banner modal and active button
+3. lessonList quiz nested
+4. added ok button in quiz result
+5. solved back to module
+6. solved ok button
+7. TextEditor toggle
+8. 
+
+
+# drag
+1. target background image (1 string in array)
+2. Answer: uploaded
+ans
+
+# Home UI Updates:
+
+1. fixed common course margin and text responsive
+2. bottom join Now course buttons
 3. 

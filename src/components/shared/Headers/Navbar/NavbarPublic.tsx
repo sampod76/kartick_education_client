@@ -1,47 +1,93 @@
 "use client";
-import { Menu } from "antd";
+import { Button, Menu } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import Logo from "../../Logo";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBarHome from "./SideBarHome";
 import { homeNavItems } from "@/constants/homeNabItems";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
+import Link from "next/link";
+import { ShoppingCartOutlined } from "@ant-design/icons"
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { toggleCartModal } from "@/redux/features/cartSlice";
 
 const NavbarPublic = () => {
   // const screens = useBreakpoint();
+  // const userInfo = getUserInfo() as IDecodedInfo
+  const [userInfoLoading, setUserInfoLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState<Partial<IDecodedInfo>>({
+    email: "",
+    id: "",
+    role: undefined,
+  });
+
+  useEffect(() => {
+    // Fetch user info asynchronously on the client side
+    const fetchUserInfo = async () => {
+      const userInfo = (await getUserInfo()) as any;
+      setUserInfo(userInfo);
+    };
+    fetchUserInfo();
+    setUserInfoLoading(false);
+  }, []);
+
+  const dispatch = useAppDispatch()
+  const { cartModal } = useAppSelector(state => state.cart)
 
   return (
-    <nav
-      className=" bg-white shadow-xl text-black py-[1em] px-[2em] 
-    flex align-center justify-between  gap-2 "
-    >
-      <Logo />
+    <div className="bg-transparent backdrop-blur  block lg:flex  items-center justify-between">
+      <nav
+        className=" text-black py-[3px] md:pt-[0.9em] px-[1em] 
+    flex align-center justify-between gap-[5rem] "
+      >
+        <Logo />
+        {/* {userInfo?.role &&
+          <button onClick={() => dispatch(toggleCartModal(true))}>Your Cart <ShoppingCartOutlined /> </button>
+        } */}
+        <Menu
+          mode="horizontal"
+          className="hidden lg:flex"
+          style={{
+            // color:"#5371FF"
+            fontWeight: "700",
+            fontSize: "15px",
+            fontFamily: "fantasy",
+            // backdropBlur:"blur(8px)"
+            // display:`${screens.sm ? "flex":"none"}`
+            background: "none",
+            backdropFilter: "blur(8px)",
+            boxShadow: "none",
+          }}
+          disabledOverflow
+          // items={sidebarItems("homeNav")}
+          items={homeNavItems}
+        />
 
-      <Menu
-        mode="horizontal"
-        className="hidden lg:flex"
-        style={{
-          // color:"#5371FF"
-          fontWeight: "700",
-          fontSize: "15px",
-          fontFamily: "fantasy",
-          // display:`${screens.sm ? "flex":"none"}`
-          background: "white",
-        }}
-        disabledOverflow
-        // items={sidebarItems("homeNav")}
-        items={homeNavItems}
-      />
-      <div
-        className="flex lg:hidden"
+
+        <div
+          className="flex lg:hidden"
         // style={{
         //   display: `${screens.sm ? "none" : "flex"}`,
         // }}
-      >
-        <SideBarHome></SideBarHome>
+        >
+          <SideBarHome></SideBarHome>
+        </div>
+      </nav>
+
+      <div className="hidden lg:flex mr-2">
+        <Link
+          href="/subscription"
+          className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-primary group px-8 py-3 bg-white rounded"
+        >
+          <span className="relative z-10 text-primary group-hover:text-white text-xl duration-500">
+            Membership
+          </span>
+          <span className="absolute w-full h-full bg-primary -left-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
+          <span className="absolute w-full h-full bg-primary -right-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+        </Link>
       </div>
-      {/* <UserAvatarUI /> */}
-    </nav>
+    </div>
   );
 };
 

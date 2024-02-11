@@ -8,7 +8,7 @@ export const generalUserApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addGeneralUserWithFormData: build.mutation({
       query: (data) => ({
-        url: "/user/create-general-user",
+        url: "/users/create-general-user",
         method: "POST",
         data,
         // contentType: "multipart/form-data",

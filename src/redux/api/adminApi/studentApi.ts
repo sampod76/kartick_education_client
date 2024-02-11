@@ -10,7 +10,20 @@ export const studentApi = baseApi.injectEndpoints({
       query: (data) => {
         // 
         return {
-          url: "/user/create-student",
+          url: "/users/create-student",
+          method: "POST",
+          data: data,
+          // contentType: "multipart/form-data",
+          contentType: "application/json",
+        };
+      },
+      invalidatesTags: [tagTypes.student],
+    }),
+    addStudentWithAuthorData: build.mutation({
+      query: (data) => {
+        // 
+        return {
+          url: "/users/create-student-author",
           method: "POST",
           data: data,
           // contentType: "multipart/form-data",
@@ -73,4 +86,5 @@ export const {
   useAddStudentWithFormDataMutation,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
+  useAddStudentWithAuthorDataMutation
 } = studentApi;

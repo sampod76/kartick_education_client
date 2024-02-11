@@ -18,7 +18,7 @@ const Logo = () => {
         // borderRadius:"5px"
       }}
     >
-        <Image src={logoImage} height={120}  width={200}  alt="Logo"/>
+        <Image src={logoImage} height={120}  width={200} className="w-[160px] lg:w-[210px]  "  alt="Logo"/>
      
     </Link>
   );

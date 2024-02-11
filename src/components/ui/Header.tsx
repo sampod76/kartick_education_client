@@ -18,8 +18,8 @@ const Header = () => {
     {
       key: "0",
       label: (
-        <Button onClick={logOut} type="text" danger>
-          Logout
+        <Button onClick={logOut} style={{color:"white"}} type="default" danger>
+          <span className="text-white">Logout</span>
         </Button>
       ),
     },

@@ -23,6 +23,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const EditStudentPage = ({ params }: any) => {
   const { data: singleStudent, isLoading } = useGetSingleStudentQuery(
@@ -40,7 +41,7 @@ const EditStudentPage = ({ params }: any) => {
     const UpdateValues = {
       ...values,
     };
-    console.log(UpdateValues);
+    removeNullUndefinedAndFalsey(UpdateValues);
     try {
       const res = await updateStudent({
         id: params?.id,
@@ -53,7 +54,8 @@ const EditStudentPage = ({ params }: any) => {
         Success_model("successfully updated data");
       }
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (isLoading || updateLoading) {
@@ -163,7 +165,7 @@ const EditStudentPage = ({ params }: any) => {
                 }}
               >
                 <FormInput
-                  type="text"
+                   type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"

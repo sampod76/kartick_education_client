@@ -1,32 +1,33 @@
 "use client";
 
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
+
 import FormInput from "@/components/Forms/FormInput";
-import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
-import FormSelectField from "@/components/Forms/FormSelectField";
+
 import FormTextArea from "@/components/Forms/FormTextArea";
-import FormTimePicker from "@/components/Forms/FormTimePicker";
-import UploadImage from "@/components/ui/UploadImage";
-import { useAddBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
+import { ENUM_STATUS } from "@/constants/globalEnums";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+
 import { useAddFaqMutation } from "@/redux/api/faqApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
+
 import { Button, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 
 const CreateFaq = () => {
   const [addFaq, { isLoading: blogLoading }] = useAddFaqMutation();
+  const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
-    console.log(values);
+    removeNullUndefinedAndFalsey(values);
 
     try {
       const res = await addFaq(values).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
+        setIsReset(true);
       }
       console.log(res);
     } catch (error: any) {
@@ -44,7 +45,11 @@ const CreateFaq = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}>
+        <Form
+          submitHandler={onSubmit}
+          isReset={isReset}
+          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -80,13 +85,8 @@ const CreateFaq = () => {
                 />
               </Col>
 
-
               <Col span={24} style={{ margin: "10px 0" }}>
-                <FormTextArea
-                  name="content"
-                  label="Faq content"
-                  rows={10}
-                />
+                <FormTextArea name="content" label="Faq content" rows={10} />
               </Col>
 
               {/* <Col span={12} style={{ margin: "10px 0" }}>
@@ -95,7 +95,7 @@ const CreateFaq = () => {
             </Row>
           </div>
 
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" type="default">
             Create
           </Button>
         </Form>

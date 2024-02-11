@@ -7,22 +7,18 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import {
-  bloodGroupOptions,
-  genderOptions,
-  roleOptions,
-} from "@/constants/global";
+import { genderOptions, roleOptions } from "@/constants/global";
 import { USER_ROLE } from "@/constants/role";
 import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
-import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/seller";
+import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/sellerApi";
 import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
-import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
-import ButtonLoading from "../Utlis/ButtonLoading";
+import ButtonLoading from "../ui/Loading/ButtonLoading";
+import { useState } from "react";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const UserCreateComponent = ({
   role = { label: "Please select role", value: "" },
@@ -32,6 +28,7 @@ const UserCreateComponent = ({
     value: string;
   };
 }) => {
+  const [isReset, setIsReset] = useState(false);
   const [addAdminUserWithFormData, { isLoading: AdminLoading }] =
     useAddAdminWithFormDataMutation();
   const [addStudentUserWithFormData, { isLoading: StudentLoading }] =
@@ -40,6 +37,7 @@ const UserCreateComponent = ({
     useAddSellerWithFormDataMutation();
 
   const onSubmit = async (values: any) => {
+    removeNullUndefinedAndFalsey(values);
     try {
       let res;
       if (role.value === USER_ROLE.ADMIN) {
@@ -63,7 +61,7 @@ const UserCreateComponent = ({
           password: password,
           [USER_ROLE.SELLER]: { ...allValue },
         };
-        res = await addSellerUserWithFormData({ ...allValue }).unwrap();
+        res = await addSellerUserWithFormData({ ...modifyValue }).unwrap();
       } else if (role.value === USER_ROLE.TRAINER) {
         const { password, ...allValue } = values;
         const modifyValue = {
@@ -81,11 +79,13 @@ const UserCreateComponent = ({
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Customar created successfully");
+        Success_model("User created successfully");
+        setIsReset(true);
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data);
     }
   };
   // if (AdminLoading || StudentLoading || SellerLoading) {
@@ -105,7 +105,7 @@ const UserCreateComponent = ({
     >
       {/* resolver={yupResolver(adminSchema)} */}
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -277,7 +277,7 @@ const UserCreateComponent = ({
                 }}
               >
                 <FormInput
-                  type="text"
+                  type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
@@ -319,13 +319,15 @@ const UserCreateComponent = ({
               </Col>
             </Row>
           </div>
-          {AdminLoading || StudentLoading || SellerLoading ? (
-            <ButtonLoading />
-          ) : (
-            <Button htmlType="submit" type="default">
-              Create
-            </Button>
-          )}
+          <div>
+            {AdminLoading || StudentLoading || SellerLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button htmlType="submit" type="default">
+                Create
+              </Button>
+            )}
+          </div>
         </Form>
       </div>
     </div>

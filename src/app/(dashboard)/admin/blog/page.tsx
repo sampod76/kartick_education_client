@@ -10,7 +10,7 @@ import {
   ReloadOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 
@@ -27,10 +27,26 @@ import {
   confirm_modal,
 } from "@/utils/modalHook";
 import { useDeleteBlogMutation, useGetAllBlogQuery } from "@/redux/api/blogApi";
-import { USER_ROLE } from "@/constants/role";
+
+import { ENUM_STATUS } from "@/constants/globalEnums";
+import { getUserInfo } from "@/services/auth.service";
 
 const BlogList = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const [userInfo, setUserInfo] = useState<any>({
+    loading: false,
+    data: { email: "", id: "", role: "" },
+  });
+
+  useEffect(() => {
+    setUserInfo({ loading: true })
+    // Fetch user info asynchronously on the client side
+    const fetchUserInfo = async () => {
+      const userInfo = (await getUserInfo()) as any;
+      setUserInfo((c: any) => ({ ...c, ...userInfo }));
+    };
+    fetchUserInfo();
+    setUserInfo({ loading: false })
+  }, []);
   const query: Record<string, any> = {};
   const [deleteBlog] = useDeleteBlogMutation();
 
@@ -46,6 +62,7 @@ const BlogList = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["status"] = ENUM_STATUS.ACTIVE;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -68,7 +85,9 @@ const BlogList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteBlog(id).unwrap();
-          if (res.success == false) {
+
+
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
@@ -76,7 +95,7 @@ const BlogList = () => {
             Success_model("Service Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -114,26 +133,27 @@ const BlogList = () => {
     {
       title: "Action",
       dataIndex: "_id",
+      width: 130,
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/blog/details/${data}`}>
+            <Link href={`/${userInfo?.data?.role}/blog/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/blog/edit/${data}`}>
+            <Link href={`/${userInfo?.data?.role}/blog/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button onClick={() => handleDelete(data)} type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -168,7 +188,7 @@ const BlogList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 
@@ -177,8 +197,8 @@ const BlogList = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${SUPER_ADMIN}",
-            link: "/${SUPER_ADMIN}",
+            label: "${userInfo?.data?.role}",
+            link: "/${userInfo?.data?.role}",
           },
         ]}
       /> */}
@@ -192,13 +212,13 @@ const BlogList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/blog/create`}>
+          <Link href={`/${userInfo?.data?.role}/blog/create`}>
             <Button type="primary">Create blog</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

@@ -20,20 +20,26 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, Space, Spin, message } from "antd";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const Registration = () => {
   const [addGeneralUserWithFormData, { isLoading }] =
     useAddGeneralUserWithFormDataMutation();
   const [userLogin, { isLoading: userLoginLoading }] = useUserLoginMutation();
   const router = useRouter();
+  const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
     console.log(values);
+    removeNullUndefinedAndFalsey(values);
     try {
       const res = await addGeneralUserWithFormData({ ...values }).unwrap();
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Registration  successfully");
+
+        setIsReset(true)
 
         const res = await userLogin({
           email: values?.email,
@@ -50,7 +56,8 @@ const Registration = () => {
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   // if (isLoading || userLoginLoading) {
@@ -63,7 +70,7 @@ const Registration = () => {
 
       {/* resolver={yupResolver(adminSchema)} */}
       <div className="container mx-auto p-5">
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -194,7 +201,7 @@ const Registration = () => {
                 }}
               >
                 <FormInput
-                  type="text"
+                   type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
@@ -237,7 +244,7 @@ const Registration = () => {
             {isLoading || userLoginLoading ? (
               <Spin tip="Loading data..........."></Spin>
             ) : (
-              <Button size="large" htmlType="submit" type="primary">
+              <Button size="large" htmlType="submit"   type="default">
                 Create
               </Button>
             )}

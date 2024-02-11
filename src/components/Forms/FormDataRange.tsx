@@ -11,7 +11,8 @@ type FormDataRangeProps = {
   index?: number;
 };
 export default function FormDataRange({ name, label }: FormDataRangeProps) {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, } = useFormContext();
+
   return (
     <>
       {/* {label ? label : null} */}
@@ -20,12 +21,13 @@ export default function FormDataRange({ name, label }: FormDataRangeProps) {
         control={control}
         render={({ field }) => (
           <div className="flex flex-col items-start">
-            <h1>{label ? <LabelUi>{label}</LabelUi> : null}</h1>
+            <h1 className="text-base font-normal">{label ? <LabelUi>{label}</LabelUi> : null}</h1>
             <DatePicker.RangePicker
               size="large"
               onChange={(el, value) => {
                 setValue(name, value);
               }}
+    
               style={{ width: "100%" }}
             />
             {/* <TimePicker

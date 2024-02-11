@@ -28,9 +28,11 @@ import {
 } from "@/utils/modalHook";
 import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const ServiceList = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  // const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as IDecodedInfo;
   const query: Record<string, any> = {};
   const [deleteService] = useDeleteServiceMutation();
 
@@ -68,7 +70,7 @@ const ServiceList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteService(id).unwrap();
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
@@ -76,7 +78,7 @@ const ServiceList = () => {
             Success_model("Service Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -132,23 +134,23 @@ const ServiceList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/service/details/${data}`}>
+            <Link href={`/${userInfo?.role}/service/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/service/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/service/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
                 }}
                 onClick={() => console.log(data)}
-                type="primary"
+                  type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button onClick={() => handleDelete(data)}   type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -183,7 +185,7 @@ const ServiceList = () => {
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error.message);
+      Error_model_hook(error.message);
     }
   };
 
@@ -196,8 +198,8 @@ const ServiceList = () => {
       {/* <UMBreadCrumb
         items={[
           {
-            label: "${SUPER_ADMIN}",
-            link: "/${SUPER_ADMIN}",
+            label: "${userInfo?.role}",
+            link: "/${userInfo?.role}",
           },
         ]}
       /> */}
@@ -211,13 +213,13 @@ const ServiceList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/service/create`}>
+          <Link href={`/${userInfo?.role}/service/create`}>
             <Button type="primary">Create service</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-              type="primary"
+                type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

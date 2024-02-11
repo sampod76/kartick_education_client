@@ -9,6 +9,7 @@ export type ResponseSuccessType = {
   message?: string;
   data: any;
   meta?: IMeta;
+  statusCode?:string;
 };
 
 export type IGenericErrorResponse = {
@@ -31,4 +32,5 @@ export type ICategory = {
 export type IBookingStatusType = 'pending' | 'accept' | 'reject' | 'complete';
 
 export type ICategoryStatus = 'active' | 'deactivate' | 'disabled' | 'block'|"save";
+export type IPriceTypes = "free" | "paid" | "closed" | "recurring"
 

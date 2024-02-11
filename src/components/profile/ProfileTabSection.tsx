@@ -3,42 +3,34 @@ import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import ProfileAboutSection from "./ProfileAboutSection";
 import Courses from "../Home/coureses/Courses";
+import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
+import UserPurchased from "../package/SellerPurchased";
 
-export default function ProfileTabSection() {
+// File: types.ts
+export interface Tab {
+  key: string;
+  label: string;
+  children: React.ReactNode;
+}
+
+export default function ProfileTabSection({
+  items = [] // Provide a default value for 'items' to avoid 'undefined'
+}: {
+  items?: Tab[];
+}) {
   const onChange = (key: string) => {
     console.log(key);
-  };
+  }
 
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "About",
-      children: <ProfileAboutSection />,
-    },
-    {
-      key: "2",
-      label: "Courses",
-      children: <Courses query={{}} />,
-    },
-    {
-      key: "3",
-      label: "Purchased",
-      children: "Content of  Purchased",
-    },
-    {
-      key: "4",
-      label: "Discussion",
-      children: "Content of Discussion",
-    },
-    {
-      key: "5",
-      label: "Subscription",
-      children: "Content of Subscription",
-    },
-  ]
   return (
-    <div>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    <div className="w-full mx-auto mt-5">
+         <Tabs defaultActiveKey="1" onChange={onChange}>
+        {items?.map((item, index) => (
+          <Tabs.TabPane key={item.key} tab={item.label}>
+            {item.children}
+          </Tabs.TabPane>
+        ))}
+      </Tabs>
     </div>
   );
 }

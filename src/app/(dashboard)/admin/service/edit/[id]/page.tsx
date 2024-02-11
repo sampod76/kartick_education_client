@@ -11,6 +11,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
@@ -35,6 +36,7 @@ const EditServicePage = ({ params }: any) => {
       availableTickets: Number(values?.availableTickets || 0),
       price: Number(values?.price || 0),
     };
+    removeNullUndefinedAndFalsey(UpdateValues);
     try {
       const res = await updateService({
         id: params?.id,
@@ -47,7 +49,8 @@ const EditServicePage = ({ params }: any) => {
         Success_model("successfully updated data");
       }
     } catch (err: any) {
-      console.error(err.message);
+      console.error(err);
+      Error_model_hook(err?.message || err?.data)
     }
   };
   if (isLoading || updateLoading) {
@@ -109,7 +112,7 @@ const EditServicePage = ({ params }: any) => {
                   name="title"
                   size="large"
                   label="Service Name"
-                  required={true}
+                        
                 />
               </Col>
               <div>
@@ -128,14 +131,14 @@ const EditServicePage = ({ params }: any) => {
                       name="price"
                       size="large"
                       label="Per Ticket Price"
-                      required={true}
+                            
                     />
                     <FormInput
                       type="number"
                       name="availableTickets"
                       size="large"
                       label="Available Tickets/sit"
-                      required={true}
+                            
                     />
                   </div>
                 </Col>
@@ -163,7 +166,7 @@ const EditServicePage = ({ params }: any) => {
                   name="contact"
                   size="large"
                   label="Bus Driver Number"
-                  required={true}
+                        
                 />
               </Col>
               <Col
@@ -210,7 +213,7 @@ const EditServicePage = ({ params }: any) => {
                     <FormSelectField
                       name="category"
                       label="Select Category"
-                      required={true}
+                            
                       options={
                         //@ts-ignore
                         categoryData?.data?.map((e) => ({
@@ -231,7 +234,7 @@ const EditServicePage = ({ params }: any) => {
                     <FormSelectField
                       name="status"
                       label="Select status"
-                      required={true}
+                            
                       options={[
                         {
                           value: "available",
@@ -290,7 +293,7 @@ const EditServicePage = ({ params }: any) => {
               alignItems: "center",
             }}
           >
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit"   type="default">
               Update
             </Button>
           </div>

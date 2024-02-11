@@ -1,3 +1,4 @@
+import { USER_ROLE } from "@/constants/role";
 import { authKey } from "@/constants/storageKey";
 import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
 import { getBaseUrl } from "@/helpers/config/envConfig";
@@ -8,14 +9,23 @@ export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {
   return setToLocalStorage(authKey, accessToken as string);
 };
 
-export const getUserInfo = () => {
+export interface IDecodedInfo {
+  id: string;
+  role: USER_ROLE | string;
+  email: string;
+  e?:string
+}
+
+export const getUserInfo = (): IDecodedInfo | {e:""} => {
   const authToken = getFromLocalStorage(authKey);
+  // console.log(authToken)
 
   if (authToken) {
-    const decodedData = decodedToken(authToken);
+    const decodedData = decodedToken(authToken) as IDecodedInfo;
+    // console.log(decodedData)
     return decodedData;
   } else {
-    return "";
+    return {e:''};
   }
 };
 

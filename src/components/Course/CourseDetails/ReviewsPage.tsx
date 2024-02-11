@@ -33,25 +33,9 @@ const ReviewsPage = () => {
           width: `${sm ? "40%" : "100%"}`,
         }}
       >
-        <h2 style={{ color: "#333333", fontSize: "20px", fontWeight: "600" }}>
-          Student Feedback
-        </h2>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "3px",
-            background: "#F7F7F7",
-            padding: "8px 14px",
-          }}
-        >
-          <h4 style={{ fontSize: "16px", color: "#333333" }}>4.6</h4>
-          <Rate defaultValue={5.5} value={5.5} allowHalf disabled />
-          <h4 style={{ fontWeight: "550" }}>Course Rating</h4>
-        </div>
-
-        {/* feedback  */}
+    
         <FeedbackSection></FeedbackSection>
+
       </div>
 
       {/* user reviews section */}

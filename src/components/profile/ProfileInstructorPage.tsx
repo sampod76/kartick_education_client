@@ -1,20 +1,11 @@
-import Image from "next/image";
-import {
-  GithubFilled,
-  TwitterSquareFilled,
-  FacebookFilled,
-  LinkedinFilled,
-  InstagramFilled,
-} from "@ant-design/icons";
-import Link from "next/link";
-
 import React from "react";
-import ImageTag from "../ui/CustomTag/ImageTag";
-import TopProfileSection from "./TopProfileSection";
+
+import TopProfileSection, { IProfileDetailsTop } from "./TopProfileSection";
 import ProfileMainSection from "./ProfileTabSection";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const ProfileInstructorPage = ({ userData }: { userData: any }) => {
-  // console.log(userData);
+  const userInfo = getUserInfo() as IDecodedInfo;
   const img = userData?.img || userData[userData.role]["img"];
   // console.log(img);
   const gender = userData?.gender || userData[userData.role]["gender"];
@@ -26,9 +17,25 @@ const ProfileInstructorPage = ({ userData }: { userData: any }) => {
   const lastName =
     userData?.name?.lastName || userData[userData.role]["name"].lastName;
 
+  const topDetailsData: IProfileDetailsTop = {
+    headings: firstName + lastName,
+    sub_headings: userData?.role,
+    total_student: 201,
+    total_course: 5,
+    total_review: 8,
+    total_subscription: 10,
+    img: img,
+    facebook: "",
+    twitter: "",
+    linkedin: "",
+    instagram: "",
+    edit_link: `/${userInfo?.role}/manage-users/all-users/edit/${userData?._id}`,
+    detail_link: `/${userInfo?.role}/manage-users/all-users/details/${userData?._id}`,
+  };
+
   return (
     <div className="">
-      <TopProfileSection userData={userData} />
+      <TopProfileSection topDetails={topDetailsData} />
       <ProfileMainSection />
     </div>
   );

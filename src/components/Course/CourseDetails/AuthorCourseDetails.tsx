@@ -16,9 +16,13 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
   // console.log(authImg);
   // const role = authorData?.role;
   let img = "";
+  let fullName = ""
+
   if (authorData?.role) {
     img = authorData[authorData?.role]["img"];
+    fullName = `${authorData[authorData?.role]["name"]?.firstName} ${authorData[authorData?.role]["name"]?.lastName}`
   }
+
 
   return (
     <div
@@ -30,7 +34,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
         padding: "18px 16px",
       }}
     >
-      <section
+      <div
         style={{
           display: "flex",
 
@@ -48,7 +52,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
         />
         <div style={{}}>
           <h1 style={{ fontSize: "18px", fontWeight: "600" }}>
-            Sampod Debnath Nath
+            {fullName}
           </h1>
           <button
             style={{
@@ -64,9 +68,9 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
             Subscribe
           </button>
         </div>
-      </section>
+      </div>
 
-      <section
+      <div
         style={{ display: "flex", alignItems: "center", gap: "8px" }}
         className="mt-5 lg:mt-0"
       >
@@ -79,7 +83,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         >
           <EyeOutlined />
-          <h1>1453</h1>
+          <h1 className="text-base font-normal">1453</h1>
         </button>
         <button
           style={{
@@ -90,7 +94,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         >
           <LikeOutlined />
-          <h1>1453</h1>
+          <h1 className="text-base font-normal">1453</h1>
         </button>
         <button
           style={{
@@ -101,7 +105,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         >
           <DislikeOutlined />
-          <h1>1453</h1>
+          <h1 className="text-base font-normal">1453</h1>
         </button>
         <button
           style={{
@@ -112,9 +116,9 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         >
           <ShareAltOutlined />
-          <h1>1453</h1>
+          <h1 className="text-base font-normal">1453</h1>
         </button>
-      </section>
+      </div>
     </div>
   );
 };

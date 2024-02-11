@@ -7,14 +7,13 @@ import {
 import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
 import { Divider } from "antd";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 
 const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
   // console.log(milestoneId);
-
   const { data: milestoneData, isLoading: milestionLoading } =
-    useGetSingleMilestoneQuery(milestoneId);
+  useGetSingleMilestoneQuery(milestoneId);
   // console.log(milestoneData);
 
   const { data, isLoading } = useGetAllModuleQuery({
@@ -22,8 +21,9 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
     // lesson: "yes",
     status: "active",
   });
-
+  
   const modulesData = data?.data;
+
 
   return (
     <>
@@ -86,7 +86,7 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
                         >
                           {/* //! Modules List  */}
                           <div className="Ellipse14 w-3 h-3 bg-yellow-400 rounded-full"></div>
-                          <h1>{module?.title}</h1>
+                          <h1 className="text-base font-normal">{module?.title}</h1>
                         </Link>
                       );
                     })}

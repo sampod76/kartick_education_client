@@ -4,19 +4,44 @@ import React from "react";
 
 const FeedbackSection = () => {
   return (
-    <div>
+    <div className="">
+    <h2 style={{ color: "#333333", fontSize: "20px", fontWeight: "600" }}>
+          Student Feedback
+        </h2>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            background: "#F7F7F7",
+            padding: "8px 14px",
+            margin:"16px 0px",
+            justifyContent:"space-between"
+          }}
+        >
+          <h4 style={{ fontSize: "16px", color: "#333333" }}>4.6</h4>
+          <Rate defaultValue={5.5} value={5.5} allowHalf disabled  style={{width:""}}/>
+          <h4 style={{ fontWeight: "550" }}>Course Rating</h4>
+        </div>
+    
+    <div className="grid grid-cols-1 gap-2">
       {feedbackData?.map((item: IFeedback, index: number) => {
         return (
           <div
             key={index}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
+            // style={{
+            //   display: "flex",
+            //   alignItems: "center",
+            //   justifyContent: "space-between",
+            //   width: "100%",
+            // }}
+            className="block lg:flex items-center justify-between w-full shadow-sm p-2"
           >
-            <Progress strokeColor="red" percent={Number(item?.percent)} size={[300, 20]} />
+            <Progress
+              strokeColor="#5371FF"
+              percent={Number(item?.percent)}
+              size={['20vw', 20]}
+            />
             <Rate
               // defaultValue={item?.stars}
               value={item?.stars}
@@ -39,6 +64,7 @@ const FeedbackSection = () => {
           </div>
         );
       })}
+    </div>
     </div>
   );
 };

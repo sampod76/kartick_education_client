@@ -2,6 +2,7 @@ import { DatePicker, DatePickerProps, Input } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import dayjs, { Dayjs } from "dayjs";
 import LabelUi from "../ui/dashboardUI/LabelUi";
+import { USER_ROLE } from '../../constants/role';
 
 type UMDatePikerProps = {
   onChange?: (valOne: Dayjs | null, valTwo: string) => void;
@@ -10,7 +11,7 @@ type UMDatePikerProps = {
   value?: Dayjs;
   size?: "large" | "small";
   disablePrevious?: boolean;
-  required?: boolean;
+  required?: boolean ;
   specificDates?: string[];
 };
 

@@ -22,6 +22,7 @@ import { ENUM_BOOKING_STATUS } from "@/constants/globalEnums";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useDebounced } from "@/redux/hooks";
 import Search, { SearchProps } from "antd/es/input/Search";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const UpComingService = ({
   status,
@@ -61,6 +62,7 @@ const UpComingService = ({
 
   //
   const onSubmit = async (data: any) => {
+    removeNullUndefinedAndFalsey(data);
     try {
       //@ts-ignore
       const res = await addBooking({
@@ -70,7 +72,7 @@ const UpComingService = ({
         status: ENUM_BOOKING_STATUS.PENDING,
         totalBalance: Number(data.bookingTickets) * Number(bookMarkData?.price),
       }).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message + "");
       } else {
         setOpen(false);
@@ -104,7 +106,7 @@ const UpComingService = ({
         </h1>
         <div className="flex items-center gap-2">
           <div>
-            <h1>Search</h1>
+            <h1 className="text-base font-normal">Search</h1>
             <Search
               placeholder="input search text"
               onSearch={onSearch}
@@ -112,7 +114,7 @@ const UpComingService = ({
             />
           </div>
           <div>
-            <h1>Category</h1>
+            <h1 className="text-base font-normal">Category</h1>
             <Select
               placeholder={"Select category"}
               style={{ width: 120 }}
@@ -172,7 +174,7 @@ const UpComingService = ({
                       style={{ width: "100%" }}
                       //  className=" text-white p-1 mx-1 rounded-xl"
                     >
-                      <Button style={{ width: "100%" }} type="primary">
+                      <Button style={{ width: "100%" }}   type="default">
                         View
                       </Button>
                     </Link>
@@ -183,7 +185,7 @@ const UpComingService = ({
                         setBookMarkData(single);
                         showModal();
                       }}
-                      type="primary"
+                        type="default"
                     >
                       Booking +
                     </Button>
@@ -231,7 +233,7 @@ const UpComingService = ({
 
             <FormInput
               label="Phone Number (For contact)"
-              type="text"
+              type="number"
               name="phoneNumber"
               placeholder="Please provide your phone number"
             />
@@ -264,7 +266,7 @@ const UpComingService = ({
               placeholder="Please provide your phone number"
             />
             <div className="my-2 flex justify-center items-center">
-              <Button htmlType="submit" type="primary">
+              <Button htmlType="submit"   type="default">
                 Submit
               </Button>
             </div>

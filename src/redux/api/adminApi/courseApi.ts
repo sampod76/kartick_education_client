@@ -2,6 +2,7 @@
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "@/redux/tag-types";
+import { ICourseData } from "@/types/courseType";
 
 const COURSE_URL = "/course";
 
@@ -16,7 +17,7 @@ export const courseApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any[], meta: IMeta) => {
+      transformResponse: (response: ICourseData[], meta: IMeta) => {
         // console.log(response);
         return {
           data: response,
@@ -33,6 +34,13 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.course],
     }),
+    getSingleCourseModuleLessonQuizVideoSize: build.query({
+      query: (id: string | string[] | undefined) => ({
+        url: `${COURSE_URL}/course-modulesize-lessonsize-quizsize/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.course],
+    }),
     // create a new academic department
     addCourse: build.mutation({
       query: (data) => ({
@@ -40,7 +48,7 @@ export const courseApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
-      invalidatesTags: [tagTypes.course],
+      invalidatesTags: [tagTypes.course, tagTypes.categoryChildren],
     }),
     // update ac department
     updateCourse: build.mutation({
@@ -69,4 +77,5 @@ export const {
   useGetAllCourseQuery,
   useGetSingleCourseQuery,
   useUpdateCourseMutation,
+  useGetSingleCourseModuleLessonQuizVideoSizeQuery
 } = courseApi;

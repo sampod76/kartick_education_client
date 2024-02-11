@@ -14,11 +14,19 @@ export const axiosBaseQuery =
       params?: AxiosRequestConfig["params"];
       meta?: IMeta;
       contentType?: string;
+      withCredentials?: boolean;
     },
     unknown,
     unknown
   > =>
-  async ({ url, method, data, params, contentType }) => {
+  async ({
+    url,
+    method,
+    data,
+    params,
+    contentType,
+    withCredentials = true,
+  }) => {
     try {
       const result = await axiosInstance({
         url: baseUrl + url,
@@ -28,16 +36,26 @@ export const axiosBaseQuery =
         headers: {
           "Content-Type": contentType || "application/json",
         },
-        withCredentials: true,
+        withCredentials,
       });
       return result;
     } catch (axiosError) {
-      let err = axiosError as AxiosError;
+      let err = axiosError as AxiosError & {
+        statusCode: number;
+        message: string;
+        success: boolean;
+        errorMessages: Array<any>;
+      };
+
+      const error = {
+        status: err.response?.status || err?.statusCode || 400,
+        data: err.response?.data || err.message,
+        message: err.response?.data || err.message,
+        success: err?.success,
+        errorMessages: err?.errorMessages,
+      };
       return {
-        error: {
-          status: err.response?.status,
-          data: err.response?.data || err.message,
-        },
+        error: error,
       };
     }
   };

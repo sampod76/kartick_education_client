@@ -9,6 +9,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import FormTimePicker from "@/components/Forms/FormTimePicker";
 import UploadImage from "@/components/ui/UploadImage";
 import { NO_IMAGE } from "@/constants/filePatch";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import {
   useAddBlogMutation,
   useGetAllBlogQuery,
@@ -26,15 +27,18 @@ const EditFaq = ({params}:{params:any}) => {
   const {data={},isLoading}=useGetSingleBlogQuery(params.id,{
     skip:!Boolean(params.id)
   })
+
+  const [isReset, setIsReset] = useState(false);
   const [updateBlog, { isLoading: blogLoading }] = useUpdateBlogMutation();
   const onSubmit = async (values: any) => {
-
+    removeNullUndefinedAndFalsey(values);
     try {
       const res = await updateBlog({id:params.id,body:values}).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
+        setIsReset(true)
       }
       console.log(res);
     } catch (error: any) {
@@ -59,7 +63,7 @@ const EditFaq = ({params}:{params:any}) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form submitHandler={onSubmit} defaultValues={defaultValues} isReset={isReset}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -131,7 +135,7 @@ const EditFaq = ({params}:{params:any}) => {
             </Row>
           </div>
 
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit"   type="default">
             Update
           </Button>
         </Form>

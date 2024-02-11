@@ -30,9 +30,12 @@ import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
 } from "@/redux/api/adminApi/usersApi";
+import dynamic from "next/dynamic";
+import { getUserInfo } from "@/services/auth.service";
 
 const AdminPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  // const userInfo?.role = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as any
   const query: Record<string, any> = {};
   const [deleteUser] = useDeleteUserMutation();
 
@@ -94,11 +97,20 @@ const AdminPage = () => {
       title: "Name",
       ellipsis: true,
       render: function (data: any) {
-        const fullName =
-          data[data.role]["name"]["firstName"] +
-          " " +
-          data[data.role]["name"]["lastName"];
-        return <p className="capitalize">{fullName}</p>;
+        let fullName = "";
+        if (data?.role === USER_ROLE.ADMIN) {
+          fullName = data?.admin?.name?.firstName + " " + data?.admin?.name?.lastName;
+        } else if (data?.role === USER_ROLE.TRAINER) {
+          fullName =
+            data?.trainer?.name?.firstName + " " + data?.trainer?.name?.lastName;
+        } else if (data?.role === USER_ROLE.SELLER) {
+          fullName =
+            data?.seller?.name?.firstName + " " + data?.seller?.name?.lastName;
+        } else if (data?.role === USER_ROLE.STUDENT) {
+          fullName =
+            data?.student?.name?.firstName + " " + data?.student?.name?.lastName;
+        }
+        return <p className="">{fullName}</p>;
       },
     },
     {
@@ -126,7 +138,16 @@ const AdminPage = () => {
     {
       title: "Contact no.",
       render: function (data: any) {
-        const Contact = data[data.role]["phoneNumber"];
+        let Contact = "";
+        if (data?.role === USER_ROLE.ADMIN) {
+          Contact = data?.admin?.phoneNumber;
+        } else if (data?.role === USER_ROLE.TRAINER) {
+          Contact = data?.trainer?.phoneNumber;
+        } else if (data?.role === USER_ROLE.SELLER) {
+          Contact = data?.seller?.phoneNumber;
+        } else if (data?.role === USER_ROLE.STUDENT) {
+          Contact = data?.student?.phoneNumber;
+        }
         return <>{Contact}</>;
       },
     },
@@ -140,19 +161,20 @@ const AdminPage = () => {
     },
     {
       title: "Action",
+      width: 130,
       dataIndex: "_id",
       render: function (data: any) {
         // console.log(data);
         return (
           <>
             <Link
-              href={`/${SUPER_ADMIN}/manage-users/all-users/details/${data}`}
+              href={`/${userInfo?.role}/manage-users/all-users/details/${data}`}
             >
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${SUPER_ADMIN}/manage-users/all-users/edit/${data}`}>
+            <Link href={`/${userInfo?.role}/manage-users/all-users/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -165,7 +187,7 @@ const AdminPage = () => {
             </Link>
             <Button
               onClick={() => deleteUserHandler(data)}
-              type="primary"
+              type="default"
               danger
             >
               <DeleteOutlined />
@@ -199,7 +221,7 @@ const AdminPage = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteUser(id).unwrap();
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
@@ -207,7 +229,7 @@ const AdminPage = () => {
             Success_model("Customer Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -237,7 +259,7 @@ const AdminPage = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/manage-users/all-users/create`}>
+          <Link href={`/${userInfo.role}/manage-users/all-users/create`}>
             <Button type="primary">Create Customer</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -276,4 +298,11 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+// export default AdminPage;
+
+// export default AdminPage;
+
+export default dynamic(() =>
+  Promise.resolve(AdminPage), {
+  ssr: false,
+})

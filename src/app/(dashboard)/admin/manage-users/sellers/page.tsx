@@ -28,9 +28,11 @@ import {
   useDeleteStudentMutation,
   useGetAllStudentsQuery,
 } from "@/redux/api/adminApi/studentApi";
+import { getUserInfo } from "@/services/auth.service";
 
 const StudentPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  // const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const userInfo = getUserInfo() as any;
   const query: Record<string, any> = {};
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -109,15 +111,20 @@ const StudentPage = () => {
     {
       title: "Action",
       dataIndex: "_id",
+      width: 130,
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/manage-users/students/details/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/students/details/${data}`}
+            >
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/admin/manage-users/students/edit/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/students/edit/${data}`}
+            >
               <Button
                 style={{
                   margin: "0px 5px",
@@ -164,7 +171,7 @@ const StudentPage = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteStudent(id).unwrap();
-          if (res.success == false) {
+          if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
@@ -172,7 +179,7 @@ const StudentPage = () => {
             Success_model("Student Successfully Deleted");
           }
         } catch (error: any) {
-          message.error(error.message);
+          Error_model_hook(error.message);
         }
       }
     });
@@ -200,7 +207,7 @@ const StudentPage = () => {
           }}
         />
         <div>
-          <Link href={`/admin/manage-users/students/create`}>
+          <Link href={`/${userInfo?.role}/manage-users/students/create`}>
             <Button type="default">Create Student</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

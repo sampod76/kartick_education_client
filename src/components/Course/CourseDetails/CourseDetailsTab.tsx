@@ -2,11 +2,12 @@
 import Courses from "@/components/Home/coureses/Courses";
 import { Tabs, TabsProps } from "antd";
 import React, { useState } from "react";
-import MilestoneList from "../MilestoneList";
+import MilestoneList from "../MilestoneHomeList";
 import ReviewsPage from "./ReviewsPage";
 import CourseAbout from "./CourseAbout";
+import { ICourseData } from "@/types/courseType";
 
-const CourseDetailsTab = ({ courseId }: { courseId: string }) => {
+const CourseDetailsTab = ({ CourseData }: { CourseData: ICourseData }) => {
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
@@ -22,19 +23,24 @@ const CourseDetailsTab = ({ courseId }: { courseId: string }) => {
     {
       label: <button>About</button>,
       key: "1",
-      children: <CourseAbout courseId={courseId} />,
+      children: <CourseAbout courseId={CourseData?._id} />,
     },
     {
-      label: <button>Course Content</button>,
+      label: <button>Course Milestone</button>,
       key: "2",
-      children: <MilestoneList courseId={courseId} />,
+      children: <MilestoneList courseId={CourseData?._id} />,
     },
     {
       label: <button>Reviews</button>,
       key: "3",
       children: <ReviewsPage />,
     },
-  ];
+  ]
+
+
+
+
+
   return (
     <div className="mt-5">
       <Tabs

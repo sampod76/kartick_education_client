@@ -23,6 +23,7 @@ import { Button, Col, Form, Input, InputNumber, Rate, Row } from "antd";
 
 import Image from "next/image";
 import { useState } from "react";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 
 const BookingDetails = ({ params }: any) => {
   const [form] = Form.useForm();
@@ -46,14 +47,14 @@ const BookingDetails = ({ params }: any) => {
       ...data,
       bookingTickets: changeBookingTickets || bookingData?.bookingTickets,
     };
-
+    removeNullUndefinedAndFalsey(updateData);
     try {
       //@ts-ignore
       const res = await updateBooking({
         id: params?.id,
         body: updateData,
       }).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         Error_model_hook(res?.message + "");
       } else {
         Success_model("Successfully update booking");
@@ -84,7 +85,7 @@ const BookingDetails = ({ params }: any) => {
     //  // console.log("Received values:", values);
     try {
       const res = await addRating({ ...values }).unwrap();
-      if (res.success == false) {
+      if (res?.success == false) {
         // message.success("Admin Successfully Deleted!");
         // setOpen(false);
         Error_model_hook(res?.message);
@@ -105,7 +106,7 @@ const BookingDetails = ({ params }: any) => {
             id: params?.id,
             body: { payment: true },
           }).unwrap();
-          if (res.success == false) {
+          if (res?.success == false) {
             Error_model_hook(res?.message + "");
           } else {
             Success_model("Successfully update booking");
@@ -164,7 +165,7 @@ const BookingDetails = ({ params }: any) => {
             >
               <FormInput
                 label="Phone Number (For contact)"
-                type="text"
+                type="number"
                 name="phoneNumber"
                 readOnly={true}
               />
@@ -197,7 +198,7 @@ const BookingDetails = ({ params }: any) => {
                 name="bookingTickets"
               /> */}
               <div>
-                <h1>Booking Sit</h1>
+                <h1 className="text-base font-normal">Booking Sit</h1>
                 <InputNumber
                   type="number"
                   defaultValue={defaultValues.bookingTickets}
@@ -213,7 +214,7 @@ const BookingDetails = ({ params }: any) => {
                 readOnly={true}
               />
               <div>
-                <h1>Total price</h1>
+                <h1 className="text-base font-normal">Total price</h1>
                 <Input
                   type="text"
                   value={
@@ -274,9 +275,9 @@ const BookingDetails = ({ params }: any) => {
                 ]}
               />
               <div className="border-2 p-3 flex flex-col justify-center items-center">
-                <h1>Status</h1>
+                <h1 className="text-base font-normal">Status</h1>
                 <Button
-                  type="primary"
+                    type="default"
                   danger={defaultValues?.status === "reject"}
                 >
                   {defaultValues?.status}
@@ -294,12 +295,12 @@ const BookingDetails = ({ params }: any) => {
             readOnly={true}
           />
           <div className="my-2 flex justify-center items-center">
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit"   type="default">
               Submit
             </Button>
 
             {defaultValues.status == "accept" && (
-              <Button onClick={() => handlePayment(params?.id)} type="primary">
+              <Button onClick={() => handlePayment(params?.id)}   type="default">
                 Payment
               </Button>
             )}
@@ -350,7 +351,7 @@ const BookingDetails = ({ params }: any) => {
                   alignItems: "center",
                 }}
               >
-                <Button type="primary" htmlType="submit">
+                <Button   type="default" htmlType="submit">
                   Submit
                 </Button>
               </Form.Item>

@@ -29,3 +29,4 @@ export type IAdminCreate = {
   password?: string;
   admin: IUserGeneralData;
 };
+
