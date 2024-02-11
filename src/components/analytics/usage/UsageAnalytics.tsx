@@ -5,7 +5,18 @@ import TopFilterSelect from '../TopFilterSelect';
 import { Progress, Space } from 'antd';
 import { Line } from '@ant-design/charts';
 import { EditOutlined, ClockCircleOutlined, SettingOutlined } from "@ant-design/icons"
+import dynamic from 'next/dynamic';
+const DynamicLineChart = dynamic(() => import('@ant-design/charts').then((module) => module.Line), {
+    ssr: false, // Set ssr to false to prevent server-side rendering
+});
 
+
+let LineChart: any; // Define LineChart variable
+
+if (typeof window !== 'undefined') {
+    // Import Line component only on the client side
+    LineChart = require('@ant-design/charts').Line;
+}
 export default function UsageAnlytics() {
 
     const [category, setCategory] = useState<{ _id?: string; title?: string }>(
@@ -138,7 +149,9 @@ export default function UsageAnlytics() {
 
                     {/* chart sections */}
                     <div className="max-w-[38rem] relative max-h-[18rem] ">
-                        <Line {...config} />
+                        {/* <Line {...config} /> */}
+                        {/* <LineChart {...config} /> */}
+                        {LineChart && <LineChart {...config} />}
                     </div>
                 </div>
 
