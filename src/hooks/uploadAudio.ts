@@ -29,7 +29,7 @@ const uploadAudioInServer = async (file: any) => {
     console.log(response);
 
     if (response.data.original_filename) {
-      return `${getOnlyBaseUrl()}/audios/${response.data.original_filename}`;
+      return `${getBaseUrl()}/paly-audio/${response.data.original_filename}`;
     } else {
       console.error("Failed to upload image to Cloudinary");
       Error_model_hook("Failed to upload audios");

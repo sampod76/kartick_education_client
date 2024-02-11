@@ -95,7 +95,7 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
   return (
     <div
       className={`max-w-2xl mx-auto my-3 ${
-        disabled && "disabled opacity-[0.5] cursor-none "
+        disabled && "disabled  cursor-none "
       }`}
     >
       <div style={{ display: "flex", gap: "10px" }} id="images">
@@ -134,8 +134,8 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
           {draggedItems?.map((item, index) => (
             <div key={index} style={{ cursor: "zoom-out" }}>
               <Badge.Ribbon
-                text={<span onClick={() => handleRemoveItem(index)}>X</span>}
-                color="red"
+                text={<span onClick={() => handleRemoveItem(index)}>x</span>}
+                color="blue"
                 placement="end"
               >
                 <ImageNext
