@@ -24,7 +24,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="">
 
       <div className="sticky -top-[5.2rem] top z-40">
-        <TopBar />
+        {/* <TopBar /> */}
         <NavbarPublic />
       </div>
 
