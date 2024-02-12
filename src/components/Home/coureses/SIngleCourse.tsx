@@ -102,7 +102,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               </div>
             </div>
           </div>
-          <div className="px-6 py-4 flex flex-col justify-between h-[11rem] ">
+          <div className="px-6 py-4 flex flex-col justify-between h-full ">
             <div>
               <Typography.Title level={4}>
                 <EllipsisMiddle suffixCount={3} maxLength={90}>
@@ -110,7 +110,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 </EllipsisMiddle>
               </Typography.Title>
 
-              <p
+              {/* <p
                 style={{ overflow: "hidden" }}
                 className="text-black text-sm md:text-base"
               >
@@ -120,7 +120,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 >
                   {course?.short_description}
                 </EllipsisMiddle>
-              </p>
+              </p> */}
             </div>
           </div>
         </Link>

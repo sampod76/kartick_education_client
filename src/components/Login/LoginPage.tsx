@@ -44,7 +44,7 @@ const Login = ({
   const [loading, setLoading] = useState(true);
   const userInfo = getUserInfo() as IDecodedInfo;
 
-  //!----------- if user already login then auto redirect
+  //!----------- if user already login then auto redirect--------
   useEffect(() => {
     if (userInfo.id) {
       router.back();
@@ -84,7 +84,7 @@ const Login = ({
   }
 
   return (
-    <div className="bg-white ">
+    <div className=" ">
       <div className="flex justify-center items-center mt-3 relative ">
         {/* 
         <div
@@ -108,8 +108,9 @@ const Login = ({
         </div> 
         */}
         <Image
-          className=""
+          className="relative -top-24 -z-10"
           style={{ width: "100vw", height: "100vh" }}
+          
           src={
             "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           }
@@ -118,7 +119,7 @@ const Login = ({
           alt=""
         />
 
-        <div className="flex items-start pt-10 w-full max-w-lg px-6 mx-auto lg:w-3/6 absolute z-30 top-0 inset-0  ">
+        <div className="flex items-start pt-10 w-full max-w-lg px-6 mx-auto lg:w-3/6 absolute z-30 top-10 inset-0  ">
           <div className="flex-1 shadow-lg p-5 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 backdrop-blur-3xl">
             <div className="text-center">
               <div className="flex justify-center mx-auto">

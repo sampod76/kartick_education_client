@@ -25,6 +25,7 @@ import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { ENUM_YN } from "@/constants/globalEnums";
 
 const CategoryList = () => {
   const query: Record<string, any> = {};
@@ -35,19 +36,20 @@ const CategoryList = () => {
 
   const [deleteCategory] = useDeleteCategoryMutation();
 
+  const [adminId, setAdminId] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("serial_number");
+  const [sortOrder, setSortOrder] = useState<string>("asc");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
+  query["isDelete"] = ENUM_YN.NO;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -57,7 +59,7 @@ const CategoryList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllCategoryQuery({ ...query });
+  const { data , isLoading } = useGetAllCategoryQuery({ ...query });
 
   //@ts-ignore
   const categoryData = data?.data;

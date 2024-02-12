@@ -54,7 +54,7 @@ export default function MilestoneHomeFeatures2() {
         <div className='rounded-[28px] bg-[#2AAAE2] px-3 py-5 container mx-auto mt-7'>
 
             <h1 className='text-center  text-white text-2xl lg:text-3xl my-3'>{milestoneData?.title}</h1>
-            <div className="bg-[#424644] grid grid-cols-2 lg:grid-cols-4 p-[1rem] rounded-b-xl">
+            <div className="bg-[#424644] gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-[1rem] rounded-b-xl">
                 {
                     milestoneData?.modules?.map((module: any) => {
                         return <Link href={`/`} className=' flex gap-2 items-center text-white' key={module?._id}>
