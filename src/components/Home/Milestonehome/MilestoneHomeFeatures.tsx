@@ -62,33 +62,50 @@ export default function MilestoneHomeFeatures() {
   query["sortBy"] = "serial_number";
   query["sortOrder"] = "asc";
   query["status"] = "active";
-  const {data={},isLoading} = useGetAllCategoryChildrenQuery({ ...query });
-  console.log("🚀 ~ MilestoneHomeFeatures ~ data:", data)
+  const { data = {}, isLoading } = useGetAllCategoryChildrenQuery({ ...query });
+  console.log("🚀 ~ MilestoneHomeFeatures ~ data:", data);
   return (
     <div className="container mx-auto mt-7">
       {
         //@ts-ignore
-        data?.data?.map((category:any)=><div key={category._id} className="rounded-[28px] bg-[#FFB504] px-3 py-5 mt-3">
-        <h1 className="text-center  text-white text-2xl lg:text-3xl my-3">
-          {category?.title}
-        </h1>
-        <div className="bg-[#424644] grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-[1rem] rounded-b-xl">
-          {category?.courses?.map((course: any) => {
-            return (
-              <Link
-                href={`/`}
-                className=" flex gap-2 items-center text-white"
-                key={course?._id}
-              >
-                <Image src={milestoneIcon} height={20} width={20} alt="icon" />
-                <h4>{course?.title} </h4>
-              </Link>
-            );
-          })}
-        </div>
-      </div>)
+        data?.data?.map((category: any, index: number) => (
+          <div
+            key={category._id}
+            className={`rounded-[28px] ${
+              index % 4 === 0
+                ? "bg-[#43CD66]"
+                : index % 3 === 0
+                ? "bg-[#F96A9A]"
+                : index % 2 === 0
+                ? "bg-[#2AAAE2]"
+                : "bg-[#F9B001]"
+            } px-3 py-5 mt-3`}
+          >
+            <h1 className="text-center  text-white text-2xl lg:text-3xl my-3">
+              {category?.title}
+            </h1>
+            <div className="bg-[#424644] grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-[1rem] rounded-b-xl">
+              {category?.courses?.map((course: any) => {
+                return (
+                  <Link
+                    href={`/`}
+                    className=" flex gap-2 items-center text-white"
+                    key={course?._id}
+                  >
+                    <Image
+                      src={milestoneIcon}
+                      height={20}
+                      width={20}
+                      alt="icon"
+                    />
+                    <h4>{course?.title} </h4>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))
       }
-      
     </div>
   );
 }
