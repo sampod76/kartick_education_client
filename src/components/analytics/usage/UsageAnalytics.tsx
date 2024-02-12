@@ -152,6 +152,7 @@ export default function UsageAnlytics() {
                         {/* <Line {...config} /> */}
                         {/* <LineChart {...config} /> */}
                         {/* {LineChart && <LineChart {...config} />} */}
+                        {typeof window !== 'undefined' && <DynamicLineChart {...config} />}
                     </div>
                 </div>
 

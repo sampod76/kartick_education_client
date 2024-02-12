@@ -5,7 +5,11 @@ import { PrinterOutlined } from "@ant-design/icons"
 import { Pie } from '@ant-design/plots';
 import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
 import PieChart from '@/components/dashboard/admin/chart/PieChart';
+import dynamic from 'next/dynamic';
 
+const DynamicPie = dynamic(() => import('@ant-design/plots').then((mod) => mod.Pie), {
+    ssr: false, // Set ssr to false to prevent rendering on the server
+});
 export default function ScoreAnalytics() {
     const [category, setCategory] = useState<{ _id?: string; title?: string }>(
         {}
@@ -104,8 +108,9 @@ export default function ScoreAnalytics() {
                 <h1 className='text-2xl lg:text-2xl font-normal my-2 mt-5 text-slate-600  '> Overview of  {course?.title} In the  {time}</h1>
             </div>
             <div className="">
-                <Pie {...config} />;
+                {/* <Pie {...config} />; */}
                 {/* <PieChart /> */}
+                {typeof window !== 'undefined' && <DynamicPie {...config} />}
             </div>
         </div>
     )
