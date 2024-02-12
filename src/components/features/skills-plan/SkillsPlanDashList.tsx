@@ -140,9 +140,9 @@ export default function SkillsPlanDashList() {
                 src={
                   data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
                 }
-                style={{ height: "50px", width: "80px" }}
-                width={50}
-                height={50}
+                style={{ height: "80px", width: "90px" }}
+                width={80}
+                height={80}
                 alt="dd"
               />
             }
@@ -164,6 +164,7 @@ export default function SkillsPlanDashList() {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
+      width: 220,
     },
     {
       title: "Action",
