@@ -85,7 +85,7 @@ const UserAvatarUI = () => {
             src={AllImage.profileAvater || ""}
             width={50}
             height={50}
-            className="w-12  h-12 rounded-full"
+            className="w-8  h-8 lg:w-12  lg:h-12  rounded-full"
             alt=""
           />
         </button>

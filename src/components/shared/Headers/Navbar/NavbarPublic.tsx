@@ -80,25 +80,25 @@ const NavbarPublic = () => {
             background: "none",
             backdropFilter: "blur(80px)",
             boxShadow: "none",
-            color: `${pathname ==='/' ? "white" : "black"}`,
+            color: `${pathname === '/' ? "white" : "black"}`,
             // fontWeight:"700"
           }}
           disabledOverflow
           items={navItemsHome}
-          // items={() => userInfo?.role ? userInfo.role : null)}
-          // items={() => homeNavItems(userInfo?.role ? userInfo.role : null)}
+        // items={() => userInfo?.role ? userInfo.role : null)}
+        // items={() => homeNavItems(userInfo?.role ? userInfo.role : null)}
         />
 
         <div
           className="flex lg:hidden"
-          // style={{
-          //   display: `${screens.sm ? "none" : "flex"}`,
-          // }}
+        // style={{
+        //   display: `${screens.sm ? "none" : "flex"}`,
+        // }}
         >
           <SideBarHome userInfo={userInfo}></SideBarHome>
         </div>
       </nav>
-      <div className="flex justify-start items-center gap-2">
+      <div className=" hidden lg:flex  justify-start items-center gap-2">
         <div className="hidden lg:flex ">
           <Link
             href="/subscription"
@@ -121,17 +121,17 @@ const NavbarPublic = () => {
               className="flex  font-[700]  max-h-[2.7rem] lg:max-h-[3.3rem]
          "
             >
-              
+
               <Link
-            href="/login"
-            className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 py-2 bg-white rounded-[36px] uppercase "
-          >
-            <span className="relative z-10 text-[#5F8122] group-hover:text-white text-lg duration-500">
-            Login
-            </span>
-            <span className="absolute w-full h-full bg-[#5F8122] -left- top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
-            <span className="absolute w-full h-full bg-[#5F8122] -right- top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
-          </Link>
+                href="/login"
+                className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 py-2 bg-white rounded-[36px] uppercase "
+              >
+                <span className="relative z-10 text-[#5F8122] group-hover:text-white text-lg duration-500">
+                  Login
+                </span>
+                <span className="absolute w-full h-full bg-[#5F8122] -left- top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
+                <span className="absolute w-full h-full bg-[#5F8122] -right- top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+              </Link>
             </div>
           )}
         </div>

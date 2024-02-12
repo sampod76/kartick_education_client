@@ -59,7 +59,7 @@ const CategoryList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data , isLoading } = useGetAllCategoryQuery({ ...query });
+  const { data, isLoading } = useGetAllCategoryQuery({ ...query });
 
   //@ts-ignore
   const categoryData = data?.data;
@@ -177,7 +177,7 @@ const CategoryList = () => {
                 </Menu>
               }
             >
-              <a>Action</a>
+              <button className="text-blue-700">Action</button>
             </Dropdown>
           </Space>
         </>

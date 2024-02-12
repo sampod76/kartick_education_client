@@ -35,7 +35,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 const GeneralUserBooking = () => {
   //
   // const ROLE = USER_ROLE.STUDENT;
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo
   //
   const query: Record<string, any> = {};
 
@@ -54,7 +54,7 @@ const GeneralUserBooking = () => {
   useEffect(() => {
     setUserData(getUserInfo() as any);
     setUserLoading(false);
-    return () => {};
+    return () => { };
   }, []);
 
   const debouncedSearchTerm = useDebounced({
@@ -227,7 +227,7 @@ const GeneralUserBooking = () => {
               </Menu>
             }
           >
-            <a>Action</a>
+            <button className="text-blue-700">Action</button>
           </Dropdown>
         </Space>
       ),
@@ -281,7 +281,7 @@ const GeneralUserBooking = () => {
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-                type="default"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />
