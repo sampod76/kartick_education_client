@@ -71,7 +71,7 @@ const CoursesTab = () => {
   tabsItems2.unshift({
     label: (
       <button
-        className={activeTabKey === "011allCourses" ? `${activeClass} ml-1` : inactiveClass}
+        className={`${activeTabKey === "011allCourses" ? `${activeClass} ml-1` : inactiveClass} p-1 w-[3.5rem]`}
       >
         <p className="px-1 "> All</p>
       </button>

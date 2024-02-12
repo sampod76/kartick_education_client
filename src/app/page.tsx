@@ -24,6 +24,11 @@ const HomePage = () => {
       <div className="-mt-[6rem] bg-[#BEDDF9">
         <div className="w-full min-h-[5rem]"></div>
         <BannerSection />
+        <div className="bg-transparent bg-gradient-to-b from-[#1C478D] to-slate-200 backdrop-blur-md font-bold text-[3vw] lg:text-[1vw] text-nowrap text-white absolut -bottom-[2rem]  right-[40%] px-5  lg:px-9  py-7 rounded-full cursor-pointer 
+      -mt-[3rem] w-[90%]  lg:max-w-[30%] mx-auto text-center
+      ">
+          CULTIVATING CONFIDENCE CULTIVATING SUCCESS
+        </div>
       </div>
 
       <main className="bg-[#A2B0F321 pb-10 min-h-screen">

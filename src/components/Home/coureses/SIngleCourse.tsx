@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode, useEffect } from "react";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined, SnippetsOutlined } from "@ant-design/icons";
 import { CgPlayButtonO } from "react-icons/cg";
 import { CiClock2 } from "react-icons/ci";
 import { Avatar, Card, Rate, TooltipProps } from "antd";
@@ -68,11 +68,9 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
     <AnimatePresenceWrapper>
       <div className="w-[360px] md:w-full mx-auto  rounded-md shadow-md bg-white relative">
         <Link
-          href={`/course/milestone/${course?._id}?categoryName=${
-            course?.category?.title
-          }&courseName=${course?.title}&category=${
-            course?.category?._id || course?.category
-          }`}
+          href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title
+            }&courseName=${course?.title}&category=${course?.category?._id || course?.category
+            }`}
         >
           <div className="overflow-hidden  ">
             <div className="relative">
@@ -85,9 +83,9 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                   src={course?.img || AllImage?.notFoundImage}
                   // onLoadingComplete={(img) => console.log(img.naturalWidth)}
                   alt="Sunset in the mountains"
-                  // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
+                // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
 
-                  // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
+                // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
                 />
               </div>
               <div className="hover:bg-transparent   rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
@@ -138,9 +136,16 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
           <ShoppingCartOutlined style={{}} /> Add to cart
         </span> */}
           <span className="flex whitespace-nowrap justify-center items-center gap-1">
+            <SnippetsOutlined className="text-gray-900" />
+            {course?.totalEnrollStudentSize + " " + "quiz"}
+          </span>
+          <span className="flex whitespace-nowrap justify-center items-center gap-1">
             <SVGstudentIcom className="text-gray-900" />{" "}
             {course?.totalEnrollStudentSize + " " + "students"}
           </span>
+        </div>
+        <div className=" bg-secondary text-center font-bold w-full text-white h-[rem] text-xl py-2">
+          Enroll Now
         </div>
       </div>
     </AnimatePresenceWrapper>
