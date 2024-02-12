@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import Courses from "./Courses";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
-import { ENUM_SORT_ORDER, ENUM_STATUS } from "@/constants/globalEnums";
+import { ENUM_SORT_ORDER, ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 
 import TopBarLoading from "@/components/ui/Loading/TopBarLoading";
 import { Error_model_hook } from "@/utils/modalHook";
@@ -37,6 +37,8 @@ const CoursesTab = () => {
   query["status"] = ENUM_STATUS.ACTIVE;
   query["limit"] = 99999;
   query["sortOrder"] = ENUM_SORT_ORDER.ASC;
+  query["sortBy"] = "serial_number";
+  query["isDelete"] = ENUM_YN.NO;
 
 
   // console.log('query',query)
@@ -100,20 +102,24 @@ const CoursesTab = () => {
   };
 
   return (
-    <div className=" p-3 container mx-auto mt-7 bg-white">
+    <div className=" container mx-auto  bg-white">
 
-      <div className="py-2 my-6 flex justify-between items-center ">
-        <h2 className="flex flex-col font-bold text-lg lg:text-3xl text-gray-700">
+      <div className="py-2 px-2 my-6 flex justify-between items-center ">
+        <h2 className="flex flex-col font-bold text-sm md:text-md lg:text-lg 2xl:text-4xl text-gray-700 whitespace-nowrap">
 
           <span>Overcome challenges with
             <span className="text-[#FB8500] mx-2 font-[800]">iBlossomLearn</span></span>
           <span className="text-nowrap">Your adventure in learning awaits!</span>
         </h2>
-        <Link href={`/`} className="cursor-pointer  overflow-hidden relative z-100 border border-[#5F8122] text-[#5F8122] group px-5 py-2 bg-white rounded-[36px] uppercase font-bold text-[14px] lg:text-lg">
+        <Link href={`/`} className="cursor-pointer text-nowrap overflow-hidden relative z-100 border border-[#5F8122] text-[#5F8122] group px-3 py-2 lg:px-5 lg:py-2 bg-white rounded-[36px] uppercase font-bold text-center text-[10px] md:text-[12px] lg:text-lg">
           Join Now
         </Link>
       </div>
 
+{/* <div>
+
+</div> */}
+<div>
 
       {isLoading ? (
         <TopBarLoading />
@@ -128,6 +134,7 @@ const CoursesTab = () => {
           onTabClick={(key, event) => TabClickHandler(key, event)}
         />
       )}
+</div>
     </div>
   );
 };

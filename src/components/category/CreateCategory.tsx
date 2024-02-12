@@ -22,19 +22,19 @@ const CreateCategory = () => {
     const status = "active";
     // const imgUrl = await uploadImgCloudinary(values.img);
 
-    const categoryData: {
-      title: string;
-      img?: string | null;
-      status: string;
-    } = {
-      title: values.title,
-      img: values.img,
-      status: status,
-    };
+    // const categoryData: {
+    //   title: string;
+    //   img?: string | null;
+    //   status: string;
+    // } = {
+    //   title: values.title,
+    //   img: values.img,
+    //   status: status,
+    // };
     // console.log(categoryData);
 
     try {
-      const res = await addCategory(categoryData).unwrap();
+      const res = await addCategory(values).unwrap();
       // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
@@ -49,9 +49,7 @@ const CreateCategory = () => {
     }
   };
 
-  if (serviceLoading) {
-    return message.loading("Loading...");
-  }
+ 
 
   return (
     <div>
@@ -71,7 +69,7 @@ const CreateCategory = () => {
               backgroundColor: "white",
               boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
             }}
-            // className="w-fit p-3 rounded-xl mx-auto shadow-2xl"
+            className=" "
           >
             <h1
               style={{
@@ -99,8 +97,8 @@ const CreateCategory = () => {
                 lg={24}
                 style={{
                   marginBottom: "20px",
-                  maxWidth: "30vw",
-                  margin: "0 auto",
+                  // maxWidth: "30vw",
+                  // margin: "0 auto",
                 }}
               >
                 <FormInput
@@ -109,6 +107,24 @@ const CreateCategory = () => {
                   size="large"
                   label="Category Title"
                   required={true}
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+               
+                style={{
+                  marginBottom: "20px",
+                  // maxWidth: "30vw",
+                  // margin: "0 auto",
+                }}
+              >
+                <FormInput
+                  type="number"
+                  name="serial_number"
+                  size="large"
+                  label="Category serial number"
+               
                 />
               </Col>
 
@@ -130,7 +146,7 @@ const CreateCategory = () => {
             </Row>
 
             <div className="flex justify-center items-center">
-              <Button htmlType="submit" type="default">
+              <Button loading={serviceLoading} htmlType="submit" type="default">
                 Create Category
               </Button>
             </div>

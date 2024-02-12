@@ -92,7 +92,7 @@ const Courses = ({ query ,width='container'}: { query: ICourseItemType, width?:s
         <NotFoundCourse />
       ) : (
         <div className={`mt-3 ${width ==="container" ?"container" : "w-full"} mx-auto `}>
-          <div className="grid grid-cols-1 lg:grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1  md:grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-5">
             {courseData?.map((item: ICourseData, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}
