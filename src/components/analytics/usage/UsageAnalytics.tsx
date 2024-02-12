@@ -151,7 +151,7 @@ export default function UsageAnlytics() {
                     <div className="max-w-[38rem] relative max-h-[18rem] ">
                         {/* <Line {...config} /> */}
                         {/* <LineChart {...config} /> */}
-                        {LineChart && <LineChart {...config} />}
+                        {/* {LineChart && <LineChart {...config} />} */}
                     </div>
                 </div>
 

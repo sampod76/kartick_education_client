@@ -4,6 +4,7 @@ import TopFilterSelect from '../TopFilterSelect';
 import { PrinterOutlined } from "@ant-design/icons"
 import { Pie } from '@ant-design/plots';
 import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
+import PieChart from '@/components/dashboard/admin/chart/PieChart';
 
 export default function ScoreAnalytics() {
     const [category, setCategory] = useState<{ _id?: string; title?: string }>(
@@ -104,6 +105,7 @@ export default function ScoreAnalytics() {
             </div>
             <div className="">
                 <Pie {...config} />;
+                {/* <PieChart /> */}
             </div>
         </div>
     )
