@@ -13,6 +13,7 @@ import { Error_model_hook } from "@/utils/modalHook";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { useAppSelector } from "@/redux/hooks";
 import { useDebounced } from "@/redux/hooks";
+import Link from "next/link";
 
 const CoursesTab = () => {
   const screens = useBreakpoint();
@@ -44,22 +45,22 @@ const CoursesTab = () => {
 
   const categoryData = data?.data || [];
   const activeClass =
-    "   text-[14px] lg:text-[18px] font-bold";
+    "   text-[14px] lg:text-[18px] font-bold bg-[#FB8500] text-white rounded";
   const inactiveClass =
     "  text-[14px] lg:text-[18px]  ";
 
   const tabsItems2: TabsProps["items"] = categoryData?.map(
-    (singleCategory: Record<string, any>, index: number ) => ({
+    (singleCategory: Record<string, any>, index: number) => ({
       label: (
         <button
           className={
-            activeTabKey === String(index+1)  ? activeClass : inactiveClass
+            `${activeTabKey === String(index + 1) ? activeClass : inactiveClass} p-1`
           }
         >
           <p className="px-1"> {singleCategory?.title}</p>
         </button>
       ),
-      key: String(index+1) ,
+      key: String(index + 1),
       children: (
         <Courses query={{ status: "active", category: singleCategory?._id }} />
       ),
@@ -70,7 +71,7 @@ const CoursesTab = () => {
   tabsItems2.unshift({
     label: (
       <button
-        className={activeTabKey === "011allCourses"  ? `${activeClass} ml-1` : inactiveClass}
+        className={`${activeTabKey === "011allCourses" ? `${activeClass} ml-1` : inactiveClass} p-1 w-[3.5rem]`}
       >
         <p className="px-1 "> All</p>
       </button>
@@ -99,7 +100,21 @@ const CoursesTab = () => {
   };
 
   return (
-    <div className="  p-3 container mx-auto">
+    <div className=" p-3 container mx-auto mt-7 bg-white">
+
+      <div className="py-2 my-6 flex justify-between items-center ">
+        <h2 className="flex flex-col font-bold text-lg lg:text-3xl text-gray-700">
+
+          <span>Overcome challenges with
+            <span className="text-[#FB8500] mx-2 font-[800]">iBlossomLearn</span></span>
+          <span className="text-nowrap">Your adventure in learning awaits!</span>
+        </h2>
+        <Link href={`/`} className="cursor-pointer  overflow-hidden relative z-100 border border-[#5F8122] text-[#5F8122] group px-5 py-2 bg-white rounded-[36px] uppercase font-bold text-[14px] lg:text-lg">
+          Join Now
+        </Link>
+      </div>
+
+
       {isLoading ? (
         <TopBarLoading />
       ) : (

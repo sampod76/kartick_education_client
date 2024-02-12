@@ -35,13 +35,16 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
 
     const [form] = Form.useForm();
 
+    console.log(defaultSkillPlanData?.imgs[0], 'defaultSkillPlanData')
 
     // const [addPackage, { isLoading: UpdatePackageLoading }] =
     //     useAddPackageMutation();
     const onFinish = async (values: any) => {
-        if (typeof (values?.imgs) !== 'string') {
+        console.log(values?.imgs?.file, 'filee')
+
+        if (values?.imgs?.file) {
             const imgUrl = await uploadImgCloudinary(values?.imgs?.file);
-            // console.log(imgUrl, 'imgUrl')
+            console.log(imgUrl, 'filee')
             values.imgs = imgUrl;
         }
 
@@ -49,13 +52,13 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
 
             title: values.title || defaultSkillPlanData?.title,
             imgTitle: values.imgTitle || defaultSkillPlanData?.imgTitle,
-            imgs: [values?.imgs] || defaultSkillPlanData?.imgs[0],
+            imgs: [values?.imgs] || [...defaultSkillPlanData?.imgs],
             page: values.page || defaultSkillPlanData?.page || "home",
             details: textEditorValue || defaultSkillPlanData?.details,
             points: values.points || defaultSkillPlanData?.points,
         };
         // console.log("Received values of form:", values);
-        // console.log("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData);
+        console.log("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData);
         // return
         try {
             const res = await updateSkills_plan({
