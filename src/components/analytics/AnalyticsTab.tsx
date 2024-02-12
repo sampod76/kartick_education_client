@@ -55,7 +55,7 @@ export default function AnalyticsTab() {
   ]
   return (
     <div className='w-full lg:max-w-[70%] mx-auto'>
-      <Tabs
+      {/* <Tabs
         defaultActiveKey="2"
         items={tabsItems}
         indicatorSize={100}
@@ -65,7 +65,7 @@ export default function AnalyticsTab() {
       // tabPosition="bottom"
 
       // indicator={{ size: (origin) => origin - 20, align: 'center' }}
-      />
+      /> */}
 
     </div>
   )

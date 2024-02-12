@@ -69,7 +69,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     {
       label: (
         <Link className="text-[20px]  font-bold capitalize" href="/analytics">
-          Analysis
+          Analytics
         </Link>
       ),
       key: "/analytics",
