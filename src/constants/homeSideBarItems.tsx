@@ -73,7 +73,7 @@ const homeSideItems = (role: string | null): MenuProps["items"] => {
     },
     {
       label: (
-        <Link href="/">
+        <Link href="/about">
           About
         </Link>
       ),

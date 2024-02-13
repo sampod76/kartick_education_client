@@ -1,4 +1,4 @@
-import BannerCourses from '@/components/Home/Heros/BannerCourses'
+import BannerCourses from '@/components/Home/Banner&hero/BannerCourses'
 import React from 'react'
 import CourseStatistics from '../CourseStatistics'
 import MilestoneHomeList from '../MilestoneHomeList'

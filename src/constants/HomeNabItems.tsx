@@ -55,7 +55,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     },
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/course">
+        <Link className="text-[20px]  font-bold capitalize" href="/about">
           About
         </Link>
       ),

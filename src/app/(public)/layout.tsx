@@ -3,8 +3,8 @@ import MilestoneList from "@/components/Course/MilestoneHomeList";
 import CartDrawer from "@/components/Home/Cart/CartDrawer";
 
 
-import BannerCourses from "@/components/Home/Heros/BannerCourses";
-import SupportHero from "@/components/Home/Heros/SupportHero";
+import BannerCourses from "@/components/Home/Banner&hero/BannerCourses";
+import SupportHero from "@/components/Home/Banner&hero/SupportHero";
 // import NavbarPublic from "@/components/shared/Headers/Navbar/NavbarPublic";
 
 import TopBar from "@/components/shared/Headers/TopBar";
