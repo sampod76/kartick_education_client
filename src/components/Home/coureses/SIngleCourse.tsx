@@ -27,6 +27,7 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
+import VimeoPlayer from "@/utils/vimoPlayer";
 const { Text } = Typography;
 
 const SIngleCourse = ({ course }: { course: ICourseData }) => {
@@ -66,14 +67,25 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
 
   return (
     <>
-      <div className="w-[350px] md:w-full h-full rounded-md shadow-md bg-white ">
+      <div className="w-[350px] md:w-full h-full rounded-md shadow-md bg-white mx-auto flex flex-col justify-between ">
+        <div className="flex justify-center items-center">
+
+      <VimeoPlayer
+              width={!screens.xl?360: !screens.lg?385: 347 }
+              height={ 347}
+              autoplay={ false }
+              // link={result.data as string}
+              link={"https://vimeo.com/889428749"}
+            />
+        </div>
+        <div className="flex flex-col justify-between item-start">
         <Link
           href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title
             }&courseName=${course?.title}&category=${course?.category?._id || course?.category
             }`}
         >
           
-          <div className="px-6 py-4 flex flex-col justify-between  ">
+          <div className="px-2 py-2 flex flex-col justify-between  ">
             <div>
               <Typography.Title level={4}>
                 <EllipsisMiddle suffixCount={3} maxLength={90}>
@@ -84,7 +96,8 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
             </div>
           </div>
         </Link>
-        <div className="bg-gray-100 py-2 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900  px-6 ">
+       <div>
+       <div className="bg-gray-100 py-2 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900  px-6 ">
           <span className="py-1  font-regular whitespace-nowrap text-gray-900 flex flex-row items-center">
             {/* <span className="ml-1">
               {course?.duration?.length &&
@@ -107,6 +120,8 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
         <button className=" bg-secondary text-center font-bold w-full text-white h-[rem] text-xl py-2">
           Enroll Now
         </button>
+       </div>
+        </div>
       </div>
     </>
   );
