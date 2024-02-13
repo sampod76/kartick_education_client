@@ -121,7 +121,8 @@ export default function LessonPage({
           {moduleData?.milestone?.short_description}
         </p>
       </div>
-      <div className="mt-9 px-2 lg:px-4 container mx-auto border  ">
+      <div className="mt-9 px-2 lg:px-4  border-2  border-[#31FF6B]">
+
         <Tabs
           defaultActiveKey="1"
           tabPosition={screens?.sm ? "left" : "top"}
