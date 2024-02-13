@@ -102,7 +102,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
               </div>
             </div>
           </div>
-          <div className="px-6 py-4 flex flex-col justify-between h-full ">
+          <div className="px-6 py-4 flex flex-col justify-between h-[6rem] ">
             <div>
               <Typography.Title level={4}>
                 <EllipsisMiddle suffixCount={3} maxLength={90}>

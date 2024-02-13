@@ -23,7 +23,7 @@ export default function ModuleTab({
   moduleId: string;
   moduleData: any[];
 }) {
- 
+
   // console.log(moduleData)
 
   // const {data:QuizData} = useGetQui
@@ -37,7 +37,7 @@ export default function ModuleTab({
   const tabsItems: TabsProps["items"] = [
     {
       label: (
-        <button className="text-xl font-bold ">
+        <button className="text-xl font-bold text-secondary ">
           <BlockOutlined
             style={{
               fontSize: "1.5rem",
@@ -47,12 +47,12 @@ export default function ModuleTab({
         </button>
       ),
       key: "1",
-      children: <LessonList moduleId={moduleId} moduleData={moduleData}/>,
+      children: <LessonList moduleId={moduleId} moduleData={moduleData} />,
     },
 
     // {
     //   label: (
-    //     <button className="text-xl font-bold ">
+    //     <button className="text-xl font-bold text-secondary ">
     //       <QuestionOutlined
     //         style={{
     //           fontSize: "1.5rem",
@@ -67,7 +67,7 @@ export default function ModuleTab({
 
     {
       label: (
-        <button className="text-xl font-bold ">
+        <button className="text-xl font-bold text-secondary ">
           <BookOutlined
             style={{
               fontSize: "1.5rem",
@@ -82,7 +82,7 @@ export default function ModuleTab({
 
     {
       label: (
-        <button className="text-xl font-bold ">
+        <button className="text-xl font-bold text-secondary ">
           {" "}
           <CommentOutlined
             style={{
@@ -103,6 +103,7 @@ export default function ModuleTab({
         centered
         onChange={handleTabClick}
         items={tabsItems}
+        // type=""
       />
     </div>
   );
