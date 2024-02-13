@@ -47,10 +47,10 @@ const CourseStatistics = ({ courseId }: { courseId: string }) => {
   ];
 
   return (
-    <div className="bg-white grid grid-cols-2 lg:grid-cols-4 w-full lg:w-[60%] mx-auto gap-5 p-4">
+    <div className="bg-white grid grid-cols-2 lg:grid-cols-4 w-full lg:w-[60%] mx-auto gap-5 p-4 my-3">
       {overViews?.map((item: any, index: number) => (
         <div
-          className="text-center shadow w-[5rem] md:w-[9rem] mx-auto uppercase "
+          className="text-center shadow w-[9rem] mx-auto uppercase "
           key={index}
         >
           {typeof item.No === 'number' ? (
