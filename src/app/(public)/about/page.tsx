@@ -71,11 +71,11 @@ export default function AboutPage() {
                 </div>
             </div>
             {/* course sections */}
-            <div className="container mx-auto bg-[#A9DDF421]  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 py-[5rem]">
+            <div className="container mx-auto bg-[#A9DDF421]  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 py-[5rem]">
 
                 {aboutCourseData?.map((course: any, index: number) => {
 
-                    return <div className='max-w-[480px] md:w-full lg:max-w-[400px] xl:w-[480px] bg-white  mx-auto border border-[#51ADD4] rounded-lg p-2' key={index + 1}>
+                    return <div className='max-w-[480px] md:w-full lg:max-w-[430px] xl:w-[480px] bg-white  mx-auto border border-[#51ADD4] rounded-lg p-2' key={index + 1}>
                         <Image className='w-full h-[20rem]' src={course?.img} height={350} width={400} alt="course" />
                         <div className="px-3">
                             <h2 className='text-2xl  font-semibold my-3 text-center'>{course?.title}</h2>
