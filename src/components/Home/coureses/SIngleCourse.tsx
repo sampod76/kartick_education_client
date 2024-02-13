@@ -65,44 +65,15 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   };
 
   return (
-    <AnimatePresenceWrapper>
-      <div className="w-[360px] md:w-full mx-auto  rounded-md shadow-md bg-white relative">
+    <>
+      <div className="w-[350px] md:w-full h-full rounded-md shadow-md bg-white ">
         <Link
           href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title
             }&courseName=${course?.title}&category=${course?.category?._id || course?.category
             }`}
         >
-          <div className="overflow-hidden  ">
-            <div className="relative">
-              <div>
-                <Image
-                  height={350}
-                  width={350}
-                  // loader={LoaderNextImage}
-                  className="w-full h-[190px] xl:h-[200px] object-cover rounded-md" // Add the rounded-md class here
-                  src={course?.img || AllImage?.notFoundImage}
-                  // onLoadingComplete={(img) => console.log(img.naturalWidth)}
-                  alt="Sunset in the mountains"
-                // placeholder={`data:image/https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif` }
-
-                // blurDataURL="https://media.giphy.com/media/9MImS9neQuoRa3D19h/giphy.gif"
-                />
-              </div>
-              <div className="hover:bg-transparent   rounded-md duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
-              <div>
-                <div className="absolute bottom-0 left-0 bg-black bg-opacity-25 font-bold text-lg rounded-tr-md px-4 py-2 text-white  hover:bg-white hover:text-primary transition duration-500 ease-in-out">
-                  {course?.price} $
-                </div>
-              </div>
-              <div>
-                <h2 className="text-sm absolute top-0 right-0 bg-slate-200 px-4 text-black rounded-full h-12 w-12 flex flex-col items-center justify-center mt-3 mr-3 hover:bg-primary hover:text-white transition duration-500 ease-in-out capitalized">
-                  {/* <span className="font-bold">27</span> */}
-                  <small className="capitalize">{course?.price_type}</small>
-                </h2>
-              </div>
-            </div>
-          </div>
-          <div className="px-6 py-4 flex flex-col justify-between h-full ">
+          
+          <div className="px-6 py-4 flex flex-col justify-between  ">
             <div>
               <Typography.Title level={4}>
                 <EllipsisMiddle suffixCount={3} maxLength={90}>
@@ -110,17 +81,6 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 </EllipsisMiddle>
               </Typography.Title>
 
-              {/* <p
-                style={{ overflow: "hidden" }}
-                className="text-black text-sm md:text-base"
-              >
-                <EllipsisMiddle
-                  suffixCount={3}
-                  maxLength={screens.xxl ? 170 : screens.xl ? 150 : 170}
-                >
-                  {course?.short_description}
-                </EllipsisMiddle>
-              </p> */}
             </div>
           </div>
         </Link>
@@ -148,7 +108,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
           Enroll Now
         </button>
       </div>
-    </AnimatePresenceWrapper>
+    </>
   );
 };
 
