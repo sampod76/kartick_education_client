@@ -41,7 +41,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
     module: "yes",
     ...query,
   })
-    console.log("🚀 ~ MilestoneList ~ data:", data)
+    // console.log("🚀 ~ MilestoneList ~ data:", data)
   // console.log(data,"courseId");
   const milestoneData = data?.data || [];
 
@@ -56,7 +56,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
       ) : (
         <div
           style={{
-            marginTop: "1.25rem",
+            marginTop: "1.5rem",
           }}
           className="relative min-h-screen container mx-auto"
         >

@@ -90,7 +90,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
 
 
       </div>
-      <div className="flex   uppercase justify-between items-center gap-2  font-[700] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
+      <div className="flex   uppercase justify-between items-center gap-2  font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
         {isLoading ? (
           <CategoryButtonSKeletton />
         ) : (
@@ -98,9 +98,9 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
             return (
               <div key={index + 1} onClick={() => showModal(category?._id)} className={`p-3`}>
                 <button
-                  className={`py-3 px-3 text-[12px] lg:text-[18px] rounded-tl-[20px rounded-br-[20px rounded-[28rem]  ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
+                  className={`py-2 px-3 text-[12px] shadow-lg scale-105  lg:text-[18px] rounded-tl-[20px rounded-br-[20px  rounded-[28rem]  ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
                     } ${index % 3 === 1 && "bg-secondary"} text-white ${categoryId === category?._id &&
-                    "border-[4px] border-white bg-gradient-to-r  via-[#059669] scale-105 duration-300 from-[#047857] to-[#14b8a6]"
+                    "border-[4px] border-white bg-gradient-to-r  via-[#059669] scale-105 duration-300 from-[#047857] to-[#14b8a6] p-2"
                     }`}
                 >
                   {category?.title}

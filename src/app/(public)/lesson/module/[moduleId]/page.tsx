@@ -1,6 +1,6 @@
 "use client";
 import { AllImage } from "@/assets/AllImge";
-import BannerModule from "@/components/Home/Heros/BannerModule";
+import BannerModule from "@/components/Home/Banner&hero/BannerModule";
 import ModuleList from "@/components/module/ModuleList";
 import ModuleTab from "@/components/module/ModuleTab";
 import ModuleTop from "@/components/module/ModuleTop";

@@ -58,7 +58,7 @@ const NavbarPublic = () => {
   const navItemsHome = homeNavItems(userInfo?.role ? userInfo.role : null);
   // console.log(homeNavItems(userInfo?.role ? userInfo.role : null), 'iiiiiiii')
   return (
-    <div className="w-full lg:w-[80%] mx-auto bg-transparent rounded-b-[50px]  backdrop-blur  block lg:flex  items-center justify-between border-b border-slate-500 px-[2em]">
+    <div className="w-full lg:w-[80%] mx-auto bg-transparent rounded-b-[50px]  backdrop-blur-xl  block lg:flex  items-center justify-between border-b border-slate-500 px-[2em]">
       <nav
         className=" text-black py-[8px] md:pt-[0.9em]  
     flex align-center justify-between gap-[5rem] "
@@ -80,7 +80,7 @@ const NavbarPublic = () => {
             background: "none",
             backdropFilter: "blur(80px)",
             boxShadow: "none",
-            color: `${pathname === '/' ? "white" : "black"}`,
+            color: `${pathname === '/' ? "white" : "white"}`,
             // fontWeight:"700"
           }}
           disabledOverflow

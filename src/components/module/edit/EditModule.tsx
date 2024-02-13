@@ -71,7 +71,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
       values["milestone"] = milestone?._id;
     }
 
-    console.log(values, 'values.................')
+    // console.log(values, 'values.................')
     removeNullUndefinedAndFalsey(values);
     const ModuleData: {} = {
       ...values,
@@ -85,7 +85,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
         id: moduleId,
         data: ModuleData,
       }).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
