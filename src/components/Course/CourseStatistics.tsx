@@ -9,7 +9,7 @@ import { useGetSingleCourseModuleLessonQuizVideoSizeQuery } from "@/redux/api/ad
 
 const CourseStatistics = ({ courseId }: { courseId: string }) => {
   const { data, isLoading } =
-  useGetSingleCourseModuleLessonQuizVideoSizeQuery(courseId);
+    useGetSingleCourseModuleLessonQuizVideoSizeQuery(courseId);
   console.log("🚀 ~ CourseStatistics ~ data:", data)
   const allData: any = data;
 
@@ -50,22 +50,23 @@ const CourseStatistics = ({ courseId }: { courseId: string }) => {
     <div className="bg-white grid grid-cols-2 lg:grid-cols-4 w-full lg:w-[60%] mx-auto gap-5 p-4">
       {overViews?.map((item: any, index: number) => (
         <div
-          className="flex flex-col justify-between items-center gap-2 p-5 rounded-md shadow w-[7rem] md:w-[9rem] mx-auto"
+          className="text-center shadow w-[5rem] md:w-[9rem] mx-auto uppercase "
           key={index}
         >
           {typeof item.No === 'number' ? (
-            <>
-              <Image
+            <div className="font-bold">
+              {/* <Image
                 src={item?.icon}
                 height={50}
                 width={50}
                 className="h-[2rem] w-[2rem]"
                 alt="overviews"
-              />
-              <h1 className="font-[500] text-base md:text-lg whitespace-nowrap">
-                {item?.No} {item?.name}
+              /> */}
+              <h1 className="font-bold rounded-t-[8px] bg-[#24560a] px-2 text-white text-center w-full whitespace-nowrap text-xl py-2">
+                {item?.name}
               </h1>
-            </>
+              <p className="text-5xl font-[900] bg-white text-[#1C3052] border-[3px]  border-[#1C3052] p-6">{item?.No}</p>
+            </div>
           ) : (
             item.No // Render placeholder during loading
           )}
