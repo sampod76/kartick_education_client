@@ -25,6 +25,8 @@ export default function LessonPage({
   const { data: moduleData, isLoading } = useGetSingleModuleQuery(moduleId);
   // console.log("🚀 ~ file: page.tsx:12 ~ LessonPage ~ moduleData:", moduleData);
   const milestoneId = moduleData?.milestone?._id;
+
+
   // ! for get all module
   const query: Record<string, any> = {};
   query["limit"] = 999999;
@@ -60,7 +62,7 @@ export default function LessonPage({
   const inactiveClass =
     "  text-[14px] lg:text-[18px]  ";
 
-  console.log(modulesData, 'modulesData')
+  // console.log(modulesData, 'modulesData')
   const tabsItems2: TabsProps["items"] = modulesData?.map(
     (singleModule: any, index: number) => ({
       label: (
@@ -84,7 +86,7 @@ export default function LessonPage({
     <div className="mb-5">
 
       <BannerModule className={"h-[40vh]"} />
-      <div className="text-primary">
+      <div className="my-[4rem]">
         {/* <UMBreadCrumb
         items={[
           {
@@ -109,11 +111,15 @@ export default function LessonPage({
             textTransform: "uppercase",
             fontSize: "24px",
             fontFamily: "Lato",
+            // marginBlock: "4rem",
           }}
         >
-          {moduleData?.milestone?.title} milestone
+          {moduleData?.milestone?.title}
           {/* //! Course Title */}
         </h2>
+        <p className="text-center text-base">
+          {moduleData?.milestone?.short_description}
+        </p>
       </div>
       <div className="mt-9 px-2 lg:px-4 container mx-auto border  ">
         <Tabs
