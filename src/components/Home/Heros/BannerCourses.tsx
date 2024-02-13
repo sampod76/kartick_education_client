@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 
 import { Modal, Button } from "antd";
 import ModalCourseBanner from "@/components/Modal/ModalCourseBanner";
+import Image from "next/image";
 
 const BannerCourses = () => {
   const query: Record<string, any> = {};
@@ -62,56 +63,60 @@ const BannerCourses = () => {
   }
   return (
     <div className="-mt-[5px] ">
-      <div
-        // className="wrapper"
-        style={{
-          // backgroundImage: `url('/banner/bannerBG.png')`,
-          backgroundImage: `url('/banner/courses_banner.png')`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          // minHeight: "50vh",
-          // position: "relative",
 
-          display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "flex-start",
-          margin: "0",
-          position: "relative",
-          // backgroundColor:"white",
-          marginTop: "0px",
-        }}
-        className="h-36 md:h-[40rem]"
+      <Image alt="" src={"/banner/v2CourseBanner.png"} className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[80vh] 2xl:h-[45.75rem] -mt-[6rem]" width={1900} height={1900} />
+      <div
+      // className="wrapper"
+      // style={{
+      //   // backgroundImage: `url('/banner/bannerBG.png')`,
+      //   backgroundImage: `url('/banner/v2CourseBanner.png')`,
+      //   backgroundRepeat: "no-repeat",
+      //   backgroundSize: "cover",
+      //   // minHeight: "50vh",
+      //   // position: "relative",
+
+      //   display: "flex",
+      //   alignItems: "flex-end",
+      //   justifyContent: "flex-start",
+      //   margin: "0",
+      //   position: "relative",
+      //   // backgroundColor:"white",
+      //   marginTop: "0px",
+      // }}
+      // className="h-[] md:h-[40rem]"
       >
         {/* border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
 active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
-        <div className="flex   uppercase justify-between items-center gap-2  font-[550] mb-9 md:mb-[8rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap">
-          {isLoading ? (
-            <CategoryButtonSKeletton />
-          ) : (
-            categoryData?.map((category: any, index: number) => {
-              return (
-                <div key={index + 1} onClick={() => showModal(category?._id)} className={`p-3`}>
-                  <button
-                    className={`py-2 lg:py-3 px-2  lg:px-3 text-[12px] lg:text-[18px] rounded-tl-[20px] rounded-br-[20px] ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
-                      } ${index % 3 === 1 && "bg-secondary"} text-white ${categoryId === category?._id &&
-                      "border-[4px] border-white bg-gradient-to-r  via-[#059669] scale-105 duration-300 from-[#047857] to-[#14b8a6]"
-                      }`}
-                  >
-                    {category?.title}
-                  </button>
-                </div>
-              );
-            })
-          )}
-        </div>
-        <ModalCourseBanner
-          categoryId={isModalCategoryId}
-          showModal={showModal}
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
 
-        />
+
       </div>
+      <div className="flex   uppercase justify-between items-center gap-2  font-[700] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
+        {isLoading ? (
+          <CategoryButtonSKeletton />
+        ) : (
+          categoryData?.map((category: any, index: number) => {
+            return (
+              <div key={index + 1} onClick={() => showModal(category?._id)} className={`p-3`}>
+                <button
+                  className={`py-3 px-3 text-[12px] lg:text-[18px] rounded-tl-[20px rounded-br-[20px rounded-[28rem]  ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
+                    } ${index % 3 === 1 && "bg-secondary"} text-white ${categoryId === category?._id &&
+                    "border-[4px] border-white bg-gradient-to-r  via-[#059669] scale-105 duration-300 from-[#047857] to-[#14b8a6]"
+                    }`}
+                >
+                  {category?.title}
+                </button>
+              </div>
+            );
+          })
+        )}
+      </div>
+      <ModalCourseBanner
+        categoryId={isModalCategoryId}
+        showModal={showModal}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+
+      />
       {/* <div className="">
             <CoverSvg />
           </div> */}
