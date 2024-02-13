@@ -67,7 +67,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
               color: "black",
               textTransform: "uppercase",
               fontSize: "35px",
-              fontFamily: "Lato",
+              fontFamily: "Latao",
             }}
           >
             {courseData?.title}
