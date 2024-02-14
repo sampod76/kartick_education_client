@@ -25,8 +25,8 @@ import { useRouter } from "next/navigation";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
-
-const SignUpTeacherAndStudent = ({setOpen}:any) => {
+import BannerSignUp from '@/components/Home/Banner&hero/BannerSignup'
+const SignUpTeacherAndStudent = ({ setOpen }: any) => {
   console.log("🚀 ~ SignUpTeacherAndStudent ~ setOpen:", setOpen)
   const router = useRouter();
   const [isReset, setIsReset] = useState(false);
@@ -43,7 +43,7 @@ const SignUpTeacherAndStudent = ({setOpen}:any) => {
       router.back();
     }
     setLoading(false);
-    return () => {};
+    return () => { };
   }, [router, userInfo]);
 
   if (loading) {
@@ -112,11 +112,14 @@ const SignUpTeacherAndStudent = ({setOpen}:any) => {
   //   message.loading("Loading...");
   //   return
   // }
-
   return (
-    <div className="container mx-auto p-5 bg-white rounded-lg shadow-2xl">
+    <div className="">
+      <div className="-mt-[2rem] mb-4 lg:mb-6 ">
+        <div className="w-full min-h-[3.3rem] bg-[#BEDDF9]"></div>
+        <BannerSignUp />
+      </div>
       {/* resolver={yupResolver(adminSchema)} */}
-      <div>
+      <div className="container mx-auto p-5 bg-white rounded-lg shadow-2xl">
         <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
@@ -336,7 +339,7 @@ const SignUpTeacherAndStudent = ({setOpen}:any) => {
             </Row>
           </div>
           <div className="flex justify-center items-center">
-            { StudentLoading || SellerLoading ? (
+            {StudentLoading || SellerLoading ? (
               <ButtonLoading />
             ) : (
               <Button htmlType="submit" type="default">

@@ -24,14 +24,14 @@ const SideBarHome = ({ userInfo }: { userInfo: any }) => {
   const sideItemsHome = homeSIdeItems(userInfo?.role ? userInfo.role : null)
   return (
     <>
-      <Space className="text-2xl flex text-gray-200">
+      <Space className="text-2xl flex text-gray-100">
         {
           userInfo?.email ? (
             <UserAvatarUI />
           ) : (
             <div className="flex font-[700] max-h-[2.7rem] lg:max-h-[3.3rem]">
               <Link href="/login">
-                <div className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 py-2 bg-white rounded-[36px] uppercase">
+                <div className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 py-1 bg-white rounded-[36px] uppercase">
                   <span className="relative z-10 text-[#5F8122] group-hover:text-white text-lg duration-500">
                     Login
                   </span>
