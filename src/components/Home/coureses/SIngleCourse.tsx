@@ -65,8 +65,8 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   };
 
   return (
-    <AnimatePresenceWrapper>
-      <div className="w-[360px] md:w-full mx-auto  rounded-md shadow-md bg-white relative">
+    <>
+      <div className="w-[350px] md:w-full h-full rounded-md shadow-md bg-white ">
         <Link
           href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title
             }&courseName=${course?.title}&category=${course?.category?._id || course?.category
@@ -110,17 +110,6 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 </EllipsisMiddle>
               </Typography.Title>
 
-              {/* <p
-                style={{ overflow: "hidden" }}
-                className="text-black text-sm md:text-base"
-              >
-                <EllipsisMiddle
-                  suffixCount={3}
-                  maxLength={screens.xxl ? 170 : screens.xl ? 150 : 170}
-                >
-                  {course?.short_description}
-                </EllipsisMiddle>
-              </p> */}
             </div>
           </div>
         </Link>
@@ -148,7 +137,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
           Enroll Now
         </button>
       </div>
-    </AnimatePresenceWrapper>
+    </>
   );
 };
 

@@ -239,6 +239,16 @@ const CreateCourse = ({ setOpen }: any) => {
                     />
                   </Form.Item>
                 </Col>
+                <Col xs={24} md={12} lg={12} style={{}}>
+                  <Form.Item label="Showing Number" name="showing_number">
+                    <InputNumber
+                      type="number"
+                      size="large"
+                      style={{ width: "100%" }}
+                      placeholder="Please type price"
+                    />
+                  </Form.Item>
+                </Col>
 
                 <Col xs={24} md={12} lg={12} style={{}}>
                   <Form.Item label="Duration" name="duration">
