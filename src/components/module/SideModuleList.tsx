@@ -4,9 +4,9 @@ import {
   useGetSingleMilestoneQuery,
 } from "@/redux/api/adminApi/milestoneApi";
 import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
-import { Divider } from "antd";
+import { Divider, Tabs, TabsProps } from "antd";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { ENUM_YN } from "@/constants/globalEnums";
 import { ContainerOutlined } from "@ant-design/icons"
@@ -40,10 +40,63 @@ const SideModuleList = ({
   // console.log(data,"milestoneId");
   const modulesData = data?.data;
   // console.log("🚀 ~ modulesData:", modulesData)
+  const [activeTabKey, setActiveTabKey] = useState("1");
 
   if (isLoading || moduleLoading) {
     return <LoadingSkeleton />;
   }
+
+  const handleTabClick = (key: any) => {
+    setActiveTabKey(key);
+    // console.log(key);
+  };
+
+  const tabsItems: TabsProps["items"] = [
+    {
+      label: (
+        <button className="text-xl font-bold ">
+          {/* <BlockOutlined
+            style={{
+              fontSize: "1.5rem",
+            }}
+          />{" "} */}
+          <h1 className=" text-sm md:text-lg lg:text-2xl">Lesson Summery</h1>
+        </button>
+      ),
+      key: "1",
+      children: "tab1",
+    },
+    {
+      label: (
+        <button className="text-xl font-bold ">
+          {/* <BookOutlined
+            style={{
+              fontSize: "1.5rem",
+            }}
+          /> */}
+          <h1 className="text-sm md:text-lg lg:text-2xl">Glossary</h1>
+        </button>
+      ),
+      key: "3",
+      children: "tabs3",
+    },
+
+    {
+      label: (
+        <button className="text-xl font-bold ">
+          {" "}
+          {/* <CommentOutlined
+            style={{
+              fontSize: "1.5rem",
+            }}
+          /> */}
+          <h1 className=" text-sm md:text-lg lg:text-2xl"> Resources</h1>
+        </button>
+      ),
+      key: "4",
+      children: "tab4",
+    },
+  ];
   return (
     <div
       style={{
@@ -61,7 +114,13 @@ const SideModuleList = ({
           background: "red",
         }}
       /> */}
-
+      {/* <Tabs
+        defaultActiveKey="1"
+        tabPosition="left"
+        centered
+        onChange={handleTabClick}
+        items={tabsItems}
+      /> */}
       <div className="flex flex-col gap-1 md:gap-2 max-w-[8 mx-auto mt-2">
         {modulesData?.map((module: any, index: number) => {
           return (

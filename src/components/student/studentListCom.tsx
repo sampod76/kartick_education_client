@@ -115,9 +115,8 @@ const StudentListCom = ({
       title: "Name",
       render: function (data: any) {
         // console.log(data);
-        const fullName = `${data[data.role]?.name?.firstName} ${
-          data[data.role]?.name?.lastName
-        }  `;
+        const fullName = `${data[data.role]?.name?.firstName} ${data[data.role]?.name?.lastName
+          }  `;
         return <>{fullName}</>;
       },
     },
@@ -161,7 +160,7 @@ const StudentListCom = ({
     {
       title: "Status",
       dataIndex: "status",
-      
+
     },
     {
       title: "Action",
@@ -207,7 +206,7 @@ const StudentListCom = ({
                   </Menu>
                 }
               >
-                <a>Action</a>
+                <button className="text-blue-700">Action</button>
               </Dropdown>
             </Space>
           </>

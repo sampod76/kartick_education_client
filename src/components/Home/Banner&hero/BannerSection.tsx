@@ -55,14 +55,13 @@ const BannerSection = () => {
   };
 
   return (
-    <Image alt="" src={"/banner/v2Banner.png"} className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[80vh] 2xl:h-[45.75rem] -mt-[3.5rem]"  width={1900} height={1900}/>
+    <Image alt="" src={"/banner/v2Banner.png"} className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[80vh] 2xl:h-[45.75rem] -mt-[3.5rem]" width={1900} height={1900} />
     // <div
     //   className="-mt-[3.5rem] min-h-[50rem] w-full relative flex flex-col justify-end re"
     //   style={{
     //     backgroundImage: `url('/banner/v2Banner.png')`,
     //     backgroundRepeat: "no-repeat",
     //     backgroundSize: "cover", // or "contain"
-        
     //   }}
     // >
 
@@ -156,9 +155,9 @@ const BannerSection = () => {
     //       alt="treeboy"
     //     />
     //   </div> */}
-   
+
     // </div>
- 
+
   );
 };
 

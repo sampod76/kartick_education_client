@@ -56,7 +56,7 @@ export default function AdvanceClassList() {
   // const SUPER_ADMIN=USER_ROLE.ADMIN
   const userInfo = getUserInfo() as IDecodedInfo
 
-  const [deleteShowAdvanceClasses,{isLoading:deleteLoading}] = useDeleteShowAdvanceClassesMutation();
+  const [deleteShowAdvanceClasses, { isLoading: deleteLoading }] = useDeleteShowAdvanceClassesMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -200,7 +200,7 @@ export default function AdvanceClassList() {
                 </Menu>
               }
             >
-              <a>Action</a>
+              <button className="text-blue-700">Action</button>
             </Dropdown>
           </Space>
         </>

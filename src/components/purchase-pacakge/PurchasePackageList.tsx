@@ -206,7 +206,7 @@ export default function PurchasePackageList() {
                 </Menu>
               }
             >
-              <a>Action</a>
+              <button className="text-blue-700">Action</button>
             </Dropdown>
           </Space>
         </>
