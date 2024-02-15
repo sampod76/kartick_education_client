@@ -58,11 +58,10 @@ const NavbarPublic = () => {
   const navItemsHome = homeNavItems(userInfo?.role ? userInfo.role : null);
   // console.log(homeNavItems(userInfo?.role ? userInfo.role : null), 'iiiiiiii')
   return (
-    <div className={`w-full lg:w-[80%] mx-auto bg-transparent ${pathname === '/contact' || pathname === '/analytics' ? 'bg-[#C2C4CB]' : 'bg-transparent'} rounded-b-[50px]  backdrop-blur-xl  block lg:flex  items-center justify-between border-b border-slate-500 px-[2em]`}>
-
+    <div className={`w-full lg:w-[84%] mx-auto bg-transparent ${pathname === '/contact' || pathname === '/analytics' ? 'bg-[#C2C4CB]' : 'bg-transparent'} rounded-b-[50px]  backdrop-blur-xl  block md:flex lg:flex xl:flex items-center justify-between border-b border-slate-500 px-[2em] `}>
       <nav
-        className="text-[#dedee0 text-black py-[8px] md:pt-[0.9em]  
-    flex align-center justify-between gap-[5rem] "
+        className="text-[#dedee0 text-black py-[8px md:pt-[0.9em  
+    flex align-center justify-between gap-[5rem]"
       >
         <Logo />
         {/* {userInfo?.role &&
@@ -70,11 +69,11 @@ const NavbarPublic = () => {
         } */}
         <Menu
           mode="horizontal"
-          className="hidden lg:flex"
+          className="hidden md:flex lg:flex xl:flex items-center"
           style={{
             // color:"#5371FF"
             fontWeight: "700",
-            fontSize: "15px",
+            // fontSize: "15px",
             fontFamily: "roboto",
             // backdropBlur:"blur(8px)"
             // display:`${screens.sm ? "flex":"none"}`
@@ -91,7 +90,7 @@ const NavbarPublic = () => {
         />
 
         <div
-          className="flex lg:hidden"
+          className="flex  md:hidden lg:hidden xl:hidden "
         // style={{
         //   display: `${screens.sm ? "none" : "flex"}`,
         // }}
@@ -99,8 +98,9 @@ const NavbarPublic = () => {
           <SideBarHome userInfo={userInfo}></SideBarHome>
         </div>
       </nav>
-      <div className=" hidden lg:flex gap-2">
-        <div className="hidden lg:flex">
+
+      <div className="hidden md:flex lg:flex xl:flex gap-2 items-center ">
+        <div className="hidden md:flex lg:flex xl:flex items-center ">
           <Link
             href="/subscription"
             className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 md:px-3 py-1 md:py-0 lg:py-1 xl:py-2  bg-white rounded-[36px] uppercase "
@@ -112,7 +112,7 @@ const NavbarPublic = () => {
             <span className="absolute w-full h-full bg-[#5F8122] -right- top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
           </Link>
         </div>
-        <div className="flex justify-between gap-1 lg:mt-0 ">
+        <div className="flex justify-between items-center gap-1 lg:mt-0 ">
           {userInfoLoading ? (
             <div className="bg-white w-[50px] h-[50px] rounded-full shadow-md animate-pulse"></div>
           ) : userInfo?.id ? (

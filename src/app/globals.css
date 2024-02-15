@@ -1,10 +1,9 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lora&display=swap");
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Lora', serif;
+  font-family: "Lora", serif;
   /* max-width: "1536px";
   margin-inline: "auto"; */
   /* font-family: 'Roboto Condensed', sans-serif; */
@@ -12,7 +11,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 .container2 {
   width: 100%;
@@ -162,3 +160,11 @@ td {
 .error {
   color: #dc3545; /* Text color for error state */
 }
+
+.colorCheck {
+  @apply bg-slate-600 md:bg-blue-500 lg:bg-red-300 xl:bg-green-400;
+}
+/* 
+.commonGap {
+  @apply w-full md:w-5/6 mx-0 md:mx-auto;
+} */
