@@ -5,13 +5,15 @@ function VimeoPlayer({
   link,
   width = 640,
   height = 640,
+    autoplay =true
 }: {
   link: string;
   width?: number;
   height?: number;
+  autoplay?: boolean;
 }) {
   const playerRef = useRef<HTMLDivElement>(null);
-
+console.log(autoplay)
   useEffect(() => {
     // Initialize the Vimeo player once the component mounts
     if (!link || !playerRef.current) {
@@ -23,7 +25,7 @@ function VimeoPlayer({
       height: height,
       width: width,
       autopause:true,
-      autoplay: true,
+      autoplay,
       // responsive: true,
 
       // Replace VIDEO_ID with the actual ID of the Vimeo video you want to embed
