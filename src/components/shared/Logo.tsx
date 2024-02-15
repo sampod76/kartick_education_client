@@ -20,8 +20,8 @@ const Logo = () => {
         background: "transparent"
       }}
     >
-      <Image src={logoImage} height={120} width={200} className="w-[70px]
-       md:w-[84px] lg:w-[90px]  xl:w-[80px]  h-[56px] lg:h-[70px] 
+      <Image src={logoImage} height={120} width={200} className="w-[50px] 
+       md:w-[84px] lg:w-[90px]  xl:w-[80px]  h-[40px] lg:h-[70px] 
        " alt="Logo" />
 
     </Link>

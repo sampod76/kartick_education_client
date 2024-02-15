@@ -85,7 +85,7 @@ const UserAvatarUI = () => {
             src={AllImage.profileAvater || ""}
             width={550}
             height={550}
-            className="w-[32px]  h-8  md:w-[80px] lg:w-[64px] xl:w-[64px]  lg:h-12  rounded-full"
+            className="w-8 h-8 md:h-12 md:w-12  rounded-full"
             alt=""
           />
         </button>
@@ -94,9 +94,9 @@ const UserAvatarUI = () => {
   );
 };
 
-// export default UserAvatarUI;
+export default UserAvatarUI;
 
 
-export default dynamic(() => Promise.resolve(UserAvatarUI), {
-  ssr: false,
-});
+// export default dynamic(() => Promise.resolve(UserAvatarUI), {
+//   ssr: false,
+// });
