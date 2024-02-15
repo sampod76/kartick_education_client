@@ -9,6 +9,7 @@ import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { useGetAllShowAdvanceClassesQuery } from "@/redux/api/adminApi/features/showAdvanceClassApi";
 import SIngleAdvanceClass from "./SingleAdvanceClass";
 import { Button } from "antd";
+import Link from "next/link";
 
 const AdvanceHomeClass = () => {
   const query: Record<string, any> = {};
@@ -34,9 +35,9 @@ const AdvanceHomeClass = () => {
         <h1 className="pl-2 lg:pl-0 text-xl lg:text-3xl my-2 text-[#282938] font-[600]">
           {classData?.title}
         </h1>
-        <Button type="default" className="p-2 mt-3 h-10 text-nowrap border-2 border-primary rounded px-3 font-semibold gap-3 hover:bg-primary hover:text-white">
+        <Link href={`/subscription`} type="default" className="p-2 mt-3 h-10 text-nowrap border-2 border-primary rounded px-3 font-semibold gap-3 hover:bg-primary hover:text-white">
           Join Now
-        </Button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 first-letter:">
