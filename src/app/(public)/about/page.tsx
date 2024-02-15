@@ -95,7 +95,7 @@ export default function AboutPage() {
 
             </div>
             {/* footer sections */}
-            <div className="mt-5 container mx-auto bg-white py-5 px-7">
+            <div className="mt-5 container mx-auto  max-w-[1200px] bg-white py-5 px-7">
                 <h2 className='text-center text-4xl font-semibold '>Why Choose iBlossomLearn?</h2>
 
                 <div className=" w-full  mx-auto flex flex-col gap-7 mt-5">

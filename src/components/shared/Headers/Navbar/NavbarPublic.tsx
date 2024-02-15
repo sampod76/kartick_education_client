@@ -114,7 +114,7 @@ const NavbarPublic = () => {
         <div className="flex justify-between gap-1 lg:mt-0 ">
           {userInfoLoading ? (
             <div className="bg-white w-[50px] h-[50px] rounded-full shadow-md animate-pulse"></div>
-          ) : userInfo?.email ? (
+          ) : userInfo?.id ? (
             <UserAvatarUI />
           ) : (
             <div
