@@ -62,7 +62,7 @@ const UserAvatarUI = () => {
         display: "flex",
         alignItems: "center",
         gap: "28px",
-        marginLeft: "24px",
+        // marginLeft: "24px",
       }}
     >
       <Dropdown
@@ -72,7 +72,7 @@ const UserAvatarUI = () => {
           background: "black",
         }}
       >
-        <button style={{ opacity: "0px" }}>
+        <button style={{ opacity: "0px" }} className="">
           {/* <Avatar
             style={{
               fontSize: "",
@@ -85,7 +85,7 @@ const UserAvatarUI = () => {
             src={AllImage.profileAvater || ""}
             width={550}
             height={550}
-            className="w-8  h-8 lg:w-12  lg:h-12  rounded-full"
+            className="w-[32px]  h-8  md:w-[80px] lg:w-[64px]  lg:h-12  rounded-full"
             alt=""
           />
         </button>

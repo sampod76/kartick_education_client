@@ -111,30 +111,30 @@ const CoursesTab = () => {
             <span className="text-[#FB8500] mx-2 font-[800]">iBlossomLearn</span></span>
           <span className="text-nowrap">Your adventure in learning awaits!</span>
         </h2>
-        <Link href={`/`} className="cursor-pointer text-nowrap overflow-hidden relative z-100 border border-[#5F8122] text-[#5F8122] group px-3 py-2 lg:px-5 lg:py-2 bg-white rounded-[36px] uppercase font-bold text-center text-[10px] md:text-[12px] lg:text-lg">
+        <Link href={`/subscription`} className="cursor-pointer text-nowrap overflow-hidden relative z-100 border border-[#5F8122] text-[#5F8122] group px-3 py-2 lg:px-5 lg:py-2 bg-white rounded-[36px] uppercase font-bold text-center text-[10px] md:text-[12px] lg:text-lg">
           Join Now
         </Link>
       </div>
 
-{/* <div>
+      {/* <div>
 
 </div> */}
-<div>
+      <div>
 
-      {isLoading ? (
-        <TopBarLoading />
-      ) : (
-        <Tabs
-          defaultActiveKey="011allCourses"
-          // centered
-          animated
-          onChange={handleTabClick}
-          items={tabsItems2}
-          // style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
-          onTabClick={(key, event) => TabClickHandler(key, event)}
-        />
-      )}
-</div>
+        {isLoading ? (
+          <TopBarLoading />
+        ) : (
+          <Tabs
+            defaultActiveKey="011allCourses"
+            // centered
+            animated
+            onChange={handleTabClick}
+            items={tabsItems2}
+            // style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
+            onTabClick={(key, event) => TabClickHandler(key, event)}
+          />
+        )}
+      </div>
     </div>
   );
 };
