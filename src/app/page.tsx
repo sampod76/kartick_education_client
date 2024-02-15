@@ -1,7 +1,7 @@
 'use client'
 import Footer from "@/components/Home/Footer";
-import BannerSection from "@/components/Home/Heros/BannerSection";
-import SupportHero from "@/components/Home/Heros/SupportHero";
+import BannerSection from "@/components/Home/Banner&hero/BannerSection";
+import SupportHero from "@/components/Home/Banner&hero/SupportHero";
 
 import TestimonialMain from "@/components/Home/Testimonial/TestimonialMain";
 import CommonCourse from "@/components/Home/commonCourse/CommonCourse";

@@ -12,9 +12,9 @@ export default function ModuleTop({ moduleData }: { moduleData: any }) {
 
   return (
     <div
-    className="rounded-tl-[20px] rounded-br-[20px]"
+      className="rounded-tl-[20px] rounded-br-[20px] bg-secondary"
       style={{
-        background: "#5371FF",
+        // background: "#5371FF",
         // minHeight: "3rem",
         // height: "",
         width: "100%",

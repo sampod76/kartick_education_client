@@ -69,8 +69,10 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
 
   return (
     <>
+
       <div className="w-[350px] md:w-full h-full rounded-md shadow-md bg-white mx-auto flex flex-col justify-between ">
         <div className="flex justify-center items-center">
+
 
           <VimeoPlayer
             width={!screens.xl ? 360 : !screens.lg ? 385 : !screens.sm ? 340 : 340}

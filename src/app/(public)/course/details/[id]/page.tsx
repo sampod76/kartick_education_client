@@ -4,8 +4,8 @@ import CourseDetailsTab from "@/components/Course/CourseDetails/CourseDetailsTab
 import CourseDetailsTop from "@/components/Course/CourseDetails/CourseDetailsTop";
 import CourseDetailsMain from "@/components/Course/CourseDetails/CourseDetailsMain";
 import CourseStatistics from "@/components/Course/CourseStatistics";
-import BannerCourses from "@/components/Home/Heros/BannerCourses";
-import SupportHero from "@/components/Home/Heros/SupportHero";
+import BannerCourses from "@/components/Home/Banner&hero/BannerCourses";
+import SupportHero from "@/components/Home/Banner&hero/SupportHero";
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import React from "react";
 
@@ -47,7 +47,7 @@ const CourseDetailsPublicPage = ({ params }: any) => {
       {/* <h2 className="text-base font-normal">The Web Developer Boot Camp</h2> */}
       <BannerCourses />
       {/* <CourseStatistics /> */}
- <CourseDetailsMain courseId={id}/>
+      <CourseDetailsMain courseId={id} />
       <SupportHero />
     </div>
   );

@@ -66,10 +66,9 @@ export default function StudentActivePackageToCourse() {
       title: "Expiry date",
       render: function (data: any) {
         // console.log(data);
-        const label = `${
-          data?.sellerPackageDetails?.expiry_date &&
+        const label = `${data?.sellerPackageDetails?.expiry_date &&
           dayjs(data?.sellerPackageDetails?.expiry_date).format("MMMM D, YYYY")
-        } `;
+          } `;
         return <>{label}</>;
       },
     },
@@ -106,7 +105,7 @@ export default function StudentActivePackageToCourse() {
                   </Menu>
                 }
               >
-                <a>Action</a>
+                <button className="text-blue-700">Action</button>
               </Dropdown> */}
               <button
                 onClick={() =>
