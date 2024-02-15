@@ -6,7 +6,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
   const defaultNavItem = [
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/">
+        <Link className="text-[20px]   font-bold capitalize" href="/">
           Home
         </Link>
       ),
@@ -14,7 +14,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     },
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/subscription">
+        <Link className="text-[20px]   font-bold capitalize" href="/subscription">
           subscription
         </Link>
       ),
@@ -22,7 +22,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     },
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/learning">
+        <Link className="text-[20px]   font-bold capitalize" href="/learning">
           Learning
         </Link>
       ),
@@ -30,7 +30,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     },
     // {
     //   label: (
-    //     <Link className="text-[20px]  font-bold capitalize" href="/">
+    //     <Link className="text-[20px]   font-bold capitalize" href="/">
     //       Assessment
     //     </Link>
     //   ),
@@ -38,7 +38,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     // },
     // {
     //   label: (
-    //     <Link className="text-[20px]  font-bold capitalize" href="/">
+    //     <Link className="text-[20px]   font-bold capitalize" href="/">
     //       Analysis
     //     </Link>
     //   ),
@@ -47,7 +47,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
 
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/contact">
+        <Link className="text-[20px]   font-bold capitalize" href="/contact">
           Contacts
         </Link>
       ),
@@ -55,7 +55,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     },
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/about">
+        <Link className="text-[20px]   font-bold capitalize" href="/about">
           About
         </Link>
       ),
@@ -68,7 +68,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     ...defaultNavItem,
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/analytics">
+        <Link className="text-[20px]   font-bold capitalize" href="/analytics">
           Analytics
         </Link>
       ),
@@ -87,7 +87,7 @@ export const homeNavItem: MenuProps["items"] =
   [
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/">
+        <Link className="text-[20px]   font-bold capitalize" href="/">
           Home
         </Link>
       ),
@@ -95,7 +95,7 @@ export const homeNavItem: MenuProps["items"] =
     },
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/subscription">
+        <Link className="text-[20px]   font-bold capitalize" href="/subscription">
           subscription
         </Link>
       ),
@@ -103,7 +103,7 @@ export const homeNavItem: MenuProps["items"] =
     },
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/learning">
+        <Link className="text-[20px]   font-bold capitalize" href="/learning">
           Learning
         </Link>
       ),
@@ -111,7 +111,7 @@ export const homeNavItem: MenuProps["items"] =
     },
     // {
     //   label: (
-    //     <Link className="text-[20px]  font-bold capitalize" href="/">
+    //     <Link className="text-[20px]   font-bold capitalize" href="/">
     //       Assessment
     //     </Link>
     //   ),
@@ -119,7 +119,7 @@ export const homeNavItem: MenuProps["items"] =
     // },
     // {
     //   label: (
-    //     <Link className="text-[20px]  font-bold capitalize" href="/">
+    //     <Link className="text-[20px]   font-bold capitalize" href="/">
     //       Analysis
     //     </Link>
     //   ),
@@ -128,7 +128,7 @@ export const homeNavItem: MenuProps["items"] =
 
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/contact">
+        <Link className="text-[20px]   font-bold capitalize" href="/contact">
           Contacts
         </Link>
       ),
@@ -136,7 +136,7 @@ export const homeNavItem: MenuProps["items"] =
     },
     {
       label: (
-        <Link className="text-[20px]  font-bold capitalize" href="/course">
+        <Link className="text-[20px]   font-bold capitalize" href="/course">
           About
         </Link>
       ),
