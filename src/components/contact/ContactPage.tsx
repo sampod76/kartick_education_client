@@ -12,6 +12,7 @@ import {
   LinkedinFilled,
   LinkedinOutlined,
   YoutubeOutlined,
+  TwitterOutlined
 } from "@ant-design/icons";
 import CreateStudentPage from "../stepper/CreateStudent";
 import ContactForm from "./ContactForm";
@@ -80,24 +81,27 @@ export default function ContactPage() {
               style={{
                 fontSize: "48px",
                 borderRadius: "10px",
-                backgroundColor: "grey",
+                backgroundColor: "#5F8122",
                 color: "white",
+                border: "2px solid #5F8122"
               }}
             />
-            <TwitterCircleFilled
+            <TwitterOutlined
               style={{
                 fontSize: "48px",
-                borderRadius: "100%",
-                backgroundColor: "grey",
+                borderRadius: "8px",
+                backgroundColor: "#5F8122",
                 color: "white",
+                border: "2px solid #5F8122"
               }}
             />
             <LinkedinFilled
               style={{
                 fontSize: "48px",
                 borderRadius: "8px",
-                backgroundColor: "grey",
+                backgroundColor: "#5F8122",
                 color: "white",
+                border: "2px solid #5F8122"
               }}
             />
             {/* <LinkedinOutlined /> */}
@@ -105,8 +109,9 @@ export default function ContactPage() {
               style={{
                 fontSize: "48px",
                 borderRadius: "10px",
-                backgroundColor: "grey",
+                backgroundColor: "#5F8122",
                 color: "white",
+                border: "2px solid #5F8122"
               }}
             />
           </div>
