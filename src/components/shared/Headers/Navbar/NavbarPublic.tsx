@@ -58,7 +58,7 @@ const NavbarPublic = () => {
   const navItemsHome = homeNavItems(userInfo?.role ? userInfo.role : null);
   // console.log(homeNavItems(userInfo?.role ? userInfo.role : null), 'iiiiiiii')
   return (
-    <div className={`w-full lg:w-[84%] mx-auto bg-transparent ${pathname === '/contact' || pathname === '/analytics' ? 'bg-[#C2C4CB]' : 'bg-transparent'} rounded-b-[50px]  backdrop-blur-xl  block md:flex lg:flex xl:flex items-center justify-between border-b border-slate-500 px-[2em] `}>
+    <div className={`w-full lg:w-[84%] mx-auto bg-transparent rounded-b-[50px]  backdrop-blur-xl  block md:flex lg:flex xl:flex items-center justify-between border-b border-slate-500 px-[2em] `}>
       <nav
         className="text-[#dedee0 text-black py-[8px md:pt-[0.9em  
     flex align-center justify-between gap-[5rem]"
@@ -77,7 +77,8 @@ const NavbarPublic = () => {
             fontFamily: "roboto",
             // backdropBlur:"blur(8px)"
             // display:`${screens.sm ? "flex":"none"}`
-            background: `${pathname === '/contact' || pathname === '/analytics' ? "#C2C4CB" : "none"}  `,
+            // background: `${pathname === '/contact' || pathname === '/analytics' ? "#C2C4CB" : "none"}  `,
+            background: "none",
             backdropFilter: "blur(80px)",
             boxShadow: "none",
             color: `${pathname === '/' ? "white" : "black"}`,
