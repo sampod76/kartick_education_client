@@ -4,10 +4,18 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IBannerCourse {
   searchValue: string;
+  generateColor?: {
+    color: string;
+    bg: string;
+  };
 }
 
 const initialState: IBannerCourse = {
   searchValue: "",
+  generateColor: {
+    color: "#108213",
+    bg: "#E8EABD",
+  },
 };
 
 const bannerCourseSlice = createSlice({
@@ -35,10 +43,19 @@ const bannerCourseSlice = createSlice({
       //   );
       //   state.total -= action.payload.price;
     },
+    addBackgroundColor: (
+      state,
+      action: PayloadAction<{ color: string; bg: string }>
+    ) => {
+      state.generateColor = action.payload;
+    },
   },
 });
 
-export const { addBannerSearchValue, clearBannerSearchValue } =
-  bannerCourseSlice.actions;
+export const {
+  addBannerSearchValue,
+  clearBannerSearchValue,
+  addBackgroundColor,
+} = bannerCourseSlice.actions;
 
 export default bannerCourseSlice.reducer;

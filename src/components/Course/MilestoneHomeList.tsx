@@ -18,15 +18,17 @@ import PaypalCheckoutByCourse from "../Utlis/PaypalCheckoutByCourse";
 import SingleMilestone from "../milestone/SingleMilestone";
 import { IMilestoneData } from "@/types/miestoneType";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
+import { useAppSelector } from "@/redux/hooks";
 
-const MilestoneList = ({ courseId }: { courseId: string }) => {
+const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
   // const userInfo = getUserInfo() as any;
+  // const { generateBgColor } = useAppSelector((state) => state.bannerSearch);
   const {
     data: courseData = {},
     isLoading: courseLoading,
     error,
   } = useGetSingleCourseQuery(courseId);
-  console.log("🚀 ~ MilestoneList ~ courseData:", courseData)
+  // console.log("🚀 ~ MilestoneHomeList ~ courseData:", courseData)
 
   const query: Record<string, any> = {};
   query["limit"] = 999999;
@@ -42,7 +44,9 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
     module: "yes",
     ...query,
   })
-  // console.log("🚀 ~ MilestoneList ~ data:", data)
+
+
+  // console.log("🚀 ~ MilestoneHomeList ~ data:", data)
   // console.log(data,"courseId");
   const milestoneData = data?.data || [];
 
@@ -88,7 +92,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
               background: "red",
             }}
           />
-          <div className="flex justify-between items-center bg-[#8CA46D]">
+          <div className="flex justify-between items-center ">
             {/* <div className="w-full lg:w-[20%]">
               <h2 className="uppercase text-2xl font-bold">Label</h2>
               <div className="flex flex-col gap-5 ">
@@ -112,7 +116,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
   );
 };
 
-export default MilestoneList;
+export default MilestoneHomeList;
 // export default dynamic(() => Promise.resolve(MilestoneList), {
 //    ssr: false,
 //  });
