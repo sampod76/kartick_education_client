@@ -37,7 +37,7 @@ export default function ModuleTab({
   const tabsItems: TabsProps["items"] = [
     {
       label: (
-        <button className="text-xl font-bold text-secondary ">
+        <button className="text-xl font-bold text-[#323232] ">
           <BlockOutlined
             style={{
               fontSize: "1.5rem",
@@ -67,7 +67,7 @@ export default function ModuleTab({
 
     {
       label: (
-        <button className="text-xl font-bold text-secondary ">
+        <button className="text-xl font-bold text-[#323232] ">
           <BookOutlined
             style={{
               fontSize: "1.5rem",
@@ -82,7 +82,7 @@ export default function ModuleTab({
 
     {
       label: (
-        <button className="text-xl font-bold text-secondary ">
+        <button className="text-xl font-bold text-[#323232] ">
           {" "}
           <CommentOutlined
             style={{
@@ -94,16 +94,23 @@ export default function ModuleTab({
       ),
       key: "4",
       children: <ResourcePage moduleId={moduleId} />,
+
     },
   ];
   return (
-    <div className="mt-5">
+    <div className="mt-5 ">
       <Tabs
         defaultActiveKey="1"
-        centered
+        // centered
         onChange={handleTabClick}
         items={tabsItems}
         // type=""
+        tabBarStyle={{
+          background: '#D9D9D9',
+          padding: "10px",
+          borderRadius: '8px'
+
+        }}
       />
     </div>
   );
