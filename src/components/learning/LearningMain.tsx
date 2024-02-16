@@ -121,7 +121,7 @@ export default function LearningMain() {
                             <div className="" >
 
 
-                                <div className=" grid grid-cols-1 lg:grid-cols-2 px-3">
+                                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3">
                                     {
                                         milestoneData?.map((milestone) => (
                                             <div className="" key={milestone?._id}>
