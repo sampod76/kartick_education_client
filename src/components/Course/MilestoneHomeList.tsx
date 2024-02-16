@@ -17,6 +17,7 @@ import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import PaypalCheckoutByCourse from "../Utlis/PaypalCheckoutByCourse";
 import SingleMilestone from "../milestone/SingleMilestone";
 import { IMilestoneData } from "@/types/miestoneType";
+import { EllipsisMiddle } from "@/utils/CutTextElliples";
 
 const MilestoneList = ({ courseId }: { courseId: string }) => {
   // const userInfo = getUserInfo() as any;
@@ -41,7 +42,7 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
     module: "yes",
     ...query,
   })
-    // console.log("🚀 ~ MilestoneList ~ data:", data)
+  // console.log("🚀 ~ MilestoneList ~ data:", data)
   // console.log(data,"courseId");
   const milestoneData = data?.data || [];
 
@@ -72,6 +73,11 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
           >
             {courseData?.title}
           </h2>
+          <p className="text-center my-3 text-lg lg:text-xl">
+            <EllipsisMiddle suffixCount={3} maxLength={120}>
+              {courseData?.short_description}
+            </EllipsisMiddle>
+          </p>
           <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
             <PaypalCheckoutByCourse courseData={courseData} />
           </div>
@@ -82,12 +88,23 @@ const MilestoneList = ({ courseId }: { courseId: string }) => {
               background: "red",
             }}
           />
-          <div className="grid  grid-cols-1 lg:grid-cols-2 gap-3">
-            {milestoneData?.map((milestone: IMilestoneData, index: number) => {
-              return (
-                <SingleMilestone key={index} milestoneData={milestone} index={index}/>
-              );
-            })}
+          <div className="flex justify-between items-center bg-[#8CA46D]">
+            {/* <div className="w-full lg:w-[20%]">
+              <h2 className="uppercase text-2xl font-bold">Label</h2>
+              <div className="flex flex-col gap-5 ">
+                <button>Lebel-1</button>
+                <button>Lebel-2</button>
+                <button>Lebel-3</button>
+              </div>
+            </div> */}
+
+            <div className="w-full lg:w-[80%] grid  grid-cols-1 lg:grid-cols-2 gap-3">
+              {milestoneData?.map((milestone: IMilestoneData, index: number) => {
+                return (
+                  <SingleMilestone key={index} milestoneData={milestone} index={index} />
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
