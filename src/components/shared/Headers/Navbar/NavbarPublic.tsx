@@ -95,7 +95,7 @@ const NavbarPublic = () => {
         //   display: `${screens.sm ? "none" : "flex"}`,
         // }}
         >
-          <SideBarHome userInfo={userInfo}></SideBarHome>
+          <SideBarHome userInfo={userInfo} userInfoLoading={userInfoLoading}></SideBarHome>
         </div>
       </nav>
 

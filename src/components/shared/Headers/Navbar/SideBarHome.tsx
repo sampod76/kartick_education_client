@@ -9,9 +9,9 @@ import homeSIdeItems from "@/constants/homeSideBarItems";
 import Link from "next/link";
 import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
 
-const SideBarHome = ({ userInfo }: { userInfo: any }) => {
+const SideBarHome = ({ userInfo, userInfoLoading }: { userInfo: any, userInfoLoading: boolean }) => {
   const [open, setOpen] = useState(false);
-
+  // const [userInfoLoading, setUserInfoLoading] = useState(true);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -25,7 +25,9 @@ const SideBarHome = ({ userInfo }: { userInfo: any }) => {
   return (
     <>
       <Space className="text-2xl flex text-gray-100">
-        {
+        {userInfoLoading ? (
+          <div className="bg-white w-[50px] h-[50px] rounded-full shadow-md animate-pulse"></div>
+        ) :
           userInfo?.email ? (
             <UserAvatarUI />
           ) : (
