@@ -63,11 +63,12 @@ export default function LearningMain() {
 
     const categoryId = queryData?.categoryId
 
+    // console.log(categoryId, 'categoryId')
     let labelQuery = { ...query }
     if (categoryId) {
         labelQuery["category"] = categoryId
     } else {
-        labelQuery["category"] = '11'
+        labelQuery["category"] = learningCategoryId
     }
 
 
@@ -90,6 +91,9 @@ export default function LearningMain() {
     const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery }) as any
 
     const courseFirstData = courseAllData?.data[0] as any
+
+
+
     if (error || categoryLevelError) {
         console.log(error, categoryLevelError);
     }

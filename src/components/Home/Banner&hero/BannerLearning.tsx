@@ -47,8 +47,15 @@ const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, set
     }
     const categoryId = queryData?.categoryId;
 
-    console.log(queryData, 'queryData');
+    // console.log(queryData, 'queryData');
 
+
+    if (!categoryId) {
+        setLearningCategoryId(categoryData[0]?._id)
+    }
+    else {
+        setLearningCategoryId(categoryData[0]?._id)
+    }
 
     // const [LearningCategoryId, setLearningCategoryId] = useState<string | null>(
     //     categoryId
