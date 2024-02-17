@@ -52,21 +52,7 @@ export default function LearningMain() {
 
     const categoryId = learningCategoryId || courseFirstData?.category?._id
     const { data: courseLevelData, isLoading: courseLevelLoading, error: categoryLevelError } = useGetAllCourse_labelQuery({ ...query, category: categoryId })
-    // const courseId = courseFirstData?._id || ''
-
-    // console.log(courseLevelData, 'courseLevelData', categoryId)
-
-    // const {
-    //     data: courseFirstData = {},
-    //     isLoading: courseLoading,
-    //     error,
-    // } = useGetSingleCourseQuery(courseId);
-    // console.log("🚀 ~ MilestoneList ~ courseFirstData:", courseFirstData)
-
-    // console.log(labelId, 'labelId')
-
-
-    // console.log(milestoneData)
+   
 
     if (error || categoryLevelError) {
         console.log(error, categoryLevelError);
@@ -129,6 +115,8 @@ export default function LearningMain() {
                                         </button>
                                     ))
                                 }
+                    
+                
                             </div>
                         </div>
                         <div className="w-full lg:w-[70%] md:w-[70%] xl:w-[75%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 container mx-auto">
