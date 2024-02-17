@@ -6,7 +6,7 @@ import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import CategoryButtonSKeletton from "@/components/ui/Loading/CategoryButtonSKeletton";
 import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
 import CoverSvg from "@/assets/svg/CoverBackground";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { Modal, Button } from "antd";
 import ModalCourseBanner from "@/components/Modal/ModalCourseBanner";
@@ -21,6 +21,8 @@ interface BannerLearningProps {
 }
 const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, setLearningCategoryId }) => {
 
+
+    const router = useRouter()
     const dispatch = useAppDispatch();
     const query: Record<string, any> = {};
     query["limit"] = 999999;
@@ -32,9 +34,20 @@ const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, set
     const categoryData = data?.data || [];
 
     const searchParams = useSearchParams();
+    const encodedData = searchParams.get("data");
+    // Check if encodedData is not null and not an empty string before decoding
+    const decodedData = encodedData && encodedData.trim() !== "" ? decodeURIComponent(encodedData) : "";
+    let queryData;
+    try {
+        queryData = JSON.parse(decodedData);
+    } catch (error) {
+        // Handle the error, log it, or provide a default value for queryData
+        console.error("Error parsing JSON:", error);
+        queryData = {}; // Provide a default value if parsing fails
+    }
+    const categoryId = queryData?.categoryId;
 
-    const categoryId = searchParams.get("category");
-
+    console.log(queryData, 'queryData');
 
 
     // const [LearningCategoryId, setLearningCategoryId] = useState<string | null>(
@@ -82,12 +95,22 @@ const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, set
         return bgColors[index % bgColors.length];
     };
 
+    // const encodedData = router.query.data
+    // const searchParams = useSearchParams()
+    // const searchParams = useSearchParams();
+
     const modalButtonHandler = (id: string, index: number) => {
         // showModal(id);
         setLearningCategoryId(id);
         const color = getCategoryColor(index);
-        const bg = getBGColor(index)
-        dispatch(addBackgroundColor({ color, bg }));
+        // const bg = getBGColor(index)
+        // dispatch(addBackgroundColor({ color, bg }));
+        const data = { categoryId: id, color }
+
+        const stringifiedData = JSON.stringify(data);
+        const encodedData = encodeURIComponent(stringifiedData);
+        const href = `/learning?data=${encodedData}`
+        router.push(href)
     };
     return (
         <div className="-mt-[5px] ">
@@ -103,8 +126,8 @@ const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, set
                             <div key={index + 1} onClick={() => modalButtonHandler(category?._id, index)} className={`p-3`}>
                                 <button
                                     style={{ backgroundColor: colors[index % colors.length], color: "white" }} // Apply the background color
-                                    className={`py-2 px-3 text-[12px] shadow-lg scale-105 lg:text-[18px] rounded-tl-[20px rounded-br-[20px rounded-[28rem] ${index % 3 === 0 && "bg-[#FB8500]"} ${categoryId === category?._id &&
-                                        "border-[4px] border-white bg-gradient-to-r  via-[#059669] scale-105 duration-300 from-[#047857] to-[#14b8a6] p-2 text-white"
+                                    className={`py-2 px-3 text-[12px] shadow-lg scale-105 lg:text-[18px] brightness-95 rounded-tl-[20px rounded-br-[20px rounded-[28rem] ${index % 3 === 0 && "bg-[#FB8500]"} ${categoryId === category?._id &&
+                                        "border-[4px] border-white  scale-105 duration-300  p-2 text-white brightness-105"
                                         }`}
                                 >
                                     {category?.title}

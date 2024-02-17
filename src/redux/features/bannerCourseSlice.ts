@@ -6,7 +6,10 @@ interface IBannerCourse {
   searchValue: string;
   generateColor?: {
     color: string;
-    bg: string;
+    bgNormal: string;
+    bgBold: string;
+    categoryId: string;
+    labelId?: string;
   };
 }
 
@@ -14,7 +17,10 @@ const initialState: IBannerCourse = {
   searchValue: "",
   generateColor: {
     color: "#108213",
-    bg: "#E8EABD",
+    bgNormal: "#E8EABD",
+    bgBold: "#E8EABD",
+    categoryId: "",
+    labelId: "",
   },
 };
 
@@ -45,7 +51,13 @@ const bannerCourseSlice = createSlice({
     },
     addBackgroundColor: (
       state,
-      action: PayloadAction<{ color: string; bg: string }>
+      action: PayloadAction<{
+        color: string;
+        bgNormal: string;
+        bgBold: string;
+        categoryId: string;
+        labelId?: string;
+      }>
     ) => {
       state.generateColor = action.payload;
     },

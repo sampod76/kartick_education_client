@@ -18,8 +18,29 @@ import { LockOutlined } from "@ant-design/icons"
 import { useGetAllCourse_labelQuery } from '@/redux/api/adminApi/courseLevelApi';
 import { ICourseLevelData } from '@/types/courseLevelDataType';
 import { ICourseData } from '@/types/courseType';
+import { Button, Modal, Select } from "antd";
+import { useSearchParams } from 'next/navigation';
 export default function LearningMain() {
 
+
+    /// for active category from categoryId;
+
+
+    const searchParams = useSearchParams();
+    const encodedData = searchParams.get("data");
+    // Check if encodedData is not null and not an empty string before decoding
+    const decodedData = encodedData && encodedData.trim() !== "" ? decodeURIComponent(encodedData) : "";
+    let queryData;
+    try {
+        queryData = JSON.parse(decodedData);
+    } catch (error) {
+        // Handle the error, log it, or provide a default value for queryData
+        console.error("Error parsing JSON:", error);
+        queryData = {}; // Provide a default value if parsing fails
+    }
+    // const categoryId = queryData?.categoryId;
+
+    // console.log(queryData, 'queryData');
     ////!learging select category id
 
     const [learningCategoryId, setLearningCategoryId] = useState<string | null>(null);
@@ -29,7 +50,7 @@ export default function LearningMain() {
     const { generateColor } = useAppSelector((state) => state.bannerSearch);
     // bg - [${ generateBgColor }]
 
-    const bg = generateColor?.bg
+    const bg = generateColor?.bgBold
 
 
     const query: Record<string, any> = {};
@@ -50,13 +71,28 @@ export default function LearningMain() {
 
     console.log(courseAllData, 'courseAllData', labelId)
 
-    const categoryId = learningCategoryId || courseFirstData?.category?._id
+    const categoryId = queryData?.categoryId || courseFirstData?.category?._id
     const { data: courseLevelData, isLoading: courseLevelLoading, error: categoryLevelError } = useGetAllCourse_labelQuery({ ...query, category: categoryId })
-   
+
 
     if (error || categoryLevelError) {
         console.log(error, categoryLevelError);
     }
+
+    // ! for categoryMoadal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = (categoryId: string) => {
+        setIsModalOpen(true);
+
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     // console.log(learningCategoryId, 'learningCategoryId')
     return (
@@ -92,22 +128,26 @@ export default function LearningMain() {
                     >
                         {courseFirstData?.title}
                     </h2>
+
                     <p className="text-center my-3 text-lg lg:text-xl">
                         <EllipsisMiddle suffixCount={3} maxLength={120}>
                             {courseFirstData?.short_description}
                         </EllipsisMiddle>
                     </p>
-                    <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
-                        <PaypalCheckoutByCourse courseData={courseFirstData} />
+                    {/*//! label button */}
+                    <div className="flex lg:hidden md:hidden xl:hidden absolute -top-8 lg:top-0 left-0 animate-pulse">
+                        {/* <PaypalCheckoutByCourse courseData={courseFirstData} /> */}
+
+                        <button onClick={() => showModal(categoryId)} className="uppercase text-2xl text-[#1C3052] text-center font-bold">Level</button>
                     </div>
-                    <div className="block lg:flex justify-between items-start mt-3 lg:mt-5 md:mt-3 xl:mt-7">
+                    <div className="flex  justify-between items-start mt-3 lg:mt-5 md:mt-3 xl:mt-7">
                         {/*//! label section */}
-                        <div className="w-full lg:w-[20%]">
-                            
+                        <div className="hidden  lg:flex flex-col w-full lg:w-[20%]">
+
                             <h2 className="uppercase text-2xl text-[#1C3052] text-center font-bold">Label</h2>
-                            <div className="flex flex-col justify-self-start gap-3 mt-3 w-full lg:w-[70%] md:w-[70%] xl:w-[76%] ">
+                            <div className="flex  flex-col justify-self-start gap-3 mt-3 w-full lg:w-[70%] md:w-[70%] xl:w-[76%] ">
                                 {
-                                     courseLevelData?.data?.map((label: ICourseLevelData) => (
+                                    courseLevelData?.data?.map((label: ICourseLevelData) => (
                                         <button onClick={() => setLabelId(label?._id)} key={label?._id} className=' py-2 rounded-r-lg px-3 text-xl font-bold text-[#1C3052]' style={{
                                             background: '#C3C399'
                                         }}>
@@ -115,11 +155,11 @@ export default function LearningMain() {
                                         </button>
                                     ))
                                 }
-                    
-                
+
                             </div>
                         </div>
-                        <div className="w-full lg:w-[70%] md:w-[70%] xl:w-[75%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 container mx-auto">
+
+                        <div className="w-full lg:w-[70%] md:w-[70%] xl:w-[75%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 ">
                             <h1 className='py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}> {courseFirstData?.title ? courseFirstData?.title : "Course Title"}</h1>
                             <div className="" >
                                 <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3" style={{
@@ -143,6 +183,37 @@ export default function LearningMain() {
                     </div>
                 </div>
             )}
+
+            {/* //! lebel modal */}
+
+            <Modal
+                title="Select Level"
+                open={isModalOpen}
+                style={{ top: 20 }}
+                // onOk={handleOk}
+                onCancel={handleCancel}
+
+                footer={(_, { OkBtn, CancelBtn }) => (
+                    <>
+
+                        <Button onClick={handleOk}>Ok </Button>
+                    </>
+                )}
+            >
+                <div onClick={handleCancel} className="flex flex-col justify-self-start gap-3 mt-3 w-full ">
+                    {
+                        courseLevelData?.data?.map((label: ICourseLevelData) => (
+                            <button onClick={() => setLabelId(label?._id)} key={label?._id} className=' py-2 rounded-r-lg px-3 text-xl font-bold text-[#1C3052]' style={{
+                                background: '#C3C399'
+                            }}>
+                                {label?.title}
+                            </button>
+                        ))
+                    }
+
+                </div>
+
+            </Modal>
         </div>
     )
 }
