@@ -42,7 +42,7 @@ const CourseList = () => {
   const { data: userStateData } = useAppSelector(state => state.userInfo)
   console.log('userStateData', userStateData)
   // console.log(userInfo);
-  const [deleteCourse] = useDeleteCourseMutation();
+  const [deleteCourse, { isLoading: deleteLoading }] = useDeleteCourseMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -72,10 +72,11 @@ const CourseList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data = [], isLoading } = useGetAllCourseQuery({ ...query });
+  const { data, isLoading } = useGetAllCourseQuery({ ...query });
 
   //@ts-ignore
-  const courseData = data?.data;
+  const courseData = data?.data || [];
+  console.log("🚀 ~ CourseList ~ courseData:", courseData)
   //@ts-ignore
   const meta = data?.meta;
 
@@ -144,8 +145,8 @@ const CourseList = () => {
       // ellipsis: true,
     },
     {
-      title: "level",
-      dataIndex: "level",
+      title: "label",
+      dataIndex: ["labelDetails", "title"],
       ellipsis: true,
     },
     {

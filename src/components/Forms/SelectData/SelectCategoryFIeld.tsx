@@ -4,7 +4,7 @@ import FormSelectField from "../FormSelectField";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import FormSearchSelectField from "../FormSearchSelectField";
 
-const SelectCategoryField = ({ defaultData }: { defaultData?: any }) => {
+const SelectCategoryField = ({ defaultData, setCategory }: { defaultData?: any, setCategory?: any }) => {
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryQuery({});
   const CategoryData = Category?.data;
@@ -25,6 +25,7 @@ const SelectCategoryField = ({ defaultData }: { defaultData?: any }) => {
       label="Category"
       loading={isLoading}
       required={true}
+      setState={setCategory}
     />
   );
 };

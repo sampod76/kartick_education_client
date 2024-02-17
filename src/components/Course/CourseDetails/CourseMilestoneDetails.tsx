@@ -9,7 +9,6 @@ export default function CourseMilestoneDetails({ courseId }: { courseId: string 
   const { generateColor } = useAppSelector((state) => state.bannerSearch);
   // bg - [${ generateBgColor }]
 
-  const bg = generateColor?.bg
 
   // console.log(bg, 'bg')
   return (
