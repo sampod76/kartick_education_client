@@ -10,7 +10,7 @@ import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { useGetAllResourceQuery } from "@/redux/api/adminApi/resourceApi";
 
 export default function ResourcePage({ moduleId }: { moduleId: string }) {
-  console.log("🚀 ~ GlossaryPage ~ moduleId:", moduleId);
+  // console.log("🚀 ~ GlossaryPage ~ moduleId:", moduleId);
 
   const { data: resourcesData, isLoading } = useGetAllResourceQuery({
     module: moduleId,

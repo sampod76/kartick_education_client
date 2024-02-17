@@ -10,7 +10,7 @@ import { useGetSingleCourseModuleLessonQuizVideoSizeQuery } from "@/redux/api/ad
 const CourseStatistics = ({ courseId }: { courseId: string }) => {
   const { data, isLoading } =
     useGetSingleCourseModuleLessonQuizVideoSizeQuery(courseId);
-  console.log("🚀 ~ CourseStatistics ~ data:", data)
+  // console.log("🚀 ~ CourseStatistics ~ data:", data)
   const allData: any = data;
 
 
@@ -47,7 +47,7 @@ const CourseStatistics = ({ courseId }: { courseId: string }) => {
   ];
 
   return (
-    <div className="bg-white grid grid-cols-2 lg:grid-cols-4 w-full lg:w-[60%] mx-auto gap-5 p-4 my-3">
+    <div className=" grid grid-cols-2 lg:grid-cols-4 w-full lg:w-[60%] mx-auto gap-5 p-4 my-3">
       {overViews?.map((item: any, index: number) => (
         <div
           className="text-center shadow w-[9rem] mx-auto uppercase "

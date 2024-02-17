@@ -104,9 +104,14 @@ const SideModuleList = ({
       }}
       className=" lg:border-r-2 border-r-slate-500 h-full"
     >
-      <h2 className="text-start text-[20px] px-3 flex gap-2 font-semibold font-['Inter'] leading-1 py-4 bg-[#479FEC] text-white">
-        <ContainerOutlined />   <span>{milestoneData?.title}</span>
-      </h2>
+
+      <div className="bg-no-repeat bg-cover backdrop-blur-xl min-h-[3rem] flex  items-center  " style={{
+        backgroundImage: `url(/banner/registrationBanner.png)`
+      }}>
+        <h2 className="text-start text-[20px] px-3 flex gap-2 items-center font-semibold font-['Inter'] leading-1   text-gray-100">
+          <ContainerOutlined />   <span>{milestoneData?.title}</span>
+        </h2>
+      </div>
       {/* <Divider
         style={{
           color: "red",

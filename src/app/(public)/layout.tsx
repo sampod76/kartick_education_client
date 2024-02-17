@@ -23,7 +23,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="">
 
-      <div className="sticky -top-[5.2rem] top z-40">
+      <div className="sticky -top-[0rem]   lg:-top-[0.3rem] z-40">
         {/* <TopBar /> */}
         <NavbarPublic />
       </div>

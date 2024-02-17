@@ -11,8 +11,11 @@ import { useSearchParams } from "next/navigation";
 import { Modal, Button } from "antd";
 import ModalCourseBanner from "@/components/Modal/ModalCourseBanner";
 import Image from "next/image";
+import { useAppDispatch } from "@/redux/hooks";
+import { addBackgroundColor } from "@/redux/features/bannerCourseSlice";
 
 const BannerCourses = () => {
+  const dispatch = useAppDispatch();
   const query: Record<string, any> = {};
   query["limit"] = 999999;
   query["sortOrder"] = "asc";
@@ -61,6 +64,39 @@ const BannerCourses = () => {
       />
     );
   }
+
+
+
+  const colors = [
+    "#108213",
+    "#FFDA15",
+    "#FB8500",
+    "#5371FF",
+    "#2C92A8",
+  ];
+
+
+  const bgColors = [
+    '#E8EABD',
+    '#F5F5D5',
+    '#d38f41',
+    '#8093e5',
+    '#5ba8b7'
+  ]
+
+  const getCategoryColor = (index: number): string => {
+    return colors[index % colors.length];
+  };
+  const getBGColor = (index: number): string => {
+    return bgColors[index % bgColors.length];
+  };
+
+  const modalButtonHandler = (id: string, index: number) => {
+    showModal(id);
+    const color = getCategoryColor(index);
+    const bg = getBGColor(index)
+    // dispatch(addBackgroundColor({ color, bg }));
+  };
   return (
     <div className="-mt-[5px] ">
 
@@ -88,19 +124,18 @@ const BannerCourses = () => {
         {/* border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
 active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
 
-
       </div>
-      <div className="flex   uppercase justify-between items-center gap-2  font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
+      {/* <div className="flex   uppercase justify-between items-center gap-2  font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
         {isLoading ? (
           <CategoryButtonSKeletton />
         ) : (
           categoryData?.map((category: any, index: number) => {
             return (
-              <div key={index + 1} onClick={() => showModal(category?._id)} className={`p-3`}>
+              <div key={index + 1} onClick={() => modalButtonHandler(category?._id, index)} className={`p-3`}>
                 <button
-                  className={`py-2 px-3 text-[12px] shadow-lg scale-105  lg:text-[18px] rounded-tl-[20px rounded-br-[20px  rounded-[28rem]  ${index % 2 === 0 ? "bg-green-500" : "bg-primary"
-                    } ${index % 3 === 1 && "bg-secondary"} text-white ${categoryId === category?._id &&
-                    "border-[4px] border-white bg-gradient-to-r  via-[#059669] scale-105 duration-300 from-[#047857] to-[#14b8a6] p-2"
+                  style={{ backgroundColor: colors[index % colors.length], color: "white" }} // Apply the background color
+                  className={`py-2 px-3 text-[12px] shadow-lg scale-105 lg:text-[18px] rounded-tl-[20px rounded-br-[20px rounded-[28rem] ${index % 3 === 0 && "bg-[#FB8500]"} ${categoryId === category?._id &&
+                    "border-[4px] border-white bg-gradient-to-r  via-[#059669] scale-105 duration-300 from-[#047857] to-[#14b8a6] p-2 text-white"
                     }`}
                 >
                   {category?.title}
@@ -109,7 +144,28 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
             );
           })
         )}
+      </div> */}
+      <div className="flex uppercase justify-between items-center gap-2 font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
+        {isLoading ? (
+          <CategoryButtonSKeletton />
+        ) : (
+          categoryData?.map((category: any, index: number) => {
+            return (
+              <div key={index + 1} onClick={() => modalButtonHandler(category?._id, index)} className={`p-3`}>
+                <button
+                  style={{ backgroundColor: colors[index % colors.length], color: "white" }}
+                  className={`py-2 px-3 text-[12px] shadow-lg scale-105 lg:text-[18px] brightness-95 rounded-tl-[20px rounded-br-[20px rounded-[28rem] ${index % 3 === 0 && "bg-[#FB8500]"} ${categoryId === category?._id &&
+                    "border-[4px] border-white  scale-105 duration-300  p-2 text-white brightness-105"
+                    } sm:overflow-x-hidden`}
+                >
+                  {category?.title}
+                </button>
+              </div>
+            );
+          })
+        )}
       </div>
+
       <ModalCourseBanner
         categoryId={isModalCategoryId}
         showModal={showModal}

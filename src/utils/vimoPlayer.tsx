@@ -13,7 +13,7 @@ function VimeoPlayer({
   autoplay?: boolean;
 }) {
   const playerRef = useRef<HTMLDivElement>(null);
-console.log(autoplay)
+// console.log(autoplay)
   useEffect(() => {
     // Initialize the Vimeo player once the component mounts
     if (!link || !playerRef.current) {
@@ -35,7 +35,7 @@ console.log(autoplay)
     return () => {
       player.unload();
     };
-  }, [link, width, height]);
+  }, [link, width, height, autoplay]);
 
   return (
     <div className="-mt-[50px] -mb-[30px]">

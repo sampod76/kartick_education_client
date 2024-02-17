@@ -11,9 +11,11 @@ const SelectStatusCategoryFIeld = ({
   defaultData,
   disable = false,
   setCategoryValue,
+  required = false
 }: {
   defaultData?: any;
   disable?: boolean;
+  required?: boolean;
   setCategoryValue: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   // Filter `option.label` match the user type `input`
@@ -42,7 +44,7 @@ const SelectStatusCategoryFIeld = ({
 
   return (
     <div>
-      <LabelUi>Select Category</LabelUi>
+      <LabelUi>Select Category {required && <span className="text-red-600 text-center">*</span>}</LabelUi>
       <Select
       size="large"
         // onChange={handleChange ? handleChange : onChange}

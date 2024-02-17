@@ -1,13 +1,23 @@
+"use client";
 import BannerCourses from '@/components/Home/Banner&hero/BannerCourses'
 import React from 'react'
 import CourseStatistics from '../CourseStatistics'
 import MilestoneHomeList from '../MilestoneHomeList'
+import { useAppSelector } from '@/redux/hooks';
 
 export default function CourseMilestoneDetails({ courseId }: { courseId: string }) {
+  const { generateColor } = useAppSelector((state) => state.bannerSearch);
+  // bg - [${ generateBgColor }]
 
+  const bg = generateColor?.bg
 
+  // console.log(bg, 'bg')
   return (
-    <div>
+    <div className={``}
+      style={{
+        // backgroundColor: bg
+      }}
+    >
       <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
         <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
         <BannerCourses />

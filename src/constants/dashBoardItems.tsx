@@ -102,6 +102,35 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
+      label: "Course label",
+      key: "Level",
+      icon: <CreditCardOutlined />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/course_label/create`}
+            >
+              Create label
+            </Link>
+          ),
+          key: `/${role}/course_label/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/course_label`}
+            >
+             Label list
+            </Link>
+          ),
+          key: `/${role}/course_label`,
+        },
+      ],
+    },
+    {
       label: " Course",
       key: "manage-Course",
       icon: <FileTextOutlined />,

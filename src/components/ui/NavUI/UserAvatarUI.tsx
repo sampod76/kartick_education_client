@@ -62,7 +62,7 @@ const UserAvatarUI = () => {
         display: "flex",
         alignItems: "center",
         gap: "28px",
-        marginLeft: "24px",
+        // marginLeft: "24px",
       }}
     >
       <Dropdown
@@ -72,7 +72,7 @@ const UserAvatarUI = () => {
           background: "black",
         }}
       >
-        <button style={{ opacity: "0px" }}>
+        <button style={{ opacity: "0px" }} className="">
           {/* <Avatar
             style={{
               fontSize: "",
@@ -83,9 +83,9 @@ const UserAvatarUI = () => {
           /> */}
           <Image
             src={AllImage.profileAvater || ""}
-            width={50}
-            height={50}
-            className="w-8  h-8 lg:w-12  lg:h-12  rounded-full"
+            width={550}
+            height={550}
+            className="w-8 h-8 md:h-12 md:w-12  rounded-full"
             alt=""
           />
         </button>
@@ -94,9 +94,9 @@ const UserAvatarUI = () => {
   );
 };
 
-// export default UserAvatarUI;
+export default UserAvatarUI;
 
 
-export default dynamic(() => Promise.resolve(UserAvatarUI), {
-  ssr: false,
-});
+// export default dynamic(() => Promise.resolve(UserAvatarUI), {
+//   ssr: false,
+// });

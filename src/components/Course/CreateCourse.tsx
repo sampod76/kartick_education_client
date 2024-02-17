@@ -33,6 +33,7 @@ import Dragger from "antd/es/upload/Dragger";
 import { getCloudinaryEnv } from "@/helpers/config/envConfig";
 import UploadMultipalDragAndDropImge from "@/components/ui/UploadMultipalDragAndDropImge";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGetAllCourse_labelQuery } from "@/redux/api/adminApi/courseLevelApi";
 const TextEditorNotSetForm = dynamic(
   () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
   {
@@ -41,6 +42,8 @@ const TextEditorNotSetForm = dynamic(
 );
 
 const CreateCourse = ({ setOpen }: any) => {
+  const [category, setCategory] = useState("");
+  console.log("🚀 ~ CreateCourse ~ category:", category)
   const [textEditorValue, setTextEditorValue] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -59,6 +62,25 @@ const CreateCourse = ({ setOpen }: any) => {
     }
     return Promise.reject(new Error("Please enter a valid URL"));
   };
+
+    const labelQuery: Record<string, any> = {};
+  labelQuery["limit"] = 99999999;
+
+  labelQuery["sortBy"] = "serial_number";
+  labelQuery["sortOrder"] = "asc";
+  labelQuery["status"] = "active";
+  labelQuery["category"] = category;
+
+  const { data:LabelData, isLoading: getLabelLoading } = useGetAllCourse_labelQuery(
+    labelQuery,
+    { skip: !Boolean(category) }
+  );
+  // const LabelDataOptions = LabelData?.data?.map((item: any) => {
+  //   return {
+  //     label: item?.title,
+  //     value: item?._id,
+  //   };
+  // });
 
   const [form] = Form.useForm();
   const onFinish = async (values: any) => {
@@ -224,11 +246,7 @@ const CreateCourse = ({ setOpen }: any) => {
                   </Form.Item>
                 </Col>
 
-                <Col xs={24} md={12} lg={12} style={{}}>
-                  <Form.Item label="Course level" name="level">
-                    <Input size="large" placeholder="Course level" />
-                  </Form.Item>
-                </Col>
+               
                 <Col xs={24} md={12} lg={12} style={{}}>
                   <Form.Item label="Showing Number" name="showing_number">
                     <InputNumber
@@ -239,20 +257,11 @@ const CreateCourse = ({ setOpen }: any) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} style={{}}>
-                  <Form.Item label="Showing Number" name="showing_number">
-                    <InputNumber
-                      type="number"
-                      size="large"
-                      style={{ width: "100%" }}
-                      placeholder="Please type price"
-                    />
-                  </Form.Item>
-                </Col>
+                
 
                 <Col xs={24} md={12} lg={12} style={{}}>
-                  <Form.Item label="Duration" name="duration">
-                    <DatePicker.RangePicker />
+                  <Form.Item label="Duration"  name="duration">
+                    <DatePicker.RangePicker size="large" />
                   </Form.Item>
                   {/* <FormDataRange name="duration" label="Duration" /> */}
                 </Col>
@@ -275,15 +284,30 @@ const CreateCourse = ({ setOpen }: any) => {
                       size="large"
                       loading={categoryLoading}
                       placeholder="Select your category"
+                      onChange={(value)=>setCategory(value)}
                     >
                       {CategoryOptions?.map((data: any) => (
-                        <Select.Option value={data.value} key={data.value}>
+                        <Select.Option  allowClear value={data.value} key={data.value}>
                           {data.label}
                         </Select.Option>
                       ))}
                     </Select>
                   </Form.Item>
                   {/* //! category 10 */}
+                </Col>
+                <Col xs={24} md={12} lg={12} style={{}}>
+                  {/* <Form.Item label="Course level" name="level">
+                    <Input size="large" placeholder="Course level" />
+                  </Form.Item> */}
+                  <Form.Item label="Course label"  name="level_id">
+                    <Select size="large"  allowClear loading={getLabelLoading} placeholder="select course label" style={{ width: "100%" }}>
+                      { LabelData?.data?.length && LabelData?.data?.map((Label: any, index: any) => (
+                        <Select.Option value={Label._id} key={Label._id}>
+                          {Label?.serial_number + "." +" "+ Label?.title}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
                 </Col>
                 <Col xs={24} md={12} lg={12} style={{}}>
                   {/* <SelectAuthorField /> */}
@@ -298,6 +322,7 @@ const CreateCourse = ({ setOpen }: any) => {
                       size="large"
                       loading={AuthorLoading}
                       placeholder="Select course trainer"
+                      allowClear
                     >
                       {/* <Select.Option value="" key={0}>
                         Select author
@@ -432,11 +457,11 @@ const CreateCourse = ({ setOpen }: any) => {
               <UploadMultpalImage />
             </div> */}
           <div className="w-fit mx-auto">
-            {isLoading ? (
+            {isLoading ||getLabelLoading ? (
               <Spin />
             ) : (
               <Button
-                disabled={imageUploadLoading}
+                disabled={imageUploadLoading ||getLabelLoading}
                 type="default"
                 style={{ marginTop: "1rem" }}
                 htmlType="submit"

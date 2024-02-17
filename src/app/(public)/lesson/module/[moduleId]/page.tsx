@@ -13,19 +13,24 @@ import { Tabs, TabsProps } from "antd";
 import Image from "next/image";
 import React, { useState } from "react";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-
+import { ArrowLeftOutlined } from '@ant-design/icons'
+import { EllipsisMiddle } from "@/utils/CutTextElliples";
+import { useRouter } from "next/navigation";
 export default function LessonPage({
   params,
 }: {
   params: { moduleId: string };
 }) {
   const screens = useBreakpoint();
+
+  const router = useRouter()
   const moduleId = params.moduleId;
   // console.log(moduleId);
   const { data: moduleData, isLoading } = useGetSingleModuleQuery(moduleId);
   // console.log("🚀 ~ file: page.tsx:12 ~ LessonPage ~ moduleData:", moduleData);
   const milestoneId = moduleData?.milestone?._id;
 
+  // console.log(moduleData, 'moduleData')
 
   // ! for get all module
   const query: Record<string, any> = {};
@@ -84,9 +89,8 @@ export default function LessonPage({
 
   return (
     <div className="mb-5">
-
       <BannerModule className={"h-[40vh]"} />
-      <div className="my-[4rem]">
+      <div className="text-primary">
         {/* <UMBreadCrumb
         items={[
           {
@@ -103,38 +107,76 @@ export default function LessonPage({
           },
         ]}
       /> */}
-        <h2
-          style={{
-            fontWeight: 700,
-            textAlign: "center",
-            color: "black",
-            textTransform: "uppercase",
-            fontSize: "24px",
-            fontFamily: "Lato",
-            // marginBlock: "4rem",
-          }}
-        >
-          {moduleData?.milestone?.title}
-          {/* //! Course Title */}
-        </h2>
-        <p className="text-center text-base">
-          {moduleData?.milestone?.short_description}
-        </p>
+      
       </div>
-      <div className="mt-9 px-2 lg:px-4  border-2  border-[#31FF6B]">
 
-        <Tabs
-          defaultActiveKey="1"
-          tabPosition={screens?.sm ? "left" : "top"}
-          centered
-          onChange={handleTabClick}
-          items={tabsItems2}
-        />
+      {/* top section */}
 
+      <div className="px-2 lg:px-7 mt-5 mb-3 block lg:flex justify-between items-center gap-3">
+        <div onClick={() => router.back()} className="cursor-pointer flex items-center gap-2 border border-[#30ACFB] p-2 uppercase  font-bold rounded w-[7rem]">
+          <ArrowLeftOutlined style={{
+            color: '#30ACFB',
+            fontWeight: "800",
+            fontSize: "18px"
+          }} />
+          <span>Lesson</span>
+        </div>
+        <div className="flex  items-center gap-5 mt-3 lg:mt-0 md:mt-0 xl:mt-0">
+          <h1 className="flex flex-col">
+            <span className="text-sm text-slate-600">Category</span>
+            <span className="text-[#323232] text-lg">
+              <EllipsisMiddle suffixCount={2} maxLength={20}>
+                {moduleData?.milestone?.course?.category?.title}
+              </EllipsisMiddle>
+            </span>
+          </h1>
+          <h1 className="flex flex-col">
+            <span className="text-sm text-slate-600">Level</span>
+            <span className="text-[#323232] text-lg">
+              <EllipsisMiddle suffixCount={2} maxLength={15}>
+                {moduleData?.title}
+              </EllipsisMiddle>
+            </span>
+          </h1>
+        </div>
+      </div>
+
+      {/*//! small banner */}
+      <div className="px-2 lg:px-5 my-2">
+        <h1 className="text-center text-black font-semibold text-2xl md:text--3xl lg:text-3xl xl:text-4xl my-5 ">IBLossom Math Kindergarten Two</h1>
+        <div className="bg-no-repeat bg-cover flex flex-col items-center justify-center backdrop-blur-xl min-h-[6rem]" style={{
+          backgroundImage: `url(/banner/registrationBanner.png)`
+        }}>
+          <h2 className="text-4xl font-bold text-white">Overview </h2>
+        </div>
+      </div>
+
+
+      <div className="mt-5 px-2 lg:px-4 containe mx-auto">
         <div className="block lg:flex justify-center gap-5 items-">
           {/* //! Side  */}
+          <div className="w-full lg:max-w-[30%] px-2 lg:px-5">
+            {/* <ModuleList milestoneId={milestoneId}></ModuleList> */}
+            <SideModuleList milestoneId={milestoneId} moduleId={moduleId} />
+            <hr className=" border-[#eec699] lg:border-none -mx-7 overflow-hidden" />
+          </div>
 
-
+          {/* main */}
+          <div className="w-full lg:max-w-[70%]">
+            {/* //! top user sections */}
+            {/* <div className="flex flex-col justify-center items-center mb-5">
+              <Image
+                src={AllImage.profileAvater || ""}
+                width={300}
+                height={300}
+                className="w-[7rem]  h-[7rem] rounded-full"
+                alt=""
+              />
+              <h3 className="text-[#AAA4A4] font-semibold"> David</h3>
+            </div> */}
+            {/* <ModuleTop moduleData={moduleData} /> */}
+            <ModuleTab moduleId={moduleId} moduleData={moduleData} />
+          </div>
         </div>
       </div>
     </div>
