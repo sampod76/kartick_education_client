@@ -61,22 +61,30 @@ export default function LearningMain() {
 
 
 
+    const categoryId = queryData?.categoryId
+
+    let labelQuery = { ...query }
+    if (categoryId) {
+        labelQuery["category"] = categoryId
+    } else {
+        labelQuery["category"] = '11'
+    }
 
 
     // console.log(courseAllData, 'courseAllData', labelId)
 
-    const categoryId = queryData?.categoryId
-    const { data: courseLevelData, isLoading: courseLevelLoading, error: categoryLevelError } = useGetAllCourse_labelQuery({ ...query, category: categoryId })
+    const { data: courseLevelData, isLoading: courseLevelLoading, error: categoryLevelError } = useGetAllCourse_labelQuery({ ...labelQuery })
 
 
     let courseQuery = { ...query }
-    courseQuery['label_id'] = labelId
-    // if (labelId) {
-    //     courseQuery['label_id'] = labelId
-    // }
-    // else {
-    // }
-    const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery });
+    // courseQuery['label_id'] = labelId
+    if (labelId) {
+        courseQuery['label_id'] = labelId
+    }
+    else {
+        courseQuery['label_id'] = '11'
+    }
+    const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery }) as any
 
     const courseFirstData = courseAllData?.data[0] as any
     if (error || categoryLevelError) {
@@ -169,17 +177,24 @@ export default function LearningMain() {
                                     backgroundColor: '#CCEDBC'
                                 }}>
                                     {
-                                        courseAllData?.data?.map((course: ICourseData, index: number) => (
-                                            <div className="" key={course?._id}>
-                                                {/* <h5 className='text-lg font-[600] my-2'>{course?.title}</h5> */}
-                                                <p className="text-gray-900 text-start flex justify-start gap-1 "
-                                                > <p className=" text-lg"> {index + 1} {course?.title}</p>
+                                        courseAllData?.data?.length > 0 ? (
+                                            courseAllData.data.map((course: ICourseData, index: number) => (
+                                                <div className="" key={course?._id}>
+                                                    <p className="text-gray-900 text-start flex justify-start gap-1">
+                                                        <p className="text-lg"> {index + 1} {course?.title}</p>
+                                                        <LockOutlined />
+                                                    </p>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div>
+                                                <p className="text-gray-900 text-start flex justify-start gap-1">
+                                                    <p className="text-lg"> 1 Empty course for the Label</p>
                                                     <LockOutlined />
                                                 </p>
                                             </div>
-                                        ))
+                                        )
                                     }
-
                                 </div>
                             </div>
                         </div>
