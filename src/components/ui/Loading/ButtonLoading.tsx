@@ -4,7 +4,7 @@ import React from "react";
 const ButtonLoading = () => {
   return (
     <>
-      <Spin />
+      <Spin tip="Loading data..........."/>
     </>
   );
 };

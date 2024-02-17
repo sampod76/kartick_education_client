@@ -64,7 +64,7 @@ export const fileUploadHook = async ({
           },
         }
       );
-      console.log(result);
+      // console.log(result);
       if (result.data?.success) {
         allFileData.singleImageFileData = result.data.data;
         // setImageFileData((c) => ({

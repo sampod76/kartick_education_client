@@ -242,7 +242,7 @@ const Registration = () => {
             }}
           >
             {isLoading || userLoginLoading ? (
-              <Spin></Spin>
+              <Spin tip="Loading data..........."></Spin>
             ) : (
               <Button size="large" htmlType="submit"   type="default">
                 Create

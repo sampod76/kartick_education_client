@@ -5,6 +5,8 @@ import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import FormSearchSelectField from "../FormSearchSelectField";
 
 const SelectCategoryField = ({ defaultData }: { defaultData?: any }) => {
+
+
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryQuery({});
   const CategoryData = Category?.data;
@@ -13,8 +15,8 @@ const SelectCategoryField = ({ defaultData }: { defaultData?: any }) => {
     return {
       label: item?.title,
       value: item?._id,
-    };
-  });
+    }
+  })
 
   return (
     <FormSearchSelectField

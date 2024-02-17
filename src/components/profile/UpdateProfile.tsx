@@ -44,7 +44,7 @@ const UpdateProfile = () => {
     return () => {};
   }, []);
   const { data = {}, isLoading: profileLoading } = useGetProfileQuery("");
-  console.log(data);
+  // console.log(data);
   const userData = data?.generalUser || data?.admin || data?.superAdmin;
   const [updateGeneralUser, { isLoading }] = useUpdateGeneralUserMutation();
   const [updateAdmin, { isLoading: updateAdminLoader }] =
@@ -271,7 +271,7 @@ const UpdateProfile = () => {
             }}
           >
             {isLoading ? (
-              <Spin></Spin>
+              <Spin tip="Loading data..........."></Spin>
             ) : (
               <Button size="large" htmlType="submit"   type="default">
                 Update

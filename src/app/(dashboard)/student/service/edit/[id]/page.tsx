@@ -41,7 +41,7 @@ const EditServicePage = ({ params }: any) => {
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {

@@ -24,6 +24,24 @@ export const categoryApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.category],
     }),
+    // get all academic departments
+    getChildrenCategory: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${CATEGORY_URL}/category-children`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: IMeta) => {
+        // console.log(response);
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.category],
+    }),
     // get single academic department
     getSingleCategory: build.query({
       query: (id: string | string[] | undefined) => {
@@ -38,7 +56,7 @@ export const categoryApi = baseApi.injectEndpoints({
     // create a new academic department
     addCategory: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+
 
         return {
           url: CATEGORY_URL,
@@ -78,4 +96,5 @@ export const {
   useGetAllCategoryQuery,
   useGetSingleCategoryQuery,
   useUpdateCategoryMutation,
+  useGetChildrenCategoryQuery
 } = categoryApi;
