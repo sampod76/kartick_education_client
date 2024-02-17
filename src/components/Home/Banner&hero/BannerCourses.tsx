@@ -95,7 +95,7 @@ const BannerCourses = () => {
     showModal(id);
     const color = getCategoryColor(index);
     const bg = getBGColor(index)
-    dispatch(addBackgroundColor({ color, bg }));
+    // dispatch(addBackgroundColor({ color, bg }));
   };
   return (
     <div className="-mt-[5px] ">
@@ -123,7 +123,6 @@ const BannerCourses = () => {
       >
         {/* border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
 active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
-
 
       </div>
       <div className="flex   uppercase justify-between items-center gap-2  font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
