@@ -19,7 +19,7 @@ const Form = ({
   submitHandler,
   defaultValues,
   resolver,
-  isReset,
+  isReset=false,
 }: FormProps) => {
   const formConfig: FormConfig = {};
 
