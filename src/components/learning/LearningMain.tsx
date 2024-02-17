@@ -41,8 +41,8 @@ export default function LearningMain() {
     // const categoryId = queryData?.categoryId;
 
     // console.log(queryData, 'queryData');
-    ////!learging select category id
 
+    ////!learning select category id
     const [learningCategoryId, setLearningCategoryId] = useState<string | null>(null);
     const [labelId, setLabelId] = useState<string | null>(null);
 
@@ -59,27 +59,31 @@ export default function LearningMain() {
     query["status"] = "active";
     query["isDelete"] = ENUM_YN.NO;
 
-    if (labelId) {
-        query['label_id'] = labelId
-    }
 
 
-    const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...query });
-
-    const courseFirstData = courseAllData?.data[0] as any
 
 
-    console.log(courseAllData, 'courseAllData', labelId)
+    // console.log(courseAllData, 'courseAllData', labelId)
 
-    const categoryId = queryData?.categoryId || courseFirstData?.category?._id
+    const categoryId = queryData?.categoryId
     const { data: courseLevelData, isLoading: courseLevelLoading, error: categoryLevelError } = useGetAllCourse_labelQuery({ ...query, category: categoryId })
 
 
+    let courseQuery = { ...query }
+    courseQuery['label_id'] = labelId
+    // if (labelId) {
+    //     courseQuery['label_id'] = labelId
+    // }
+    // else {
+    // }
+    const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery });
+
+    const courseFirstData = courseAllData?.data[0] as any
     if (error || categoryLevelError) {
         console.log(error, categoryLevelError);
     }
 
-    // ! for categoryMoadal
+    // ! for categoryModal //
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = (categoryId: string) => {
         setIsModalOpen(true);
@@ -110,10 +114,10 @@ export default function LearningMain() {
             ) : (
                 <div
                     style={{
-                        marginTop: "1.5rem",
+                        marginTop: "1.8rem",
                         border: "2px solid #31FF6B"
                     }}
-                    className="relative min-h-screen container mx-auto py-2 md:py-3 lg:py-5 xl:py-6 "
+                    className="relative min-h-screen container mx-auto mt-12 lg:mt-5 md:mt-6 xl:mt-6 py-2 md:py-3 lg:py-5 xl:py-6 "
                 >
                     <h2
                         style={{
@@ -135,7 +139,7 @@ export default function LearningMain() {
                         </EllipsisMiddle>
                     </p>
                     {/*//! label button */}
-                    <div className="flex lg:hidden md:hidden xl:hidden absolute -top-8 lg:top-0 left-0 animate-pulse">
+                    <div className="flex lg:hidden md:hidden xl:hidden absolute -top-8 lg:top-0 left-0 animate-pulse border-2">
                         {/* <PaypalCheckoutByCourse courseData={courseFirstData} /> */}
 
                         <button onClick={() => showModal(categoryId)} className="uppercase text-2xl text-[#1C3052] text-center font-bold">Level</button>
@@ -143,7 +147,6 @@ export default function LearningMain() {
                     <div className="flex  justify-between items-start mt-3 lg:mt-5 md:mt-3 xl:mt-7">
                         {/*//! label section */}
                         <div className="hidden  lg:flex flex-col w-full lg:w-[20%]">
-
                             <h2 className="uppercase text-2xl text-[#1C3052] text-center font-bold">Label</h2>
                             <div className="flex  flex-col justify-self-start gap-3 mt-3 w-full lg:w-[70%] md:w-[70%] xl:w-[76%] ">
                                 {
