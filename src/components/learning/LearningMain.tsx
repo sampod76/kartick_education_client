@@ -81,8 +81,11 @@ export default function LearningMain() {
     if (labelId) {
         courseQuery['label_id'] = labelId
     }
+    else if (!labelId && courseLevelData?.data[0]) {
+        courseQuery['label_id'] = courseLevelData?.data[0]?.title
+    }
     else {
-        courseQuery['label_id'] = '11'
+        courseQuery['label_id'] = "11"
     }
     const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery }) as any
 
