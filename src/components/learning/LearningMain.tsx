@@ -120,7 +120,7 @@ export default function LearningMain() {
                             <h2 className="uppercase text-2xl text-[#1C3052] text-center font-bold">Label</h2>
                             <div className="flex flex-col justify-self-start gap-3 mt-3 w-full lg:w-[70%] md:w-[70%] xl:w-[76%] ">
                                 {
-                                    courseLevelData?.data?.map((label: ICourseLevelData) => (
+                                    courseLevelData?.data?.length && courseLevelData?.data?.map((label: ICourseLevelData) => (
                                         <button onClick={() => setLabelId(label?._id)} key={label?._id} className=' py-2 rounded-r-lg px-3 text-xl font-bold text-[#1C3052]' style={{
                                             background: '#C3C399'
                                         }}>
@@ -128,10 +128,9 @@ export default function LearningMain() {
                                         </button>
                                     ))
                                 }
-
                             </div>
                         </div>
-                        <div className="w-full lg:w-[80%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 container mx-auto">
+                        <div className="w-full lg:w-[70%] md:w-[70%] xl:w-[75%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 container mx-auto">
                             <h1 className='py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}> {courseFirstData?.title ? courseFirstData?.title : "Course Title"}</h1>
                             <div className="" >
                                 <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3" style={{
