@@ -15,7 +15,7 @@ export default function CourseMilestoneDetails({ courseId }: { courseId: string 
   return (
     <div className={``}
       style={{
-        backgroundColor: bg
+        // backgroundColor: bg
       }}
     >
       <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
