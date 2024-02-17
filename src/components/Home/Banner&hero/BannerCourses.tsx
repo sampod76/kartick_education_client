@@ -125,7 +125,7 @@ const BannerCourses = () => {
 active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
 
       </div>
-      <div className="flex   uppercase justify-between items-center gap-2  font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
+      {/* <div className="flex   uppercase justify-between items-center gap-2  font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
         {isLoading ? (
           <CategoryButtonSKeletton />
         ) : (
@@ -144,7 +144,28 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
             );
           })
         )}
+      </div> */}
+      <div className="flex uppercase justify-between items-center gap-2 font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
+        {isLoading ? (
+          <CategoryButtonSKeletton />
+        ) : (
+          categoryData?.map((category: any, index: number) => {
+            return (
+              <div key={index + 1} onClick={() => modalButtonHandler(category?._id, index)} className={`p-3`}>
+                <button
+                  style={{ backgroundColor: colors[index % colors.length], color: "white" }}
+                  className={`py-2 px-3 text-[12px] shadow-lg scale-105 lg:text-[18px] brightness-95 rounded-tl-[20px rounded-br-[20px rounded-[28rem] ${index % 3 === 0 && "bg-[#FB8500]"} ${categoryId === category?._id &&
+                    "border-[4px] border-white  scale-105 duration-300  p-2 text-white brightness-105"
+                    } sm:overflow-x-hidden`}
+                >
+                  {category?.title}
+                </button>
+              </div>
+            );
+          })
+        )}
       </div>
+
       <ModalCourseBanner
         categoryId={isModalCategoryId}
         showModal={showModal}

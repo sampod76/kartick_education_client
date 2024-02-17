@@ -81,7 +81,7 @@ const NavbarPublic = () => {
             background: "none",
             backdropFilter: "blur(80px)",
             boxShadow: "none",
-            color: `${pathname === '/' ? "white" : "white"}`,
+            color: `${pathname === '/' ? "white" : "black"}`,
             // fontWeight:"700"
           }}
           disabledOverflow
