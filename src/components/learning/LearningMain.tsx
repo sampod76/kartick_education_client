@@ -117,10 +117,11 @@ export default function LearningMain() {
                     <div className="block lg:flex justify-between items-start mt-3 lg:mt-5 md:mt-3 xl:mt-7">
                         {/*//! label section */}
                         <div className="w-full lg:w-[20%]">
+                            
                             <h2 className="uppercase text-2xl text-[#1C3052] text-center font-bold">Label</h2>
                             <div className="flex flex-col justify-self-start gap-3 mt-3 w-full lg:w-[70%] md:w-[70%] xl:w-[76%] ">
                                 {
-                                    courseLevelData?.data?.length && courseLevelData?.data?.map((label: ICourseLevelData) => (
+                                     courseLevelData?.data?.map((label: ICourseLevelData) => (
                                         <button onClick={() => setLabelId(label?._id)} key={label?._id} className=' py-2 rounded-r-lg px-3 text-xl font-bold text-[#1C3052]' style={{
                                             background: '#C3C399'
                                         }}>
