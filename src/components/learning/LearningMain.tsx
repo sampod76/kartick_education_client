@@ -64,20 +64,12 @@ export default function LearningMain() {
     // console.log("🚀 ~ MilestoneList ~ courseFirstData:", courseFirstData)
 
     // console.log(labelId, 'labelId')
-    const { data, isLoading: milestoneLoading,
-        error: milestonError } = useGetAllMilestoneQuery({
-            course: courseFirstData?._id,
-            module: "yes",
-            ...query,
-        })
-    // console.log("🚀 ~ MilestoneList ~ data:", data)
-    // console.log(data,"courseId");
-    const milestoneData = data?.data || [];
+
 
     // console.log(milestoneData)
 
-    if (error || milestonError || categoryLevelError) {
-        console.log(error, milestonError, categoryLevelError);
+    if (error || categoryLevelError) {
+        console.log(error, categoryLevelError);
     }
 
     // console.log(learningCategoryId, 'learningCategoryId')
@@ -91,7 +83,7 @@ export default function LearningMain() {
             </div>
             <CourseStatistics courseId={courseFirstData?._id} />
 
-            {isLoading || milestoneLoading || courseLevelLoading ? (
+            {isLoading ? (
                 <LoadingSkeleton number={20} />
             ) : (
                 <div
@@ -139,10 +131,10 @@ export default function LearningMain() {
 
                             </div>
                         </div>
-                        <div className="w-full lg:w-[80%]">
-                            <h1 className='py-1 text-center text-white h-[2.5rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}> {courseFirstData?.title}</h1>
+                        <div className="w-full lg:w-[80%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 container mx-auto">
+                            <h1 className='py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}> {courseFirstData?.title ? courseFirstData?.title : "Course Title"}</h1>
                             <div className="" >
-                                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3" style={{
+                                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3" style={{
                                     backgroundColor: '#CCEDBC'
                                 }}>
                                     {
