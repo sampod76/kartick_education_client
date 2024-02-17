@@ -1,6 +1,7 @@
 import { tagTypes } from "@/redux/tag-types";
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
+import { ICourseLevelData } from "@/types/courseLevelDataType";
 
 const COURSE_LEVEL_URL = "/course_label";
 
@@ -15,7 +16,7 @@ export const Course_labelApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any[], meta: IMeta) => {
+      transformResponse: (response: ICourseLevelData[], meta: IMeta) => {
         // console.log(response);
         return {
           data: response,
