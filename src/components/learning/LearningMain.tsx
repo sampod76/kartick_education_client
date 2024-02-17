@@ -17,6 +17,7 @@ import BannerLearning from '../Home/Banner&hero/BannerLearning';
 import { LockOutlined } from "@ant-design/icons"
 import { useGetAllCourse_labelQuery } from '@/redux/api/adminApi/courseLevelApi';
 import { ICourseLevelData } from '@/types/courseLevelDataType';
+import { ICourseData } from '@/types/courseType';
 export default function LearningMain() {
 
     ////!learging select category id
@@ -37,33 +38,35 @@ export default function LearningMain() {
     query["status"] = "active";
     query["isDelete"] = ENUM_YN.NO;
 
-
+    if (labelId) {
+        query['label_id'] = labelId
+    }
 
 
     const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...query });
 
-    const courseData = courseAllData?.data[0] as any
+    const courseFirstData = courseAllData?.data[0] as any
 
 
-    // console.log(courseData, 'courseData')
+    console.log(courseAllData, 'courseAllData', labelId)
 
-    const categoryId = learningCategoryId || courseData?.category?._id
+    const categoryId = learningCategoryId || courseFirstData?.category?._id
     const { data: courseLevelData, isLoading: courseLevelLoading, error: categoryLevelError } = useGetAllCourse_labelQuery({ ...query, category: categoryId })
-    // const courseId = courseData?._id || ''
+    // const courseId = courseFirstData?._id || ''
 
     // console.log(courseLevelData, 'courseLevelData', categoryId)
 
     // const {
-    //     data: courseData = {},
+    //     data: courseFirstData = {},
     //     isLoading: courseLoading,
     //     error,
     // } = useGetSingleCourseQuery(courseId);
-    // console.log("🚀 ~ MilestoneList ~ courseData:", courseData)
+    // console.log("🚀 ~ MilestoneList ~ courseFirstData:", courseFirstData)
 
-
+    // console.log(labelId, 'labelId')
     const { data, isLoading: milestoneLoading,
         error: milestonError } = useGetAllMilestoneQuery({
-            course: courseData?._id,
+            course: courseFirstData?._id,
             module: "yes",
             ...query,
         })
@@ -71,7 +74,7 @@ export default function LearningMain() {
     // console.log(data,"courseId");
     const milestoneData = data?.data || [];
 
-    console.log(milestoneData)
+    // console.log(milestoneData)
 
     if (error || milestonError || categoryLevelError) {
         console.log(error, milestonError, categoryLevelError);
@@ -86,7 +89,7 @@ export default function LearningMain() {
                 <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
                 <BannerLearning learningCategoryId={learningCategoryId} setLearningCategoryId={setLearningCategoryId} />
             </div>
-            <CourseStatistics courseId={courseData?._id} />
+            <CourseStatistics courseId={courseFirstData?._id} />
 
             {isLoading || milestoneLoading || courseLevelLoading ? (
                 <LoadingSkeleton number={20} />
@@ -109,24 +112,26 @@ export default function LearningMain() {
 
                         }}
                     >
-                        {courseData?.title}
+                        {courseFirstData?.title}
                     </h2>
                     <p className="text-center my-3 text-lg lg:text-xl">
                         <EllipsisMiddle suffixCount={3} maxLength={120}>
-                            {courseData?.short_description}
+                            {courseFirstData?.short_description}
                         </EllipsisMiddle>
                     </p>
                     <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
-                        <PaypalCheckoutByCourse courseData={courseData} />
+                        <PaypalCheckoutByCourse courseData={courseFirstData} />
                     </div>
-                    <div className="block lg:flex justify-between items-start">
+                    <div className="block lg:flex justify-between items-start mt-3 lg:mt-5 md:mt-3 xl:mt-7">
                         {/*//! label section */}
                         <div className="w-full lg:w-[20%]">
                             <h2 className="uppercase text-2xl text-[#1C3052] text-center font-bold">Label</h2>
-                            <div className="flex flex-col justify-self-start gap-3 mt-3 w-[70%]">
+                            <div className="flex flex-col justify-self-start gap-3 mt-3 w-full lg:w-[70%] md:w-[70%] xl:w-[76%] ">
                                 {
                                     courseLevelData?.data?.map((label: ICourseLevelData) => (
-                                        <button onClick={() => setLabelId(label?._id)} key={label?._id} className='bg-[#C3C399] py-2 rounded-r-lg px-3 text-xl font-bold'>
+                                        <button onClick={() => setLabelId(label?._id)} key={label?._id} className=' py-2 rounded-r-lg px-3 text-xl font-bold text-[#1C3052]' style={{
+                                            background: '#C3C399'
+                                        }}>
                                             {label?.title}
                                         </button>
                                     ))
@@ -134,32 +139,20 @@ export default function LearningMain() {
 
                             </div>
                         </div>
-
                         <div className="w-full lg:w-[80%]">
-                            <h1 className='py-1 text-center text-white h-[2.5rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}>Course Title</h1>
+                            <h1 className='py-1 text-center text-white h-[2.5rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}> {courseFirstData?.title}</h1>
                             <div className="" >
-
-
                                 <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3" style={{
                                     backgroundColor: '#CCEDBC'
                                 }}>
                                     {
-                                        milestoneData?.map((milestone) => (
-                                            <div className="" key={milestone?._id}>
-                                                <h5 className='text-lg font-[600] my-2'>{milestone?.title}</h5>
-                                                {milestone?.modules?.map((module: any, index: number) => {
-                                                    return (
-                                                        <Link
-                                                            href={`/lesson/module/${module?._id}?module=${module?.title}`}
-                                                            key={module?._id || index}
-                                                            className="text-gray-900 text-start flex justify-start gap-1 "
-                                                        >
-
-                                                            <p className=" text-lg"> {index + 1} {module?.title}</p>
-                                                            <LockOutlined />
-                                                        </Link>
-                                                    );
-                                                })}
+                                        courseAllData?.data?.map((course: ICourseData, index: number) => (
+                                            <div className="" key={course?._id}>
+                                                {/* <h5 className='text-lg font-[600] my-2'>{course?.title}</h5> */}
+                                                <p className="text-gray-900 text-start flex justify-start gap-1 "
+                                                > <p className=" text-lg"> {index + 1} {course?.title}</p>
+                                                    <LockOutlined />
+                                                </p>
                                             </div>
                                         ))
                                     }
