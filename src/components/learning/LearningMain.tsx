@@ -42,7 +42,7 @@ export default function LearningMain() {
         queryData = {}; // Provide a default value if parsing fails
     }
     // const categoryId = queryData?.categoryId;
-
+    const color = queryData?.color
     // console.log(queryData, 'queryData');
 
     ////!learning select category id
@@ -53,7 +53,7 @@ export default function LearningMain() {
     const { generateColor } = useAppSelector((state) => state.bannerSearch);
     // bg - [${ generateBgColor }]
 
-   
+
 
 
     const query: Record<string, any> = {};
@@ -82,7 +82,7 @@ export default function LearningMain() {
 
 
     let courseQuery = { ...query }
-   
+
     // courseQuery['label_id'] = labelId
     if (selectLabelData?._id) {
         courseQuery['label_id'] = selectLabelData?._id
@@ -94,7 +94,7 @@ export default function LearningMain() {
         courseQuery['label_id'] = "65d00cd5f64a5b71b4916a36" //only damping
     }
 
-    const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery },{skip:!Boolean(selectLabelData?._id)}) as any
+    const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery }, { skip: !Boolean(selectLabelData?._id) }) as any
 
     if (error || categoryLevelError) {
         console.log(error, categoryLevelError);
@@ -116,21 +116,26 @@ export default function LearningMain() {
     };
 
     useEffect(() => {
-      
+
         setLabelData(courseLevelData?.data[0] || "")
-    
+
     }, [courseLevelData?.data])
-    
-    if(courseLevelLoading){
-        return <LoadingSkeleton/>
+
+    if (courseLevelLoading) {
+        return <LoadingSkeleton />
     }
 
     // console.log(learningCategoryId, 'learningCategoryId')
 
     return (
-        <div style={{
-            backgroundColor: "#EFFBE1"
+        <div className='bg-opacity relative' style={{
+            // backgroundColor: color,
+            // opacity:0.05
+
         }}>
+            {/* //! for bg opacity color */}
+            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-20`}></div>
+
             <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
                 <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
                 <BannerLearning learningCategoryId={learningCategoryId} setLearningCategoryId={setLearningCategoryId} />
@@ -158,7 +163,7 @@ export default function LearningMain() {
 
                         }}
                     >
-                        { selectLabelData?.categoryDetails?.title ? courseLevelData?.data[0]?.categoryDetails?.title :""}
+                        {selectLabelData?.categoryDetails?.title ? courseLevelData?.data[0]?.categoryDetails?.title : ""}
                     </h2>
 
                     <p className="text-center my-3 text-lg lg:text-xl">
@@ -179,9 +184,10 @@ export default function LearningMain() {
                             <div className="flex  flex-col justify-self-start gap-3 mt-3 w-full mr-2 ">
                                 {
                                     courseLevelData?.data?.map((label: ICourseLevelData) => (
-                                        <button onClick={() => setLabelData(label)} key={label?._id} className={`py-2 rounded-r-2xl px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id && "border-[3px] border-indigo-400 "}`} style={{
-                                            background: '#D5E6B9'
+                                        <button onClick={() => setLabelData(label)} key={label?._id} className={`py-2  px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id ? "border-[3px] border-indigo-400" : ""} rounded-r-xl relative`} style={{
+                                            // background: color,
                                         }}>
+                                            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] ${label?._id === selectLabelData._id ? "bg-opacity-55 " :"bg-opacity-40"} `}></div>
                                             {label?.title}
                                         </button>
                                     ))
@@ -191,11 +197,16 @@ export default function LearningMain() {
                         </div>
 
                         <div className="w-full lg:w-[70%] md:w-[70%] xl:w-[75%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 ">
-                            <h1 className='py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}> { selectLabelData?.title +" "+ "(All Courses)"}</h1>
+
+                            <h1 className='py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap relative' >
+                                {/* //! for background opacity */}
+                                <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-60`}></div>
+                                {selectLabelData?.title + " " + "(All Courses)"}
+                            </h1>
                             <div className="" >
-                                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3" style={{
-                                    backgroundColor: '#CCEDBC'
-                                }}>
+                                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3 relative min-h-screen" >
+                                    {/*//! for background opacity */}
+                                    <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-30`}></div>
                                     {
                                         courseAllData?.data?.length > 0 ? (
                                             courseAllData.data.map((course: ICourseData, index: number) => (
