@@ -8,10 +8,12 @@ import { useGetSingleCourseModuleLessonQuizVideoSizeQuery } from "@/redux/api/ad
 
 
 const CourseStatistics = ({ courseId }: { courseId: string }) => {
+  console.log("🚀 ~ CourseStatistics ~ courseId:", courseId)
   const { data, isLoading } =
     useGetSingleCourseModuleLessonQuizVideoSizeQuery(courseId);
   // console.log("🚀 ~ CourseStatistics ~ data:", data)
   const allData: any = data;
+  console.log("🚀 ~ CourseStatistics ~ allData:", allData)
 
 
   let overViews: any[] = [

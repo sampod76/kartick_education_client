@@ -47,7 +47,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-2xl">Lesson Summery</h1>
+          <h1 className=" text-sm md:text-md lg:text-lg">Lesson Summery</h1>
         </button>
       ),
       key: "1",
@@ -63,7 +63,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />
-          <h1 className="text-sm md:text-lg lg:text-2xl">Glossary</h1>
+          <h1 className="text-sm md:text-md lg:text-lg">Glossary</h1>
         </button>
       ),
       key: "3",
@@ -79,7 +79,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />
-          <h1 className=" text-sm md:text-lg lg:text-2xl"> Resources</h1>
+          <h1 className=" text-sm md:text-md lg:text-lg"> Resources</h1>
         </button>
       ),
       key: "4",
@@ -88,15 +88,18 @@ export default function ModuleTab({
     },
   ];
   return (
-    <div className="mt-5 ">
+    <div className="mt-5 flex justify-center items-center">
 
       <Tabs
         defaultActiveKey={activeTabKey}
         tabBarStyle={{
           padding: "10px",
           borderRadius: '8px',
+         
           // backgroundColor: '#D9D9D9'
         }}
+        animated
+        
         onChange={handleTabClick}
       >
         {tabsItems.map((item) => (

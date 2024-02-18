@@ -8,4 +8,5 @@ export type ICourseLevelData = {
   isDelete: ENUM_YN;
   createdAt: string;
   updatedAt: string;
+  categoryDetails:any
 };
