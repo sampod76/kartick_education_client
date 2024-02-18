@@ -58,7 +58,7 @@ const ShortOverViewHomePage = () => {
   let query: any = {}
   query["status"] = "active";
 
-  const { data , isLoading } = useGetAllShortOverViewQuery({ ...query }) as any
+  const { data, isLoading } = useGetAllShortOverViewQuery({ ...query }) as any
   const shortOverviewData: IShort_overviewData[] = data?.data || []
   // console.log(shortOverviewData, 'shortOverviewData')
 
@@ -79,7 +79,7 @@ const ShortOverViewHomePage = () => {
           <div className="my-[3rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-3 lg:px-0  mx-3">
             {shortOverviewData.length && shortOverviewData[0]?.cards?.map((item: any, index: any) => {
               return (
-                <AnimatePresenceWrapper key={index} delay={0.24 + (index / 100)}>
+                <AnimatePresenceWrapper key={item._id || index} delay={0.24 + (index / 100)}>
                   <div
                     className="w-full h-full bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
                     key={index + 1}
