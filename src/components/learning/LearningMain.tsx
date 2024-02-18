@@ -42,7 +42,7 @@ export default function LearningMain() {
         queryData = {}; // Provide a default value if parsing fails
     }
     // const categoryId = queryData?.categoryId;
-    const color = queryData?.color
+    const color = queryData?.color || '#43CD66'
     // console.log(queryData, 'queryData');
 
     ////!learning select category id
@@ -78,7 +78,7 @@ export default function LearningMain() {
     // console.log(courseAllData, 'courseAllData', labelId)
 
     const { data: courseLevelData, isLoading: courseLevelLoading, error: categoryLevelError } = useGetAllCourse_labelQuery({ ...labelQuery })
-    console.log("🚀 ~ LearningMain ~ courseLevelData:", courseLevelData)
+    // console.log("🚀 ~ LearningMain ~ courseLevelData:", courseLevelData)
 
 
     let courseQuery = { ...query }
@@ -187,7 +187,7 @@ export default function LearningMain() {
                                         <button onClick={() => setLabelData(label)} key={label?._id} className={`py-2  px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id ? "border-[3px] border-indigo-400" : ""} rounded-r-xl relative`} style={{
                                             // background: color,
                                         }}>
-                                            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] ${label?._id === selectLabelData._id ? "bg-opacity-55 " :"bg-opacity-40"} `}></div>
+                                            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] ${label?._id === selectLabelData._id ? "bg-opacity-55 " : "bg-opacity-40"} `}></div>
                                             {label?.title}
                                         </button>
                                     ))
