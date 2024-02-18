@@ -13,6 +13,7 @@ import ModalCourseBanner from "@/components/Modal/ModalCourseBanner";
 import Image from "next/image";
 import { useAppDispatch } from "@/redux/hooks";
 import { addBackgroundColor } from "@/redux/features/bannerCourseSlice";
+import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 
 
 interface BannerLearningProps {
@@ -20,7 +21,7 @@ interface BannerLearningProps {
     setLearningCategoryId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, setLearningCategoryId }) => {
-
+const [loading,setLoading]=useState(false)
 
     const router = useRouter()
     const dispatch = useAppDispatch();
@@ -108,6 +109,8 @@ const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, set
 
     const modalButtonHandler = (id: string, index: number) => {
         // showModal(id);
+        setLoading(true)
+       setTimeout(() => {
         setLearningCategoryId(id);
         const color = getCategoryColor(index);
         // const bg = getBGColor(index)
@@ -116,9 +119,14 @@ const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, set
 
         const stringifiedData = JSON.stringify(data);
         const encodedData = encodeURIComponent(stringifiedData);
+        setLoading(false)
         const href = `/learning?data=${encodedData}`
         router.push(href)
+       },1000)
     };
+    if(loading){
+        return <LoadingSkeleton number={40} sectionNumber={30}/>
+    }
     return (
         <div className="-mt-[5px] ">
 
@@ -134,7 +142,7 @@ const BannerLearning: React.FC<BannerLearningProps> = ({ learningCategoryId, set
                                 <button
                                     style={{ backgroundColor: colors[index % colors.length], color: "white" }} // Apply the background color
                                     className={`py-2 px-3 text-[12px] shadow-lg scale-105 lg:text-[18px] brightness-95 rounded-tl-[20px rounded-br-[20px rounded-[28rem] ${index % 3 === 0 && "bg-[#FB8500]"} ${categoryId === category?._id &&
-                                        "border-[4px] border-white  scale-105 duration-300  p-2 text-white brightness-105"
+                                        "border-[3px] md:border-[5px] border-indigo-600  scale-105 duration-300  p-2 text-white brightness-105"
                                         }`}
                                 >
                                     {category?.title}

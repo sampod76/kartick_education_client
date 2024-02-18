@@ -144,10 +144,8 @@ export default function LessonPage({
       {/*//! small banner */}
       <div className="px-2 lg:px-5 my-2">
         <h1 className="text-center text-black font-semibold text-2xl md:text--3xl lg:text-3xl xl:text-4xl my-5 ">IBLossom Math Kindergarten Two</h1>
-        <div className="bg-no-repeat bg-cover flex flex-col items-center justify-center backdrop-blur-xl min-h-[6rem]" style={{
-          backgroundImage: `url(/banner/registrationBanner.png)`
-        }}>
-          <h2 className="text-4xl font-bold text-white">Overview </h2>
+        <div className=" flex flex-col items-center justify-center min-h-[6rem] bg-[#effbe1]" >
+          <h2 className="text-lg lg:text-4xl font-bold text-gray-700">Overview </h2>
         </div>
       </div>
 
