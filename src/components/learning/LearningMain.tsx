@@ -73,6 +73,7 @@ export default function LearningMain() {
     } else {
         labelQuery["category"] = learningCategoryId
     }
+    console.log("🚀 ~ LearningMain ~ labelQuery:", labelQuery)
 
 
     // console.log(courseAllData, 'courseAllData', labelId)
@@ -95,6 +96,7 @@ export default function LearningMain() {
     }
 
     const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery },{skip:!Boolean(selectLabelData?._id)}) as any
+    console.log("🚀 ~ LearningMain ~ courseAllData:", courseAllData)
 
     if (error || categoryLevelError) {
         console.log(error, categoryLevelError);
@@ -133,7 +135,7 @@ export default function LearningMain() {
         }}>
             <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
                 <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
-                <BannerLearning learningCategoryId={learningCategoryId} setLearningCategoryId={setLearningCategoryId} />
+                <BannerLearning  learningCategoryId={learningCategoryId} setLearningCategoryId={setLearningCategoryId} />
             </div>
             {/* <CourseStatistics courseId={learningCategoryId || courseFirstData?._id} /> */}
 
@@ -143,7 +145,7 @@ export default function LearningMain() {
                 <div
                     style={{
                         marginTop: "1.8rem",
-                        border: "2px solid #31FF6B"
+                        border: "2px solid #CED6D0"
                     }}
                     className="relative min-h-screen container rounded-md p-2 mx-auto mt-12 lg:mt-5 md:mt-6 xl:mt-6 py-2 md:py-3 lg:py-5 xl:py-6 "
                 >
@@ -179,7 +181,7 @@ export default function LearningMain() {
                             <div className="flex  flex-col justify-self-start gap-3 mt-3 w-full mr-2 ">
                                 {
                                     courseLevelData?.data?.map((label: ICourseLevelData) => (
-                                        <button onClick={() => setLabelData(label)} key={label?._id} className={`py-2 rounded-r-2xl px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id && "border-[3px] border-indigo-400 "}`} style={{
+                                        <button onClick={() => setLabelData(label)} key={label?._id} className={`py-2 rounded-r-2xl px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id && "border-[3px] border-[#89bb97] "}`} style={{
                                             background: '#D5E6B9'
                                         }}>
                                             {label?.title}
