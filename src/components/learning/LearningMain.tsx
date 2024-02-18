@@ -43,7 +43,7 @@ export default function LearningMain() {
     }
     // const categoryId = queryData?.categoryId;
 
-    console.log(queryData, 'queryData');
+    // console.log(queryData, 'queryData');
 
     ////!learning select category id
     const [learningCategoryId, setLearningCategoryId] = useState<string | null>(null);
