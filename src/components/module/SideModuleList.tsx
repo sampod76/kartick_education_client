@@ -105,13 +105,20 @@ const SideModuleList = ({
       className=" lg:border-r-2 border-r-slate-500 h-full"
     >
 
-      <div className="bg-no-repeat bg-cover backdrop-blur-xl min-h-[3rem] flex  items-center  " style={{
-        backgroundImage: `url(/banner/registrationBanner.png)`
+      <div className="relative bg-no-repeat bg-cover min-h-[3rem] flex items-center " style={{
+        backgroundImage: `url(/banner/registrationBanner.png)`,
+        borderImageSource: 'linear-gradient(black, transparent)', // Black border with transparency
+        borderImageSlice: 1,
+        borderImageRepeat: 'stretch',
+        borderImageWidth: 4,  // Adjust the width as needed
+        borderStyle: 'solid', // Specify the border style
+        boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.5)', // Add an inset box shadow for the bottom
       }}>
-        <h2 className="text-start text-[20px] px-3 flex gap-2 items-center font-semibold font-['Inter'] leading-1   text-gray-100">
-          <ContainerOutlined />   <span>{milestoneData?.title}</span>
+        <h2 className="text-start text-[20px] px-3 flex gap-2 items-center font-semibold font-['Inter'] leading-1 text-gray-100">
+          <ContainerOutlined /> <span>{milestoneData?.title}</span>
         </h2>
       </div>
+
       {/* <Divider
         style={{
           color: "red",
