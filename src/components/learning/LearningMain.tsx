@@ -180,7 +180,7 @@ export default function LearningMain() {
                                 {
                                     courseLevelData?.data?.map((label: ICourseLevelData) => (
                                         <button onClick={() => setLabelData(label)} key={label?._id} className={`py-2 rounded-r-2xl px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id && "border-[3px] border-indigo-400 "}`} style={{
-                                            background: '#C3C399'
+                                            background: '#D5E6B9'
                                         }}>
                                             {label?.title}
                                         </button>
