@@ -1,11 +1,12 @@
 
 
-import EditCategory from '@/components/category/EditCategory'
+
+import EditCourseLabel from '@/components/course_label/EditCourseLavel'
 import React from 'react'
 
-export default function UpdateAdminCategoryPage({params}:{params:{id:string}}) {
+export default function UpdateCourseLabel({ params }: { params: { id: string } }) {
   return (
-    <div><EditCategory categoryId={params?.id}/></div>
+    <div><EditCourseLabel courseLabelId={params?.id} /></div>
   )
 }
 

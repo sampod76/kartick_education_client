@@ -94,8 +94,8 @@ export default function TestimonialMain() {
           supports students and be inspired <br /> by their success stories.
         </h2>
         <Slider {...settings}>
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="text-center">
+          {testimonials.map((testimonial: any, index) => (
+            <div key={testimonial._id || index} className="text-center">
               {/* <img
               className="mx-auto mt-4 rounded-full h-[9rem] w-[9rem]"
               src={testimonial.image}
