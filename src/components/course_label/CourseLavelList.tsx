@@ -32,12 +32,12 @@ const Course_labelList = () => {
 
   // const ADMIN = USER_ROLE.ADMIN;
   const userInfo = getUserInfo() as IDecodedInfo;
-  
+
   // console.log("🚀 ~ file: page.tsx:41 ~ Course_labelList ~ role:", role);
 
-  const [deleteCourse_label,{isLoading:DeleteCourseLabel}] = useDeleteCourse_labelMutation();
+  const [deleteCourse_label, { isLoading: DeleteCourseLabel }] = useDeleteCourse_labelMutation();
 
- 
+
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("serial_number");
@@ -61,6 +61,7 @@ const Course_labelList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = useGetAllCourse_labelQuery({ ...query });
+  console.log("🚀 ~ data:", data)
 
   //@ts-ignore
   const Course_labelData = data?.data;
@@ -117,6 +118,12 @@ const Course_labelList = () => {
       //  width: 130,
     },
     {
+      title: "Subject",
+      dataIndex: ["categoryDetails", 'title'],
+      ellipsis: true,
+      //  width: 130,
+    },
+    {
       title: "Created at",
       dataIndex: "createdAt",
       render: function (data: any) {
@@ -160,7 +167,7 @@ const Course_labelList = () => {
                       Edit
                     </Link>
                   </Menu.Item>
-                 
+
                   <Menu.Item
                     key="delete"
                     onClick={() => {
@@ -196,7 +203,7 @@ const Course_labelList = () => {
     setSearchTerm("");
   };
 
-  
+
   return (
     <div>
       {/* <UMBreadCrumb
@@ -249,7 +256,7 @@ const Course_labelList = () => {
         showPagination={true}
       />
 
-      
+
     </div>
   );
 };
