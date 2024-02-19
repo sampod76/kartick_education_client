@@ -194,7 +194,7 @@ export default function LearningMain() {
                                             // background: color,
 
                                         }}>
-                                            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] ${label?._id === selectLabelData._id ? "bg-opacity-55 " : "bg-opacity-40"} `}></div>
+                                            <div className={`absolute top-0 left-0 w-full h-full bg-[${'#8CA46D'}] ${label?._id === selectLabelData._id ? "bg-opacity-55 " : "bg-opacity-40"} `}></div>
                                             {label?.title}
                                         </button>
                                     ))
