@@ -156,4 +156,5 @@ password : 11223344
 
 1. module tab center -
 2. login button fixed
-3. 
+3. logo fixed
+4. 
