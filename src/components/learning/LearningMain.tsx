@@ -43,7 +43,8 @@ export default function LearningMain() {
     }
     // const categoryId = queryData?.categoryId;
 
-    // console.log(queryData, 'queryData');
+    const color = queryData?.color || '#43CD66'
+
 
     ////!learning select category id
     const [learningCategoryId, setLearningCategoryId] = useState<string | null>(null);
@@ -79,7 +80,7 @@ export default function LearningMain() {
     // console.log(courseAllData, 'courseAllData', labelId)
 
     const { data: courseLevelData, isLoading: courseLevelLoading, error: categoryLevelError } = useGetAllCourse_labelQuery({ ...labelQuery })
-    console.log("🚀 ~ LearningMain ~ courseLevelData:", courseLevelData)
+    // console.log("🚀 ~ LearningMain ~ courseLevelData:", courseLevelData)
 
 
     let courseQuery = { ...query }
@@ -95,8 +96,10 @@ export default function LearningMain() {
         courseQuery['label_id'] = "65d00cd5f64a5b71b4916a36" //only damping
     }
 
+
     const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery }, { skip: !Boolean(selectLabelData?._id) }) as any
     console.log("🚀 ~ LearningMain ~ courseAllData:", courseAllData)
+
 
     if (error || categoryLevelError) {
         console.log(error, categoryLevelError);
@@ -130,9 +133,14 @@ export default function LearningMain() {
     // console.log(learningCategoryId, 'learningCategoryId')
 
     return (
-        <div style={{
-            backgroundColor: "#EFFBE1"
+        <div className='bg-opacity relative' style={{
+            // backgroundColor: color,
+            // opacity:0.05
+
         }}>
+            {/* //! for bg opacity color */}
+            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-20`}></div>
+
             <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
                 <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
                 <BannerLearning learningCategoryId={learningCategoryId} setLearningCategoryId={setLearningCategoryId} />
@@ -181,9 +189,12 @@ export default function LearningMain() {
                             <div className="flex  flex-col justify-self-start gap-3 mt-3 w-full mr-2 ">
                                 {
                                     courseLevelData?.data?.map((label: ICourseLevelData) => (
-                                        <button onClick={() => setLabelData(label)} key={label?._id} className={`py-2 rounded-r-2xl px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id && "border-[3px] border-[#89bb97] "}`} style={{
-                                            background: '#D5E6B9'
+
+                                        <button onClick={() => setLabelData(label)} key={label?._id} className={`py-2  px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id ? "border-[3px] border-indigo-400" : ""} rounded-r-xl relative`} style={{
+                                            // background: color,
+
                                         }}>
+                                            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] ${label?._id === selectLabelData._id ? "bg-opacity-55 " : "bg-opacity-40"} `}></div>
                                             {label?.title}
                                         </button>
                                     ))
@@ -193,11 +204,13 @@ export default function LearningMain() {
                         </div>
 
                         <div className="w-full lg:w-[70%] md:w-[70%] xl:w-[75%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 ">
+
                             <h1 className='py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}> {selectLabelData?.title + " " + "(All Courses)"}</h1>
+
                             <div className="" >
-                                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3" style={{
-                                    backgroundColor: '#CCEDBC'
-                                }}>
+                                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3 relative min-h-screen" >
+                                    {/*//! for background opacity */}
+                                    <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-30`}></div>
                                     {
                                         courseAllData?.data?.length > 0 ? (
                                             courseAllData.data.map((course: ICourseData, index: number) => (

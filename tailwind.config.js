@@ -13,7 +13,8 @@ module.exports = {
       colors:{
         primary:"#5371FF",
         secondary:"#FB8500"
-      }
+      },
+        backgroundOpacity: ['active'],
     },
    
   },
