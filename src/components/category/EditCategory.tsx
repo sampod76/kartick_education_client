@@ -100,6 +100,24 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
                   required={true}
                 />
               </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+
+                style={{
+                  marginBottom: "20px",
+                  // maxWidth: "30vw",
+                  // margin: "0 auto",
+                }}
+              >
+                <FormInput
+                  type="number"
+                  name="serial_number"
+                  size="large"
+                  label="Category serial number"
+
+                />
+              </Col>
 
               <Col
                 className="gutter-row"

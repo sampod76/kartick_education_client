@@ -42,8 +42,9 @@ export default function LearningMain() {
         queryData = {}; // Provide a default value if parsing fails
     }
     // const categoryId = queryData?.categoryId;
+
     const color = queryData?.color || '#43CD66'
-    // console.log(queryData, 'queryData');
+
 
     ////!learning select category id
     const [learningCategoryId, setLearningCategoryId] = useState<string | null>(null);
@@ -96,7 +97,8 @@ export default function LearningMain() {
     }
 
 
-    const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery },{skip:!Boolean(selectLabelData?._id)}) as any
+    const { data: courseAllData, isLoading, error } = useGetAllCourseQuery({ ...courseQuery }, { skip: !Boolean(selectLabelData?._id) }) as any
+    console.log("🚀 ~ LearningMain ~ courseAllData:", courseAllData)
 
 
     if (error || categoryLevelError) {
@@ -141,7 +143,7 @@ export default function LearningMain() {
 
             <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
                 <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
-                <BannerLearning  learningCategoryId={learningCategoryId} setLearningCategoryId={setLearningCategoryId} />
+                <BannerLearning learningCategoryId={learningCategoryId} setLearningCategoryId={setLearningCategoryId} />
             </div>
             {/* <CourseStatistics courseId={learningCategoryId || courseFirstData?._id} /> */}
 
@@ -203,11 +205,8 @@ export default function LearningMain() {
 
                         <div className="w-full lg:w-[70%] md:w-[70%] xl:w-[75%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 ">
 
-                            <h1 className='py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap relative' >
-                                {/* //! for background opacity */}
-                                <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-60`}></div>
-                                {selectLabelData?.title + " " + "(All Courses)"}
-                            </h1>
+                            <h1 className='py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap' style={{ backgroundColor: '#8CA46D' }}> {selectLabelData?.title + " " + "(All Courses)"}</h1>
+
                             <div className="" >
                                 <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3 relative min-h-screen" >
                                     {/*//! for background opacity */}

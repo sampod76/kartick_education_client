@@ -9,7 +9,7 @@ const SelectLessonField = () => {
   query["limit"] = 999999;
   query["sortBy"] = "title";
   query["sortOrder"] = "asc";
-
+  query["status"] = "active";
   //! for Lesson options selection
   const { data: lessons } = useGetAllLessonQuery({ ...query });
   const LessonData = lessons?.data;

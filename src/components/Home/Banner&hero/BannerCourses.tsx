@@ -19,6 +19,7 @@ const BannerCourses = () => {
   const query: Record<string, any> = {};
   query["limit"] = 999999;
   query["sortOrder"] = "asc";
+  query["sortBy"] = "serial_number";
   query["status"] = "active";
 
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
