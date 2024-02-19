@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { Tabs, TabsProps } from "antd";
-
+import ModuleList from "./ModuleList";
+import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
+import Courses from "../Home/coureses/Courses";
 import LessonList from "../lesson/LessonList";
 // import GlossaryPage from "../"
 import {
- 
   ContainerOutlined,
   SettingOutlined,
   ReadOutlined
@@ -99,11 +100,7 @@ export default function ModuleTab({
 
         onChange={handleTabClick}
       >
-        {/* {tabsItems.map((item) => (
-          <TabPane tab={item.label} key={item.key}>
-            {item.children}
-          </TabPane>
-        ))} */}
+
       </Tabs>
     </div>
   );

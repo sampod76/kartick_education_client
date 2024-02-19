@@ -124,17 +124,17 @@ export default function LessonPage({
         <div className="flex  items-center gap-5 mt-3 lg:mt-0 md:mt-0 xl:mt-0">
           <h1 className="flex flex-col">
             <span className="text-sm text-slate-600">Category</span>
-            <span className="text-[#323232] text-lg">
+            <span className="text-[#323232] text-sm lg:text-lg">
               <EllipsisMiddle suffixCount={2} maxLength={20}>
                 {moduleData?.milestone?.course?.category?.title}
               </EllipsisMiddle>
             </span>
           </h1>
           <h1 className="flex flex-col">
-            <span className="text-sm text-slate-600">Label</span>
-            <span className="text-[#323232] text-lg">
-              <EllipsisMiddle suffixCount={2} maxLength={15}>
-                {moduleData?.milestone?.course?.category?.label}
+            <span className="text-sm text-slate-600">Level</span>
+            <span className="text-[#323232] text-sm lg:text-lg">
+              <EllipsisMiddle suffixCount={1} maxLength={7}>
+                {moduleData?.title}
               </EllipsisMiddle>
             </span>
           </h1>
