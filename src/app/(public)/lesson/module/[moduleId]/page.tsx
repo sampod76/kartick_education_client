@@ -107,7 +107,7 @@ export default function LessonPage({
           },
         ]}
       /> */}
-      
+
       </div>
 
       {/* top section */}
@@ -131,10 +131,10 @@ export default function LessonPage({
             </span>
           </h1>
           <h1 className="flex flex-col">
-            <span className="text-sm text-slate-600">Level</span>
+            <span className="text-sm text-slate-600">Label</span>
             <span className="text-[#323232] text-lg">
               <EllipsisMiddle suffixCount={2} maxLength={15}>
-                {moduleData?.title}
+                {moduleData?.milestone?.course?.category?.label}
               </EllipsisMiddle>
             </span>
           </h1>

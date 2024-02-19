@@ -125,10 +125,11 @@ const NavbarPublic = () => {
             >
               <Link
                 href="/login"
-                className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 py-2 bg-white rounded-[36px] uppercase "
+                className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 md:px-3 py-1 md:py-0 lg:py-1 xl:py-2  bg-white rounded-[36px] uppercase "
               >
-                <span className="relative z-10 text-[#5F8122] group-hover:text-white text-lg duration-500">
-                  Login
+                <span className="relative z-10 text-[#5F8122] group-hover:text-white text-lg md:text-sm lg:text-sm  xl:text-lg duration-500 mx-3">
+                  Login 
+
                 </span>
                 <span className="absolute w-full h-full bg-[#5F8122] -left- top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
                 <span className="absolute w-full h-full bg-[#5F8122] -right- top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>

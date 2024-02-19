@@ -1,16 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { Tabs, TabsProps } from "antd";
-import ModuleList from "./ModuleList";
-import ReviewsPage from "../Course/CourseDetails/ReviewsPage";
-import Courses from "../Home/coureses/Courses";
+
 import LessonList from "../lesson/LessonList";
 // import GlossaryPage from "../"
 import {
-  BookOutlined,
-  QuestionOutlined,
-  CommentOutlined,
-  BlockOutlined,
+ 
   ContainerOutlined,
   SettingOutlined,
   ReadOutlined
@@ -88,25 +83,27 @@ export default function ModuleTab({
     },
   ];
   return (
-    <div className="mt-5 flex justify-center items-center">
+    <div className="mt-5 ">
 
       <Tabs
         defaultActiveKey={activeTabKey}
         tabBarStyle={{
           padding: "10px",
           borderRadius: '8px',
-         
+
           // backgroundColor: '#D9D9D9'
         }}
+        centered
         animated
-        
+        items={tabsItems}
+
         onChange={handleTabClick}
       >
-        {tabsItems.map((item) => (
+        {/* {tabsItems.map((item) => (
           <TabPane tab={item.label} key={item.key}>
             {item.children}
           </TabPane>
-        ))}
+        ))} */}
       </Tabs>
     </div>
   );
