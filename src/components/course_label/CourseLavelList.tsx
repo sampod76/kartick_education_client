@@ -26,6 +26,7 @@ import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { ENUM_YN } from "@/constants/globalEnums";
+import FilterCategorySelect from "../dashboard/Filter/FilterCategory";
 
 const Course_labelList = () => {
   const query: Record<string, any> = {};
@@ -44,13 +45,16 @@ const Course_labelList = () => {
   const [sortOrder, setSortOrder] = useState<string>("asc");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-
+  const [filterValue, setFilterValue] = useState("");
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["status"] = "active";
   query["isDelete"] = ENUM_YN.NO;
+  if (filterValue) {
+    query["category"] = filterValue;
+  }
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -228,10 +232,14 @@ const Course_labelList = () => {
             width: "20%",
           }}
         />
-        <div>
+        <div className="space-x-2">
           <Link href={`/${userInfo?.role}/course_label/create`}>
-            <Button type="default">Create Course label</Button>
+            <Button size="middle" type="default">Create Course label</Button>
           </Link>
+          <FilterCategorySelect
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+          />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}

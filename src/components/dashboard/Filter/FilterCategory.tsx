@@ -15,15 +15,16 @@ const FilterCategorySelect = ({
   const query: Record<string, any> = {};
   //! for Course options selection
   query["limit"] = 999999;
-  query["sortBy"] = "title";
+  query["sortBy"] = "serial_number";
   query["sortOrder"] = "asc";
+  query["status"] = "active";
   //! for search and select
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-     //  // console.log("search:", value);
+    //  // console.log("search:", value);
   };
 
   //! for Category options selection
@@ -44,15 +45,17 @@ const FilterCategorySelect = ({
       }}
       size={"large"}
       options={CategoryOptions}
+
       value={filterValue}
       style={{ width: "10rem" }}
       loading={isLoading}
       //! for search & filter
       showSearch
+      allowClear
       onSearch={onSearch}
       filterOption={filterOption}
       optionFilterProp="children"
-      placeholder="Inserted are removed"
+      placeholder="Please select a category"
     />
   );
 };

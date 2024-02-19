@@ -9,8 +9,9 @@ const SelectMilestoneField = () => {
   query["limit"] = 999999;
   query["sortBy"] = "title";
   query["sortOrder"] = "asc";
+  query["status"] = "active";
   //! for Milestone options selection
-  const { data,isLoading } = useGetAllMilestoneQuery({ ...query });
+  const { data, isLoading } = useGetAllMilestoneQuery({ ...query });
   const milestoneData = data?.data;
   // console.log(milestoneData)
   const MilestoneOptions = milestoneData?.map((item: any) => {

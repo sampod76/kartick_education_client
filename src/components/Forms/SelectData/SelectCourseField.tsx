@@ -4,12 +4,13 @@ import FormSelectField from "../FormSelectField";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import FormSearchSelectField from "../FormSearchSelectField";
 
-const SelectCourseField = ({}) => {
+const SelectCourseField = ({ }) => {
   const query: Record<string, any> = {};
   //! for Course options selection
   query["limit"] = 999999;
   query["sortBy"] = "title";
   query["sortOrder"] = "asc";
+  query["status"] = "active";
 
   const { data: Course } = useGetAllCourseQuery({ ...query });
   const CourseData = Course?.data;
