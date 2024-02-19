@@ -55,31 +55,39 @@ export default function MilestoneHomeFeatures() {
   };
   const query: Record<string, any> = {};
 
-  const [size, setSize] = useState<number>(4);
+  const [size, setSize] = useState<boolean>(false);
 
   query["limit"] = 4;
   query["children"] = "course";
   query["sortBy"] = "serial_number";
   query["sortOrder"] = "asc";
   query["status"] = "active";
+  
+  if (size) {
+    query['limit'] = 999999
+  } else {
+    query['limit'] = 2
+  }
+
+
   const { data = {}, isLoading } = useGetAllCategoryChildrenQuery({ ...query });
-  console.log("🚀 ~ MilestoneHomeFeatures ~ data:", data);
+  // console.log("🚀 ~ MilestoneHomeFeatures ~ data:", data);
+
   return (
-    <div className="container mx-auto mt-7">
+    <div className="container mx-auto mt-7 text-center">
       {
         //@ts-ignore
         data?.data?.map((category: any, index: number) => (
           <div
             key={category._id}
-            className={`rounded-[28px] ${
-              index % 4 === 0
-                ? "bg-[#43CD66]"
-                : index % 3 === 0
+            className={`rounded-[28px] ${index % 4 === 0
+              ? "bg-[#43CD66]"
+              : index % 3 === 0
                 ? "bg-[#F96A9A]"
                 : index % 2 === 0
-                ? "bg-[#2AAAE2]"
-                : "bg-[#F9B001]"
-            } px-3 py-5 mt-3`}
+                  ? "bg-[#2AAAE2]"
+                  : "bg-[#F9B001]"
+              } px-3 py-5 mt-3`}
           >
             <h1 className="text-center  text-white text-2xl lg:text-3xl my-3">
               {category?.title}
@@ -103,8 +111,18 @@ export default function MilestoneHomeFeatures() {
                 );
               })}
             </div>
+
+
           </div>
         ))
+      }
+
+      {!size && <button
+        onClick={() => setSize(true)}
+        className="w-[7rem] mx-auto mt-9 bg-[#C6F2BA] h-[48px] text-center px-3 py-3 text-gray-700  font-semibold  rounded text-nowrap"
+      >
+        See All
+      </button>
       }
     </div>
   );
