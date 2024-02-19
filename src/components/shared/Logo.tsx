@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-// import logoImage  from "@/assets/Logo/Rectangle 1.png"
+import logoFullImage from "@/assets/Logo/logoFull.png"
 import logoImage from "@/assets/Logo/logOnly.png"
 import Image from "next/image";
 
@@ -20,7 +20,10 @@ const Logo = () => {
         background: "transparent"
       }}
     >
-      <Image src={logoImage} height={120} width={200} className="w-[50px] 
+      <Image unoptimized src={logoFullImage} height={120} width={200} className="hidden md:flex lg:flex xl:flex w-[50px] 
+       md:w-[84px] lg:w-[90px]  xl:w-[80px]  h-[40px] lg:h-[70px] 
+       " alt="Logo" />
+      <Image src={logoImage} height={120} width={200} className="flex md:hidden lg:hidden xl:hidden w-[50px] 
        md:w-[84px] lg:w-[90px]  xl:w-[80px]  h-[40px] lg:h-[70px] 
        " alt="Logo" />
 
