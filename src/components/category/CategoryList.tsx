@@ -116,6 +116,11 @@ const CategoryList = () => {
       //  width: 130,
     },
     {
+      title: "Serial Number",
+      dataIndex: "serial_number",
+      width: 130,
+    },
+    {
       title: "Created at",
       dataIndex: "createdAt",
       render: function (data: any) {

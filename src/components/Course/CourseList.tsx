@@ -36,12 +36,12 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 const CourseList = () => {
   const query: Record<string, any> = {};
 
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
+
   const userInfo = getUserInfo() as IDecodedInfo;
-  // const { userInfo } = useAppSelector((state: any) => state.);
+
   const { data: userStateData } = useAppSelector(state => state.userInfo)
   console.log('userStateData', userStateData)
-  // console.log(userInfo);
+
   const [deleteCourse, { isLoading: deleteLoading }] = useDeleteCourseMutation();
 
   const [page, setPage] = useState<number>(1);
