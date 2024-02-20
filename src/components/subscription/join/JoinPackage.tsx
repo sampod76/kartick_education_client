@@ -32,10 +32,6 @@ import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getUserInfo } from "@/services/auth.service";
 import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
-import ModalComponent from "@/components/Modal/ModalComponents";
-import Registration from "@/app/registration/page";
-import SignUpTeacherAndStudent from "@/app/(public)/signup/page";
-import { usePathname } from "next/navigation";
 import { Error_model_hook } from "@/utils/modalHook";
 
 export default function JoinPackage({
