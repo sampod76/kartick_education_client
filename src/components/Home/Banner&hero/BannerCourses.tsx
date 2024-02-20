@@ -146,7 +146,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
           })
         )}
       </div> */}
-      <div className="flex uppercase justify-between items-center gap-2 font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
+      <div className="flex uppercase justify-between items-center gap-2 font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scroll-smooth  whitespace-nowrap container mx-auto">
         {isLoading ? (
           <CategoryButtonSKeletton />
         ) : (

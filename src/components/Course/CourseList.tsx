@@ -126,7 +126,7 @@ const CourseList = () => {
       title: "Name",
       // fixed:"left",
       dataIndex: "title",
-      ellipsis: true,
+      // ellipsis: true,
       // responsive: ['md','sm']
     },
     {
@@ -135,15 +135,15 @@ const CourseList = () => {
       ellipsis: true,
       width: 100,
     },
-    {
-      title: "duration",
-      dataIndex: "duration",
-      render: function (data: any) {
-        // console.log(data)
-        return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
-      },
-      // ellipsis: true,
-    },
+    // {
+    //   title: "duration",
+    //   dataIndex: "duration",
+    //   render: function (data: any) {
+    //     // console.log(data)
+    //     return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
+    //   },
+    //   // ellipsis: true,
+    // },
     {
       title: "label",
       dataIndex: ["labelDetails", "title"],
