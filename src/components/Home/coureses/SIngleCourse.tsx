@@ -70,48 +70,42 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
   return (
     <>
 
-      <div className="w-[350px] md:w-full h-full rounded-xl shadow-xl bg-white mx-auto flex flex-col justify-between ">
-        <div className="flex justify-center items-center">
-
-
+      <div className="w-[363px] md:w-full h-full rounded-xl shadow-xl bg-white mx-auto flex flex-col justify-between ">
+        <div className="flex justify-center items-center h-1/2 mt-7">
           <VimeoPlayer
-            width={!screens.xl ? 360 : !screens.lg ? 385 : !screens.sm ? 340 : 340}
+            width={!screens.xl ? 365 : !screens.lg ? 450 : !screens.sm ? 340 : 340}
             height={347}
             autoplay={false}
             // link={result.data as string}
             link={urlChecker(course?.demo_video?.video).platform === ENUM_VIDEO_PLATFORM.VIMEO ? course.demo_video.video : "https://vimeo.com/547716679"}
           />
         </div>
-        <div className="flex flex-col justify-between item-start">
+        <div className="flex flex-col justify-between h-1/2  ">
           <Link
             href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title
               }&courseName=${course?.title}&category=${course?.category?._id || course?.category
               }`}
+            className=""
           >
 
-            <div className="px-2 py-2 flex flex-col justify-between  ">
+            <div className="px-2 py-2 ">
               <div>
-                <Typography.Title level={4}>
+                <h3 className="text-black ">
                   <EllipsisMiddle suffixCount={3} maxLength={90}>
                     {course?.title}
                   </EllipsisMiddle>
-                </Typography.Title>
+                </h3>
 
               </div>
             </div>
           </Link>
-          <div>
-            <div className="bg-gray-100 py-2 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900  px-6 ">
+          <div className="">
+            <div className="bg-gray-100 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900  px-6 ">
               <span className="py-1  font-regular whitespace-nowrap text-gray-900 flex flex-row items-center">
-                {/* <span className="ml-1">
-              {course?.duration?.length &&
-                dayjs(course?.duration[1]).format("MMM D, YYYY")}
-            </span> */}
+
                 <CgPlayButtonO className="mr-1" /> {course?.totalVideoSize} video
               </span>
-              {/* <span onClick={() => addToCartHandler(course)} className="flex whitespace-nowrap justify-center items-center gap-1 cursor-pointer">
-          <ShoppingCartOutlined style={{}} /> Add to cart
-        </span> */}
+
               <span className="flex whitespace-nowrap justify-center items-center gap-1">
                 <SnippetsOutlined className="text-gray-900" />
                 {course?.totalEnrollStudentSize + " " + "quiz"}
@@ -121,7 +115,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 {course?.totalEnrollStudentSize + " " + "students"}
               </span>
             </div>
-            <button className=" bg-secondary text-center font-bold w-full text-white h-[rem] text-xl py-2">
+            <button className=" bg-secondary rounded-b-lg text-center font-bold w-full text-white  text-xl py-1">
               Enroll Now
             </button>
           </div>

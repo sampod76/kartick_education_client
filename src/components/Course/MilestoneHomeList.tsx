@@ -102,7 +102,7 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
               </div>
             </div> */}
 
-            <div className="w-full lg:w-[80%] mx-auto grid  grid-cols-1 lg:grid-cols-2 gap-3">
+            <div className="w-full  mx-auto grid  grid-cols-1 lg:grid-cols-2 gap-3">
               {milestoneData?.map((milestone: IMilestoneData, index: number) => {
                 return (
                   <SingleMilestone key={index} milestoneData={milestone} index={index} />

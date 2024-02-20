@@ -62,11 +62,11 @@ export default function MilestoneHomeFeatures() {
   query["sortBy"] = "serial_number";
   query["sortOrder"] = "asc";
   query["status"] = "active";
-  
+
   if (size) {
     query['limit'] = 999999
   } else {
-    query['limit'] = 2
+    query['limit'] = 4
   }
 
 
@@ -96,7 +96,7 @@ export default function MilestoneHomeFeatures() {
               {category?.courses?.map((course: any) => {
                 return (
                   <Link
-                    href={`/`}
+                    href={`/course/milestone/${course?._id}?category=${category?._id}`}
                     className=" flex gap-2 items-center text-white"
                     key={course?._id}
                   >
