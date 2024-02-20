@@ -19,7 +19,7 @@ interface ICourseItemType {
   [key: string]: string | undefined;
 }
 
-const Courses = ({ query ,width='container'}: { query: ICourseItemType, width?:string}) => {
+const Courses = ({ query, width = 'container' }: { query: ICourseItemType, width?: string }) => {
   // console.log("🚀 ~ Courses ~ query:", query)
 
 
@@ -38,10 +38,10 @@ const Courses = ({ query ,width='container'}: { query: ICourseItemType, width?:s
   queryAll["page"] = currentPage;
 
   // console.log(searchValue?.length, 'searchValue?.length', debouncedSearchTerm)
-  if (!!debouncedSearchTerm &&searchValue?.length >0) {
+  if (!!debouncedSearchTerm && searchValue?.length > 0) {
     query["searchTerm"] = debouncedSearchTerm;
-  }else{
-    query["searchTerm"] =''
+  } else {
+    query["searchTerm"] = ''
   }
 
   // console.log(query,'query')
@@ -85,19 +85,23 @@ const Courses = ({ query ,width='container'}: { query: ICourseItemType, width?:s
     );
   }
   return (
-    <>
+    <div className="relative">
+
       {isLoading ? (
         <LoadingSkeleton />
       ) : courseData?.length === 0 ? (
         <NotFoundCourse />
       ) : (
-        <div className={`mt-3 ${width ==="container" ?"container" : "w-full"} mx-auto `}>
+        <div className={`mt-3 ${width === "container" ? "container" : "w-full"} mx-auto `}>
+          
+
           <div className="grid grid-cols-1  md:grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-5">
             {courseData?.map((item: ICourseData, index: number) => {
               return <SIngleCourse course={item} key={index + 1} />;
             })}
           </div>
-          <div className="mt-10 mb-2  flex justify-center items-center">
+
+          <div className={`mt-10 mb-2  flex justify-center items-center`}>
             <Pagination
               showSizeChanger
               current={currentPage}
@@ -110,7 +114,7 @@ const Courses = ({ query ,width='container'}: { query: ICourseItemType, width?:s
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

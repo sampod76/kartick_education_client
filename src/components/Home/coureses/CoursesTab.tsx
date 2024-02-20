@@ -102,9 +102,9 @@ const CoursesTab = () => {
   };
 
   return (
-    <div className=" container mx-auto  bg-white">
+    <div className="  bg-white ">
 
-      <div className="py-2 px-2 my-6 flex justify-between items-center ">
+      <div className="container mx-auto  py-2 px-2 my-6 flex justify-between items-center ">
         <h2 className="flex flex-col font-bold text-sm md:text-md lg:text-lg 2xl:text-4xl text-gray-700 whitespace-nowrap">
 
           <span>Overcome challenges with
@@ -116,24 +116,33 @@ const CoursesTab = () => {
         </Link>
       </div>
 
-      {/* <div>
 
-</div> */}
-      <div>
+      <div className="relative">
 
-        {isLoading ? (
-          <TopBarLoading />
-        ) : (
-          <Tabs
-            defaultActiveKey="011allCourses"
-            // centered
-            animated
-            onChange={handleTabClick}
-            items={tabsItems2}
-            // style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
-            onTabClick={(key, event) => TabClickHandler(key, event)}
-          />
-        )}
+        <div className="absolute top-[5rem] inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: 'url("/banner/courseBg.webp")', opacity: 0.3 }} />
+        <div className="container mx-auto py-4 text-center ">
+
+          {isLoading ? (
+            <TopBarLoading />
+          ) : (
+            <Tabs
+              defaultActiveKey="011allCourses"
+              // centered
+              animated
+              onChange={handleTabClick}
+              tabBarStyle={{
+
+              }}
+              items={tabsItems2}
+              // style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
+              onTabClick={(key, event) => TabClickHandler(key, event)}
+            />
+          )}
+          {/* <Link href={`/subscription`} className="cursor-pointer text-nowrap overflow-hidden relative z-100 border border-[#5F8122] text-[#5F8122] group px-3 py-2 lg:px-5 lg:py-3 bg-white rounded-[36px] uppercase font-bold text-center text-[10px] md:text-[12px] lg:text-lg w-[4rem] mx-auto my-8">
+            Join Now
+          </Link> */}
+        </div>
+
       </div>
     </div>
   );

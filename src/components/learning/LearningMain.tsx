@@ -134,12 +134,12 @@ export default function LearningMain() {
 
     return (
         <div className='bg-opacity relative' style={{
-            // backgroundColor: color,
+            backgroundColor: '#EBFFE3',
             // opacity:0.05
 
         }}>
             {/* //! for bg opacity color */}
-            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-20`}></div>
+            {/* <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-20`}></div> */}
 
             <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
                 <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
@@ -194,7 +194,7 @@ export default function LearningMain() {
                                             // background: color,
 
                                         }}>
-                                            <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] ${label?._id === selectLabelData._id ? "bg-opacity-55 " : "bg-opacity-40"} `}></div>
+                                            <div className={`absolute top-0 left-0 w-full h-full bg-[${'#8CA46D'}] ${label?._id === selectLabelData._id ? "bg-opacity-55 " : "bg-opacity-40"} `}></div>
                                             {label?.title}
                                         </button>
                                     ))
@@ -210,7 +210,7 @@ export default function LearningMain() {
                             <div className="" >
                                 <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3 relative min-h-screen" >
                                     {/*//! for background opacity */}
-                                    <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-30`}></div>
+                                    <div className={`absolute top-0 left-0 w-full h-full bg-[#CCEDBC] bg-opacity-30`}></div>
                                     {
                                         courseAllData?.data?.length > 0 ? (
                                             courseAllData.data.map((course: ICourseData, index: number) => (
