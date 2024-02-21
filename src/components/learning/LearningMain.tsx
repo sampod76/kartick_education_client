@@ -119,7 +119,7 @@ console.log(courseQuery)
 
   return (
     <div
-      className="bg-opacity relative"
+      className="bg-opacity relative py-6"
       style={{
         backgroundColor: "#EBFFE3",
         // opacity:0.05
@@ -145,7 +145,7 @@ console.log(courseQuery)
             marginTop: "1.8rem",
             border: "2px solid #CED6D0",
           }}
-          className="relative min-h-screen container rounded-md p-2 mx-auto mt-12 lg:mt-5 md:mt-6 xl:mt-6 py-2 md:py-3 lg:py-5 xl:py-6 "
+          className="relative min-h-screen container rounded-xl p-2 mx-auto mt-12 lg:mt-5 md:mt-6 xl:mt-6 py-2 md:py-3 lg:py-5 xl:py-6 "
         >
           <h2
             style={{
@@ -220,7 +220,7 @@ console.log(courseQuery)
                 className="py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap"
                 style={{ backgroundColor: "#8CA46D" }}
               >
-                {" "}
+               
                 {(selectLabelData?.title ?selectLabelData?.title : "") + " " + "(All Courses)"}
               </h1>
 
@@ -255,6 +255,13 @@ console.log(courseQuery)
                       </p>
                     </div>
                   )}
+                </div>
+                <div className="flex justify-center items-center gap-5 mt-3">
+                  <button className="bg-white shadow-lg p-2 rounded-lg border-2 border-[#92E3A9] text-[#92E3A9] text-lg font-bold">BUY NOW</button>
+                  <Link href={'/subscription'} className="bg-white shadow-lg p-2 rounded-lg border-2 border-[#92E3A9] text-[#92E3A9] text-lg font-bold">
+                  MEMBERSHIP
+                  </Link>
+                 
                 </div>
               </div>
             </div>
