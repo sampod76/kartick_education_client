@@ -223,13 +223,13 @@ const CourseList = () => {
                     Delete
                   </Menu.Item>
 
-                  <Menu.Item key="add_milestone">
+                  {/* <Menu.Item key="add_milestone">
                     <Link
                       href={`/${userInfo?.role}/course/create/milestone/${record?._id}?courseName=${record?.title}`}
                     >
                       Add Milestone
                     </Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
                 </Menu>
               }
             >
