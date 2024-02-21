@@ -66,7 +66,7 @@ export default function DetailsMilestoneDash({ milestoneId }: { milestoneId: str
             <div className="block lg:flex gap-2">
 
                 {/* backgroundImage: `url(${milestoneData?.imgs?.length ? milestoneData?.imgs[0] : AllImage?.notFoundImage})`, */}
-                <div className="p-2 border-2 shadow-md  rounded-xl flex max-w-xl bg-white  overflow-hidden">
+                <div className="p-2 border-2 shadow-md  rounded-xl  block lg:flex md:flex xl:flex  max-w-xl bg-white  overflow-hidden">
                     <div className="w-1/3 bg-cover" style={{
                         backgroundImage: `url(${milestoneSingleData?.imgs?.length ? milestoneSingleData?.imgs[0] : AllImage?.notFoundImage})`
                     }}>

@@ -18,14 +18,14 @@ export default function DetailsModuleDash({ moduleId }: { moduleId: string }) {
     // console.log('moduleData', moduleData)
 
 
-    // console.log(singleModuleData, 'singleModuleData')
+    // console.log(moduleData, 'singleModuleData')
 
     return (
         <div>
-            <h2 className='text-center text-md my-3'>Module Detail </h2>
+            <h2 className='text-center text-md my-3'>Module Details </h2>
 
-            <div className="block lg:flex gap-2">
-                <div className="p-2 border-2 shadow-md rounded-xl flex max-w-xl bg-white overflow-hidden">
+            <div className="block lg:flex gap-4">
+                <div className="p-2 border-2 shadow-md rounded-xl block lg:flex md:flex xl:flex max-w-xl bg-white overflow-hidden">
                     <div
                         className="w-1/3 bg-cover"
                         style={{
@@ -51,6 +51,7 @@ export default function DetailsModuleDash({ moduleId }: { moduleId: string }) {
                 </div>
 
                 <div className="max-w-xl">
+                    <h4 className='text-slate-600 '>Lesson List of the module</h4>
                     <LessonList moduleId={moduleData?._id} moduleData={moduleData} />
                     {/* Add more components or details as needed */}
                 </div>
