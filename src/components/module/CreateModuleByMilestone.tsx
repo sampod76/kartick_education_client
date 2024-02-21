@@ -260,7 +260,9 @@ export default function CreateModuleByMilestone() {
               {serviceLoading ? (
                 <Spin />
               ) : (
-                <ButtonSubmitUI>Create Module</ButtonSubmitUI>
+                <div className=" text-center">
+                  <ButtonSubmitUI>Create Module</ButtonSubmitUI>
+                </div>
               )}
             </Form>
           </div>

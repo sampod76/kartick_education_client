@@ -303,7 +303,9 @@ export default function EditCourse({ courseId }: { courseId: string }) {
             {isLoading ? (
               <Spin />
             ) : (
+                <div className=" text-center">
               <ButtonSubmitUI>Update Course</ButtonSubmitUI>
+              </div>
             )}
           </div>
         </Form>
