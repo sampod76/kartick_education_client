@@ -240,7 +240,7 @@ const CreateQuizByLesson = () => {
                   </Col>
                   <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                     <DemoVideoUI
-                     
+
                       options={["youtube", "vimeo"]}
                       label="Preview Video"
                     />
@@ -258,7 +258,7 @@ const CreateQuizByLesson = () => {
                     {/*//! 10--- */}
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage   isReset={isReset} name="imgs" />
+                    <UploadMultipalImage isReset={isReset} name="imgs" />
                     {/* //! 2 -- */}
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
@@ -288,16 +288,20 @@ const CreateQuizByLesson = () => {
                         Description
                       </p>
                       <TextEditor
-                      isReset={isReset}
-                        // textEditorValue={textEditorValue}
-                        // setTextEditorValue={setTextEditorValue}
+                        isReset={isReset}
+                      // textEditorValue={textEditorValue}
+                      // setTextEditorValue={setTextEditorValue}
                       />
                     </div>
                   </Col>
                 </Row>
               </div>
+              <div className=" text-center">
+                <div className=" text-center">
 
-              <ButtonSubmitUI>Create</ButtonSubmitUI>
+                  <ButtonSubmitUI>Create</ButtonSubmitUI>
+                </div>
+              </div>
             </Form>
           </div>
         </div>

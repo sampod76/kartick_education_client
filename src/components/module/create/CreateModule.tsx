@@ -274,7 +274,9 @@ export default function CreateModule() {
                 {serviceLoading ? (
                   <Spin />
                 ) : (
-                  <ButtonSubmitUI>Create Module</ButtonSubmitUI>
+                  <div className=" text-center">
+                    <ButtonSubmitUI>Create Module</ButtonSubmitUI>
+                  </div>
                 )}
               </div>
             </Form>
