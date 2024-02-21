@@ -131,7 +131,7 @@ const BannerLearning: React.FC<BannerLearningProps> = ({
         height={1900}
       />
 
-      <div className="flex   uppercase justify-start items-center gap-2  font-[800] mt-2 md:mt-[1rem] pl-4 overflow-x-auto  whitespace-nowrap scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar container mx-auto">
+      <div className="flex   uppercase justify-start items-center gap-2  font-[800] mt-2 md:mt-[1rem] pl-4 overflow-x-auto  whitespace-nowrap scrollbar-thumb-rounded-full scrollbar-track-rounded-full  container mx-auto">
         {isLoading ? (
           <CategoryButtonSKeletton />
         ) : (

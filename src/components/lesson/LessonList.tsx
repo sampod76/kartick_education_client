@@ -31,6 +31,7 @@ import { USER_ROLE } from "@/constants/role";
 import parse from "html-react-parser";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { urlChecker } from "@/utils/urlChecker";
+import QuizIcon from "@/assets/svg/quizIcon";
 export default function LessonList({
   moduleId,
   moduleData,
@@ -48,7 +49,7 @@ export default function LessonList({
   const categoryId = moduleData?.milestone?.course?.category?._id;
 
   // for seller
-  const { data: purchasedData, isLoading: purchaseAcceptLoading } =
+  const { data: purchasedPackage, isLoading: purchaseAcceptLoading } =
     useGetAllPurchaseAcceptedPackageQuery(
       {
         status: "active",
@@ -99,7 +100,7 @@ export default function LessonList({
 
   let IsExistCategoryOrCourse: any = false;
   if (userInfo.role !== "student") {
-    IsExistCategoryOrCourse = purchasedData?.data?.some((item: any) =>
+    IsExistCategoryOrCourse = purchasedPackage?.data?.some((item: any) =>
       item.categories.some(
         (category: any) => category.category._id === categoryId
       )
@@ -249,12 +250,12 @@ export default function LessonList({
                     <Link
                       key={quiz?._id}
                       href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3 text-[#479FEC]"
+                      className="text-[14px] flex justify-between  mx-auto mt-3 text-[#479FEC]"
                     >
-                      <h2 className="text-base font-normal">
-                        Quiz {index + 1} : <span>{quiz?.title} </span>
+                      <h2 className="text-base font-normal flex justify-start gap-1">
+                     <span className="mt-1"><QuizIcon/></span>   Quiz {index + 1} : {quiz?.title}
                       </h2>
-                      <LockOutlined style={{ fontSize: "18px" }} />
+                      {/* <LockOutlined style={{ fontSize: "18px" }} /> */}
                     </Link>
                   );
                 })}

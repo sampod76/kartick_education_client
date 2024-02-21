@@ -10,6 +10,8 @@ import React, { useState } from "react";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { ENUM_YN } from "@/constants/globalEnums";
 import { ContainerOutlined } from "@ant-design/icons"
+import { AllSvg } from "@/assets/AllSvg";
+import ModuleIcon from "@/assets/svg/moduleIcon";
 
 const SideModuleList = ({
   milestoneId,
@@ -60,7 +62,7 @@ const SideModuleList = ({
               fontSize: "1.5rem",
             }}
           />{" "} */}
-          <h1 className=" text-sm md:text-lg lg:text-2xl">Lesson Summery</h1>
+          <h1 className=" text-sm md:text-lg lg:text-2xl">Lessons & Quizes</h1>
         </button>
       ),
       key: "1",
@@ -139,11 +141,12 @@ const SideModuleList = ({
             <Link
               key={index}
               href={`/lesson/module/${module?._id}?module=${module?.title}`}
-              className={`  text-start text-base lg:text-text-lg  leading-2   py-1 px-1 md:px-3 rounded ${module?._id === moduleId ? "text-[#479FEC] front-bold" : "text-gray-800 font-normal"
+              className={`flex   text-start text-base lg:text-text-lg  leading-2   py-1 px-1 md:px-3 rounded ${module?._id === moduleId ? "text-[#479FEC] front-bold" : "text-gray-800 font-normal"
                 } `}
             >
-              <span className={`rounded-full   w-2 h-2 inline-flex items-center justify-center mr-2 ${module?._id === moduleId ? "bg-[#479FEC]" : "bg-black"
-                }`}></span>
+              {/* <span className={`rounded-full   w-2 h-2 inline-flex items-center justify-center mr-2 ${module?._id === moduleId ? "bg-[#479FEC]" : "bg-black"
+                }`}></span> */}
+                <span className="mt-1 mr-1">{<ModuleIcon />}</span>
               {module?.title}
             </Link>
           );
