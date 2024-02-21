@@ -1,5 +1,6 @@
 import { ICategoryStatus, IPriceTypes } from "@/types";
 import { IUserData } from "./userType";
+import { ICategoryDataType } from "./categoryDataType";
 
 export type ICourseData = {
   _id:string;
@@ -10,12 +11,7 @@ export type ICourseData = {
   details: string;
   short_description: string;
   author: IUserData;
-  category: {
-    _id: string;
-    title: string;
-    img: string;
-    status: string;
-  };
+  category:ICategoryDataType;
   // sub1_course_category_id: Types.ObjectId;
   price: number;
   tax: number;

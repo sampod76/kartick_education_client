@@ -5,119 +5,52 @@ import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import Image from "next/image";
 import React from 'react'
 
-export default function ViewCategory({categoryId}:{categoryId:string}) {
+export default function ViewCategory({ categoryId }: { categoryId: string }) {
 
 
-    const { data: data, isLoading } = useGetSingleCategoryQuery(categoryId, {
-        skip: !Boolean(categoryId),
-      });
-    
-    
-      if (isLoading) {
-        return <LoadingForDataFetch />;
-      }
-      return (
-        <>
-          <div
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-            className="container "
-          >
-            <div
-              style={{
-                overflow: "hidden",
-                borderRadius: "0.25rem",
-                width: "100%",
-                boxShadow:
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-              }} /* className="w-full rounded overflow-hidden shadow-lg" */
-            >
-              <div className="grid  grid-cols-1 xl:grid-cols-2">
-                <div>
-                  <Image
-                    width={800}
-                    height={800}
-                    src={data?.img}
-                    alt="Transport Image"
-                    // className="w-full"
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div>
-                  <div
-                    style={{
-                      paddingTop: "1rem",
-                      paddingBottom: "1rem",
-                      paddingLeft: "1.5rem",
-                      paddingRight: "1.5rem",
-                    }} /* className="px-6 py-4" */
-                  >
-                    <p
-                      style={{
-                        marginBottom: "0.5rem",
-                        fontSize: "1.25rem",
-                        lineHeight: "1.75rem",
-                        fontWeight: 700,
-                      }} /* className="font-bold text-xl mb-2" */
-                    >
-                      {data?.title}
-                    </p>
-                    <p
-                      style={{
-                        fontSize: "1rem",
-                        lineHeight: "1.5rem",
-                        color: "#374151",
-                      }} /* className="text-gray-700 text-base" */
-                    >
-                      {data?.description}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      paddingTop: "1rem",
-                      paddingBottom: "1rem",
-                      paddingLeft: "1.5rem",
-                      paddingRight: "1.5rem",
-                    }} /* className="px-6 py-4" */
-                  >
-                    <span
-                      style={{
-                        display: "inline-block",
-                        paddingTop: "0.25rem",
-                        paddingBottom: "0.25rem",
-                        paddingLeft: "0.75rem",
-                        paddingRight: "0.75rem",
-                        marginRight: "0.5rem",
-                        fontSize: "0.875rem",
-                        lineHeight: "1.25rem",
-                        fontWeight: 600,
-                        color: "#374151",
-                        backgroundColor: "#E5E7EB",
-                      }} /* className="inline-block bg-gray-200  px-3 py-1 text-sm font-semibold text-gray-700 mr-2" */
-                    >
-                      Status : ➡
-                    </span>
-                    <span
-                      style={{
-                        display: "inline-block",
-                        paddingTop: "0.25rem",
-                        paddingBottom: "0.25rem",
-                        paddingLeft: "0.75rem",
-                        paddingRight: "0.75rem",
-                        fontSize: "0.875rem",
-                        lineHeight: "1.25rem",
-                        fontWeight: 600,
-                        color: "#ffffff",
-                        textTransform: "capitalize",
-                        backgroundColor: "#059669",
-                      }} /* className="inline-block bg-green-600 text-white  px-3 py-1 text-sm font-semibold capitalize" */
-                    >
-                      {data?.status}
-                    </span>
-                  </div>
-                </div>
+  const { data: category, isLoading } = useGetSingleCategoryQuery(categoryId, {
+    skip: !Boolean(categoryId),
+  });
+
+
+  // const category = data
+  if (isLoading) {
+    return <LoadingForDataFetch />;
+  }
+  return (
+    <>
+      <div
+        style={{ marginLeft: "auto", marginRight: "auto" }}
+        className="container "
+      >
+        <div className="container mx-auto p-8">
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h1 className="text-3xl font-bold mb-6">{category.title}</h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Category Image */}
+              <div className="col-span-full mb-6">
+                <Image height={200} width={300} src={category.img} alt={category.title + 'Image'} className="w-full h- rounded" />
+              </div>
+
+              {/* Category Details */}
+              <div className="col-span-full md:col-span-1">
+                {/* <p className="text-gray-600 mb-2">Category ID: {category.id}</p> */}
+                <p className="text-gray-600 mb-2">Status: {category.status}</p>
+                <p className="text-gray-600 mb-2">Created At: {category.createdAt}</p>
+                <p className="text-gray-600 mb-2">Updated At: {category.updatedAt}</p>
+                {/* Add more details as needed */}
               </div>
             </div>
+
+            {/* Additional Information */}
+            <div className="mt-8">
+              {/* <h2 className="text-xl font-semibold mb-4">Additional Information</h2> */}
+              {/* Add more details or components as needed */}
+            </div>
           </div>
-        </>
-      );
+        </div>
+      </div>
+    </>
+  );
 }
