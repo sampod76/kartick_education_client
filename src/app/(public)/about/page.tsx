@@ -60,7 +60,7 @@ export default function AboutPage() {
             </div>
 
             {/* about hero  */}
-            <div className="flex flex-wrap-reverse items-center lg:flex justify-between mt-[4rem]  xl:justify-end container mx-auto p-2">
+            <div className="flex flex-wrap-reverse items-center lg:flex justify-between mt-2 lg:mt-[4rem]  xl:justify-end container mx-auto p-2">
 
                 <div className="w-full lg:w-[55%] text-sm lg:text-xl mx-auto text-[#000000] font-[400] px-5 pr-3 md:lg:pr-[5rem] lg:pr-[7rem] ">
                     <p>Sabah Kunle is the Founder and CEO of IBLossomLearn. Sabah incorporates her 13 years of classroom experience, her knowledge, expertise, and degree in curriculum development, and her professional trainings in guided reading and literacy instruction to help teachers learn how to implement a Literacy approach into their skills acquisition easily and effectively.</p>
