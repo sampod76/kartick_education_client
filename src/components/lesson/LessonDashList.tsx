@@ -223,13 +223,13 @@ export default function LessonDashList() {
                       Edit
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="add_milestone">
+                  {/* <Menu.Item key="add_milestone">
                     <Link
                       href={`/${userInfo?.role}/lesson/create/quiz/${record?._id}?lessonName=${record?.title}`}
                     >
                       Add Quiz
                     </Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item
                     key="delete"
                     onClick={() => {

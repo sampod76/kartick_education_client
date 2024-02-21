@@ -121,17 +121,19 @@ export default function MilestoneHomeFeatures() {
               {showAllCourses ? 'Show Less' : 'Show All'}
             </button>
           )}
+
+
         </div>
       ))}
 
-
-      {!size && <button
+  { (data?.data && !size) && <button
         onClick={() => setSize(true)}
         className="w-[7rem] mx-auto mt-9 bg-[#C6F2BA] h-[48px] text-center px-3 py-3 text-gray-700  font-semibold  rounded text-nowrap"
       >
         See All
       </button>
       }
+    
     </div>
   );
 }
