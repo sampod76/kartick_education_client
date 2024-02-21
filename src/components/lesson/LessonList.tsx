@@ -164,7 +164,9 @@ export default function LessonList({
 
   // console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
-    if (IsExistCategoryOrCourse || index === 0) {
+    if (IsExistCategoryOrCourse
+      // || index === 0//! for first open video
+    ) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {
         const result = urlChecker(lesson?.videos[0]?.link);
         if (result.platform === ENUM_VIDEO_PLATFORM.VIMEO) {
@@ -187,11 +189,11 @@ export default function LessonList({
     } else {
       return (
         <div className="text-base lg:text-lg text-start text-red-500 font-medium">
-          This contents is privet. First purchase this course.
+          This contents is private. First purchase this course.
           {/* <ModalComponent buttonText="login">
             <LoginPage redirectLink={pathname} />
           </ModalComponent> */}
-          
+
         </div>
       );
     }
@@ -270,7 +272,11 @@ export default function LessonList({
                 <h2 className="text-base text-start font-normal">
                   <span>Lesson {index + 1}: </span> {lesson?.title}
                 </h2>
-                <EyeOutlined style={{ fontSize: "18px" }} />
+                {isLessonCollapsed ? (
+                  <EyeInvisibleOutlined style={{ fontSize: "18px" }} />
+                ) : (
+                  <EyeOutlined style={{ fontSize: "18px" }} />
+                )}
               </button>
             </div>
           ),
