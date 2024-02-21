@@ -191,10 +191,12 @@ export default function LessonList({
           {/* <ModalComponent buttonText="login">
             <LoginPage redirectLink={pathname} />
           </ModalComponent> */}
+          
         </div>
       );
     }
   };
+
 
 
   //! collapse data ////
