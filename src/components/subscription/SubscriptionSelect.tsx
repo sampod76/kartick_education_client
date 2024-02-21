@@ -117,7 +117,7 @@ export default function SubscriptionSelect() {
                 >
                   Join Now
                 </Link> */}
-                <p  className="w-full mx-auto bg-[#C6F2BA] h-[48px] text-center px-3 py-3 text-black  border border-black font-semibold  rounded text-nowrap">Contact us</p>
+                <p className="w-full mx-auto bg-[#C6F2BA] h-[48px] text-center px-3 py-3 text-black  border border-black font-semibold  rounded text-nowrap">Contact us</p>
                 <Link
                   href={`/subscription/trial/${subscription?._id}`}
                   className="w-full mx-auto bg-[white] h-[48px] text-center px-3 py-3 text-black  border border-[#5392F9] font-semibold  rounded text-nowrap"

@@ -20,7 +20,7 @@ const Logo = () => {
         background: "transparent"
       }}
     >
-      <Image unoptimized src={logoFullImage} height={120} width={200} className="hidden md:flex lg:flex xl:flex w-[110px] 
+      <Image  src={logoFullImage} height={120} width={200} className="hidden md:flex lg:flex xl:flex w-[110px] 
          h-[36px] lg:h-[56px] 
        " alt="Logo" />
       <Image src={logoImage} height={120} width={200} className="flex md:hidden lg:hidden xl:hidden w-[50px] 
