@@ -313,11 +313,13 @@ export default function EditLesson({lessonId}:{lessonId:string}) {
                   </Col>
                 </Row>
               </div>
-              {UpdateLesson ? (
-                <ButtonLoading />
-              ) : (
-                <ButtonSubmitUI>Update Lesson</ButtonSubmitUI>
-              )}
+             <div className=" text-center">
+                {UpdateLesson ? (
+                  <ButtonLoading />
+                ) : (
+                  <ButtonSubmitUI>Update Lesson</ButtonSubmitUI>
+                )}
+             </div>
             </Form>
           </div>
         ) : (
