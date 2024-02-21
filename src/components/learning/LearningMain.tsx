@@ -138,7 +138,7 @@ console.log(courseQuery)
       {/* <CourseStatistics courseId={learningCategoryId || courseFirstData?._id} /> */}
 
       {isLoading ? (
-        <LoadingSkeleton number={20} />
+        <LoadingSkeleton number={40} />
       ) : (
         <div
           style={{
