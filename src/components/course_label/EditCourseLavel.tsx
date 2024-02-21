@@ -109,7 +109,24 @@ export default function EditCourseLabel({ courseLabelId }: { courseLabelId: stri
                   name="title"
                   size="large"
                   label="Course_label Name"
-                  required={true}
+                 
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={8}
+                style={{
+                  marginBottom: "20px",
+                  // maxWidth: "30vw",
+                  // margin: "0 auto",
+                }}
+              >
+                <FormInput
+                  type="number"
+                  name="serial_number"
+                  
+                  size="large"
+                  label={`Serial number`}
                 />
               </Col>
 
