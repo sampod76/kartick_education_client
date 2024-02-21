@@ -1,15 +1,7 @@
+import { ICategoryDataType } from "../categoryDataType";
+
 export type IPackageCategory = {
-  category: {
-    _id: string;
-    title: string;
-    img: string;
-    status: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: 0;
-    isDelete: string;
-    id: string;
-  };
+  category: ICategoryDataType;
   label: string;
   _id: string;
   id: string;
@@ -36,7 +28,7 @@ export type IPackageData = {
     price: number;
     each_student_increment: number;
   };
-  
+
   isDelete: string;
   createdAt: string;
   updatedAt: string;
