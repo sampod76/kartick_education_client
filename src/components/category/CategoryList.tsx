@@ -164,13 +164,13 @@ const CategoryList = () => {
                       Edit
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="add_milestone">
+                  {/* <Menu.Item key="add_milestone">
                     <Link
                       href={`/${userInfo?.role}/category/create/course/${record?._id}?categoryName=${record?.title}`}
                     >
                       Add Course
                     </Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item
                     key="delete"
                     onClick={() => {
