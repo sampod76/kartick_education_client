@@ -417,7 +417,7 @@ export default function EditSingleQuiz({
                 </Col>
               </Row>
               <Col
-              
+
                 className="gutter-row"
                 xs={24}
                 style={{
@@ -484,6 +484,12 @@ export default function EditSingleQuiz({
                     />
                   )}
                   {quizType === "multiple_select" && (
+                    <AnswerMultiple
+                      answersMultiple={answers}
+                      setAnswersMultiple={setAnswers as any}
+                    />
+                  )}
+                  {quizType === "audio" && (
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
