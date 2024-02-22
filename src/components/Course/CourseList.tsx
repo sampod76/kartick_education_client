@@ -76,7 +76,7 @@ const CourseList = () => {
 
   //@ts-ignore
   const courseData = data?.data || [];
-  console.log("🚀 ~ CourseList ~ courseData:", courseData)
+  // console.log("🚀 ~ CourseList ~ courseData:", courseData)
   //@ts-ignore
   const meta = data?.meta;
 
