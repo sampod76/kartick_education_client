@@ -17,6 +17,7 @@ import { useDeleteQuizMutation, useGetAllQuizQuery } from "@/redux/api/adminApi/
 import { ILessonData } from "@/types/lessonType";
 import { AllImage } from "@/assets/AllImge";
 import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
+import { EllipsisMiddle } from "@/utils/CutTextElliples";
 export default function ViewLesson({ lessonId }: { lessonId: string }) {
 
 
@@ -252,7 +253,14 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
         </div>
 
         <div className="">
-          <HeadingUI>Courses of {lessonData?.title}</HeadingUI>
+          <HeadingUI>
+
+            <span>Courses of </span>
+
+            <EllipsisMiddle suffixCount={3} maxLength={60}>
+              {lessonData?.title}
+            </EllipsisMiddle>
+          </HeadingUI>
 
           <UMTable
             loading={quizDataLoading}
