@@ -40,7 +40,7 @@ const CourseList = () => {
   const userInfo = getUserInfo() as IDecodedInfo;
 
   const { data: userStateData } = useAppSelector(state => state.userInfo)
-  console.log('userStateData', userStateData)
+  // console.log('userStateData', userStateData)
 
   const [deleteCourse, { isLoading: deleteLoading }] = useDeleteCourseMutation();
 
