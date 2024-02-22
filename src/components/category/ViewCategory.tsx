@@ -49,7 +49,7 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  console.log(query)
+  // console.log(query)
   const { data, isLoading: courseLoading } = useGetAllCourseQuery({ ...query });
   const courseData = data?.data || [];
   const meta = data?.meta;
@@ -213,8 +213,8 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
   return (
     <>
       <div
-      // style={{ marginLeft: "auto", marginRight: "auto" }}
-      // className="container "
+        style={{ marginLeft: "auto", marginRight: "auto" }}
+        className="container "
       >
         <div className="container mx-auto p-8">
           <div className="bg-white shadow-md rounded-lg p-6">
