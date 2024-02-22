@@ -30,9 +30,12 @@ import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresen
 import VimeoPlayer from "@/utils/vimoPlayer";
 import { urlChecker } from "@/utils/urlChecker";
 import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
+import { useRouter } from "next/navigation";
 const { Text } = Typography;
 
 const SIngleCourse = ({ course }: { course: ICourseData }) => {
+
+  const router = useRouter()
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
   // console.log(course);
@@ -100,7 +103,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
             </div>
           </Link>
           <div className="">
-            <div className="bg-gray-100 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900  px-6 ">
+            <div className="bg-gray-100 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900  px-6 py-1">
               <span className="py-1  font-regular whitespace-nowrap text-gray-900 flex flex-row items-center">
 
                 <CgPlayButtonO className="mr-1" /> {course?.totalVideoSize} video
@@ -115,9 +118,16 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 {course?.totalEnrollStudentSize + " " + "students"}
               </span>
             </div>
-            <button className=" bg-secondary rounded-b-lg text-center font-bold w-full text-white  text-xl py-1">
+            <button
+              // href= {`/payment/checkout/${course?._id}?categoryId=${course?.category}`}
+              onClick={() =>
+                router.push(`/payment/checkout/${course?._id}?categoryId=${course?.category}`)
+              }
+              className="bg-secondary rounded-b-lg text-center font-bold w-full text-white text-xl py-1 cursor-pointer "
+            >
               Enroll Now
             </button>
+
           </div>
         </div>
       </div>
