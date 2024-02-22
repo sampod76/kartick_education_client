@@ -9,7 +9,7 @@ export default function ContactForm() {
 
   const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
-    console.log(values);
+    // console.log(values);
     
     message.success("sent message");
 
