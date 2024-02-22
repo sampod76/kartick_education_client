@@ -1,5 +1,6 @@
+import { IContactDataType } from './../../../types/contactDataType';
 import { tagTypes } from "@/redux/tag-types";
-import { IContact, IMeta } from "@/types";
+import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 
 const Contact_URL = "/contact";
@@ -15,7 +16,7 @@ export const contactApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any[], meta: IMeta) => {
+      transformResponse: (response: IContactDataType[], meta: IMeta) => {
         // console.log(response);
         return {
           data: response,
