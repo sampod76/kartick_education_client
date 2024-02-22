@@ -89,8 +89,8 @@ export default function ContactForm() {
           </Col>
           <Button
             htmlType="submit"
-            style={{ marginLeft: "20px", color: "white" }}
-            type="default"
+            style={{ marginLeft: "20px", color: "white", backgroundColor: '#5371FF' }}
+            type="primary"
             size="large"
             loading={isLoading}
           >
