@@ -6,12 +6,13 @@ import Image from "next/image";
 import React, { useState } from 'react'
 import UMTable from "../ui/UMTable";
 import HeadingUI from "../ui/dashboardUI/HeadingUI";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import { useDeleteCourseMutation, useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useDebounced } from "@/redux/hooks";
 import { Dropdown, Menu, Space } from "antd";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
 export default function ViewCategory({ categoryId }: { categoryId: string }) {
 
 
@@ -19,6 +20,8 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
     skip: !Boolean(categoryId),
   });
   // ! for course
+
+  const [deleteCourse, { isLoading: deleteLoading }] = useDeleteCourseMutation();
   const userInfo = getUserInfo() as IDecodedInfo;
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -49,10 +52,30 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  console.log(query)
+  // console.log(query)
   const { data, isLoading: courseLoading } = useGetAllCourseQuery({ ...query });
   const courseData = data?.data || [];
   const meta = data?.meta;
+  const handleDelete = (id: string) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
+      if (res.isConfirmed) {
+        try {
+          const res = await deleteCourse(id).unwrap();
+          if (res?.success == false) {
+            // message.success("Admin Successfully Deleted!");
+            // setOpen(false);
+            Error_model_hook(res?.message);
+          } else {
+            Success_model("Course Successfully Deleted");
+          }
+        } catch (error: any) {
+          console.log("🚀 ~ confirm_modal ~ error:", error);
+          Error_model_hook(error.message);
+        }
+      }
+    });
+  };
+
 
   // const category = data
   if (isLoading || courseLoading) {
@@ -149,54 +172,54 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
       //   console.log(data);
       // }
     },
-    // {
-    //   title: "Action",
-    //   // fixed: "right",
-    //   width: 110,
-    //   render: (record: any) => (
-    //     <>
-    //       <Space size="middle">
-    //         <Dropdown
-    //           overlay={
-    //             <Menu>
-    //               <Menu.Item key="details">
-    //                 <Link
-    //                   href={`/${userInfo?.role}/course/details/${record._id}`}
-    //                 >
-    //                   View
-    //                 </Link>
-    //               </Menu.Item>
-    //               <Menu.Item key="edit">
-    //                 <Link href={`/${userInfo?.role}/course/edit/${record._id}`}>
-    //                   Edit
-    //                 </Link>
-    //               </Menu.Item>
+    {
+      title: "Action",
+      // fixed: "right",
+      width: 110,
+      render: (record: any) => (
+        <>
+          <Space size="middle">
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="details">
+                    <Link
+                      href={`/${userInfo?.role}/course/details/${record._id}`}
+                    >
+                      View
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="edit">
+                    <Link href={`/${userInfo?.role}/course/edit/${record._id}`}>
+                      Edit
+                    </Link>
+                  </Menu.Item>
 
-    //               <Menu.Item
-    //                 key="delete"
-    //                 onClick={() => {
-    //                   handleDelete(record._id);
-    //                 }}
-    //               >
-    //                 Delete
-    //               </Menu.Item>
+                  <Menu.Item
+                    key="delete"
+                    onClick={() => {
+                      handleDelete(record._id);
+                    }}
+                  >
+                    Delete
+                  </Menu.Item>
 
-    //               {/* <Menu.Item key="add_milestone">
-    //                 <Link
-    //                   href={`/${userInfo?.role}/course/create/milestone/${record?._id}?courseName=${record?.title}`}
-    //                 >
-    //                   Add Milestone
-    //                 </Link>
-    //               </Menu.Item> */}
-    //             </Menu>
-    //           }
-    //         >
-    //           <button className="text-blue-700">Action</button>
-    //         </Dropdown>
-    //       </Space>
-    //     </>
-    //   ),
-    // },
+                  {/* <Menu.Item key="add_milestone">
+                    <Link
+                      href={`/${userInfo?.role}/course/create/milestone/${record?._id}?courseName=${record?.title}`}
+                    >
+                      Add Milestone
+                    </Link>
+                  </Menu.Item> */}
+                </Menu>
+              }
+            >
+              <button className="text-blue-700">Action</button>
+            </Dropdown>
+          </Space>
+        </>
+      ),
+    },
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -213,8 +236,8 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
   return (
     <>
       <div
-      // style={{ marginLeft: "auto", marginRight: "auto" }}
-      // className="container "
+        style={{ marginLeft: "auto", marginRight: "auto" }}
+        className="container "
       >
         <div className="container mx-auto p-8">
           <div className="bg-white shadow-md rounded-lg p-6">
