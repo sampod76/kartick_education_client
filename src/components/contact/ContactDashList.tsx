@@ -63,6 +63,7 @@ const ContactList = () => {
 
     //@ts-ignore
     const contactData = data?.data;
+    // console.log("🚀 ~ file: ContactDashList.tsx:66 ~ ContactList ~ contactData:", contactData)
 
     //@ts-ignore
     const meta = data?.meta;
