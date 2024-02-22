@@ -13,9 +13,10 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { useGetSingleLessonQuery } from "@/redux/api/adminApi/lessoneApi";
-import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
+import { useDeleteQuizMutation, useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
 import { ILessonData } from "@/types/lessonType";
 import { AllImage } from "@/assets/AllImge";
+import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
 export default function ViewLesson({ lessonId }: { lessonId: string }) {
 
 
@@ -55,9 +56,33 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
 
   // console.log(query)
   const { data, isLoading: quizDataLoading } = useGetAllQuizQuery({ ...query });
+
+  const [deleteQuiz] = useDeleteQuizMutation();
   const courseData = data?.data || [];
   const meta = data?.meta;
 
+  const handleDelete = (id: string) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
+      if (res.isConfirmed) {
+        try {
+          console.log(id);
+
+          const res = await deleteQuiz(id).unwrap();
+
+          console.log(res, "response for delete Quiz");
+          if (res?.success == false) {
+            // message.success("Admin Successfully Deleted!");
+            // setOpen(false);
+            Error_model_hook(res?.message);
+          } else {
+            Success_model("Quiz Successfully Deleted");
+          }
+        } catch (error: any) {
+          Error_model_hook(error.message);
+        }
+      }
+    });
+  };
   // const category = data
   if (isLoading || quizDataLoading) {
     return <LoadingForDataFetch />;
@@ -122,7 +147,6 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
       sorter: true,
       width: 180,
     },
-
     {
       title: "Status",
       dataIndex: "status",
@@ -131,54 +155,54 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
       //   console.log(data);
       // }
     },
-    // {
-    //   title: "Action",
-    //   // fixed: "right",
-    //   width: 110,
-    //   render: (record: any) => (
-    //     <>
-    //       <Space size="middle">
-    //         <Dropdown
-    //           overlay={
-    //             <Menu>
-    //               <Menu.Item key="details">
-    //                 <Link
-    //                   href={`/${userInfo?.role}/course/details/${record._id}`}
-    //                 >
-    //                   View
-    //                 </Link>
-    //               </Menu.Item>
-    //               <Menu.Item key="edit">
-    //                 <Link href={`/${userInfo?.role}/course/edit/${record._id}`}>
-    //                   Edit
-    //                 </Link>
-    //               </Menu.Item>
+    {
+      title: "Action",
+      // fixed: "right",
+      width: 110,
+      render: (record: any) => (
+        <>
+          <Space size="middle">
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="details">
+                    <Link
+                      href={`/${userInfo?.role}/quiz/details/${record._id}`}
+                    >
+                      View
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="edit">
+                    <Link href={`/${userInfo?.role}/quiz/edit/${record._id}`}>
+                      Edit
+                    </Link>
+                  </Menu.Item>
 
-    //               <Menu.Item
-    //                 key="delete"
-    //                 onClick={() => {
-    //                   handleDelete(record._id);
-    //                 }}
-    //               >
-    //                 Delete
-    //               </Menu.Item>
+                  <Menu.Item
+                    key="delete"
+                    onClick={() => {
+                      handleDelete(record._id);
+                    }}
+                  >
+                    Delete
+                  </Menu.Item>
 
-    //               {/* <Menu.Item key="add_milestone">
-    //                 <Link
-    //                   href={`/${userInfo?.role}/course/create/milestone/${record?._id}?courseName=${record?.title}`}
-    //                 >
-    //                   Add Milestone
-    //                 </Link>
-    //               </Menu.Item> */}
-    //             </Menu>
-    //           }
-    //         >
-    //           <button className="text-blue-700">Action</button>
-    //         </Dropdown>
-    //       </Space>
-    //     </>
-    //   ),
-    // },
+                  {/* <Menu.Item key="add_milestone">
+                    <Link
+                      href={`/${userInfo?.role}/course/create/milestone/${record?._id}?courseName=${record?.title}`}
+                    >
+                      Add Milestone
+                    </Link>
+                  </Menu.Item> */}
+                </Menu>
+              }
+            >
+              <button className="text-blue-700">Action</button>
+            </Dropdown>
+          </Space>
+        </>
+      ),
+    },
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
