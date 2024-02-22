@@ -3,36 +3,230 @@
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import Image from "next/image";
-import React from 'react'
-
+import React, { useState } from 'react'
+import UMTable from "../ui/UMTable";
+import HeadingUI from "../ui/dashboardUI/HeadingUI";
+import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import { useDebounced } from "@/redux/hooks";
+import { Dropdown, Menu, Space } from "antd";
+import Link from "next/link";
+import dayjs from "dayjs";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 export default function ViewCategory({ categoryId }: { categoryId: string }) {
 
 
   const { data: category, isLoading } = useGetSingleCategoryQuery(categoryId, {
     skip: !Boolean(categoryId),
   });
+  // ! for course
+  const userInfo = getUserInfo() as IDecodedInfo;
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  // const [courseId, setCourseId] = useState<string>("");
 
+  const [filterValue, setFilterValue] = useState("");
+  const query: Record<string, any> = {};
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+  query["status"] = "active";
+  query["category"] = categoryId;
+  // if (filterValue) {
+  //   query["category"] = filterValue;
+  // }
+
+  const debouncedSearchTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedSearchTerm) {
+    query["searchTerm"] = debouncedSearchTerm;
+  }
+
+  console.log(query)
+  const { data, isLoading: courseLoading } = useGetAllCourseQuery({ ...query });
+  const courseData = data?.data || [];
+  const meta = data?.meta;
 
   // const category = data
-  if (isLoading) {
+  if (isLoading || courseLoading) {
     return <LoadingForDataFetch />;
   }
+
+  const columns = [
+    {
+      title: "Image",
+      render: function (data: any) {
+        return (
+          <>
+            {
+              <Image
+                src={data?.img}
+                style={{ height: "50px", width: "80px" }}
+                width={150}
+                height={150}
+                alt="dd"
+              />
+            }
+          </>
+        );
+      },
+      width: 100,
+    },
+    {
+      title: "Name",
+      // fixed:"left",
+      dataIndex: "title",
+      // ellipsis: true,
+      // responsive: ['md','sm']
+    },
+    {
+      title: "price",
+      dataIndex: "price",
+      ellipsis: true,
+      width: 100,
+    },
+    // {
+    //   title: "duration",
+    //   dataIndex: "duration",
+    //   render: function (data: any) {
+    //     // console.log(data)
+    //     return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
+    //   },
+    //   // ellipsis: true,
+    // },
+    {
+      title: "label",
+      dataIndex: ["labelDetails", "title"],
+      ellipsis: true,
+      width: 150,
+    },
+    {
+      title: "Price Type",
+      dataIndex: "price_type",
+      // ellipsis: true,
+      width: 100,
+    },
+    {
+      title: "author",
+      dataIndex: "author",
+      render: function (data: any) {
+        // console.log(data);
+        return data.email;
+      },
+      // ellipsis: true,
+    },
+    {
+      title: "category",
+      dataIndex: "category",
+      render: function (data: any) {
+        return data.title;
+      },
+      ellipsis: true,
+      // width: 120,
+    },
+
+    {
+      title: "Created at",
+      dataIndex: "createdAt",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
+      sorter: true,
+    },
+
+    {
+      title: "Status",
+      dataIndex: "status",
+      width: 80,
+      // render:function(data:any){
+      //   console.log(data);
+      // }
+    },
+    // {
+    //   title: "Action",
+    //   // fixed: "right",
+    //   width: 110,
+    //   render: (record: any) => (
+    //     <>
+    //       <Space size="middle">
+    //         <Dropdown
+    //           overlay={
+    //             <Menu>
+    //               <Menu.Item key="details">
+    //                 <Link
+    //                   href={`/${userInfo?.role}/course/details/${record._id}`}
+    //                 >
+    //                   View
+    //                 </Link>
+    //               </Menu.Item>
+    //               <Menu.Item key="edit">
+    //                 <Link href={`/${userInfo?.role}/course/edit/${record._id}`}>
+    //                   Edit
+    //                 </Link>
+    //               </Menu.Item>
+
+    //               <Menu.Item
+    //                 key="delete"
+    //                 onClick={() => {
+    //                   handleDelete(record._id);
+    //                 }}
+    //               >
+    //                 Delete
+    //               </Menu.Item>
+
+    //               {/* <Menu.Item key="add_milestone">
+    //                 <Link
+    //                   href={`/${userInfo?.role}/course/create/milestone/${record?._id}?courseName=${record?.title}`}
+    //                 >
+    //                   Add Milestone
+    //                 </Link>
+    //               </Menu.Item> */}
+    //             </Menu>
+    //           }
+    //         >
+    //           <button className="text-blue-700">Action</button>
+    //         </Dropdown>
+    //       </Space>
+    //     </>
+    //   ),
+    // },
+  ];
+
+  const onPaginationChange = (page: number, pageSize: number) => {
+    setPage(page);
+    setSize(pageSize);
+  };
+  const onTableChange = (pagination: any, filter: any, sorter: any) => {
+    const { order, field } = sorter;
+    // console.log(order, field);
+    setSortBy(field as string);
+    setSortOrder(order === "ascend" ? "asc" : "desc");
+  };
+
   return (
     <>
       <div
-        style={{ marginLeft: "auto", marginRight: "auto" }}
-        className="container "
+      // style={{ marginLeft: "auto", marginRight: "auto" }}
+      // className="container "
       >
         <div className="container mx-auto p-8">
           <div className="bg-white shadow-md rounded-lg p-6">
             <h1 className="text-3xl font-bold mb-6">{category.title}</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Category Image */}
-              <div className="col-span-full mb-6">
-                <Image height={200} width={300} src={category.img} alt={category.title + 'Image'} className="w-full h- rounded" />
+              <div className="col-span-full mb-6 bg-cover w-full h-[18rem]" style={{
+                backgroundImage: `url(${category.img})`,
+                backgroundAttachment: 'fixed',
+                backgroundSize: 'cover', // Add this line for covering the full height
+              }}>
               </div>
-
               {/* Category Details */}
               <div className="col-span-full md:col-span-1">
                 {/* <p className="text-gray-600 mb-2">Category ID: {category.id}</p> */}
@@ -49,6 +243,23 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
               {/* Add more details or components as needed */}
             </div>
           </div>
+        </div>
+
+        <div className="">
+          <HeadingUI>Courses of {category?.title}</HeadingUI>
+
+          <UMTable
+            loading={courseLoading}
+            columns={columns}
+            dataSource={courseData}
+            pageSize={size}
+            totalPages={meta?.total}
+            showSizeChanger={true}
+            onPaginationChange={onPaginationChange}
+            onTableChange={onTableChange}
+            showPagination={true}
+          />
+
         </div>
       </div>
     </>

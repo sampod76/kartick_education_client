@@ -9,6 +9,7 @@ const UMBreadCrumb = ({
     label: string;
     link: string;
   }[];
+
 }) => {
   const breadCrumbItems = [
     {
@@ -29,7 +30,8 @@ const UMBreadCrumb = ({
     }),
   ];
 
-  return <Breadcrumb style={{marginBlock:"1rem"}}  items={breadCrumbItems}></Breadcrumb>;
+  // return <Breadcrumb style={{marginBlock:"1rem"}}  items={breadCrumbItems}></Breadcrumb>;
+  return <div className=""></div> //! for hide breadcrumb
 };
 
 export default UMBreadCrumb;
