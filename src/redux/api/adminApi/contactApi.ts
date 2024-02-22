@@ -1,9 +1,9 @@
-import { IContactDataType } from './../../../types/contactDataType';
+import { IContactDataType } from "./../../../types/contactDataType";
 import { tagTypes } from "@/redux/tag-types";
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 
-const Contact_URL = "/contact";
+const Contact_URL = "/contact_mail";
 
 export const contactApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

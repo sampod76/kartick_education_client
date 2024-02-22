@@ -72,7 +72,7 @@ const ContactList = () => {
             if (res.isConfirmed) {
                 try {
                     const res = await deleteContact(id).unwrap();
-                    console.log("🚀 ~ confirm_modal ~ res:", res)
+                    // console.log("🚀 ~ confirm_modal ~ res:", res)
 
                     if (res?.success == false) {
                         // message.success("Admin Successfully Deleted!");
@@ -113,19 +113,19 @@ const ContactList = () => {
             title: "Name",
             dataIndex: "name",
             ellipsis: true,
-            width: 80,
+            width: 140,
         },
         {
             title: "email",
             dataIndex: "email",
             ellipsis: true,
-            width: 130,
+            // width: 180,
         },
         {
             title: "subject",
             dataIndex: "subject",
             ellipsis: true,
-            width: 140,
+            // width: 140,
         },
         {
             title: "Message",

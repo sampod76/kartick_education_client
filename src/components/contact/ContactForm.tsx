@@ -6,17 +6,28 @@ import FormInput from "../Forms/FormInput";
 import FormTextArea from "../Forms/FormTextArea";
 import { useAddContactMutation } from "@/redux/api/adminApi/contactApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { getUserInfo } from "@/services/auth.service";
 
 export default function ContactForm() {
 
+  const userInfo = getUserInfo() as any;
   const [isReset, setIsReset] = useState(false);
 
   const [addContact, { isLoading }] = useAddContactMutation()
 
   const onSubmit = async (values: any) => {
-    console.log(values);
+    // console.log(values);
 
-    message.success("sent message");
+    // message.success("sent message");
+
+    if (userInfo?.email) {
+      values['user'] = userInfo?.id
+    }
+
+    // const contactData={
+    //   ...values,
+
+    // }
 
     try {
       const res = await addContact(values).unwrap();
