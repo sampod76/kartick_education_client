@@ -69,7 +69,7 @@ export const SingleQuizApi = baseApi.injectEndpoints({
     // delete ac department
     deleteSingleQuiz: build.mutation({
       query: (id) => {
-        console.log("🚀 ~ file: singleQuiz.ts:78 ~ id:", id);
+        
         return {
           url: `${SINGLE_QUIZ_URL}/${id}`,
           method: "DELETE",

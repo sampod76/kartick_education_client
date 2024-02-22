@@ -5,7 +5,7 @@ import { baseApi } from "../baseApi";
 
 const PURCHASE_PACKAGE_URL = "/purchase_packages";
 const PURCHASE_COURSE_URL = "/purchase_courses";
-const PURCHASE_STUDENT_COURSE_URL = "/student_purchase_packages_course";
+const PURCHASE_STUDENT_COURSE_URL = "/student_purchase_packages_course_course";
 export const paymentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // create a new academic department
@@ -53,7 +53,10 @@ export const paymentApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.userPurchaseCourse,tagTypes.addPackageAndcourseTag],
+      providesTags: [
+        tagTypes.userPurchaseCourse,
+        tagTypes.addPackageAndcourseTag,
+      ],
     }),
 
     getSinglePurchasePackage: build.query({
@@ -169,7 +172,5 @@ export const {
   useGetSinglePurchaseAcceptCourseQuery,
   //total amount
   useGetAllPurchaseAcceptedCourseAmountQuery,
-  useGetAllPurchaseAcceptedPackageAmountQuery
-
-
+  useGetAllPurchaseAcceptedPackageAmountQuery,
 } = paymentApi;

@@ -29,7 +29,7 @@ const HomePage = () => {
           <div className="bg-transparent bg-gradient-to-b from-[#1C478D]  to-[#B1C4E2] backdrop-blur-sm font-bold text-[3vw] lg:text-[1.8vw] text-nowrap text-white  -bottom-[2rem]  right-[40%] px-5  lg:px-9  py-7 rounded-full cursor-pointer 
       -mt-[3rem] w-[90%]  lg:max-w-[55%] mx-auto text-center
       ">
-            CULTIVATING CONFIDENCE CULTIVATING SUCCESS
+            CULTIVATING CONFIDENCE , CULTIVATING SUCCESS
           </div>
         </AnimatePresenceWrapper>
       </div>

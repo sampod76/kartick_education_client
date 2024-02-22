@@ -43,7 +43,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />{" "}
-          <h1 className=" text-sm md:text-md lg:text-lg">Lesson Summery</h1>
+          <h1 className=" text-sm md:text-md lg:text-lg">Lessons & Quizes</h1>
         </button>
       ),
       key: "1",
