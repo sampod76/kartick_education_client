@@ -57,7 +57,7 @@ export const contactApi = baseApi.injectEndpoints({
           data,
         };
       },
-      invalidatesTags: [tagTypes.contact, tagTypes.contactChildren],
+      invalidatesTags: [tagTypes.contact],
     }),
     // update ac department
     updateContact: build.mutation({

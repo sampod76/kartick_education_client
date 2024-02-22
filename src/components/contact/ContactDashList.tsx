@@ -18,28 +18,28 @@ import {
     confirm_modal,
 } from "@/utils/modalHook";
 import {
-    useDeleteCategoryMutation,
-    useGetAllCategoryQuery,
-} from "@/redux/api/adminApi/categoryApi";
+    useDeleteContactMutation,
+    useGetAllContactQuery,
+} from "@/redux/api/adminApi/contactApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { ENUM_YN } from "@/constants/globalEnums";
 
-const CategoryList = () => {
+const ContactList = () => {
     const query: Record<string, any> = {};
 
     // const ADMIN = USER_ROLE.ADMIN;
     const userInfo = getUserInfo() as IDecodedInfo;
-    // console.log("🚀 ~ file: page.tsx:41 ~ CategoryList ~ role:", role);
+    // console.log("🚀 ~ file: page.tsx:41 ~ ContactList ~ role:", role);
 
-    const [deleteCategory] = useDeleteCategoryMutation();
+    const [deleteContact] = useDeleteContactMutation();
 
     const [adminId, setAdminId] = useState<string>("");
     const [page, setPage] = useState<number>(1);
     const [size, setSize] = useState<number>(10);
-    const [sortBy, setSortBy] = useState<string>("serial_number");
+    const [sortBy, setSortBy] = useState<string>("email");
     const [sortOrder, setSortOrder] = useState<string>("asc");
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [open, setOpen] = useState<boolean>(false);
@@ -59,10 +59,10 @@ const CategoryList = () => {
     if (!!debouncedSearchTerm) {
         query["searchTerm"] = debouncedSearchTerm;
     }
-    const { data, isLoading } = useGetAllCategoryQuery({ ...query });
+    const { data, isLoading } = useGetAllContactQuery({ ...query });
 
     //@ts-ignore
-    const categoryData = data?.data;
+    const contactData = data?.data;
 
     //@ts-ignore
     const meta = data?.meta;
@@ -71,7 +71,7 @@ const CategoryList = () => {
         confirm_modal(`Are you sure you want to delete`).then(async (res) => {
             if (res.isConfirmed) {
                 try {
-                    const res = await deleteCategory(id).unwrap();
+                    const res = await deleteContact(id).unwrap();
                     console.log("🚀 ~ confirm_modal ~ res:", res)
 
                     if (res?.success == false) {
@@ -79,7 +79,7 @@ const CategoryList = () => {
                         // setOpen(false);
                         Error_model_hook(res?.message);
                     } else {
-                        Success_model("Category Successfully Deleted");
+                        Success_model("Contact Successfully Deleted");
                     }
                 } catch (error: any) {
                     Error_model_hook(error.data);
@@ -90,36 +90,54 @@ const CategoryList = () => {
     };
 
     const columns = [
+        // {
+        //     title: "Image",
+        //     render: function (data: any) {
+        //         return (
+        //             <>
+        //                 {
+        //                     <Image
+        //                         src={data?.img || AllImage.notFoundImage}
+        //                         style={{ height: "50px", width: "80px" }}
+        //                         width={80}
+        //                         height={80}
+        //                         alt="dd"
+        //                     />
+        //                 }
+        //             </>
+        //         );
+        //     },
+        //     width: 130,
+        // },
         {
-            title: "Image",
-            render: function (data: any) {
-                return (
-                    <>
-                        {
-                            <Image
-                                src={data?.img || AllImage.notFoundImage}
-                                style={{ height: "50px", width: "80px" }}
-                                width={80}
-                                height={80}
-                                alt="dd"
-                            />
-                        }
-                    </>
-                );
-            },
+            title: "Name",
+            dataIndex: "name",
+            ellipsis: true,
+            width: 80,
+        },
+        {
+            title: "email",
+            dataIndex: "email",
+            ellipsis: true,
             width: 130,
         },
         {
-            title: "Name",
-            dataIndex: "title",
+            title: "subject",
+            dataIndex: "subject",
+            ellipsis: true,
+            width: 140,
+        },
+        {
+            title: "Message",
+            dataIndex: "message",
             ellipsis: true,
             //  width: 130,
         },
-        {
-            title: "Serial Number",
-            dataIndex: "serial_number",
-            width: 130,
-        },
+        // {
+        //     title: "Serial Number",
+        //     dataIndex: "serial_number",
+        //     width: 130,
+        // },
         {
             title: "Created at",
             dataIndex: "createdAt",
@@ -134,10 +152,10 @@ const CategoryList = () => {
         //   dataIndex: "contact",
         // },
         // {
-        //   title: "Category",
-        // //   dataIndex: "category",
+        //   title: "Contact",
+        // //   dataIndex: "contact",
         //   render: function (data: any) {
-        //     return <>{data?.category?.title}</>;
+        //     return <>{data?.contact?.title}</>;
         //   },
         // },
         {
@@ -150,23 +168,23 @@ const CategoryList = () => {
                         <Dropdown
                             overlay={
                                 <Menu>
-                                    <Menu.Item key="view">
+                                    {/* <Menu.Item key="view">
                                         <Link
-                                            href={`/${userInfo?.role}/category/details/${record._id}`}
+                                            href={`/${userInfo?.role}/contact/details/${record._id}`}
                                         >
                                             View
                                         </Link>
-                                    </Menu.Item>
-                                    <Menu.Item key="edit">
+                                    </Menu.Item> */}
+                                    {/* <Menu.Item key="edit">
                                         <Link
-                                            href={`/${userInfo?.role}/category/edit/${record._id}`}
+                                            href={`/${userInfo?.role}/contact/edit/${record._id}`}
                                         >
                                             Edit
                                         </Link>
-                                    </Menu.Item>
+                                    </Menu.Item> */}
                                     {/* <Menu.Item key="add_milestone">
                     <Link
-                      href={`/${userInfo?.role}/category/create/course/${record?._id}?categoryName=${record?.title}`}
+                      href={`/${userInfo?.role}/contact/create/course/${record?._id}?contactName=${record?.title}`}
                     >
                       Add Course
                     </Link>
@@ -206,12 +224,12 @@ const CategoryList = () => {
         setSearchTerm("");
     };
 
-    const deleteCategoryHandler = async (id: string) => {
+    const deleteContactHandler = async (id: string) => {
         //
         try {
-            const res = await deleteCategory(id);
+            const res = await deleteContact(id);
             if (res) {
-                message.success("Category Successfully Deleted!");
+                message.success("Contact Successfully Deleted!");
                 setOpen(false);
             }
         } catch (error: any) {
@@ -228,12 +246,12 @@ const CategoryList = () => {
                         link: `/${userInfo?.role}`,
                     },
                     {
-                        label: `Category`,
-                        link: `/${userInfo?.role}/category`,
+                        label: `Contact`,
+                        link: `/${userInfo?.role}/contact`,
                     },
                 ]}
             />
-            <HeadingUI>Category List</HeadingUI>
+            <HeadingUI>Contact List</HeadingUI>
             <ActionBar>
                 <Input
                     size="large"
@@ -244,9 +262,10 @@ const CategoryList = () => {
                     }}
                 />
                 <div>
-                    <Link href={`/${userInfo?.role}/category/create`}>
-                        <Button type="default">Create Category</Button>
-                    </Link>
+                    {/* <Link href={`/${userInfo?.role}/contact/create`}>
+                        <Button type="default">Create Contact</Button>
+                    </Link> */}
+
                     {(!!sortBy || !!sortOrder || !!searchTerm) && (
                         <Button
                             style={{ margin: "0px 5px" }}
@@ -262,7 +281,7 @@ const CategoryList = () => {
             <UMTable
                 loading={isLoading}
                 columns={columns}
-                dataSource={categoryData}
+                dataSource={contactData}
                 pageSize={size}
                 totalPages={meta?.total}
                 showSizeChanger={true}
@@ -272,21 +291,21 @@ const CategoryList = () => {
             />
 
             <UMModal
-                title="Remove Category"
+                title="Remove Contact"
                 isOpen={open}
                 closeModal={() => setOpen(false)}
-                handleOk={() => deleteCategoryHandler(adminId)}
+                handleOk={() => deleteContactHandler(adminId)}
             >
                 <p style={{ marginTop: "1.25rem", marginBottom: "1.25rem" }}>
-                    Do you want to remove this category?
+                    Do you want to remove this contact?
                 </p>
             </UMModal>
         </div>
     );
 };
 
-// export default CategoryList;
+// export default ContactList;
 
-export default dynamic(() => Promise.resolve(CategoryList), {
+export default dynamic(() => Promise.resolve(ContactList), {
     ssr: false,
 });

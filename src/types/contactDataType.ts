@@ -4,6 +4,7 @@ export type IContactDataType = {
   email: string;
   subject: string;
   message: string;
+  imgs: [string];
   createdAt: string;
   updatedAt: string;
   __v: 0;
