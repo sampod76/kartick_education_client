@@ -90,7 +90,7 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
 
             <div className="px-2 py-2 ">
               <div>
-                <h3 className="text-black ">
+                <h3 className="text-black text-center">
                   <EllipsisMiddle suffixCount={3} maxLength={90}>
                     {course?.title}
                   </EllipsisMiddle>

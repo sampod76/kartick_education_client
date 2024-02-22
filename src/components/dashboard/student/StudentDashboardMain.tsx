@@ -8,6 +8,7 @@ import {
   useGetAllPurchaseAcceptedCourseQuery,
   useGetAllPurchaseAcceptedPackageQuery,
 } from "@/redux/api/public/purchaseAPi";
+import { useGetSubmitAllQuizQuery } from "@/redux/api/quizSubmitApi";
 import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import React, { useEffect, useState } from "react";
@@ -39,8 +40,9 @@ export default function StudentDashboardMain() {
     isLoading: PurchaseCourseLoading,
   } = useGetAllPurchaseAcceptedCourseQuery({
     isDelete: ENUM_YN.NO,
+    status: "active",
     author: userInfo?.id,
-  });
+  },{skip:!Boolean(userInfo?.id)});
   console.log(
     "🚀 ~ StudentDashboardMain ~ allPurchaseCourse:",
     allPurchaseCourse
@@ -52,7 +54,7 @@ export default function StudentDashboardMain() {
   } = useGetAllPackageAndCourseQuery(
     {
       isDelete: ENUM_YN.NO,
-      // status: "active",
+      status: "active",
       user: userInfo?.id,
     },
     { skip: !Boolean(userInfo?.id) }
@@ -62,14 +64,16 @@ export default function StudentDashboardMain() {
     data: allSingleQuiz,
     error: allSingleQuizError,
     isLoading: allSingleQuizLoading,
-  } = useGetAllSingleQuizQuery(
+  } = useGetSubmitAllQuizQuery(
     {
       isDelete: ENUM_YN.NO,
+      status: "active",
       user: userInfo?.id,
     },
     { skip: !Boolean(userInfo?.id) }
   );
-  if (PurchaseCourseLoading || userInfoLoading || allSingleQuizLoading) {
+  console.log("🚀 ~ StudentDashboardMain ~ allSingleQuiz:", allSingleQuiz)
+  if (PurchaseCourseLoading || userInfoLoading || allSingleQuizLoading ||allPurchasePackageLoading) {
     return <LoadingSkeleton />;
   }
   return (
