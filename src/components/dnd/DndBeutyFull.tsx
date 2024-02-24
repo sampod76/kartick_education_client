@@ -1,6 +1,7 @@
 
 "use client";
 
+import { AllImage } from "@/assets/AllImge";
 import React, { useState } from "react";
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 
@@ -79,7 +80,7 @@ const DndQuizCard: React.FC<DragAndDropProps> = ({ card }) => {
                                 {...provided.droppableProps}
                                 ref={provided.innerRef}
                                 className="h-48 bg-gray-300 relative"
-                                style={{ backgroundImage: `url(${card.imgs[0]})`, backgroundSize: "cover" }}
+                                style={{ backgroundImage: `url(${card.imgs.length ? card.imgs[0] : AllImage.notFoundImage})`, backgroundSize: "cover" }}
                             >
                                 {selectedImages.map((img, index) => (
                                     <div

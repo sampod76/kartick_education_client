@@ -109,7 +109,7 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
             style={{ cursor: !disabled ? "move" : "not-allowed" }}
           >
             <ImageNext
-              src={answer.imgs ? answer?.imgs[0] : ""}
+              src={answer.imgs?.length ? answer?.imgs[0] : ""}
               alt={`Image ${index}`}
               width={100}
               height={100}
@@ -137,7 +137,7 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
               className="relative"
               >
                 <ImageNext
-                  src={item.imgs ? item.imgs[0] : ""}
+                  src={item.imgs?.length ? item.imgs[0] : ""}
                   alt={`Image ${index}`}
                   width={100}
                   height={120}
@@ -176,7 +176,7 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
                   correctAnswer?.map((item: any, index: number) => (
                     <div key={index} style={{ cursor: "zoom-out" }}>
                       <ImageNext
-                        src={item.imgs ? item.imgs[0] : ""}
+                        src={item?.imgs?.length ? item.imgs[0] : ""}
                         alt={`Image ${index}`}
                         width={100}
                         height={120}

@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect } from "react";
 import { ShoppingCartOutlined, SnippetsOutlined } from "@ant-design/icons";
 import { CgPlayButtonO } from "react-icons/cg";
 import { CiClock2 } from "react-icons/ci";
-import { Avatar, Card, Rate, TooltipProps } from "antd";
+import { Avatar, Button, Card, Rate, TooltipProps } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import parse from "html-react-parser";
@@ -31,18 +31,17 @@ import VimeoPlayer from "@/utils/vimoPlayer";
 import { urlChecker } from "@/utils/urlChecker";
 import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
 const { Text } = Typography;
 
 const SIngleCourse = ({ course }: { course: ICourseData }) => {
-
-  const router = useRouter()
+  const { userInfo, userInfoLoading } = useGlobalContext();
+  console.log("🚀 ~ SIngleCourse ~ userInfo:", userInfo);
+  const router = useRouter();
   // console.log(course);
   // const { title, details, img, demo_video, tags} = course;
-  // console.log(course);
-  const screens = useBreakpoint();
 
-  // const dispatch = useAppDispatch()
-  const userInfo = getUserInfo() as IDecodedInfo;
+  const screens = useBreakpoint();
 
   const [addCart] = useAddCartMutation();
 
@@ -72,25 +71,32 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
 
   return (
     <>
-
       <div className="w-[363px] md:w-full h-full rounded-xl shadow-xl bg-white mx-auto flex flex-col justify-between ">
         <div className="flex justify-center items-center h-1/2 mt-7">
           <VimeoPlayer
-            width={!screens.xl ? 365 : !screens.lg ? 450 : !screens.sm ? 340 : 340}
+            width={
+              !screens.xl ? 365 : !screens.lg ? 450 : !screens.sm ? 340 : 340
+            }
             height={347}
             autoplay={false}
             // link={result.data as string}
-            link={urlChecker(course?.demo_video?.video).platform === ENUM_VIDEO_PLATFORM.VIMEO ? course.demo_video.video : "https://vimeo.com/547716679"}
+            link={
+              urlChecker(course?.demo_video?.video).platform ===
+              ENUM_VIDEO_PLATFORM.VIMEO
+                ? course.demo_video.video
+                : "https://vimeo.com/547716679"
+            }
           />
         </div>
         <div className="flex flex-col justify-between h-1/2  ">
           <Link
-            href={`/course/milestone/${course?._id}?categoryName=${course?.category?.title
-              }&courseName=${course?.title}&category=${course?.category?._id || course?.category
-              }`}
+            href={`/course/milestone/${course?._id}?categoryName=${
+              course?.category?.title
+            }&courseName=${course?.title}&category=${
+              course?.category?._id || course?.category
+            }`}
             className=""
           >
-
             <div className="px-2 py-2 ">
               <div>
                 <h3 className="text-black text-center">
@@ -98,15 +104,14 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                     {course?.title}
                   </EllipsisMiddle>
                 </h3>
-
               </div>
             </div>
           </Link>
           <div className="">
             <div className="bg-gray-100 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900  px-6 py-1">
               <span className="py-1  font-regular whitespace-nowrap text-gray-900 flex flex-row items-center">
-
-                <CgPlayButtonO className="mr-1" /> {course?.totalVideoSize} video
+                <CgPlayButtonO className="mr-1" /> {course?.totalVideoSize}{" "}
+                video
               </span>
 
               <span className="flex whitespace-nowrap justify-center items-center gap-1">
@@ -118,16 +123,20 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 {course?.totalEnrollStudentSize + " " + "students"}
               </span>
             </div>
-            <button
+            <Button
               // href= {`/payment/checkout/${course?._id}?categoryId=${course?.category}`}
-              onClick={() =>
-                router.push(`/payment/checkout/${course?._id}?categoryId=${course?.category}`)
-              }
-              className="bg-secondary rounded-b-lg text-center font-bold w-full text-white text-xl py-1 cursor-pointer "
+              onClick={() => {
+                console.log("first")
+                router.push(
+                  `/payment/checkout/${course?._id}?categoryId=${course?.category}`
+                );
+              }}
+              type="default"
+              style={{color:"white",borderBottomRightRadius:"0.5rem",borderBottomLeftRadius:"0.5rem"}}
+              className="bg-secondary cursor-pointer   text-center flex justify-center items-center font-bold w-full text-white text-xl   "
             >
-              Enroll Now
-            </button>
-
+              Enroll Now 
+            </Button>
           </div>
         </div>
       </div>

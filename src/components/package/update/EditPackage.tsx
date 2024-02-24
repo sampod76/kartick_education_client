@@ -56,6 +56,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
   //     useAddPackageMutation();
   const onFinish = async (values: any) => {
     const packageData: Partial<IPackageData> = {
+      ...values,
       membership:
         {
           title: values.membership,
@@ -108,7 +109,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     biannual: defaultPackageData?.biannual,
     yearly: defaultPackageData?.yearly,
     membership: defaultPackageData?.membership?.title,
-    categories: defaultCategory,
+    categories: defaultCategory ,
   };
 
   // console.log(initialPackageFormData, 'initialPackageFormData..........')

@@ -82,9 +82,9 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
               {courseData?.short_description}
             </EllipsisMiddle>
           </p>
-          <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
+          {/* <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
             <PaypalCheckoutByCourse courseData={courseData} />
-          </div>
+          </div> */}
           <Divider
             style={{
               color: "red",

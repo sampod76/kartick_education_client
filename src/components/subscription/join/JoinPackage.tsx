@@ -10,6 +10,7 @@ import {
   Card,
   Checkbox,
   Input,
+  Modal,
   Radio,
   Select,
   Space,
@@ -33,8 +34,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { getUserInfo } from "@/services/auth.service";
 import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 import { Error_model_hook } from "@/utils/modalHook";
-
-export default function JoinPackage({
+import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
+import { LockOutlined } from "@ant-design/icons";
+import { GrRadialSelected } from "react-icons/gr";
+import dynamic from "next/dynamic";
+export const JoinPackage = ({
   plan,
   setPlan,
   quantity,
@@ -44,7 +48,7 @@ export default function JoinPackage({
   setPlan: React.Dispatch<React.SetStateAction<IPlan>>;
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
-}) {
+}) => {
   // const paramsSearch = useSea
   const router = useRouter();
   const userInfo = getUserInfo() as any;
@@ -69,10 +73,20 @@ export default function JoinPackage({
   const packName = searchParams.get("pack") as string;
   // For select package
   const [selectPackage, setSelectPackage] = useState<any | null>({});
+  console.log("🚀 ~ selectPackage:", selectPackage);
+  const [totalPriceByThePackage, setTotalPriceByThePackage] = useState(0);
   ///! for the multiple and single select package
   const [singleSelect, setSingleSelect] = useState<Record<string, any>>({});
   const [multipleSelect, setMultipleSelect] = useState<string[]>([]);
-
+  // ----- modal state -------
+  const [open, setOpen] = useState(false);
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+  //------------------------------
   // const calculateTotalPrice = (categories: ICaterory[], plan: string) => {
   //   return (
   //     categories.reduce((total, caterory) => {
@@ -209,8 +223,8 @@ export default function JoinPackage({
         packName === "school_teacher"
           ? "school & teacher"
           : packName === "family_personal"
-            ? "family & personal"
-            : "nulls",
+          ? "family & personal"
+          : "nulls",
     },
     {
       skip: !Boolean(packName),
@@ -256,6 +270,7 @@ export default function JoinPackage({
     const { totalPackagePrice, incrementPrice, packages } = values;
     setSelectPackage(packages);
     console.log("🚀 ~ selectPackageHandler ~ packages:", packages);
+    setTotalPriceByThePackage(totalPackagePrice);
     // console.log(quantity);
     message.success(`Selected ${packages?.title}-> $${totalPackagePrice}`);
 
@@ -294,7 +309,7 @@ export default function JoinPackage({
                   key={index + 1}
                   className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[30rem] "
                 >
-                  <span
+                  {/* <span
                     className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
                     ${selectPackage?._id === packages?._id
                         ? "bg-secondary text-white"
@@ -303,12 +318,13 @@ export default function JoinPackage({
                   `}
                   >
                     {plan}
-                  </span>
+                  </span> */}
                   <div
-                    className={`h-28 ${selectPackage?._id === packages?._id
-                      ? "bg-green-600"
-                      : "bg-gray-700"
-                      } text-center p-4`}
+                    className={`h-28 ${
+                      selectPackage?._id === packages?._id
+                        ? "bg-green-600"
+                        : "bg-gray-700"
+                    } text-center p-4`}
                   >
                     <h3 className="text-2xl text-white uppercase font-semibold mb-1">
                       {packages?.title}
@@ -319,10 +335,11 @@ export default function JoinPackage({
                     </p>
                   </div>
                   <div
-                    className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${selectPackage?._id === packages?._id
-                      ? "bg-green-600"
-                      : "bg-gray-700"
-                      } text-white border-4 flex flex-col items-center justify-center border-white`}
+                    className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
+                      selectPackage?._id === packages?._id
+                        ? "bg-green-600"
+                        : "bg-gray-700"
+                    } text-white border-4 flex flex-col items-center justify-center border-white`}
                   >
                     <h3 className="text-2xl font-semibold">
                       ${totalPackagePrice}
@@ -372,9 +389,9 @@ export default function JoinPackage({
                               flexDirection: "column",
                               gap: "1rem",
                             }}
-                          // onChange={(e) => {
-                          //   setSingleSelect(e.target.value);
-                          // }}
+                            // onChange={(e) => {
+                            //   setSingleSelect(e.target.value);
+                            // }}
                           >
                             {packages?.categories?.map(
                               (option?: IPackageCategory) => (
@@ -463,10 +480,11 @@ export default function JoinPackage({
                           })
                         }
                         type="button"
-                        className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${selectPackage?._id === packages?._id
-                          ? "bg-green-600 hover:brightness-125"
-                          : "bg-gray-700 hover:bg-gray-800"
-                          }  rounded-md static lg:absolute bottom-1 left-0`}
+                        className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
+                          selectPackage?._id === packages?._id
+                            ? "bg-green-600 hover:brightness-125"
+                            : "bg-gray-700 hover:bg-gray-800"
+                        }  rounded-md static lg:absolute bottom-1 left-0`}
                       >
                         Select
                       </button>
@@ -476,8 +494,123 @@ export default function JoinPackage({
               );
             })}
           </div>
-          <div className="flex justify-center items-center m-5">
-            <div>
+          <div className="-mx-1 my-5 font-bold">
+            <div className="flex justify-between items-center p-4 border text-lg">
+              <p>Total</p>
+              <p>$ {totalPriceByThePackage}</p>
+            </div>
+
+           <div className="flex justify-center items-center">
+           <button
+              onClick={() => {
+                if (totalPriceByThePackage) {
+                  showModal();
+                } else {
+                  Error_model_hook("Please select any package");
+                }
+              }}
+              className="text-blue-800 px-5 py-3 border rounded-md my-3 font-bold text-lg"
+            >
+              Checkout
+            </button>
+           </div>
+            <Modal
+              // title="Title"
+              open={open}
+              // onOk={handleOk}
+              // confirmLoading={confirmLoading}
+              onCancel={handleCancel}
+              width={1100}
+              footer={(_, { OkBtn, CancelBtn }) => (
+                <>
+                  {/* <Button>Custom Button</Button>
+            <CancelBtn />
+            <OkBtn /> */}
+                </>
+              )}
+            >
+              <div className=" px-2">
+                <div className="container mx-auto  flex items-center gap-3 text-lg">
+                  <UserAvatarUI />
+                  <h5 className="text-lg lg:text-xl">
+                    Logged in as {userInfo?.email}{" "}
+                  </h5>
+                </div>
+                <div className="container mx-auto">
+                  <h1 className="text-lg md:text-xl lg:text-2xl ">
+                    Your Order
+                  </h1>
+                  <div className=" mt-8">
+                    <table className="w-full border">
+                      <thead>
+                        <tr className="bg-gray-200 ">
+                          <th className="py-5 px-4 border flex items-center gap-5  ">
+                            <Image
+                              src={selectPackage?.img || AllImage.notFoundImage}
+                              style={{ height: "64px", width: "80px" }}
+                              width={150}
+                              height={150}
+                              alt="course"
+                            />
+                            <h1 className="text-lg md:text-xl lg:text-2xl ">
+                              {selectPackage?.title}
+                            </h1>
+                          </th>
+                          <th className="py-5 px-4 border">Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border">
+                          <td className="py-5 px-4 border text-[#797979]">
+                            Sub Total
+                          </td>
+                          <td className="py-5 px-4 border text-xl lg:text-2xl font-bold">
+                            $ {totalPriceByThePackage}
+                          </td>
+                        </tr>
+                        <tr className="bg-gray-100 border">
+                          <td className="py-5 px-4 border text-[#797979]">
+                            Total
+                          </td>
+                          <td className="py-5 px-4 border text-xl lg:text-2xl font-bold">
+                            $ {totalPriceByThePackage}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="mt-5 container mx-auto">
+                  <h2 className="my-3 text-lg lg:text-xl">Additional Note </h2>
+                  <textarea className="w-full min-h-[4rem] lg:min-h-[8rem] border border-[#DADADA] outline-none p-3" />
+
+                  <div className="mt-7">
+                    <div className="flex justify-between items-center uppercase">
+                      <h2 className="text-lg lg:text-xl font-bold uppercase my-3">
+                        PAYMENT
+                      </h2>
+                      <p className="text-sm text-slate-600">
+                        <LockOutlined style={{ marginInline: "3px" }} />
+                        secure payment
+                      </p>
+                    </div>
+
+                    <div className="text-2xl font-bold flex justify-start items-center gap-2 bg-[#d4d4d4] p-4">
+                      <GrRadialSelected />{" "}
+                      <p className="italic text-[#273b7c]">
+                        Pay<span className="text-[#1997cd]">Pal</span>
+                      </p>
+                    </div>
+
+                    {PaypalPaymentLoading ? <ButtonLoading/> :<button onClick={()=>makePayment("paypal")} className="bg-[#5371FF] h- p-3 mt-5 text-lg lg:text-xl font-bold text-white rounded uppercase">
+                      Place Order
+                    </button>}
+                  </div>
+                </div>
+              </div>
+            </Modal>
+            {/* <div>
               {paymentLoading || PaypalPaymentLoading ? (
                 <Button
                   type="default"
@@ -516,10 +649,14 @@ export default function JoinPackage({
                   Check out with PayPal
                 </button>
               )}
-            </div>
+            </div> */}
           </div>
         </>
       )}
     </div>
   );
-}
+};
+
+export default dynamic(() => Promise.resolve(JoinPackage), {
+  ssr: false,
+});

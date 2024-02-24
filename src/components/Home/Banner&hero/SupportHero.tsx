@@ -51,7 +51,7 @@ const SupportHero = () => {
               {skillData?.imgTitle}
             </h1> */}
 
-            {skillData?.imgs[0] && <Image
+            {skillData?.imgs?.length && skillData?.imgs[0] && <Image
               src={skillData?.imgs[0] || AllImage.notFoundImage}
               style={{ marginTop: "10px", }}
               height={340}
