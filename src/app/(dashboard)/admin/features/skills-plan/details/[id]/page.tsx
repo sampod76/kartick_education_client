@@ -42,7 +42,7 @@ export default function SkillAndPlanDetailsPage({ params }: { params: { id: stri
                         </h1>
 
                         <Image
-                            src={skillData?.imgs[0] || AllImage.notFoundImage}
+                            src={skillData?.imgs?.length ? skillData?.imgs[0] : AllImage.notFoundImage}
                             style={{ marginTop: "10px" }}
                             height={332}
                             width={570}

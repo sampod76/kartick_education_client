@@ -35,7 +35,7 @@ export default function EditSKillsAndPlan({ planId }: { planId: string }) {
 
     const [form] = Form.useForm();
 
-    console.log(defaultSkillPlanData?.imgs[0], 'defaultSkillPlanData')
+    console.log(defaultSkillPlanData, 'defaultSkillPlanData')
 
     // const [addPackage, { isLoading: UpdatePackageLoading }] =
     //     useAddPackageMutation();

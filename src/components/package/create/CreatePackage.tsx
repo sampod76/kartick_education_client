@@ -268,8 +268,8 @@ export default function CreatePackage() {
                 listType="picture-circle"
                 beforeUpload={async (file) => {
                   // console.log(file)
-                  // const imgUrl = await uploadImgCloudinary(file);
-                  form.setFieldsValue({ imgs: "" }); // Set imgUrl in Form values
+                  const imgUrl = await uploadImgCloudinary(file);
+                  form.setFieldsValue({ img:imgUrl ?imgUrl : "" }); // Set imgUrl in Form values
                   return false; // Prevent default upload behavior
                   // return true
                 }}
@@ -278,9 +278,9 @@ export default function CreatePackage() {
               </Upload>
             </Form.Item>
 
-            <Form.Item name="date_range" label="Package duration" required>
+            {/* <Form.Item name="date_range" label="Package duration" required>
               <RangePicker format="YYYY-MM-DD" />
-            </Form.Item>
+            </Form.Item> */}
           </Space.Compact>
         </Form.Item>
         <div className="border-2 rounded-lg p-3">

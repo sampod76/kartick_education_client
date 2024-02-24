@@ -5,9 +5,10 @@ import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 import Providers from "@/lib/Providers";
 import { Noto_Sans } from "next/font/google";
-import MyErrorBoundary from "@/components/Utlis/MyErrorBoundary";
+
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import GlobalContextApi from "@/components/ContextApi/GlobalContextApi";
 
 // import { Head } from "next/document";
 // import { CookiesProvider } from "react-cookie";
@@ -28,6 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <GlobalContextApi>
     <DndProvider backend={HTML5Backend}>
       {/* <MyErrorBoundary> */}
       {/* <CookiesProvider defaultSetOptions={{ path: "/" }}> */}
@@ -50,5 +52,6 @@ export default function RootLayout({
       {/* </CookiesProvider> */}
       {/* </MyErrorBoundary> */}
     </DndProvider>
+    </GlobalContextApi>
   );
 }

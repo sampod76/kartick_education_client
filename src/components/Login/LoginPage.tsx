@@ -59,11 +59,15 @@ const Login = ({
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
+      console.log("🚀 ~ constonSubmit:SubmitHandler<FormValues>= ~ res:", res)
       if (res?.accessToken) {
         // router.push("/profile");
         message.success("User logged in successfully!");
-        storeUserInfo({ accessToken: res?.accessToken });
-        router.push(redirect ||redirectLink || `/`);
+        // storeUserInfo({ accessToken: res?.accessToken });
+        localStorage.setItem('accessToken', res?.accessToken);
+        setTimeout(() => {
+          router.push(redirect ||redirectLink || `/`);
+        }, 300);
         // setOpen(false)
       } else {
         Error_model_hook(res?.message);

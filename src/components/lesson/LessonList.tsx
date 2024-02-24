@@ -47,8 +47,9 @@ export default function LessonList({
 
   const [currentCollapse, setCurrentCollapse] = useState<string[]>([]);
   ////! for purchased data of a user
-  const categoryId = moduleData?.milestone?.course?.category?._id;
-  console.log("🚀 ~ categoryId:", categoryId)
+  const categoryId = moduleData?.category ||  moduleData?.milestone?.course?.category?._id;
+  const courseId = moduleData?.course || moduleData?.milestone?.course?._id
+  console.log("🚀 ~ categoryId:", moduleData)
 
   let IsExistCategoryOrCourse: any = false;
  
@@ -64,7 +65,7 @@ export default function LessonList({
     ...lesson_query,
   });
 
-  const {data:checkPurchase,isLoading:CheckPurchaseLoading}=useCheckPurchaseCategoryQuery(categoryId)
+  const {data:checkPurchase,isLoading:CheckPurchaseLoading}=useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`)
   console.log("🚀 ~ checkPurchase:", checkPurchase)
   if(checkPurchase){
     IsExistCategoryOrCourse=checkPurchase
