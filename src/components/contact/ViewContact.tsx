@@ -13,6 +13,8 @@ export default function ViewContact({ contactId }: { contactId: string }) {
             <CardLoading />
         </>
     }
+
+    
     return (
         <div className=''>
             <div className="container mx-auto bg-white rounded shadow p-6 mb-4">
