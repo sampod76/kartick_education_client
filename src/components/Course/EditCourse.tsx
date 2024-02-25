@@ -47,7 +47,7 @@ const TextEditor = dynamic(
   }
 )
 
-export default function EditCourse({ courseId }: { courseId: string }) {
+export default functionEditCourse({ courseId }: { courseId: string }) {
   const [updateCourse, { isLoading: courseUpdateLoading }] =
     useUpdateCourseMutation();
   const [category, setCategory] = useState("");
@@ -303,8 +303,8 @@ export default function EditCourse({ courseId }: { courseId: string }) {
             {isLoading ? (
               <Spin />
             ) : (
-                <div className=" text-center">
-              <ButtonSubmitUI>Update Course</ButtonSubmitUI>
+              <div className=" text-center">
+                <ButtonSubmitUI>Update Course</ButtonSubmitUI>
               </div>
             )}
           </div>

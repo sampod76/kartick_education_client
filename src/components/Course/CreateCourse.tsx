@@ -34,6 +34,7 @@ import { getCloudinaryEnv } from "@/helpers/config/envConfig";
 import UploadMultipalDragAndDropImge from "@/components/ui/UploadMultipalDragAndDropImge";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCourse_labelQuery } from "@/redux/api/adminApi/courseLevelApi";
+import { USER_ROLE } from "@/constants/role";
 const TextEditorNotSetForm = dynamic(
   () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
   {
@@ -147,9 +148,18 @@ const CreateCourse = ({ setOpen }: any) => {
     ...query,
   });
 
+
   const AuthorOptions = usersData?.data?.map((item: any) => {
+    let label = ""
+    if (item.role === USER_ROLE.ADMIN) {
+      label = item?.admin?.name?.firstName + " " + item?.admin?.name?.lastName
+    } else if (item.role === USER_ROLE.TRAINER) {
+      label = item?.trainer?.name?.firstName + " " + item?.trainer?.name?.lastName
+    } else if (item?.role === USER_ROLE.TEACHER) {
+      label = item?.teacher?.name?.firstName + " " + item?.teacher?.name?.lastName
+    }
     return {
-      label: item?.email,
+      label: label,
       value: item?._id,
     };
   });

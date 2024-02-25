@@ -11,7 +11,7 @@ import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 import PaypalCheckoutByCourse from "../Utlis/PaypalCheckoutByCourse";
-import { Divider } from "antd";
+import { Divider, Popconfirm } from "antd";
 import SingleMilestone from "../milestone/SingleMilestone";
 import { IMilestoneData } from "@/types/miestoneType";
 import Link from "next/link";
@@ -24,9 +24,10 @@ import { useGetAllCourse_labelQuery } from "@/redux/api/adminApi/courseLevelApi"
 import { ICourseLevelData } from "@/types/courseLevelDataType";
 import { ICourseData } from "@/types/courseType";
 import { Button, Modal, Select } from "antd";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { GiToggles } from "react-icons/gi";
 export default function LearningMain() {
+  const router = useRouter()
   const [learningCategoryId, setLearningCategoryId] = useState<string | null>(
     null
   );
@@ -61,7 +62,7 @@ export default function LearningMain() {
   labelQuery["sortOrder"] = "asc";
   labelQuery["status"] = "active";
   labelQuery["isDelete"] = ENUM_YN.NO;
-  labelQuery["category"]=categoryId || learningCategoryId || "63621c9cc6e03d494145bea0"
+  labelQuery["category"] = categoryId || learningCategoryId || "63621c9cc6e03d494145bea0"
   console.log("🚀 ~ LearningMain ~ labelQuery:", labelQuery)
 
   console.log(labelQuery);
@@ -76,10 +77,10 @@ export default function LearningMain() {
   let courseQuery = { ...query };
   if (selectLabelData?._id) {
     courseQuery["label_id"] = selectLabelData?._id;
-  }else {
+  } else {
     courseQuery["label_id"] = "63621c9cc6e03d494145bea0"; //only damping
   }
-console.log(courseQuery)
+  console.log(courseQuery)
   const {
     data: courseAllData,
     isLoading,
@@ -111,7 +112,7 @@ console.log(courseQuery)
     setLabelData(courseLevelData?.data[0] || "");
   }, [courseLevelData?.data]);
 
-  if (courseLevelLoading) {
+  if (courseLevelLoading || isLoading) {
     return <LoadingSkeleton />;
   }
 
@@ -191,11 +192,10 @@ console.log(courseQuery)
                   <button
                     onClick={() => setLabelData(label)}
                     key={label?._id}
-                    className={`py-2  px-3 text-xl font-bold text-[#1C3052] ${
-                      label?._id === selectLabelData._id
-                        ? "border-[3px] border-[#618850] rounded-r-3xl  "
-                        : ""
-                    }  relative`}
+                    className={`py-2  px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id
+                      ? "border-[3px] border-[#618850] rounded-r-3xl  "
+                      : ""
+                      }  relative`}
                     style={
                       {
                         // background: color,
@@ -203,11 +203,10 @@ console.log(courseQuery)
                     }
                   >
                     <div
-                      className={`absolute top-0 left-0 w-full h-full bg-[${"#8CA46D"}] ${
-                        label?._id === selectLabelData._id
-                          ? "bg-opacity-55  rounded-r-3xl"
-                          : "bg-opacity-40"
-                      } `}
+                      className={`absolute top-0 left-0 w-full h-full bg-[${"#8CA46D"}] ${label?._id === selectLabelData._id
+                        ? "bg-opacity-55  rounded-r-3xl"
+                        : "bg-opacity-40"
+                        } `}
                     ></div>
                     {label?.title}
                   </button>
@@ -220,8 +219,8 @@ console.log(courseQuery)
                 className="py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap"
                 style={{ backgroundColor: "#8CA46D" }}
               >
-               
-                {(selectLabelData?.title ?selectLabelData?.title : "") + " " + "(All Courses)"}
+
+                {(selectLabelData?.title ? selectLabelData?.title : "") + " " + "(All Courses)"}
               </h1>
 
               <div className="">
@@ -231,20 +230,40 @@ console.log(courseQuery)
                     className={`absolute top-0 left-0 w-full h-full bg-[#CCEDBC] bg-opacity-30`}
                   ></div>
                   {courseAllData?.data?.length > 0 ? (
-                    courseAllData.data.map(
+                    courseAllData?.data?.map(
                       (course: ICourseData, index: number) => (
-                        <div className="" key={course?._id}>
-                          <Link
+
+                        <Popconfirm
+                          title="Do you want to purchase?"
+                          // description="Are you sure to delete this task?"
+                          //   icon={<QuestionCircleOutlined style={{ color: 'red' }} />
+                          // }
+                          key={course?._id}
+                          onConfirm={() => {
+                            router.push(`/course/milestone/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`)
+                          }}
+                          okText="View Course"
+
+                          onCancel={() => {
+                            router.push(`/payment/checkout/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`)
+                          }}
+                          cancelText="BUY NOW"
+                        >
+
+                          <Button style={{ border: "0px", boxShadow: "0px", fontSize: "1.125rem", textAlign: "start" }}>{index + 1}. {course?.title}</Button>
+                          {/* <Link
                             href={`/course/milestone/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`}
-                            className="text-gray-900 text-start flex justify-start gap-1"
+                            className="text-gray-900 text-start flex justify-start gap-1 cursor-pointer"
                           >
                             <p className="text-lg">
                               {" "}
-                              {index + 1} {course?.title}
+                              {index + 1}. {course?.title}
                             </p>
-                            {/* <LockOutlined /> */}
-                          </Link>
-                        </div>
+                          
+                          </Link> */}
+                        </Popconfirm>
+
+
                       )
                     )
                   ) : (
@@ -257,11 +276,11 @@ console.log(courseQuery)
                   )}
                 </div>
                 <div className="flex justify-center items-center gap-5 mt-3">
-                  <button className="bg-white shadow-lg p-2 rounded-lg border-2 border-[#92E3A9] text-[#92E3A9] text-lg font-bold">BUY NOW</button>
+                  {/* <button className="bg-white shadow-lg p-2 rounded-lg border-2 border-[#92E3A9] text-[#92E3A9] text-lg font-bold">BUY NOW</button> */}
                   <Link href={'/subscription'} className="bg-white shadow-lg p-2 rounded-lg border-2 border-[#92E3A9] text-[#92E3A9] text-lg font-bold">
-                  MEMBERSHIP
+                    MEMBERSHIP
                   </Link>
-                 
+
                 </div>
               </div>
             </div>
