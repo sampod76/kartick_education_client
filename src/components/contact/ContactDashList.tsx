@@ -169,13 +169,13 @@ const ContactList = () => {
                         <Dropdown
                             overlay={
                                 <Menu>
-                                    {/* <Menu.Item key="view">
+                                    <Menu.Item key="view">
                                         <Link
                                             href={`/${userInfo?.role}/contact/details/${record._id}`}
                                         >
                                             View
                                         </Link>
-                                    </Menu.Item> */}
+                                    </Menu.Item>
                                     {/* <Menu.Item key="edit">
                                         <Link
                                             href={`/${userInfo?.role}/contact/edit/${record._id}`}
