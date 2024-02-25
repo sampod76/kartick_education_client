@@ -94,7 +94,7 @@ export default function MilestoneHomeFeatures() {
               ? category?.courses?.map((course: any) => (
                 <Link
                   href={`/course/milestone/${course?._id}?category=${category?._id}`}
-                  className="flex gap-2 items-center text-white"
+                  className="flex gap-2  text-white"
                   key={course?._id}
                 >
                   <Image src={milestoneIcon} height={20} width={20} alt="icon" />
@@ -104,7 +104,7 @@ export default function MilestoneHomeFeatures() {
               : category?.courses?.slice(0, 18).map((course: any) => (
                 <Link
                   href={`/course/milestone/${course?._id}?category=${category?._id}`}
-                  className="flex gap-2 items-center text-white"
+                  className="flex gap-2  text-white"
                   key={course?._id}
                 >
                   <Image src={milestoneIcon} height={20} width={20} alt="icon" />
@@ -126,14 +126,14 @@ export default function MilestoneHomeFeatures() {
         </div>
       ))}
 
-  { (data?.data && !size) && <button
+      {(data?.data && !size) && <button
         onClick={() => setSize(true)}
         className="w-[7rem] mx-auto mt-9 bg-[#C6F2BA] h-[48px] text-center px-3 py-3 text-gray-700  font-semibold  rounded text-nowrap"
       >
         See All
       </button>
       }
-    
+
     </div>
   );
 }

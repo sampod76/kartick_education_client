@@ -74,7 +74,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
   ];
   const trainerSidebarItems: MenuProps["items"] = [
     {
-      label: " category",
+      label: "Category",
       key: "manage-category",
       icon: <CreditCardOutlined />,
       children: [
@@ -579,34 +579,35 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
             },
           ],
         },
+
+      ],
+    },
+    {
+      label: "Contact",
+      key: "manage-contact",
+      icon: <ContactsFilled />,
+      children: [
+        // {
+        //   label: (
+        //     <Link
+        //       onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+        //       href={`/${role}/contact/create`}
+        //     >
+        //       Create Contact
+        //     </Link>
+        //   ),
+        //   key: `/${role}/contact/create`,
+        // },
         {
-          label: "Contact",
-          key: "manage-contact",
-          icon: <ContactsFilled />,
-          children: [
-            // {
-            //   label: (
-            //     <Link
-            //       onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-            //       href={`/${role}/contact/create`}
-            //     >
-            //       Create Contact
-            //     </Link>
-            //   ),
-            //   key: `/${role}/contact/create`,
-            // },
-            {
-              label: (
-                <Link
-                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/contact`}
-                >
-                  Contact List
-                </Link>
-              ),
-              key: `/${role}/contact`,
-            },
-          ],
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/contact`}
+            >
+              Contact List
+            </Link>
+          ),
+          key: `/${role}/contact`,
         },
       ],
     },
