@@ -26,7 +26,6 @@ const Logo = () => {
       <Image src={logoImage} height={120} width={200} className="flex md:hidden lg:hidden xl:hidden w-[50px] 
        md:w-[84px] lg:w-[90px]  xl:w-[80px]  h-[36px] lg:h-[70px] 
        " alt="Logo" />
-
     </Link>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, InputNumber, Spin } from "antd";
+import { Button, Form, Input, Space, InputNumber, Spin, Upload } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -16,6 +16,7 @@ import {
 } from "@/redux/api/userApi/packageAPi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { IPackageData } from "@/types/package/packageType";
+import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
 
 // ! for uuid
 const generateUUID = () => {
@@ -55,6 +56,15 @@ export default function EditPackage({ packageId }: { packageId: string }) {
   // const [addPackage, { isLoading: UpdatePackageLoading }] =
   //     useAddPackageMutation();
   const onFinish = async (values: any) => {
+
+    
+    if (values?.img) {
+      const imgUrl = await uploadImgCloudinary(values?.img?.file);
+      // console.log(imgUrl, 'imgUrl')
+      values.img = imgUrl;
+    }
+    // c
+
     const packageData: Partial<IPackageData> = {
       ...values,
       membership:
@@ -69,7 +79,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
       yearly: values.yearly || defaultPackageData?.yearly,
       categories: values.categories || defaultPackageData?.categories,
     };
-    console.log("Received values of form:", values);
+    // console.log("Received values of form:", values);
     console.log("🚀 ~ onFinish ~ packageData:", packageData);
     // return
     try {
@@ -109,7 +119,8 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     biannual: defaultPackageData?.biannual,
     yearly: defaultPackageData?.yearly,
     membership: defaultPackageData?.membership?.title,
-    categories: defaultCategory ,
+    categories: defaultCategory,
+    img: defaultPackageData?.img 
   };
 
   // console.log(initialPackageFormData, 'initialPackageFormData..........')
@@ -273,6 +284,30 @@ export default function EditPackage({ packageId }: { packageId: string }) {
               </Form.Item>
             </Space.Compact>
           </div>
+          <Space.Compact style={{}}>
+            <Form.Item name="img" required>
+              <Upload
+                listType="picture-circle"
+                
+                beforeUpload={async (file) => {
+                  // console.log(file)
+                  const imgUrl = await uploadImgCloudinary(file);
+                  form.setFieldsValue({ img: imgUrl ? imgUrl : "" }); // Set imgUrl in Form values
+                  return false; // Prevent default upload behavior
+                  // return true
+                }}
+                  defaultFileList={defaultPackageData?.img ? [{ uid: '-1', name: 'default-image', status: 'done', url: defaultPackageData?.img }] : []}
+                  // multiple_select={false}
+
+              >
+                Upload
+              </Upload>
+            </Form.Item>
+
+            {/* <Form.Item name="date_range" label="Package duration" required>
+              <RangePicker format="YYYY-MM-DD" />
+            </Form.Item> */}
+          </Space.Compact>
         </Form.Item>
         <div className="border-2 rounded-lg p-3">
           <LabelUi>Add Category</LabelUi>
