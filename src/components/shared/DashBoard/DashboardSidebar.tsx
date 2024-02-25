@@ -8,7 +8,8 @@ import { USER_ROLE } from "@/constants/role";
 import { ProfileOutlined, UserOutlined } from "@ant-design/icons";
 import Logo from "../Logo";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-
+import logoImage from "@/assets/Logo/logOnly.png";
+import Image from "next/image";
 const { Sider } = Layout;
 
 const DashboardSidebar = ({
@@ -76,8 +77,11 @@ const DashboardSidebar = ({
         <UserOutlined className="text-2xl ml-7 mt-3" />
       )} */}
 
-      <Logo />
-
+      {/* <Logo /> */}
+      <Link href='/'>
+        <Image src={logoImage} height={120} width={200} className={`${collapsed ? " w-[46px] h-[36px]" : "max-w-[80px] h-[56px]"}  
+         max-w-[80px] h-[56px] mx-auto`} alt="Logo" />
+      </Link>
       <Menu
         // theme="light"
 
@@ -89,8 +93,8 @@ const DashboardSidebar = ({
           fontWeight: "500",
           marginTop: "36px",
           fontSize: "16px",
-          paddingInline:'10px',
-          
+          paddingInline: '10px',
+
           // ...clipPathStyle,
         }}
         mode="inline"
@@ -100,7 +104,7 @@ const DashboardSidebar = ({
       // items={dashboardItems(USER_ROLE.SELLER)}
       />
       <div style={{ ...clipPathStyle }}>
-      
+
       </div>
     </Sider>
   );

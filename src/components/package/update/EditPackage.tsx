@@ -297,7 +297,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                   // return true
                 }}
                   defaultFileList={defaultPackageData?.img ? [{ uid: '-1', name: 'default-image', status: 'done', url: defaultPackageData?.img }] : []}
-                  multiple_select={false}
+                  // multiple_select={false}
 
               >
                 Upload
