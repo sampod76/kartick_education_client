@@ -14,7 +14,11 @@ import PaypalCheckoutByCourse from "../Utlis/PaypalCheckoutByCourse";
 
 export default function Checkout({ courseId }: { courseId?: string }) {
   console.log("🚀 ~ Checkout ~ courseId:", courseId)
+
+  // const userInfo = getUserInfo() as any;
   const { userInfo, userInfoLoading } = useGlobalContext();
+
+
   const { data, isLoading } = useGetSingleCourseQuery(courseId, {
     skip: !Boolean(courseId),
   });

@@ -47,7 +47,7 @@ const TextEditor = dynamic(
   }
 )
 
-export default functionEditCourse({ courseId }: { courseId: string }) {
+export default function EditCourse({ courseId }: { courseId: string }) {
   const [updateCourse, { isLoading: courseUpdateLoading }] =
     useUpdateCourseMutation();
   const [category, setCategory] = useState("");

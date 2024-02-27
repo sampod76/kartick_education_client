@@ -28,10 +28,11 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetAllAdminsQuery } from "@/redux/api/adminApi/adminApi";
 import { useDeleteAdminMutation } from "@/redux/api/adminApi";
 import { getUserInfo } from "@/services/auth.service";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
 
 const TrainerListPage = () => {
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
-  const userInfo = getUserInfo() as any;
+  const { userInfo, userInfoLoading } = useGlobalContext()
   const query: Record<string, any> = {};
   const [deleteAdmin] = useDeleteAdminMutation();
 
@@ -47,7 +48,7 @@ const TrainerListPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  query["status"] = "active";
+  // query["status"] = "active";
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -57,7 +58,7 @@ const TrainerListPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllAdminsQuery({
+  const { data, isLoading } = useGetAllAdminsQuery({
     ...query,
   });
 
@@ -98,6 +99,9 @@ const TrainerListPage = () => {
     {
       title: "Date Of Birth",
       dataIndex: "dateOfBirth",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY ");
+      },
     },
     {
       title: "Gender",
@@ -113,7 +117,7 @@ const TrainerListPage = () => {
       width: 130,
       render: function (data: any) {
         return (
-          <>
+          <div className="flex justify-between items-center gap-2">
             <Link
               href={`/${userInfo?.role}/manage-users/admin/details/${data}`}
             >
@@ -121,7 +125,7 @@ const TrainerListPage = () => {
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${userInfo?.role}/manage-users/admin/edit/${data}`}>
+            {/* <Link href={`/${userInfo?.role}/manage-users/admin/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -131,7 +135,7 @@ const TrainerListPage = () => {
               >
                 <EditOutlined />
               </Button>
-            </Link>
+            </Link> */}
             <Button
               onClick={() => deleteAdminHandler(data)}
               type="default"
@@ -139,7 +143,7 @@ const TrainerListPage = () => {
             >
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },

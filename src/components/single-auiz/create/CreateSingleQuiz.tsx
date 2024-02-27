@@ -117,6 +117,7 @@ const CreateSingleQuiz = () => {
       lesson: lesson?._id,
       quiz: quiz?._id,
       type: quizType,
+      imgs: values.length ? values.imgs : [""]
     };
 
 

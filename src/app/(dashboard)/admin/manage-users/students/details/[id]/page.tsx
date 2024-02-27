@@ -4,6 +4,7 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 import { useGetSingleStudentQuery } from "@/redux/api/adminApi/moderatorApi";
 import UserProfile from "@/components/profile/UserProfile";
+import { USER_ROLE } from "@/constants/role";
 
 const StudentDetailsPage = ({ params }: any) => {
   const id = params.id;
@@ -16,7 +17,7 @@ const StudentDetailsPage = ({ params }: any) => {
 
   return (
     <div>
-      <UserProfile userData={userData}></UserProfile>
+      <UserProfile userData={{ ...userData, role: USER_ROLE.STUDENT }}></UserProfile>
     </div>
   );
 };

@@ -20,6 +20,7 @@ export default function GlobalContextApi({
 }: {
   children: React.ReactNode;
 }) {
+  // const userInfo = getUserInfo() as any;
   const [userInfoLoading, setUserInfoLoading] = useState(true);
   const [userInfo, setUserInfo] = useState<Partial<IDecodedInfo>>({
     email: "",
@@ -40,6 +41,11 @@ export default function GlobalContextApi({
     // Call the memoized function to fetch user info asynchronously
     memoizedFetchUserInfo();
   }, [memoizedFetchUserInfo]);
+
+
+
+
+
   const value: IContextType = {
     userInfo,
     userInfoLoading,
