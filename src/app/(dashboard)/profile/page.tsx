@@ -91,14 +91,14 @@ const ProfileTemplate = () => {
         </div>
       )} */}
       <UserProfile userData={data} />
-      {
+      {/* {
         data?.role === "seller" &&
         <SellerMainProfile />
       }
       {
         data?.role === "admin" &&
         <AdminMainProfile />
-      }
+      } */}
 
     </div>
   );
