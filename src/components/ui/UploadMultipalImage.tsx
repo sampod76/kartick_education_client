@@ -45,7 +45,7 @@ const UploadMultipalImage = ({
   customChange,
   isReset = false,
   isImageloading = false,
-  multiple = true,
+  multiple = false,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
 
@@ -77,7 +77,8 @@ const UploadMultipalImage = ({
       console.log("🚀 ~ handleImageProcessing ~ imgUrl:", imgUrl)
 
 
-      setImagesUrl((prevImages) => [...prevImages, imgUrl]);
+      // setImagesUrl((prevImages) => [...prevImages, imgUrl]);
+      setImagesUrl((prevImages) => [ imgUrl]);
       setLoading(false);
       if (isImageloading) {
 
