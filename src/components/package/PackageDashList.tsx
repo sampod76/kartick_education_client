@@ -142,7 +142,7 @@ export default function PackageDashList() {
             {
               <Image
                 src={
-                  data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
+                  data?.img ? data?.img : AllImage.notFoundImage
                 }
                 style={{ height: "50px", width: "80px" }}
                 width={50}
@@ -211,11 +211,11 @@ export default function PackageDashList() {
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item key="view">
+                  {/* <Menu.Item key="view">
                     <Link href={`/${userInfo?.role}/package/details/${record._id}`}>
                       View
                     </Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key="edit">
                     <Link href={`/${userInfo?.role}/package/edit/${record._id}`}>
                       Edit

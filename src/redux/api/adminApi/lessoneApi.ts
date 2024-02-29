@@ -1,6 +1,7 @@
 import { tagTypes } from "@/redux/tag-types";
 import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
+import { ILessonData } from "@/types/lessonType";
 
 const LESSON_URL = "/lesson";
 
@@ -15,7 +16,7 @@ export const lessonApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any[], meta: IMeta) => {
+      transformResponse: (response: ILessonData[], meta: IMeta) => {
         return {
           data: response,
           meta,
@@ -26,7 +27,6 @@ export const lessonApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleLesson: build.query({
       query: (id: string | string[] | undefined) => {
-
         return {
           url: `${LESSON_URL}/${id}`,
           method: "GET",
@@ -37,26 +37,24 @@ export const lessonApi = baseApi.injectEndpoints({
     // create a new academic department
     addLesson: build.mutation({
       query: (data) => {
- 
         return {
           url: LESSON_URL,
           method: "POST",
           data,
         };
       },
-      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.lesson, tagTypes.categoryChildren],
     }),
     // update ac department
     updateLesson: build.mutation({
       query: ({ data, id }) => {
-        
         return {
           url: `${LESSON_URL}/${id}`,
           method: "PATCH",
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.lesson, tagTypes.categoryChildren],
     }),
 
     // delete ac department
@@ -65,7 +63,7 @@ export const lessonApi = baseApi.injectEndpoints({
         url: `${LESSON_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.lesson,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.lesson, tagTypes.categoryChildren],
     }),
   }),
 });

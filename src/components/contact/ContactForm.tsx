@@ -4,14 +4,45 @@ import Form from "../Forms/Form";
 import { Button, Col, Row, message } from "antd";
 import FormInput from "../Forms/FormInput";
 import FormTextArea from "../Forms/FormTextArea";
+import { useAddContactMutation } from "@/redux/api/adminApi/contactApi";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { getUserInfo } from "@/services/auth.service";
 
 export default function ContactForm() {
 
+  const userInfo = getUserInfo() as any;
   const [isReset, setIsReset] = useState(false);
+
+  const [addContact, { isLoading }] = useAddContactMutation()
+
   const onSubmit = async (values: any) => {
-    console.log(values);
-    
-    message.success("sent message");
+    // console.log(values);
+
+    // message.success("sent message");
+
+    if (userInfo?.email) {
+      values['user'] = userInfo?.id
+    }
+
+    // const contactData={
+    //   ...values,
+
+    // }
+
+    try {
+      const res = await addContact(values).unwrap();
+      // console.log(res);
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Successfully sent your Message");
+        setIsReset(true)
+      }
+      // console.log(res);
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+      console.log(error);
+    }
 
     // try {
     //   const res = await addCategory(values).unwrap();
@@ -19,7 +50,7 @@ export default function ContactForm() {
     //     Error_model_hook(res?.message);
     //   } else {
     //     Success_model("Successfully added Category");
-    setIsReset(true)
+
     //   }
     //   console.log(res);
     // } catch (error: any) {
@@ -58,9 +89,10 @@ export default function ContactForm() {
           </Col>
           <Button
             htmlType="submit"
-            style={{ marginLeft: "20px" }}
-            type="default"
+            style={{ marginLeft: "20px", color: "white", backgroundColor: '#5371FF' }}
+            type="primary"
             size="large"
+            loading={isLoading}
           >
             Send
           </Button>

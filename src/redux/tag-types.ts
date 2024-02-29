@@ -28,6 +28,7 @@ export enum tagTypes {
   ShowAdvanceClasses = "ShowAdvanceClasses",
   Skills_plan = "Skills_plan",
   overview = "overview",
+  contact = "contact",
   course_label = "course_label",
 }
 
@@ -62,5 +63,6 @@ export const tagTypesList = [
   tagTypes.ShowAdvanceClasses,
   tagTypes.Skills_plan,
   tagTypes.overview,
+  tagTypes.contact,
   tagTypes.course_label,
 ];

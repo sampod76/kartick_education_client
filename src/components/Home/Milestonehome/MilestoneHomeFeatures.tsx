@@ -55,57 +55,85 @@ export default function MilestoneHomeFeatures() {
   };
   const query: Record<string, any> = {};
 
-  const [size, setSize] = useState<number>(4);
+  const [size, setSize] = useState<boolean>(false);
+  const [showAllCourses, setShowAllCourses] = useState(false);
 
   query["limit"] = 4;
   query["children"] = "course";
   query["sortBy"] = "serial_number";
   query["sortOrder"] = "asc";
   query["status"] = "active";
-  const { data = {}, isLoading } = useGetAllCategoryChildrenQuery({ ...query });
-  console.log("🚀 ~ MilestoneHomeFeatures ~ data:", data);
+
+  if (size) {
+    query['limit'] = 999999
+  } else {
+    query['limit'] = 4
+  }
+
+
+  const { data = {}, isLoading } = useGetAllCategoryChildrenQuery({ ...query }) as any
+  // console.log("🚀 ~ MilestoneHomeFeatures ~ data:", data);
+
   return (
-    <div className="container mx-auto mt-7">
-      {
-        //@ts-ignore
-        data?.data?.map((category: any, index: number) => (
-          <div
-            key={category._id}
-            className={`rounded-[28px] ${
-              index % 4 === 0
-                ? "bg-[#43CD66]"
-                : index % 3 === 0
-                ? "bg-[#F96A9A]"
-                : index % 2 === 0
-                ? "bg-[#2AAAE2]"
-                : "bg-[#F9B001]"
+    <div className="container mx-auto mt-7 text-center">
+      {data?.data && data?.data?.map((category: any, index: number) => (
+        <div
+          key={category._id}
+          className={`rounded-[28px] ${index % 4 === 0
+            ? 'bg-[#43CD66]'
+            : index % 3 === 0
+              ? 'bg-[#F96A9A]'
+              : index % 2 === 0
+                ? 'bg-[#2AAAE2]'
+                : 'bg-[#F9B001]'
             } px-3 py-5 mt-3`}
-          >
-            <h1 className="text-center  text-white text-2xl lg:text-3xl my-3">
-              {category?.title}
-            </h1>
-            <div className="bg-[#424644] grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-[1rem] rounded-b-xl">
-              {category?.courses?.map((course: any) => {
-                return (
-                  <Link
-                    href={`/`}
-                    className=" flex gap-2 items-center text-white"
-                    key={course?._id}
-                  >
-                    <Image
-                      src={milestoneIcon}
-                      height={20}
-                      width={20}
-                      alt="icon"
-                    />
-                    <h4>{course?.title} </h4>
-                  </Link>
-                );
-              })}
-            </div>
+        >
+          <h1 className="text-center text-white text-2xl lg:text-3xl my-3">{category?.title}</h1>
+          <div className="bg-[#424644] grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-[1rem] rounded-b-xl">
+            {showAllCourses
+              ? category?.courses?.map((course: any) => (
+                <Link
+                  href={`/course/milestone/${course?._id}?category=${category?._id}`}
+                  className="flex gap-2  text-white"
+                  key={course?._id}
+                >
+                  <Image src={milestoneIcon} height={20} width={20} alt="icon" />
+                  <h4>{course?.title} </h4>
+                </Link>
+              ))
+              : category?.courses?.slice(0, 18).map((course: any) => (
+                <Link
+                  href={`/course/milestone/${course?._id}?category=${category?._id}`}
+                  className="flex gap-2  text-white"
+                  key={course?._id}
+                >
+                  <Image src={milestoneIcon} height={20} width={20} alt="icon" />
+                  <h4>{course?.title} </h4>
+                </Link>
+              ))}
           </div>
-        ))
+
+          {category?.courses?.length > 18 && (
+            <button
+              className="text-white underline mt-2 cursor-pointer"
+              onClick={() => setShowAllCourses(!showAllCourses)}
+            >
+              {showAllCourses ? 'Show Less' : 'Show All'}
+            </button>
+          )}
+
+
+        </div>
+      ))}
+
+      {(data?.data && !size) && <button
+        onClick={() => setSize(true)}
+        className="w-[7rem] mx-auto mt-9 bg-[#C6F2BA] h-[48px] text-center px-3 py-3 text-gray-700  font-semibold  rounded text-nowrap"
+      >
+        See All
+      </button>
       }
+
     </div>
   );
 }

@@ -318,7 +318,9 @@ const CreateLesson = () => {
               {serviceLoading ? (
                 <ButtonLoading />
               ) : (
-                <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
+                <div className=" text-center">
+                  <ButtonSubmitUI>Create Lesson</ButtonSubmitUI>
+                </div>
               )}
             </div>
           </Form>

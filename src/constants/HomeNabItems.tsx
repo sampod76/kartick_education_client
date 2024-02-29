@@ -12,14 +12,14 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
       ),
       key: "1",
     },
-    {
-      label: (
-        <Link className="text-[20px]   font-bold capitalize" href="/subscription">
-          subscription
-        </Link>
-      ),
-      key: "/subscription",
-    },
+    // {
+    //   label: (
+    //     <Link className="text-[20px]   font-bold capitalize" href="/subscription">
+    //       subscription
+    //     </Link>
+    //   ),
+    //   key: "/subscription",
+    // },
     {
       label: (
         <Link className="text-[20px]   font-bold capitalize" href="/learning">
@@ -93,14 +93,14 @@ export const homeNavItem: MenuProps["items"] =
       ),
       key: "1",
     },
-    {
-      label: (
-        <Link className="text-[20px]   font-bold capitalize" href="/subscription">
-          subscription
-        </Link>
-      ),
-      key: "/subscription",
-    },
+    // {
+    //   label: (
+    //     <Link className="text-[20px]   font-bold capitalize" href="/subscription">
+    //       subscription
+    //     </Link>
+    //   ),
+    //   key: "/subscription",
+    // },
     {
       label: (
         <Link className="text-[20px]   font-bold capitalize" href="/learning">

@@ -1,4 +1,6 @@
 "use client";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
 import SellerPurchased from "@/components/package/SellerPurchased";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { ENUM_YN } from "@/constants/globalEnums";
@@ -8,6 +10,7 @@ import {
   useGetAllPurchaseAcceptedCourseQuery,
   useGetAllPurchaseAcceptedPackageQuery,
 } from "@/redux/api/public/purchaseAPi";
+import { useGetSubmitAllQuizQuery } from "@/redux/api/quizSubmitApi";
 import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import React, { useEffect, useState } from "react";
@@ -17,30 +20,16 @@ import { MdAccountBalance } from "react-icons/md";
 import { SiSellfy } from "react-icons/si";
 
 export default function StudentDashboardMain() {
-  const [userInfoLoading, setUserInfoLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState<Partial<IDecodedInfo>>({
-    email: "",
-    id: "",
-    role: undefined,
-  });
-
-  useEffect(() => {
-    // Fetch user info asynchronously on the client side
-    const fetchUserInfo = async () => {
-      const userInfo = (await getUserInfo()) as any;
-      setUserInfo(userInfo);
-    };
-    fetchUserInfo();
-    setUserInfoLoading(false);
-  }, []);
+ const {userInfo,userInfoLoading} =useGlobalContext()
   const {
     data: allPurchaseCourse,
     error: PurchaseCourseError,
     isLoading: PurchaseCourseLoading,
   } = useGetAllPurchaseAcceptedCourseQuery({
     isDelete: ENUM_YN.NO,
+    status: "active",
     author: userInfo?.id,
-  });
+  },{skip:!Boolean(userInfo?.id)});
   console.log(
     "🚀 ~ StudentDashboardMain ~ allPurchaseCourse:",
     allPurchaseCourse
@@ -52,7 +41,7 @@ export default function StudentDashboardMain() {
   } = useGetAllPackageAndCourseQuery(
     {
       isDelete: ENUM_YN.NO,
-      // status: "active",
+      status: "active",
       user: userInfo?.id,
     },
     { skip: !Boolean(userInfo?.id) }
@@ -62,14 +51,16 @@ export default function StudentDashboardMain() {
     data: allSingleQuiz,
     error: allSingleQuizError,
     isLoading: allSingleQuizLoading,
-  } = useGetAllSingleQuizQuery(
+  } = useGetSubmitAllQuizQuery(
     {
       isDelete: ENUM_YN.NO,
+      status: "active",
       user: userInfo?.id,
     },
     { skip: !Boolean(userInfo?.id) }
   );
-  if (PurchaseCourseLoading || userInfoLoading || allSingleQuizLoading) {
+  console.log("🚀 ~ StudentDashboardMain ~ allSingleQuiz:", allSingleQuiz)
+  if (PurchaseCourseLoading || userInfoLoading || allSingleQuizLoading ||allPurchasePackageLoading) {
     return <LoadingSkeleton />;
   }
   return (
@@ -78,7 +69,8 @@ export default function StudentDashboardMain() {
         <div className="w-full mx-auto p-4 grid grid-cols-12 gap-2 min-h-screen">
           <div className="col-span-12 relative top-0 z-10">
             {/* <Chart></Chart> */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-4 xl:gap-6 text-[30px]">
+           <AnimatePresenceWrapper>
+           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-4 xl:gap-6 text-[30px]">
               <div className="border text-white bg-[#4e36e2] w-full p-4 shadow rounded-xl flex justify-between items-center h-28 ">
                 <p className="border-2 border-white rounded-md p-1">
                   <FaUser className="h-7 w-7" />
@@ -120,6 +112,7 @@ export default function StudentDashboardMain() {
                 </div>
               </div>
             </div>
+           </AnimatePresenceWrapper>
             <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 ">
               <div className="rounded-lg bg-white max-w-full md:min-h-[40vh] lgg:min-h-[60vh] px-4 py-5 shadow">
                 <div className="py-2 align-middle px-2">
@@ -207,7 +200,7 @@ export default function StudentDashboardMain() {
                   </div>
                 </div>
               </div>
-            </div>
+            A</div>
           </div>
           {/* <Modal
     closeModal={setOpenModal}

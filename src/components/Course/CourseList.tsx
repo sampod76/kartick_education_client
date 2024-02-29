@@ -36,13 +36,13 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 const CourseList = () => {
   const query: Record<string, any> = {};
 
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
+
   const userInfo = getUserInfo() as IDecodedInfo;
-  // const { userInfo } = useAppSelector((state: any) => state.);
+
   const { data: userStateData } = useAppSelector(state => state.userInfo)
-  console.log('userStateData', userStateData)
-  // console.log(userInfo);
-  const [deleteCourse] = useDeleteCourseMutation();
+  // console.log('userStateData', userStateData)
+
+  const [deleteCourse, { isLoading: deleteLoading }] = useDeleteCourseMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -72,10 +72,11 @@ const CourseList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data = [], isLoading } = useGetAllCourseQuery({ ...query });
+  const { data, isLoading } = useGetAllCourseQuery({ ...query });
 
   //@ts-ignore
-  const courseData = data?.data;
+  const courseData = data?.data || [];
+  // console.log("🚀 ~ CourseList ~ courseData:", courseData)
   //@ts-ignore
   const meta = data?.meta;
 
@@ -125,7 +126,7 @@ const CourseList = () => {
       title: "Name",
       // fixed:"left",
       dataIndex: "title",
-      ellipsis: true,
+      // ellipsis: true,
       // responsive: ['md','sm']
     },
     {
@@ -134,18 +135,18 @@ const CourseList = () => {
       ellipsis: true,
       width: 100,
     },
+    // {
+    //   title: "duration",
+    //   dataIndex: "duration",
+    //   render: function (data: any) {
+    //     // console.log(data)
+    //     return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
+    //   },
+    //   // ellipsis: true,
+    // },
     {
-      title: "duration",
-      dataIndex: "duration",
-      render: function (data: any) {
-        // console.log(data)
-        return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
-      },
-      // ellipsis: true,
-    },
-    {
-      title: "level",
-      dataIndex: "level",
+      title: "label",
+      dataIndex: ["labelDetails", "title"],
       ellipsis: true,
     },
     {
@@ -222,13 +223,13 @@ const CourseList = () => {
                     Delete
                   </Menu.Item>
 
-                  <Menu.Item key="add_milestone">
+                  {/* <Menu.Item key="add_milestone">
                     <Link
                       href={`/${userInfo?.role}/course/create/milestone/${record?._id}?courseName=${record?.title}`}
                     >
                       Add Milestone
                     </Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
                 </Menu>
               }
             >

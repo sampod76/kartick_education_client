@@ -7,10 +7,6 @@ import Courses from "../Home/coureses/Courses";
 import LessonList from "../lesson/LessonList";
 // import GlossaryPage from "../"
 import {
-  BookOutlined,
-  QuestionOutlined,
-  CommentOutlined,
-  BlockOutlined,
   ContainerOutlined,
   SettingOutlined,
   ReadOutlined
@@ -47,7 +43,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-2xl">Lesson Summery</h1>
+          <h1 className=" text-sm md:text-md lg:text-lg">Lessons & Quizes</h1>
         </button>
       ),
       key: "1",
@@ -63,7 +59,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />
-          <h1 className="text-sm md:text-lg lg:text-2xl">Glossary</h1>
+          <h1 className="text-sm md:text-md lg:text-lg">Glossary</h1>
         </button>
       ),
       key: "3",
@@ -79,7 +75,7 @@ export default function ModuleTab({
               fontSize: "1.5rem",
             }}
           />
-          <h1 className=" text-sm md:text-lg lg:text-2xl"> Resources</h1>
+          <h1 className=" text-sm md:text-md lg:text-lg"> Resources</h1>
         </button>
       ),
       key: "4",
@@ -95,15 +91,16 @@ export default function ModuleTab({
         tabBarStyle={{
           padding: "10px",
           borderRadius: '8px',
+
           // backgroundColor: '#D9D9D9'
         }}
+        centered
+        animated
+        items={tabsItems}
+
         onChange={handleTabClick}
       >
-        {tabsItems.map((item) => (
-          <TabPane tab={item.label} key={item.key}>
-            {item.children}
-          </TabPane>
-        ))}
+
       </Tabs>
     </div>
   );

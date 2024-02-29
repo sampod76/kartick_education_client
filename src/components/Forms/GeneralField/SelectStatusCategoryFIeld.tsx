@@ -24,7 +24,7 @@ const SelectStatusCategoryFIeld = ({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-     //  // console.log("search:", value);
+    //  // console.log("search:", value);
   };
   const query: Record<string, any> = {};
   query["limit"] = 999999;
@@ -46,14 +46,14 @@ const SelectStatusCategoryFIeld = ({
     <div>
       <LabelUi>Select Category {required && <span className="text-red-600 text-center">*</span>}</LabelUi>
       <Select
-      size="large"
+        size="large"
         // onChange={handleChange ? handleChange : onChange}
         onChange={(val) => {
           setCategoryValue(val);
         }}
         disabled={disable}
         // defaultActiveFirstOption
-        defaultValue={{ label: "Select Category", value: "" }}
+        defaultValue={defaultData || { label: "Select Category", value: "" }}
         options={CategoryOptions}
         style={{ width: "100%" }}
         showSearch
@@ -61,7 +61,7 @@ const SelectStatusCategoryFIeld = ({
         filterOption={filterOption}
         optionFilterProp="children"
         loading={isLoading}
-        // placeholder={placeholder}
+      // placeholder={placeholder}
       />
     </div>
   );

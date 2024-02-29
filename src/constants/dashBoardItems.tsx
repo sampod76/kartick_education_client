@@ -24,6 +24,7 @@ import {
   PayCircleFilled,
   ThunderboltFilled,
   PicLeftOutlined,
+  ContactsFilled
 } from "@ant-design/icons";
 import { PiPackageDuotone } from "react-icons/pi";
 import Link from "next/link";
@@ -73,7 +74,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
   ];
   const trainerSidebarItems: MenuProps["items"] = [
     {
-      label: " category",
+      label: "Category",
       key: "manage-category",
       icon: <CreditCardOutlined />,
       children: [
@@ -123,7 +124,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
               onClick={() => (setCollapsed ? setCollapsed(false) : null)}
               href={`/${role}/course_label`}
             >
-             Label list
+              Label list
             </Link>
           ),
           key: `/${role}/course_label`,
@@ -307,6 +308,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         },
       ],
     },
+
+
   ];
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
@@ -575,6 +578,36 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
               key: `/${role}/features/short-overview`,
             },
           ],
+        },
+
+      ],
+    },
+    {
+      label: "Contact",
+      key: "manage-contact",
+      icon: <ContactsFilled />,
+      children: [
+        // {
+        //   label: (
+        //     <Link
+        //       onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+        //       href={`/${role}/contact/create`}
+        //     >
+        //       Create Contact
+        //     </Link>
+        //   ),
+        //   key: `/${role}/contact/create`,
+        // },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/contact`}
+            >
+              Contact List
+            </Link>
+          ),
+          key: `/${role}/contact`,
         },
       ],
     },

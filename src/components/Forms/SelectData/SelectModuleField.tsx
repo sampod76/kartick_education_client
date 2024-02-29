@@ -9,8 +9,9 @@ const SelectModuleField = () => {
   query["limit"] = 999999;
   query["sortBy"] = "title";
   query["sortOrder"] = "asc";
+  query["status"] = "active";
   //! for Module options selection
-  const { data ,isLoading} = useGetAllModuleQuery({ ...query });
+  const { data, isLoading } = useGetAllModuleQuery({ ...query });
   const moduleData = data?.data;
   // console.log(moduleData)
   const ModuleOptions = moduleData?.map((item: any) => {

@@ -82,9 +82,9 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
               {courseData?.short_description}
             </EllipsisMiddle>
           </p>
-          <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
+          {/* <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
             <PaypalCheckoutByCourse courseData={courseData} />
-          </div>
+          </div> */}
           <Divider
             style={{
               color: "red",
@@ -92,7 +92,7 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
               background: "red",
             }}
           />
-          <div className="flex justify-between items-center ">
+          <div className="">
             {/* <div className="w-full lg:w-[20%]">
               <h2 className="uppercase text-2xl font-bold">Label</h2>
               <div className="flex flex-col gap-5 ">
@@ -102,7 +102,7 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
               </div>
             </div> */}
 
-            <div className="w-full lg:w-[80%] grid  grid-cols-1 lg:grid-cols-2 gap-3">
+            <div className="w-full  mx-auto grid  grid-cols-1 lg:grid-cols-2 gap-3">
               {milestoneData?.map((milestone: IMilestoneData, index: number) => {
                 return (
                   <SingleMilestone key={index} milestoneData={milestone} index={index} />

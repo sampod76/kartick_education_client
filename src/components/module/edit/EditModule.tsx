@@ -269,7 +269,9 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
               {updateModuleLoading ? (
                 <Spin />
               ) : (
+                  <div className=" text-center">
                 <ButtonSubmitUI>Update Module</ButtonSubmitUI>
+                </div>
               )}
             </Form>
           </div>

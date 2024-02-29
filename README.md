@@ -150,4 +150,12 @@ password : 11223344
 9. removed page and responsive add points
 10. default image fixed
 11. fixed category list
-12. 
+12.
+
+# final Update
+
+1. module tab center -
+2. login button fixed
+3. logo fixed
+4. course banner setup
+5. see more categories with button

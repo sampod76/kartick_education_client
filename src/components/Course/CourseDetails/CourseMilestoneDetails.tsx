@@ -6,16 +6,15 @@ import MilestoneHomeList from '../MilestoneHomeList'
 import { useAppSelector } from '@/redux/hooks';
 
 export default function CourseMilestoneDetails({ courseId }: { courseId: string }) {
-  const { generateColor } = useAppSelector((state) => state.bannerSearch);
+  // const { generateColor } = useAppSelector((state) => state.bannerSearch);
   // bg - [${ generateBgColor }]
 
-  const bg = generateColor?.bg
 
   // console.log(bg, 'bg')
   return (
     <div className={``}
       style={{
-        // backgroundColor: bg
+        backgroundColor: "#effbe1"
       }}
     >
       <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">

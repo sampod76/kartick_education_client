@@ -34,6 +34,7 @@ import { getCloudinaryEnv } from "@/helpers/config/envConfig";
 import UploadMultipalDragAndDropImge from "@/components/ui/UploadMultipalDragAndDropImge";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCourse_labelQuery } from "@/redux/api/adminApi/courseLevelApi";
+import { USER_ROLE } from "@/constants/role";
 const TextEditorNotSetForm = dynamic(
   () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
   {
@@ -63,7 +64,7 @@ const CreateCourse = ({ setOpen }: any) => {
     return Promise.reject(new Error("Please enter a valid URL"));
   };
 
-    const labelQuery: Record<string, any> = {};
+  const labelQuery: Record<string, any> = {};
   labelQuery["limit"] = 99999999;
 
   labelQuery["sortBy"] = "serial_number";
@@ -71,7 +72,7 @@ const CreateCourse = ({ setOpen }: any) => {
   labelQuery["status"] = "active";
   labelQuery["category"] = category;
 
-  const { data:LabelData, isLoading: getLabelLoading } = useGetAllCourse_labelQuery(
+  const { data: LabelData, isLoading: getLabelLoading } = useGetAllCourse_labelQuery(
     labelQuery,
     { skip: !Boolean(category) }
   );
@@ -118,7 +119,7 @@ const CreateCourse = ({ setOpen }: any) => {
       Error_model_hook(err?.data);
     }
   };
-  
+
   const categoryQuery: Record<string, any> = {};
   categoryQuery["status"] = ENUM_STATUS.ACTIVE;
   categoryQuery["limit"] = 99999;
@@ -147,9 +148,18 @@ const CreateCourse = ({ setOpen }: any) => {
     ...query,
   });
 
+
   const AuthorOptions = usersData?.data?.map((item: any) => {
+    let label = ""
+    if (item.role === USER_ROLE.ADMIN) {
+      label = item?.admin?.name?.firstName + " " + item?.admin?.name?.lastName
+    } else if (item.role === USER_ROLE.TRAINER) {
+      label = item?.trainer?.name?.firstName + " " + item?.trainer?.name?.lastName
+    } else if (item?.role === USER_ROLE.TEACHER) {
+      label = item?.teacher?.name?.firstName + " " + item?.teacher?.name?.lastName
+    }
     return {
-      label: item?.email,
+      label: label,
       value: item?._id,
     };
   });
@@ -246,7 +256,7 @@ const CreateCourse = ({ setOpen }: any) => {
                   </Form.Item>
                 </Col>
 
-               
+
                 <Col xs={24} md={12} lg={12} style={{}}>
                   <Form.Item label="Showing Number" name="showing_number">
                     <InputNumber
@@ -257,10 +267,10 @@ const CreateCourse = ({ setOpen }: any) => {
                     />
                   </Form.Item>
                 </Col>
-                
+
 
                 <Col xs={24} md={12} lg={12} style={{}}>
-                  <Form.Item label="Duration"  name="duration">
+                  <Form.Item label="Duration" name="duration">
                     <DatePicker.RangePicker size="large" />
                   </Form.Item>
                   {/* <FormDataRange name="duration" label="Duration" /> */}
@@ -284,10 +294,10 @@ const CreateCourse = ({ setOpen }: any) => {
                       size="large"
                       loading={categoryLoading}
                       placeholder="Select your category"
-                      onChange={(value)=>setCategory(value)}
+                      onChange={(value) => setCategory(value)}
                     >
                       {CategoryOptions?.map((data: any) => (
-                        <Select.Option  allowClear value={data.value} key={data.value}>
+                        <Select.Option allowClear value={data.value} key={data.value}>
                           {data.label}
                         </Select.Option>
                       ))}
@@ -299,11 +309,11 @@ const CreateCourse = ({ setOpen }: any) => {
                   {/* <Form.Item label="Course level" name="level">
                     <Input size="large" placeholder="Course level" />
                   </Form.Item> */}
-                  <Form.Item label="Course label"  name="level_id">
-                    <Select size="large"  allowClear loading={getLabelLoading} placeholder="select course label" style={{ width: "100%" }}>
-                      { LabelData?.data?.length && LabelData?.data?.map((Label: any, index: any) => (
+                  <Form.Item label="Course label" name="label_id">
+                    <Select size="large" allowClear loading={getLabelLoading} placeholder="select course label" style={{ width: "100%" }}>
+                      {LabelData?.data?.length && LabelData?.data?.map((Label: any, index: any) => (
                         <Select.Option value={Label._id} key={Label._id}>
-                          {Label?.serial_number + "." +" "+ Label?.title}
+                          {Label?.serial_number + "." + " " + Label?.title}
                         </Select.Option>
                       ))}
                     </Select>
@@ -457,11 +467,11 @@ const CreateCourse = ({ setOpen }: any) => {
               <UploadMultpalImage />
             </div> */}
           <div className="w-fit mx-auto">
-            {isLoading ||getLabelLoading ? (
+            {isLoading || getLabelLoading ? (
               <Spin />
             ) : (
               <Button
-                disabled={imageUploadLoading ||getLabelLoading}
+                disabled={imageUploadLoading || getLabelLoading}
                 type="default"
                 style={{ marginTop: "1rem" }}
                 htmlType="submit"

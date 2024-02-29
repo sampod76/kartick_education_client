@@ -200,7 +200,9 @@ export default function CreateMilestoneByCourse() {
                 {serviceLoading ? (
                   <Spin />
                 ) : (
-                  <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
+                  <div className=" text-center">
+                    <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
+                  </div>
                 )}
               </div>
               {/* <FloatButton

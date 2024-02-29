@@ -14,6 +14,7 @@ import SelectStatusCategoryFIeld from "../Forms/GeneralField/SelectStatusCategor
 
 const CreateCourse_label = () => {
   const [category, setCategoryValue] = useState();
+  console.log("🚀 ~ category:", category)
   const query: Record<string, any> = {};
   query["limit"] = 1;
 

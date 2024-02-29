@@ -162,7 +162,7 @@ export default function EditSingleQuiz({
         <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
           Update single quiz
         </h1>
-        <div className="text-xl font-bold space-x-2 mb-2 text-start my-2 shadow-lg p-3 bg-white rounded-lg">
+        {/* <div className="text-xl font-bold space-x-2 mb-2 text-start my-2 shadow-lg p-3 bg-white rounded-lg">
           <span className=" p-3  text-base md:text-lg border rounded-lg hover:bg-blue-600 hover:text-white">
             {" "}
             Category:
@@ -186,12 +186,8 @@ export default function EditSingleQuiz({
             {" : "}
             {data?.lesson?.title}
           </h1>
-          {/* <h1 className=" mt-3 p-1 rounded-lg w-fit text-base md:text-lg hover:bg-blue-600 hover:text-white">
-               Milestone:➡{data?.module?.milestone?.milestone_number}
-               {" : "}
-               {data?.module?.milestone?.title}
-             </h1> */}
-        </div>
+         
+        </div> */}
       </div>
 
       {data?._id ? (
@@ -417,7 +413,7 @@ export default function EditSingleQuiz({
                 </Col>
               </Row>
               <Col
-              
+
                 className="gutter-row"
                 xs={24}
                 style={{
@@ -484,6 +480,12 @@ export default function EditSingleQuiz({
                     />
                   )}
                   {quizType === "multiple_select" && (
+                    <AnswerMultiple
+                      answersMultiple={answers}
+                      setAnswersMultiple={setAnswers as any}
+                    />
+                  )}
+                  {quizType === "audio" && (
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}

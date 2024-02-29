@@ -47,7 +47,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
     { skip: Boolean(courseId) }
   );
   const categoryData: any = Category?.data;
- 
+
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
 
@@ -129,9 +129,9 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
             <h1 className="text-xl font-bold my-2">Create Milestone</h1>
 
             <Form submitHandler={onSubmit}
-             isReset={isReset}
-          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
-          >
+              isReset={isReset}
+            // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+            >
               <div
                 style={{
                   border: "1px solid #d9d9d9",
@@ -170,7 +170,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                     <TagsSelectUI />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage   isReset={isReset} name="imgs" />
+                    <UploadMultipalImage isReset={isReset} name="imgs" />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>
@@ -198,7 +198,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                         Description
                       </p>
                       <TextEditor
-                      isReset={isReset}
+                        isReset={isReset}
                       // textEditorValue={textEditorValue}
                       // setTextEditorValue={setTextEditorValue}
                       />
@@ -210,7 +210,9 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                 {serviceLoading ? (
                   <Spin />
                 ) : (
-                  <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
+                  <div className=" text-center">
+                    <ButtonSubmitUI>Create Milestone</ButtonSubmitUI>
+                  </div>
                 )}
               </div>
               {/* <FloatButton

@@ -111,12 +111,13 @@ export default function SubscriptionSelect() {
                 />
               </div>
               <div className="mt-7 flex items-center gap-5 w-full px-3 uppercase">
-                <Link
+                {/* <Link
                   href={`/subscription/join/${subscription?._id}?pack=${subscription?.params}`}
                   className="w-full mx-auto bg-[#C6F2BA] h-[48px] text-center px-3 py-3 text-black  border border-black font-semibold  rounded text-nowrap"
                 >
                   Join Now
-                </Link>
+                </Link> */}
+                <p className="w-full mx-auto bg-[#C6F2BA] h-[48px] text-center px-3 py-3 text-black  border border-black font-semibold  rounded text-nowrap">Contact us</p>
                 <Link
                   href={`/subscription/trial/${subscription?._id}`}
                   className="w-full mx-auto bg-[white] h-[48px] text-center px-3 py-3 text-black  border border-[#5392F9] font-semibold  rounded text-nowrap"

@@ -19,6 +19,7 @@ const BannerCourses = () => {
   const query: Record<string, any> = {};
   query["limit"] = 999999;
   query["sortOrder"] = "asc";
+  query["sortBy"] = "serial_number";
   query["status"] = "active";
 
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
@@ -100,7 +101,7 @@ const BannerCourses = () => {
   return (
     <div className="-mt-[5px] ">
 
-      <Image alt="" src={"/banner/v2CourseBanner.png"} className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[70vh] 2xl:h-[45.75rem] -mt-[6rem]" width={1900} height={1900} />
+      <Image alt=""  src={"/banner/v2CourseBanner.png"} className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[70vh] 2xl:h-[45.75rem] -mt-[6rem]" width={1900} height={1900} />
       <div
       // className="wrapper"
       // style={{
@@ -145,7 +146,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
           })
         )}
       </div> */}
-      <div className="flex uppercase justify-between items-center gap-2 font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
+      <div className="flex uppercase justify-between items-center gap-2 font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scroll-smooth  whitespace-nowrap container mx-auto">
         {isLoading ? (
           <CategoryButtonSKeletton />
         ) : (

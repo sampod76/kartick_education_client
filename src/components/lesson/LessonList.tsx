@@ -31,6 +31,8 @@ import { USER_ROLE } from "@/constants/role";
 import parse from "html-react-parser";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { urlChecker } from "@/utils/urlChecker";
+import QuizIcon from "@/assets/svg/quizIcon";
+import { useCheckPurchaseCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 export default function LessonList({
   moduleId,
   moduleData,
@@ -45,89 +47,12 @@ export default function LessonList({
 
   const [currentCollapse, setCurrentCollapse] = useState<string[]>([]);
   ////! for purchased data of a user
-  const categoryId = moduleData?.milestone?.course?.category?._id;
-
-  // for seller
-  const { data: purchasedData, isLoading: purchaseAcceptLoading } =
-    useGetAllPurchaseAcceptedPackageQuery(
-      {
-        status: "active",
-        isDelete: ENUM_YN.NO,
-        limit: 99999,
-        user: userInfo?.id || "65aa1b19d1661e1c9a9e5135", ///is not valid user
-        category: categoryId,
-      },
-      {
-        skip:
-          userInfo.role === USER_ROLE.ADMIN
-            ? true
-            : userInfo.role === "student"
-              ? true
-              : false,
-      }
-    );
-  // for student
-  const { data: soldSellerPackage, isLoading: purchaseAllLoading } =
-    useGetAllPackageAndCourseQuery(
-      {
-        isDelete: ENUM_YN.NO,
-        status: "active",
-        limit: 99999,
-      },
-      {
-        skip:
-          userInfo.role === USER_ROLE.ADMIN
-            ? true
-            : userInfo.role === "student"
-              ? false
-              : true,
-      }
-    );
-
-  // any user by the course and chack this
-  const { data: userToAllCourse, isLoading: gePurchaseLoading } =
-    useGetCheckPurchasesCourseQuery(
-      {
-        user: userInfo?.id,
-        course: moduleData?.course,
-        isDelete: ENUM_YN?.NO,
-        status: "active",
-        limit: 99999,
-      },
-      { skip: userInfo.role === USER_ROLE.ADMIN ? true : false }
-    );
+  const categoryId = moduleData?.category ||  moduleData?.milestone?.course?.category?._id;
+  const courseId = moduleData?.course || moduleData?.milestone?.course?._id
+  console.log("🚀 ~ categoryId:", moduleData)
 
   let IsExistCategoryOrCourse: any = false;
-  if (userInfo.role !== "student") {
-    IsExistCategoryOrCourse = purchasedData?.data?.some((item: any) =>
-      item.categories.some(
-        (category: any) => category.category._id === categoryId
-      )
-    );
-  } else {
-    IsExistCategoryOrCourse = soldSellerPackage?.data?.some((item: any) =>
-      item?.sellerPackageDetails?.categories.some(
-        (categoryData: any) => categoryData.category === categoryId
-      )
-    );
-  }
-
-  if (userToAllCourse?.data?.length) {
-    IsExistCategoryOrCourse = true;
-  }
-
-  if (userInfo.role === USER_ROLE.ADMIN) {
-    IsExistCategoryOrCourse = true;
-  }
-  // ! for match seller category
-
-  // const IsSoldCategory = soldSellerPackage?.data?.some((item: any) =>
-  //   item?.sellerPackageDetails?.categories.some(
-  //     (categoryData: any) => categoryData.category === categoryId
-  //   )
-  // );
-
-  // console.log(IsExistCategory,'IsExistCategoryIsExistCategoryIsExistCategory purchased the category')
+ 
   //! for Course options selection
   const lesson_query: Record<string, any> = {};
   lesson_query["limit"] = 999999;
@@ -139,6 +64,12 @@ export default function LessonList({
     module: moduleId,
     ...lesson_query,
   });
+
+  const {data:checkPurchase,isLoading:CheckPurchaseLoading}=useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`)
+  console.log("🚀 ~ checkPurchase:", checkPurchase)
+  if(checkPurchase){
+    IsExistCategoryOrCourse=checkPurchase
+  }
 
 
   const quiz_query: Record<string, any> = {};
@@ -154,17 +85,16 @@ export default function LessonList({
 
   if (
     isLoading ||
-    quizLoading ||
-    gePurchaseLoading ||
-    purchaseAcceptLoading ||
-    purchaseAllLoading
+    quizLoading  ||CheckPurchaseLoading  
   ) {
     return <LoadingSkeleton />;
   }
 
   // console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
-    if (IsExistCategoryOrCourse || index === 0) {
+    if (IsExistCategoryOrCourse
+      // || index === 0//! for first open video
+    ) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {
         const result = urlChecker(lesson?.videos[0]?.link);
         if (result.platform === ENUM_VIDEO_PLATFORM.VIMEO) {
@@ -187,14 +117,16 @@ export default function LessonList({
     } else {
       return (
         <div className="text-base lg:text-lg text-start text-red-500 font-medium">
-          This contents is privet. First purchase this course.
+          This contents is private. First purchase this course.
           {/* <ModalComponent buttonText="login">
             <LoginPage redirectLink={pathname} />
           </ModalComponent> */}
+
         </div>
       );
     }
   };
+
 
 
   //! collapse data ////
@@ -245,12 +177,12 @@ export default function LessonList({
                     <Link
                       key={quiz?._id}
                       href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3 text-[#479FEC]"
+                      className="text-[14px] flex justify-between  mx-auto mt-3 text-[#479FEC]"
                     >
-                      <h2 className="text-base font-normal">
-                        Quiz {index + 1} : <span>{quiz?.title} </span>
+                      <h2 className="text-base font-normal flex justify-start gap-1">
+                     <span className="mt-1"><QuizIcon/></span>   Quiz {index + 1} : {quiz?.title}
                       </h2>
-                      <LockOutlined style={{ fontSize: "18px" }} />
+                      {/* <LockOutlined style={{ fontSize: "18px" }} /> */}
                     </Link>
                   );
                 })}
@@ -268,7 +200,11 @@ export default function LessonList({
                 <h2 className="text-base text-start font-normal">
                   <span>Lesson {index + 1}: </span> {lesson?.title}
                 </h2>
-                <EyeOutlined style={{ fontSize: "18px" }} />
+                {isLessonCollapsed ? (
+                  <EyeInvisibleOutlined style={{ fontSize: "18px" }} />
+                ) : (
+                  <EyeOutlined style={{ fontSize: "18px" }} />
+                )}
               </button>
             </div>
           ),

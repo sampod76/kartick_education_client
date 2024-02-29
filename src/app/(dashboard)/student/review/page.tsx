@@ -5,6 +5,8 @@ import { getUserInfo } from "@/services/auth.service";
 import { Input, Rate } from "antd";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { AllImage } from '@/assets/AllImge'
+
 
 const Review = () => {
   const [user, setUserData] = useState<any>({});
@@ -44,7 +46,7 @@ const Review = () => {
             </div>
           </div>
         ))}
-        <div className="flex justify-center items-center">Upcoming ....</div>
+        <div className='flex justify-center items-center container mx-auto'><Image alt="" src={AllImage.upcoming} width={700} height={700} className="min-w-sm rounded-lg" /></div>
       </div>
     </div>
   );

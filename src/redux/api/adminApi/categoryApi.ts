@@ -35,6 +35,16 @@ export const categoryApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.category],
     }),
+    checkPurchaseCategory: build.query({
+      query: (id: string | string[] | undefined) => {
+        // console.log(id);
+        return {
+          url: `${CATEGORY_URL}/check-purchase/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: [tagTypes.category],
+    }),
     // create a new academic department
     addCategory: build.mutation({
       query: (data) => {
@@ -78,4 +88,5 @@ export const {
   useGetAllCategoryQuery,
   useGetSingleCategoryQuery,
   useUpdateCategoryMutation,
+  useCheckPurchaseCategoryQuery
 } = categoryApi;
