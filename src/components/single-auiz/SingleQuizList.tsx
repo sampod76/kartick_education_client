@@ -327,7 +327,7 @@ const SingleQuizList = () => {
           },
         ]}
       /> */}
-      <HeadingUI>SIngle Quiz List</HeadingUI>
+      <HeadingUI>Single Quiz List</HeadingUI>
       <ActionBar>
         <Input
           size="large"

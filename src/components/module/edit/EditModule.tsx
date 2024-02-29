@@ -101,6 +101,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
   if (isLoading) {
     return <LoadingSkeleton />;
   }
+  // console.log(data,'data')
 
   const { milestoneDefault, ...othersData } = data
 
