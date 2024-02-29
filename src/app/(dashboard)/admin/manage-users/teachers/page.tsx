@@ -29,12 +29,15 @@ import {
   useGetAllStudentsQuery,
 } from "@/redux/api/adminApi/studentApi";
 import { getUserInfo } from "@/services/auth.service";
+import useGlobalCache from "@ant-design/cssinjs/lib/hooks/useGlobalCache";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { useDeleteSellerMutation, useGetAllSellersQuery } from "@/redux/api/adminApi/sellerApi";
 
-const StudentPage = () => {
+const TeacherOrSellerPage = () => {
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
-  const userInfo = getUserInfo() as any;
+  const { userInfo, userInfoLoading } = useGlobalContext()
   const query: Record<string, any> = {};
-  const [deleteStudent] = useDeleteStudentMutation();
+  const [deleteSeller] = useDeleteSellerMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -48,7 +51,7 @@ const StudentPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  query["status"] = "active";
+  // query["status"] = "active";
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -58,14 +61,14 @@ const StudentPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllStudentsQuery({
+  const { data, isLoading } = useGetAllSellersQuery({
     ...query,
   });
 
   //@ts-ignore
   const StudentData = data?.data;
 
-  console.log(StudentData, "student data");
+
 
   //@ts-ignore
   const meta = data?.meta;
@@ -114,16 +117,16 @@ const StudentPage = () => {
       width: 130,
       render: function (data: any) {
         return (
-          <>
+          <div className="flex justify-center items-center gap-1">
             <Link
-              href={`/${userInfo?.role}/manage-users/students/details/${data}`}
+              href={`/${userInfo?.role}/manage-users/teachers/details/${data}`}
             >
               <Button onClick={() => console.log(data)} type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link
-              href={`/${userInfo?.role}/manage-users/students/edit/${data}`}
+            {/* <Link
+              href={`/${userInfo?.role}/manage-users/teachers/edit/${data}`}
             >
               <Button
                 style={{
@@ -134,15 +137,15 @@ const StudentPage = () => {
               >
                 <EditOutlined />
               </Button>
-            </Link>
+            </Link> */}
             <Button
-              onClick={() => deleteStudentHandler(data)}
+              onClick={() => deleteSellerHandler(data)}
               type="default"
               danger
             >
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
@@ -165,18 +168,18 @@ const StudentPage = () => {
     setSearchTerm("");
   };
 
-  const deleteStudentHandler = async (id: string) => {
+  const deleteSellerHandler = async (id: string) => {
     console.log(id);
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          const res = await deleteStudent(id).unwrap();
+          const res = await deleteSeller(id).unwrap();
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Student Successfully Deleted");
+            Success_model("Teacher Successfully Deleted");
           }
         } catch (error: any) {
           Error_model_hook(error.message);
@@ -197,7 +200,7 @@ const StudentPage = () => {
         padding: "1rem",
       }}
     >
-      <ActionBar title="Student List">
+      <ActionBar title="Teacher List">
         <Input
           size="large"
           placeholder="Search"
@@ -207,8 +210,8 @@ const StudentPage = () => {
           }}
         />
         <div>
-          <Link href={`/${userInfo?.role}/manage-users/students/create`}>
-            <Button type="default">Create Student</Button>
+          <Link href={`/${userInfo?.role}/manage-users/teachers/create`}>
+            <Button type="default">Create teacher</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -238,7 +241,7 @@ const StudentPage = () => {
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteStudentHandler(adminId)}
+        handleOk={() => deleteSellerHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </UMModal>
@@ -246,4 +249,4 @@ const StudentPage = () => {
   );
 };
 
-export default StudentPage;
+export default TeacherOrSellerPage;

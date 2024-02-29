@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function PackageToStudentS() {
+export default function PackageToStudent() {
   return (
-    <div>page</div>
+    <div>pagegjfgjfg</div>
   )
 }
