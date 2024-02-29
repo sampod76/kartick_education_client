@@ -117,11 +117,12 @@ const CreateSingleQuiz = () => {
       lesson: lesson?._id,
       quiz: quiz?._id,
       type: quizType,
-      imgs: values.length ? values.imgs : [""]
+      
     };
+    removeNullUndefinedAndFalsey(singleQuizDat)
+   
 
-
-
+// return
 
 
     try {
@@ -509,7 +510,7 @@ const CreateSingleQuiz = () => {
               {serviceLoading ? (
                 <ButtonLoading />
               ) : (
-                <Button disabled={imageUploadLoading || serviceLoading} htmlType="submit" size="large" style={{ width: "10rem" }} type="default"> Create
+                <Button  htmlType="submit" size="large" style={{ width: "10rem" }} type="default"> Create
                 </Button>
               )}
             </div>

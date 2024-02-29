@@ -681,13 +681,13 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       label: (
         <Link
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/${role}/support`}
+          href={`/contact`}
         >
           Support and Help
         </Link>
       ),
       icon: <BorderOuterOutlined />,
-      key: `/${role}/support`,
+      key: `/contact`,
     },
   ];
   const sellerSidebarItems: MenuProps["items"] = [

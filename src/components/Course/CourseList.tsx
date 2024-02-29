@@ -32,12 +32,14 @@ import ModalComponent from "@/components/Modal/ModalComponents";
 import Test from "@/components/Utlis/Test";
 import CreateCourse from "@/components/Course/CreateCourse";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
 
 
-  const userInfo = getUserInfo() as IDecodedInfo;
+  // const userInfo = getUserInfo() as IDecodedInfo;
+  const {userInfo,userInfoLoading} =useGlobalContext()
 
   const { data: userStateData } = useAppSelector(state => state.userInfo)
   // console.log('userStateData', userStateData)

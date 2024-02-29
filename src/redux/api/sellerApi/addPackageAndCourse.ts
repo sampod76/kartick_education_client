@@ -4,7 +4,7 @@ import { baseApi } from "../baseApi";
 import { tagTypes } from "@/redux/tag-types";
 import { ICourseData } from "@/types/courseType";
 
-const ADD_PACKAGE_COURSE_URL = "/student_purchase_packages_course_course";
+const ADD_PACKAGE_COURSE_URL = "/student_purchase_packages_course";
 
 export const addPackageAndCourse = baseApi.injectEndpoints({
   endpoints: (build) => ({
