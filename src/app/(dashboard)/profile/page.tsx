@@ -12,6 +12,7 @@ import UserProfile from "@/components/profile/UserProfile";
 import ProfileTabSection from "@/components/profile/ProfileTabSection";
 import SellerMainProfile from "@/components/profile/seller/SellerMainProfile";
 import AdminMainProfile from "@/components/profile/admin/AdminMainProfile";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -19,6 +20,7 @@ const { Title, Text } = Typography;
 const ProfileTemplate = () => {
   const [update, setUpdate] = useState(false);
   // console.log(update);
+  const { userInfo, userInfoLoading } = useGlobalContext()
   const { data = {}, isLoading } = useGetProfileQuery("");
   console.log(data, 'data profile');
 

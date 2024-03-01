@@ -20,6 +20,8 @@ import { EllipsisMiddle } from '@/utils/CutTextElliples';
 import SelectCategoryChildren from '@/components/Forms/GeneralField/SelectCategoryChildren';
 import { Select } from 'antd';
 import TopFilterSelect from '../TopFilterSelect';
+import { useGlobalContext } from '@/components/ContextApi/GlobalContextApi';
+import { useGetAnalyticsSubmitAllQuizQuery } from '@/redux/api/quizSubmitApi';
 // import { Line, } from '@ant-design/charts';
 
 const { Panel } = Collapse
@@ -27,18 +29,19 @@ const { Panel } = Collapse
 
 
 export default function ProgressAnalytics() {
+    const { userInfo, userInfoLoading } = useGlobalContext()
 
-    const { data: CategoryData, isLoading } = useGetAllCategoryChildrenQuery({ status: ENUM_STATUS.ACTIVE, isDelete: ENUM_YN.NO, children: 'course-milestone-module' })
+
+    const query: any = {}
+    query.user = userInfo?.id
+    const { data: CategoryData, isLoading } = useGetAnalyticsSubmitAllQuizQuery(query, { skip: !Boolean(userInfo?.id) })
+    console.log("🚀 ~ ProgressAnalytics ~ CategoryData:", CategoryData)
     //! collapse section ////
     const [currentCollapse, setCurrentCollapse] = useState<string[]>([]);
     const handleChange = (key: any) => {
         console.log(key, 'key')
-
         setCurrentCollapse(key);
     };
-
-
-
 
 
 
@@ -48,7 +51,7 @@ export default function ProgressAnalytics() {
     const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
     const [time, setTime] = useState<string>('Today');
 
-    if (isLoading) {
+    if (isLoading || userInfoLoading) {
         return <LoadingForDataFetch />
     }
 
@@ -64,7 +67,7 @@ export default function ProgressAnalytics() {
                 {/* top header section */}
                 <div className="flex justify-between uppercase bg-blue-500 text-white font-semibold py-3 px-2 rounded-md">
 
-                    <h3 className='text-nowrap w-[40%]'>Course</h3>
+                    <h3 className='text-nowrap w-[40%]'>Subject</h3>
                     <div className="w-[60%] grid grid-cols-1 lg:grid-cols-3">
                         <h3 className='text-nowrap'>Time Spent</h3>
                         <h3 className='text-nowrap'>Questions</h3>
@@ -79,7 +82,7 @@ export default function ProgressAnalytics() {
                     marginTop: "0px",
                 }}>
                     {CategoryData?.data?.map((category: any) => (
-                        <Panel header={<h2 className='text-white font-normal bg-[#b0d9e2'>{category?.title}</h2>} key={category?._id}>
+                        <Panel header={<h2 className='text-white font-normal bg-[#b0d9e2'>{category?.category.title}</h2>} key={category?.category?._id}>
                             <Collapse style={{
                                 backgroundColor: '#b0d9e'
                             }} defaultActiveKey="1"
@@ -90,21 +93,48 @@ export default function ProgressAnalytics() {
                                     <Panel header={course?.title} key={course?._id}>
                                         {
                                             course?.milestones?.map((milestone: any, milestoneIndex: number) => {
-                                                return <div className="flex justify-between items-center" key={milestone?._id}>
-                                                    <section className='flex gap-1 w-[40%]'>
-                                                        <SearchOutlined />
-                                                        <span>{milestone?.milestone_number}</span>
-                                                        <EllipsisMiddle suffixCount={5} maxLength={64}>
-                                                            {milestone?.title}
-                                                        </EllipsisMiddle>
-                                                    </section>
-                                                    <section className='w-[60%] grid grid-cols-1 lg:grid-cols-3 gap-3 items-center'>
-                                                        <h3 className='text-sm text-slate-600'>   module: {milestone?.modules?.length} min </h3>
-                                                        <h3 className='text-nowrap'>{10 + milestoneIndex}</h3>
-                                                        <h3 className='text-nowrap'>   <Progress percent={90} status="active" strokeColor={{ from: '#108ee9', to: '#87d068' }} /></h3>
-                                                    </section>
+                                                // return <div className="flex justify-between items-center" key={milestone?._id}>
+                                                //     <section className='flex gap-1 w-[40%]'>
+                                                //         <SearchOutlined />
+                                                //         <span>{milestone?.milestone_number}</span>
+                                                //         <EllipsisMiddle suffixCount={5} maxLength={64}>
+                                                //             {milestone?.title}
+                                                //         </EllipsisMiddle>
+                                                //     </section>
+                                                //     <section className='w-[60%] grid grid-cols-1 lg:grid-cols-3 gap-3 items-center'>
+                                                //         <h3 className='text-sm text-slate-600'>   module: {milestone?.modules?.length} min </h3>
+                                                //         <h3 className='text-nowrap'>{10 + milestoneIndex}</h3>
+                                                //         <h3 className='text-nowrap'>   <Progress percent={90} status="active" strokeColor={{ from: '#108ee9', to: '#87d068' }} /></h3>
+                                                //     </section>
 
-                                                </div>
+                                                // </div>
+                                                return <Panel header={<p className=' font-normal bg-[#b0d9e2'>{milestone?.title}</p>} key={milestone?._id}>
+                                                    <Collapse style={{
+                                                        backgroundColor: '#b0d9e'
+                                                    }} defaultActiveKey="1"
+                                                        bordered={false}
+                                                    //  ghost={true}
+                                                    >
+                                                        {
+                                                            milestone.modules.map((module: any, index: number, allModule: any[]) => {
+                                                                return <div className="flex justify-between items-center" key={milestone?._id}>
+                                                                    <section className='flex gap-1 w-[40%]'>
+                                                                        {/* <SearchOutlined /> */}
+                                                                        {/* <span>{milestone?.milestone_number}</span> */}
+                                                                        <EllipsisMiddle suffixCount={5} maxLength={64}>
+                                                                            {module?.title}
+                                                                        </EllipsisMiddle>
+                                                                    </section>
+                                                                    <section className='w-[60%] grid grid-cols-1 lg:grid-cols-3 gap-3 items-center'>
+                                                                        <h3 className='text-sm text-slate-600'>   module: {milestone?.modules?.length} min </h3>
+
+                                                                        <h3 className='text-nowrap'>   <Progress percent={90} status="active" strokeColor={{ from: '#108ee9', to: '#87d068' }} /></h3>
+                                                                    </section>
+
+                                                                </div>
+                                                            })
+                                                        }
+                                                    </Collapse> </Panel>
                                             })
                                         }
 
