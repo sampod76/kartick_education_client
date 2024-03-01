@@ -9,34 +9,34 @@ import ScoreAnalytics from './scores/ScoreAnalytics';
 export default function AnalyticsTab() {
 
   const tabsItems: TabsProps["items"] = [
-    {
-      label: (
-        <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r- border-slate-00">
-          <UserSwitchOutlined
-            style={{
-              fontSize: "1.4rem",
-            }}
-          />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-xl">Usage</h1>
-        </button>
-      ),
-      key: "usage",
-      children: <UsageAnlytics />
-    },
-    {
-      label: (
-        <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r- border-slate-00">
-          <DiffOutlined
-            style={{
-              fontSize: "1.4rem",
-            }}
-          />{" "}
-          <h1 className=" text-sm md:text-lg lg:text-xl">Scores </h1>
-        </button>
-      ),
-      key: "Scores",
-      children: <ScoreAnalytics />
-    },
+    // {
+    //   label: (
+    //     <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r- border-slate-00">
+    //       <UserSwitchOutlined
+    //         style={{
+    //           fontSize: "1.4rem",
+    //         }}
+    //       />{" "}
+    //       <h1 className=" text-sm md:text-lg lg:text-xl">Usage</h1>
+    //     </button>
+    //   ),
+    //   key: "usage",
+    //   children: <UsageAnlytics />
+    // },
+    // {
+    //   label: (
+    //     <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r- border-slate-00">
+    //       <DiffOutlined
+    //         style={{
+    //           fontSize: "1.4rem",
+    //         }}
+    //       />{" "}
+    //       <h1 className=" text-sm md:text-lg lg:text-xl">Scores </h1>
+    //     </button>
+    //   ),
+    //   key: "Scores",
+    //   children: <ScoreAnalytics />
+    // },
     {
       label: (
         <button className="text-lg lg:text-xl text-center font-bold    px-3 py-2 flex gap-2 border-r- border-slate-600">

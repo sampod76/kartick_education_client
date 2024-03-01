@@ -19,6 +19,7 @@ import { IUserData } from "@/types/userType";
 import { useRouter } from "next/navigation";
 import { Error_model_hook } from "@/utils/modalHook";
 import { USER_ROLE } from "@/constants/role";
+import { AllImage } from "@/assets/AllImge";
 
 
 const UserProfile = ({ userData }: { userData: IUserData | any }) => {
@@ -56,7 +57,7 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
             // preview={false}
             // className="object-cover object-top w-full"
             style={{ objectFit: "cover", objectPosition: "top", width: "100%" }}
-            src={img || `https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ`}
+            src={`https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ`}
             alt="Mountain"
           />
         </div>
@@ -64,7 +65,7 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
           <ImageAnt style={{
             height: "180px",
             width: "180px"
-          }} src={img} alt="User mask" />
+          }} src={img || AllImage.profileAvater} alt="User mask" />
         </div>
 
         <div className=" mt-2">
