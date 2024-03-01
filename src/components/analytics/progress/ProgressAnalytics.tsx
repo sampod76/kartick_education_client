@@ -54,6 +54,14 @@ export default function ProgressAnalytics() {
     if (isLoading || userInfoLoading) {
         return <LoadingForDataFetch />
     }
+// ! for calculate total "yes" modules
+     const calculateProgressPercent = (isCorrects: string[]) => {
+    const yesCount = isCorrects.filter((value) => value === 'yes').length;
+    const totalCount = isCorrects.length;
+
+    // Prevent division by zero
+    return totalCount > 0 ? (yesCount / totalCount) * 100 : 0;
+  };
 
     return (
         <div>
@@ -76,81 +84,62 @@ export default function ProgressAnalytics() {
                     </div>
 
                 </div>
-                <Collapse onChange={handleChange} style={{
-                    backgroundColor: '#298BA0',
-                    color: "white",
-                    marginTop: "0px",
-                }}>
-                    {CategoryData?.data?.map((category: any) => (
-                        <Panel header={<h2 className='text-white font-normal bg-[#b0d9e2'>{category?.category.title}</h2>} key={category?.category?._id}>
-                            <Collapse style={{
-                                backgroundColor: '#b0d9e'
-                            }} defaultActiveKey="1"
-                                bordered={false}
-                            //  ghost={true}
-                            >
-                                {category?.courses?.map((course: any) => (
-                                    <Panel header={course?.title} key={course?._id}>
-                                        {
-                                            course?.milestones?.map((milestone: any, milestoneIndex: number) => {
-                                                // return <div className="flex justify-between items-center" key={milestone?._id}>
-                                                //     <section className='flex gap-1 w-[40%]'>
-                                                //         <SearchOutlined />
-                                                //         <span>{milestone?.milestone_number}</span>
-                                                //         <EllipsisMiddle suffixCount={5} maxLength={64}>
-                                                //             {milestone?.title}
-                                                //         </EllipsisMiddle>
-                                                //     </section>
-                                                //     <section className='w-[60%] grid grid-cols-1 lg:grid-cols-3 gap-3 items-center'>
-                                                //         <h3 className='text-sm text-slate-600'>   module: {milestone?.modules?.length} min </h3>
-                                                //         <h3 className='text-nowrap'>{10 + milestoneIndex}</h3>
-                                                //         <h3 className='text-nowrap'>   <Progress percent={90} status="active" strokeColor={{ from: '#108ee9', to: '#87d068' }} /></h3>
-                                                //     </section>
-
-                                                // </div>
-                                                return <Panel header={<p className=' font-normal bg-[#b0d9e2'>{milestone?.title}</p>} key={milestone?._id}>
-                                                    <Collapse style={{
-                                                        backgroundColor: '#b0d9e'
-                                                    }} defaultActiveKey="1"
-                                                        bordered={false}
-                                                    //  ghost={true}
-                                                    >
-                                                        {
-                                                            milestone.modules.map((module: any, index: number, allModule: any[]) => {
-                                                                return <div className="flex justify-between items-center" key={milestone?._id}>
-                                                                    <section className='flex gap-1 w-[40%]'>
-                                                                        {/* <SearchOutlined /> */}
-                                                                        {/* <span>{milestone?.milestone_number}</span> */}
-                                                                        <EllipsisMiddle suffixCount={5} maxLength={64}>
-                                                                            {module?.title}
-                                                                        </EllipsisMiddle>
-                                                                    </section>
-                                                                    <section className='w-[60%] grid grid-cols-1 lg:grid-cols-3 gap-3 items-center'>
-                                                                        <h3 className='text-sm text-slate-600'>   module: {milestone?.modules?.length} min </h3>
-
-                                                                        <h3 className='text-nowrap'>   <Progress percent={90} status="active" strokeColor={{ from: '#108ee9', to: '#87d068' }} /></h3>
-                                                                    </section>
-
-                                                                </div>
-                                                            })
-                                                        }
-                                                    </Collapse> </Panel>
-                                            })
-                                        }
-
-                                        {/* <Collapse defaultActiveKey="1">
-                                            {(course?.milestones || []).map((milestone: any) => (
-                                                <Panel header={milestone?.title} key={milestone?._id}>
-                                                    <p>Content for milestone: {milestone?.title}</p>
-                                                </Panel>
-                                            ))}
-                                        </Collapse> */}
-                                    </Panel>
-                                ))}
-                            </Collapse>
-                        </Panel>
+              <Collapse onChange={handleChange} style={{ backgroundColor: '#298BA0', color: 'white', marginTop: '0px' }}>
+{CategoryData?.data?.map((category: any) => (
+  <Panel header={<h2 className='text-white font-normal bg-[#b0d9e2'>{category?.category?.title || ' '}</h2>} key={category?.category?._id}>
+    <Collapse style={{ backgroundColor: '#b0d9e' }} defaultActiveKey="1" bordered={false}>
+      {category?.courses?.length && category?.courses?.map((course: any) => (
+        <Panel header={course?.title || ' '} key={course?._id}>
+          {course?.milestones?.length &&
+            course?.milestones?.map((milestone: any) => (
+              <Panel header={<p className='font-normal bg-[#b0d9e2 bg-red-3 text-blue-30'>
+                {/*//! milestone */}
+                {milestone?.title || 'empty '}  
+                
+                  <Collapse style={{ backgroundColor: 'r' }} defaultActiveKey="1" bordered={false}>
+                  {milestone?.modules?.length &&
+                    milestone?.modules?.map((module: any) => (
+                      <Panel
+                        header={
+                          <p className='font-normal bg-[#b0d9e2 text-blue-30'>{module?.title || 'empty ' } module</p>
+                        }
+                        className="bg-green-40 "
+                        key={module?._id}
+                      >
+                 {/*//! module */}
+                        <section className='flex gap-1  bg-blue-40'>
+                          <EllipsisMiddle suffixCount={5} maxLength={50}>
+                            {module?.title}
+                          </EllipsisMiddle>
+                        </section>
+                        <section className='mx-auto bg-red-40'>
+                          {/* <h3 className='text-sm text-slate-600'>module: {milestone?.modules?.length} min</h3> */}
+                          <h3 className='text-nowrap w-[40%]'>
+                            <Progress
+                              percent={calculateProgressPercent(module?.isCorrects || [])}
+                              status="active"
+                              strokeColor={{ from: '#108ee9', to: '#87d068' }}
+                            />
+                          </h3>
+                        </section>
+                      </Panel>
                     ))}
                 </Collapse>
+                
+                </p>} key={milestone?._id}>
+            
+
+      {/*///! here  the collapse is not showing  */}
+             
+              
+              </Panel>
+            ))}
+        </Panel>
+      ))}
+    </Collapse>
+  </Panel>
+))}
+    </Collapse>
 
             </div>
         </div>
