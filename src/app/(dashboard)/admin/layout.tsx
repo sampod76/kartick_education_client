@@ -14,7 +14,7 @@ import dynamic from "next/dynamic";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();
-  const userInfo =getUserInfo() as any;
+  const userInfo = getUserInfo() as any;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

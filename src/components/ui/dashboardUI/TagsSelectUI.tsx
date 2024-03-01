@@ -25,7 +25,7 @@ const TagsSelectUI = ({ defaultTags }: { defaultTags?: string[] }) => {
       {/* <pre>{JSON.stringify(selected)}</pre> */}
       <TagsInput
         value={selectedTags}
-    
+
         onChange={(value) => onchangeTags(value)}
         name="fruits"
         placeHolder="enter fruits"

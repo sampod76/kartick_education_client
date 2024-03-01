@@ -7,6 +7,7 @@ const PAYMENT_URL = "/payment";
 export const paymentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // create a new academic department
+
     addStripePayment: build.mutation({
       query: (data) => {
         // console.log(data, "cacccc");
@@ -68,13 +69,13 @@ export const paymentApi = baseApi.injectEndpoints({
     // update ac department
   }),
   overrideExisting: true,
-});
+})
+
+
 
 export const {
   useAddStripePaymentMutation,
   useAddPaypalPaymentMutation,
   useGetCheckPaypalPaymentQuery,
-
   useAddPaypalPaymentByCourseMutation,
-
 } = paymentApi;
