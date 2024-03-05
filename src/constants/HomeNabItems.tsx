@@ -64,16 +64,16 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
     },
     {
       label: (
-        <Link className="text-[20px]   font-bold capitalize" href="/about">
+        <p className="text-[20px]   font-bold capitalize" >
           Students
-        </Link>
+        </p>
       ),
 
       key: "/students",
       children: [
         {
           label: (
-            <Link className="text-[14px]   font-bold capitalize" href="/course">
+            <Link className="text-[14px]   font-bold capitalize" href="/students/elibrary">
               eLibrary
             </Link>
           ),
@@ -83,7 +83,7 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
 
         {
           label: (
-            <Link className="text-[14px]   font-bold capitalize" href="/course">
+            <Link className="text-[14px]   font-bold capitalize" href="/students/podcast">
               Podcast
             </Link>
           ),
@@ -92,12 +92,12 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
         },
         {
           label: (
-            <Link className="text-[14px]   font-bold capitalize" href="/course">
-              Suplimental Activities
+            <Link className="text-[14px]   font-bold capitalize" href="/students/activities">
+              Supplemental Activities
             </Link>
           ),
 
-          key: "/students/Suplimental-Activities"
+          key: "/students/Supplemental-Activities"
         },
       ]
     },
