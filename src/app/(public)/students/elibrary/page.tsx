@@ -8,7 +8,7 @@ export default function ELibraryPage() {
                 <Image alt="" src={"/banner/eLibraryBanner.jpg"} className="-z-10 w-[100vw] h-[40vh] lg:h-[80vh]  -mt-[5rem]"
                     width={3200}
                     height={2200} />
-                <h2 className='absolute top-1/2 right-1/2 text-xl lg:text-5xl text-white font-bold'>E Learning </h2>
+                <h2 className='absolute top-1/2 right-1/2 text-xl lg:text-5xl text-gray-800 font-bold'>E Learning </h2>
             </div>
 
 
