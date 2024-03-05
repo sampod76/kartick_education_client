@@ -4,7 +4,7 @@ import React from 'react'
 const ClubSection: React.FC<{ title: string; content: string[] | React.ReactNode[] }> = ({ title, content }) => {
     return (
         <div className="mb-8">
-            <h4 className="text-2xl font-bold mb-4">{title}</h4>
+            <h4 className="text-xl font-bold mb-4">{title}</h4>
             <div className="list-disc pl-4">
                 {content.map((item, index) => (
                     <p key={index} className="mb-2">
@@ -17,67 +17,38 @@ const ClubSection: React.FC<{ title: string; content: string[] | React.ReactNode
     );
 };
 
-export default function ActivitiesPage() {
+export default function LearningActPage() {
 
     return (
         <div className="-mt-[8px] ">
 
             <div className="relative">
-                <Image alt="" src={"/banner/activityBanner.jpg"} className="-z-10 w-[100vw] h-[40vh] lg:h-[80vh]  -mt-[5rem]"
+                <Image alt="" src={"/banner/learningActBanner.jpg"} className="-z-10 w-[100vw] h-[40vh] lg:h-[80vh]  -mt-[5rem]"
                     width={3200}
                     height={2200} />
-
+                <h2 className='absolute top-1/2 right-1/2  text-2xl  lg:text-5xl text-white uppercase font-bold text-nowrap'>     THE LEARNING ARC TUTORING</h2>
             </div>
 
             <div className="flex flex-wrap justify-between p-4 space-y-4 md:space-y-0 container mx-auto text-white mt-7">
-                <div className="w-full md:w-1/2 bg-blue-700 p-7 rounded">
-                    <h2 className="text-2xl font-bold mb-4">SIGN UP FOR LIVE CLUBS!</h2>
-                    <p className="text-base">
-                        Students have the opportunity to meet live each week with a teacher and peers. Enjoy learning something new while connecting with friends each week! Our live clubs are available to our IBLossomlearn students for a simple $25 student yearly registration fee. If a club has different age groups, you will be placed based on grade level. Club fee of $25 per student will be billed when the club begins. Along with email, you will receive an email from your club(s) teacher with a Zoom link to use for that particular club. Emails are always from a <a href="https://iblossomlearn.com/">https://iblossomlearn.com/</a>
-                    </p>
-                </div>
-                {/* card sections */}
-                <div className="w-full md:w-1/2 bg-[#e9c328] p-7 rounded">
-                    <h2 className="text-2xl font-bold mb-4">How Do I Sign Up?</h2>
-                    <p className="text-base">
-                        You can use the Live Clubs Signup button. You will be asked the information below. If you have a question about supplemental activities such as the Live Clubs, use the Live Clubs Question button. We will try to answer as quickly as possible.
-                    </p>
-                    <p className="text-base font-semibold">
-                        Your email address. <br />
-                        Student name. <br />
-                        Grade level. <br />
-                        Club(s) that you would like to enroll in.
-                    </p>
-                    <div className="border-t mt-4 pt-4">
-                        {/* You can add your Live Clubs Signup and Live Clubs Question buttons here */}
-                    </div>
-                </div>
+
+
 
                 {/* main content sections */}
 
                 <div className="flex flex-col space-y-8 p-4 text-black mt-7">
+                    <h3 className="text-xl font-bold mb-4 text-center">Assist your student in getting ahead or</h3>
                     <ClubSection
-                        title="Welcome to IBLossom’s Connections Club!"
+                        title="catching up in his studies!"
                         content={[
-                            "We currently offer over different clubs available to our students, providing a wide array of opportunities - most certainly something for everyone.",
-                            "We strongly encourage all of our students to explore their options and get involved in at least one student club or activity.",
-                            "Studies have shown that the single most accurate predictor of success in life is the degree of involvement a person has had in co-curricular programs.",
-                            "Get involved in IBLossom TODAY!",
+                            "IBLossomLearn specializes in tailoring its programs to each student’s specific needs. All of our tutors come to you as highly trained professionals, and we take the time to find the best match for you. Contact us if you want your child to have tutoring that will challenge them, build their confidence, improve their study skills, and help them get better grades.",
                         ]}
                     />
 
                     <ClubSection
-                        title="Study Skills Club"
+                        title="Why The Learning Arc Tutoring?"
                         content={[
-                            "Is your child struggling to keep up with homework and class projects? Do they need help getting and staying organized? Or could they benefit from better active reading skills? If so, then it is time to start studying smarter, and not harder! For more than two decades IBLossomLearn has been a leading in-home and online tutoring company, and has developed proprietary curriculum to assist students in developing proper study and organizational skills! IBLossomLearn has developed an effective Learning Built to Last  study skills tutoring program that targets different learning styles and habits of students in grades 5-12, to help students develop lifelong study and organizational habits.",
-                            "Students need the additional assistance in becoming more organized and adapting to new study skills as the curriculum becomes more demanding.",
-                            "Providing your child with the opportunity to receive the following assistance in order to achieve academic success:",
-
-                            "- Note-Taking Skills",
-                            "- Study Habits",
-                            "- Content Area Study Skills",
-                            "- Homework",
-                            "- Organizational Skills",
+                            "At IBLossom, our unique approach to tutoring through The Learning Arc will help your child feel confident in his or her learning. Learning is not a “one size fits all” approach: every child’s needs and abilities are unique. So, each IBLossomLearn program is made to fit the unique learning needs of each child.",
+                            "Through The Learning Arc, we look at each student’s individual goals, educational needs, and learning styles, and pair our tutors with those students accordingly. Before we find the right tutor for your child, we build a strong academic and cognitive profile of his or her needs. Using those results, we find the right fit for him or her and build a program that is unique to your child’s learning needs and academic goals."
                         ]}
                     />
                     <ClubSection

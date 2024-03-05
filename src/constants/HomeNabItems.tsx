@@ -99,6 +99,15 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
 
           key: "/students/Supplemental-Activities"
         },
+        {
+          label: (
+            <Link className="text-[14px]   font-bold capitalize" href="/students/learning-act">
+              The Learning Act Tutoring
+            </Link>
+          ),
+
+          key: "/students/learning-act"
+        },
       ]
     },
 
