@@ -62,6 +62,46 @@ export const homeNavItems = (role: string | null): MenuProps["items"] => {
 
       key: "/About",
     },
+    {
+      label: (
+        <Link className="text-[20px]   font-bold capitalize" href="/about">
+          Students
+        </Link>
+      ),
+
+      key: "/students",
+      children: [
+        {
+          label: (
+            <Link className="text-[14px]   font-bold capitalize" href="/course">
+              eLibrary
+            </Link>
+          ),
+
+          key: "/students/E-Library",
+        },
+
+        {
+          label: (
+            <Link className="text-[14px]   font-bold capitalize" href="/course">
+              Podcast
+            </Link>
+          ),
+
+          key: "/students/Podcast"
+        },
+        {
+          label: (
+            <Link className="text-[14px]   font-bold capitalize" href="/course">
+              Suplimental Activities
+            </Link>
+          ),
+
+          key: "/students/Suplimental-Activities"
+        },
+      ]
+    },
+
   ]
 
   const loginUserNavItem = [
@@ -136,11 +176,12 @@ export const homeNavItem: MenuProps["items"] =
     },
     {
       label: (
-        <Link className="text-[20px]   font-bold capitalize" href="/course">
+        <Link className="text-[20px]   font-bold capitalize" href="/about">
           About
         </Link>
       ),
 
       key: "/About",
     },
+
   ];
