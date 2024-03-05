@@ -3,11 +3,14 @@ import Image from "next/image";
 
 export default function ELibraryPage() {
     return (
-        <div className="-mt-[5px] relative">
-            <Image alt="" src={"/banner/eLibraryBanner.jpg"} className="-z-10 w-[100vw] h-[40vh] lg:h-[88vh]  -mt-[7rem]"
-                width={3200}
-                height={2200} />
-            <h2 className='absolute top-1/2 right-1/2 text-xl lg:text-5xl text-white font-bold'>E Learning </h2>
+        <div className="-mt-[8px] ">
+            <div className="relative">
+                <Image alt="" src={"/banner/eLibraryBanner.jpg"} className="-z-10 w-[100vw] h-[40vh] lg:h-[80vh]  -mt-[5rem]"
+                    width={3200}
+                    height={2200} />
+                <h2 className='absolute top-1/2 right-1/2 text-xl lg:text-5xl text-white font-bold'>E Learning </h2>
+            </div>
+
 
             <div className="container mx-auto mt-7">
                 <div className=" p-4">
