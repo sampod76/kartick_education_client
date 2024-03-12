@@ -24,7 +24,7 @@ export default function PodCastPage() {
                 <div className="flex flex-col justify-center items-center">
 
 
-                    <Image height={300} width={400} src={podcast} className='h-[36rem] w-[36rem] mx-auto' alt="podast" />
+                    <Image height={300} width={400} src={podcast} className='h-[36rem] w-[24rem] lg:w-[36rem] mx-auto' alt="podast" />
 
                     <p className='p-5 py-12 border-2 border-blue-500 rounded-md -mt-[4.5rem] tex-2xl'>Listen to any free episode; they will Wow your World and inspire you to seek out Cultures and Traditions of other lands. You are invited to share your adventures with Auntie Audrey & uncle Godfrey…Right here!</p>
                 </div>
