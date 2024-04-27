@@ -4,13 +4,15 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 
 import { useGetSingleStudentQuery } from "@/redux/api/adminApi/moderatorApi";
 import UserProfile from "@/components/profile/UserProfile";
+import { useGetSingleAdminQuery } from "@/redux/api/adminApi/adminApi";
+import { USER_ROLE } from "@/constants/role";
 
-const StudentDetailsPage = ({ params }: any) => {
+const AdminDetailsPage = ({ params }: any) => {
   const id = params.id;
-  console.log(id);
-  const { data: userData, isLoading: loading } = useGetSingleStudentQuery(id);
 
-  console.log(userData);
+  const { data: userData, isLoading: loading } = useGetSingleAdminQuery(id);
+
+
 
   if (loading) {
     return <LoadingForDataFetch />;
@@ -18,12 +20,12 @@ const StudentDetailsPage = ({ params }: any) => {
 
   return (
     <div>
-      <UserProfile userData={userData}></UserProfile>
+      <UserProfile userData={{ ...userData, role: USER_ROLE.ADMIN }}></UserProfile>
     </div>
   );
 };
 
-export default StudentDetailsPage;
+export default AdminDetailsPage;
 
 function useAdminQuery(id: any): { data: any; isLoading: any } {
   throw new Error("Function not implemented.");

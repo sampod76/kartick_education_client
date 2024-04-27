@@ -50,6 +50,7 @@ const CreateSingleQuiz = () => {
   >("select"); // !  tag selection
 
   const [isReset, setIsReset] = useState(false);
+  const [imageUploadLoading, isImageloading] = useState(false);
 
 
   // ! For quiz Answer// 
@@ -116,10 +117,13 @@ const CreateSingleQuiz = () => {
       lesson: lesson?._id,
       quiz: quiz?._id,
       type: quizType,
+      
     };
-    console.log("🚀 ~ onSubmit ~ singleQuizDat:", singleQuizDat)
+    removeNullUndefinedAndFalsey(singleQuizDat)
+   
 
-    // console.log(singleQuizDat);
+// return
+
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
@@ -366,10 +370,7 @@ const CreateSingleQuiz = () => {
                 >
                   <TagsSelectUI />
                 </Col>
-                {
 
-
-                }
                 <Col
                   hidden={quizType === "audio" ? true : false}
                   className="gutter-row"
@@ -380,7 +381,7 @@ const CreateSingleQuiz = () => {
                 >
 
                   <LabelUi>Select Quiz Question images (optional)</LabelUi>
-                  <UploadMultipalImage isReset={isReset} name="imgs" />
+                  <UploadMultipalImage isImageloading={isImageloading} isReset={isReset} name="imgs" />
                 </Col>
                 <Col
                   hidden={quizType !== "audio" ? true : false}
@@ -509,8 +510,7 @@ const CreateSingleQuiz = () => {
               {serviceLoading ? (
                 <ButtonLoading />
               ) : (
-                <Button htmlType="submit" size="large" style={{ width: "10rem" }} type="default">
-                  Create
+                <Button  htmlType="submit" size="large" style={{ width: "10rem" }} type="default"> Create
                 </Button>
               )}
             </div>

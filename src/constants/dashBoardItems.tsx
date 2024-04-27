@@ -378,31 +378,31 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
           ],
         },
         {
-          label: "Trainers",
-          key: "trainers",
+          label: "Teacher",
+          key: "teacher",
           icon: <UserSwitchOutlined />,
           children: [
             {
               label: (
                 <Link
                   onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/manage-users/trainers/create`}
+                  href={`/${role}/manage-users/teachers/create`}
                 >
-                  Create Trainer
+                  Create Teacher
                 </Link>
               ),
-              key: `//${role}/manage-users/trainers/create`,
+              key: `//${role}/manage-users/teachers/create`,
             },
             {
               label: (
                 <Link
                   onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/manage-users/trainers`}
+                  href={`/${role}/manage-users/teachers`}
                 >
-                  Trainers List
+                  Teacher List
                 </Link>
               ),
-              key: `/${role}/manage-users/trainers`,
+              key: `/${role}/manage-users/teachers`,
             },
           ],
         },
@@ -681,13 +681,13 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       label: (
         <Link
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/${role}/support`}
+          href={`/contact`}
         >
           Support and Help
         </Link>
       ),
       icon: <BorderOuterOutlined />,
-      key: `/${role}/support`,
+      key: `/contact`,
     },
   ];
   const sellerSidebarItems: MenuProps["items"] = [

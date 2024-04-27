@@ -94,20 +94,20 @@ export default function MilestoneHomeFeatures() {
               ? category?.courses?.map((course: any) => (
                 <Link
                   href={`/course/milestone/${course?._id}?category=${category?._id}`}
-                  className="flex gap-2  text-white"
+                  className="flex gap-2 justify-start items-start text-start text-white whitespace-normal"
                   key={course?._id}
                 >
-                  <Image src={milestoneIcon} height={20} width={20} alt="icon" />
+                  <Image src={milestoneIcon} height={20} width={20} alt="icon" className="w-4 h-4 mt-1" />
                   <h4>{course?.title} </h4>
                 </Link>
               ))
               : category?.courses?.slice(0, 18).map((course: any) => (
                 <Link
                   href={`/course/milestone/${course?._id}?category=${category?._id}`}
-                  className="flex gap-2  text-white"
+                  className="flex gap-2 justify-start items-start text-white text-start break-words"
                   key={course?._id}
                 >
-                  <Image src={milestoneIcon} height={20} width={20} alt="icon" />
+                  <Image src={milestoneIcon} height={20} width={20} alt="icon" className="w-4 h-4 mt-1" />
                   <h4>{course?.title} </h4>
                 </Link>
               ))}

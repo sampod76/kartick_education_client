@@ -1,7 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 import BannerAbout from '@/components/Home/Banner&hero/BannerAbout'
 import BannerCourses from '@/components/Home/Banner&hero/BannerCourses'
 import React from 'react'
 import aboutHero from "@/assets/about/aboutGirl.png"
+import aboutOwner from "@/assets/about/about_Owner.jpeg"
 import aboutCourse1 from "@/assets/about/aboutCourse1.png"
 import aboutCourse2 from "@/assets/about/aboutCourse2.png"
 import aboutCourse3 from "@/assets/about/aboutCourse3.png"
@@ -54,7 +56,7 @@ export default function AboutPage() {
     return (
         <div>
             {/* about banner */}
-            <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
+            <div className="-mt-[6.8rem] mb-4 lg:mb-6 ">
                 <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
                 <BannerAbout />
             </div>
@@ -63,11 +65,14 @@ export default function AboutPage() {
             <div className="flex flex-wrap-reverse items-center lg:flex justify-between mt-2 lg:mt-[4rem]  xl:justify-end container mx-auto p-2">
 
                 <div className="w-full lg:w-[55%] text-sm lg:text-xl mx-auto text-[#000000] font-[400] px-5 pr-3 md:lg:pr-[5rem] lg:pr-[7rem] ">
-                    <p>Sabah Kunle is the Founder and CEO of IBLossomLearn. Sabah incorporates her 13 years of classroom experience, her knowledge, expertise, and degree in curriculum development, and her professional trainings in guided reading and literacy instruction to help teachers learn how to implement a Literacy approach into their skills acquisition easily and effectively.</p>
-                    <p className='hidden md:flex lg:flex mt-5'>The goal of her in-depth Grammar & Literacy  program is to help scholars learn how to effectively reach their highest achievement levels. Sabah’s passion for education and love of sharing her experiences with other educators has led to many others implementing her literacy framework into their own classrooms to help engage their students in greater buy-ins as committed allies to learning. Thus increasing and improving their chances for overall academic and social success..</p>
+                    <p>Sabah Kunle, holding an Ed.D. in Curriculum and Instruction, serves as the driving force behind IBLossomLearn as its Founder and CEO. With over a decade of classroom experience, she brings a wealth of practical knowledge to her role, adeptly blending pedagogical insights with curriculum design expertise. 'Sabah\'s' doctoral studies have equipped her with a deep understanding of instructional methodologies and learning theories, providing a solid foundation for crafting innovative educational programs tailored to diverse student needs.</p>
+                    <p className='hidden md:flex lg:flex mt-5'>Sabah's commitment to ongoing professional development shines through her extensive training in reading and literacy instruction. Actively engaging in workshops and seminars, she stays abreast of the latest research and best practices in literacy education, constantly refining her teaching approach. This continuous learning journey empowers Sabah to leverage evidence-based strategies and cutting-edge techniques in developing dynamic literacy programs that foster student growth and success..</p>
+                    <p className=' mt-5'>
+                        Fueled by her unwavering passion for education, Sabah has channeled her expertise into creating the Grammar & Literacy program at IBLossomLearn. By synthesizing her classroom experience, academic background, and professional training, Sabah has curated a comprehensive program that empowers educators to seamlessly integrate literacy approaches into their teaching practice. Through her visionary leadership and innovative approach, Sabah is revolutionizing literacy education, equipping teachers with the tools and support they need to unlock their students' full potential and drive academic excellence.
+                    </p>
                 </div>
-                <div className="  mx-auto">
-                    <Image className='' height={400} width={550} src={"https://img.freepik.com/free-photo/image-icon-front-side-white-background_187299-40166.jpg?w=400&t=st=1708023279~exp=1708023879~hmac=55d02d06a0aad804c293defd256bbbd301a1830690e7982552a5614c7a7db2e3"} alt="aboutHero" />
+                <div className=" mx-auto">
+                    <Image className='' height={400} width={550} src={aboutOwner} alt="aboutHero" />
                 </div>
             </div>
             {/* course sections */}

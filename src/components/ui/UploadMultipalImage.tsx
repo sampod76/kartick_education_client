@@ -35,6 +35,8 @@ type ImageUploadProps = {
   defaultImage?: string[];
   customChange?: any;
   isReset?: boolean;
+  isImageloading?: any;
+  multiple?: boolean;
 };
 
 const UploadMultipalImage = ({
@@ -42,6 +44,8 @@ const UploadMultipalImage = ({
   defaultImage = [],
   customChange,
   isReset = false,
+  isImageloading = false,
+  multiple = false,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +53,7 @@ const UploadMultipalImage = ({
   const { setValue } = useFormContext();
   useEffect(() => {
     setValue(name, imagesUrl);
-  }, [imagesUrl, name]);
+  }, [imagesUrl, name, setValue]);
   const handleImageProcessing = useCallback(async (file: any) => {
     try {
       // Resize the image
@@ -73,19 +77,32 @@ const UploadMultipalImage = ({
       console.log("🚀 ~ handleImageProcessing ~ imgUrl:", imgUrl)
 
 
-      setImagesUrl((prevImages) => [...prevImages, imgUrl]);
+      // setImagesUrl((prevImages) => [...prevImages, imgUrl]);
+      setImagesUrl((prevImages) => [ imgUrl]);
       setLoading(false);
+      if (isImageloading) {
+
+        isImageloading(true)
+      }
     } catch (error) {
       console.error("Error processing image:", error);
       setLoading(false);
+      if (isImageloading) {
+
+        isImageloading(true)
+      }
     }
-  }, []);
+  }, [isImageloading]);
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
   ) => {
     if (info.file.status === "uploading") {
       setLoading(true);
+      if (isImageloading) {
+
+        isImageloading(true)
+      }
       return;
     }
     if (info.file.status === "done") {
@@ -123,10 +140,11 @@ const UploadMultipalImage = ({
         : null}
       <Upload
         name={name}
+
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={true}
-        multiple={true}
+        multiple={multiple}
         maxCount={5}
         action="/api/file"
         beforeUpload={customChange ? customChange : beforeUpload}

@@ -25,6 +25,24 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.submitQuiz],
     }),
+    getAnalyticsSubmitAllQuiz: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${SUBMIT_QUIZ_URL}/analytics`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: IMeta) => {
+        // console.log(response);
+
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.submitQuiz],
+    }),
     // get single academic department
     getSubmitUserQuiz: build.query({
       query: (id: string | string[] | undefined) => {
@@ -57,4 +75,5 @@ export const {
   useSubmitQuizMutation,
   useGetSubmitAllQuizQuery,
   useGetSubmitUserQuizQuery,
+  useGetAnalyticsSubmitAllQuizQuery
 } = SubmitQuizApi;

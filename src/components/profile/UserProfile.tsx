@@ -16,12 +16,21 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import Image from "next/image";
 import { Image as ImageAnt } from "antd";
 import { IUserData } from "@/types/userType";
+import { useRouter } from "next/navigation";
+import { Error_model_hook } from "@/utils/modalHook";
+import { USER_ROLE } from "@/constants/role";
+import { AllImage } from "@/assets/AllImge";
 
 
 const UserProfile = ({ userData }: { userData: IUserData | any }) => {
   // console.log(userData, 'userData')
+  const router = useRouter()
+  if (!userData?._id) {
+    Error_model_hook("Not found user")
 
-  const userInfo = getUserInfo() as IDecodedInfo;
+    return
+  }
+
   const img = userData?.img || userData[userData?.role]?.img;
   // console.log(img);
   const gender = userData?.gender || userData[userData?.role]?.gender;
@@ -35,6 +44,8 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
     userData?.name?.firstName || userData[userData?.role]?.name?.firstName;
   const lastName =
     userData?.name?.lastName || userData[userData?.role]?.name?.lastName;
+  const role = userData?.role || userData[userData?.role]?.role
+
 
   return (
     <main className="profile-page">
@@ -46,7 +57,7 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
             // preview={false}
             // className="object-cover object-top w-full"
             style={{ objectFit: "cover", objectPosition: "top", width: "100%" }}
-            src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ"
+            src={`https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ`}
             alt="Mountain"
           />
         </div>
@@ -54,17 +65,18 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
           <ImageAnt style={{
             height: "180px",
             width: "180px"
-          }} src={img} alt="User mask" />
+          }} src={img || AllImage.profileAvater} alt="User mask" />
         </div>
 
         <div className=" mt-2">
           <h2 className="font-semibold text-center uppercase">
-            {firstName} {lastName} <span className="text-sm capitalize text-gray-800">{userData?.role}</span>
+            {firstName} {lastName} <span className="text-sm capitalize text-gray-800">({role})</span>
+            {/* <span>({role === USER_ROLE.SELLER ? 'Teacher' : role})</span> */}
           </h2>
         </div>
 
 
-        <div className="px-3">
+        <div className="px-3 mt-1">
           <div className="flex justify-between ">
             <p>Phone Number : {phoneNumber}</p>
             <p>Gender: {gender}</p>
