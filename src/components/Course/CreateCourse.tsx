@@ -35,6 +35,8 @@ import UploadMultipalDragAndDropImge from "@/components/ui/UploadMultipalDragAnd
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCourse_labelQuery } from "@/redux/api/adminApi/courseLevelApi";
 import { USER_ROLE } from "@/constants/role";
+import { getUserInfo } from "@/services/auth.service";
+import { IDecodedInfo } from "../../services/auth.service";
 const TextEditorNotSetForm = dynamic(
   () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
   {
@@ -43,8 +45,9 @@ const TextEditorNotSetForm = dynamic(
 );
 
 const CreateCourse = ({ setOpen }: any) => {
+  const userInfo = getUserInfo() as IDecodedInfo;
   const [category, setCategory] = useState("");
-  console.log("🚀 ~ CreateCourse ~ category:", category)
+  // console.log("🚀 ~ CreateCourse ~ category:", category)
   const [textEditorValue, setTextEditorValue] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -71,11 +74,11 @@ const CreateCourse = ({ setOpen }: any) => {
   labelQuery["sortOrder"] = "asc";
   labelQuery["status"] = "active";
   labelQuery["category"] = category;
-
-  const { data: LabelData, isLoading: getLabelLoading } = useGetAllCourse_labelQuery(
-    labelQuery,
-    { skip: !Boolean(category) }
-  );
+  if (userInfo.role === USER_ROLE.SELLER) {
+    labelQuery["author"] = userInfo.id;
+  }
+  const { data: LabelData, isLoading: getLabelLoading } =
+    useGetAllCourse_labelQuery(labelQuery, { skip: !Boolean(category) });
   // const LabelDataOptions = LabelData?.data?.map((item: any) => {
   //   return {
   //     label: item?.title,
@@ -144,19 +147,27 @@ const CreateCourse = ({ setOpen }: any) => {
   query["multipleRole"] = "admin,trainer";
   query["sortBy"] = "title";
   query["sortOrder"] = "asc";
-  const { data: usersData, isLoading: AuthorLoading } = useGetAllUsersQuery({
-    ...query,
-  });
-
+  let skip = true;
+  if (userInfo.role === USER_ROLE.ADMIN) {
+    skip = false;
+  }
+  const { data: usersData, isLoading: AuthorLoading } = useGetAllUsersQuery(
+    {
+      ...query,
+    },
+    { skip: skip }
+  );
 
   const AuthorOptions = usersData?.data?.map((item: any) => {
-    let label = ""
+    let label = "";
     if (item.role === USER_ROLE.ADMIN) {
-      label = item?.admin?.name?.firstName + " " + item?.admin?.name?.lastName
+      label = item?.admin?.name?.firstName + " " + item?.admin?.name?.lastName;
     } else if (item.role === USER_ROLE.TRAINER) {
-      label = item?.trainer?.name?.firstName + " " + item?.trainer?.name?.lastName
+      label =
+        item?.trainer?.name?.firstName + " " + item?.trainer?.name?.lastName;
     } else if (item?.role === USER_ROLE.TEACHER) {
-      label = item?.teacher?.name?.firstName + " " + item?.teacher?.name?.lastName
+      label =
+        item?.teacher?.name?.firstName + " " + item?.teacher?.name?.lastName;
     }
     return {
       label: label,
@@ -256,7 +267,6 @@ const CreateCourse = ({ setOpen }: any) => {
                   </Form.Item>
                 </Col>
 
-
                 <Col xs={24} md={12} lg={12} style={{}}>
                   <Form.Item label="Showing Number" name="showing_number">
                     <InputNumber
@@ -267,7 +277,6 @@ const CreateCourse = ({ setOpen }: any) => {
                     />
                   </Form.Item>
                 </Col>
-
 
                 <Col xs={24} md={12} lg={12} style={{}}>
                   <Form.Item label="Duration" name="duration">
@@ -297,7 +306,11 @@ const CreateCourse = ({ setOpen }: any) => {
                       onChange={(value) => setCategory(value)}
                     >
                       {CategoryOptions?.map((data: any) => (
-                        <Select.Option allowClear value={data.value} key={data.value}>
+                        <Select.Option
+                          allowClear
+                          value={data.value}
+                          key={data.value}
+                        >
                           {data.label}
                         </Select.Option>
                       ))}
@@ -309,42 +322,54 @@ const CreateCourse = ({ setOpen }: any) => {
                   {/* <Form.Item label="Course level" name="level">
                     <Input size="large" placeholder="Course level" />
                   </Form.Item> */}
-                  <Form.Item label="Course label" name="label_id">
-                    <Select size="large" allowClear loading={getLabelLoading} placeholder="select course label" style={{ width: "100%" }}>
-                      {LabelData?.data?.length && LabelData?.data?.map((Label: any, index: any) => (
-                        <Select.Option value={Label._id} key={Label._id}>
-                          {Label?.serial_number + "." + " " + Label?.title}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col xs={24} md={12} lg={12} style={{}}>
-                  {/* <SelectAuthorField /> */}
-                  <Form.Item
-                    label="Author/trainer"
-                    name="author"
-                    rules={[
-                      { required: true, message: "Author/trainer is required" },
-                    ]}
-                  >
+                  <Form.Item label="Course label" name="label_id" required>
                     <Select
                       size="large"
-                      loading={AuthorLoading}
-                      placeholder="Select course trainer"
                       allowClear
+                      loading={getLabelLoading}
+                      placeholder="select course label"
+                      style={{ width: "100%" }}
                     >
-                      {/* <Select.Option value="" key={0}>
-                        Select author
-                      </Select.Option> */}
-                      {AuthorOptions?.map((data: any) => (
-                        <Select.Option value={data.value} key={data.value}>
-                          {data.label}
-                        </Select.Option>
-                      ))}
+                      {LabelData?.data?.length &&
+                        LabelData?.data?.map((Label: any, index: any) => (
+                          <Select.Option value={Label._id} key={Label._id}>
+                            {Label?.serial_number + "." + " " + Label?.title}
+                          </Select.Option>
+                        ))}
                     </Select>
                   </Form.Item>
                 </Col>
+                {userInfo?.role && userInfo.role === USER_ROLE.ADMIN ? (
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    {/* <SelectAuthorField /> */}
+                    <Form.Item
+                      label="Author/trainer"
+                      name="author"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Author/trainer is required",
+                        },
+                      ]}
+                    >
+                      <Select
+                        size="large"
+                        loading={AuthorLoading}
+                        placeholder="Select course trainer"
+                        allowClear
+                      >
+                        {/* <Select.Option value="" key={0}>
+                        Select author
+                      </Select.Option> */}
+                        {AuthorOptions?.map((data: any) => (
+                          <Select.Option value={data.value} key={data.value}>
+                            {data.label}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                ) : null}
                 <Col xs={24} md={12} lg={12}>
                   <Form.Item
                     label="Select coruse status"
@@ -454,9 +479,7 @@ const CreateCourse = ({ setOpen }: any) => {
               />
             </Form.Item>
           </div>
-          <div
-            style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
-          >
+          <div style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */>
             <p className="text-center my-3 font-bold text-xl">Description</p>
             <TextEditorNotSetForm
               textEditorValue={textEditorValue}

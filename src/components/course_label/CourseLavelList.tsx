@@ -36,8 +36,8 @@ const Course_labelList = () => {
 
   // console.log("🚀 ~ file: page.tsx:41 ~ Course_labelList ~ role:", role);
 
-  const [deleteCourse_label, { isLoading: DeleteCourseLabel }] = useDeleteCourse_labelMutation();
-
+  const [deleteCourse_label, { isLoading: DeleteCourseLabel }] =
+    useDeleteCourse_labelMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -55,6 +55,9 @@ const Course_labelList = () => {
   if (filterValue) {
     query["category"] = filterValue;
   }
+  if (userInfo) {
+    query["author"] = userInfo?.id;
+  }
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -65,7 +68,7 @@ const Course_labelList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = useGetAllCourse_labelQuery({ ...query });
-  console.log("🚀 ~ data:", data)
+  console.log("🚀 ~ data:", data);
 
   //@ts-ignore
   const Course_labelData = data?.data;
@@ -78,7 +81,7 @@ const Course_labelList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteCourse_label(id).unwrap();
-          console.log("🚀 ~ confirm_modal ~ res:", res)
+          console.log("🚀 ~ confirm_modal ~ res:", res);
 
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
@@ -123,7 +126,7 @@ const Course_labelList = () => {
     },
     {
       title: "Subject",
-      dataIndex: ["categoryDetails", 'title'],
+      dataIndex: ["categoryDetails", "title"],
       ellipsis: true,
       //  width: 130,
     },
@@ -207,7 +210,6 @@ const Course_labelList = () => {
     setSearchTerm("");
   };
 
-
   return (
     <div>
       {/* <UMBreadCrumb
@@ -234,7 +236,9 @@ const Course_labelList = () => {
         />
         <div className="space-x-2">
           <Link href={`/${userInfo?.role}/course_label/create`}>
-            <Button size="middle" type="default">Create Course label</Button>
+            <Button size="middle" type="default">
+              Create Course label
+            </Button>
           </Link>
           <FilterCategorySelect
             filterValue={filterValue}
@@ -263,10 +267,8 @@ const Course_labelList = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
-
     </div>
   );
 };
 
-export default Course_labelList
+export default Course_labelList;

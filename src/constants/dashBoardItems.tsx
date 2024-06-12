@@ -689,7 +689,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
   ];
   const sellerSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    ...trainerSidebarItems,
+    ...trainerSidebarItems.filter((item) => item?.key !== "manage-category"),
     // {
     //   label: (
     //     <Link
