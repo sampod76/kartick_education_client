@@ -24,7 +24,7 @@ import {
   PayCircleFilled,
   ThunderboltFilled,
   PicLeftOutlined,
-  ContactsFilled
+  ContactsFilled,
 } from "@ant-design/icons";
 import { PiPackageDuotone } from "react-icons/pi";
 import Link from "next/link";
@@ -308,8 +308,6 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         },
       ],
     },
-
-
   ];
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
@@ -579,7 +577,6 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
             },
           ],
         },
-
       ],
     },
     {
@@ -692,6 +689,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
   ];
   const sellerSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
+    ...trainerSidebarItems,
     // {
     //   label: (
     //     <Link

@@ -35,7 +35,7 @@ const CoursesTab = () => {
 
   const query: Record<string, any> = {};
   query["status"] = ENUM_STATUS.ACTIVE;
-  query["limit"] = 99999;
+  query["limit"] = 6;
   query["sortOrder"] = ENUM_SORT_ORDER.ASC;
   query["sortBy"] = "serial_number";
   query["isDelete"] = ENUM_YN.NO;
@@ -47,9 +47,9 @@ const CoursesTab = () => {
 
   const categoryData = data?.data || [];
   const activeClass =
-    "   text-[14px] lg:text-[18px] font-bold bg-[#FB8500] text-white rounded";
+    "   text-[14px] lg:text-[18px] font-[600] bg-[#95c3ff3e] text-[#2a63ff] rounded ";
   const inactiveClass =
-    "  text-[14px] lg:text-[18px]  ";
+    "  text-[14px] lg:text-[18px]   ";
 
   const tabsItems2: TabsProps["items"] = categoryData?.map(
     (singleCategory: Record<string, any>, index: number) => ({
@@ -102,9 +102,9 @@ const CoursesTab = () => {
   };
 
   return (
-    <div className="  bg-white ">
+    <div className="  bg-white px-2">
 
-      <div className="container mx-auto  py-2 px-2 my-6 flex justify-between items-center ">
+      {/* <div className="container mx-auto  py-2 px-2 my-6 flex justify-between items-center ">
         <h2 className="flex flex-col font-bold text-sm md:text-md lg:text-lg 2xl:text-4xl text-gray-700 whitespace-nowrap">
 
           <span>Overcome challenges with
@@ -114,12 +114,12 @@ const CoursesTab = () => {
         <Link href={`/subscription`} className="cursor-pointer text-nowrap overflow-hidden relative z-100 border border-[#5F8122] text-[#5F8122] group px-3 py-2 lg:px-5 lg:py-2 bg-white rounded-[36px] uppercase font-bold text-center text-[10px] md:text-[12px] lg:text-lg">
           Join Now
         </Link>
-      </div>
+      </div> */}
 
 
       <div className="relative">
 
-        <div className="absolute top-[5rem] inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: 'url("/banner/courseBg.webp")', opacity: 0.3 }} />
+        <div className="absolute top-[5rem] inset-0 bg-cover bg-no-repeat" />
         <div className="container mx-auto py-4 text-center ">
 
           {isLoading ? (

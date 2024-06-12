@@ -14,31 +14,35 @@ const TextToSpeech: React.FC<{ text: string }> = ({ text }) => {
     };
 
     if ('speechSynthesis' in window) {
-      loadVoices();
-      // Chrome loads voices asynchronously, so listen for voiceschanged event
       speechSynthesis.onvoiceschanged = loadVoices;
     }
+
+    return () => {
+      speechSynthesis.onvoiceschanged = null; // Clean up event listener
+    };
   }, []);
 
   const speakText = () => {
     const utterance = new SpeechSynthesisUtterance(text);
 
-  // Filter voices to get a woman's voice
     const womanVoice = voices.find((voice) =>
+    // console.log(voice)
+    
       voice.name.toLowerCase().includes("female")
     );
-   
- 
 
     if (womanVoice) {
       utterance.voice = womanVoice;
     }
 
+    // console.log(womanVoice);
+    
+
     utterance.onend = () => {
       setIsPlaying(false);
     };
 
-    speechSynthesis.cancel(); // Cancel any existing speech
+    speechSynthesis.cancel();
     speechSynthesis.speak(utterance);
     setIsPlaying(true);
     setSpeakingText(utterance);

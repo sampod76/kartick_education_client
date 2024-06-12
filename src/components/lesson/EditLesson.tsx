@@ -16,9 +16,7 @@ import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 
-
 import {
-
   useGetSingleLessonQuery,
   useUpdateLessonMutation,
 } from "@/redux/api/adminApi/lessoneApi";
@@ -64,7 +62,6 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
   console.log(data);
   const [updateLesson, { isLoading: UpdateLesson }] = useUpdateLessonMutation();
 
-
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
     if (module?._id) {
@@ -83,7 +80,7 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
       // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
-        setIsReset(true)
+        setIsReset(true);
       } else {
         Success_model("Successfully Update Lesson");
       }
@@ -135,7 +132,7 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
         <div className="shadow-xl rounded-lg bg-white p-3">
           {/* resolver={yupResolver(adminSchema)} */}
           {/* resolver={yupResolver(IServiceSchema)} */}
-          <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
+          {/* <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
             <Col xs={24} lg={12}>
               <SelectCategoryChildren
                 lableText="Select category"
@@ -174,8 +171,12 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
                 }
               />
             </Col>
-          </Row>
-          <Form submitHandler={onSubmit} defaultValues={{ ...data, module: data.module?._id }} isReset={isReset}>
+          </Row> */}
+          <Form
+            submitHandler={onSubmit}
+            defaultValues={{ ...data, module: data.module?._id }}
+            isReset={isReset}
+          >
             <div
               style={{
                 border: "1px solid #d9d9d9",
@@ -229,7 +230,7 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
                     options={courseStatusOptions as any}
                     // defaultValue={priceTypeOptions[0]}
                     label="status"
-                  // placeholder="Select"
+                    // placeholder="Select"
                   />
                 </Col>
                 <Col
@@ -261,8 +262,8 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
 
                   <VideoSelect
                     defaultValue={data?.videos || []}
-                  // videos={SelectVideo}
-                  // setVideos={setSelectVideo as any}
+                    // videos={SelectVideo}
+                    // setVideos={setSelectVideo as any}
                   />
                 </Col>
                 {/* //! commented for refresh */}
@@ -285,7 +286,7 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
                   <UploadMultipalImage
                     defaultImage={data?.imgs || []}
                     name="imgs"
-                  // isReset={isReset}
+                    // isReset={isReset}
                   />
                 </Col>
                 <Col className="gutter-row" xs={24} style={{}}>

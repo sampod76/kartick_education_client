@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 // import bannerBG from "@/assets/banner/bannerBG.png";
-import bannerBG from "@/assets/banner/v2Banner.png";
+import bannerBG from "@/assets/banner/header.png";
 import treeBoy from "@/assets/banner/treeBoy.png";
 import Image from "next/image";
 import { SearchOutlined, ReloadOutlined } from "@ant-design/icons";
@@ -55,7 +55,45 @@ const BannerSection = () => {
   };
 
   return (
-    <Image alt="" src={"/banner/v2Banner.png"} className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[80vh] 2xl:h-[45.75rem] -mt-[3.5rem]" width={1900} height={1900} />
+
+    <div className="w-full">
+        <div className="w-full border-b-2 py-10">
+          <div className="grid md:grid-cols-2 w-[85%] mx-auto py-5">
+            <div className="flex flex-col gap-3 justify-center">
+              <p className="w-fit text-sm md:text-lg font-semibold bg-[#fcdbb6] rounded-sm text-[#FB8500]">
+              &nbsp;&nbsp; Are you bored or have fears and anxieties of either Math or
+                English? &nbsp;&nbsp;
+              </p>
+              <h1 className="md:text-5xl text-3xl font-bold ">
+                Overcome challenges with{" "}
+                <span className="text-blue-500 ">iBlossomLearn</span>
+              </h1>
+              <p className="font-semibold">
+                Your adventure in learning awaits!
+              </p>
+              <div className="flex gap-3 items-center">
+                <input 
+                  className="p-3 w-[300px] rounded-md border "
+                  placeholder="Enter Your Email"
+                />
+                <div className="bg-blue-500 p-3 rounded-md text-white font-semibold">
+                  Subcribe
+                </div>
+              </div>
+              <p>
+                By clicking the button, you are agreeing with our Terms &
+                Conditions.
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <Image alt=""  src={bannerBG} className="pr-5 w-full h-full " />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    // <Image alt="" src={"/banner/v2Banner.png"} className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[80vh] 2xl:h-[45.75rem] -mt-[3.5rem]" width={1900} height={1900} />
     // <div
     //   className="-mt-[3.5rem] min-h-[50rem] w-full relative flex flex-col justify-end re"
     //   style={{

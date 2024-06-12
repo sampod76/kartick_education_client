@@ -28,7 +28,7 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
     isLoading: courseLoading,
     error,
   } = useGetSingleCourseQuery(courseId);
-  // console.log("🚀 ~ MilestoneHomeList ~ courseData:", courseData)
+  console.log("🚀 ~ MilestoneHomeList ~ courseDataM:", courseData)
 
   const query: Record<string, any> = {};
   query["limit"] = 999999;
@@ -49,6 +49,8 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
   // console.log("🚀 ~ MilestoneHomeList ~ data:", data)
   // console.log(data,"courseId");
   const milestoneData = data?.data || [];
+  console.log(milestoneData, "jjj");
+  
 
   if (error || milestonError) {
     console.log(error, milestonError);
@@ -102,7 +104,7 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
               </div>
             </div> */}
 
-            <div className="w-full  mx-auto grid  grid-cols-1 lg:grid-cols-2 gap-3">
+            <div className="w-full  mx-auto  gap-3">
               {milestoneData?.map((milestone: IMilestoneData, index: number) => {
                 return (
                   <SingleMilestone key={index} milestoneData={milestone} index={index} />

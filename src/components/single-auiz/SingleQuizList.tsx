@@ -49,6 +49,9 @@ import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import { ENUM_STATUS } from "@/constants/globalEnums";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import timeDurationToMilliseconds from "@/hooks/stringToMiliSecend";
+import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuizApi";
 const SingleQuizList = () => {
   const userInfo = getUserInfo() as IDecodedInfo;
   //
@@ -114,6 +117,92 @@ const SingleQuizList = () => {
   const singleQuizData = data?.data;
   //@ts-ignore
   const meta = data?.meta;
+
+
+  const [addSingleQuiz, { isLoading: serviceLoading }] =
+    useAddSingleQuizMutation();
+
+  const handleDuplicate = async (dudata:any)=>{
+
+    // console.log(dudata.milestone);
+    
+    // return
+
+    const {answers} = dudata
+
+    const values = {
+
+      title : dudata?.title,
+      demo_video : dudata?.demo_video,
+      hints : dudata?.hints || "",
+      quizData :dudata?.quizData,
+      serialNumber : dudata?.serialNumber ,
+      imgs : [],
+      short_description : dudata?.short_description || "",
+      status : dudata?.status,
+      time_duration :dudata?.time_duration || "",
+      answers : answers
+
+
+    }
+
+
+
+    console.log("🚀 ~ onSubmit ~ values:", data)
+    // return
+    // console.log("🚀 ~ onSubmit ~ values:", values);
+    if (!dudata?.quiz?._id) {
+      Error_model_hook("Please ensure your are selected quiz");
+      return;
+    }
+
+    if (!dudata?.type) {
+      Error_model_hook("Please select an quiz type");
+      return;
+    }
+
+
+    const singleQuizDat: {} = {
+      ...values,
+      category: dudata?.category,
+      course: dudata?.course,
+      milestone: dudata?.milestone,
+      module: dudata?.module?._id,
+      lesson: dudata?.lesson,
+      quiz: dudata?.quiz?._id,
+      type: dudata?.type,
+      
+    };
+
+
+
+    // console.log(singleQuizDat,"hhhhh");
+    
+    // return
+    removeNullUndefinedAndFalsey(singleQuizDat)
+   
+
+// return
+
+
+    try {
+      const res = await addSingleQuiz(singleQuizDat).unwrap();
+
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Successfully added the Quiz");
+      }
+      // console.log(res);
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+      console.log(error);
+    }
+  };
+
+
+
+
   const handleDelete = (id: string) => {
     console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id);
 
@@ -254,6 +343,14 @@ const SingleQuizList = () => {
                     }}
                   >
                     Delete
+                  </Menu.Item>
+                  <Menu.Item
+                    key="duplicate"
+                    onClick={() => {
+                      handleDuplicate(record);
+                    }}
+                  >
+                    duplicate
                   </Menu.Item>
                 </Menu>
               }

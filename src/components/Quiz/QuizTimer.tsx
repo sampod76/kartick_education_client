@@ -37,7 +37,7 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
   //   const [isTimeUp,setIsTimeUp] = useState(false)
 
   const OnFinishTimeUP = () => {
-    console.log("finished time");
+    // console.log("finished time");
 
     if (currentData) {
       // Check if the object is extensible

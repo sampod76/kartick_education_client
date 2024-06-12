@@ -34,19 +34,18 @@ const SideBarHome = ({ userInfo, userInfoLoading }: { userInfo: any, userInfoLoa
             <div className="flex font-[700] max-h-[2.7rem] lg:max-h-[3.3rem]">
               <Link
                 href="/login"
-                className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 md:px-3 py- md:py-0 lg:py-1 xl:py-2  bg-white rounded-[36px] uppercase "
+                className="cursor-pointer font-semibold overflow-hidden relative z-100 border bg-gray-200  group px-5 md:px-3 py- md:py-0 lg:py-1 xl:py-2   rounded-lg uppercase "
               >
-                <span className="relative z-10 text-[#5F8122] group-hover:text-white text-lg md:text-sm lg:text-sm  xl:text-lg duration-500">
+                <span className="relative z-10 text-black  group-hover:text-white text-lg md:text-sm lg:text-sm  xl:text-lg duration-500">
                   Login
                 </span>
-                <span className="absolute w-full h-full bg-[#5F8122] -left- top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
-                <span className="absolute w-full h-full bg-[#5F8122] -right- top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+                
               </Link>
             </div>
           )
         }
         {!open ? (
-          <MenuUnfoldOutlined onClick={showDrawer} />
+          <MenuUnfoldOutlined style={{color:"blue"}} onClick={showDrawer} />
         ) : (
           <CloseOutlined />
         )}
@@ -62,6 +61,7 @@ const SideBarHome = ({ userInfo, userInfoLoading }: { userInfo: any, userInfoLoa
             <Logo />
           </div>
         }
+        
       >
         <MenuUI itemData={sideItemsHome} setOpen={setOpen} />
       </Drawer>

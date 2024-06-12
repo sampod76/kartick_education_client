@@ -58,7 +58,11 @@ const NavbarPublic = () => {
   const navItemsHome = homeNavItems(userInfo?.role ? userInfo.role : null);
   // console.log(homeNavItems(userInfo?.role ? userInfo.role : null), 'iiiiiiii')
   return (
-    <div className={`w-full lg:w-[84%] mx-auto bg-transparent rounded-b-[50px]  backdrop-blur-xl  block md:flex lg:flex xl:flex items-center justify-between border-b border-slate-500 px-[2em] `}>
+
+
+
+
+    <div className={`w-full bg-white lg:w-[84%] mx-auto rounded-b-[50px]  backdrop-blur-xl  block md:flex lg:flex xl:flex items-center justify-between py-2 border-slate-500 px-[2em] `}>
       <nav
         className="text-[#dedee0 text-black py-[8px md:pt-[0.9em  
     flex align-center justify-between gap-[5rem]"
@@ -81,7 +85,7 @@ const NavbarPublic = () => {
             background: "none",
             backdropFilter: "blur(80px)",
             boxShadow: "none",
-            color: `${pathname === '/' ? "white" : "black"}`,
+            color: `black`,
             // fontWeight:"700"
           }}
           disabledOverflow
@@ -104,13 +108,12 @@ const NavbarPublic = () => {
         <div className="hidden md:flex lg:flex xl:flex items-center ">
           <Link
             href="/subscription"
-            className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 md:px-3 py-1 md:py-0 lg:py-1 xl:py-2  bg-white rounded-[36px] uppercase "
+            className="cursor-pointer font-semibold overflow-hidden relative z-100 border bg-gray-200 group px-5 md:px-3 py-1 md:py-0 lg:py-1 xl:py-2   rounded-lg uppercase "
           >
-            <span className="relative z-10 text-[#5F8122] group-hover:text-white text-lg md:text-sm lg:text-sm  xl:text-lg duration-500">
+            <span className="relative z-10 text-black group-hover:text-blue-600 text-lg md:text-sm lg:text-sm  xl:text-lg duration-500">
               Membership
             </span>
-            <span className="absolute w-full h-full bg-[#5F8122] -left- top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
-            <span className="absolute w-full h-full bg-[#5F8122] -right- top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+            
           </Link>
         </div>
         <div className="flex justify-between items-center gap-1 lg:mt-0 ">
@@ -125,14 +128,13 @@ const NavbarPublic = () => {
             >
               <Link
                 href="/login"
-                className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-[#5F8122] group px-5 md:px-3 py-1 md:py-0 lg:py-1 xl:py-2  bg-white rounded-[36px] uppercase "
+                className="cursor-pointer font-semibold overflow-hidden relative z-100 group px-5 md:px-3 py-1 md:py-0 lg:py-1 xl:py-2  bg-white rounded-[36px] uppercase "
               >
-                <span className="relative z-10 text-[#5F8122] group-hover:text-white text-lg md:text-sm lg:text-sm  xl:text-lg duration-500 mx-3">
+                <span className="relative z-10 text-black font-semibold group-hover:text-blue-600 text-lg md:text-sm lg:text-sm  xl:text-lg duration-500 mx-3">
                   Login 
 
                 </span>
-                <span className="absolute w-full h-full bg-[#5F8122] -left- top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
-                <span className="absolute w-full h-full bg-[#5F8122] -right- top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+                
               </Link>
             </div>
           )}

@@ -159,7 +159,7 @@ export default function EditQuiz({ quizId }: { quizId: string }) {
           }}
         >
           <div>
-            <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
+            {/* <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
               <Col xs={24} md={6}>
                 <SelectCategoryChildren
                   lableText="For change Select category"
@@ -208,10 +208,13 @@ export default function EditQuiz({ quizId }: { quizId: string }) {
                   }
                 />
               </Col>
-            </Row>
+            </Row> */}
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}
-            <Form submitHandler={onSubmit} defaultValues={{ ...data, lesson: data?.lesson?._id }}>
+            <Form
+              submitHandler={onSubmit}
+              defaultValues={{ ...data, lesson: data?.lesson?._id }}
+            >
               <div
                 style={{
                   border: "1px solid #d9d9d9",
@@ -242,7 +245,7 @@ export default function EditQuiz({ quizId }: { quizId: string }) {
                       name="passingGrade"
                       size="large"
                       label="passingGrade "
-                    //
+                      //
                     />
                     {/*//! 4 --- */}
                   </Col>
@@ -254,7 +257,7 @@ export default function EditQuiz({ quizId }: { quizId: string }) {
                       options={courseStatusOptions as any}
                       // defaultValue={priceTypeOptions[2]}
                       label="status"
-                    // placeholder="Select"
+                      // placeholder="Select"
                     />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
@@ -321,7 +324,6 @@ export default function EditQuiz({ quizId }: { quizId: string }) {
                   <ButtonSubmitUI>Update quiz</ButtonSubmitUI>
                 </div>
               )}
-
             </Form>
           </div>
         </div>

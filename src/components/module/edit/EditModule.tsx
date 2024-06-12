@@ -33,8 +33,6 @@ const TextEditor = dynamic(
   }
 );
 
-
-
 export default function EditModule({ moduleId }: { moduleId: string }) {
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
@@ -42,9 +40,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
     {}
   );
 
-  console.log(
-    milestone
-  )
+  console.log(milestone);
   const query: Record<string, any> = {};
   query["children"] = "course-milestone";
   //! for Category options selection
@@ -65,7 +61,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
   const onSubmit = async (values: any) => {
     // console.log(values, 'values')
     if (values?.milestone?._id) {
-      values["milestone"] = values?.milestone?._id
+      values["milestone"] = values?.milestone?._id;
     }
     if (milestone?._id) {
       values["milestone"] = milestone?._id;
@@ -103,7 +99,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
   }
   // console.log(data,'data')
 
-  const { milestoneDefault, ...othersData } = data
+  const { milestoneDefault, ...othersData } = data;
 
   return (
     <>
@@ -137,7 +133,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
           }}
         >
           <div>
-            <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
+            {/* <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
               <Col xs={24} md={6}>
                 <SelectCategoryChildren
                   lableText="For change category"
@@ -166,8 +162,14 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
                   }
                 />
               </Col>
-            </Row>
-            <Form submitHandler={onSubmit} defaultValues={{ milestone: milestoneDefault?._id, ...othersData }}>
+            </Row> */}
+            <Form
+              submitHandler={onSubmit}
+              defaultValues={{
+                milestone: milestoneDefault?._id,
+                ...othersData,
+              }}
+            >
               <div
                 style={{
                   border: "1px solid #d9d9d9",
@@ -219,7 +221,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
                       options={courseStatusOptions as any}
                       defaultValue={{ label: "Select", value: "" }}
                       label="status"
-                    // placeholder="Select"
+                      // placeholder="Select"
                     />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
@@ -229,7 +231,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
                     <UploadMultipalImage
                       defaultImage={data?.imgs}
                       name="imgs"
-                    // isReset={isReset}
+                      // isReset={isReset}
                     />
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
@@ -270,8 +272,8 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
               {updateModuleLoading ? (
                 <Spin />
               ) : (
-                  <div className=" text-center">
-                <ButtonSubmitUI>Update Module</ButtonSubmitUI>
+                <div className=" text-center">
+                  <ButtonSubmitUI>Update Module</ButtonSubmitUI>
                 </div>
               )}
             </Form>

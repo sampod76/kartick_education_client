@@ -64,6 +64,7 @@ const StudentListCom = ({
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["sortOrder"] = sortOrder;
   // query["status"] = ENUM_STATUS.ACTIVE;
   query["isDelete"] = ENUM_YN.NO;
   if (author) {
@@ -78,7 +79,7 @@ const StudentListCom = ({
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useGetAllUsersQuery({
+  const { data, isLoading } = useGetAllStudentsQuery({
     ...query,
   });
 
@@ -115,7 +116,7 @@ const StudentListCom = ({
       title: "Name",
       render: function (data: any) {
         // console.log(data);
-        const fullName = `${data[data.role]?.name?.firstName} ${data[data.role]?.name?.lastName
+        const fullName = `${data?.name?.firstName} ${data?.name?.lastName
           }  `;
         return <>{fullName}</>;
       },
@@ -134,7 +135,7 @@ const StudentListCom = ({
       // dataIndex: "phoneNumber",
       render: function (data: any) {
         // console.log(data);
-        const fullName = `${data[data.role]?.phoneNumber}`;
+        const fullName = `${data?.phoneNumber}`;
         return <>{fullName}</>;
       },
     },
@@ -153,7 +154,7 @@ const StudentListCom = ({
       // dataIndex: "gender",
       render: function (data: any) {
         // console.log(data);
-        const gender = `${data[data.role]?.gender}   `;
+        const gender = `${data?.gender}   `;
         return <>{gender}</>;
       },
     },
@@ -174,12 +175,12 @@ const StudentListCom = ({
                 overlay={
                   <Menu>
                     <Menu.Item key="details">
-                      <Link href={`/${userInfo?.role}/students/details/${id}`}>
+                      <Link href={`/${userInfo?.role}/manage-users/students/details/${id}`}>
                         View
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="edit">
-                      <Link href={`/${userInfo?.role}/students/edit/${id}`}>
+                      <Link href={`/${userInfo?.role}/manage-users/students/edit/${id}`}>
                         Edit
                       </Link>
                     </Menu.Item>

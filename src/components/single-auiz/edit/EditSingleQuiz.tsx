@@ -43,9 +43,7 @@ export default function EditSingleQuiz({
 }: {
   singleQuizId: string;
 }) {
-  const [quizType, setQuizTypes] = useState<
-    IQuizType
-  >("select"); // !  tag selection
+  const [quizType, setQuizTypes] = useState<IQuizType>("select"); // !  tag selection
   const [videoType, setVideoType] = useState(null); // ! for video insert
   const [videoUrl, setVideoUrl] = useState("");
   // ! For quiz Answer
@@ -200,7 +198,7 @@ export default function EditSingleQuiz({
             padding: "1rem",
           }}
         >
-          <div className="border-2 rounded-lg my-3 p-5 ">
+          {/* <div className="border-2 rounded-lg my-3 p-5 ">
             <Row gutter={[16, 16]}>
               <Col xs={24} md={6}>
                 <SelectCategoryChildren
@@ -261,7 +259,7 @@ export default function EditSingleQuiz({
                 />
               </Col>
             </Row>
-          </div>
+          </div> */}
           <Form isReset={isReset} submitHandler={onSubmit} defaultValues={data}>
             <div
               style={{
@@ -298,7 +296,7 @@ export default function EditSingleQuiz({
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                  //
+                    //
                   />
                 </Col>
                 <Col
@@ -405,15 +403,17 @@ export default function EditSingleQuiz({
                   style={{
                     margin: "20px 0",
                   }}
-
                 >
-
                   <LabelUi>Add Your Audio Quiz</LabelUi>
-                  <UploadAudioFile defaultFiles={data?.quizData?.link} isReset={isReset} fileType="audio" name="quizData.link" />
+                  <UploadAudioFile
+                    defaultFiles={data?.quizData?.link}
+                    isReset={isReset}
+                    fileType="audio"
+                    name="quizData.link"
+                  />
                 </Col>
               </Row>
               <Col
-
                 className="gutter-row"
                 xs={24}
                 style={{
@@ -454,8 +454,8 @@ export default function EditSingleQuiz({
                   </p>
                   <TextEditor
                     isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
                   />
                 </div>
               </Col>

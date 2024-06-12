@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import type { CollapseProps } from "antd";
 import { Collapse, theme } from "antd";
 import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
+import TextToSpeech from "@/utils/TextToSpeech";
 import Link from "next/link";
 import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
 import { CutText } from "@/utils/CutText";
@@ -49,7 +50,7 @@ export default function LessonList({
   ////! for purchased data of a user
   const categoryId = moduleData?.category ||  moduleData?.milestone?.course?.category?._id;
   const courseId = moduleData?.course || moduleData?.milestone?.course?._id
-  console.log("🚀 ~ categoryId:", moduleData)
+  // console.log("🚀 ~ categoryId:", moduleData)
 
   let IsExistCategoryOrCourse: any = false;
  
@@ -66,7 +67,7 @@ export default function LessonList({
   });
 
   const {data:checkPurchase,isLoading:CheckPurchaseLoading}=useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`)
-  console.log("🚀 ~ checkPurchase:", checkPurchase)
+  // console.log("🚀 ~ checkPurchase:", checkPurchase)
   if(checkPurchase){
     IsExistCategoryOrCourse=checkPurchase
   }
@@ -180,10 +181,12 @@ export default function LessonList({
                       className="text-[14px] flex justify-between  mx-auto mt-3 text-[#479FEC]"
                     >
                       <h2 className="text-base font-normal flex justify-start gap-1">
-                     <span className="mt-1"><QuizIcon/></span>   Quiz {index + 1} : {quiz?.title}
+                     <span className="mt-1"><QuizIcon/></span>   Quiz : {quiz?.title}
                       </h2>
+                      
                       {/* <LockOutlined style={{ fontSize: "18px" }} /> */}
                     </Link>
+                    
                   );
                 })}
             </div>

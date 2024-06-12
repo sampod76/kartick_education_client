@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
@@ -14,6 +15,8 @@ import Image from "next/image";
 import { useAppDispatch } from "@/redux/hooks";
 import { addBackgroundColor } from "@/redux/features/bannerCourseSlice";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
+import LearningPageImage from "../../../assets/svg/LearningPage.svg";
+import LearningPageImage2 from "../../../assets/svg/LearningPageImage2.svg";
 
 interface BannerLearningProps {
   learningCategoryId: string | null;
@@ -34,7 +37,7 @@ const BannerLearning: React.FC<BannerLearningProps> = ({
   query["status"] = "active";
 
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
-  console.log("🚀 ~ learningCategoryId:", learningCategoryId);
+  // console.log("🚀 ~ learningCategoryId:", learningCategoryId);
 
   const categoryData = data?.data || [];
 
@@ -56,7 +59,6 @@ const BannerLearning: React.FC<BannerLearningProps> = ({
     queryData = {}; // Provide a default value if parsing fails
   }
   const categoryId = queryData?.categoryId;
-
 
   useEffect(() => {
     if (!categoryId) {
@@ -121,15 +123,22 @@ const BannerLearning: React.FC<BannerLearningProps> = ({
     return <LoadingSkeleton number={40} sectionNumber={30} />;
   }
   return (
-    <div className="-mt-[5px] ">
-      <Image
-        unoptimized
-        alt=""
-        src={"/banner/v2CourseBanner.png"}
-        className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[70vh] 2xl:h-[45.75rem] -mt-[6rem]"
-        width={1900}
-        height={1900}
-      />
+    <div className="">
+      <div className="object-cover  bg-[#F7EEE5] overflow-hidden -z-10 w-[100%] h-[50vh] lg:h-[70vh] 2xl:h-[45.75rem] -mt-[7rem] grid sm:grid-cols-2 items-center">
+
+        <div className="px-4 sm:mt-4 flex flex-col gap-5">
+          <h1 className="lg:text-6xl md:text-4xl text-3xl">
+          Build a healthier foundation for lifelong learning
+          </h1>
+          <p className="text-lg">
+          At iBLossomLearn, we prioritize building a healthier foundation for lifelong learning. Through our comprehensive curriculum and dedicated support, we empower students to develop essential skills and habits that foster academic success and personal growth well beyond their schooling years. With iBLossomLearn, students are equipped with the tools and mindset needed to thrive in an ever-changing world.
+          </p>
+        </div>
+        <div className="sm:flex hidden justify-end">
+          <Image src={LearningPageImage2} alt=""/>
+        </div>
+
+      </div>
 
       <div className="flex   uppercase justify-start items-center gap-2  font-[800] mt-2 md:mt-[1rem] pl-4 overflow-x-auto  whitespace-nowrap scrollbar-thumb-rounded-full scrollbar-track-rounded-full  container mx-auto">
         {isLoading ? (
@@ -143,15 +152,10 @@ const BannerLearning: React.FC<BannerLearningProps> = ({
                 className={`p-3`}
               >
                 <button
-                  style={{
-                    backgroundColor: colors[index % colors.length],
-                    color: "white",
-                  }} // Apply the background color
-                  className={`py-2 px-3 text-[12px] shadow-lg scale-105 lg:text-[18px] brightness-95 rounded-tl-[20px rounded-br-[20px rounded-[28rem] ${
-                    index % 3 === 0 && "bg-[#FB8500]"
-                  } ${
+                  style={{}} // Apply the background color
+                  className={`py-2 px-3 text-[12px]  scale-105 lg:text-[18px] brightness-95  rounded-md ${
                     categoryId === category?._id &&
-                    "border-[3px] md:border-[5px] border-white shadow-2xl  scale-105 duration-300  p-2 text-white brightness-105"
+                    " border-white text-[#5371FB] bg-[#d2e1fe]  scale-105 duration-300  p-2 brightness-105"
                   }`}
                 >
                   {category?.title}

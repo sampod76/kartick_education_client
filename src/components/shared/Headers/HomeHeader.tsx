@@ -12,6 +12,7 @@ const HomeHeader = () => {
     <div className="sticky -top-[0rem]  lg:-top-[0.4rem] z-40">
       {/* <TopBar /> */}
       <NavbarPublic />
+      <hr />
     </div>
   );
 };

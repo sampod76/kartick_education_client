@@ -79,7 +79,7 @@ export default function UploadMultipalDragAndDropImge({
     }
 
     return () => clearTimeout(timeout);
-  }, [formSubmitted]);
+  }, [formSubmitted, setFormSubmitted]);
 
   return (
     <div>

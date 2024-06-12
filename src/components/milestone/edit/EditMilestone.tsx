@@ -34,10 +34,11 @@ const TextEditor = dynamic(
   }
 );
 
-
-
-export default function EditMilestone({ milestoneId }: { milestoneId: string }) {
-
+export default function EditMilestone({
+  milestoneId,
+}: {
+  milestoneId: string;
+}) {
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState<{ _id?: string }>({});
 
@@ -117,7 +118,7 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
           <div>
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}
-            <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
+            {/* <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
               <Col xs={24} md={6}>
                 <SelectCategoryChildren
                   lableText="Change category"
@@ -136,7 +137,7 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
                   }
                 />
               </Col>
-            </Row>
+            </Row> */}
 
             <Form
               submitHandler={onSubmit}
@@ -183,9 +184,8 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
                     <UploadMultipalImage
                       defaultImage={data?.imgs || []}
                       name="img"
-                    // isReset={isReset}
+                      // isReset={isReset}
                     />
-
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>

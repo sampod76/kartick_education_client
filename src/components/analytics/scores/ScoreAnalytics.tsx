@@ -2,14 +2,14 @@
 import React, { useState } from 'react'
 import TopFilterSelect from '../TopFilterSelect';
 import { PrinterOutlined } from "@ant-design/icons"
-import { Pie } from '@ant-design/plots';
+import { Line, Pie } from '@ant-design/charts';
 import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
 import PieChart from '@/components/dashboard/admin/chart/PieChart';
 import dynamic from 'next/dynamic';
 
 const DynamicPie = dynamic(() => import('@ant-design/plots').then((mod) => mod.Pie), {
     ssr: false, // Set ssr to false to prevent rendering on the server
-});
+}) as typeof Line;
 export default function ScoreAnalytics() {
     const [category, setCategory] = useState<{ _id?: string; title?: string }>(
         {}

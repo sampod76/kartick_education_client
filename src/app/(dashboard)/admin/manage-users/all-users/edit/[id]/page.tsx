@@ -14,9 +14,9 @@ import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
-  useGetSingleServiceQuery,
-  useUpdateServiceMutation,
-} from "@/redux/api/serviceApi";
+  useGetSingleUserQuery,
+  useUpdateUserMutation
+} from "@/redux/api/adminApi/usersApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -24,10 +24,10 @@ import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
 
 const EditUserData = ({ params }: any) => {
-  const { data: serviceData, isLoading } = useGetSingleServiceQuery(params?.id);
+  const { data: userData, isLoading } = useGetSingleUserQuery(params?.id);
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
-  const [updateService, { isLoading: updateLoading, error }] =
-    useUpdateServiceMutation();
+  const [updateUser, { isLoading: updateLoading, error }] =
+  useUpdateUserMutation();
 
   const onSubmit = async (values: any) => {
     const UpdateValues = {
@@ -35,12 +35,14 @@ const EditUserData = ({ params }: any) => {
   
     };
     removeNullUndefinedAndFalsey(UpdateValues);
+
+    console.log(UpdateValues, "dfghtyfgh")
     try {
-      const res = await updateService({
+      const res = await updateUser({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+      console.log(res, "ghjbnhj");
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -57,19 +59,23 @@ const EditUserData = ({ params }: any) => {
   if (error) {
     console.log(error);
   }
+  
+  console.log(userData);
+  
 
   const defaultValues = {
-    title: serviceData?.title || "",
-    price: serviceData?.price || "",
-    image: serviceData?.image || "",
-    description: serviceData?.description || "",
-    address: serviceData?.address || "",
-    contact: serviceData?.contact || "",
-    availableTickets: serviceData?.availableTickets || "",
-    serviceDate: serviceData?.serviceDate || "",
-    status: serviceData?.status || "",
-    category: serviceData?.category?._id || "",
-    // managementDepartment: serviceData?.managementDepartment?.id || "",
+    name: {
+      firstName: userData[userData?.role]?.name.firstName || "",
+      lastName: userData[userData?.role]?.name.lastName || "",
+    },
+    gender: userData[userData?.role]?.gender || "",
+    // dateOfBirth: studentData?.dateOfBirth || "",
+    email: userData[userData?.role]?.email || "",
+    phoneNumber: userData[userData?.role]?.phoneNumber || "",
+    bloodGroup: userData[userData?.role]?.bloodGroup || "", // Optional blood group
+    address: userData[userData?.role]?.address || "",
+    img: userData[userData?.role]?.img || "",
+    StdId : userData[userData?.role]?.id || ""
   };
 
   return (
@@ -77,7 +83,7 @@ const EditUserData = ({ params }: any) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues} >
+        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -92,7 +98,7 @@ const EditUserData = ({ params }: any) => {
                 marginBottom: "10px",
               }}
             >
-              Service Information
+              Student Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -106,10 +112,132 @@ const EditUserData = ({ params }: any) => {
               >
                 <FormInput
                   type="text"
-                  name="title"
+                  name="name.firstName"
                   size="large"
-                  label="Service Name"
-                  required={true}
+                  label="First Name"
+                />
+
+                <FormInput
+                  type="text"
+                  name="name.lastName"
+                  size="large"
+                  label="Last Name"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="email"
+                  name="email"
+                  size="large"
+                  label="Email address"
+                  readOnly={true}
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                   type="text"
+                  name="phoneNumber"
+                  size="large"
+                  label="Phone Number"
+                />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="bloodGroup"
+                  defaultValue={defaultValues?.gender}
+                  options={bloodGroupOptions}
+                  label="bloodGroup"
+                  placeholder="Select"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <UploadImage defaultImage={defaultValues?.img} name="img" />
+              </Col>
+            </Row>
+          </div>
+
+          {/* basic info */}
+          <div
+            style={{
+              border: "1px solid #d9d9d9",
+              borderRadius: "5px",
+              padding: "15px",
+              marginBottom: "10px",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "18px",
+                marginBottom: "10px",
+              }}
+            >
+              Basic Information
+            </p>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="gender"
+                  options={genderOptions}
+                  label="Gender"
+                  placeholder="Select"
+                />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="text"
+                  name="address"
+                  size="large"
+                  label="Address"
                 />
               </Col>
               <Col
@@ -123,10 +251,9 @@ const EditUserData = ({ params }: any) => {
               >
                 <FormInput
                   type="number"
-                  name="price"
+                  name="phoneNumber"
                   size="large"
-                  label="Per Ticket Price"
-                  required={true}
+                  label="Phone Number"
                 />
               </Col>
               <Col
@@ -138,156 +265,21 @@ const EditUserData = ({ params }: any) => {
                   marginBottom: "10px",
                 }}
               >
-                <FormInput
-                  type="text"
-                  name="contact"
+                <FormDatePicker
+                  name="dateOfBirth"
+                  label="Date of birth"
                   size="large"
-                  label="Bus Driver Number"
-                  required={true}
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <Row gutter={[16, 16]}>
-                  <Col
-                    className="gutter-row"
-                    span={12}
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <FormDatePicker name="serviceDate" label="Date" />
-                  </Col>
-                  <Col
-                    className="gutter-row"
-                    span={12}
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <FormInput
-                      type="number"
-                      name="availableTickets"
-                      size="large"
-                      label="Available Tickets"
-                      required={true}
-                    />
-                  </Col>
-                </Row>
-              </Col>
 
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <Row gutter={[16, 16]}>
-                  <Col
-                    className="gutter-row"
-                    xs={24}
-                    md={12}
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <FormSelectField
-                      name="category"
-                      label="Select Category"
-                      required={true}
-                      options={
-                        //@ts-ignore
-                        categoryData?.data?.map((e) => ({
-                          value: e._id,
-                          label: e.title,
-                        }))
-                      }
-                    />
-                  </Col>
-                  <Col
-                    className="gutter-row"
-                    xs={24}
-                    md={12}
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <FormSelectField
-                      name="status"
-                      label="Select status"
-                      required={true}
-                      options={[
-                        {
-                          value: "available",
-                          label: "Available",
-                        },
-                        {
-                          value: "upcoming",
-                          label: "Upcoming",
-                        },
-                        {
-                          value: "unavailable",
-                          label: "Unavailable",
-                        },
-                      ]}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-               
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  <UploadImage name="image" />
-                  <Image
-                    src={defaultValues?.image}
-                    width={100}
-                    height={100}
-                    className="w-36"
-                    alt="d"
-                  />
-                </div>
-              </Col>
               <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea
-                  name="description"
-                  label="Service description"
-                  rows={4}
-                />
+                <FormTextArea name="address" label="Address" rows={4} />
               </Col>
-
-              {/* <Col span={12} style={{ margin: "10px 0" }}>
-              <FormTextArea name="address" label="Address" rows={4} />
-            </Col> */}
             </Row>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button htmlType="submit"   type="default">
-              Update
-            </Button>
-          </div>
+          <Button htmlType="submit" type="default">
+            Update
+          </Button>
         </Form>
       </div>
     </div>

@@ -211,10 +211,18 @@ export default function QuizQuestionCard({
     : false
 
   console.log(quiz, 'quzzzzzzzzz')
+
+  // const heading = quiz?.short_description.split(":")
+  // console.log(heading);
+  
   return (
     <div>
       <div key={quiz?._id} className={`my-4 w-full relative px-2 lg:pl-3 `}>
         {/* //! Quiz Timer */}
+        <p className={`lg:text-xl font-bold mb-2 text-base mx-2`}>
+            <TextToSpeech text={quiz?.title} />
+            Question {index + 1} : {quiz?.title}
+          </p>
         <div className="text-center mt-3 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
@@ -224,6 +232,12 @@ export default function QuizQuestionCard({
             submittedDefaultData={submittedDefaultData}
           />
         </div>
+        <div dangerouslySetInnerHTML={{ __html: quiz?.details }}/>
+        {/* <h1 className="text-center font-bold">{heading[0]}</h1>
+        <p>
+        <TextToSpeech text={(heading?.slice(1).toString())} />
+          { heading?.slice(1)}  
+        </p> */}
         <div className="absolute right-4 top-0 p-">
           {submittedDefaultData?.singleQuiz ? (
             isCorrectAnswer ? (
@@ -240,10 +254,7 @@ export default function QuizQuestionCard({
           )}
         </div>
         <div className=" my-2 pr-4">
-          <p className={`lg:text-lg font-[550] mb-2 text-base mx-2`}>
-            <TextToSpeech text={quiz?.title} />
-            Question {index + 1} : {quiz?.title}
-          </p>
+          
           {quiz?.type === "audio" &&
             // <Link className="flex justify-start items-center gap-2 ml-2" href={quiz?.quizData?.link} rel="noopener noreferrer" target="_blank">
             //  <PlayCircleOutlined style={{ fontSize: "1.5rem" }} /> Play Audio  
