@@ -52,8 +52,9 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import timeDurationToMilliseconds from "@/hooks/stringToMiliSecend";
 import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuizApi";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 const SingleQuizList = () => {
-  const userInfo = getUserInfo() as IDecodedInfo;
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //
   const [openDrawer, setOpenDrawer] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -72,6 +73,9 @@ const SingleQuizList = () => {
 
   const queryCategory: Record<string, any> = {};
   queryCategory["children"] = "course-milestone-module-lessons-quiz";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -118,37 +122,30 @@ const SingleQuizList = () => {
   //@ts-ignore
   const meta = data?.meta;
 
-
   const [addSingleQuiz, { isLoading: serviceLoading }] =
     useAddSingleQuizMutation();
 
-  const handleDuplicate = async (dudata:any)=>{
-
+  const handleDuplicate = async (dudata: any) => {
     // console.log(dudata.milestone);
-    
+
     // return
 
-    const {answers} = dudata
+    const { answers } = dudata;
 
     const values = {
+      title: dudata?.title,
+      demo_video: dudata?.demo_video,
+      hints: dudata?.hints || "",
+      quizData: dudata?.quizData,
+      serialNumber: dudata?.serialNumber,
+      imgs: [],
+      short_description: dudata?.short_description || "",
+      status: dudata?.status,
+      time_duration: dudata?.time_duration || "",
+      answers: answers,
+    };
 
-      title : dudata?.title,
-      demo_video : dudata?.demo_video,
-      hints : dudata?.hints || "",
-      quizData :dudata?.quizData,
-      serialNumber : dudata?.serialNumber ,
-      imgs : [],
-      short_description : dudata?.short_description || "",
-      status : dudata?.status,
-      time_duration :dudata?.time_duration || "",
-      answers : answers
-
-
-    }
-
-
-
-    console.log("🚀 ~ onSubmit ~ values:", data)
+    console.log("🚀 ~ onSubmit ~ values:", data);
     // return
     // console.log("🚀 ~ onSubmit ~ values:", values);
     if (!dudata?.quiz?._id) {
@@ -161,7 +158,6 @@ const SingleQuizList = () => {
       return;
     }
 
-
     const singleQuizDat: {} = {
       ...values,
       category: dudata?.category,
@@ -171,19 +167,14 @@ const SingleQuizList = () => {
       lesson: dudata?.lesson,
       quiz: dudata?.quiz?._id,
       type: dudata?.type,
-      
     };
 
-
-
     // console.log(singleQuizDat,"hhhhh");
-    
+
     // return
-    removeNullUndefinedAndFalsey(singleQuizDat)
-   
+    removeNullUndefinedAndFalsey(singleQuizDat);
 
-// return
-
+    // return
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
@@ -199,9 +190,6 @@ const SingleQuizList = () => {
       console.log(error);
     }
   };
-
-
-
 
   const handleDelete = (id: string) => {
     console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id);
@@ -258,13 +246,13 @@ const SingleQuizList = () => {
       title: "Serial",
       dataIndex: "serialNumber",
       // ellipsis: true,
-      width: 100
+      width: 100,
     },
     {
       title: "Type",
       dataIndex: "type",
       // ellipsis: true,
-      width: 120
+      width: 120,
     },
     {
       title: "Time",
@@ -274,12 +262,11 @@ const SingleQuizList = () => {
       },
       // ellipsis: true,
       width: 120,
-
     },
 
     {
       title: "Quiz Name",
-      dataIndex: ['quiz', 'title'],
+      dataIndex: ["quiz", "title"],
       ellipsis: true,
       // width: 120
     },
@@ -291,7 +278,7 @@ const SingleQuizList = () => {
     },
     {
       title: "Module",
-      dataIndex: ['module', 'title'],
+      dataIndex: ["module", "title"],
       ellipsis: true,
       sorter: true,
       // width: 120

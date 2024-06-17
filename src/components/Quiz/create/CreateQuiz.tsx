@@ -25,6 +25,8 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -32,6 +34,7 @@ const TextEditor = dynamic(
   }
 );
 const CreateQuiz = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
     {}
   );
@@ -45,6 +48,9 @@ const CreateQuiz = () => {
 
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module-lessons";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,

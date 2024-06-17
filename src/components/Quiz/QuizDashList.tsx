@@ -44,9 +44,11 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 
 const QuizDashList = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const screens = useBreakpoint();
   //----------------------------------------------------------------
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -65,6 +67,9 @@ const QuizDashList = () => {
 
   const categoryQuery: Record<string, any> = {};
   categoryQuery["children"] = "course-milestone-module-lessons";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    categoryQuery["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -73,9 +78,6 @@ const QuizDashList = () => {
 
   const categoryData: any = Category?.data;
   //---------------------------------------------------------
-
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo;
 
   const [deleteQuiz] = useDeleteQuizMutation();
 
@@ -304,7 +306,7 @@ const QuizDashList = () => {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: screens.sm ? "30%" : "100%"
+              width: screens.sm ? "30%" : "100%",
             }}
           />
           {/* <FilterLesson

@@ -8,7 +8,6 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 
-
 import { courseStatusOptions, singleQuizTypes } from "@/constants/global";
 
 import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuizApi";
@@ -35,6 +34,8 @@ import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFals
 import { IQuizType } from "@/types/quiz/singleQuizType";
 import AnswerFind from "@/components/Forms/answer/AnswerFind";
 import UploadAudioFile from "@/components/ui/UploadAudio";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -43,18 +44,15 @@ const TextEditor = dynamic(
 );
 
 const CreateSingleQuiz = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //
 
-  const [quizType, setQuizTypes] = useState<
-    IQuizType
-  >("select"); // !  tag selection
+  const [quizType, setQuizTypes] = useState<IQuizType>("select"); // !  tag selection
 
   const [isReset, setIsReset] = useState(false);
   const [imageUploadLoading, isImageloading] = useState(false);
 
-
-  // ! For quiz Answer// 
-
+  // ! For quiz Answer//
 
   const [answers, setAnswers] = useState([]); ///! select and multiple select
 
@@ -73,6 +71,9 @@ const CreateSingleQuiz = () => {
 
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module-lessons-quiz";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
@@ -84,8 +85,7 @@ const CreateSingleQuiz = () => {
     useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
-
-    console.log("🚀 ~ onSubmit ~ values:", values)
+    console.log("🚀 ~ onSubmit ~ values:", values);
     // console.log("🚀 ~ onSubmit ~ values:", values);
     if (!quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");
@@ -117,13 +117,10 @@ const CreateSingleQuiz = () => {
       lesson: lesson?._id,
       quiz: quiz?._id,
       type: quizType,
-      
     };
-    removeNullUndefinedAndFalsey(singleQuizDat)
-   
+    removeNullUndefinedAndFalsey(singleQuizDat);
 
-// return
-
+    // return
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
@@ -233,7 +230,7 @@ const CreateSingleQuiz = () => {
           <Form
             submitHandler={onSubmit}
             isReset={isReset}
-          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+            // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
           >
             <h1 className="text-xl font-bold text-center border-b-2 border-spacing-4 mb-2 ">
               Create A Single Quiz
@@ -266,7 +263,7 @@ const CreateSingleQuiz = () => {
                     style={{ width: "100%" }}
                     onChange={(value: any) => setQuizTypes(value)}
                     size="large"
-                    defaultValue={'select'}
+                    defaultValue={"select"}
                   >
                     {singleQuizTypes.map((item: any, i: number) => {
                       return (
@@ -299,7 +296,6 @@ const CreateSingleQuiz = () => {
                   md={8}
                   style={{
                     marginTop: "8px",
-
                   }}
                 >
                   <FormInput
@@ -307,7 +303,7 @@ const CreateSingleQuiz = () => {
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                  // required={true}
+                    // required={true}
                   />
                 </Col>
 
@@ -322,7 +318,6 @@ const CreateSingleQuiz = () => {
                 >
                   <FormTimePicker name="time_duration" label="Time Duration" />
                 </Col>
-
 
                 <Col
                   className="gutter-row"
@@ -379,9 +374,12 @@ const CreateSingleQuiz = () => {
                     margin: "20px 0",
                   }}
                 >
-
                   <LabelUi>Select Quiz Question images (optional)</LabelUi>
-                  <UploadMultipalImage isImageloading={isImageloading} isReset={isReset} name="imgs" />
+                  <UploadMultipalImage
+                    isImageloading={isImageloading}
+                    isReset={isReset}
+                    name="imgs"
+                  />
                 </Col>
                 <Col
                   hidden={quizType !== "audio" ? true : false}
@@ -391,9 +389,12 @@ const CreateSingleQuiz = () => {
                     margin: "20px 0",
                   }}
                 >
-
                   <LabelUi>Add Your Audio Quiz</LabelUi>
-                  <UploadAudioFile isReset={isReset} fileType="audio" name="quizData.link" />
+                  <UploadAudioFile
+                    isReset={isReset}
+                    fileType="audio"
+                    name="quizData.link"
+                  />
                 </Col>
               </Row>
               <Col
@@ -403,7 +404,10 @@ const CreateSingleQuiz = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormTextArea label="Short Description" name="short_description" />
+                <FormTextArea
+                  label="Short Description"
+                  name="short_description"
+                />
               </Col>
               <Col
                 className="gutter-row"
@@ -437,8 +441,8 @@ const CreateSingleQuiz = () => {
                   </p>
                   <TextEditor
                     isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
                   />
                 </div>
               </Col>
@@ -495,7 +499,7 @@ const CreateSingleQuiz = () => {
                       <Input
                         placeholder="Type the answer"
                         style={{
-                          width: "70%"
+                          width: "70%",
                         }}
                         onBlur={(value: any) =>
                           setSingleAnswerInput(value.target.value)
@@ -510,7 +514,14 @@ const CreateSingleQuiz = () => {
               {serviceLoading ? (
                 <ButtonLoading />
               ) : (
-                <Button  htmlType="submit" size="large" style={{ width: "10rem" }} type="default"> Create
+                <Button
+                  htmlType="submit"
+                  size="large"
+                  style={{ width: "10rem" }}
+                  type="default"
+                >
+                  {" "}
+                  Create
                 </Button>
               )}
             </div>

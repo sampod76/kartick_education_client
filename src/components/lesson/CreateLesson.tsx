@@ -7,18 +7,13 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
-import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
-import UploadImage from "@/components/ui/UploadImage";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 
 import {
   useAddLessonMutation,
@@ -28,16 +23,15 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Col, Row, message } from "antd";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
 import VideoSelect from "@/components/Forms/VideoSelect";
-import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
-import ButtonGroup from "antd/es/button/button-group";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
-import { FormProps, useForm } from "react-hook-form";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+import { USER_ROLE } from "@/constants/role";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { Col, Row } from "antd";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -45,6 +39,7 @@ const TextEditor = dynamic(
   }
 );
 const CreateLesson = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //----------------------------------------------------------------
   const [isReset, setIsReset] = useState(false);
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
@@ -58,6 +53,9 @@ const CreateLesson = () => {
   //! for Category options selection
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
   });
@@ -196,9 +194,11 @@ const CreateLesson = () => {
                 <Col
                   className="gutter-row"
                   xs={24}
-                  style={{
-                    // marginBottom: "10px",
-                  }}
+                  style={
+                    {
+                      // marginBottom: "10px",
+                    }
+                  }
                 >
                   <FormInput
                     type="text"

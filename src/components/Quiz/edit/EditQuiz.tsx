@@ -37,6 +37,8 @@ import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -45,6 +47,7 @@ const TextEditor = dynamic(
 );
 
 export default function EditQuiz({ quizId }: { quizId: string }) {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
   const [milestone, setmilestone] = useState({});
@@ -53,6 +56,9 @@ export default function EditQuiz({ quizId }: { quizId: string }) {
 
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module-lessons";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading: getCategoryLoading } =
     useGetAllCategoryChildrenQuery({

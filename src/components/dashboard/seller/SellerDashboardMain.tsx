@@ -1,39 +1,31 @@
 "use client";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
 import SellerPurchased from "@/components/package/SellerPurchased";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { ENUM_YN } from "@/constants/globalEnums";
+import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
 import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuizApi";
 import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { GiBookCover } from "react-icons/gi";
 import { MdAccountBalance } from "react-icons/md";
 import { SiSellfy } from "react-icons/si";
 
 export default function SellerDashboardMain() {
-  const [userInfoLoading, setUserInfoLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState<Partial<IDecodedInfo>>({
-    email: "",
-    id: "",
-    role: undefined,
-  });
-
-  useEffect(() => {
-    // Fetch user info asynchronously on the client side
-    const fetchUserInfo = async () => {
-      const userInfo = (await getUserInfo()) as any;
-      setUserInfo(userInfo);
-    };
-    fetchUserInfo();
-    setUserInfoLoading(false);
-  }, []);
+  const { userInfo, userInfoLoading } = useGlobalContext();
+  console.log("🚀 ~ SellerDashboardMain ~ userInfo:", userInfo);
   const {
     data: allStudent,
     error: UserError,
     isLoading: userLoading,
-  } = useGetAllUsersQuery({ isDelete: ENUM_YN.NO, author: userInfo?.id });
+  } = useGetAllUsersQuery(
+    { isDelete: ENUM_YN.NO, author: userInfo?.id },
+    { skip: !Boolean(userInfo?.id) }
+  );
+  // console.log(allStudent);
   const {
     data: allPurchasePackage,
     error: allPurchasePackageError,
@@ -45,18 +37,15 @@ export default function SellerDashboardMain() {
     },
     { skip: !Boolean(userInfo?.id) }
   );
-  const {
-    data: allSingleQuiz,
-    error: allSingleQuizError,
-    isLoading: allSingleQuizLoading,
-  } = useGetAllSingleQuizQuery(
+  const { data: totalCourse, isLoading } = useGetAllCourseQuery(
     {
       isDelete: ENUM_YN.NO,
-      user: userInfo?.id,
+      author: userInfo?.id,
     },
     { skip: !Boolean(userInfo?.id) }
   );
-  if (userLoading || userInfoLoading || allSingleQuizLoading) {
+  console.log(totalCourse);
+  if (userLoading || userInfoLoading || isLoading) {
     return <LoadingSkeleton />;
   }
   return (
@@ -99,10 +88,10 @@ export default function SellerDashboardMain() {
                 </p>
                 <div className="space-y-2">
                   <p className="text-end font-normal text-base lggg:text-lg">
-                    Total Submitted Quiz
+                    Total Courses
                   </p>
                   <div className="font-bold font-sans text-end text-2xl">
-                    <span>{allSingleQuiz?.meta?.total || 0}</span>
+                    <span>{totalCourse?.meta?.total || 0}</span>
                   </div>
                 </div>
               </div>
@@ -160,7 +149,7 @@ export default function SellerDashboardMain() {
               <div className="rounded-lg bg-white max-w-full md:min-h-[40vh] lgg:min-h-[60vh] px-4 py-5 shadow">
                 <div className="py-2 align-middle px-2">
                   <h3 className="text-base font-medium underline underline-offset-2">
-                    Recent submitted Quiz
+                    Recent publish course
                   </h3>
                   <div className="w-full divide-y divide-gray-300">
                     <div className="flex justify-between">
@@ -172,19 +161,20 @@ export default function SellerDashboardMain() {
                       </p> */}
                     </div>
                     <div className="divide-y divide-gray-200 space-y-4">
-                      {allSingleQuiz?.data?.length ? (
-                        allSingleQuiz?.data?.map(({ title,_id,createdAt }: any) => (
-                          <div
-                            key={_id}
-                            className="flex justify-between gap-3 hover:bg-slate-50 pt-4"
-                          >
-                            <div className="font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200 ">
-                              <p className="line-clamp-1">{title}</p>
-                              <p>{new Date(createdAt).toLocaleString()}</p>
+                      {totalCourse?.data?.length ? (
+                        totalCourse?.data?.map(
+                          ({ title, _id, createdAt }: any) => (
+                            <div
+                              key={_id}
+                              className="flex justify-between gap-3 hover:bg-slate-50 pt-4"
+                            >
+                              <div className="font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200 ">
+                                <p className="line-clamp-1">{title}</p>
+                                <p>{new Date(createdAt).toLocaleString()}</p>
+                              </div>
                             </div>
-                            
-                          </div>
-                        ))
+                          )
+                        )
                       ) : (
                         <div className="py-20 w-full text-center text-red-400">
                           Empty !

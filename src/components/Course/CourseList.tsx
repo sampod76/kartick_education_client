@@ -33,18 +33,19 @@ import Test from "@/components/Utlis/Test";
 import CreateCourse from "@/components/Course/CreateCourse";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
 
-
   // const userInfo = getUserInfo() as IDecodedInfo;
-  const {userInfo,userInfoLoading} =useGlobalContext()
+  const { userInfo, userInfoLoading } = useGlobalContext();
 
-  const { data: userStateData } = useAppSelector(state => state.userInfo)
+  const { data: userStateData } = useAppSelector((state) => state.userInfo);
   // console.log('userStateData', userStateData)
 
-  const [deleteCourse, { isLoading: deleteLoading }] = useDeleteCourseMutation();
+  const [deleteCourse, { isLoading: deleteLoading }] =
+    useDeleteCourseMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -63,6 +64,9 @@ const CourseList = () => {
   query["status"] = "active";
   if (filterValue) {
     query["category"] = filterValue;
+  }
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
   }
 
   const debouncedSearchTerm = useDebounced({
@@ -323,7 +327,7 @@ const CourseList = () => {
       </ActionBar>
 
       <UMTable
-        loading={isLoading}
+        loading={isLoading || userInfoLoading}
         columns={columns}
         dataSource={courseData}
         pageSize={size}

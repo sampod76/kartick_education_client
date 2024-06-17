@@ -42,9 +42,11 @@ import React from "react";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 
 export default function ModuleDashList() {
-  const userInfo = getUserInfo() as IDecodedInfo;
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //
   const [openDrawer, setOpenDrawer] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -59,6 +61,9 @@ export default function ModuleDashList() {
   );
   const queryCategory: Record<string, any> = {};
   queryCategory["children"] = "course-milestone";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    queryCategory["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -93,7 +98,9 @@ export default function ModuleDashList() {
   if (filterValue) {
     query["milestone"] = filterValue;
   }
-
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -346,7 +353,7 @@ export default function ModuleDashList() {
         </div>
       </ActionBar>
       <UMTable
-        loading={isLoading}
+        loading={isLoading || userInfoLoading}
         columns={columns}
         dataSource={MilestoneData}
         pageSize={size}

@@ -42,8 +42,11 @@ import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { USER_ROLE } from "@/constants/role";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 
 const MileStoneList = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //
   const [openDrawer, setOpenDrawer] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -56,18 +59,19 @@ const MileStoneList = () => {
 
   const queryCategory: Record<string, any> = {};
   queryCategory["children"] = "course";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    queryCategory["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
       ...queryCategory,
     });
   const categoryData: any = Category?.data;
+  console.log("🚀 ~ MileStoneList ~ categoryData:", categoryData);
   //----------------------------------------------------------------
 
   const query: Record<string, any> = {};
-
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo
 
   const [deleteMilestone] = useDeleteMilestoneMutation();
 
@@ -92,6 +96,9 @@ const MileStoneList = () => {
   if (filterValue) {
     query["course"] = filterValue;
   }
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -106,6 +113,7 @@ const MileStoneList = () => {
 
   //@ts-ignore
   const milestoneData = data?.data || [];
+  console.log("🚀 ~ MileStoneList ~ milestoneData:", milestoneData);
 
   //@ts-ignore
   const meta = data?.meta;
@@ -188,7 +196,6 @@ const MileStoneList = () => {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
-
     },
     {
       title: "Action",
@@ -202,12 +209,16 @@ const MileStoneList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${userInfo?.role}/milestone/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/milestone/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/milestone/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/milestone/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
@@ -324,7 +335,6 @@ const MileStoneList = () => {
             Filter
           </Button>
 
-
           <Link href={`/${userInfo?.role}/milestone/create`}>
             <Button type="default">Create Milestone</Button>
           </Link>
@@ -340,7 +350,7 @@ const MileStoneList = () => {
         </div>
       </ActionBar>
       <UMTable
-        loading={isLoading}
+        loading={isLoading || userInfoLoading}
         columns={columns}
         dataSource={milestoneData}
         pageSize={size}

@@ -37,12 +37,15 @@ import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFals
 import AnswerFind from "@/components/Forms/answer/AnswerFind";
 import { IQuizType } from "@/types/quiz/singleQuizType";
 import UploadAudioFile from "@/components/ui/UploadAudio";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 
 export default function EditSingleQuiz({
   singleQuizId,
 }: {
   singleQuizId: string;
 }) {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [quizType, setQuizTypes] = useState<IQuizType>("select"); // !  tag selection
   const [videoType, setVideoType] = useState(null); // ! for video insert
   const [videoUrl, setVideoUrl] = useState("");
@@ -81,6 +84,9 @@ export default function EditSingleQuiz({
 
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module-lessons-quiz";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,

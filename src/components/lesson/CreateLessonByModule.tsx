@@ -6,7 +6,6 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 
-
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 
@@ -14,18 +13,16 @@ import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 
-
 import {
   useAddLessonMutation,
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Col, Row, message } from "antd";
-import { useSearchParams } from "next/navigation";
 
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -33,7 +30,13 @@ const TextEditor = dynamic(
   }
 );
 
-export default function CreateLessonByModule({ moduleId, moduleName }: { moduleId: string, moduleName: string }) {
+export default function CreateLessonByModule({
+  moduleId,
+  moduleName,
+}: {
+  moduleId: string;
+  moduleName: string;
+}) {
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
   const [textEditorValue, setTextEditorValue] = useState("");
   const [isReset, setIsReset] = useState(false);
@@ -41,7 +44,6 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
   const { data: existLesson, isLoading } = useGetAllLessonQuery({});
 
   // !  tag selection
-
 
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
@@ -55,7 +57,6 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
       ...values,
 
       module: moduleId,
-      // details: textEditorValue,
     };
     removeNullUndefinedAndFalsey(LessonData);
     // console.log(LessonData);
@@ -67,7 +68,7 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
-        setIsReset(true)
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -79,7 +80,9 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
   if (serviceLoading) {
     return message.loading("Loading...");
   }
-  const roundedNumber = Number(existLesson?.data[0]?.lesson_number || 1).toFixed(1);
+  const roundedNumber = Number(
+    existLesson?.data[0]?.lesson_number || 1
+  ).toFixed(1);
 
   // Add 0.1 to the rounded number and use toFixed again when logging
   const prelesson_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
@@ -183,9 +186,7 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
                   marginBottom: "10px",
                 }}
               >
-                <TagsSelectUI
-
-                />
+                <TagsSelectUI />
                 {/*//! 6 */}
               </Col>
               <Col
@@ -217,8 +218,8 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
                   </p>
                   <TextEditor
                     isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
                   />
                 </div>
               </Col>

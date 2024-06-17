@@ -27,12 +27,12 @@ import { AllImage } from "@/assets/AllImge";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { ENUM_YN } from "@/constants/globalEnums";
 import FilterCategorySelect from "../dashboard/Filter/FilterCategory";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 
 const Course_labelList = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const query: Record<string, any> = {};
-
-  // const ADMIN = USER_ROLE.ADMIN;
-  const userInfo = getUserInfo() as IDecodedInfo;
 
   // console.log("🚀 ~ file: page.tsx:41 ~ Course_labelList ~ role:", role);
 
@@ -55,9 +55,10 @@ const Course_labelList = () => {
   if (filterValue) {
     query["category"] = filterValue;
   }
-  if (userInfo) {
-    query["author"] = userInfo?.id;
-  }
+  // if (userInfo?.role !== USER_ROLE.ADMIN) {
+  //   query["author"] = userInfo?.id;
+  // }
+  console.log(query);
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -257,7 +258,7 @@ const Course_labelList = () => {
       </ActionBar>
 
       <UMTable
-        loading={isLoading}
+        loading={isLoading || userInfoLoading}
         columns={columns}
         dataSource={Course_labelData}
         pageSize={size}

@@ -31,6 +31,8 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -38,6 +40,7 @@ const TextEditor = dynamic(
   }
 );
 const CreateQuizByLesson = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
   const [milestone, setmilestone] = useState({});
@@ -46,6 +49,9 @@ const CreateQuizByLesson = () => {
 
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module-lessons";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
@@ -83,7 +89,7 @@ const CreateQuizByLesson = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
-        setIsReset(true)
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -240,7 +246,6 @@ const CreateQuizByLesson = () => {
                   </Col>
                   <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                     <DemoVideoUI
-
                       options={["youtube", "vimeo"]}
                       label="Preview Video"
                     />
@@ -289,8 +294,8 @@ const CreateQuizByLesson = () => {
                       </p>
                       <TextEditor
                         isReset={isReset}
-                      // textEditorValue={textEditorValue}
-                      // setTextEditorValue={setTextEditorValue}
+                        // textEditorValue={textEditorValue}
+                        // setTextEditorValue={setTextEditorValue}
                       />
                     </div>
                   </Col>
@@ -298,7 +303,6 @@ const CreateQuizByLesson = () => {
               </div>
               <div className=" text-center">
                 <div className=" text-center">
-
                   <ButtonSubmitUI>Create</ButtonSubmitUI>
                 </div>
               </div>

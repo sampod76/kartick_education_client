@@ -24,6 +24,8 @@ import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCatego
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -32,6 +34,7 @@ const TextEditor = dynamic(
 );
 
 export default function CreateModule() {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //
 
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
@@ -45,6 +48,9 @@ export default function CreateModule() {
 
   const query: Record<string, any> = {};
   query["children"] = "course-milestone";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
@@ -53,7 +59,12 @@ export default function CreateModule() {
   //
   // const [textEditorValue, setTextEditorValue] = useState("");
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
-  const { data: existModule, isLoading: ModuleNumLoadingg } = useGetAllModuleQuery({ status: ENUM_STATUS.ACTIVE, isDelete: ENUM_YN.NO, sortOrder: "desc" });
+  const { data: existModule, isLoading: ModuleNumLoadingg } =
+    useGetAllModuleQuery({
+      status: ENUM_STATUS.ACTIVE,
+      isDelete: ENUM_YN.NO,
+      sortOrder: "desc",
+    });
 
   const onSubmit = async (values: any) => {
     if (!milestone?._id && !course?._id) {
@@ -85,10 +96,11 @@ export default function CreateModule() {
   };
 
   if (ModuleNumLoadingg) {
-    return <div>
-
-      <Spin />
-    </div>
+    return (
+      <div>
+        <Spin />
+      </div>
+    );
   }
   const roundedModuleNumber = Number(
     existModule?.data[0]?.module_number || 1
@@ -159,7 +171,7 @@ export default function CreateModule() {
             <Form
               isReset={isReset}
               submitHandler={onSubmit}
-            // defaultValues={{ module_number: Number(preModule_number) }}
+              // defaultValues={{ module_number: Number(preModule_number) }}
             >
               <div
                 style={{
@@ -193,11 +205,16 @@ export default function CreateModule() {
                       required={true}
                     />
                   </Col>
-                  <Col className="gutter-row" xs={4} style={{
-                    // backgroundColor: 'red',
-                    // display: "flex",
-
-                  }} >
+                  <Col
+                    className="gutter-row"
+                    xs={4}
+                    style={
+                      {
+                        // backgroundColor: 'red',
+                        // display: "flex",
+                      }
+                    }
+                  >
                     {/* <Space.Compact>
                       
                     </Space.Compact> */}
@@ -211,7 +228,6 @@ export default function CreateModule() {
                     {/* <span>
                       {roundedModuleNumber}
                     </span> */}
-
                   </Col>
 
                   {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
@@ -263,8 +279,8 @@ export default function CreateModule() {
                       </p>
                       <TextEditor
                         isReset={isReset}
-                      // textEditorValue={textEditorValue}
-                      // setTextEditorValue={setTextEditorValue}
+                        // textEditorValue={textEditorValue}
+                        // setTextEditorValue={setTextEditorValue}
                       />
                     </div>
                   </Col>

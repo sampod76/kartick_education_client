@@ -74,9 +74,9 @@ const CreateCourse = ({ setOpen }: any) => {
   labelQuery["sortOrder"] = "asc";
   labelQuery["status"] = "active";
   labelQuery["category"] = category;
-  if (userInfo.role === USER_ROLE.SELLER) {
-    labelQuery["author"] = userInfo.id;
-  }
+  // if (userInfo.role === USER_ROLE.SELLER) {
+  //   labelQuery["author"] = userInfo.id;
+  // }
   const { data: LabelData, isLoading: getLabelLoading } =
     useGetAllCourse_labelQuery(labelQuery, { skip: !Boolean(category) });
   // const LabelDataOptions = LabelData?.data?.map((item: any) => {
@@ -267,16 +267,18 @@ const CreateCourse = ({ setOpen }: any) => {
                   </Form.Item>
                 </Col>
 
-                <Col xs={24} md={12} lg={12} style={{}}>
-                  <Form.Item label="Showing Number" name="showing_number">
-                    <InputNumber
-                      type="number"
-                      size="large"
-                      style={{ width: "100%" }}
-                      placeholder="Please type price"
-                    />
-                  </Form.Item>
-                </Col>
+                {userInfo.role === USER_ROLE.ADMIN && (
+                  <Col xs={24} md={12} lg={12} style={{}}>
+                    <Form.Item label="Showing Number" name="showing_number">
+                      <InputNumber
+                        type="number"
+                        size="large"
+                        style={{ width: "100%" }}
+                        placeholder="Please type price"
+                      />
+                    </Form.Item>
+                  </Col>
+                )}
 
                 <Col xs={24} md={12} lg={12} style={{}}>
                   <Form.Item label="Duration" name="duration">
@@ -322,12 +324,12 @@ const CreateCourse = ({ setOpen }: any) => {
                   {/* <Form.Item label="Course level" name="level">
                     <Input size="large" placeholder="Course level" />
                   </Form.Item> */}
-                  <Form.Item label="Course label" name="label_id" required>
+                  <Form.Item label="Course label (optional)" name="label_id">
                     <Select
                       size="large"
                       allowClear
                       loading={getLabelLoading}
-                      placeholder="select course label"
+                      placeholder="Example "
                       style={{ width: "100%" }}
                     >
                       {LabelData?.data?.length &&
@@ -372,7 +374,7 @@ const CreateCourse = ({ setOpen }: any) => {
                 ) : null}
                 <Col xs={24} md={12} lg={12}>
                   <Form.Item
-                    label="Select coruse status"
+                    label="Select course status"
                     name="status"
                     style={{ width: "100%" }}
                   >

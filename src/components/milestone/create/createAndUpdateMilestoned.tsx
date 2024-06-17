@@ -22,6 +22,8 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import { ENUM_STATUS } from "@/constants/globalEnums";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 //
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -32,6 +34,7 @@ const TextEditor = dynamic(
 // courseId -->For update
 const CreateMilestone = ({ setOpen, courseId, title }: any) => {
   //
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [isReset, setIsReset] = useState(false);
   const [category, setCategory] = useState<{ _id?: string }>({});
   const [courses, setCourses] = useState<{ _id?: string }>({});
@@ -39,6 +42,9 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
   const query: Record<string, any> = {};
   query["children"] = "course";
   query["status"] = ENUM_STATUS.ACTIVE;
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection for filtering
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery(
     {
@@ -47,6 +53,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
     { skip: Boolean(courseId) }
   );
   const categoryData: any = Category?.data;
+  console.log("🚀 ~ CreateMilestone ~ categoryData:", categoryData);
 
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
@@ -128,9 +135,10 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
             {/* resolver={yupResolver(IServiceSchema)} */}
             <h1 className="text-xl font-bold my-2">Create Milestone</h1>
 
-            <Form submitHandler={onSubmit}
+            <Form
+              submitHandler={onSubmit}
               isReset={isReset}
-            // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+              // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
             >
               <div
                 style={{
@@ -199,8 +207,8 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                       </p>
                       <TextEditor
                         isReset={isReset}
-                      // textEditorValue={textEditorValue}
-                      // setTextEditorValue={setTextEditorValue}
+                        // textEditorValue={textEditorValue}
+                        // setTextEditorValue={setTextEditorValue}
                       />
                     </div>
                   </Col>
