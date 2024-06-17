@@ -1,39 +1,26 @@
 "use client";
+import { ENUM_VIDEO_PLATFORM, ENUM_YN } from "@/constants/globalEnums";
+import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
+import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
+import { EllipsisMiddle } from "@/utils/CutTextElliples";
+import VimeoPlayer from "@/utils/vimoPlayer";
 import {
-  CaretRightOutlined,
-  RightCircleOutlined,
+  EyeInvisibleOutlined,
   EyeOutlined,
   LockOutlined,
-  EyeInvisibleOutlined,
+  RightCircleOutlined,
 } from "@ant-design/icons";
-import type { CSSProperties } from "react";
-import React, { useState } from "react";
-import type { CollapseProps } from "antd";
-import { Collapse, theme } from "antd";
-import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
-import TextToSpeech from "@/utils/TextToSpeech";
+import { Collapse } from "antd";
 import Link from "next/link";
-import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
-import { CutText } from "@/utils/CutText";
-import VimeoPlayer from "@/utils/vimoPlayer";
-import { ENUM_VIDEO_PLATFORM, ENUM_YN } from "@/constants/globalEnums";
-import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { EllipsisMiddle } from "@/utils/CutTextElliples";
+import { useState } from "react";
 import YoutubePlayer from "react-player/youtube";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 
-import { getUserInfo } from "@/services/auth.service";
-import ModalComponent from "../Modal/ModalComponents";
-import LoginPage from "../Login/LoginPage";
-import { usePathname } from "next/navigation";
-import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
-import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourseApi";
-import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
-import { USER_ROLE } from "@/constants/role";
-import parse from "html-react-parser";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import { urlChecker } from "@/utils/urlChecker";
 import QuizIcon from "@/assets/svg/quizIcon";
 import { useCheckPurchaseCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import { urlChecker } from "@/utils/urlChecker";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import parse from "html-react-parser";
 export default function LessonList({
   moduleId,
   moduleData,
@@ -44,16 +31,16 @@ export default function LessonList({
   // console.log(moduleId, "moduleId from LessonList");
 
   const screens = useBreakpoint();
-  const userInfo = getUserInfo() as any;
 
   const [currentCollapse, setCurrentCollapse] = useState<string[]>([]);
   ////! for purchased data of a user
-  const categoryId = moduleData?.category ||  moduleData?.milestone?.course?.category?._id;
-  const courseId = moduleData?.course || moduleData?.milestone?.course?._id
+  const categoryId =
+    moduleData?.category || moduleData?.milestone?.course?.category?._id;
+  const courseId = moduleData?.course || moduleData?.milestone?.course?._id;
   // console.log("🚀 ~ categoryId:", moduleData)
 
   let IsExistCategoryOrCourse: any = false;
- 
+
   //! for Course options selection
   const lesson_query: Record<string, any> = {};
   lesson_query["limit"] = 999999;
@@ -66,12 +53,12 @@ export default function LessonList({
     ...lesson_query,
   });
 
-  const {data:checkPurchase,isLoading:CheckPurchaseLoading}=useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`)
+  const { data: checkPurchase, isLoading: CheckPurchaseLoading } =
+    useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`);
   // console.log("🚀 ~ checkPurchase:", checkPurchase)
-  if(checkPurchase){
-    IsExistCategoryOrCourse=checkPurchase
+  if (checkPurchase) {
+    IsExistCategoryOrCourse = checkPurchase;
   }
-
 
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
@@ -84,16 +71,14 @@ export default function LessonList({
     ...quiz_query,
   });
 
-  if (
-    isLoading ||
-    quizLoading  ||CheckPurchaseLoading  
-  ) {
+  if (isLoading || quizLoading || CheckPurchaseLoading) {
     return <LoadingSkeleton />;
   }
 
   // console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
-    if (IsExistCategoryOrCourse
+    if (
+      IsExistCategoryOrCourse
       // || index === 0//! for first open video
     ) {
       if (lesson?.videos?.length && lesson?.videos[0]?.link) {
@@ -122,13 +107,10 @@ export default function LessonList({
           {/* <ModalComponent buttonText="login">
             <LoginPage redirectLink={pathname} />
           </ModalComponent> */}
-
         </div>
       );
     }
   };
-
-
 
   //! collapse data ////
   const collapseLessonData = lessonData?.data?.map(
@@ -181,12 +163,14 @@ export default function LessonList({
                       className="text-[14px] flex justify-between  mx-auto mt-3 text-[#479FEC]"
                     >
                       <h2 className="text-base font-normal flex justify-start gap-1">
-                     <span className="mt-1"><QuizIcon/></span>   Quiz : {quiz?.title}
+                        <span className="mt-1">
+                          <QuizIcon />
+                        </span>{" "}
+                        Quiz : {quiz?.title}
                       </h2>
-                      
+
                       {/* <LockOutlined style={{ fontSize: "18px" }} /> */}
                     </Link>
-                    
                   );
                 })}
             </div>

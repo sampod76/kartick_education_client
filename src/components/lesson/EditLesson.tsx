@@ -31,6 +31,8 @@ import VideoSelect from "@/components/Forms/VideoSelect";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -40,6 +42,7 @@ const TextEditor = dynamic(
 );
 
 export default function EditLesson({ lessonId }: { lessonId: string }) {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
   const [milestone, setmilestone] = useState({});
@@ -48,6 +51,9 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
   //! for Category options selection
   const query: Record<string, any> = {};
   query["children"] = "course-milestone-module";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
   });

@@ -21,6 +21,8 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { USER_ROLE } from "../../../constants/role";
 //
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -30,6 +32,7 @@ const TextEditor = dynamic(
 );
 
 export default function CreateMilestoneByCourse() {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //
 
   const [category, setCategory] = useState<{ _id?: string }>({});
@@ -38,6 +41,9 @@ export default function CreateMilestoneByCourse() {
 
   const query: Record<string, any> = {};
   query["children"] = "course";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Categorys, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,

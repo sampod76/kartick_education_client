@@ -45,8 +45,10 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 
 export default function LessonDashList() {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //
   const [openDrawer, setOpenDrawer] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
@@ -62,6 +64,9 @@ export default function LessonDashList() {
 
   const queryCategory: Record<string, any> = {};
   queryCategory["children"] = "course-milestone-module";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    queryCategory["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -70,9 +75,8 @@ export default function LessonDashList() {
   const categoryData: any = Category?.data;
   //!----------------------------------------------------------------
 
-
   const query: Record<string, any> = {};
-  const userInfo = getUserInfo() as IDecodedInfo;
+
   // const SUPER_ADMIN=USER_ROLE.ADMIN
 
   const [deleteLesson] = useDeleteLessonMutation();
@@ -100,7 +104,9 @@ export default function LessonDashList() {
   if (filterValue) {
     query["module"] = filterValue;
   }
-
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -327,7 +333,6 @@ export default function LessonDashList() {
           >
             Filter
           </Button>
-
 
           <Link href={`/${userInfo?.role}/lesson/create`}>
             <Button type="default">Create Lesson</Button>

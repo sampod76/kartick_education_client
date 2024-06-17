@@ -1,6 +1,8 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+import UMTable from "@/components/ui/UMTable";
+import { useDebounced } from "@/redux/hooks";
+import { ReloadOutlined } from "@ant-design/icons";
 import {
   Button,
   Drawer,
@@ -8,51 +10,36 @@ import {
   Dropdown,
   Input,
   Menu,
-  RadioChangeEvent,
   Space,
   message,
 } from "antd";
 import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
 
-import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
+import dayjs from "dayjs";
 
-import Image from "next/image";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
+import Image from "next/image";
 
-import {
-  useDeleteMilestoneMutation,
-  useGetAllMilestoneQuery,
-} from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 
+import { AllImage } from "@/assets/AllImge";
+import { ENUM_STATUS } from "@/constants/globalEnums";
+import { USER_ROLE } from "@/constants/role";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import {
+  useAddSingleQuizMutation,
   useDeleteSingleQuizMutation,
   useGetAllSingleQuizQuery,
 } from "@/redux/api/adminApi/singleQuizApi";
-import { AllImage } from "@/assets/AllImge";
-import { USER_ROLE } from "@/constants/role";
-import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import { ENUM_STATUS } from "@/constants/globalEnums";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-import timeDurationToMilliseconds from "@/hooks/stringToMiliSecend";
-import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuizApi";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 const SingleQuizList = () => {
   const { userInfo, userInfoLoading } = useGlobalContext();
   //
@@ -74,7 +61,7 @@ const SingleQuizList = () => {
   const queryCategory: Record<string, any> = {};
   queryCategory["children"] = "course-milestone-module-lessons-quiz";
   if (userInfo?.role !== USER_ROLE.ADMIN) {
-    query["author"] = userInfo?.id;
+    queryCategory["author"] = userInfo?.id;
   }
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
@@ -111,7 +98,9 @@ const SingleQuizList = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
-
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }

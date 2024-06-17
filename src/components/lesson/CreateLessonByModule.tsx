@@ -20,9 +20,11 @@ import {
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Col, Row, message } from "antd";
 
+import { USER_ROLE } from "@/constants/role";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -37,11 +39,15 @@ export default function CreateLessonByModule({
   moduleId: string;
   moduleName: string;
 }) {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
   const [textEditorValue, setTextEditorValue] = useState("");
   const [isReset, setIsReset] = useState(false);
-
-  const { data: existLesson, isLoading } = useGetAllLessonQuery({});
+  const query: Record<string, any> = {};
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
+  const { data: existLesson, isLoading } = useGetAllLessonQuery(query);
 
   // !  tag selection
 

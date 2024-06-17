@@ -1,6 +1,9 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+import UMTable from "@/components/ui/UMTable";
+import { useDebounced } from "@/redux/hooks";
+import { ReloadOutlined } from "@ant-design/icons";
 import {
   Button,
   Drawer,
@@ -12,40 +15,29 @@ import {
   message,
 } from "antd";
 import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
 
-import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
+import dayjs from "dayjs";
 
-import Image from "next/image";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
+import Image from "next/image";
 
+import { AllImage } from "@/assets/AllImge";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import { USER_ROLE } from "@/constants/role";
 import {
   useDeleteQuizMutation,
   useGetAllQuizQuery,
 } from "@/redux/api/adminApi/quizApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import FilterLesson from "@/components/dashboard/Filter/FilterLesson";
-import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
-import { USER_ROLE } from "@/constants/role";
+import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 
 const QuizDashList = () => {
   const { userInfo, userInfoLoading } = useGlobalContext();
@@ -77,6 +69,7 @@ const QuizDashList = () => {
     });
 
   const categoryData: any = Category?.data;
+  console.log("🚀 ~ QuizDashList ~ categoryData:", categoryData);
   //---------------------------------------------------------
 
   const [deleteQuiz] = useDeleteQuizMutation();
@@ -105,7 +98,9 @@ const QuizDashList = () => {
   if (filterValue) {
     query["lesson"] = filterValue;
   }
-
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,

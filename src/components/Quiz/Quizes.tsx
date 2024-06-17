@@ -1,19 +1,14 @@
 // only modula in single quiz
 "use client";
 
-import React from "react";
-import { Card, Radio, Input, Select, Button } from "antd";
-import QuizAside from "./QuizAside";
-import UMBreadCrumb from "../ui/UMBreadCrumb";
 import { useGetAllSingleQuizQuery } from "@/redux/api/adminApi/singleQuizApi";
+import { Select } from "antd";
+import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import TextToSpeech from "@/utils/TextToSpeech";
 // import QuizTestPage from "./QuizTestPage";
-import { ArrowLeftOutlined } from "@ant-design/icons"
-import Link from "next/link";
 import { singleQuizTypes } from "@/constants/global";
-import { ISingleQuizData } from "@/types/quiz/singleQuizType";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 const QuizTestPage = React.lazy(() => import("./QuizTestPage"));
 
 const { Option } = Select;
@@ -25,12 +20,11 @@ export default function QuizeSinglePage({
   quizeId: string;
   quiz_title: string;
 }) {
-
-  const router = useRouter()
+  const router = useRouter();
   // console.log("🚀 ~ quizeId:", quizeId)
   const searchParams = useSearchParams();
   const quiz_query: Record<string, any> = {};
-  //! for a quiz data 
+  //! for a quiz data
   quiz_query["limit"] = 999999;
   quiz_query["sortBy"] = "serialNumber";
   quiz_query["sortOrder"] = "asc";
@@ -41,7 +35,6 @@ export default function QuizeSinglePage({
   });
   // console.log('quizeIdquizeId', quizeId, "🚀 ~ allSingleQuizeData:", allSingleQuizeData);
 
-
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
   };
@@ -50,23 +43,24 @@ export default function QuizeSinglePage({
     return <LoadingSkeleton number={10} />;
   }
 
-
-  const filteredByTypesQuizData = allSingleQuizeData?.data?.filter(item => {
+  const filteredByTypesQuizData = allSingleQuizeData?.data?.filter((item) => {
     return singleQuizTypes.includes(item?.type);
   });
 
   // href = {`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`
   // }
-  const moduleInfo = allSingleQuizeData?.data[0]?.module
+  const moduleInfo = allSingleQuizeData?.data[0]?.module;
   // console.log(allSingleQuizeData, 'allSingleQuizeData', moduleInfo)
 
   const rediretBack = () => {
     if (moduleInfo?._id) {
-      router.push(`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`)
+      router.push(
+        `/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`
+      );
     } else {
-      router.back()
+      router.back();
     }
-  }
+  };
 
   return (
     <div className="container mx-auto rounded-xl mt-3 shadow-2xl">
@@ -104,7 +98,6 @@ export default function QuizeSinglePage({
           ]}
         /> 
         */}
-
       </div>
 
       <div className="w-full  mx-auto my-5 lg:my-0 ">
@@ -175,7 +168,6 @@ export default function QuizeSinglePage({
               </Button>
             </div>
           </div> */}
-
       </div>
     </div>
   );

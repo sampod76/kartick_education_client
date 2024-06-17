@@ -22,6 +22,8 @@ import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCatego
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import { USER_ROLE } from "@/constants/role";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -30,6 +32,7 @@ const TextEditor = dynamic(
 );
 
 export default function CreateModuleByMilestone() {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [isReset, setIsReset] = useState(false);
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
     {}
@@ -41,6 +44,9 @@ export default function CreateModuleByMilestone() {
 
   const query: Record<string, any> = {};
   query["children"] = "course-milestone";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
@@ -49,11 +55,12 @@ export default function CreateModuleByMilestone() {
   //
 
   const [addModule, { isLoading: serviceLoading }] = useAddModuleMutation();
-  const { data: existModule, isLoading: moduleNOLOading } = useGetAllModuleQuery({
-    status: ENUM_STATUS.ACTIVE,
-    isDelete: ENUM_YN.NO,
-    milestone: milestone?._id,
-  });
+  const { data: existModule, isLoading: moduleNOLOading } =
+    useGetAllModuleQuery({
+      status: ENUM_STATUS.ACTIVE,
+      isDelete: ENUM_YN.NO,
+      milestone: milestone?._id,
+    });
 
   const onSubmit = async (values: any) => {
     if (!milestone?._id) {
@@ -84,9 +91,11 @@ export default function CreateModuleByMilestone() {
   };
 
   if (moduleNOLOading) {
-    return <div>
-      <Spin />
-    </div>
+    return (
+      <div>
+        <Spin />
+      </div>
+    );
   }
   const roundedModuleNoNumber = Number(
     existModule?.data[0]?.module_number || 1
@@ -157,7 +166,7 @@ export default function CreateModuleByMilestone() {
             <Form
               isReset={isReset}
               submitHandler={onSubmit}
-            // defaultValues={{ module_number: Number(preModule_number) }}
+              // defaultValues={{ module_number: Number(preModule_number) }}
             >
               <div
                 style={{
@@ -250,8 +259,8 @@ export default function CreateModuleByMilestone() {
                       </p>
                       <TextEditor
                         isReset={isReset}
-                      // textEditorValue={textEditorValue}
-                      // setTextEditorValue={setTextEditorValue}
+                        // textEditorValue={textEditorValue}
+                        // setTextEditorValue={setTextEditorValue}
                       />
                     </div>
                   </Col>
