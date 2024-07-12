@@ -1,26 +1,19 @@
 "use client";
-import React from "react";
-import { FaUser } from "react-icons/fa";
-import { GiBookCover } from "react-icons/gi";
-import { MdAccountBalance } from "react-icons/md";
-import { SiSellfy } from "react-icons/si";
-import { FaUserTimes } from "react-icons/fa";
-import { FaUserNurse } from "react-icons/fa";
-import { FaUserNinja } from "react-icons/fa";
-import { Col, Row } from "antd";
-import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useGetAllTrainersQuery } from "@/redux/api/adminApi/trainerApi";
+import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 import { ENUM_YN } from "@/constants/globalEnums";
+import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import { useGetAllUsersQuery } from "@/redux/api/adminApi/usersApi";
 import {
   useGetAllPurchaseAcceptedCourseAmountQuery,
   useGetAllPurchaseAcceptedCourseQuery,
   useGetAllPurchaseAcceptedPackageAmountQuery,
   useGetAllPurchaseAcceptedPackageQuery,
-  useGetAllPurchasePendingAndAcceptedCourseQuery,
 } from "@/redux/api/public/purchaseAPi";
-import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
+import { FaUser, FaUserTimes } from "react-icons/fa";
+import { GiBookCover } from "react-icons/gi";
+import { MdAccountBalance } from "react-icons/md";
+import { SiSellfy } from "react-icons/si";
 
 type ICard = {
   _id: string;
@@ -117,86 +110,90 @@ export default function TopDashStatistics() {
                   </div>
                 </AnimatePresenceWrapper>
                 <AnimatePresenceWrapper>
-                <div className="border text-white bg-[#1ad588] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
-                  <p className="border-2 border-white rounded-md p-1">
-                    <GiBookCover className="h-7 w-7" />
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-end font-normal text-base lggg:text-lg">
-                      Total Course
+                  <div className="border text-white bg-[#1ad588] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
+                    <p className="border-2 border-white rounded-md p-1">
+                      <GiBookCover className="h-7 w-7" />
                     </p>
-                    <div className="font-bold font-sans text-end text-2xl">
-                      <span>{allCourseNumber || 0}</span>
+                    <div className="space-y-2">
+                      <p className="text-end font-normal text-base lggg:text-lg">
+                        Total Course
+                      </p>
+                      <div className="font-bold font-sans text-end text-2xl">
+                        <span>{allCourseNumber || 0}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </AnimatePresenceWrapper>
                 <AnimatePresenceWrapper>
-                <div className="border text-white bg-[#60803b] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
-                  <p className="border-2 border-white rounded-md p-1">
-                    <MdAccountBalance className="h-7 w-7" />
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-end font-normal text-base lggg:text-lg">
-                      Total Amount
+                  <div className="border text-white bg-[#60803b] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
+                    <p className="border-2 border-white rounded-md p-1">
+                      <MdAccountBalance className="h-7 w-7" />
                     </p>
-                    <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
-                      <span>
-                        $
-                        {allSellCourseAmount?.data[0]?.totalAmount +
-                          allSellPackageAmount?.data[0]?.totalAmount}
-                      </span>
+                    <div className="space-y-2">
+                      <p className="text-end font-normal text-base lggg:text-lg">
+                        Total Amount
+                      </p>
+                      <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
+                        <span>
+                          $
+                          {allSellCourseAmount?.data[0]?.totalAmount +
+                            allSellPackageAmount?.data[0]?.totalAmount}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </AnimatePresenceWrapper>
                 <AnimatePresenceWrapper>
-                <div className="border text-white bg-[#508baa] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
-                  <p className="border-2 border-white rounded-md p-1">
-                    <SiSellfy className="h-7 w-7" />
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-end font-normal text-base lggg:text-lg">
-                      Total Sales courses
+                  <div className="border text-white bg-[#508baa] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
+                    <p className="border-2 border-white rounded-md p-1">
+                      <SiSellfy className="h-7 w-7" />
                     </p>
-                    <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
-                      <span>${allSellCourseAmount?.data[0]?.totalAmount}</span>
+                    <div className="space-y-2">
+                      <p className="text-end font-normal text-base lggg:text-lg">
+                        Total Sales courses
+                      </p>
+                      <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
+                        <span>
+                          ${allSellCourseAmount?.data[0]?.totalAmount}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </AnimatePresenceWrapper>
                 <AnimatePresenceWrapper>
-                <div className="border text-white bg-[#5eacd6] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
-                  <p className="border-2 border-white rounded-md p-1">
-                    <SiSellfy className="h-7 w-7" />
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-end font-normal text-base lggg:text-lg">
-                      Total Sales Package
+                  <div className="border text-white bg-[#5eacd6] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
+                    <p className="border-2 border-white rounded-md p-1">
+                      <SiSellfy className="h-7 w-7" />
                     </p>
-                    <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
-                      <span>${allSellPackageAmount?.data[0]?.totalAmount}</span>
+                    <div className="space-y-2">
+                      <p className="text-end font-normal text-base lggg:text-lg">
+                        Total Sales Package
+                      </p>
+                      <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
+                        <span>
+                          ${allSellPackageAmount?.data[0]?.totalAmount}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </AnimatePresenceWrapper>
                 <AnimatePresenceWrapper>
-                <div className="border text-white bg-[#1d7ca5] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
-                  <p className="border-2 border-white rounded-md">
-                    <FaUserTimes className="h-7 w-7" />
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-end font-normal text-base lggg:text-lg">
-                      Total Admin
+                  <div className="border text-white bg-[#1d7ca5] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
+                    <p className="border-2 border-white rounded-md">
+                      <FaUserTimes className="h-7 w-7" />
                     </p>
-                    <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
-                      <span>{2}</span>
+                    <div className="space-y-2">
+                      <p className="text-end font-normal text-base lggg:text-lg">
+                        Total Admin
+                      </p>
+                      <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
+                        <span>{1}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </AnimatePresenceWrapper>
               </div>
-              
+
               <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3">
                 <div className="rounded-lg bg-white max-w-full md:min-h-[40vh] lgg:min-h-[60vh] px-4 py-5 shadow">
                   <div className="py-2 align-middle px-2">

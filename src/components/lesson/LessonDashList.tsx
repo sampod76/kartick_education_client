@@ -1,6 +1,15 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+import UMModal from "@/components/ui/UMModal";
+import UMTable from "@/components/ui/UMTable";
+import { useDebounced } from "@/redux/hooks";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
+import { ReloadOutlined } from "@ant-design/icons";
 import {
   Button,
   Drawer,
@@ -11,41 +20,26 @@ import {
   Space,
   message,
 } from "antd";
-import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
 import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
 import Image from "next/image";
-import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
+import Link from "next/link";
+import { useState } from "react";
 
+import { AllImage } from "@/assets/AllImge";
+import FilterModule from "@/components/dashboard/Filter/FilterModule";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import { USER_ROLE } from "@/constants/role";
 import {
   useDeleteLessonMutation,
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import FilterModule from "@/components/dashboard/Filter/FilterModule";
-import { AllImage } from "@/assets/AllImge";
 
-import React from "react";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import ModalComponent from "../Modal/ModalComponents";
+import AssignmentUpload from "../assignment/Assignment";
 
 export default function LessonDashList() {
   const { userInfo, userInfoLoading } = useGlobalContext();
@@ -224,6 +218,7 @@ export default function LessonDashList() {
                       View
                     </Link>
                   </Menu.Item>
+
                   <Menu.Item key="edit">
                     <Link href={`/${userInfo?.role}/lesson/edit/${record._id}`}>
                       Edit
@@ -243,6 +238,11 @@ export default function LessonDashList() {
                     }}
                   >
                     Delete
+                  </Menu.Item>
+                  <Menu.Item key="view">
+                    <ModalComponent buttonText="Add assignment">
+                      <AssignmentUpload lessonData={record} />
+                    </ModalComponent>
                   </Menu.Item>
                 </Menu>
               }

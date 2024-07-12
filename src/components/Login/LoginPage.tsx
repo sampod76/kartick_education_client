@@ -1,30 +1,23 @@
 "use client";
-import { Button, Col, Input, Row, Spin, message, Modal } from "antd";
-import loginImage from "@/assets/login-image.png";
-import Image from "next/image";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
+import { Button, message } from "antd";
+import Image from "next/image";
 import { SubmitHandler } from "react-hook-form";
 // import { useUserLoginMutation } from "@/redux/api/authApi";
-import {
-  IDecodedInfo,
-  getUserInfo,
-  isLoggedIn,
-  storeUserInfo,
-} from "@/services/auth.service";
-import { useRouter } from "next/navigation";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/schemas/login";
-import { Error_model_hook } from "@/utils/modalHook";
-import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
-import { useUserLoginMutation } from "@/redux/api/auth/authApi";
-import ButtonLoading from "../ui/Loading/ButtonLoading";
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { AllImage } from "@/assets/AllImge";
+import { useUserLoginMutation } from "@/redux/api/auth/authApi";
+import { loginSchema } from "@/schemas/login";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { Error_model_hook } from "@/utils/modalHook";
+import { yupResolver } from "@hookform/resolvers/yup";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
+import ButtonLoading from "../ui/Loading/ButtonLoading";
 import ForgetPassword from "./ForgetPassword";
-import { useSearchParams } from 'next/navigation'
 type FormValues = {
   email: string;
   password: string;
@@ -47,7 +40,8 @@ const Login = ({
   //!----------- if user already login then auto redirect--------
   useEffect(() => {
     if (userInfo.id) {
-      router.back();
+      // router.back();
+      router.push("/");
     }
     setLoading(false);
     return () => {};
@@ -59,14 +53,14 @@ const Login = ({
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      console.log("🚀 ~ constonSubmit:SubmitHandler<FormValues>= ~ res:", res)
+      console.log("🚀 ~ constonSubmit:SubmitHandler<FormValues>= ~ res:", res);
       if (res?.accessToken) {
         // router.push("/profile");
         message.success("User logged in successfully!");
         // storeUserInfo({ accessToken: res?.accessToken });
-        localStorage.setItem('accessToken', res?.accessToken);
+        localStorage.setItem("accessToken", res?.accessToken);
         setTimeout(() => {
-          router.push(redirect ||redirectLink || `/`);
+          router.push(redirect || redirectLink || `/`);
         }, 300);
         // setOpen(false)
       } else {
@@ -114,7 +108,6 @@ const Login = ({
         <Image
           className="relative -top-24 -z-10"
           style={{ width: "100vw", height: "100vh" }}
-          
           src={
             "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           }

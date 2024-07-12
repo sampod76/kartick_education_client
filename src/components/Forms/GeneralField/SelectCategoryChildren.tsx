@@ -1,11 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import FormSelectField from "../FormSelectField";
+import React, { useState } from "react";
 
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
-import FormSearchSelectField from "../FormSearchSelectField";
-import { Select } from "antd";
 import LabelUi from "@/components/ui/dashboardUI/LabelUi";
+import { Select } from "antd";
 
 const SelectCategoryChildren = ({
   categoryData,
@@ -36,13 +33,17 @@ const SelectCategoryChildren = ({
   const CategoryOptions = categoryData?.map((item: any) => {
     let label = "";
     if (item.milestone_number) {
-      label = `${item.milestone_number} : ${item.title}`;
+      // label = `${item.milestone_number} : ${item.title}`;
+      label = `${item.title}`;
     } else if (item.module_number) {
-      label = `${item.module_number} : ${item.title}`;
+      // label = `${item.module_number} : ${item.title}`;
+      label = `${item.title}`;
     } else if (item.lesson_number) {
-      label = `${item.lesson_number} : ${item.title}`;
+      // label = `${item.lesson_number} : ${item.title}`;
+      label = ` ${item.title}`;
     } else if (item.serial_number) {
-      label = `${item.serial_number} : ${item.title}`;
+      // label = `${item.serial_number} : ${item.title}`;
+      label = ` ${item.title}`;
     } else {
       label = `${item.title}`;
     }
@@ -55,9 +56,7 @@ const SelectCategoryChildren = ({
 
   return (
     <div>
-      {lableText &&
-        <LabelUi>{lableText}</LabelUi>
-      }
+      {lableText && <LabelUi>{lableText}</LabelUi>}
       <Select
         size="large"
         // onChange={handleChange ? handleChange : onChange}
@@ -79,7 +78,7 @@ const SelectCategoryChildren = ({
         loading={isLoading}
         allowClear
 
-      // placeholder={placeholder}
+        // placeholder={placeholder}
       />
     </div>
   );

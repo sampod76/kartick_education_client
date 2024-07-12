@@ -12,18 +12,18 @@ import { useAddMilestoneMutation } from "@/redux/api/adminApi/milestoneApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Col, FloatButton, Row, Spin } from "antd";
-import React, { useState } from "react";
+import { Col, Row, Spin } from "antd";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 
-import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import FormTextArea from "@/components/Forms/FormTextArea";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import { ENUM_STATUS } from "@/constants/globalEnums";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import FormTextArea from "@/components/Forms/FormTextArea";
+import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
+import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
+import { ENUM_STATUS } from "@/constants/globalEnums";
 import { USER_ROLE } from "@/constants/role";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 //
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
@@ -166,7 +166,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
                       size="large"
                       label="Milestone No"
                       placeholder="Please enter a milestone No"
-                      required={true}
+                      // required={true}
                     />
                   </Col>
 

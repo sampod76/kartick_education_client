@@ -8,50 +8,39 @@ import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
-import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
 import {
-  useAddCourseMutation,
   useGetSingleCourseQuery,
   useUpdateCourseMutation,
 } from "@/redux/api/adminApi/courseApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import {
-  Button,
-  Col,
-  Input,
-  Row,
-  Select,
-  Spin,
-  Typography,
-  Upload,
-  message,
-} from "antd";
+import { Col, Row, Spin } from "antd";
 import { useState } from "react";
 
-import dynamic from "next/dynamic";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
-import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
 import { ENUM_YN } from "@/constants/globalEnums";
+import { USER_ROLE } from "@/constants/role";
+import formatMongoCreatedAtDate from "@/hooks/formateMongoTimeToLocal";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-import { useGetAllCourse_labelQuery } from "@/redux/api/adminApi/courseLevelApi";
+import dynamic from "next/dynamic";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 import SelectLabelField from "../Forms/SelectData/SelectLabel";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
     ssr: false,
   }
-)
+);
 
 export default function EditCourse({ courseId }: { courseId: string }) {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [updateCourse, { isLoading: courseUpdateLoading }] =
     useUpdateCourseMutation();
   const [category, setCategory] = useState("");
-  console.log("🚀 ~ CreateCourse ~ category:", category)
+  console.log("🚀 ~ CreateCourse ~ category:", category);
   const {
     data: getCourse = {},
     isLoading,
@@ -65,13 +54,15 @@ export default function EditCourse({ courseId }: { courseId: string }) {
 
   console.log(getCourse);
 
-
   // console.log(demo_video);
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
     const CourseData = {
       ...values,
     };
+    // if (userInfo?.role !== USER_ROLE.ADMIN) {
+    //   CourseData.author = userInfo?.id;
+    // }
 
     try {
       const res = await updateCourse({
@@ -115,10 +106,10 @@ export default function EditCourse({ courseId }: { courseId: string }) {
           defaultValues={
             getCourse?._id
               ? {
-                ...getCourse,
-                category: getCourse?.category?._id,
-                author: getCourse?.author?._id,
-              }
+                  ...getCourse,
+                  category: getCourse?.category?._id,
+                  author: getCourse?.author?._id,
+                }
               : {}
           }
         >
@@ -171,24 +162,22 @@ export default function EditCourse({ courseId }: { courseId: string }) {
                       options={priceTypeOptions}
                       // defaultValue={priceTypeOptions[0]}
                       label="Price Type"
-                    // placeholder="Select"
+                      // placeholder="Select"
                     />
                     {/* //! price type 8 */}
                   </Col>
 
-
-
                   <Col xs={24} md={12} lg={12} style={{}}>
                     <div className="flex flex-col justify-start ">
-                      {getCourse?.duration[0] &&
-
+                      {getCourse?.duration[0] && (
                         <p className="ml:3">
                           {" "}
                           Start date:{" "}
-                          {formatMongoCreatedAtDate(getCourse?.duration[0])} - End
-                          : {formatMongoCreatedAtDate(getCourse?.duration[1])}
+                          {formatMongoCreatedAtDate(getCourse?.duration[0])} -
+                          End :{" "}
+                          {formatMongoCreatedAtDate(getCourse?.duration[1])}
                         </p>
-                      }
+                      )}
 
                       <FormDataRange name="duration" label="Duration" />
                     </div>
@@ -206,13 +195,17 @@ export default function EditCourse({ courseId }: { courseId: string }) {
                     {/* //! category 10 */}
                   </Col>
                   <Col xs={24} md={12} lg={12} style={{}}>
-                    <SelectLabelField category={category || getCourse?.labelDetails?.category} />
+                    <SelectLabelField
+                      category={category || getCourse?.labelDetails?.category}
+                    />
                     {/* //! category 10 */}
                   </Col>
-                  <Col xs={24} md={12} lg={12} style={{}}>
-                    <SelectAuthorField />
-                    {/* //! price type 8 */}
-                  </Col>
+                  {userInfo?.role === USER_ROLE.ADMIN && (
+                    <Col xs={24} md={12} lg={12} style={{}}>
+                      <SelectAuthorField />
+                      {/* //! price type 8 */}
+                    </Col>
+                  )}
                   <Col xs={24} md={12} lg={12} style={{}}>
                     <FormSelectField
                       size="large"
@@ -220,7 +213,7 @@ export default function EditCourse({ courseId }: { courseId: string }) {
                       options={courseStatusOptions as any}
                       // defaultValue={priceTypeOptions[0]}
                       label="status"
-                    // placeholder="Select"
+                      // placeholder="Select"
                     />
                   </Col>
                   <Col xs={24} md={12} lg={12} style={{}}>
@@ -233,7 +226,7 @@ export default function EditCourse({ courseId }: { courseId: string }) {
                       ]}
                       // defaultValue={priceTypeOptions[0]}
                       label="Featcher"
-                    // placeholder="Select"
+                      // placeholder="Select"
                     />
                   </Col>
 
@@ -252,8 +245,8 @@ export default function EditCourse({ courseId }: { courseId: string }) {
                       name="demo_video.video"
                       size="large"
                       label="Preview Video"
-                    // videoType={videoT"
-                    //
+                      // videoType={videoT"
+                      //
                     />
                   </Col>
 

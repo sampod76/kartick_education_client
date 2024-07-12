@@ -1,39 +1,30 @@
 "use client";
+import CreateCourse from "@/components/Course/CreateCourse";
+import ModalComponent from "@/components/Modal/ModalComponents";
+import FilterCategorySelect from "@/components/dashboard/Filter/FilterCategory";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Dropdown, Input, Menu, Space, message } from "antd";
-import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useAppSelector, useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
-import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
-import Image from "next/image";
+import UMTable from "@/components/ui/UMTable";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import { USER_ROLE } from "@/constants/role";
+import {
+  useDeleteCourseMutation,
+  useGetAllCourseQuery,
+} from "@/redux/api/adminApi/courseApi";
+import { useAppSelector, useDebounced } from "@/redux/hooks";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
-import {
-  useDeleteCourseMutation,
-  useGetAllCourseQuery,
-} from "@/redux/api/adminApi/courseApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import FilterCategorySelect from "@/components/dashboard/Filter/FilterCategory";
+import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Input, Menu, Space, message } from "antd";
+import dayjs from "dayjs";
 import dynamic from "next/dynamic";
-import ModalComponent from "@/components/Modal/ModalComponents";
-import Test from "@/components/Utlis/Test";
-import CreateCourse from "@/components/Course/CreateCourse";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
-import { USER_ROLE } from "@/constants/role";
 
 const CourseList = () => {
   const query: Record<string, any> = {};
@@ -208,11 +199,7 @@ const CourseList = () => {
               overlay={
                 <Menu>
                   <Menu.Item key="details">
-                    <Link
-                      href={`/${userInfo?.role}/course/details/${record._id}`}
-                    >
-                      View
-                    </Link>
+                    <Link href={`/course/milestone/${record._id}`}>View</Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
                     <Link href={`/${userInfo?.role}/course/edit/${record._id}`}>
