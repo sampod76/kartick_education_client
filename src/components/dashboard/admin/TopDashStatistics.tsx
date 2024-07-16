@@ -66,6 +66,7 @@ export default function TopDashStatistics() {
   ) {
     return <LoadingSkeleton />;
   }
+  // console.log(allSellCourseErrorAmount);
   return (
     <div>
       {/*

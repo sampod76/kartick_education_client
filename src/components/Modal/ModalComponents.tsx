@@ -2,27 +2,21 @@
 import React, { ReactElement, useState } from "react";
 import { Button, Modal } from "antd";
 
-
 const ModalComponent = ({
   children,
   buttonText,
   loading = false,
-  
 }: {
   children: React.ReactElement;
   buttonText?: string;
   loading?: boolean;
-  
 }) => {
   const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
 
-
   const showModal = () => {
     setOpen(true);
   };
-
-
 
   const handleCancel = () => {
     setOpen(false);
@@ -46,9 +40,10 @@ const ModalComponent = ({
             <OkBtn /> */}
           </>
         )}
+        // footer={null}
         width={1000}
       >
-       {React.cloneElement(children, { open, setOpen })}
+        {React.cloneElement(children, { open, setOpen })}
       </Modal>
     </>
   );

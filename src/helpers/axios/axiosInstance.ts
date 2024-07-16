@@ -47,17 +47,25 @@ instance.interceptors.response.use(
 
   async function (error) {
     const config = error?.config;
-
-    if (error?.response?.status === 403 && !config?.sent) {
-      config.sent = true;
+    const sent = getFromLocalStorage("sent");
+    console.log("🚀 ~ sent:", sent);
+    if (error?.response?.status === 403 && sent == (null || "false")) {
+      setToLocalStorage("sent", "true");
       const response = await getRefreshToken();
+      console.log("🚀 ~ response:", response);
       const accessToken = response?.data?.accessToken;
       config.headers["Authorization"] = accessToken;
       setToLocalStorage(authKey, accessToken);
+      setToLocalStorage("sent", "false");
+      console.log(config);
       return instance(config);
     } else {
       console.log(error);
-      if (error?.response?.status === 403  || error?.response?.data?.message ==='Validation Error:-> refreshToken : Refresh Token is required') {
+      if (
+        error?.response?.status === 403 ||
+        error?.response?.data?.message ===
+          "Validation Error:-> refreshToken : Refresh Token is required"
+      ) {
         removeUserInfo(authKey);
       }
       let responseObject: any = {

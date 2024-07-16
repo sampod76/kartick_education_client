@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 import ButtonLoading from "../ui/Loading/ButtonLoading";
 import ForgetPassword from "./ForgetPassword";
+import { setToLocalStorage } from "@/utils/local-storage";
 type FormValues = {
   email: string;
   password: string;
@@ -59,6 +60,8 @@ const Login = ({
         message.success("User logged in successfully!");
         // storeUserInfo({ accessToken: res?.accessToken });
         localStorage.setItem("accessToken", res?.accessToken);
+        // localStorage.setItem("sent", "false");
+
         setTimeout(() => {
           router.push(redirect || redirectLink || `/`);
         }, 300);
