@@ -21,31 +21,29 @@ import { Error_model_hook } from "@/utils/modalHook";
 import { USER_ROLE } from "@/constants/role";
 import { AllImage } from "@/assets/AllImge";
 
-
 const UserProfile = ({ userData }: { userData: IUserData | any }) => {
-  // console.log(userData, 'userData')
-  const router = useRouter()
+  //// console.log(userData, 'userData')
+  const router = useRouter();
   if (!userData?._id) {
-    Error_model_hook("Not found user")
+    Error_model_hook("Not found user");
 
-    return
+    return;
   }
 
   const img = userData?.img || userData[userData?.role]?.img;
-  // console.log(img);
+  //// console.log(img);
   const gender = userData?.gender || userData[userData?.role]?.gender;
   const phoneNumber =
-
     userData?.phoneNumber || userData[userData.role]?.phoneNumber;
   const address = userData?.address || userData[userData.role]?.address;
-  const dateOfBirth = userData?.dateOfBirth || userData[userData.role]?.dateOfBirth;
+  const dateOfBirth =
+    userData?.dateOfBirth || userData[userData.role]?.dateOfBirth;
 
   const firstName =
     userData?.name?.firstName || userData[userData?.role]?.name?.firstName;
   const lastName =
     userData?.name?.lastName || userData[userData?.role]?.name?.lastName;
-  const role = userData?.role || userData[userData?.role]?.role
-
+  const role = userData?.role || userData[userData?.role]?.role;
 
   return (
     <main className="profile-page">
@@ -62,19 +60,23 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
           />
         </div>
         <div className="mx-auto w-[180px] h-[180px] relative -mt-16 border-4 border-white rounded-full overflow-hidden">
-          <ImageAnt style={{
-            height: "180px",
-            width: "180px"
-          }} src={img || AllImage.profileAvater} alt="User mask" />
+          <ImageAnt
+            style={{
+              height: "180px",
+              width: "180px",
+            }}
+            src={img || AllImage.profileAvater}
+            alt="User mask"
+          />
         </div>
 
         <div className=" mt-2">
           <h2 className="font-semibold text-center uppercase">
-            {firstName} {lastName} <span className="text-sm capitalize text-gray-800">({role})</span>
+            {firstName} {lastName}{" "}
+            <span className="text-sm capitalize text-gray-800">({role})</span>
             {/* <span>({role === USER_ROLE.SELLER ? 'Teacher' : role})</span> */}
           </h2>
         </div>
-
 
         <div className="px-3 mt-1">
           <div className="flex justify-between ">
@@ -82,9 +84,23 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
             <p>Gender: {gender}</p>
           </div>
           <div className="text-[10px] my-3 text-gray-800">
-            <h2> <MailOutlined /> <span className="text-[14px] ml-2 ">{userData?.email}</span></h2>
-            <h2> <BankOutlined /><span className="text-[14px] ml-2 "> BirthDay: {dateOfBirth}</span></h2>
-            <h2><EnvironmentOutlined /> <span className="text-[14px] ml-2 ">{address}</span></h2>
+            <h2>
+              {" "}
+              <MailOutlined />{" "}
+              <span className="text-[14px] ml-2 ">{userData?.email}</span>
+            </h2>
+            <h2>
+              {" "}
+              <BankOutlined />
+              <span className="text-[14px] ml-2 ">
+                {" "}
+                BirthDay: {dateOfBirth}
+              </span>
+            </h2>
+            <h2>
+              <EnvironmentOutlined />{" "}
+              <span className="text-[14px] ml-2 ">{address}</span>
+            </h2>
           </div>
         </div>
 

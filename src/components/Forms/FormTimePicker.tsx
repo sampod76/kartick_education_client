@@ -15,12 +15,13 @@ type FormTimePickerProps = {
 export default function FormTimePicker({ name, label }: FormTimePickerProps) {
   const { control, setValue } = useFormContext();
 
-
   const customLocale = {
     ...locale,
     lang: {
       ...locale.lang,
-      ok: <button className="bg-primary text-white px-2  rounded">{"Ok"}</button>, // Change "Ok" text to "Save"
+      ok: (
+        <button className="bg-primary text-white px-2  rounded">{"Ok"}</button>
+      ), // Change "Ok" text to "Save"
       cancel: "Close", // Change "Cancel" text to "Close"
     },
   };
@@ -31,13 +32,13 @@ export default function FormTimePicker({ name, label }: FormTimePickerProps) {
         name={name}
         control={control}
         render={({ field }) => {
-          // console.log(field, "tttttttttttttt");
+          //
 
           let defaultTime = field?.value;
           if (typeof defaultTime === "number") {
             defaultTime = convertTimeDurationMillisecondsToTime(defaultTime);
           }
-          // console.log(defaultTime);
+          //
 
           return (
             <div className="flex flex-col items-start capitalize">
@@ -55,17 +56,16 @@ export default function FormTimePicker({ name, label }: FormTimePickerProps) {
                 onChange={(el, value) => {
                   setValue(name, value);
                 }}
-                popupStyle={{ backgroundColor: 'black' }}
+                popupStyle={{ backgroundColor: "black" }}
                 style={{ width: "100%" }}
-              // renderExtraFooter={() => (
-              //   <>
+                // renderExtraFooter={() => (
+                //   <>
 
-              //     <h2>
-              //       Ok
-              //     </h2>
-              //   </>
-              // )}
-
+                //     <h2>
+                //       Ok
+                //     </h2>
+                //   </>
+                // )}
               />
             </div>
           );
@@ -74,5 +74,3 @@ export default function FormTimePicker({ name, label }: FormTimePickerProps) {
     </>
   );
 }
-
-

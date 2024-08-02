@@ -93,7 +93,7 @@ const StudentListCom = ({
     {
       width: 150,
       render: function (data: any) {
-        // console.log(data);
+        //// console.log(data);
         let img = `${data[data.role]?.img} `;
         if (img === "undefined" || img === "undefined ") {
           img = "";
@@ -115,9 +115,8 @@ const StudentListCom = ({
     {
       title: "Name",
       render: function (data: any) {
-        // console.log(data);
-        const fullName = `${data?.name?.firstName} ${data?.name?.lastName
-          }  `;
+        //// console.log(data);
+        const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
         return <>{fullName}</>;
       },
     },
@@ -134,7 +133,7 @@ const StudentListCom = ({
       title: "Contact no.",
       // dataIndex: "phoneNumber",
       render: function (data: any) {
-        // console.log(data);
+        //// console.log(data);
         const fullName = `${data?.phoneNumber}`;
         return <>{fullName}</>;
       },
@@ -143,7 +142,7 @@ const StudentListCom = ({
     //   title: "Date Of Birth",
     //   // dataIndex: "dateOfBirth",
     //   render: function (data: any) {
-    //     // console.log(data);
+    //     //// console.log(data);
     //     const date = `${data[data.role]?.dateOfBirth}   `;
     //     return date && dayjs(date).format("MMMM D, YYYY");
     //   },
@@ -153,7 +152,7 @@ const StudentListCom = ({
       title: "Gender",
       // dataIndex: "gender",
       render: function (data: any) {
-        // console.log(data);
+        //// console.log(data);
         const gender = `${data?.gender}   `;
         return <>{gender}</>;
       },
@@ -161,7 +160,6 @@ const StudentListCom = ({
     {
       title: "Status",
       dataIndex: "status",
-
     },
     {
       title: "Action",
@@ -175,12 +173,16 @@ const StudentListCom = ({
                 overlay={
                   <Menu>
                     <Menu.Item key="details">
-                      <Link href={`/${userInfo?.role}/manage-users/students/details/${id}`}>
+                      <Link
+                        href={`/${userInfo?.role}/manage-users/students/details/${id}`}
+                      >
                         View
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="edit">
-                      <Link href={`/${userInfo?.role}/manage-users/students/edit/${id}`}>
+                      <Link
+                        href={`/${userInfo?.role}/manage-users/students/edit/${id}`}
+                      >
                         Edit
                       </Link>
                     </Menu.Item>
@@ -216,13 +218,13 @@ const StudentListCom = ({
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -234,7 +236,7 @@ const StudentListCom = ({
   };
 
   const handleDeactivate = async (id: string, data: any) => {
-    console.log(id);
+    // console.log(id);
     confirm_modal(`Are you sure you want to Update status`, "Yes").then(
       async (res) => {
         if (res.isConfirmed) {
@@ -281,7 +283,7 @@ const StudentListCom = ({
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

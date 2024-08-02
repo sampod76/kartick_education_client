@@ -15,7 +15,7 @@ import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFals
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleUserQuery,
-  useUpdateUserMutation
+  useUpdateUserMutation,
 } from "@/redux/api/adminApi/usersApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -27,22 +27,21 @@ const EditUserData = ({ params }: any) => {
   const { data: userData, isLoading } = useGetSingleUserQuery(params?.id);
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
   const [updateUser, { isLoading: updateLoading, error }] =
-  useUpdateUserMutation();
+    useUpdateUserMutation();
 
   const onSubmit = async (values: any) => {
     const UpdateValues = {
       ...values,
-  
     };
     removeNullUndefinedAndFalsey(UpdateValues);
 
-    console.log(UpdateValues, "dfghtyfgh")
+    
     try {
       const res = await updateUser({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res, "ghjbnhj");
+      
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -50,17 +49,16 @@ const EditUserData = ({ params }: any) => {
       }
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (isLoading || updateLoading) {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
+    
   }
-  
-  console.log(userData);
+
   
 
   const defaultValues = {
@@ -75,7 +73,7 @@ const EditUserData = ({ params }: any) => {
     bloodGroup: userData[userData?.role]?.bloodGroup || "", // Optional blood group
     address: userData[userData?.role]?.address || "",
     img: userData[userData?.role]?.img || "",
-    StdId : userData[userData?.role]?.id || ""
+    StdId: userData[userData?.role]?.id || "",
   };
 
   return (
@@ -151,7 +149,7 @@ const EditUserData = ({ params }: any) => {
                 }}
               >
                 <FormInput
-                   type="text"
+                  type="text"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"

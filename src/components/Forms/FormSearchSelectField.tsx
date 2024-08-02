@@ -22,7 +22,7 @@ type SelectFieldProps = {
   required?: boolean;
   disabled?: boolean;
   loading?: boolean;
-  setState?: any
+  setState?: any;
 };
 
 const FormSearchSelectField = ({
@@ -37,7 +37,7 @@ const FormSearchSelectField = ({
   required,
   disabled = false,
   loading = false,
-  setState
+  setState,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
 
@@ -47,7 +47,7 @@ const FormSearchSelectField = ({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-    //  // console.log("search:", value);
+
   };
 
   return (
@@ -65,10 +65,9 @@ const FormSearchSelectField = ({
           <Select
             // onChange={handleChange ? handleChange : onChange}
             onChange={(val) => {
-
               onChange(val);
               if (setState) {
-                setState(val)
+                setState(val);
               }
             }}
             disabled={disabled}
@@ -83,8 +82,8 @@ const FormSearchSelectField = ({
             filterOption={filterOption}
             optionFilterProp="children"
             loading={loading}
-          // allowClear
-          // placeholder={placeholder}
+            // allowClear
+            // placeholder={placeholder}
           />
         )}
       />

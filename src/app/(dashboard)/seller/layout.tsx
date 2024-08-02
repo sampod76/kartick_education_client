@@ -10,13 +10,13 @@ import dynamic from "next/dynamic";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const userInfo: any = getUserInfo();
-  // console.log("🚀 ~ DashboardLayout ~ userInfo:", userInfo)
-  // console.log(userInfo);
+  //
+  //
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (!userInfo?.role) {
       router.push("/login");
     } else if (userInfo?.role !== USER_ROLE.SELLER) {

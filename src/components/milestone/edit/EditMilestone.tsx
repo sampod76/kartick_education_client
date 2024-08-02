@@ -58,7 +58,7 @@ export default function EditMilestone({
   //
   const { data = {}, isLoading: gerMilestoneLoading } =
     useGetSingleMilestoneQuery(milestoneId);
-  console.log("🚀 ~ file: page.tsx:50 ~ MilestoneEditePage ~ data:", data);
+  // console.log("🚀 ~ file: page.tsx:50 ~ MilestoneEditePage ~ data:", data);
   //
   // const [textEditorValue, setTextEditorValue] = useState("");
 
@@ -74,24 +74,24 @@ export default function EditMilestone({
       ...values,
       // details: textEditorValue,
     };
-    // console.log(MilestoneData);
+    //// console.log(MilestoneData);
     removeNullUndefinedAndFalsey(MilestoneData);
     try {
       const res = await updateMilestone({
         id: milestoneId,
         data: MilestoneData,
       }).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully Update Milestone");
         // setTextEditorValue("");
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
   if (gerMilestoneLoading) {

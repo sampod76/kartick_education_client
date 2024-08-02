@@ -80,21 +80,21 @@ const CreateQuizByLesson = () => {
       demo_video,
       lesson: lesson?._id,
     };
-    console.log(LessonData);
+    // console.log(LessonData);
 
     try {
       const res = await addQuiz(LessonData).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
         setIsReset(true);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 

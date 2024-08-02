@@ -11,7 +11,6 @@ const CourseDetailsTab = ({ CourseData }: { CourseData: ICourseData }) => {
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
-    // console.log(key);
   };
 
   const activeClass =
@@ -35,11 +34,7 @@ const CourseDetailsTab = ({ CourseData }: { CourseData: ICourseData }) => {
       key: "3",
       children: <ReviewsPage />,
     },
-  ]
-
-
-
-
+  ];
 
   return (
     <div className="mt-5">

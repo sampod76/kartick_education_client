@@ -48,7 +48,7 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
   });
 
   const categoryData: any = Category?.data;
-  // console.log("🚀 ~ ClassData:", ClassData)
+  //
 
   const handleAdd = () => {
     setClassData([
@@ -69,7 +69,6 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
     setClassData(updatedClassData);
   };
 
-
   return (
     <div className="">
       <SubHeadingUI>Add Class </SubHeadingUI>
@@ -86,7 +85,6 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
             borderRadius: "4px",
             width: "100%",
             // background: 'blue',
-
           }}
           className="shadow-1 "
         >
@@ -106,10 +104,15 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
               // boxSizing: "border-box",
               // width: 100 %;
             }}
-          // align="start"
+            // align="start"
           >
             <MinusCircleOutlined
-              style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
+              style={{
+                fontSize: "1.5rem",
+                position: "absolute",
+                right: 0,
+                top: 0,
+              }}
               onClick={() => handleRemove(index)}
             />
             {/*//! 1. class title */}
@@ -126,7 +129,7 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
               onChange={(e) =>
                 handleChange(index, { ...answer, title: e.target.value })
               }
-            // defaultValue={index + 1}
+              // defaultValue={index + 1}
             />
             <p className="-mb-3">Select Course </p>
             <Select
@@ -160,7 +163,7 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
               onChange={(e) =>
                 handleChange(index, { ...answer, buttonLink: e.target.value })
               }
-            // defaultValue={index + 1}
+              // defaultValue={index + 1}
             />
             <p className="-mb-3">
               Short description <span className="text-red-600">*</span>
@@ -194,7 +197,7 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
                 multiple={false}
                 // multiple
                 beforeUpload={async (file) => {
-                  // console.log(
+                  //
                   //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
                   //   file
                   // );
@@ -215,7 +218,9 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
                   return false; // Prevent default upload behavior
                 }}
               >
-                <Button loading={loading} style={{ textAlign: "start" }}>Class Image +</Button>
+                <Button loading={loading} style={{ textAlign: "start" }}>
+                  Class Image +
+                </Button>
               </Upload>
               <div className="flex justify-between items-center">
                 {answer?.img && (
@@ -232,13 +237,10 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
 
             {/* select status */}
           </div>
-
         </div>
-      ))
-      }
+      ))}
       <Button
         type="dashed"
-
         // disabled={ClassData?.length > 6 ? true : false}
         onClick={handleAdd}
         // block
@@ -247,7 +249,7 @@ const CLassField: React.FC<ClassFieldProps> = ({ ClassData, setClassData }) => {
         {/* {ClassData?.length < 7 ? "Add Answer" : "Already added 6"} */}
         Add Class
       </Button>
-    </div >
+    </div>
   );
 };
 

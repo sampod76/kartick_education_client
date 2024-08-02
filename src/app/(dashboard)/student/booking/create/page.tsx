@@ -21,10 +21,10 @@ import React, { useState } from "react";
 const CreateService = () => {
   const [addService, { isLoading: serviceLoading }] =
     useAddServiceWithFormDataMutation();
-    const [isReset, setIsReset] = useState(false);
+  const [isReset, setIsReset] = useState(false);
   const { data = [], isLoading } = useGetAllCategoryQuery({});
   const onSubmit = async (values: any) => {
-    console.log(values);
+    
     removeNullUndefinedAndFalsey(values);
     try {
       const res = await addService(values).unwrap();
@@ -32,12 +32,12 @@ const CreateService = () => {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added service");
-        setIsReset(true)
+        setIsReset(true);
       }
-      console.log(res);
+      
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      
     }
   };
 
@@ -221,7 +221,6 @@ const CreateService = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -242,7 +241,7 @@ const CreateService = () => {
             </Row>
           </div>
 
-          <Button htmlType="submit"   type="default">
+          <Button htmlType="submit" type="default">
             Create
           </Button>
         </Form>

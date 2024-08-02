@@ -11,10 +11,10 @@ import React, { useState } from "react";
 import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 
 const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
-  // console.log(milestoneId);
+  //// console.log(milestoneId);
   const { data: milestoneData, isLoading: milestionLoading } =
     useGetSingleMilestoneQuery(milestoneId);
-  // console.log(milestoneData);
+  //// console.log(milestoneData);
 
   const { data, isLoading } = useGetAllModuleQuery({
     course: milestoneId,
@@ -23,7 +23,7 @@ const ModuleList = ({ milestoneId }: { milestoneId: any }) => {
   });
 
   const modulesData = data?.data;
-  console.log("🚀 ~ ModuleList ~ modulesData:", modulesData);
+  // console.log("🚀 ~ ModuleList ~ modulesData:", modulesData);
 
   return (
     <>

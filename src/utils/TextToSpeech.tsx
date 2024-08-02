@@ -3,9 +3,8 @@ import React, { useState, useEffect } from "react";
 const TextToSpeech: React.FC<{ text: string }> = ({ text }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [speakingText, setSpeakingText] = useState<SpeechSynthesisUtterance | null>(
-    null
-  );
+  const [speakingText, setSpeakingText] =
+    useState<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
     const loadVoices = () => {
@@ -13,7 +12,7 @@ const TextToSpeech: React.FC<{ text: string }> = ({ text }) => {
       setVoices(availableVoices);
     };
 
-    if ('speechSynthesis' in window) {
+    if ("speechSynthesis" in window) {
       speechSynthesis.onvoiceschanged = loadVoices;
     }
 
@@ -26,8 +25,8 @@ const TextToSpeech: React.FC<{ text: string }> = ({ text }) => {
     const utterance = new SpeechSynthesisUtterance(text);
 
     const womanVoice = voices.find((voice) =>
-    // console.log(voice)
-    
+
+
       voice.name.toLowerCase().includes("female")
     );
 
@@ -35,8 +34,7 @@ const TextToSpeech: React.FC<{ text: string }> = ({ text }) => {
       utterance.voice = womanVoice;
     }
 
-    // console.log(womanVoice);
-    
+
 
     utterance.onend = () => {
       setIsPlaying(false);

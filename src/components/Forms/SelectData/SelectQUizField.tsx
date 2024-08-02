@@ -11,7 +11,7 @@ const SelectQUizField = () => {
 
   const { data: Quizs, isLoading } = useGetAllQuizQuery({ ...query });
   const QuizData = Quizs?.data;
-  // console.log(QuizData)
+  //// console.log(QuizData)
   const QuizOptions = QuizData?.map((item: any) => {
     return {
       label: item?.title,

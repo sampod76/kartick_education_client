@@ -33,15 +33,15 @@ export default function QuizTestPage({
   const { userAnswers } = useAppSelector((state: any) => state.quiz);
 
   //! for submitted  getQUiz
-  // console.log(quizId, 'quizIdquizIdquizIdquizIdquizId')
+  //// console.log(quizId, 'quizIdquizIdquizIdquizIdquizId')
   const { data: userSubmitData, isLoading } = useGetSubmitUserQuizQuery(quizId);
 
   // const userSubmitData = quizAnswerData;
 
-  // console.log(userSubmitData)
+  //// console.log(userSubmitData)
   const submittedDefaultData: ISubmittedUserQuizData = userSubmitData?.find(
     (answer: any) => answer?.singleQuiz?._id === currentAnswer?.singleQuiz
-  )
+  );
 
   // ! For Test is submitted Answer is CorrectAnswer;
 
@@ -54,53 +54,61 @@ export default function QuizTestPage({
     // });
 
     // return allCorrect;
-    if (responseData?.singleQuiz?.type === 'input') {
-      const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
-      return isCorrectInput
-    }
-    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find" || responseData?.singleQuiz?.type === "drag" || responseData?.singleQuiz?.type === "audio") {
-      const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
-        const submittedAnswer = responseData?.singleQuiz?.answers?.find(
-          (answer: any) => answer.id === answerId && answer.correct
-        );
-        return submittedAnswer && submittedAnswer.correct;
-      });
+    if (responseData?.singleQuiz?.type === "input") {
+      const isCorrectInput =
+        responseData?.singleQuiz?.single_answer ===
+        responseData?.submitAnswers[0]
+          ? true
+          : false;
+      return isCorrectInput;
+    } else if (
+      responseData?.singleQuiz?.type === "select" ||
+      responseData?.singleQuiz?.type === "multiple_select" ||
+      responseData?.singleQuiz?.type === "find" ||
+      responseData?.singleQuiz?.type === "drag" ||
+      responseData?.singleQuiz?.type === "audio"
+    ) {
+      const allCorrectSelect = responseData?.submitAnswers.every(
+        (answerId: string) => {
+          const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+            (answer: any) => answer.id === answerId && answer.correct
+          );
+          return submittedAnswer && submittedAnswer.correct;
+        }
+      );
       return allCorrectSelect;
     }
 
-    return false
+    return false;
   };
 
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
 
-  // console.log(submittedDefaultData, "ccccccccccccccccc", isCorrectAnswer);
+  //// console.log(submittedDefaultData, "ccccccccccccccccc", isCorrectAnswer);
   // if (submittedDefaultData?.submitAnswers) {
   //   setIsCorrectAnswer(checkAnswers(submittedDefaultData));
   // };
 
-
   const submitAnswer = async () => {
     if (currentAnswer?.singleQuiz !== submittedDefaultData?.singleQuiz?._id) {
-
       const isBeforeCorrect = checkAnswers(currentAnswer);
-      // console.log(isBeforeCorrect, 'isBeforeCorrect')
+      //// console.log(isBeforeCorrect, 'isBeforeCorrect')
       if (isBeforeCorrect) {
-        currentAnswer['isCorrect'] = 'yes'
+        currentAnswer["isCorrect"] = "yes";
       } else {
-        currentAnswer['isCorrect'] = 'no'
+        currentAnswer["isCorrect"] = "no";
       }
 
       try {
         const res = await submitQuiz(currentAnswer).unwrap();
-        console.log(res, "response");
+        // console.log(res, "response");
         if (res?.success === false) {
           Error_model_hook(res?.message);
-
         } else {
           // Check if submitted answers are correct
           const isCorrect = checkAnswers(res);
           if (currentStep + 1 !== quizData?.length) {
-            // console.log('equal............')
+            //// console.log('equal............')
             return setCurrentStep((prevStep) => prevStep + 1);
           }
           if (isCorrect) {
@@ -111,10 +119,9 @@ export default function QuizTestPage({
             );
           }
           if (currentStep + 1 !== quizData?.length) {
-            // console.log('equal............' )
+            //// console.log('equal............' )
             return setCurrentStep((prevStep) => prevStep + 1);
           }
-
         }
       } catch (err: any) {
         console.error(err);
@@ -123,7 +130,7 @@ export default function QuizTestPage({
     } else {
       // Error_model_hook("Already submitted the answer");
       if (currentStep + 1 !== quizData?.length) {
-        // console.log('equal............')
+        //// console.log('equal............')
         return setCurrentStep((prevStep) => prevStep + 1);
       }
     }
@@ -132,29 +139,28 @@ export default function QuizTestPage({
   // ! For Next quiz and submit Quiz
   const handleNext = () => {
     submitAnswer();
-    // console.log(currentStep,"qu !== ?.length",quizAnswerData?.length)
+    //// console.log(currentStep,"qu !== ?.length",quizAnswerData?.length)
 
     // if (currentStep + 1 !== quizData?.length) {
-    //   console.log('equal............' )
+    //  // console.log('equal............' )
     //   return setCurrentStep((prevStep) => prevStep + 1);
     // }
   };
 
-  // console.log(userAnswers)
+  //// console.log(userAnswers)
   // ! For disabled Next Button
   const isDisabledNext = useMemo(() => {
-
-    // console.log(userAnswers)
+    //// console.log(userAnswers)
     const isSelected = userAnswers.find(
       (answer: any) =>
-        answer?.index === (currentStep < quizData.length - 1 ? currentStep + 1 : currentStep + 1)
-
+        answer?.index ===
+        (currentStep < quizData.length - 1 ? currentStep + 1 : currentStep + 1)
     );
 
     let disabled = false;
 
     if (currentAnswer?.singleQuiz === submittedDefaultData?.singleQuiz?._id) {
-      // console.log("false ..........");
+      //// console.log("false ..........");
       disabled = false;
     } else if (isSelected) {
       disabled = false;
@@ -162,10 +168,16 @@ export default function QuizTestPage({
       disabled = true;
     }
     return disabled;
-  }, [currentAnswer?.singleQuiz, currentStep, quizData.length, submittedDefaultData?.singleQuiz?._id, userAnswers]);
+  }, [
+    currentAnswer?.singleQuiz,
+    currentStep,
+    quizData.length,
+    submittedDefaultData?.singleQuiz?._id,
+    userAnswers,
+  ]);
 
-  // console.log(isDisabledNext, 'isDisabledNext')
-  // console.log(quizData?.length, "and", quizAnswerData);
+  //// console.log(isDisabledNext, 'isDisabledNext')
+  //// console.log(quizData?.length, "and", quizAnswerData);
 
   // ! for result Show modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -182,19 +194,18 @@ export default function QuizTestPage({
     setIsModalOpen(false);
   };
   const handleFinishQuiz = () => {
-    // console.log(userAnswers);
+    //// console.log(userAnswers);
     // submitAnswer();
     // message.success("Quiz Finished successfully!")
-    showModal()
-
-  }
+    showModal();
+  };
 
   // ! for result Show Function
   interface AnalysisResult {
     correctAnswers: string[];
     incorrectAnswers: string[];
   }
-  // console.log('userSubmitData', userSubmitData)
+  //// console.log('userSubmitData', userSubmitData)
   function analyzeQuizAnswers(submittedData: any): AnalysisResult {
     const correctAnswersSet: Set<string> = new Set();
     const incorrectAnswersSet: Set<string> = new Set();
@@ -214,11 +225,17 @@ export default function QuizTestPage({
           singleQuiz?.answers?.forEach((answer: any) => {
             if (submitAnswers?.includes(answer?._id)) {
               if (answer?.correct) {
-                if (!correctAnswersSet?.has(singleQuiz?._id) && !incorrectAnswersSet?.has(singleQuiz?._id)) {
+                if (
+                  !correctAnswersSet?.has(singleQuiz?._id) &&
+                  !incorrectAnswersSet?.has(singleQuiz?._id)
+                ) {
                   correctAnswersSet.add(singleQuiz?._id);
                 }
               } else {
-                if (!correctAnswersSet?.has(singleQuiz?._id) && !incorrectAnswersSet?.has(singleQuiz?._id)) {
+                if (
+                  !correctAnswersSet?.has(singleQuiz?._id) &&
+                  !incorrectAnswersSet?.has(singleQuiz?._id)
+                ) {
                   incorrectAnswersSet.add(singleQuiz?._id);
                 }
               }
@@ -240,17 +257,14 @@ export default function QuizTestPage({
     return { correctAnswers, incorrectAnswers };
   }
 
-
-
-  // console.log(userSubmitData)
+  //// console.log(userSubmitData)
 
   // Example usage with the provided submittedData
   const result = analyzeQuizAnswers(userSubmitData);
-  // console.log('result', result);
-  // console.log(currentAnswer, 'submittedANswer', userSubmitData, quizData)
+  //// console.log('result', result);
+  //// console.log(currentAnswer, 'submittedANswer', userSubmitData, quizData)
   return (
     <div className="w-full  mx-aut my-5 lg:my-0 ">
-
       <div className="flex flex-col justify-start  gap-3 mt-4  w-[80 ">
         {/* Render quiz based on the current step */}
         {isLoading && <TopBarLoading />}
@@ -263,8 +277,8 @@ export default function QuizTestPage({
             currentAnswer={currentAnswer}
             setCurrentAnswer={setCurrentAnswer}
             submittedDefaultData={submittedDefaultData}
-          // setUserResponses={setUserResponses}
-          // userResponses={userResponses}
+            // setUserResponses={setUserResponses}
+            // userResponses={userResponses}
           />
         )}
         {/* {
@@ -305,24 +319,30 @@ export default function QuizTestPage({
           )}
         </div>
 
-
         {/* //! For result container UI */}
 
-        <Modal title="Your Result" open={isModalOpen} footer={(_, { OkBtn, CancelBtn }) => (
-          <>
-            {/* <Button>Custom Button</Button>
+        <Modal
+          title="Your Result"
+          open={isModalOpen}
+          footer={(_, { OkBtn, CancelBtn }) => (
+            <>
+              {/* <Button>Custom Button</Button>
             <CancelBtn />
             <OkBtn /> */}
-            <Button onClick={handleOk}>Ok </Button>
-          </>
-        )} onCancel={handleCancel} >
+              <Button onClick={handleOk}>Ok </Button>
+            </>
+          )}
+          onCancel={handleCancel}
+        >
           <div className="">
             <h2 className="text-center my-3">Total Quiz {quizData?.length}</h2>
             <h2 className="text-[1rem] font-serif text-green-600 ">
-              Total Correct Answer : <span className="">{result?.correctAnswers?.length}</span>
+              Total Correct Answer :{" "}
+              <span className="">{result?.correctAnswers?.length}</span>
             </h2>
             <h2 className="text-[1rem] font-serif  text-red-600">
-              Total InCorrect Answer : <span className="">{result?.incorrectAnswers?.length}</span>
+              Total InCorrect Answer :{" "}
+              <span className="">{result?.incorrectAnswers?.length}</span>
             </h2>
           </div>
         </Modal>

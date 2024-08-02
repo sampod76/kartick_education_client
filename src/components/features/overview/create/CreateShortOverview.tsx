@@ -1,13 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Form,
-  Input,
-  Space,
-  Upload,
-} from "antd";
+import { Button, Form, Input, Space, Upload } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -20,13 +14,11 @@ import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
 import { useAddShortOverViewMutation } from "@/redux/api/adminApi/features/overview";
 
-
 export default function CreateShortOverview() {
   const [form] = Form.useForm();
 
-
   const [textEditorValue, setTextEditorValue] = useState("");
-  // console.log(uuid,"uuiduuid")
+  //
   const { data, isLoading, error } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
@@ -40,28 +32,25 @@ export default function CreateShortOverview() {
 
   const [addShortOverView, { isLoading: shortOverviewLoading }] =
     useAddShortOverViewMutation();
-  // console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
-
-
+  //
 
   const onFinish = async (values: any) => {
-    // console.log("Received values", values);
-
+    //
 
     const shortOverView = {
       title: values.title,
 
-      page: values.page || 'page',
+      page: values.page || "page",
       details: textEditorValue,
 
       cards: values?.cards,
     };
-    console.log("🚀 ~ onFinish ~ shortOverView:", shortOverView)
+
     // return
 
     try {
       const res = await addShortOverView(shortOverView).unwrap();
-      console.log(res);
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -69,10 +58,9 @@ export default function CreateShortOverview() {
         form.resetFields();
       }
 
-      // console.log(res);
+      //
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
     }
   };
 
@@ -95,13 +83,10 @@ export default function CreateShortOverview() {
         autoComplete="off"
         layout="vertical"
       >
-
         {/* //! 1. title */}
         <Form.Item name="title" label="Title">
           <Input size="large" placeholder="Please enter Short Overview title" />
         </Form.Item>
-
-
 
         {/* //! 3.page  */}
         {/* <Form.Item name="page" label="Page">
@@ -112,20 +97,19 @@ export default function CreateShortOverview() {
           <LabelUi>Add cards</LabelUi>
           <Form.List name="cards">
             {(fields, { add, remove }) => {
-              // console.log(fields,'fieldsfieldsfieldsfields') ;
+              //
 
               // const handleChange = (value: any) => {
-              //   console.log(value, 'value');
+              //
               //   const updatedOptions = options?.filter(
               //     (item) => item?.value !== value
               //   );
-              //   // console.log(updatedOptions)
+              //   //
               //   options = updatedOptions;
-              //   // console.log(options)
+              //   //
               // };
 
               const handleRemove = (value: any) => {
-                console.log(value, "handleRemove");
                 remove(value);
               };
 
@@ -166,7 +150,10 @@ export default function CreateShortOverview() {
                           maxWidth: "200px",
                         }}
                         rules={[
-                          { required: true, message: "Missing cards count Number" },
+                          {
+                            required: true,
+                            message: "Missing cards count Number",
+                          },
                         ]}
                       >
                         <Input size="large" placeholder="count Number" />
@@ -180,10 +167,16 @@ export default function CreateShortOverview() {
                           maxWidth: "200px",
                         }}
                         rules={[
-                          { required: true, message: "Missing cards short_description" },
+                          {
+                            required: true,
+                            message: "Missing cards short_description",
+                          },
                         ]}
                       >
-                        <Input.TextArea size="large" placeholder="short_description" />
+                        <Input.TextArea
+                          size="large"
+                          placeholder="short_description"
+                        />
                       </Form.Item>
                       <MinusCircleOutlined
                         onClick={() => handleRemove(name)}

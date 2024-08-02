@@ -19,7 +19,6 @@ import {
 
 // import {}
 
-
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 import { Button, Col, Row, message } from "antd";
@@ -31,7 +30,7 @@ const EditStudentComponent = ({ id }: { id: string }) => {
   });
   const studentData = singleStudent;
 
-  console.log(studentData, id);
+  // console.log(studentData, id);
 
   const [updateStudent, { isLoading: updateLoading, error }] =
     useUpdateStudentMutation();
@@ -41,13 +40,13 @@ const EditStudentComponent = ({ id }: { id: string }) => {
     const UpdateValues = {
       ...values,
     };
-    console.log(UpdateValues);
+    // console.log(UpdateValues);
     try {
       const res = await updateStudent({
         id: id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -62,10 +61,10 @@ const EditStudentComponent = ({ id }: { id: string }) => {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
+    // console.log(error);
   }
 
-  console.log(studentData);
+  // console.log(studentData);
 
   const defaultValues = {
     name: {
@@ -154,7 +153,7 @@ const EditStudentComponent = ({ id }: { id: string }) => {
                 }}
               >
                 <FormInput
-                   type="text"
+                  type="text"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"

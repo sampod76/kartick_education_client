@@ -43,7 +43,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
     {}
   );
 
-  console.log(milestone);
+  // console.log(milestone);
   const query: Record<string, any> = {};
   query["children"] = "course-milestone";
   if (userInfo?.role !== USER_ROLE.ADMIN) {
@@ -62,10 +62,10 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
   const { data = {}, isLoading } = useGetSingleModuleQuery(moduleId, {
     skip: !Boolean(moduleId),
   });
-  // console.log("🚀 ~ file: page.tsx:57 ~ EditModule ~ data:", data);
+  //// console.log("🚀 ~ file: page.tsx:57 ~ EditModule ~ data:", data);
 
   const onSubmit = async (values: any) => {
-    // console.log(values, 'values')
+    //// console.log(values, 'values')
     if (values?.milestone?._id) {
       values["milestone"] = values?.milestone?._id;
     }
@@ -73,7 +73,7 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
       values["milestone"] = milestone?._id;
     }
 
-    // console.log(values, 'values.................')
+    //// console.log(values, 'values.................')
     removeNullUndefinedAndFalsey(values);
     const ModuleData: {} = {
       ...values,
@@ -87,23 +87,23 @@ export default function EditModule({ moduleId }: { moduleId: string }) {
         id: moduleId,
         data: ModuleData,
       }).unwrap();
-      // console.log(res);
+      //// console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully Update Module");
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message || error?.data);
-      console.log(error);
+      // console.log(error);
     }
   };
 
   if (isLoading) {
     return <LoadingSkeleton />;
   }
-  // console.log(data,'data')
+  //// console.log(data,'data')
 
   const { milestoneDefault, ...othersData } = data;
 

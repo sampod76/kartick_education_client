@@ -121,11 +121,11 @@ export default function ModuleDashList() {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deleteModule(id).unwrap();
 
-          console.log(res, "response for delete Milestone");
+          // console.log(res, "response for delete Milestone");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -251,13 +251,13 @@ export default function ModuleDashList() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -269,7 +269,7 @@ export default function ModuleDashList() {
   };
 
   const deleteModuleHandler = async (id: string) => {
-    // console.log(id);
+    //// console.log(id);
     try {
       const res = await deleteModule(id);
       if (res) {
@@ -321,7 +321,7 @@ export default function ModuleDashList() {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "20%",
+              width: "250px",
             }}
           />
           <FilterMilestone

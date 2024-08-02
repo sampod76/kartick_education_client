@@ -25,9 +25,9 @@ import { useRouter } from "next/navigation";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
-import BannerSignUp from '@/components/Home/Banner&hero/BannerSignup'
+import BannerSignUp from "@/components/Home/Banner&hero/BannerSignup";
 const SignUpTeacherAndStudent = ({ setOpen }: any) => {
-  console.log("🚀 ~ SignUpTeacherAndStudent ~ setOpen:", setOpen)
+  
   const router = useRouter();
   const [isReset, setIsReset] = useState(false);
   const [userLogin, { error, isLoading: LoginLoading }] =
@@ -43,7 +43,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
       router.back();
     }
     setLoading(false);
-    return () => { };
+    return () => {};
   }, [router, userInfo]);
 
   if (loading) {
@@ -51,7 +51,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
   }
 
   const onSubmit = async (values: any) => {
-    console.log("🚀 ~ onSubmit ~ values:", values);
+    
     removeNullUndefinedAndFalsey(values);
 
     try {
@@ -98,7 +98,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
           }
         } catch (err: any) {
           Error_model_hook(err?.data || err?.message);
-          console.log(err);
+          
         }
         router.push("/login");
       }

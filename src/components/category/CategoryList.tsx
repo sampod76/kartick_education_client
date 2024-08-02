@@ -32,7 +32,7 @@ const CategoryList = () => {
 
   // const ADMIN = USER_ROLE.ADMIN;
   const userInfo = getUserInfo() as IDecodedInfo;
-  // console.log("🚀 ~ file: page.tsx:41 ~ CategoryList ~ role:", role);
+  //
 
   const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -72,7 +72,6 @@ const CategoryList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteCategory(id).unwrap();
-          console.log("🚀 ~ confirm_modal ~ res:", res)
 
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
@@ -240,7 +239,7 @@ const CategoryList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

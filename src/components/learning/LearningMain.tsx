@@ -71,16 +71,16 @@ export default function LearningMain() {
   labelQuery["isDelete"] = ENUM_YN.NO;
   labelQuery["category"] =
     categoryId || learningCategoryId || "63621c9cc6e03d494145bea0";
-  // console.log("🚀 ~ LearningMain ~ labelQuery:", labelQuery)
+  //// console.log("🚀 ~ LearningMain ~ labelQuery:", labelQuery)
 
-  // console.log(labelQuery);
+  //// console.log(labelQuery);
 
   const {
     data: courseLevelData,
     isLoading: courseLevelLoading,
     error: categoryLevelError,
   } = useGetAllCourse_labelQuery({ ...labelQuery });
-  // console.log("🚀 ~ LearningMain ~ courseLevelData:", courseLevelData);
+  //// console.log("🚀 ~ LearningMain ~ courseLevelData:", courseLevelData);
 
   let courseQuery = { ...query };
   if (selectLabelData?._id) {
@@ -88,16 +88,16 @@ export default function LearningMain() {
   } else {
     courseQuery["label_id"] = "63621c9cc6e03d494145bea0"; //only damping
   }
-  // console.log(courseQuery)
+  //// console.log(courseQuery)
   const {
     data: courseAllData,
     isLoading,
     error,
   } = useGetAllCourseQuery({ ...courseQuery }) as any;
-  // console.log("🚀 ~ LearningMain ~ courseAllData:", courseAllData);
+  //// console.log("🚀 ~ LearningMain ~ courseAllData:", courseAllData);
 
   if (error || categoryLevelError) {
-    console.log(error, categoryLevelError);
+    // console.log(error, categoryLevelError);
   }
 
   // ! for categoryModal //
@@ -122,8 +122,8 @@ export default function LearningMain() {
     return <LoadingSkeleton />;
   }
 
-  // console.log(learningCategoryId, 'learningCategoryId')
-  // console.log(courseAllData?.data, "hyfghygf");
+  //// console.log(learningCategoryId, 'learningCategoryId')
+  //// console.log(courseAllData?.data, "hyfghygf");
 
   return (
     <div
@@ -243,7 +243,7 @@ export default function LearningMain() {
                               {courseAllData?.data?.length > 0 ? (
                                 courseAllData?.data?.map(
                                   (course: ICourseData, index: number) => (
-                                    // console.log()
+                                    //// console.log()
 
                                     <div
                                       key={course?._id}

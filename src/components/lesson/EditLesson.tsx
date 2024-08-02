@@ -65,7 +65,7 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
       skip: !Boolean(lessonId),
     }
   );
-  console.log(data);
+  // console.log(data);
   const [updateLesson, { isLoading: UpdateLesson }] = useUpdateLessonMutation();
 
   const onSubmit = async (values: any) => {
@@ -83,17 +83,17 @@ export default function EditLesson({ lessonId }: { lessonId: string }) {
         id: lessonId,
         data: LessonData,
       }).unwrap();
-      // console.log(res);
+      //// console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
         setIsReset(true);
       } else {
         Success_model("Successfully Update Lesson");
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error.message || error?.data);
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -31,14 +31,14 @@ const CreateStudentPage = () => {
       password: values.password,
       student: others,
     };
-    // console.log(
+    //// console.log(
     //   "🚀 ~ file: CreateStudent.tsx:34 ~ handleStudentSubmit ~ studentData:",
     //   studentData
     // );
 
     try {
       const res = await addStudentWithFormData(studentData).unwrap();
-      console.log(res, "response");
+      // console.log(res, "response");
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {

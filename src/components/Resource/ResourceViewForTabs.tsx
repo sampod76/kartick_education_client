@@ -10,7 +10,7 @@ import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { useGetAllResourceQuery } from "@/redux/api/adminApi/resourceApi";
 
 export default function ResourcePage({ moduleId }: { moduleId: string }) {
-  // console.log("🚀 ~ GlossaryPage ~ moduleId:", moduleId);
+  //// console.log("🚀 ~ GlossaryPage ~ moduleId:", moduleId);
 
   const { data: resourcesData, isLoading } = useGetAllResourceQuery({
     module: moduleId,
@@ -23,5 +23,13 @@ export default function ResourcePage({ moduleId }: { moduleId: string }) {
     return <LoadingSkeleton />;
   }
 
-  return <div>{data?.details ? parse(data?.details): <p className="text-center">Not found any Resource....</p>}</div>;
+  return (
+    <div>
+      {data?.details ? (
+        parse(data?.details)
+      ) : (
+        <p className="text-center">Not found any Resource....</p>
+      )}
+    </div>
+  );
 }

@@ -85,8 +85,8 @@ const CreateSingleQuiz = () => {
     useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
-    console.log("🚀 ~ onSubmit ~ values:", values);
     // console.log("🚀 ~ onSubmit ~ values:", values);
+    //// console.log("🚀 ~ onSubmit ~ values:", values);
     if (!quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");
       return;
@@ -132,10 +132,10 @@ const CreateSingleQuiz = () => {
         setIsReset(true);
         setAnswers([]);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -12,11 +12,7 @@ import {
   message,
 } from "antd";
 import Link from "next/link";
-import {
-
-  ReloadOutlined,
-
-} from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
@@ -41,7 +37,10 @@ import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { useDeletePackageMutation, useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
+import {
+  useDeletePackageMutation,
+  useGetAllPackageQuery,
+} from "@/redux/api/userApi/packageAPi";
 
 export default function PackageDashList() {
   //
@@ -67,7 +66,7 @@ export default function PackageDashList() {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
 
   const [deletePackage] = useDeletePackageMutation();
 
@@ -102,7 +101,7 @@ export default function PackageDashList() {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllPackageQuery({ ...query });
-  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+  // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
   //@ts-ignore
   const packageData = data?.data || [];
@@ -114,11 +113,11 @@ export default function PackageDashList() {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deletePackage(id).unwrap();
 
-          console.log(res, "response for delete Package");
+          // console.log(res, "response for delete Package");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -141,9 +140,7 @@ export default function PackageDashList() {
           <>
             {
               <Image
-                src={
-                  data?.img ? data?.img : AllImage.notFoundImage
-                }
+                src={data?.img ? data?.img : AllImage.notFoundImage}
                 style={{ height: "50px", width: "80px" }}
                 width={50}
                 height={50}
@@ -168,30 +165,27 @@ export default function PackageDashList() {
     },
     {
       title: "MemberShip",
-      dataIndex: ['membership', 'title'],
+      dataIndex: ["membership", "title"],
       ellipsis: true,
     },
     {
       title: "Monthly",
-      dataIndex: ['monthly', 'price'],
+      dataIndex: ["monthly", "price"],
       ellipsis: true,
       width: 100,
     },
     {
       title: "Biannual",
-      dataIndex: ['biannual', 'price'],
+      dataIndex: ["biannual", "price"],
       ellipsis: true,
       width: 100,
     },
     {
       title: "Yearly",
-      dataIndex: ['yearly', 'price'],
+      dataIndex: ["yearly", "price"],
       ellipsis: true,
       width: 100,
-
-    }
-    ,
-
+    },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -205,7 +199,7 @@ export default function PackageDashList() {
       // fixed: "right",
       width: 130,
       render: (record: any) => (
-        // console.log(object);
+        //// console.log(object);
         <>
           <Space size="middle">
             <Dropdown
@@ -217,7 +211,9 @@ export default function PackageDashList() {
                     </Link>
                   </Menu.Item> */}
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/package/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/package/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
@@ -242,13 +238,13 @@ export default function PackageDashList() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -260,7 +256,7 @@ export default function PackageDashList() {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    //// console.log(id);
     try {
       const res = await deletePackage(id);
       if (res) {
@@ -328,7 +324,6 @@ export default function PackageDashList() {
           >
             Filter
           </Button> */}
-
 
           <Link href={`/${userInfo?.role}/package/create`}>
             <Button type="default">Create Package</Button>

@@ -35,7 +35,7 @@ import { getUserInfo } from "@/services/auth.service";
 
 const AdminPage = () => {
   // const userInfo?.role = USER_ROLE.ADMIN;
-  const userInfo = getUserInfo() as any
+  const userInfo = getUserInfo() as any;
   const query: Record<string, any> = {};
   const [deleteUser] = useDeleteUserMutation();
 
@@ -65,11 +65,11 @@ const AdminPage = () => {
     ...query,
   });
 
-   console.log("🚀 ~ file: page.tsx:58 ~ AdminPage ~ data:", data);
+ 
 
   //@ts-ignore
   const UserData = data?.data;
-  //  //  // console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ UserData:", UserData);
+  
   //@ts-ignore
   const meta = data?.data?.meta;
 
@@ -100,16 +100,21 @@ const AdminPage = () => {
       render: function (data: any) {
         let fullName = "";
         if (data?.role === USER_ROLE.ADMIN) {
-          fullName = data?.admin?.name?.firstName + " " + data?.admin?.name?.lastName;
+          fullName =
+            data?.admin?.name?.firstName + " " + data?.admin?.name?.lastName;
         } else if (data?.role === USER_ROLE.TRAINER) {
           fullName =
-            data?.trainer?.name?.firstName + " " + data?.trainer?.name?.lastName;
+            data?.trainer?.name?.firstName +
+            " " +
+            data?.trainer?.name?.lastName;
         } else if (data?.role === USER_ROLE.SELLER) {
           fullName =
             data?.seller?.name?.firstName + " " + data?.seller?.name?.lastName;
         } else if (data?.role === USER_ROLE.STUDENT) {
           fullName =
-            data?.student?.name?.firstName + " " + data?.student?.name?.lastName;
+            data?.student?.name?.firstName +
+            " " +
+            data?.student?.name?.lastName;
         }
         return <p className="">{fullName}</p>;
       },
@@ -178,7 +183,9 @@ const AdminPage = () => {
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/manage-users/all-users/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/manage-users/all-users/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
@@ -198,16 +205,15 @@ const AdminPage = () => {
         </>
       ),
     },
-
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -219,7 +225,7 @@ const AdminPage = () => {
   };
 
   const deleteUserHandler = async (id: string) => {
-    console.log(id);
+
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
@@ -258,7 +264,7 @@ const AdminPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>
@@ -305,7 +311,6 @@ const AdminPage = () => {
 
 // export default AdminPage;
 
-export default dynamic(() =>
-  Promise.resolve(AdminPage), {
+export default dynamic(() => Promise.resolve(AdminPage), {
   ssr: false,
-})
+});

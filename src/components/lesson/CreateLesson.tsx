@@ -71,7 +71,7 @@ const CreateLesson = () => {
     );
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
-    console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
+    // console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
     if (!module?._id || !milestone?._id || !course?._id || !category?._id) {
       Error_model_hook(
         "Please ensure your are selected Lesson/milestone/course/category"
@@ -97,7 +97,7 @@ const CreateLesson = () => {
       }
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 

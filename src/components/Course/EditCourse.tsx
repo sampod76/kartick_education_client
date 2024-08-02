@@ -40,21 +40,15 @@ export default function EditCourse({ courseId }: { courseId: string }) {
   const [updateCourse, { isLoading: courseUpdateLoading }] =
     useUpdateCourseMutation();
   const [category, setCategory] = useState("");
-  console.log("🚀 ~ CreateCourse ~ category:", category);
+
   const {
     data: getCourse = {},
     isLoading,
     error,
   } = useGetSingleCourseQuery(courseId, { skip: !Boolean(courseId) });
   // const [textEditorValue, setTextEditorValue] = useState("");
-  // console.log(
-  //   "🚀 ~ file: page.tsx:53 ~ UpdateCoursePage ~ textEditorValue:",
-  //   textEditorValue
-  // );
 
-  console.log(getCourse);
-
-  // console.log(demo_video);
+  //
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
     const CourseData = {

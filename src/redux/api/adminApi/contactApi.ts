@@ -17,7 +17,6 @@ export const contactApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: IContactDataType[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,
@@ -28,7 +27,7 @@ export const contactApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleContact: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id);
+        //// console.log(id);
         return {
           url: `${Contact_URL}/${id}`,
           method: "GET",
@@ -38,7 +37,7 @@ export const contactApi = baseApi.injectEndpoints({
     }),
     checkPurchaseContact: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id);
+        //// console.log(id);
         return {
           url: `${Contact_URL}/check-purchase/${id}`,
           method: "GET",
@@ -49,7 +48,7 @@ export const contactApi = baseApi.injectEndpoints({
     // create a new academic department
     addContact: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+        //// console.log(data, "cacccc");
 
         return {
           url: Contact_URL,
@@ -62,7 +61,7 @@ export const contactApi = baseApi.injectEndpoints({
     // update ac department
     updateContact: build.mutation({
       query: ({ data, id }) => {
-        // console.log(data, "contact data");
+        //// console.log(data, "contact data");
         return {
           url: `${Contact_URL}/${id}`,
           method: "PATCH",

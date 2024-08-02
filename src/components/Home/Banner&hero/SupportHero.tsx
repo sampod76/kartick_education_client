@@ -15,7 +15,7 @@ const SupportHero = () => {
   query["page"] = "home";
   const { data, isLoading, error } = useGetAllSkills_planQuery({ ...query });
   const skillData = data?.data[0];
-  // console.log("🚀 ~ SupportHero ~ skillData:", skillData)
+  //// console.log("🚀 ~ SupportHero ~ skillData:", skillData)
   if (isLoading) {
     return <LoadingSkeleton />;
   }
@@ -26,7 +26,7 @@ const SupportHero = () => {
           <div className="grid md:grid-cols-2 gap-5">
             <div className="flex flex-col gap-5">
               <p className="w-fit text-sm md:text-lg font-semibold bg-[#fcdbb6] rounded-sm text-[#FB8500]">
-                 WHAT WE OFFER? 
+                WHAT WE OFFER?
               </p>
               <h1 className="text-4xl font-bold leading-normal">
                 LITERACY SUPPORT IN MATH & LANGUAGE ARTS

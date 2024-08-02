@@ -8,6 +8,7 @@ import {
   setToLocalStorage,
 } from "@/utils/local-storage";
 import axios from "axios";
+import { getBaseUrl } from "../config/envConfig";
 // import { message } from 'antd';
 
 const instance = axios.create();
@@ -36,7 +37,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
-    // console.log("🚀 ~ response:", response)
+    //// console.log("🚀 ~ response:", response)
     const responseObject: ResponseSuccessType = {
       data: response?.data?.data,
       meta: response?.data?.meta,
@@ -47,17 +48,18 @@ instance.interceptors.response.use(
 
   async function (error) {
     const config = error?.config;
-    const sent = getFromLocalStorage("sent");
-    console.log("🚀 ~ sent:", sent);
-    if (error?.response?.status === 403 && sent == (null || "false")) {
-      setToLocalStorage("sent", "true");
+
+    // console.log("🚀 ~ sent:", sent);
+    if (error?.response?.status === 403 && !config?._retry) {
+      config._retry = true;
+
       const response = await getRefreshToken();
-      console.log("🚀 ~ response:", response);
       const accessToken = response?.data?.accessToken;
+      console.log("🚀 ~ accessToken:", accessToken);
+      // axios.defaults.headers.common['Authorization'] = accessToken;
       config.headers["Authorization"] = accessToken;
       setToLocalStorage(authKey, accessToken);
-      setToLocalStorage("sent", "false");
-      console.log(config);
+
       return instance(config);
     } else {
       console.log(error);
@@ -67,6 +69,7 @@ instance.interceptors.response.use(
           "Validation Error:-> refreshToken : Refresh Token is required"
       ) {
         removeUserInfo(authKey);
+        window.location.href = "/login";
       }
       let responseObject: any = {
         statusCode: error?.response?.status || 500,

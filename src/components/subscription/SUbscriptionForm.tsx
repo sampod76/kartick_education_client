@@ -14,7 +14,7 @@ export default function SUbscriptionForm() {
     status: "active",
   });
   const CategoryData = Category?.data;
-  // console.log(CategoryData)
+  //// console.log(CategoryData)
   const CategoryOptions = CategoryData?.map((item: any) => {
     return {
       label: item?.title,
@@ -24,7 +24,7 @@ export default function SUbscriptionForm() {
   });
 
   const onFinish = (value: any) => {
-    console.log(
+   // console.log(
       "🚀 ~ file: SUbscriptionForm.tsx:10 ~ onFinish ~ value:",
       value
     );

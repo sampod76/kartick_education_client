@@ -28,7 +28,7 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
   answersMultiple,
   setAnswersMultiple,
 }) => {
-  // console.log("🚀 ~ answersMultiple:", answersMultiple)
+  //
   const [isLoading, setIsLoading] = useState<{
     loading: boolean;
     index: number;
@@ -137,7 +137,7 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
                 // multiple
                 beforeUpload={async (file) => {
                   setIsLoading({ loading: true, index: index });
-                  // console.log(
+                  //
                   //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
                   //   file
                   // );
@@ -148,7 +148,7 @@ const AnswerMultiple: React.FC<AnswerInputListProps> = ({
                   if (imgUrl) {
                     images.push(imgUrl);
                   }
-                  // console.log(images,imgUrl, answer);
+                  //
 
                   handleChange(index, {
                     ...answer,

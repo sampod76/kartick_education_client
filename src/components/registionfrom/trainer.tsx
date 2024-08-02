@@ -28,7 +28,7 @@ const CreateTrainer = ({ open, setOpen }: any) => {
     useAddTrainerWithFormDataMutation();
 
   const onSubmit = async (values: any) => {
-    // console.log(values.img, "values of student");
+    //// console.log(values.img, "values of student");
     removeNullUndefinedAndFalsey(values);
     const { password, ...value } = values;
     // Success_model("Customer created successfully");

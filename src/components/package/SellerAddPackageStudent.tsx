@@ -25,12 +25,13 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
     useAddPackageAndCourseMutation();
   const [updateIncreaseStudentPackage, { isLoading: packageUpdateLoading }] =
     useUpdateIncreaseStudentPackageMutation();
-  const { data: purchasedData, isLoading } = useGetAllPurchaseAcceptedPackageQuery({
-    status: "active",
-    isDelete: ENUM_YN.NO,
-    limit: 99999,
-    user: userInfo?.id,
-  });
+  const { data: purchasedData, isLoading } =
+    useGetAllPurchaseAcceptedPackageQuery({
+      status: "active",
+      isDelete: ENUM_YN.NO,
+      limit: 99999,
+      user: userInfo?.id,
+    });
 
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
@@ -42,19 +43,19 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
         user: userId,
         author: userInfo.id,
       }).unwrap();
-      console.log("🚀 ~ addPackageForStudent ~ data:", data);
+      // console.log("🚀 ~ addPackageForStudent ~ data:", data);
 
       const data2 = await updateIncreaseStudentPackage({
         id: packageId,
         data: { studentId: userId },
       });
-      console.log("🚀 ~ addPackageForStudent ~ data2:", data2);
+      // console.log("🚀 ~ addPackageForStudent ~ data2:", data2);
 
       Success_model("Successfully added package");
       setOpen(false);
     } catch (error: any) {
       Error_model_hook(error.message);
-      console.log(error);
+      // console.log(error);
     }
   };
   return (
@@ -64,7 +65,7 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
           return (
             <div
               key={item._id || index}
-            // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
+              // href={`/packages/milestone/${packages?._id}?category=${packages?.category?._id}`}
             >
               <div className="p-3">
                 <div className="flex flex-col w-full justify-center items-center bg-white shadow-2xl rounded-lg overflow-hidden p-2">
@@ -128,7 +129,11 @@ export default function SellerAddPackageStudent({ setOpen, userId }: any) {
                   <div className="flex justify-center items-center  text-white px-10 py-2 rounded-md">
                     <Button
                       loading={addPackageAndCourseLoading}
-                      style={{ background: "blue", color: "white", padding: "5px 10px" }}
+                      style={{
+                        background: "blue",
+                        color: "white",
+                        padding: "5px 10px",
+                      }}
                       onClick={() => addPackageForStudent(item._id)}
                     >
                       Add +

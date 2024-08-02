@@ -1,4 +1,3 @@
-
 import CourseMilestoneDetails from "@/components/Course/CourseDetails/CourseMilestoneDetails";
 import CourseStatistics from "@/components/Course/CourseStatistics";
 // import MilestoneList from "@/components/Course/MilestoneList";
@@ -13,11 +12,8 @@ const MilestonePage = ({
 }: {
   params: { courseId: string };
 }) => {
-
-  // console.log(courseId);
-
   return (
-    <div >
+    <div>
       <CourseMilestoneDetails courseId={courseId} />
     </div>
   );

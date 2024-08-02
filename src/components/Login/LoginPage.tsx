@@ -54,7 +54,7 @@ const Login = ({
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      console.log("🚀 ~ constonSubmit:SubmitHandler<FormValues>= ~ res:", res);
+      // console.log("🚀 ~ constonSubmit:SubmitHandler<FormValues>= ~ res:", res);
       if (res?.accessToken) {
         // router.push("/profile");
         message.success("User logged in successfully!");
@@ -71,7 +71,7 @@ const Login = ({
       }
     } catch (err: any) {
       Error_model_hook(err?.data || err?.message);
-      console.log(err);
+      // console.log(err);
     }
   };
   // if(isLoading){
@@ -79,7 +79,7 @@ const Login = ({
   // }
   // redux error
   if (error) {
-    console.log(error);
+    // console.log(error);
     //@ts-ignore
     Error_model_hook(error?.message);
   }

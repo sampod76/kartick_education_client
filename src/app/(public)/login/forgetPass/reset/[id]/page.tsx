@@ -1,4 +1,4 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button } from "antd";
 // import { useSearchParams } from 'react-router-dom'; // Assuming you're using React Router
 
 export default function ResetPasswordPage({
@@ -11,10 +11,10 @@ export default function ResetPasswordPage({
   // const token = searchParams?.get("token");
   const [form] = Form.useForm();
 
-  const onFinish = async (values:any) => {
+  const onFinish = async (values: any) => {
     try {
       // Implement your logic for password reset here
-      console.log(values); // Example: Logging the form values
+
       // Call your API or perform necessary actions for password reset
     } catch (error) {
       console.error(error);

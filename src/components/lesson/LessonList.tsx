@@ -28,7 +28,7 @@ export default function LessonList({
   moduleId: string;
   moduleData: any;
 }) {
-  // console.log(moduleId, "moduleId from LessonList");
+  //// console.log(moduleId, "moduleId from LessonList");
 
   const screens = useBreakpoint();
 
@@ -37,7 +37,7 @@ export default function LessonList({
   const categoryId =
     moduleData?.category || moduleData?.milestone?.course?.category?._id;
   const courseId = moduleData?.course || moduleData?.milestone?.course?._id;
-  // console.log("🚀 ~ categoryId:", moduleData)
+  //// console.log("🚀 ~ categoryId:", moduleData)
 
   let IsExistCategoryOrCourse: any = false;
 
@@ -55,7 +55,7 @@ export default function LessonList({
 
   const { data: checkPurchase, isLoading: CheckPurchaseLoading } =
     useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`);
-  // console.log("🚀 ~ checkPurchase:", checkPurchase)
+  //// console.log("🚀 ~ checkPurchase:", checkPurchase)
   if (checkPurchase) {
     IsExistCategoryOrCourse = checkPurchase;
   }
@@ -75,7 +75,7 @@ export default function LessonList({
     return <LoadingSkeleton />;
   }
 
-  // console.log('QuizData', QuizData)
+  //// console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
     if (
       IsExistCategoryOrCourse
@@ -155,7 +155,7 @@ export default function LessonList({
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
                 lessonQuizData?.map((quiz: any) => {
-                  // console.log(quiz)
+                  //// console.log(quiz)
                   return (
                     <Link
                       key={quiz?._id}
@@ -210,7 +210,7 @@ export default function LessonList({
               {IsExistCategoryOrCourse &&
                 lessonQuizData &&
                 lessonQuizData?.map((quiz: any) => {
-                  // console.log(quiz)
+                  //// console.log(quiz)
                   return (
                     <Link
                       key={quiz?._id}
@@ -233,7 +233,7 @@ export default function LessonList({
   );
 
   const handleChange = (key: any) => {
-    // console.log(key, 'key')
+    //// console.log(key, 'key')
 
     setCurrentCollapse(key);
   };

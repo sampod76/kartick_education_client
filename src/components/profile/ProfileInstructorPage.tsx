@@ -7,7 +7,7 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 const ProfileInstructorPage = ({ userData }: { userData: any }) => {
   const userInfo = getUserInfo() as IDecodedInfo;
   const img = userData?.img || userData[userData.role]["img"];
-  // console.log(img);
+  //// console.log(img);
   const gender = userData?.gender || userData[userData.role]["gender"];
   const phoneNumber =
     userData?.phoneNumber || userData[userData.role]["phoneNumber"];

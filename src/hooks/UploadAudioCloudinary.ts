@@ -12,7 +12,7 @@ import { Error_model_hook } from "@/utils/modalHook";
 const url = `${getBaseUrl()}/upload/upload-audio`;
 
 const uploadAudioCloudinary = async (file: any) => {
-  console.log("🚀 ~ uploadAudioCloudinary ~ file:", file);
+  // console.log("🚀 ~ uploadAudioCloudinary ~ file:", file);
   try {
     const formData = new FormData();
     formData.append("audio", file as Blob);
@@ -26,11 +26,10 @@ const uploadAudioCloudinary = async (file: any) => {
       },
       withCredentials: true,
     });
-    console.log(response);
+    // console.log(response);
 
     if (response.data.original_filename) {
-    
-      return   `${getOnlyBaseUrl()}/audios/${response?.data?.original_filename}`;
+      return `${getOnlyBaseUrl()}/audios/${response?.data?.original_filename}`;
     } else {
       console.error("Failed to upload image to Cloudinary");
       Error_model_hook("Failed to upload image to Cloudinary");

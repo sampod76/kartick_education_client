@@ -79,7 +79,7 @@ const UpComingService = ({
         Success_model("Successfully Added booking");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   //
@@ -174,7 +174,7 @@ const UpComingService = ({
                       style={{ width: "100%" }}
                       //  className=" text-white p-1 mx-1 rounded-xl"
                     >
-                      <Button style={{ width: "100%" }}   type="default">
+                      <Button style={{ width: "100%" }} type="default">
                         View
                       </Button>
                     </Link>
@@ -185,7 +185,7 @@ const UpComingService = ({
                         setBookMarkData(single);
                         showModal();
                       }}
-                        type="default"
+                      type="default"
                     >
                       Booking +
                     </Button>
@@ -266,7 +266,7 @@ const UpComingService = ({
               placeholder="Please provide your phone number"
             />
             <div className="my-2 flex justify-center items-center">
-              <Button htmlType="submit"   type="default">
+              <Button htmlType="submit" type="default">
                 Submit
               </Button>
             </div>

@@ -22,7 +22,7 @@ const CoursesTab = () => {
 
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
-    // console.log(key);
+    //// console.log(key);
   };
 
   // const { searchValue } = useAppSelector(state => state.bannerSearch)
@@ -32,7 +32,6 @@ const CoursesTab = () => {
   //   delay: 600,
   // });
 
-
   const query: Record<string, any> = {};
   query["status"] = ENUM_STATUS.ACTIVE;
   query["limit"] = 6;
@@ -40,24 +39,22 @@ const CoursesTab = () => {
   query["sortBy"] = "serial_number";
   query["isDelete"] = ENUM_YN.NO;
 
-
-  // console.log('query',query)
-  // console.log('searchValue', searchValue)
+  //// console.log('query',query)
+  //// console.log('searchValue', searchValue)
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
 
   const categoryData = data?.data || [];
   const activeClass =
     "   text-[14px] lg:text-[18px] font-[600] bg-[#95c3ff3e] text-[#2a63ff] rounded ";
-  const inactiveClass =
-    "  text-[14px] lg:text-[18px]   ";
+  const inactiveClass = "  text-[14px] lg:text-[18px]   ";
 
   const tabsItems2: TabsProps["items"] = categoryData?.map(
     (singleCategory: Record<string, any>, index: number) => ({
       label: (
         <button
-          className={
-            `${activeTabKey === String(index + 1) ? activeClass : inactiveClass} p-1`
-          }
+          className={`${
+            activeTabKey === String(index + 1) ? activeClass : inactiveClass
+          } p-1`}
         >
           <p className="px-1"> {singleCategory?.title}</p>
         </button>
@@ -69,11 +66,15 @@ const CoursesTab = () => {
     })
   );
 
-  // console.log('activeTabKey', activeTabKey)
+  //// console.log('activeTabKey', activeTabKey)
   tabsItems2.unshift({
     label: (
       <button
-        className={`${activeTabKey === "011allCourses" ? `${activeClass} ml-1` : inactiveClass} p-1 w-[3.5rem]`}
+        className={`${
+          activeTabKey === "011allCourses"
+            ? `${activeClass} ml-1`
+            : inactiveClass
+        } p-1 w-[3.5rem]`}
       >
         <p className="px-1 "> All</p>
       </button>
@@ -90,20 +91,19 @@ const CoursesTab = () => {
     const errorType: any = error;
     Error_model_hook(
       errorType?.message ||
-      //@ts-ignore
-      data?.data?.message
+        //@ts-ignore
+        data?.data?.message
     );
-    console.log(error, data?.data);
+    // console.log(error, data?.data);
   }
 
   const TabClickHandler = (key: string, event: any) => {
-    // console.log(key, event);
+    //// console.log(key, event);
     /// do not need now
   };
 
   return (
     <div className="  bg-white px-2">
-
       {/* <div className="container mx-auto  py-2 px-2 my-6 flex justify-between items-center ">
         <h2 className="flex flex-col font-bold text-sm md:text-md lg:text-lg 2xl:text-4xl text-gray-700 whitespace-nowrap">
 
@@ -116,12 +116,9 @@ const CoursesTab = () => {
         </Link>
       </div> */}
 
-
       <div className="relative">
-
         <div className="absolute top-[5rem] inset-0 bg-cover bg-no-repeat" />
         <div className="container mx-auto py-4 text-center ">
-
           {isLoading ? (
             <TopBarLoading />
           ) : (
@@ -130,9 +127,7 @@ const CoursesTab = () => {
               // centered
               animated
               onChange={handleTabClick}
-              tabBarStyle={{
-
-              }}
+              tabBarStyle={{}}
               items={tabsItems2}
               // style={{ width: screens.sm ? "80%" : "auto", margin: "30px auto", }}
               onTabClick={(key, event) => TabClickHandler(key, event)}
@@ -142,7 +137,6 @@ const CoursesTab = () => {
             Join Now
           </Link> */}
         </div>
-
       </div>
     </div>
   );
@@ -152,5 +146,3 @@ export default CoursesTab;
 // export default dynamic(() => Promise.resolve(CoursesTab), {
 //    ssr: false,
 //  });
-
-

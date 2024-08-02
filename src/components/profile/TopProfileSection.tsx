@@ -31,7 +31,7 @@ export default function TopProfileSection({
 }: {
   topDetails: IProfileDetailsTop;
 }) {
-  console.log("🚀 ~ file: TopProfileSection.tsx:34 ~ topDetails:", topDetails)
+  // console.log("🚀 ~ file: TopProfileSection.tsx:34 ~ topDetails:", topDetails)
 
   const statisticsInfo: { title: string; number: number }[] = [
     {
@@ -53,7 +53,7 @@ export default function TopProfileSection({
   ];
 
   // const img = topDetails?.img || userData[userData.role]["img"];
-  // // console.log(img);
+  // //// console.log(img);
   // const gender = userData?.gender || userData[userData.role]["gender"];
   // const phoneNumber =
   //   userData?.phoneNumber || userData[userData.role]["phoneNumber"];

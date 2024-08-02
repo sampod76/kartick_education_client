@@ -123,7 +123,7 @@ export default function LoginHistory() {
       // fixed: "right",
       width: 110,
       render: (record: any) => (
-        // console.log(object);
+        //// console.log(object);
         <div className={`${refreshToken.value === record?.token && "hidden"}`}>
           <Button
             loading={refreshToken.loading}
@@ -139,13 +139,13 @@ export default function LoginHistory() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };

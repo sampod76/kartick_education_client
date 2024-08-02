@@ -1,13 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Form,
-  Input,
-  Space,
-  Upload,
-} from "antd";
+import { Button, Form, Input, Space, Upload } from "antd";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import { Select } from "antd";
@@ -23,9 +17,8 @@ import { useAddSkills_planMutation } from "@/redux/api/adminApi/features/skillsP
 export default function CreateSkillsPlan() {
   const [form] = Form.useForm();
 
-
   const [textEditorValue, setTextEditorValue] = useState("");
-  // console.log(uuid,"uuiduuid")
+  //
   const { data, isLoading, error } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
@@ -39,33 +32,30 @@ export default function CreateSkillsPlan() {
 
   const [addSkills_plan, { isLoading: AddPackageLoading }] =
     useAddSkills_planMutation();
-  // console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
-
-
+  //
 
   const onFinish = async (values: any) => {
-    // console.log("Received values", values);
+    //
     if (values?.imgs) {
       const imgUrl = await uploadImgCloudinary(values?.imgs?.file);
-      console.log(imgUrl, 'imgUrl')
+      
       values.imgs = imgUrl;
     }
-
 
     const skillsPlanData = {
       title: values.title,
       imgs: [values?.imgs],
       imgTitle: values.imgTitle,
-      page: values.page || 'home',
+      page: values.page || "home",
       points: values?.points,
-      details: textEditorValue
+      details: textEditorValue,
     };
     // console.count("🚀 ~ onFinish ~ skillsPlanData:", skillsPlanData)
     // return
 
     try {
       const res = await addSkills_plan(skillsPlanData).unwrap();
-      console.log(res);
+      
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -73,10 +63,10 @@ export default function CreateSkillsPlan() {
         form.resetFields();
       }
 
-      // console.log(res);
+      //
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      
     }
   };
 
@@ -102,12 +92,19 @@ export default function CreateSkillsPlan() {
         <Form.Item>
           {/* //! 1. title */}
           <Form.Item name="title" label="Title">
-            <Input size="large" placeholder="Please enter Skills and Plan title" />
+            <Input
+              size="large"
+              placeholder="Please enter Skills and Plan title"
+            />
           </Form.Item>
           {/* //! 2. imgs */}
           {/* <Space style={{}}> */}
-          <Form.Item name="imgTitle" label="Image Title" >
-            <Input size="large" placeholder="Please enter Skills and Plan imgTitle title" width={"100%"} />
+          <Form.Item name="imgTitle" label="Image Title">
+            <Input
+              size="large"
+              placeholder="Please enter Skills and Plan imgTitle title"
+              width={"100%"}
+            />
           </Form.Item>
           <Form.Item name="imgs" required>
             <Upload
@@ -123,13 +120,11 @@ export default function CreateSkillsPlan() {
               <div className="flex flex-col">
                 {/* <h1>+</h1> */}
                 <h4>Upload</h4>
-
               </div>
             </Upload>
           </Form.Item>
 
           {/* </Space> */}
-
         </Form.Item>
         {/* //! 3.page  */}
         {/* <Form.Item name="page" label="Page">
@@ -140,20 +135,20 @@ export default function CreateSkillsPlan() {
           <LabelUi>Add Points</LabelUi>
           <Form.List name="points">
             {(fields, { add, remove }) => {
-              // console.log(fields,'fieldsfieldsfieldsfields') ;
+              //
 
               // const handleChange = (value: any) => {
-              //   console.log(value, 'value');
+              //  
               //   const updatedOptions = options?.filter(
               //     (item) => item?.value !== value
               //   );
-              //   // console.log(updatedOptions)
+              //   //
               //   options = updatedOptions;
-              //   // console.log(options)
+              //   //
               // };
 
               const handleRemove = (value: any) => {
-                console.log(value, "handleRemove");
+                
                 remove(value);
               };
 
@@ -172,11 +167,9 @@ export default function CreateSkillsPlan() {
                         // background: "blue",
                         // width: "100%",
                         // position: "relative",
-
                       }}
-                    // align="center"
+                      // align="center"
                     >
-
                       <Form.Item
                         {...restField}
                         name={[name, "title"]}
@@ -193,7 +186,7 @@ export default function CreateSkillsPlan() {
                       </Form.Item>
                       <MinusCircleOutlined
                         onClick={() => handleRemove(name)}
-                      // style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
+                        // style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
                       />
                     </div>
                   ))}

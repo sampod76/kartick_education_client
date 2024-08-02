@@ -12,11 +12,7 @@ import {
   message,
 } from "antd";
 import Link from "next/link";
-import {
-
-  ReloadOutlined,
-
-} from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
@@ -36,7 +32,10 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 // import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
-import { useDeleteSkills_planMutation, useGetAllSkills_planQuery } from "@/redux/api/adminApi/features/skillsPlanApi";
+import {
+  useDeleteSkills_planMutation,
+  useGetAllSkills_planQuery,
+} from "@/redux/api/adminApi/features/skillsPlanApi";
 
 export default function SkillsPlanDashList() {
   //
@@ -63,7 +62,7 @@ export default function SkillsPlanDashList() {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
 
   const [deleteSkills_plan] = useDeleteSkills_planMutation();
 
@@ -98,11 +97,11 @@ export default function SkillsPlanDashList() {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllSkills_planQuery({ ...query });
-  // console.log("🚀 ~ file: page.tsx:68 ~ skillsPlanData ~ data:", data);
+  //
 
   //@ts-ignore
   const skillsPlanData = data?.data || [];
-  // console.log(skillsPlanData, 'skillsPlanData')
+  //
   //@ts-ignore
   const meta = data?.meta;
 
@@ -110,11 +109,11 @@ export default function SkillsPlanDashList() {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          
 
           const res = await deleteSkills_plan(id).unwrap();
 
-          console.log(res, "response for delete SKillsPlan");
+          
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -171,19 +170,23 @@ export default function SkillsPlanDashList() {
       // fixed: "right",
       width: 130,
       render: (record: any) => (
-        // console.log(object);
+        //
         <>
           <Space size="middle">
             <Dropdown
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${userInfo?.role}/features/skills-plan/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/features/skills-plan/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/features/skills-plan/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/features/skills-plan/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
@@ -208,13 +211,13 @@ export default function SkillsPlanDashList() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -226,7 +229,7 @@ export default function SkillsPlanDashList() {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    //
     try {
       const res = await deleteSkills_plan(id);
       if (res) {
@@ -294,7 +297,6 @@ export default function SkillsPlanDashList() {
           >
             Filter
           </Button> */}
-
 
           <Link href={`/${userInfo?.role}/features/skills-plan/create`}>
             <Button type="default">Create Skill&Plan</Button>
@@ -364,7 +366,6 @@ export default function SkillsPlanDashList() {
           }
         />
       </Drawer> */}
-
     </div>
   );
 }

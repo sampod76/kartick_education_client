@@ -31,7 +31,7 @@ export default function GlobalContextApi({
   const memoizedFetchUserInfo = useMemo(
     () => async () => {
       const userInfo = await getUserInfo();
-      console.log("🚀 ~ userInfo:", userInfo);
+
       setUserInfo(userInfo);
       setUserInfoLoading(false);
     },

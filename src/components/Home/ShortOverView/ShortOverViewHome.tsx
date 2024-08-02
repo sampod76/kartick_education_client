@@ -55,17 +55,19 @@ const ShortOverViewHomePage = () => {
     },
   ];
 
-  let query: any = {}
+  let query: any = {};
   query["status"] = "active";
 
-  const { data, isLoading } = useGetAllShortOverViewQuery({ ...query }) as any
-  const shortOverviewData: IShort_overviewData[] = data?.data || []
-  // console.log(shortOverviewData, 'shortOverviewData')
+  const { data, isLoading } = useGetAllShortOverViewQuery({ ...query }) as any;
+  const shortOverviewData: IShort_overviewData[] = data?.data || [];
+  //// console.log(shortOverviewData, 'shortOverviewData')
 
   if (isLoading) {
-    return <>
-      <LoadingSkeleton />
-    </>
+    return (
+      <>
+        <LoadingSkeleton />
+      </>
+    );
   }
 
   return (
@@ -77,32 +79,32 @@ const ShortOverViewHomePage = () => {
           </h1>
 
           <div className="my-[3rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-3 lg:px-0  mx-3">
-            {shortOverviewData.length && shortOverviewData[0]?.cards?.map((item: any, index: any) => {
-              return (
-                <AnimatePresenceWrapper key={item._id || index} delay={0.24 + (index / 100)}>
-                  <div
-                    className="w-full h-full bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
-                    key={index + 1}
+            {shortOverviewData.length &&
+              shortOverviewData[0]?.cards?.map((item: any, index: any) => {
+                return (
+                  <AnimatePresenceWrapper
+                    key={item._id || index}
+                    delay={0.24 + index / 100}
                   >
-                    <p className="h-12 w-12 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-3 text-white hover:text-primary hover:bg-slate-100">
-                      {item?.countNumber}
-                    </p>
-                    <h2 className="font-[500] text-xl  lg:text-2xl text-[#282938] text-nowrap">
-                      {item?.title}
-                    </h2>
-                    <p className="text-[#1f1f2b] font[400] text-[16px]">
-
-                      <EllipsisMiddle
-                        suffixCount={5}
-                        maxLength={120}
-                      >
-                        {item?.short_description}
-                      </EllipsisMiddle>
-                    </p>
-                  </div>
-                </AnimatePresenceWrapper>
-              );
-            })}
+                    <div
+                      className="w-full h-full bg-[#FFFFFF] rounded-tl-[30px] rounded-br-[30px] text-start p-5 flex flex-col gap-3"
+                      key={index + 1}
+                    >
+                      <p className="h-12 w-12 rounded-tl-[30px] rounded-tr-[5px] rounded-br-[30px] rounded-bl-[5px] font-bold text-[20px] bg-primary p-3 text-white hover:text-primary hover:bg-slate-100">
+                        {item?.countNumber}
+                      </p>
+                      <h2 className="font-[500] text-xl  lg:text-2xl text-[#282938] text-nowrap">
+                        {item?.title}
+                      </h2>
+                      <p className="text-[#1f1f2b] font[400] text-[16px]">
+                        <EllipsisMiddle suffixCount={5} maxLength={120}>
+                          {item?.short_description}
+                        </EllipsisMiddle>
+                      </p>
+                    </div>
+                  </AnimatePresenceWrapper>
+                );
+              })}
           </div>
 
           <div className="flex justify-center items-center">

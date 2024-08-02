@@ -19,7 +19,6 @@ export const showAdvanceClassApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: IShow_advance_classes[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,

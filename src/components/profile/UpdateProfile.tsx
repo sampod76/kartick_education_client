@@ -20,8 +20,11 @@ import {
   useUpdateGeneralUserMutation,
 } from "@/redux/api/adminApi/userManageApi";
 
-
-import { IDecodedInfo, getUserInfo, storeUserInfo } from "@/services/auth.service";
+import {
+  IDecodedInfo,
+  getUserInfo,
+  storeUserInfo,
+} from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,14 +40,14 @@ import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFals
 const UpdateProfile = () => {
   const [user, setUserData] = useState<any>({});
   const [userLoading, setUserLoading] = useState<boolean>(true);
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
   useEffect(() => {
     setUserData(getUserInfo() as any);
     setUserLoading(false);
     return () => {};
   }, []);
   const { data = {}, isLoading: profileLoading } = useGetProfileQuery("");
-  console.log(data);
+  // console.log(data);
   const userData = data?.generalUser || data?.admin || data?.superAdmin;
   const [updateGeneralUser, { isLoading }] = useUpdateGeneralUserMutation();
   const [updateAdmin, { isLoading: updateAdminLoader }] =
@@ -53,7 +56,7 @@ const UpdateProfile = () => {
     useUpdateSuperAdminMutation();
 
   const onSubmit = async (values: any) => {
-    console.log(user);
+    // console.log(user);
     removeNullUndefinedAndFalsey(values);
     try {
       let res;
@@ -68,7 +71,7 @@ const UpdateProfile = () => {
           body: values,
         }).unwrap();
       } else if (user?.role === USER_ROLE.SUPER_ADMIN) {
-        console.log(user);
+        // console.log(user);
         res = await updateSuperAdmin({
           id: userData?._id,
           body: values,
@@ -82,7 +85,7 @@ const UpdateProfile = () => {
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (
@@ -166,7 +169,6 @@ const UpdateProfile = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                
                 style={{
                   marginBottom: "10px",
                 }}
@@ -231,7 +233,7 @@ const UpdateProfile = () => {
                 }}
               >
                 <FormInput
-                   type="number"
+                  type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
@@ -273,7 +275,7 @@ const UpdateProfile = () => {
             {isLoading ? (
               <Spin></Spin>
             ) : (
-              <Button size="large" htmlType="submit"   type="default">
+              <Button size="large" htmlType="submit" type="default">
                 Update
               </Button>
             )}

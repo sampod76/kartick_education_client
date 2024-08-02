@@ -1,7 +1,7 @@
 const url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB}`;
 
 const uploadImgBB = async (img: any): Promise<string | undefined | null> => {
-  //  // console.log("🚀 ~ file: imgbbUploads.ts:4 ~ uploadImgBB ~ img:", img)
+  //  //// console.log("🚀 ~ file: imgbbUploads.ts:4 ~ uploadImgBB ~ img:", img)
 
   const formData = new FormData();
   formData.append("image", img);
@@ -18,7 +18,7 @@ const uploadImgBB = async (img: any): Promise<string | undefined | null> => {
       return imgUrl;
     } else {
       // throw new Error("Failed to upload image");
-      //  // console.log("Failed to upload image");
+      //  //// console.log("Failed to upload image");
     }
   } catch (error) {
     console.error("Error in uploadImgBB:", error);

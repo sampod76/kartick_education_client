@@ -18,7 +18,7 @@ const CreateCategory = () => {
 
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
-    // console.log(values);
+    //
     const status = "active";
     // const imgUrl = await uploadImgCloudinary(values.img);
 
@@ -31,25 +31,22 @@ const CreateCategory = () => {
     //   img: values.img,
     //   status: status,
     // };
-    // console.log(categoryData);
+    //
 
     try {
       const res = await addCategory(values).unwrap();
-      // console.log(res);
+      //
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Category");
         setIsReset(true);
       }
-      // console.log(res);
+      //
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
     }
   };
-
- 
 
   return (
     <div>
@@ -112,7 +109,6 @@ const CreateCategory = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "20px",
                   // maxWidth: "30vw",
@@ -124,7 +120,6 @@ const CreateCategory = () => {
                   name="serial_number"
                   size="large"
                   label="Category serial number"
-               
                 />
               </Col>
 

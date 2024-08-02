@@ -14,27 +14,26 @@ import { Button, Col, Row } from "antd";
 import { useState } from "react";
 import SelectStatusCategoryFIeld from "../Forms/GeneralField/SelectStatusCategoryFIeld";
 
-export default function EditCourseLabel({ courseLabelId }: { courseLabelId: string }) {
+export default function EditCourseLabel({
+  courseLabelId,
+}: {
+  courseLabelId: string;
+}) {
   const [isReset, setIsReset] = useState(false);
   const [category, setCategoryValue] = useState();
-  const { data: Course_labelData = {}, isLoading } = useGetSingleCourse_labelQuery(
-    courseLabelId,
-    {
+  const { data: Course_labelData = {}, isLoading } =
+    useGetSingleCourse_labelQuery(courseLabelId, {
       skip: !Boolean(courseLabelId),
-    }
-  );
-  console.log("🚀 ~ EditCourseLabel ~ Course_labelData:", Course_labelData)
-  // const { data: Course_labelData = [] } = useGetAllCourse_labelQuery({});
+    });
+
   const [updateCourse_label, { isLoading: updateLoading, error }] =
     useUpdateCourse_labelMutation();
 
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
 
-
     try {
       const res = await updateCourse_label({
-
         id: courseLabelId,
         data: { category, ...values },
       }).unwrap();
@@ -54,7 +53,6 @@ export default function EditCourseLabel({ courseLabelId }: { courseLabelId: stri
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
   }
 
   return (
@@ -109,7 +107,6 @@ export default function EditCourseLabel({ courseLabelId }: { courseLabelId: stri
                   name="title"
                   size="large"
                   label="Course_label Name"
-                 
                 />
               </Col>
               <Col
@@ -124,7 +121,6 @@ export default function EditCourseLabel({ courseLabelId }: { courseLabelId: stri
                 <FormInput
                   type="number"
                   name="serial_number"
-                  
                   size="large"
                   label={`Serial number`}
                 />

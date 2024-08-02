@@ -35,7 +35,10 @@ import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi"
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import { useGetAllPurchaseAcceptedPackageQuery, useGetAllPurchasePendingAndAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
+import {
+  useGetAllPurchaseAcceptedPackageQuery,
+  useGetAllPurchasePendingAndAcceptedPackageQuery,
+} from "@/redux/api/public/purchaseAPi";
 
 export default function PurchasePackageList() {
   const query: Record<string, any> = {};
@@ -68,10 +71,11 @@ export default function PurchasePackageList() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllPurchasePendingAndAcceptedPackageQuery({
-    ...query,
-  });
-  console.log("🚀 ~ file: page.tsx:68 ~  ~ data:", data);
+  const { data = [], isLoading } =
+    useGetAllPurchasePendingAndAcceptedPackageQuery({
+      ...query,
+    });
+  // console.log("🚀 ~ file: page.tsx:68 ~  ~ data:", data);
 
   //@ts-ignore
   const packageData = data?.data || [];
@@ -185,7 +189,7 @@ export default function PurchasePackageList() {
       // fixed: "right",
       // width: 130,
       render: (record: any) => (
-        // console.log(object);
+        //// console.log(object);
         <>
           <Space size="middle">
             <Dropdown
@@ -215,13 +219,13 @@ export default function PurchasePackageList() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };

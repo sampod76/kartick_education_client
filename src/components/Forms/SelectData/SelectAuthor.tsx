@@ -15,7 +15,7 @@ const SelectAuthorField = () => {
   const { data: usersData, isLoading } = useGetAllUsersQuery({
     ...query,
   });
-  // console.log(usersData);
+  //
 
   const AuthorOptions = usersData?.data?.map((item: any) => {
     return {
@@ -23,7 +23,6 @@ const SelectAuthorField = () => {
       value: item?._id,
     };
   });
-
 
   return (
     <FormSearchSelectField

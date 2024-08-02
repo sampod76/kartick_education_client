@@ -11,8 +11,8 @@ import { ISubmittedUserQuizData } from "@/types/quiz/submittedQuizType";
 import DragQUizTest from "../dragCustom/DragQuiz";
 import DndQuizCard from "../dnd/DndBeutyFull";
 // import {PauseCircleOutlined} from "@and"
-import AudioPlayer from 'react-h5-audio-player';
-import 'react-h5-audio-player/lib/styles.css';
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
 import { PlayCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 const { Option } = Select;
@@ -35,10 +35,10 @@ export default function QuizQuestionCard({
   setCurrentAnswer: any;
   submittedDefaultData: ISubmittedUserQuizData;
 }) {
-  // console.log(quiz);
+  //// console.log(quiz);
 
   const dispatch = useAppDispatch();
-  const router = useRouter()
+  const router = useRouter();
 
   if (!currentAnswer || quiz?._id !== currentAnswer?.singleQuiz) {
     const beforeANswer = {
@@ -49,49 +49,59 @@ export default function QuizQuestionCard({
       category: quiz?.category,
       quiz: quiz?.quiz?._id,
       singleQuiz: quiz?._id,
-      submitAnswers: [''],
+      submitAnswers: [""],
     };
 
     setCurrentAnswer(beforeANswer);
   }
 
   const checkAnswers = (responseData: ISubmittedUserQuizData) => {
-    if (responseData?.singleQuiz?.type === 'input') {
-      const isCorrectInput = responseData?.singleQuiz?.single_answer === responseData?.submitAnswers[0] ? true : false
-      return isCorrectInput
-    }
-    else if (responseData?.singleQuiz?.type === "select" || responseData?.singleQuiz?.type === 'multiple_select' || responseData?.singleQuiz?.type === "find" || responseData?.singleQuiz?.type === "drag" || responseData?.singleQuiz?.type === "audio") {
-      const allCorrectSelect = responseData?.submitAnswers.every((answerId: string) => {
-        const submittedAnswer = responseData?.singleQuiz?.answers?.find(
-          (answer: any) => answer.id === answerId && answer.correct
-        );
-        return submittedAnswer && submittedAnswer.correct;
-      });
+    if (responseData?.singleQuiz?.type === "input") {
+      const isCorrectInput =
+        responseData?.singleQuiz?.single_answer ===
+        responseData?.submitAnswers[0]
+          ? true
+          : false;
+      return isCorrectInput;
+    } else if (
+      responseData?.singleQuiz?.type === "select" ||
+      responseData?.singleQuiz?.type === "multiple_select" ||
+      responseData?.singleQuiz?.type === "find" ||
+      responseData?.singleQuiz?.type === "drag" ||
+      responseData?.singleQuiz?.type === "audio"
+    ) {
+      const allCorrectSelect = responseData?.submitAnswers.every(
+        (answerId: string) => {
+          const submittedAnswer = responseData?.singleQuiz?.answers?.find(
+            (answer: any) => answer.id === answerId && answer.correct
+          );
+          return submittedAnswer && submittedAnswer.correct;
+        }
+      );
       return allCorrectSelect;
     }
 
-    return false
-
+    return false;
   };
 
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
 
   //// ! for getting single or select answer
   const isCorrectAnswer = checkAnswers(submittedDefaultData);
-  // console.log("🚀 ~ isCorrectAnswer:", isCorrectAnswer)
-  // console.log(submittedDefaultData);
+  //// console.log("🚀 ~ isCorrectAnswer:", isCorrectAnswer)
+  //// console.log(submittedDefaultData);
 
   const getCorrectAnswerIdsHandler = (responseData: any): string[] => {
-    // console.log("🚀 ~ getCorrectAnswerIdsHandler ~ responseData:", responseData)
+    //// console.log("🚀 ~ getCorrectAnswerIdsHandler ~ responseData:", responseData)
     // Existing functionality for single select answer
 
     const correctAnswerIds: string[] = responseData?.submitAnswers.reduce(
       (acc: string[], answerId: string) => {
-        console.log(answerId, "answerId");
+        // console.log(answerId, "answerId");
         const submittedAnswered = responseData?.singleQuiz?.answers?.find(
           (answer: any) => answer.id === answerId
         );
-        console.log(submittedAnswered, "submmm");
+        // console.log(submittedAnswered, "submmm");
         if (submittedAnswered && submittedAnswered.correct) {
           acc.push(answerId);
         }
@@ -100,18 +110,17 @@ export default function QuizQuestionCard({
       []
     );
 
-
     // Check if submitAnswers length is greater than 1
     if (responseData?.submitAnswers.length > 1) {
-      // console.log(responseData?.submitAnswers,'111111111111');
+      //// console.log(responseData?.submitAnswers,'111111111111');
       // New functionality for multiple select answers
       const allCorrect = responseData?.submitAnswers.every(
         (answerId: string) => {
-          // console.log(answerId, "answe");
+          //// console.log(answerId, "answe");
           const submittedAnswer = responseData?.singleQuiz?.answers?.find(
             (answer: any) => answer.id === answerId && answer.correct
           );
-          // console.log(submittedAnswer);
+          //// console.log(submittedAnswer);
           return submittedAnswer;
         }
       );
@@ -127,7 +136,7 @@ export default function QuizQuestionCard({
 
     return correctAnswerIds;
   };
-  // console.log(getCorrectAnswerIdsHandler(submittedDefaultData));
+  //// console.log(getCorrectAnswerIdsHandler(submittedDefaultData));
   // const correctId = getCorrectAnswerIdsHandler(submittedDefaultData);
 
   const allCorrectAnsweredIdHanlder = (responseData: any) => {
@@ -141,14 +150,12 @@ export default function QuizQuestionCard({
 
   const allCorrectAnswer = allCorrectAnsweredIdHanlder(submittedDefaultData);
 
-
   const handleAnswerChange = (questionIndex: number, answer: any) => {
-    // console.log("🚀 ~ handleAnswerChange ~ answer:", answer)
+    //// console.log("🚀 ~ handleAnswerChange ~ answer:", answer)
     let changedAnswer = [];
-    console.log('answer', questionIndex)
+    // console.log('answer', questionIndex)
 
     //! changedAnswer should array of string .
-
 
     if (Array.isArray(answer)) {
       changedAnswer = answer;
@@ -160,19 +167,15 @@ export default function QuizQuestionCard({
           }
           return acc;
         }, []);
-        changedAnswer = imgUrls
-      }
-      else {
+        changedAnswer = imgUrls;
+      } else {
         changedAnswer = answer;
       }
-
-
-
     } else if (typeof answer === "string") {
       changedAnswer.push(answer);
     }
 
-    // console.log(changedAnswer)
+    //// console.log(changedAnswer)
 
     const newANswer = {
       lesson: quiz?.lesson,
@@ -187,7 +190,7 @@ export default function QuizQuestionCard({
 
     setCurrentAnswer(newANswer);
 
-    // console.log(newANswer,"answer",answer,questionIndex)
+    //// console.log(newANswer,"answer",answer,questionIndex)
     const answerData = {
       index: questionIndex,
       answer: answer,
@@ -202,27 +205,27 @@ export default function QuizQuestionCard({
   const isDefaultValue = userAnswers?.find(
     (answer) => answer?._id === quiz?._id
   );
-  // console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
+  //// console.log('submittedDefaultData?.submitAnswers[0]', submittedDefaultData?.submitAnswers[0])
 
-  const IsDisabledQUiz = isDefaultValue?.is_time_up ||
-    currentAnswer?.singleQuiz ===
-    submittedDefaultData?.singleQuiz?._id
-    ? true
-    : false
+  const IsDisabledQUiz =
+    isDefaultValue?.is_time_up ||
+    currentAnswer?.singleQuiz === submittedDefaultData?.singleQuiz?._id
+      ? true
+      : false;
 
-  console.log(quiz, 'quzzzzzzzzz')
+  // console.log(quiz, 'quzzzzzzzzz')
 
   // const heading = quiz?.short_description.split(":")
-  // console.log(heading);
-  
+  //// console.log(heading);
+
   return (
     <div>
       <div key={quiz?._id} className={`my-4 w-full relative px-2 lg:pl-3 `}>
         {/* //! Quiz Timer */}
         <p className={`lg:text-xl font-bold mb-2 text-base mx-2`}>
-            <TextToSpeech text={quiz?.title} />
-            Question {index + 1} : {quiz?.title}
-          </p>
+          <TextToSpeech text={quiz?.title} />
+          Question {index + 1} : {quiz?.title}
+        </p>
         <div className="text-center mt-3 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
@@ -232,7 +235,7 @@ export default function QuizQuestionCard({
             submittedDefaultData={submittedDefaultData}
           />
         </div>
-        <div dangerouslySetInnerHTML={{ __html: quiz?.details }}/>
+        <div dangerouslySetInnerHTML={{ __html: quiz?.details }} />
         {/* <h1 className="text-center font-bold">{heading[0]}</h1>
         <p>
         <TextToSpeech text={(heading?.slice(1).toString())} />
@@ -254,34 +257,33 @@ export default function QuizQuestionCard({
           )}
         </div>
         <div className=" my-2 pr-4">
-          
-          {quiz?.type === "audio" &&
+          {quiz?.type === "audio" && (
             // <Link className="flex justify-start items-center gap-2 ml-2" href={quiz?.quizData?.link} rel="noopener noreferrer" target="_blank">
-            //  <PlayCircleOutlined style={{ fontSize: "1.5rem" }} /> Play Audio  
+            //  <PlayCircleOutlined style={{ fontSize: "1.5rem" }} /> Play Audio
             // </Link>
             <AudioPlayer
-            autoPlay={false}
-            src={quiz?.quizData?.link}
-            // onPlay={e => console.log("onPlay")}
-            crossOrigin="anonymous"
-            preload="auto"
-            // onLoadedMetaData={}
-            // other props here
-          />
-          }
+              autoPlay={false}
+              src={quiz?.quizData?.link}
+              // onPlay={e =>// console.log("onPlay")}
+              crossOrigin="anonymous"
+              preload="auto"
+              // onLoadedMetaData={}
+              // other props here
+            />
+          )}
         </div>
         <div className="flex flex-wrap mx-5">
-          {quiz.type !== 'drag' && quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
-            <Image
-              key={key}
-              src={img}
-
-              width={700}
-              height={700}
-              className={"w-96 lg:w-full max-h-44 lg:max-h-48 m-3"}
-              alt=""
-            ></Image>
-          ))}
+          {quiz.type !== "drag" &&
+            quiz?.imgs?.map((img: string, key: number, allimages: any[]) => (
+              <Image
+                key={key}
+                src={img}
+                width={700}
+                height={700}
+                className={"w-96 lg:w-full max-h-44 lg:max-h-48 m-3"}
+                alt=""
+              ></Image>
+            ))}
         </div>
         {/* //! For select Quiz */}
         {quiz?.type === "select" && (
@@ -291,11 +293,10 @@ export default function QuizQuestionCard({
               flexDirection: "column",
               gap: "1rem",
             }}
-         
             name="radiogroup"
             disabled={
               isDefaultValue?.is_time_up ||
-                currentAnswer?.singleQuiz ===
+              currentAnswer?.singleQuiz ===
                 submittedDefaultData?.singleQuiz?._id
                 ? true
                 : false
@@ -315,26 +316,28 @@ export default function QuizQuestionCard({
                 <Radio
                   key={option?._id}
                   value={option?._id}
-                // defaultChecked={
-                //   submittedDefaultData?.submitAnswers[0] === option?._id &&
-                //   true
-                // }
+                  // defaultChecked={
+                  //   submittedDefaultData?.submitAnswers[0] === option?._id &&
+                  //   true
+                  // }
                 >
                   <div
                     className={`border-2 rounded-xl p-2 w-full 
                     
-                  ${submittedDefaultData?.submitAnswers[0] === option?._id
-                        ? "bg-slate-600 text-white"
+                  ${
+                    submittedDefaultData?.submitAnswers[0] === option?._id
+                      ? "bg-slate-600 text-white"
+                      : ""
+                  }
+                  ${
+                    submittedDefaultData?.singleQuiz
+                      ? isCorrect
+                        ? " border-2 border-green-600"
+                        : isSubmitted === option?._id
+                        ? "border-2 border-red-500 "
                         : ""
-                      }
-                  ${submittedDefaultData?.singleQuiz
-                        ? isCorrect
-                          ? " border-2 border-green-600"
-                          : isSubmitted === option?._id
-                            ? "border-2 border-red-500 "
-                            : ""
-                        : ""
-                      }
+                      : ""
+                  }
                   `}
                   >
                     <div className="flex gap-1">
@@ -367,9 +370,7 @@ export default function QuizQuestionCard({
           <Checkbox.Group
             defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
             // disabled={isDefaultValue?.is_time_up ? true : false}
-            disabled={
-              IsDisabledQUiz
-            }
+            disabled={IsDisabledQUiz}
             onChange={(value) => handleAnswerChange(index + 1, value)}
             style={{
               display: "flex",
@@ -384,7 +385,7 @@ export default function QuizQuestionCard({
               const isSubmitted = submittedDefaultData?.submitAnswers?.find(
                 (item: string) => item === option?._id
               );
-              // console.log(isCorrect, ".............", option,isSubmitted);
+              //// console.log(isCorrect, ".............", option,isSubmitted);
               return (
                 <Checkbox
                   key={option?.title}
@@ -398,17 +399,19 @@ export default function QuizQuestionCard({
                   <div
                     className={`border-2 rounded-xl p-2 w-full 
                     
-                      ${submittedDefaultData?.submitAnswers[0] === option?._id
-                        ? "bg-slate-600 text-white"
-                        : ""
+                      ${
+                        submittedDefaultData?.submitAnswers[0] === option?._id
+                          ? "bg-slate-600 text-white"
+                          : ""
                       }
-                      ${submittedDefaultData?.singleQuiz
-                        ? isCorrect
-                          ? " border-2 border-green-600"
-                          : isSubmitted === option?._id
+                      ${
+                        submittedDefaultData?.singleQuiz
+                          ? isCorrect
+                            ? " border-2 border-green-600"
+                            : isSubmitted === option?._id
                             ? "border-2 border-red-500 "
                             : ""
-                        : ""
+                          : ""
                       }
                       `}
                   >
@@ -438,18 +441,15 @@ export default function QuizQuestionCard({
           <Checkbox.Group
             defaultValue={submittedDefaultData?.submitAnswers} // Set the default value based on isDefaultValue
             // disabled={isDefaultValue?.is_time_up ? true : false}
-            disabled={
-              IsDisabledQUiz
-            }
+            disabled={IsDisabledQUiz}
             onChange={(value) => handleAnswerChange(index + 1, value)}
             style={{
               display: "grid",
               // flexDirection: "column",
-              gridTemplateColumns: 'repeat(5, 1fr)',
+              gridTemplateColumns: "repeat(5, 1fr)",
               gap: "1rem",
               padding: "2px 8px",
               // backgroundColor: 'red',
-
             }}
           >
             {quiz?.answers?.map((option: any) => {
@@ -459,7 +459,7 @@ export default function QuizQuestionCard({
               const isSubmitted = submittedDefaultData?.submitAnswers?.find(
                 (item: string) => item === option?._id
               );
-              // console.log(isCorrect, ".............", option,isSubmitted);
+              //// console.log(isCorrect, ".............", option,isSubmitted);
               return (
                 <Checkbox
                   key={option?.title}
@@ -469,33 +469,34 @@ export default function QuizQuestionCard({
                       (item: string) => item === option?._id
                     )
                   } // Check if the default value matches
-
                   style={{
                     // border:"2px solid black",
-                    borderRadius: '10px',
-                    padding: '8px',
-                    backgroundColor: submittedDefaultData?.submitAnswers[0] === option?._id
-                      ? '#2d3748'
-                      : 'transparent',
+                    borderRadius: "10px",
+                    padding: "8px",
+                    backgroundColor:
+                      submittedDefaultData?.submitAnswers[0] === option?._id
+                        ? "#2d3748"
+                        : "transparent",
                     border: submittedDefaultData?.singleQuiz
                       ? isCorrect
-                        ? '2px solid #38a169'
+                        ? "2px solid #38a169"
                         : isSubmitted === option?._id
-                          ? '2px solid #e53e3e'
-                          : "2px solid #4D545A"
+                        ? "2px solid #e53e3e"
+                        : "2px solid #4D545A"
                       : "2px solid #4D545A",
-                    color: submittedDefaultData?.submitAnswers[0] === option?._id
-                      ? '#fff'
-                      : '#000',
-
+                    color:
+                      submittedDefaultData?.submitAnswers[0] === option?._id
+                        ? "#fff"
+                        : "#000",
                   }}
                 >
                   <div
                     className={`
                     
-                      ${submittedDefaultData?.submitAnswers[0] === option?._id
-                        ? "bg-slate-600 text-white"
-                        : ""
+                      ${
+                        submittedDefaultData?.submitAnswers[0] === option?._id
+                          ? "bg-slate-600 text-white"
+                          : ""
                       }
                      
                       `}
@@ -528,25 +529,24 @@ export default function QuizQuestionCard({
               Question {index + 1} : {quiz?.title}
             </p> */}
             {currentAnswer?.singleQuiz !==
-              submittedDefaultData?.singleQuiz?._id
-              ? <Input
-                defaultValue={submittedDefaultData?.submitAnswers?.length && submittedDefaultData?.submitAnswers[0]}
-                // defaultValue='asdfasdfasd '
-                disabled={
-                  IsDisabledQUiz
+            submittedDefaultData?.singleQuiz?._id ? (
+              <Input
+                defaultValue={
+                  submittedDefaultData?.submitAnswers?.length &&
+                  submittedDefaultData?.submitAnswers[0]
                 }
+                // defaultValue='asdfasdfasd '
+                disabled={IsDisabledQUiz}
                 onChange={(e) => handleAnswerChange(index + 1, e.target.value)}
                 style={{ minHeight: "1rem", width: "12rem" }}
                 placeholder="Type your answer"
-              /> :
+              />
+            ) : (
               <h4>{submittedDefaultData?.submitAnswers[0]}</h4>
-            }
-
+            )}
           </div>
         )}
         {quiz?.type === "drag" && (
-
-
           <DragQUizTest
             // imageUrl={quiz?.answers}
             defaultValue={submittedDefaultData}
@@ -554,7 +554,7 @@ export default function QuizQuestionCard({
             onChange={handleAnswerChange}
             quizIndex={index + 1}
             quizData={quiz}
-          // isCorrectAnswer={isCorrectAnswer}
+            // isCorrectAnswer={isCorrectAnswer}
           />
           // <DndQuizCard
           //   imageUrl={['image']}
@@ -565,7 +565,6 @@ export default function QuizQuestionCard({
           //   card={quiz}
           // />
         )}
-
 
         {/* {quiz?.type === "text" && (
           <Input.TextArea

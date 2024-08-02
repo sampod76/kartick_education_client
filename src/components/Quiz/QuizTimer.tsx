@@ -18,7 +18,7 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
   index,
   submittedDefaultData,
 }) => {
-  //   console.log(time_duration, "ttttttttttttt");
+  //  // console.log(time_duration, "ttttttttttttt");
 
   const dispatch = useAppDispatch();
 
@@ -37,7 +37,7 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
   //   const [isTimeUp,setIsTimeUp] = useState(false)
 
   const OnFinishTimeUP = () => {
-    // console.log("finished time");
+    //// console.log("finished time");
 
     if (currentData) {
       // Check if the object is extensible
@@ -64,7 +64,7 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
     }
   };
 
-  // console.log(submittedDefaultData)
+  //// console.log(submittedDefaultData)
 
   //   const [updatedTime, setUpdatedTime] = useState<number | null>(null);
 
@@ -77,7 +77,11 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
   return (
     <div>
       <CountdownCircleTimer
-        isPlaying={(submittedDefaultData?.singleQuiz || currentData?.is_time_up) ? false : true}
+        isPlaying={
+          submittedDefaultData?.singleQuiz || currentData?.is_time_up
+            ? false
+            : true
+        }
         duration={
           currentData?.usedTime ? currentData?.usedTime : time_duration / 1000
         } // convert milliseconds to seconds
@@ -87,11 +91,11 @@ const QuizTimer: React.FC<QuizTimerProps> = ({
         size={120}
         strokeWidth={6}
         isSmoothColorTransition
-      // onUpdate={(remainingTime) => {
-      //     if (remainingTime !== updatedTime) {
-      //       setUpdatedTime(remainingTime);
-      //     }
-      //   }}
+        // onUpdate={(remainingTime) => {
+        //     if (remainingTime !== updatedTime) {
+        //       setUpdatedTime(remainingTime);
+        //     }
+        //   }}
       >
         {({ remainingTime }) => formatTime(remainingTime)}
       </CountdownCircleTimer>

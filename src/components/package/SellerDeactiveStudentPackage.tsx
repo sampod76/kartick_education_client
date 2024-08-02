@@ -44,7 +44,7 @@ export default function SellerDeactivedStudentPackage({
       },
       { skip: !Boolean(userId) }
     );
-  console.log(
+ // console.log(
     "🚀 ~ SellerAddPackageStudent ~ singleStudentPurchaseData:",
     singleStudentPurchaseData
   );
@@ -70,14 +70,14 @@ export default function SellerDeactivedStudentPackage({
       setOpen(false);
     } catch (error: any) {
       Error_model_hook(error.message);
-      console.log(error);
+     // console.log(error);
     }
   };
   const columns = [
     {
       title: "Name",
       render: function (data: any) {
-        // console.log(data);
+        //// console.log(data);
         const fullName = `${data?.sellerPackageDetails?.title}  `;
         return <>{fullName}</>;
       },
@@ -87,7 +87,7 @@ export default function SellerDeactivedStudentPackage({
     //   title: "Gender",
     //   // dataIndex: "gender",
     //   render: function (data: any) {
-    //     // console.log(data);
+    //     //// console.log(data);
     //     const gender = `${data[data.role]?.gender}   `;
     //     return <>{gender}</>;
     //   },

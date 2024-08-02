@@ -8,7 +8,7 @@ import { Error_model_hook } from "@/utils/modalHook";
 const url = `${getBaseUrl()}/upload/upload-single-image`;
 
 const uploadImgCloudinary = async (file: any) => {
-  // console.log("🚀 ~ uploadImgCloudinary ~ file:", file);
+  //// console.log("🚀 ~ uploadImgCloudinary ~ file:", file);
   try {
     const formData = new FormData();
     formData.append("image", file as Blob);
@@ -22,7 +22,7 @@ const uploadImgCloudinary = async (file: any) => {
       },
       withCredentials: true,
     });
-    console.log(response);
+    // console.log(response);
 
     if (response.data.url) {
       return response?.data?.secure_url;

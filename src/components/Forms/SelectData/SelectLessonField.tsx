@@ -13,14 +13,14 @@ const SelectLessonField = () => {
   //! for Lesson options selection
   const { data: lessons } = useGetAllLessonQuery({ ...query });
   const LessonData = lessons?.data;
-  // console.log(LessonData)
+  //// console.log(LessonData)
   const LessonOptions = LessonData?.map((item: any) => {
     return {
       label: item?.title,
       value: item?._id,
     };
   });
-  // console.log(LessonOptions);
+  //// console.log(LessonOptions);
   return (
     <FormSearchSelectField
       size="large"

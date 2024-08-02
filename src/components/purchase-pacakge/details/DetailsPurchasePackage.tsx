@@ -22,7 +22,7 @@ export default function DetailsPurchasePackage({
   const { data: packages, isLoading } =
     useGetSinglePurchasePendingAndAcceptedPackageQuery(purchaseId);
 
-  // console.log("🚀 ~ file: DetailsPurchasePackage.tsx:13 ~ DetailsPurchasePackage ~ allPurchaseData:", allPurchaseData)
+  //// console.log("🚀 ~ file: DetailsPurchasePackage.tsx:13 ~ DetailsPurchasePackage ~ allPurchaseData:", allPurchaseData)
 
   const userData = packages?.user;
 
@@ -34,7 +34,7 @@ export default function DetailsPurchasePackage({
     );
   }
 
-  console.log(packages, "packages");
+  // console.log(packages, "packages");
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 ">
@@ -68,7 +68,7 @@ export default function DetailsPurchasePackage({
                 packages?.categories?.map(
                   (categoryData: IPurchasedCategory) => {
                     const category = categoryData?.category;
-                    // console.log(category);
+                    //// console.log(category);
                     return (
                       <li
                         className="flex items-center text-sm text-gray-500"
@@ -85,10 +85,7 @@ export default function DetailsPurchasePackage({
                             data-original="#000000"
                           />
                         </svg>
-                        <span className="text-[16px]">
-
-                          {category?.title}
-                        </span>
+                        <span className="text-[16px]">{category?.title}</span>
                         {/* <span>{category?.title}</span> */}
                         <span className="text-[12px] text-slate-600 ml-2">
                           {categoryData?.label}
@@ -97,9 +94,7 @@ export default function DetailsPurchasePackage({
                     );
                   }
                 )}
-
             </ul>
-
           </div>
           <div className="text-center flex flex-col px-3">
             <h2 className="text-center text-[2em]">Purchased : </h2>

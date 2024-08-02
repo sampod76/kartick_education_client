@@ -32,7 +32,6 @@ const EditUserData = ({ params }: any) => {
   const onSubmit = async (values: any) => {
     const UpdateValues = {
       ...values,
-  
     };
     removeNullUndefinedAndFalsey(values);
     try {
@@ -40,7 +39,7 @@ const EditUserData = ({ params }: any) => {
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+      
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -48,14 +47,14 @@ const EditUserData = ({ params }: any) => {
       }
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (isLoading || updateLoading) {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
+    
   }
 
   const defaultValues = {
@@ -77,7 +76,7 @@ const EditUserData = ({ params }: any) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues} >
+        <Form submitHandler={onSubmit} defaultValues={defaultValues}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -248,7 +247,6 @@ const EditUserData = ({ params }: any) => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -284,7 +282,7 @@ const EditUserData = ({ params }: any) => {
               alignItems: "center",
             }}
           >
-            <Button htmlType="submit"   type="default">
+            <Button htmlType="submit" type="default">
               Update
             </Button>
           </div>

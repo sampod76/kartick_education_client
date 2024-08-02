@@ -37,19 +37,13 @@ export default function CreateAdvanceClass() {
 
   const [ClassData, setClassData] = useState<any>([]);
 
-  console.log(ClassData, "ClassData");
   const [addShowAdvance, { isLoading: ShowAdvanceLoading }] =
     useAddShowAdvanceClassesMutation();
 
-  // console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
+  //
 
-  // console.log(course, "course");
+  //
   const onFinish = async (values: any) => {
-    console.log(
-      "🚀 ~ file: CreateAdvanceClass.tsx:55 ~ onFinish ~ values:",
-      values
-    );
-
     const advancePlanData = {
       ...values,
       classes: ClassData,
@@ -60,7 +54,7 @@ export default function CreateAdvanceClass() {
     // return
     try {
       const res = await addShowAdvance(advancePlanData).unwrap();
-      // console.log(res);
+      //
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -71,10 +65,9 @@ export default function CreateAdvanceClass() {
         setIsReset(true);
       }
 
-      // console.log(res);
+      //
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
     }
   };
 
@@ -126,10 +119,10 @@ export default function CreateAdvanceClass() {
           {/* <h3 className="text-center ">Add Classes</h3>
           <Form.List name="classes">
             {(fields, { add, remove }) => {
-              // console.log(fields,'fieldsfieldsfieldsfields') ;
+              //
 
               const handleRemove = (value: any) => {
-                console.log(value, "handleRemove");
+               
                 remove(value);
               };
 

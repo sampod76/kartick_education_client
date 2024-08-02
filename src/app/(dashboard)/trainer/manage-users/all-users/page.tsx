@@ -35,7 +35,7 @@ import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const AdminPage = () => {
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
   const query: Record<string, any> = {};
   const [deleteUser] = useDeleteUserMutation();
 
@@ -64,11 +64,11 @@ const AdminPage = () => {
     ...query,
   });
 
-  //  // console.log("🚀 ~ file: page.tsx:58 ~ AdminPage ~ data:", data);
+  
 
   //@ts-ignore
   const UserData = data?.data;
-  //  //  // console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ UserData:", UserData);
+  
   //@ts-ignore
   const meta = data?.data?.meta;
 
@@ -99,16 +99,21 @@ const AdminPage = () => {
       render: function (data: any) {
         let fullName = "";
         if (data?.role === USER_ROLE.ADMIN) {
-          fullName = data?.admin?.name?.firstName + " " + data?.admin?.name?.lastName;
+          fullName =
+            data?.admin?.name?.firstName + " " + data?.admin?.name?.lastName;
         } else if (data?.role === USER_ROLE.TRAINER) {
           fullName =
-            data?.trainer?.name?.firstName + " " + data?.trainer?.name?.lastName;
+            data?.trainer?.name?.firstName +
+            " " +
+            data?.trainer?.name?.lastName;
         } else if (data?.role === USER_ROLE.SELLER) {
           fullName =
             data?.seller?.name?.firstName + " " + data?.seller?.name?.lastName;
         } else if (data?.role === USER_ROLE.STUDENT) {
           fullName =
-            data?.student?.name?.firstName + " " + data?.student?.name?.lastName;
+            data?.student?.name?.firstName +
+            " " +
+            data?.student?.name?.lastName;
         }
         return <p className="">{fullName}</p>;
       },
@@ -164,22 +169,23 @@ const AdminPage = () => {
       dataIndex: "_id",
       width: 130,
       render: function (data: any) {
-        // console.log(data);
+        
         return (
           <>
             <Link
               href={`/${userInfo?.role}/manage-users/all-users/details/${data}`}
             >
-              <Button onClick={() => console.log(data)} type="default">
+              <Button type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${userInfo?.role}/manage-users/all-users/edit/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/all-users/edit/${data}`}
+            >
               <Button
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
                 type="default"
               >
                 <EditOutlined />
@@ -187,7 +193,7 @@ const AdminPage = () => {
             </Link>
             <Button
               onClick={() => deleteUserHandler(data)}
-                type="default"
+              type="default"
               danger
             >
               <DeleteOutlined />
@@ -198,13 +204,13 @@ const AdminPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -216,7 +222,7 @@ const AdminPage = () => {
   };
 
   const deleteUserHandler = async (id: string) => {
-    console.log(id);
+    
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
@@ -255,7 +261,7 @@ const AdminPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>
@@ -302,7 +308,6 @@ const AdminPage = () => {
 
 // export default AdminPage;
 
-export default dynamic(() =>
-        Promise.resolve(AdminPage), {
+export default dynamic(() => Promise.resolve(AdminPage), {
   ssr: false,
-})
+});

@@ -41,7 +41,7 @@ export default function StudentActivePackageToCourse() {
     {
       title: "Name",
       render: function (data: any) {
-        // console.log(data);
+        
         const fullName = `${data?.sellerPackageDetails?.title}  `;
         return <>{fullName}</>;
       },
@@ -49,7 +49,7 @@ export default function StudentActivePackageToCourse() {
     {
       title: "Total subject",
       render: function (data: any) {
-        // console.log(data);
+        
         const total = `${data?.sellerPackageDetails?.categories?.length}  `;
         return <>{total}</>;
       },
@@ -57,7 +57,7 @@ export default function StudentActivePackageToCourse() {
     {
       title: "Time",
       render: function (data: any) {
-        // console.log(data);
+        
         const label = `${data?.sellerPackageDetails?.purchase?.label}  `;
         return <>{label}</>;
       },
@@ -65,10 +65,11 @@ export default function StudentActivePackageToCourse() {
     {
       title: "Expiry date",
       render: function (data: any) {
-        // console.log(data);
-        const label = `${data?.sellerPackageDetails?.expiry_date &&
+        
+        const label = `${
+          data?.sellerPackageDetails?.expiry_date &&
           dayjs(data?.sellerPackageDetails?.expiry_date).format("MMMM D, YYYY")
-          } `;
+        } `;
         return <>{label}</>;
       },
     },
@@ -77,7 +78,7 @@ export default function StudentActivePackageToCourse() {
     //   title: "Gender",
     //   // dataIndex: "gender",
     //   render: function (data: any) {
-    //     // console.log(data);
+    //     
     //     const gender = `${data[data.role]?.gender}   `;
     //     return <>{gender}</>;
     //   },
@@ -122,7 +123,7 @@ export default function StudentActivePackageToCourse() {
   ];
 
   const navigatePackage = (getPackage: any[]) => {
-    console.log("🚀 ~ navigatePackage ~ getPackage:", getPackage);
+
 
     //@ts-ignore
     const data =

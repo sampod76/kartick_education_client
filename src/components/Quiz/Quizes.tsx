@@ -21,7 +21,7 @@ export default function QuizeSinglePage({
   quiz_title: string;
 }) {
   const router = useRouter();
-  // console.log("🚀 ~ quizeId:", quizeId)
+  //// console.log("🚀 ~ quizeId:", quizeId)
   const searchParams = useSearchParams();
   const quiz_query: Record<string, any> = {};
   //! for a quiz data
@@ -33,7 +33,7 @@ export default function QuizeSinglePage({
     ...quiz_query,
     quiz: quizeId,
   });
-  // console.log('quizeIdquizeId', quizeId, "🚀 ~ allSingleQuizeData:", allSingleQuizeData);
+  //// console.log('quizeIdquizeId', quizeId, "🚀 ~ allSingleQuizeData:", allSingleQuizeData);
 
   const handleFinishQuiz = () => {
     // Handle quiz submission logic here
@@ -50,7 +50,7 @@ export default function QuizeSinglePage({
   // href = {`/lesson/module/${moduleInfo?._id}?module=${moduleInfo?.title}`
   // }
   const moduleInfo = allSingleQuizeData?.data[0]?.module;
-  // console.log(allSingleQuizeData, 'allSingleQuizeData', moduleInfo)
+  //// console.log(allSingleQuizeData, 'allSingleQuizeData', moduleInfo)
 
   const rediretBack = () => {
     if (moduleInfo?._id) {

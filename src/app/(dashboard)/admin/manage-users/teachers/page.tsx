@@ -31,11 +31,14 @@ import {
 import { getUserInfo } from "@/services/auth.service";
 import useGlobalCache from "@ant-design/cssinjs/lib/hooks/useGlobalCache";
 import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
-import { useDeleteSellerMutation, useGetAllSellersQuery } from "@/redux/api/adminApi/sellerApi";
+import {
+  useDeleteSellerMutation,
+  useGetAllSellersQuery,
+} from "@/redux/api/adminApi/sellerApi";
 
 const TeacherOrSellerPage = () => {
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
-  const { userInfo, userInfoLoading } = useGlobalContext()
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const query: Record<string, any> = {};
   const [deleteSeller] = useDeleteSellerMutation();
 
@@ -57,7 +60,7 @@ const TeacherOrSellerPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
-  console.log(query, "query");
+  
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
@@ -68,8 +71,6 @@ const TeacherOrSellerPage = () => {
   //@ts-ignore
   const StudentData = data?.data;
 
-
-
   //@ts-ignore
   const meta = data?.meta;
 
@@ -77,7 +78,7 @@ const TeacherOrSellerPage = () => {
     {
       title: "Name",
       render: function (data: any) {
-        // console.log(data);
+        //
         const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
         return <>{fullName}</>;
       },
@@ -121,7 +122,7 @@ const TeacherOrSellerPage = () => {
             <Link
               href={`/${userInfo?.role}/manage-users/teachers/details/${data}`}
             >
-              <Button onClick={() => console.log(data)} type="default">
+              <Button type="default">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -132,7 +133,7 @@ const TeacherOrSellerPage = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
+                 
                 type="default"
               >
                 <EditOutlined />
@@ -151,13 +152,13 @@ const TeacherOrSellerPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -169,7 +170,7 @@ const TeacherOrSellerPage = () => {
   };
 
   const deleteSellerHandler = async (id: string) => {
-    console.log(id);
+    
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
@@ -206,7 +207,7 @@ const TeacherOrSellerPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

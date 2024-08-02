@@ -28,7 +28,7 @@ export default function SellerCourse() {
         //@ts-ignore
         data?.data?.message
     );
-    console.log(error, data?.data);
+
   }
   return (
     <>

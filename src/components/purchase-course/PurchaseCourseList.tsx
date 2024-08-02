@@ -68,7 +68,7 @@ export default function PurchaseCourseList() {
       ...query,
     });
 
-  // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+  //// console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
   //@ts-ignore
   const packageData = data?.data || [];
@@ -178,7 +178,7 @@ export default function PurchaseCourseList() {
       // fixed: "right",
       // width: 130,
       render: (record: any) => (
-        // console.log(object);
+        //// console.log(object);
         <>
           <Space size="middle">
             <Dropdown
@@ -208,13 +208,13 @@ export default function PurchaseCourseList() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };

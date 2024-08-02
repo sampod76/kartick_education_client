@@ -11,13 +11,15 @@ import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { useGetSingleStudentQuery, useUpdateStudentMutation } from "@/redux/api/adminApi/studentApi";
+import {
+  useGetSingleStudentQuery,
+  useUpdateStudentMutation,
+} from "@/redux/api/adminApi/studentApi";
 import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
 } from "@/redux/api/serviceApi";
-
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
@@ -29,11 +31,11 @@ const EditStudentPage = ({ params }: any) => {
   const { data: singleStudent, isLoading } = useGetSingleStudentQuery(
     params?.id
   );
-  const studentData = singleStudent
+  const studentData = singleStudent;
 
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
-  
-  // console.log(studentData, "student data");
+
+  //
 
   const [updateStudent, { isLoading: updateLoading, error }] =
     useUpdateStudentMutation();
@@ -48,7 +50,7 @@ const EditStudentPage = ({ params }: any) => {
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -56,17 +58,14 @@ const EditStudentPage = ({ params }: any) => {
       }
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (isLoading || updateLoading) {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
   }
-
-  console.log(studentData);
 
   const defaultValues = {
     name: {
@@ -82,8 +81,6 @@ const EditStudentPage = ({ params }: any) => {
     address: studentData?.address || "",
     img: studentData?.img || "",
   };
-
-  console.log(defaultValues);
 
   return (
     <div>
@@ -196,7 +193,6 @@ const EditStudentPage = ({ params }: any) => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}

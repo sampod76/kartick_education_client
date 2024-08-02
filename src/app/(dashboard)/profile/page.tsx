@@ -19,22 +19,16 @@ const { Title, Text } = Typography;
 
 const ProfileTemplate = () => {
   const [update, setUpdate] = useState(false);
-  // console.log(update);
-  const { userInfo, userInfoLoading } = useGlobalContext()
+  //
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const { data = {}, isLoading } = useGetProfileQuery("");
-  console.log(data, 'data profile');
-
-
 
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
 
-
-
   return (
     <div>
-    
       <UserProfile userData={data} />
       {/* {
         data?.role === "seller" &&
@@ -44,7 +38,6 @@ const ProfileTemplate = () => {
         data?.role === "admin" &&
         <AdminMainProfile />
       } */}
-
     </div>
   );
 };

@@ -16,8 +16,8 @@ import React from "react";
 export default function CartDrawer() {
   const userInfo = getUserInfo() as IDecodedInfo;
   const { cartModal, course: cartCourse } = useAppSelector(
-    state => state.cart
-  )
+    (state) => state.cart
+  );
 
   const { data, isLoading } = useGetAllCartQuery(
     { status: "active" },
@@ -25,7 +25,7 @@ export default function CartDrawer() {
   );
 
   const cartData: ICartData[] | undefined = data?.data;
-  console.log("cartData", cartData);
+  // console.log("cartData", cartData);
 
   const [deleteCart] = useDeleteCartMutation();
 
@@ -66,7 +66,7 @@ export default function CartDrawer() {
       return accumulator + coursePrice;
     }, 0);
 
-  // console.log(totalPrice, 'totalPrice')
+  //// console.log(totalPrice, 'totalPrice')
   return (
     <Drawer
       title="Your Cart "

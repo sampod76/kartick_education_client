@@ -66,7 +66,7 @@ export default function TopDashStatistics() {
   ) {
     return <LoadingSkeleton />;
   }
-  // console.log(allSellCourseErrorAmount);
+
   return (
     <div>
       {/*
@@ -137,8 +137,10 @@ export default function TopDashStatistics() {
                       <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
                         <span>
                           $
-                          {allSellCourseAmount?.data[0]?.totalAmount +
-                            allSellPackageAmount?.data[0]?.totalAmount}
+                          {allSellCourseAmount?.data[0]?.totalAmount
+                            ? allSellCourseAmount?.data[0]?.totalAmount +
+                              allSellPackageAmount?.data[0]?.totalAmount
+                            : 0}
                         </span>
                       </div>
                     </div>
@@ -155,7 +157,7 @@ export default function TopDashStatistics() {
                       </p>
                       <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
                         <span>
-                          ${allSellCourseAmount?.data[0]?.totalAmount}
+                          ${allSellCourseAmount?.data[0]?.totalAmount || 0}
                         </span>
                       </div>
                     </div>
@@ -172,7 +174,7 @@ export default function TopDashStatistics() {
                       </p>
                       <div className="font-bold font-sans text-end text-xl lgg:text-2xl">
                         <span>
-                          ${allSellPackageAmount?.data[0]?.totalAmount}
+                          ${allSellPackageAmount?.data[0]?.totalAmount || 0}
                         </span>
                       </div>
                     </div>

@@ -43,7 +43,7 @@ import {
 } from "@/redux/api/sellerApi/addPackageAndCourse";
 
 const PackageToStudent = ({ packageId }: { packageId: string }) => {
-  console.log("🚀 ~ packageId:", packageId);
+  // console.log("🚀 ~ packageId:", packageId);
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
   const userInfo = getUserInfo() as any;
   const query: Record<string, any> = {};
@@ -66,7 +66,7 @@ const PackageToStudent = ({ packageId }: { packageId: string }) => {
     { author: userInfo?.id, sellerPackage: packageId, ...query },
     { skip: !Boolean(userInfo.id) }
   );
-  console.log("🚀 ~ data:", data);
+  // console.log("🚀 ~ data:", data);
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -102,7 +102,7 @@ const PackageToStudent = ({ packageId }: { packageId: string }) => {
       dataIndex: "_id",
       width: 100,
       render: function (_id: string, data: any) {
-        console.log(data);
+        // console.log(data);
         return (
           <>
             <Space size="middle">
@@ -140,13 +140,13 @@ const PackageToStudent = ({ packageId }: { packageId: string }) => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -168,7 +168,7 @@ const PackageToStudent = ({ packageId }: { packageId: string }) => {
               },
             }).unwrap();
 
-            console.log(res, "response for delete Lesson");
+            // console.log(res, "response for delete Lesson");
             if (res?.success == false) {
               // message.success("Admin Successfully Deleted!");
               // setOpen(false);
@@ -203,7 +203,7 @@ const PackageToStudent = ({ packageId }: { packageId: string }) => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

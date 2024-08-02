@@ -12,7 +12,6 @@ interface DraggableImageProps {
 }
 
 const DraggableImage: React.FC<DraggableImageProps> = ({ src, id, onDrag }) => {
-  console.log("🚀 ~ src:", src);
   const [, drag] = useDrag({
     type: "IMAGE",
     item: { id },

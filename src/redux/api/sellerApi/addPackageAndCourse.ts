@@ -18,7 +18,7 @@ export const addPackageAndCourse = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: ICourseData[], meta: IMeta) => {
-        // console.log(response);
+   
         return {
           data: response,
           meta,

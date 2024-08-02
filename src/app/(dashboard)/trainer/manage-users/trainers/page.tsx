@@ -71,10 +71,7 @@ const TrainerListPage = () => {
 
   //@ts-ignore
   const TrainerData = data?.data;
-  console.log(
-    "🚀 ~ file: page.tsx:68 ~ TrainerListPage ~ TrainerData:",
-    TrainerData
-  );
+ 
 
   //@ts-ignore
   const meta = data?.meta;
@@ -83,7 +80,7 @@ const TrainerListPage = () => {
     {
       title: "Name",
       render: function (data: any) {
-        // console.log(data);
+        //
         const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
         return <>{fullName}</>;
       },
@@ -127,7 +124,7 @@ const TrainerListPage = () => {
             <Link
               href={`/${userInfo?.role}/manage-users/trainers/details/${data}`}
             >
-              <Button onClick={() => console.log(data)} type="default">
+              <Button   type="default">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -138,7 +135,7 @@ const TrainerListPage = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
+                 
                 type="default"
               >
                 <EditOutlined />
@@ -157,13 +154,13 @@ const TrainerListPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -175,7 +172,7 @@ const TrainerListPage = () => {
   };
 
   const deleteStudentHandler = async (id: string) => {
-    console.log(id);
+   
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
@@ -212,7 +209,7 @@ const TrainerListPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

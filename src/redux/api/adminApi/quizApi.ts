@@ -16,9 +16,6 @@ export const QuizApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-
-        // console.log(response);
-
         return {
           data: response,
           meta,
@@ -29,8 +26,7 @@ export const QuizApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleQuiz: build.query({
       query: (id: string | string[] | undefined) => {
-
-        // console.log(id);
+        //// console.log(id);
 
         return {
           url: `${QUIZ_URL}/${id}`,
@@ -42,7 +38,7 @@ export const QuizApi = baseApi.injectEndpoints({
     // create a new academic department
     addQuiz: build.mutation({
       query: (data) => {
-        // 
+        //
 
         return {
           url: QUIZ_URL,
@@ -50,20 +46,18 @@ export const QuizApi = baseApi.injectEndpoints({
           data,
         };
       },
-      invalidatesTags: [tagTypes.quiz,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.quiz, tagTypes.categoryChildren],
     }),
     // update ac department
     updateQuiz: build.mutation({
       query: ({ data, id }) => {
-
-
         return {
           url: `${QUIZ_URL}/${id}`,
           method: "PATCH",
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.quiz,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.quiz, tagTypes.categoryChildren],
     }),
 
     // delete ac department
@@ -72,7 +66,7 @@ export const QuizApi = baseApi.injectEndpoints({
         url: `${QUIZ_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.quiz,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.quiz, tagTypes.categoryChildren],
     }),
   }),
 });

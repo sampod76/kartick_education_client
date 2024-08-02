@@ -5,7 +5,7 @@ function VimeoPlayer({
   link,
   width = 640,
   height = 640,
-  autoplay = true
+  autoplay = true,
 }: {
   link: string;
   width?: number;
@@ -13,7 +13,7 @@ function VimeoPlayer({
   autoplay?: boolean;
 }) {
   const playerRef = useRef<HTMLDivElement>(null);
-  // console.log(autoplay)
+
   useEffect(() => {
     // Initialize the Vimeo player once the component mounts
     if (!link || !playerRef.current) {

@@ -5,15 +5,16 @@ import JoinPackage from "./JoinPackage";
 import PaymentCard from "./PaymentCard";
 import { useSearchParams } from "next/navigation";
 
-export type IPlan = "monthly" | "yearly" | 'biannual';
+export type IPlan = "monthly" | "yearly" | "biannual";
 
 export default function JoinMain() {
   const searchParams = useSearchParams();
   const packName = searchParams.get("pack") as string;
-  console.log(packName, 'packName')
+  // console.log(packName, 'packName')
   const [plan, setPlan] = useState<IPlan>("monthly");
-  const [quantity, setQuantity] = useState<number>(packName === 'family_personal' ? 1 : 11);
-
+  const [quantity, setQuantity] = useState<number>(
+    packName === "family_personal" ? 1 : 11
+  );
 
   return (
     <div className="w-full lg:max-w-7xl mx-auto p-3">

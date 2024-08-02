@@ -69,7 +69,7 @@ const QuizDashList = () => {
     });
 
   const categoryData: any = Category?.data;
-  console.log("🚀 ~ QuizDashList ~ categoryData:", categoryData);
+  // console.log("🚀 ~ QuizDashList ~ categoryData:", categoryData);
   //---------------------------------------------------------
 
   const [deleteQuiz] = useDeleteQuizMutation();
@@ -110,7 +110,7 @@ const QuizDashList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllQuizQuery({ ...query });
-  console.log(data);
+  // console.log(data);
 
   //@ts-ignore
   const QuizData = data?.data;
@@ -122,11 +122,11 @@ const QuizDashList = () => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deleteQuiz(id).unwrap();
 
-          console.log(res, "response for delete Quiz");
+          // console.log(res, "response for delete Quiz");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -234,13 +234,13 @@ const QuizDashList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -252,7 +252,7 @@ const QuizDashList = () => {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    //// console.log(id);
     try {
       const res = await deleteQuiz(id);
       if (res) {

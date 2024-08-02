@@ -17,7 +17,7 @@ export default function Detailscourse({ purchaseId }: { purchaseId: string }) {
   const { data: course, isLoading } =
     useGetSinglePurchaseAcceptAndPendingCourseQuery(purchaseId);
 
-  // console.log("🚀 ~ file: DetailsPurchasePackage.tsx:13 ~ DetailsPurchasePackage ~ allPurchaseData:", allPurchaseData)
+  //// console.log("🚀 ~ file: DetailsPurchasePackage.tsx:13 ~ DetailsPurchasePackage ~ allPurchaseData:", allPurchaseData)
   // const courseData = allPurchaseData?.data?.find((item: any) => item?._id === purchaseId)
   // const course = courseData?.course
 
@@ -31,7 +31,7 @@ export default function Detailscourse({ purchaseId }: { purchaseId: string }) {
     );
   }
 
-  // console.log(course, 'course')
+  //// console.log(course, 'course')
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 ">
@@ -44,8 +44,9 @@ export default function Detailscourse({ purchaseId }: { purchaseId: string }) {
               <div
                 className="w-1/3 bg-cover"
                 style={{
-                  backgroundImage: `url(${course?.img || AllImage?.notFoundImage
-                    })`,
+                  backgroundImage: `url(${
+                    course?.img || AllImage?.notFoundImage
+                  })`,
                 }}
               ></div>
               <div className="w-2/3 p-2">

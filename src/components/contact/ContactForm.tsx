@@ -15,7 +15,7 @@ export default function ContactForm() {
   const [addContact, { isLoading }] = useAddContactMutation();
 
   const onSubmit = async (values: any) => {
-    // console.log(values);
+    ///
 
     // message.success("sent message");
 
@@ -30,17 +30,16 @@ export default function ContactForm() {
 
     try {
       const res = await addContact(values).unwrap();
-      // console.log(res);
+      ///
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully sent your Message");
         setIsReset(true);
       }
-      // console.log(res);
+      ///
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
     }
 
     // try {
@@ -51,10 +50,10 @@ export default function ContactForm() {
     //     Success_model("Successfully added Category");
 
     //   }
-    //   console.log(res);
+    //  /
     // } catch (error: any) {
     //   Error_model_hook(error?.message);
-    //   console.log(error);
+    //  /
     // }
   };
   return (
@@ -119,7 +118,7 @@ export default function ContactForm() {
               marginLeft: "16px",
               color: "white",
               backgroundColor: "#5371FF",
-              marginTop: '32px'
+              marginTop: "32px",
             }}
             type="primary"
             size="large"

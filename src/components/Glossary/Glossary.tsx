@@ -9,7 +9,7 @@ import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 
 export default function GlossaryPage({ moduleId }: { moduleId: string }) {
-  // console.log("🚀 ~ GlossaryPage ~ moduleId:", moduleId);
+  //// console.log("🚀 ~ GlossaryPage ~ moduleId:", moduleId);
 
   const { data: glossaryData, isLoading } = useGetAllGlossaryQuery({
     module: moduleId,
@@ -17,7 +17,7 @@ export default function GlossaryPage({ moduleId }: { moduleId: string }) {
     status: ENUM_STATUS.ACTIVE,
   });
   const data = glossaryData?.data[0];
-  // console.log("🚀 ~ GlossaryPage ~ glossaryData:", glossaryData);
+  //// console.log("🚀 ~ GlossaryPage ~ glossaryData:", glossaryData);
 
   if (isLoading) {
     return <LoadingSkeleton />;

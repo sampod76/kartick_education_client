@@ -14,7 +14,7 @@ import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresen
 const { Meta, Grid } = Card;
 
 const SIngleAdvanceClass = ({ programme }: { programme: IClassTypes }) => {
-  // console.log(programme);
+  //// console.log(programme);
   // const { title, details, img, demo_video, tags} = programme;
   let buttonLinkId = "";
   if (typeof programme?.course === "string") {
@@ -46,7 +46,6 @@ const SIngleAdvanceClass = ({ programme }: { programme: IClassTypes }) => {
           </div>
         </div>
         <Link
-        
           href={programme.buttonLink || `/course/milestone/${buttonLinkId}`}
           className="p-2  text-nowrap  my-2 w-[6.5rem] border-2 border-primary rounded  font-semibold gap-3 hover:bg-primary hover:text-white"
         >

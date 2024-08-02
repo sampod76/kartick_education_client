@@ -13,14 +13,14 @@ const SelectMilestoneField = () => {
   //! for Milestone options selection
   const { data, isLoading } = useGetAllMilestoneQuery({ ...query });
   const milestoneData = data?.data;
-  // console.log(milestoneData)
+  //// console.log(milestoneData)
   const MilestoneOptions = milestoneData?.map((item: any) => {
     return {
       label: item?.title,
       value: item?._id,
     };
   });
-  //   console.log(MilestoneOptions);
+  //  // console.log(MilestoneOptions);
   return (
     <FormSearchSelectField
       size="large"

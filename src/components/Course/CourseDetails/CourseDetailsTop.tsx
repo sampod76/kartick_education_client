@@ -7,10 +7,7 @@ import { CutText } from "@/utils/CutText";
 import VimeoPlayer from "@/utils/vimoPlayer";
 import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
 const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
-  // console.log(
-  //   "🚀 ~ file: CourseDetailsTop.tsx:6 ~ CourseDetailsTop ~ courseData:",
-  //   courseData
-  // );
+
 
   return (
     <div className="bg-[#333333] block lg:flex gap-3">
@@ -64,7 +61,6 @@ const CourseDetailsTop = ({ courseData }: { courseData: any }) => {
             fontWeight: "400",
           }}
         >
-  
           {courseData?.details && CutText(courseData?.short_description, 90)}
         </p>
 

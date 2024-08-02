@@ -13,14 +13,14 @@ const SelectModuleField = () => {
   //! for Module options selection
   const { data, isLoading } = useGetAllModuleQuery({ ...query });
   const moduleData = data?.data;
-  // console.log(moduleData)
+  //// console.log(moduleData)
   const ModuleOptions = moduleData?.map((item: any) => {
     return {
       label: item?.title,
       value: item?._id,
     };
   });
-  // console.log(ModuleOptions);
+  //// console.log(ModuleOptions);
   return (
     <FormSearchSelectField
       size="large"

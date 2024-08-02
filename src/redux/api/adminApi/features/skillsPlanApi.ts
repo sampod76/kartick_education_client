@@ -19,7 +19,6 @@ export const Skills_planApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: ISkills_plan[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,

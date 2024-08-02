@@ -3,7 +3,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Flex, message, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import { Image } from 'antd';
+import { Image } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
@@ -54,45 +54,45 @@ const UploadMultipalImage = ({
   useEffect(() => {
     setValue(name, imagesUrl);
   }, [imagesUrl, name, setValue]);
-  const handleImageProcessing = useCallback(async (file: any) => {
-    try {
-      // Resize the image
-      const resizedImage = await new Promise((resolve) => {
-        Resizer.imageFileResizer(
-          file,
-          700, // width
-          500, // height
-          "JPEG", // format
-          100, // quality
-          0, // rotation
-          (uri: unknown) => {
-            resolve(uri);
-          },
-          "file" // output type (file, blob, base64)
-        );
-      });
+  const handleImageProcessing = useCallback(
+    async (file: any) => {
+      try {
+        // Resize the image
+        const resizedImage = await new Promise((resolve) => {
+          Resizer.imageFileResizer(
+            file,
+            700, // width
+            500, // height
+            "JPEG", // format
+            100, // quality
+            0, // rotation
+            (uri: unknown) => {
+              resolve(uri);
+            },
+            "file" // output type (file, blob, base64)
+          );
+        });
 
-      // Get the compressed image URL
-      const imgUrl = await uploadImgCloudinary(resizedImage);
-      console.log("🚀 ~ handleImageProcessing ~ imgUrl:", imgUrl)
+        // Get the compressed image URL
+        const imgUrl = await uploadImgCloudinary(resizedImage);
+        // console.log("🚀 ~ handleImageProcessing ~ imgUrl:", imgUrl)
 
-
-      // setImagesUrl((prevImages) => [...prevImages, imgUrl]);
-      setImagesUrl((prevImages) => [ imgUrl]);
-      setLoading(false);
-      if (isImageloading) {
-
-        isImageloading(true)
+        // setImagesUrl((prevImages) => [...prevImages, imgUrl]);
+        setImagesUrl((prevImages) => [imgUrl]);
+        setLoading(false);
+        if (isImageloading) {
+          isImageloading(true);
+        }
+      } catch (error) {
+        console.error("Error processing image:", error);
+        setLoading(false);
+        if (isImageloading) {
+          isImageloading(true);
+        }
       }
-    } catch (error) {
-      console.error("Error processing image:", error);
-      setLoading(false);
-      if (isImageloading) {
-
-        isImageloading(true)
-      }
-    }
-  }, [isImageloading]);
+    },
+    [isImageloading]
+  );
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
@@ -100,8 +100,7 @@ const UploadMultipalImage = ({
     if (info.file.status === "uploading") {
       setLoading(true);
       if (isImageloading) {
-
-        isImageloading(true)
+        isImageloading(true);
       }
       return;
     }
@@ -128,19 +127,18 @@ const UploadMultipalImage = ({
     <div className="flex justify-center items-center border p-5 rounded-lg my-2 gap-3">
       {defaultImage.length
         ? defaultImage?.map((image, i) => (
-          <Image
-            key={i}
-            className=" rounded "
-            src={image}
-            width={300}
-            height={120}
-            alt=""
-          />
-        ))
+            <Image
+              key={i}
+              className=" rounded "
+              src={image}
+              width={300}
+              height={120}
+              alt=""
+            />
+          ))
         : null}
       <Upload
         name={name}
-
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={true}

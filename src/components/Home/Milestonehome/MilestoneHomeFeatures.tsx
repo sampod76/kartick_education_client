@@ -78,23 +78,23 @@ export default function MilestoneHomeFeatures() {
 
   const handleTabClick = (key: any) => {
     setClaseAcctive(key);
-    // console.log(key);
+    //// console.log(key);
   };
 
   const TestElemnt = (course: any, title: string) => {
-    // console.log(course, "ssysysy");
+    //// console.log(course, "ssysysy");
 
-    // console.log(title);
+    //// console.log(title);
 
     return course?.title && course?.title == claseAcctive
       ? course?.course?.courses &&
-          course?.course?.courses.map((item: any, index : number) => {
-            // console.log(item, "ayan");
+          course?.course?.courses.map((item: any, index: number) => {
+            //// console.log(item, "ayan");
             return (
-              
-              <div key={index} className="flex gap-3 p-4 border-b-2 hover:border-b-[#FB8500] transition-all cursor-pointer bg-white shadow-sm  items-center rounded-md">
-                
-             
+              <div
+                key={index}
+                className="flex gap-3 p-4 border-b-2 hover:border-b-[#FB8500] transition-all cursor-pointer bg-white shadow-sm  items-center rounded-md"
+              >
                 <svg
                   width="10"
                   height="18"
@@ -107,12 +107,15 @@ export default function MilestoneHomeFeatures() {
                     fill="#FB8500"
                   />
                 </svg>
-                <Link href={`/course/milestone/${item?._id}?category=${course?.course?._id}`}><h2 className="text-lg">{item.title}</h2></Link>
+                <Link
+                  href={`/course/milestone/${item?._id}?category=${course?.course?._id}`}
+                >
+                  <h2 className="text-lg">{item.title}</h2>
+                </Link>
               </div>
-              
             );
           })
-      : ""
+      : "";
   };
 
   const activeClass =
@@ -122,7 +125,7 @@ export default function MilestoneHomeFeatures() {
   const { data = {}, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
   }) as any;
-  console.log("🚀 ~ MilestoneHomeFeatures ~ data:", data.data);
+  // console.log("🚀 ~ MilestoneHomeFeatures ~ data:", data.data);
   // setActiveTabKey(data?.data[0])
 
   // setClaseAcctive(data?.data && data?.data[0].title)
@@ -159,25 +162,25 @@ export default function MilestoneHomeFeatures() {
                   </li>
                 );
 
-                // console.log(category.title);
+                //// console.log(category.title);
               })}
           </ul>
         </div>
       </div>
       <hr />
-<div className="w-full bg-[#fcdbb613]  py-6">
-<div className="container mx-auto ">
-        <div className="md:w-[90%] mx-auto justify-center grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-          {data?.data &&
-            data?.data?.map((item: any, index:number) => {
-              return <TestElemnt key={index} course={item} title={item.title} />;
-              // console.log(item.courses);
-            })}
-          
+      <div className="w-full bg-[#fcdbb613]  py-6">
+        <div className="container mx-auto ">
+          <div className="md:w-[90%] mx-auto justify-center grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            {data?.data &&
+              data?.data?.map((item: any, index: number) => {
+                return (
+                  <TestElemnt key={index} course={item} title={item.title} />
+                );
+                //// console.log(item.courses);
+              })}
+          </div>
         </div>
       </div>
-</div>
-      
     </div>
 
     // <div className="container mx-auto mt-7 text-center">

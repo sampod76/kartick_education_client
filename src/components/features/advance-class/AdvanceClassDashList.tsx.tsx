@@ -12,11 +12,7 @@ import {
   message,
 } from "antd";
 import Link from "next/link";
-import {
-
-  ReloadOutlined,
-
-} from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
@@ -35,16 +31,19 @@ import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 // import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { useDeleteShortOverViewMutation, useGetAllShortOverViewQuery } from "@/redux/api/adminApi/features/overview";
-import { useDeleteShowAdvanceClassesMutation, useGetAllShowAdvanceClassesQuery } from "@/redux/api/adminApi/features/showAdvanceClassApi";
+import {
+  useDeleteShortOverViewMutation,
+  useGetAllShortOverViewQuery,
+} from "@/redux/api/adminApi/features/overview";
+import {
+  useDeleteShowAdvanceClassesMutation,
+  useGetAllShowAdvanceClassesQuery,
+} from "@/redux/api/adminApi/features/showAdvanceClassApi";
 import { ENUM_YN } from "@/constants/globalEnums";
-
-
 
 export default function AdvanceClassList() {
   //
   const [openDrawer, setOpenDrawer] = useState(false);
-
 
   const queryCategory: Record<string, any> = {};
   queryCategory["children"] = "course";
@@ -54,9 +53,10 @@ export default function AdvanceClassList() {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
 
-  const [deleteShowAdvanceClasses, { isLoading: deleteLoading }] = useDeleteShowAdvanceClassesMutation();
+  const [deleteShowAdvanceClasses, { isLoading: deleteLoading }] =
+    useDeleteShowAdvanceClassesMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -89,12 +89,14 @@ export default function AdvanceClassList() {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllShowAdvanceClassesQuery({ ...query });
-  // console.log("🚀 ~ file: page.tsx:68 ~ Advance ClassData ~ data:", data);
+  const { data = [], isLoading } = useGetAllShowAdvanceClassesQuery({
+    ...query,
+  });
+  ///
 
   //@ts-ignore
   const advanceClassData = data?.data || [];
-  // console.log(skillsPlanData, 'skillsPlanData')
+  ///
   //@ts-ignore
   const meta = data?.meta;
 
@@ -102,11 +104,8 @@ export default function AdvanceClassList() {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
-
           const res = await deleteShowAdvanceClasses(id).unwrap();
 
-          console.log(res, "response for delete Advance Class");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -172,19 +171,23 @@ export default function AdvanceClassList() {
       // fixed: "right",
       width: 130,
       render: (record: any) => (
-        // console.log(object);
+        ///
         <>
           <Space size="middle">
             <Dropdown
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${userInfo?.role}/features/advance-class/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/features/advance-class/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/features/advance-class/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/features/advance-class/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
@@ -209,13 +212,13 @@ export default function AdvanceClassList() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  ///
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    ///
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -227,7 +230,7 @@ export default function AdvanceClassList() {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    ///
     try {
       const res = await deleteShowAdvanceClasses(id);
       if (res) {
@@ -295,7 +298,6 @@ export default function AdvanceClassList() {
           >
             Filter
           </Button> */}
-
 
           <Link href={`/${userInfo?.role}/features/advance-class/create`}>
             <Button type="default">Create Advance Class</Button>
@@ -365,7 +367,6 @@ export default function AdvanceClassList() {
           }
         />
       </Drawer> */}
-
     </div>
   );
 }

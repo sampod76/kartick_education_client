@@ -14,17 +14,17 @@ export interface Tab {
 }
 
 export default function ProfileTabSection({
-  items = [] // Provide a default value for 'items' to avoid 'undefined'
+  items = [], // Provide a default value for 'items' to avoid 'undefined'
 }: {
   items?: Tab[];
 }) {
   const onChange = (key: string) => {
-    console.log(key);
-  }
+    // console.log(key);
+  };
 
   return (
     <div className="w-full mx-auto mt-5">
-         <Tabs defaultActiveKey="1" onChange={onChange}>
+      <Tabs defaultActiveKey="1" onChange={onChange}>
         {items?.map((item, index) => (
           <Tabs.TabPane key={item.key} tab={item.label}>
             {item.children}

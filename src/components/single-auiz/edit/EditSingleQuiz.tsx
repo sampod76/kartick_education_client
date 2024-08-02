@@ -53,7 +53,7 @@ export default function EditSingleQuiz({
   const [answers, setAnswers] = useState([]);
 
   const [singleAnswer, setSingleAnswerInput] = useState<string>("");
-  // console.log(
+  //// console.log(
   //   "🚀 ~ file: page.tsx:58 ~ CreateSingleQuiz ~ singleAnswer:",
   //   singleAnswer
   // );
@@ -76,7 +76,7 @@ export default function EditSingleQuiz({
     { skip: !Boolean(singleQuizId) }
   );
 
-  console.log("🚀 ~ data:", data);
+  // console.log("🚀 ~ data:", data);
   useEffect(() => {
     setAnswers(data?.answers || []);
     setQuizTypes(data?.type);
@@ -114,7 +114,7 @@ export default function EditSingleQuiz({
       Error_model_hook("Please select an quiz type");
       return;
     }
-    // console.log(values, "ttttttttttttttttttttttt");
+    //// console.log(values, "ttttttttttttttttttttttt");
     if (typeof values?.time_duration === "string") {
       values.time_duration = timeDurationToMilliseconds(values.time_duration);
     }
@@ -149,10 +149,10 @@ export default function EditSingleQuiz({
         setAnswers([]);
         setIsReset(true);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 

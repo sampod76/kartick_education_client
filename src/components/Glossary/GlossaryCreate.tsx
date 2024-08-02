@@ -26,14 +26,14 @@ export default function GlossaryCreate({ setOpen, moduleId }: any) {
     isDelete: ENUM_YN.NO,
     // status: ENUM_STATUS.ACTIVE,
   });
-  console.log("🚀 ~ GlossaryCreate ~ data:", data);
+  // console.log("🚀 ~ GlossaryCreate ~ data:", data);
   const glossary = data?.data[0];
   const [addGlossary, { isLoading }] = useAddGlossaryMutation();
   const [updateGlossary, { isLoading: glossaryUpdateLoading }] =
     useUpdateGlossaryMutation();
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
-    console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
+    // console.log("🚀 ~ file: page.tsx:77 ~ onSubmit ~ values:", values);
     if (!moduleId) {
       Error_model_hook("Please ensure your are selected moduleId");
       return;
@@ -65,7 +65,7 @@ export default function GlossaryCreate({ setOpen, moduleId }: any) {
       }
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
   if (GlossaryLoading) {

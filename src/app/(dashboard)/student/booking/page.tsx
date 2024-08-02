@@ -77,10 +77,7 @@ const GeneralUserBooking = () => {
 
   //@ts-ignore
   const allBookingData = data?.data;
-  console.log(
-    "🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:",
-    allBookingData
-  );
+ 
   //@ts-ignore
   const meta = data?.meta;
 
@@ -234,13 +231,13 @@ const GeneralUserBooking = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -271,7 +268,7 @@ const GeneralUserBooking = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

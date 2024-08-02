@@ -8,9 +8,17 @@ import { Col, Row } from "antd";
 import { NO_IMAGE } from "@/constants/filePatch";
 import { CutText } from "@/utils/CutText";
 
-const UpComingService = ({status,text,limit}:{status?:string,text?:string,limit?:number}) => {
+const UpComingService = ({
+  status,
+  text,
+  limit,
+}: {
+  status?: string;
+  text?: string;
+  limit?: number;
+}) => {
   const query: Record<string, any> = {};
-  const [dataQuery, setDataQuery] = useState<string>(status||"");
+  const [dataQuery, setDataQuery] = useState<string>(status || "");
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(limit || 10);
   query["limit"] = size;
@@ -20,12 +28,10 @@ const UpComingService = ({status,text,limit}:{status?:string,text?:string,limit?
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
-  console.log(data);
+  // console.log(data);
 
   return (
-    <div
-      
-    >
+    <div>
       <h1 className="my-4 text-center text-3xl border-b-2">
         {text || "All Upcoming Service"}
       </h1>

@@ -20,20 +20,20 @@ import { MdAccountBalance } from "react-icons/md";
 import { SiSellfy } from "react-icons/si";
 
 export default function StudentDashboardMain() {
- const {userInfo,userInfoLoading} =useGlobalContext()
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const {
     data: allPurchaseCourse,
     error: PurchaseCourseError,
     isLoading: PurchaseCourseLoading,
-  } = useGetAllPurchaseAcceptedCourseQuery({
-    isDelete: ENUM_YN.NO,
-    status: "active",
-    author: userInfo?.id,
-  },{skip:!Boolean(userInfo?.id)});
-  console.log(
-    "🚀 ~ StudentDashboardMain ~ allPurchaseCourse:",
-    allPurchaseCourse
+  } = useGetAllPurchaseAcceptedCourseQuery(
+    {
+      isDelete: ENUM_YN.NO,
+      status: "active",
+      author: userInfo?.id,
+    },
+    { skip: !Boolean(userInfo?.id) }
   );
+
   const {
     data: allPurchasePackage,
     error: allPurchasePackageError,
@@ -46,7 +46,7 @@ export default function StudentDashboardMain() {
     },
     { skip: !Boolean(userInfo?.id) }
   );
-  console.log(allPurchasePackage)
+
   const {
     data: allSingleQuiz,
     error: allSingleQuizError,
@@ -59,8 +59,13 @@ export default function StudentDashboardMain() {
     },
     { skip: !Boolean(userInfo?.id) }
   );
-  console.log("🚀 ~ StudentDashboardMain ~ allSingleQuiz:", allSingleQuiz)
-  if (PurchaseCourseLoading || userInfoLoading || allSingleQuizLoading ||allPurchasePackageLoading) {
+
+  if (
+    PurchaseCourseLoading ||
+    userInfoLoading ||
+    allSingleQuizLoading ||
+    allPurchasePackageLoading
+  ) {
     return <LoadingSkeleton />;
   }
   return (
@@ -69,50 +74,50 @@ export default function StudentDashboardMain() {
         <div className="w-full mx-auto p-4 grid grid-cols-12 gap-2 min-h-screen">
           <div className="col-span-12 relative top-0 z-10">
             {/* <Chart></Chart> */}
-           <AnimatePresenceWrapper>
-           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-4 xl:gap-6 text-[30px]">
-              <div className="border text-white bg-[#4e36e2] w-full p-4 shadow rounded-xl flex justify-between items-center h-28 ">
-                <p className="border-2 border-white rounded-md p-1">
-                  <FaUser className="h-7 w-7" />
-                </p>
-                <div className="space-y-2">
-                  <p className="text-end font-normal text-base lggg:text-lg">
-                    Total Purchase Course
+            <AnimatePresenceWrapper>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-4 xl:gap-6 text-[30px]">
+                <div className="border text-white bg-[#4e36e2] w-full p-4 shadow rounded-xl flex justify-between items-center h-28 ">
+                  <p className="border-2 border-white rounded-md p-1">
+                    <FaUser className="h-7 w-7" />
                   </p>
+                  <div className="space-y-2">
+                    <p className="text-end font-normal text-base lggg:text-lg">
+                      Total Purchase Course
+                    </p>
 
-                  <div className="font-bold font-sans text-end text-2xl">
-                    <span>{allPurchaseCourse?.meta?.total || 0}</span>
+                    <div className="font-bold font-sans text-end text-2xl">
+                      <span>{allPurchaseCourse?.meta?.total || 0}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="border text-white bg-[#1ad588] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
-                <p className="border-2 border-white rounded-md p-1">
-                  <GiBookCover className="h-7 w-7" />
-                </p>
-                <div className="space-y-2">
-                  <p className="text-end font-normal text-base lggg:text-lg">
-                    Total Purchase Package
+                <div className="border text-white bg-[#1ad588] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
+                  <p className="border-2 border-white rounded-md p-1">
+                    <GiBookCover className="h-7 w-7" />
                   </p>
-                  <div className="font-bold font-sans text-end text-2xl">
-                    <span>{allPurchasePackage?.meta?.total || 0}</span>
+                  <div className="space-y-2">
+                    <p className="text-end font-normal text-base lggg:text-lg">
+                      Total Purchase Package
+                    </p>
+                    <div className="font-bold font-sans text-end text-2xl">
+                      <span>{allPurchasePackage?.meta?.total || 0}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="border text-white bg-[#1a97d5] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
-                <p className="border-2 border-white rounded-md p-1">
-                  <GiBookCover className="h-7 w-7" />
-                </p>
-                <div className="space-y-2">
-                  <p className="text-end font-normal text-base lggg:text-lg">
-                    Total Submitted Quiz
+                <div className="border text-white bg-[#1a97d5] w-full p-4 shadow rounded-xl flex justify-between items-center h-28">
+                  <p className="border-2 border-white rounded-md p-1">
+                    <GiBookCover className="h-7 w-7" />
                   </p>
-                  <div className="font-bold font-sans text-end text-2xl">
-                    <span>{allSingleQuiz?.meta?.total || 0}</span>
+                  <div className="space-y-2">
+                    <p className="text-end font-normal text-base lggg:text-lg">
+                      Total Submitted Quiz
+                    </p>
+                    <div className="font-bold font-sans text-end text-2xl">
+                      <span>{allSingleQuiz?.meta?.total || 0}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-           </AnimatePresenceWrapper>
+            </AnimatePresenceWrapper>
             <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 ">
               <div className="rounded-lg bg-white max-w-full md:min-h-[40vh] lgg:min-h-[60vh] px-4 py-5 shadow">
                 <div className="py-2 align-middle px-2">
@@ -200,7 +205,8 @@ export default function StudentDashboardMain() {
                   </div>
                 </div>
               </div>
-            A</div>
+              A
+            </div>
           </div>
           {/* <Modal
     closeModal={setOpenModal}

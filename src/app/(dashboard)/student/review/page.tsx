@@ -1,12 +1,11 @@
-'use client'
+"use client";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetAllRatingFeedbackQuery } from "@/redux/api/ratingFeedback";
 import { getUserInfo } from "@/services/auth.service";
 import { Input, Rate } from "antd";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { AllImage } from '@/assets/AllImge'
-
+import { AllImage } from "@/assets/AllImge";
 
 const Review = () => {
   const [user, setUserData] = useState<any>({});
@@ -23,7 +22,7 @@ const Review = () => {
         skip: !Boolean(user?._id),
       }
     );
-    console.log(ratingData);
+  
   if (userLoading) {
     return <LoadingForDataFetch />;
   }
@@ -33,8 +32,16 @@ const Review = () => {
         {ratingData?.data?.map((data: any, key: number) => (
           <div key={key} className="border-2 rounded-xl p-2">
             <div className="flex justify-between items-center font-extrabold">
-                <h1 className="text-base font-normal">Service Name : {data?.service?.title}</h1>
-                <Image width={150} height={150} className="w-[75px] h-[50px]" src={data?.service?.image} alt=""/>
+              <h1 className="text-base font-normal">
+                Service Name : {data?.service?.title}
+              </h1>
+              <Image
+                width={150}
+                height={150}
+                className="w-[75px] h-[50px]"
+                src={data?.service?.image}
+                alt=""
+              />
             </div>
             <div>
               <p>User:{data?.user?.email}</p>
@@ -46,7 +53,15 @@ const Review = () => {
             </div>
           </div>
         ))}
-        <div className='flex justify-center items-center container mx-auto'><Image alt="" src={AllImage.upcoming} width={700} height={700} className="min-w-sm rounded-lg" /></div>
+        <div className="flex justify-center items-center container mx-auto">
+          <Image
+            alt=""
+            src={AllImage.upcoming}
+            width={700}
+            height={700}
+            className="min-w-sm rounded-lg"
+          />
+        </div>
       </div>
     </div>
   );

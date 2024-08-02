@@ -28,7 +28,6 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
     isLoading: courseLoading,
     error,
   } = useGetSingleCourseQuery(courseId);
-  console.log("🚀 ~ MilestoneHomeList ~ courseDataM:", courseData)
 
   const query: Record<string, any> = {};
   query["limit"] = 999999;
@@ -43,17 +42,13 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
     course: courseId,
     module: "yes",
     ...query,
-  })
+  });
 
-
-  // console.log("🚀 ~ MilestoneHomeList ~ data:", data)
-  // console.log(data,"courseId");
+  //
+  //
   const milestoneData = data?.data || [];
-  console.log(milestoneData, "jjj");
-  
 
   if (error || milestonError) {
-    console.log(error, milestonError);
   }
 
   return (
@@ -105,11 +100,17 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
             </div> */}
 
             <div className="w-full  mx-auto  gap-3">
-              {milestoneData?.map((milestone: IMilestoneData, index: number) => {
-                return (
-                  <SingleMilestone key={index} milestoneData={milestone} index={index} />
-                );
-              })}
+              {milestoneData?.map(
+                (milestone: IMilestoneData, index: number) => {
+                  return (
+                    <SingleMilestone
+                      key={index}
+                      milestoneData={milestone}
+                      index={index}
+                    />
+                  );
+                }
+              )}
             </div>
           </div>
         </div>

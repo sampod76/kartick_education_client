@@ -10,7 +10,7 @@ export default function UploadMultipalDragAndDropImge({
   multiple = false,
   setImageLoading,
   formSubmitted,
-  setFormSubmitted
+  setFormSubmitted,
 }: {
   images?: string[];
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
@@ -49,7 +49,7 @@ export default function UploadMultipalDragAndDropImge({
       const { status } = info.file;
       if (status === "uploading") {
         setImageLoading(true);
-        console.log(info.file, info.fileList);
+        // console.log(info.file, info.fileList);
       }
       if (status === "done") {
         message.success(`${info.file.name} file uploaded successfully.`);
@@ -61,7 +61,7 @@ export default function UploadMultipalDragAndDropImge({
       }
     },
     onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
+      // console.log("Dropped files", e.dataTransfer.files);
     },
     onRemove(file) {
       if (formSubmitted) {
@@ -84,7 +84,7 @@ export default function UploadMultipalDragAndDropImge({
   return (
     <div>
       {" "}
-      <Dragger  {...props}>
+      <Dragger {...props}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>

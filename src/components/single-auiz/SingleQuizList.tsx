@@ -115,7 +115,7 @@ const SingleQuizList = () => {
     useAddSingleQuizMutation();
 
   const handleDuplicate = async (dudata: any) => {
-    // console.log(dudata.milestone);
+    //// console.log(dudata.milestone);
 
     // return
 
@@ -134,9 +134,9 @@ const SingleQuizList = () => {
       answers: answers,
     };
 
-    console.log("🚀 ~ onSubmit ~ values:", data);
+    // console.log("🚀 ~ onSubmit ~ values:", data);
     // return
-    // console.log("🚀 ~ onSubmit ~ values:", values);
+    //// console.log("🚀 ~ onSubmit ~ values:", values);
     if (!dudata?.quiz?._id) {
       Error_model_hook("Please ensure your are selected quiz");
       return;
@@ -158,7 +158,7 @@ const SingleQuizList = () => {
       type: dudata?.type,
     };
 
-    // console.log(singleQuizDat,"hhhhh");
+    //// console.log(singleQuizDat,"hhhhh");
 
     // return
     removeNullUndefinedAndFalsey(singleQuizDat);
@@ -173,24 +173,24 @@ const SingleQuizList = () => {
       } else {
         Success_model("Successfully added the Quiz");
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 
   const handleDelete = (id: string) => {
-    console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id);
+    // console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id);
 
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          // console.log(id);
+          //// console.log(id);
 
           const res = await deleteSingleQuiz(id).unwrap();
 
-          console.log(res, "response for delete SIngle QUiz");
+          // console.log(res, "response for delete SIngle QUiz");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -339,13 +339,13 @@ const SingleQuizList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -355,9 +355,9 @@ const SingleQuizList = () => {
     setSearchTerm("");
   };
   const deleteSIngleQuizHandler = async (id: string) => {
-    console.log("🚀 ~ file: page.tsx:194 ~ deleteSIngleQuizHandler ~ id:", id);
+    // console.log("🚀 ~ file: page.tsx:194 ~ deleteSIngleQuizHandler ~ id:", id);
 
-    // console.log(id);
+    //// console.log(id);
     try {
       const res = await deleteSingleQuiz(id);
       if (res) {
@@ -407,7 +407,7 @@ const SingleQuizList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

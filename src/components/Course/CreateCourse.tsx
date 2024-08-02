@@ -47,7 +47,7 @@ const TextEditorNotSetForm = dynamic(
 const CreateCourse = ({ setOpen }: any) => {
   const userInfo = getUserInfo() as IDecodedInfo;
   const [category, setCategory] = useState("");
-  // console.log("🚀 ~ CreateCourse ~ category:", category)
+  //
   const [textEditorValue, setTextEditorValue] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -133,7 +133,7 @@ const CreateCourse = ({ setOpen }: any) => {
     { ...categoryQuery }
   );
   const CategoryData = Category?.data;
-  // console.log(CategoryData)
+  //
   const CategoryOptions = CategoryData?.map((item: any) => {
     return {
       label: item?.title,
@@ -335,7 +335,7 @@ const CreateCourse = ({ setOpen }: any) => {
                       {LabelData?.data?.length &&
                         LabelData?.data?.map((Label: any, index: any) => (
                           <Select.Option value={Label._id} key={Label._id}>
-                            {Label?.serial_number + "." + " " + Label?.title}
+                            {Label?.title}
                           </Select.Option>
                         ))}
                     </Select>

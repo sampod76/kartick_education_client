@@ -63,7 +63,7 @@ export const JoinPackage = ({
     (data: { package: any }) => data.package
   );
   // ! ---------------url---------
-  // console.log(window.location.href,window.location.hostname);
+  //// console.log(window.location.href,window.location.hostname);
   const url = new URL(window.location.href);
   // Get the pathname and search without the base URL
   const modifiedPathname = url.pathname + url.search;
@@ -73,7 +73,7 @@ export const JoinPackage = ({
   const packName = searchParams.get("pack") as string;
   // For select package
   const [selectPackage, setSelectPackage] = useState<any | null>({});
-  console.log("🚀 ~ selectPackage:", selectPackage);
+  // console.log("🚀 ~ selectPackage:", selectPackage);
   const [totalPriceByThePackage, setTotalPriceByThePackage] = useState(0);
   ///! for the multiple and single select package
   const [singleSelect, setSingleSelect] = useState<Record<string, any>>({});
@@ -192,7 +192,7 @@ export const JoinPackage = ({
           sessionId: result?.id,
         });
         if (redirectResult?.error) {
-          console.log(redirectResult?.error);
+          // console.log(redirectResult?.error);
           //@ts-ignore
           Error_model_hook(redirectResult?.error?.message);
         }
@@ -208,7 +208,7 @@ export const JoinPackage = ({
         }
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       //@ts-ignore
       Error_model_hook(error?.message);
     }
@@ -269,9 +269,9 @@ export const JoinPackage = ({
     // ! All selected package data
     const { totalPackagePrice, incrementPrice, packages } = values;
     setSelectPackage(packages);
-    console.log("🚀 ~ selectPackageHandler ~ packages:", packages);
+    // console.log("🚀 ~ selectPackageHandler ~ packages:", packages);
     setTotalPriceByThePackage(totalPackagePrice);
-    // console.log(quantity);
+    //// console.log(quantity);
     message.success(`Selected ${packages?.title}-> $${totalPackagePrice}`);
 
     // const selectedPackageData = {};
@@ -352,7 +352,7 @@ export const JoinPackage = ({
                         packages?.categories?.map(
                           (categoryData: IPackageCategory) => {
                             const category = categoryData?.category;
-                            // console.log(category);
+                            //// console.log(category);
                             return (
                               <li
                                 className="flex items-center text-sm text-gray-500"
@@ -500,20 +500,20 @@ export const JoinPackage = ({
               <p>$ {totalPriceByThePackage}</p>
             </div>
 
-           <div className="flex justify-center items-center">
-           <button
-              onClick={() => {
-                if (totalPriceByThePackage) {
-                  showModal();
-                } else {
-                  Error_model_hook("Please select any package");
-                }
-              }}
-              className="text-blue-800 px-5 py-3 border rounded-md my-3 font-bold text-lg"
-            >
-              Checkout
-            </button>
-           </div>
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => {
+                  if (totalPriceByThePackage) {
+                    showModal();
+                  } else {
+                    Error_model_hook("Please select any package");
+                  }
+                }}
+                className="text-blue-800 px-5 py-3 border rounded-md my-3 font-bold text-lg"
+              >
+                Checkout
+              </button>
+            </div>
             <Modal
               // title="Title"
               open={open}
@@ -603,9 +603,16 @@ export const JoinPackage = ({
                       </p>
                     </div>
 
-                    {PaypalPaymentLoading ? <ButtonLoading/> :<button onClick={()=>makePayment("paypal")} className="bg-[#5371FF] h- p-3 mt-5 text-lg lg:text-xl font-bold text-white rounded uppercase">
-                      Place Order
-                    </button>}
+                    {PaypalPaymentLoading ? (
+                      <ButtonLoading />
+                    ) : (
+                      <button
+                        onClick={() => makePayment("paypal")}
+                        className="bg-[#5371FF] h- p-3 mt-5 text-lg lg:text-xl font-bold text-white rounded uppercase"
+                      >
+                        Place Order
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

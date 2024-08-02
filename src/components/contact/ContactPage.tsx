@@ -13,7 +13,7 @@ import {
   LinkedinFilled,
   LinkedinOutlined,
   YoutubeOutlined,
-  TwitterOutlined
+  TwitterOutlined,
 } from "@ant-design/icons";
 import CreateStudentPage from "../stepper/CreateStudent";
 import ContactForm from "./ContactForm";
@@ -22,19 +22,18 @@ import { useAddContactMutation } from "@/redux/api/adminApi/contactApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 export default function ContactPage() {
-
   const userInfo = getUserInfo() as any;
   const [isReset, setIsReset] = useState(false);
 
-  const [addContact, { isLoading }] = useAddContactMutation()
+  const [addContact, { isLoading }] = useAddContactMutation();
 
   const onSubmit = async (values: any) => {
-    // console.log(values);
+    //
 
     // message.success("sent message");
 
     if (userInfo?.email) {
-      values['user'] = userInfo?.id
+      values["user"] = userInfo?.id;
     }
 
     // const contactData={
@@ -44,17 +43,16 @@ export default function ContactPage() {
 
     try {
       const res = await addContact(values).unwrap();
-      // console.log(res);
+      //
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully sent your Message");
-        setIsReset(true)
+        setIsReset(true);
       }
-      // console.log(res);
+      //
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
     }
   };
 
@@ -82,7 +80,7 @@ export default function ContactPage() {
                 />
                 <div className="flex text-2xl flex-col gap-3">
                   <h2 className="text-2xl font-bold">Phone</h2>
-                  <h4 className="text-slate-600  text-xl ">1 (888)  2010390</h4>
+                  <h4 className="text-slate-600  text-xl ">1 (888) 2010390</h4>
                 </div>
               </div>
               <div className="flex align-top py-9  pr-5 pl-2  gap-[2rem] text-start ">
@@ -94,7 +92,7 @@ export default function ContactPage() {
                 />
                 <div className="flex text-2xl flex-col gap-3">
                   <h2 className="text-2xl font-bold">Message</h2>
-                  <h4 className="text-slate-600  text-xl ">1 (888)  2010390</h4>
+                  <h4 className="text-slate-600  text-xl ">1 (888) 2010390</h4>
                 </div>
               </div>
             </div>
@@ -123,7 +121,7 @@ export default function ContactPage() {
                 borderRadius: "10px",
                 backgroundColor: "#5F8122",
                 color: "white",
-                border: "2px solid #5F8122"
+                border: "2px solid #5F8122",
               }}
             />
             <TwitterOutlined
@@ -132,7 +130,7 @@ export default function ContactPage() {
                 borderRadius: "8px",
                 backgroundColor: "#5F8122",
                 color: "white",
-                border: "2px solid #5F8122"
+                border: "2px solid #5F8122",
               }}
             />
             <LinkedinFilled
@@ -141,7 +139,7 @@ export default function ContactPage() {
                 borderRadius: "8px",
                 backgroundColor: "#5F8122",
                 color: "white",
-                border: "2px solid #5F8122"
+                border: "2px solid #5F8122",
               }}
             />
             {/* <LinkedinOutlined /> */}
@@ -151,7 +149,7 @@ export default function ContactPage() {
                 borderRadius: "10px",
                 backgroundColor: "#5F8122",
                 color: "white",
-                border: "2px solid #5F8122"
+                border: "2px solid #5F8122",
               }}
             />
           </div>

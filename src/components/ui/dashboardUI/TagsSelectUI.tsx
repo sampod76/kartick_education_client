@@ -7,7 +7,7 @@ const TagsSelectUI = ({ defaultTags }: { defaultTags?: string[] }) => {
   // const { setValue } = useFormContext();
   const [selectedTags, setSelectedTags] = useState<string[]>(defaultTags || []);
 
-  // console.log(
+  //// console.log(
   //   "🚀 ~ file: TagsSelectUI.tsx:9 ~ TagsSelectUI ~ selectedTags:",
   //   selectedTags
   // );
@@ -25,7 +25,6 @@ const TagsSelectUI = ({ defaultTags }: { defaultTags?: string[] }) => {
       {/* <pre>{JSON.stringify(selected)}</pre> */}
       <TagsInput
         value={selectedTags}
-
         onChange={(value) => onchangeTags(value)}
         name="fruits"
         placeHolder="enter fruits"

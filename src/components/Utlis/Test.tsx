@@ -1,8 +1,6 @@
-import React from 'react'
+import React from "react";
 
-export default function Test({ open, setOpen }:any) {
-    console.log(open);
-  return (
-    <div>Test</div>
-  )
+export default function Test({ open, setOpen }: any) {
+  // console.log(open);
+  return <div>Test</div>;
 }

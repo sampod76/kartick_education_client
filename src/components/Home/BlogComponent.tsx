@@ -28,26 +28,23 @@ const AllBlogs = () => {
   const { data = [], isLoading } = useGetAllBlogQuery({ ...query });
   //@ts-ignore
   const blogData = data?.data;
-   //  // console.log("🚀 ~ file: BlogComponent.tsx:29 ~ AllBlogs ~ data:", blogData);
+  //  //// console.log("🚀 ~ file: BlogComponent.tsx:29 ~ AllBlogs ~ data:", blogData);
   if (isLoading) {
     return <LoadingForDataFetch />;
   }
 
   return (
-    <div
-     
-      className="container mx-auto mt-2"
-    >
+    <div className="container mx-auto mt-2">
       <div>
-        <h1 className="text-lg text-center p-2 shadow-lg rounded-lg border">-----Blog----</h1>
+        <h1 className="text-lg text-center p-2 shadow-lg rounded-lg border">
+          -----Blog----
+        </h1>
         <div className="grid grid-cols-1 lg:grid-cols-3">
           {blogData?.map((item: any, key: string) => (
             <div key={key} className="p-5 rounded-lg shadow-lg">
-            
-
               <div className="w-full rounded overflow-hidden ">
                 <div className="flex justify-between items-center">
-                <h1 className="text-center text-lg">Title : {item?.title}</h1>
+                  <h1 className="text-center text-lg">Title : {item?.title}</h1>
                   <div>
                     <Image
                       width={500}
@@ -57,12 +54,10 @@ const AllBlogs = () => {
                       className="w-[80px]"
                     />
                   </div>
-                  
-                  
                 </div>
                 <div>
-                   <p>{item?.content && CutText(item?.content,300)}</p>
-                  </div>
+                  <p>{item?.content && CutText(item?.content, 300)}</p>
+                </div>
               </div>
             </div>
           ))}

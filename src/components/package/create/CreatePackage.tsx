@@ -35,7 +35,7 @@ export default function CreatePackage() {
   const [form] = Form.useForm();
 
   const uuid = generateUUID();
-  // console.log(uuid,"uuiduuid")
+  //// console.log(uuid,"uuiduuid")
   const { data, isLoading, error } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
@@ -48,8 +48,8 @@ export default function CreatePackage() {
   }));
 
   const [addPackage, { isLoading: AddPackageLoading }] =
-  useAddPackageMutation();
-  console.log("🚀 ~ CreatePackage ~ AddPackageLoading:", AddPackageLoading)
+    useAddPackageMutation();
+  // console.log("🚀 ~ CreatePackage ~ AddPackageLoading:", AddPackageLoading)
 
   // const [imgUrl, setImgUrl] = useState(null);
   // const handleChange = async (info) => {
@@ -61,14 +61,13 @@ export default function CreatePackage() {
   // };
 
   const onFinish = async (values: any) => {
-
-    // console.log("Received values", values);
+    //// console.log("Received values", values);
     if (values?.img) {
       const imgUrl = await uploadImgCloudinary(values?.img?.file);
-      // console.log(imgUrl, 'imgUrl')
+      //// console.log(imgUrl, 'imgUrl')
       values.img = imgUrl;
     }
-    // console.log("Received values", values);
+    //// console.log("Received values", values);
     const formattedDateRange = values?.date_range?.map((date: any) =>
       dayjs(date).format("YYYY-MM-DD")
     );
@@ -88,23 +87,23 @@ export default function CreatePackage() {
       yearly: values.yearly,
       categories: values.categories,
     };
-    // console.log("🚀 ~ onFinish ~ packageData:", packageData)
+    //// console.log("🚀 ~ onFinish ~ packageData:", packageData)
     // return
 
     try {
       const res = await addPackage(packageData).unwrap();
-      // console.log(res);
+      //// console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Package");
         form.resetFields();
       }
-   
-      // console.log(res);
+
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
   const [dynamicOption, setDynamicOption] = useState(options);
@@ -267,9 +266,9 @@ export default function CreatePackage() {
               <Upload
                 listType="picture-circle"
                 beforeUpload={async (file) => {
-                  // console.log(file)
+                  //// console.log(file)
                   const imgUrl = await uploadImgCloudinary(file);
-                  form.setFieldsValue({ img:imgUrl ?imgUrl : "" }); // Set imgUrl in Form values
+                  form.setFieldsValue({ img: imgUrl ? imgUrl : "" }); // Set imgUrl in Form values
                   return false; // Prevent default upload behavior
                   // return true
                 }}
@@ -287,20 +286,20 @@ export default function CreatePackage() {
           <LabelUi>Add Category</LabelUi>
           <Form.List name="categories">
             {(fields, { add, remove }) => {
-              // console.log(fields,'fieldsfieldsfieldsfields') ;
+              //// console.log(fields,'fieldsfieldsfieldsfields') ;
 
               // const handleChange = (value: any) => {
-              //   console.log(value, 'value');
+              //  // console.log(value, 'value');
               //   const updatedOptions = options?.filter(
               //     (item) => item?.value !== value
               //   );
-              //   // console.log(updatedOptions)
+              //   //// console.log(updatedOptions)
               //   options = updatedOptions;
-              //   // console.log(options)
+              //   //// console.log(options)
               // };
 
               const handleRemove = (value: any) => {
-                console.log(value, "handleRemove");
+                // console.log(value, "handleRemove");
                 remove(value);
               };
 

@@ -69,7 +69,7 @@ const StepperForm = ({
     setToLocalStorage(persistKey, JSON.stringify({}));
     navigateLink && router.push(navigateLink);
   };
-  // console.log(items?.length, current, "items?.length === current");
+  //// console.log(items?.length, current, "items?.length === current");
   return (
     <>
       {/* <Steps current={current} items={items} /> */}

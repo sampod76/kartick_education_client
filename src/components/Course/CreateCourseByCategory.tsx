@@ -16,15 +16,7 @@ import { courseStatusOptions, priceTypeOptions } from "@/constants/global";
 
 import { useAddCourseMutation } from "@/redux/api/adminApi/courseApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import {
-
-  Col,
-
-  Row,
-  Select,
-  Spin,
-
-} from "antd";
+import { Col, Row, Select, Spin } from "antd";
 import { useState } from "react";
 
 import dynamic from "next/dynamic";
@@ -40,10 +32,7 @@ const TextEditor = dynamic(
 export default function CreateCourseByCategory() {
   const [isReset, setIsReset] = useState(false);
   const [textEditorValue, setTextEditorValue] = useState("");
-  console.log(
-    "🚀 ~ file: page.tsx:43 ~ CreateCoursePage ~ textEditorValue:",
-    textEditorValue
-  );
+
   const [addCourse, { isLoading, error }] = useAddCourseMutation();
 
   // !  tag selection
@@ -57,7 +46,7 @@ export default function CreateCourseByCategory() {
     platform: videoType,
   };
 
-  // console.log(demo_video);
+
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
     const CourseData = {
@@ -66,24 +55,24 @@ export default function CreateCourseByCategory() {
       ...values,
     };
 
-    // console.log(CourseData, "Course");
+   
 
     try {
       const res = await addCourse({ ...CourseData }).unwrap();
-      console.log(res, "response");
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Course created successfully");
         setVideoType(null);
         setVideoUrl("");
-        setIsReset(true)
+        setIsReset(true);
         setTextEditorValue("");
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
 
@@ -100,9 +89,11 @@ export default function CreateCourseByCategory() {
       <HeadingUI>Create Course</HeadingUI>
       {/* resolver={yupResolver(adminSchema)} */}
       <div className="">
-        <Form isReset={isReset}
+        <Form
+          isReset={isReset}
           // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
-          submitHandler={onSubmit}>
+          submitHandler={onSubmit}
+        >
           <div
             style={{
               padding: "0.5rem",
@@ -166,7 +157,7 @@ export default function CreateCourseByCategory() {
                       name="level"
                       size="large"
                       label="Level"
-                    // required={true}
+                      // required={true}
                     />
                     {/*//! 5. */}
                   </Col>
@@ -176,7 +167,7 @@ export default function CreateCourseByCategory() {
                       name="showing_number"
                       size="large"
                       label="Showing Number"
-                    // required={true}
+                      // required={true}
                     />
                     {/* //!6. Showing Number */}
                   </Col>
@@ -254,9 +245,7 @@ export default function CreateCourseByCategory() {
               style={{ borderTopWidth: "2px" }} /* className=" border-t-2" */
             >
               <p className="text-center my-3 font-bold text-xl">Description</p>
-              <TextEditor
-                isReset={isReset}
-              />
+              <TextEditor isReset={isReset} />
             </div>
             {/* <div>
                 <UploadMultpalImage />

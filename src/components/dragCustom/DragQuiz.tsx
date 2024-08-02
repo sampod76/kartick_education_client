@@ -23,7 +23,7 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
   quizIndex,
   quizData,
 }) => {
-  // console.log(disabled, 'disabled', quizData?.answers, 'defaultValue', defaultValue)
+  //
 
   // const imageUrls = [
   //   'https://i.ibb.co/WDzDCFw/nodejs.png',
@@ -34,7 +34,7 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
   const [imagesData, setImagesData] = useState<IAnswer[]>(quizData?.answers);
 
   const [draggedItems, setDraggedItems] = useState<IAnswer[]>([]);
-  console.log("🚀 ~ draggedItems:", draggedItems);
+  
 
   useEffect(() => {
     if (disabled) {
@@ -50,24 +50,24 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
     }
   }, [defaultValue?.submitAnswers, disabled, quizData?.answers]);
 
-  // console.log(quizData?.answers)
+  //
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const draggedItem = event.dataTransfer.getData("text/plain");
-    console.log("🚀 ~ handleDrop ~ draggedItem:", draggedItem);
+    
 
     if (!draggedItems.some((item) => item?._id === draggedItem)) {
       const draggedAnswer = imagesData.find(
         (answer) => answer._id === draggedItem
       );
-      console.log("🚀 ~ handleDrop ~ draggedAnswer:", draggedAnswer);
+      
 
       if (draggedAnswer) {
         setDraggedItems((prevItems) => [...prevItems, draggedAnswer]);
         setImagesData((prevData) =>
           prevData.filter((answer) => answer?._id !== draggedItem)
         );
-        // console.log('draggedItems',draggedItems,draggedAnswer,'draggedAnswer?.id')
+        //
         onChange(quizIndex, [...draggedItems, draggedAnswer]);
       }
     }
@@ -90,7 +90,7 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
   const correctAnswer = defaultValue?._id
     ? quizData.answers.filter((item) => item?.correct)
     : [];
-  console.log("🚀 ~ correctAnswer:", correctAnswer);
+  
 
   return (
     <div
@@ -133,9 +133,7 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
         <div className="flex gap-3 justify-center items-center">
           {draggedItems?.map((item, index) => (
             <div key={index} style={{ cursor: "zoom-out" }}>
-              <div
-              className="relative"
-              >
+              <div className="relative">
                 <ImageNext
                   src={item.imgs?.length ? item.imgs[0] : ""}
                   alt={`Image ${index}`}
@@ -146,11 +144,17 @@ const DragQUizTest: React.FC<DragAndDropProps> = ({
                     width: "100px",
                   }}
                 />
-                <span hidden={correctAnswer.length ? true : false} className="absolute -top-3 -right-3  text-lg rounded-full px-1" onClick={() => {
-                      if (!correctAnswer.length) {
-                       return handleRemoveItem(index);
-                      }
-                    }}><CiCircleRemove className=" text-3xl text-red-600 font-bold "/></span>
+                <span
+                  hidden={correctAnswer.length ? true : false}
+                  className="absolute -top-3 -right-3  text-lg rounded-full px-1"
+                  onClick={() => {
+                    if (!correctAnswer.length) {
+                      return handleRemoveItem(index);
+                    }
+                  }}
+                >
+                  <CiCircleRemove className=" text-3xl text-red-600 font-bold " />
+                </span>
               </div>
             </div>
           ))}

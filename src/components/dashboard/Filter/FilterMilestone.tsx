@@ -12,7 +12,7 @@ export default function FilterMilestone({
   setFilterValue: any;
 }) {
   // const [filterValue, setFilterValue] = useState("Filter by a Milestone");
-   //  // console.log("🚀 filterValue:", filterValue);
+  //
 
   const query: Record<string, any> = {};
   //! for Course options selection
@@ -25,7 +25,7 @@ export default function FilterMilestone({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-     //  // console.log("search:", value);
+    //
   };
 
   //! for Milestone options selection
@@ -33,15 +33,12 @@ export default function FilterMilestone({
 
   const MilestoneData = Milestone?.data;
 
-  // console.log(MilestoneData)
   const MilestoneOptions = MilestoneData?.map((item: any) => {
     return {
       label: item?.title,
       value: item?._id,
     };
   });
-
-  // console.log(MilestoneOptions);
 
   return (
     <Select

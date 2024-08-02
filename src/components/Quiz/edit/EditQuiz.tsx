@@ -72,7 +72,7 @@ export default function EditQuiz({ quizId }: { quizId: string }) {
   const { data = {}, isLoading } = useGetSingleQuizQuery(quizId, {
     skip: !Boolean(quizId),
   });
-  console.log("🚀 ~ file: page.tsx:65 ~ EditQuiz ~ data:", data);
+  // console.log("🚀 ~ file: page.tsx:65 ~ EditQuiz ~ data:", data);
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
@@ -105,10 +105,10 @@ export default function EditQuiz({ quizId }: { quizId: string }) {
       } else {
         Success_model("Successfully Update quiz");
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -46,7 +46,7 @@ export default function ResourceCreate({
       ...values,
       module: moduleId,
     };
-    console.log(resourceData);
+    // console.log(resourceData);
     // return;
     try {
       let res;
@@ -66,7 +66,7 @@ export default function ResourceCreate({
       }
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 

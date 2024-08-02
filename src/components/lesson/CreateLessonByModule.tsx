@@ -53,7 +53,7 @@ export default function CreateLessonByModule({
 
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
-    // console.log(values);
+    //// console.log(values);
     // const status = "active";
     // const imgUrl = await uploadImgBB(values.img);
 
@@ -65,21 +65,21 @@ export default function CreateLessonByModule({
       module: moduleId,
     };
     removeNullUndefinedAndFalsey(LessonData);
-    // console.log(LessonData);
+    //// console.log(LessonData);
 
     try {
       const res = await addLesson(LessonData).unwrap();
-      // console.log(res);
+      //// console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
         setIsReset(true);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -93,7 +93,7 @@ export default function CreateLessonByModule({
   // Add 0.1 to the rounded number and use toFixed again when logging
   const prelesson_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
 
-  // console.log(prelesson_number);
+  //// console.log(prelesson_number);
 
   return (
     <div>

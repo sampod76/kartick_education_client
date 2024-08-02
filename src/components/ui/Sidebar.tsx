@@ -13,8 +13,8 @@ const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   // const role = USER_ROLE.ADMIN;
-  const userInfo =getUserInfo() as IDecodedInfo
-  // console.log(role);
+  const userInfo = getUserInfo() as IDecodedInfo;
+  //// console.log(role);
 
   // Function to handle sidebar collapsing based on screen width
   const handleSidebarCollapse = () => {

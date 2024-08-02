@@ -16,7 +16,7 @@ import { SiSellfy } from "react-icons/si";
 
 export default function SellerDashboardMain() {
   const { userInfo, userInfoLoading } = useGlobalContext();
-  console.log("🚀 ~ SellerDashboardMain ~ userInfo:", userInfo);
+
   const {
     data: allStudent,
     error: UserError,
@@ -25,7 +25,7 @@ export default function SellerDashboardMain() {
     { isDelete: ENUM_YN.NO, author: userInfo?.id },
     { skip: !Boolean(userInfo?.id) }
   );
-  // console.log(allStudent);
+  //
   const {
     data: allPurchasePackage,
     error: allPurchasePackageError,
@@ -44,7 +44,7 @@ export default function SellerDashboardMain() {
     },
     { skip: !Boolean(userInfo?.id) }
   );
-  console.log(totalCourse);
+
   if (userLoading || userInfoLoading || isLoading) {
     return <LoadingSkeleton />;
   }

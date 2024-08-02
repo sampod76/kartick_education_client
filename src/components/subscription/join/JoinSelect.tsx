@@ -20,24 +20,29 @@ export default function JoinSelect({
   const packName = searchParams.get("pack") as string;
 
   const planHandler = (value: IPlan) => {
-
     if (value === "monthly") {
       setPlan("monthly");
     } else if (value === "yearly") {
       setPlan("yearly");
-    }
-    else {
-      setPlan("biannual")
+    } else {
+      setPlan("biannual");
     }
   };
   const quantityHandler = (value: "increase" | "decrease") => {
-    if (packName === 'family_personal' && quantity >= 10 && value === "increase") {
-      message.info("Select max 10 for Family Pack")
-      return
-    }
-    else if (packName === 'school_teacher' && quantity <= 10 && value === "decrease") {
-      message.info("Select min 10 for School Teacher  Pack")
-      return
+    if (
+      packName === "family_personal" &&
+      quantity >= 10 &&
+      value === "increase"
+    ) {
+      message.info("Select max 10 for Family Pack");
+      return;
+    } else if (
+      packName === "school_teacher" &&
+      quantity <= 10 &&
+      value === "decrease"
+    ) {
+      message.info("Select min 10 for School Teacher  Pack");
+      return;
     }
     if (value === "increase") {
       setQuantity((q) => q + 1);
@@ -52,11 +57,11 @@ export default function JoinSelect({
 
   const deActivePlane = `w-[9rem] bg-white text-primary h-[48px] border-2 border-primary text-center px-7 py-3  font-semibold `;
 
-  // console.log(plan);
+  //// console.log(plan);
   const quantityInputHandler = (value: number) => {
     if (
-      (packName === 'family_personal' && value > 10) ||
-      (packName === 'school_teacher' && value < 1)
+      (packName === "family_personal" && value > 10) ||
+      (packName === "school_teacher" && value < 1)
     ) {
       message.info("Select max 10 for Family Pack");
     } else if (value >= 1) {
@@ -76,22 +81,25 @@ export default function JoinSelect({
         <div className="flex items-center gap-0 ">
           <button
             onClick={() => planHandler("monthly")}
-            className={`rounded-l-md ${plan === "monthly" ? activePlan : deActivePlane
-              }`}
+            className={`rounded-l-md ${
+              plan === "monthly" ? activePlan : deActivePlane
+            }`}
           >
             Monthly
           </button>
           <button
             onClick={() => planHandler("biannual")}
-            className={` ${plan === "biannual" ? activePlan : deActivePlane
-              } border-x-none`}
+            className={` ${
+              plan === "biannual" ? activePlan : deActivePlane
+            } border-x-none`}
           >
             Biannual
           </button>
           <button
             onClick={() => planHandler("yearly")}
-            className={`rounded-r-md ${plan === "yearly" ? activePlan : deActivePlane
-              }`}
+            className={`rounded-r-md ${
+              plan === "yearly" ? activePlan : deActivePlane
+            }`}
           >
             Yearly
           </button>

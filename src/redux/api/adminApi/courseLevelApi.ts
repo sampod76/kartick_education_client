@@ -17,7 +17,6 @@ export const Course_labelApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: ICourseLevelData[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,
@@ -28,7 +27,7 @@ export const Course_labelApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleCourse_label: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id);
+        //// console.log(id);
         return {
           url: `${COURSE_LEVEL_URL}/${id}`,
           method: "GET",
@@ -39,7 +38,7 @@ export const Course_labelApi = baseApi.injectEndpoints({
     // create a new academic department
     addCourse_label: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+        //// console.log(data, "cacccc");
 
         return {
           url: COURSE_LEVEL_URL,
@@ -52,7 +51,7 @@ export const Course_labelApi = baseApi.injectEndpoints({
     // update ac department
     updateCourse_label: build.mutation({
       query: ({ data, id }) => {
-        // console.log(data, "Course_label data");
+        //// console.log(data, "Course_label data");
         return {
           url: `${COURSE_LEVEL_URL}/${id}`,
           method: "PATCH",

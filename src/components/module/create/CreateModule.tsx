@@ -81,17 +81,17 @@ export default function CreateModule() {
     removeNullUndefinedAndFalsey(ModuleData);
     try {
       const res = await addModule(ModuleData).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Module");
         setIsReset(true);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.data);
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -107,7 +107,7 @@ export default function CreateModule() {
   ).toFixed(2);
   // Add 0.1 to the rounded number and use toFixed again when logging
   // const preModule_number = (parseFloat(roundedModuleNumber) + 0.1).toFixed(1);
-  // console.log(preModule_number);
+  //// console.log(preModule_number);
 
   return (
     <>

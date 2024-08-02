@@ -53,7 +53,7 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
     { skip: Boolean(courseId) }
   );
   const categoryData: any = Category?.data;
-  console.log("🚀 ~ CreateMilestone ~ categoryData:", categoryData);
+  // console.log("🚀 ~ CreateMilestone ~ categoryData:", categoryData);
 
   const [addMilestone, { isLoading: serviceLoading }] =
     useAddMilestoneMutation();
@@ -69,11 +69,11 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
       category: category?._id,
       course: courses._id || courseId,
     };
-    // console.log(MilestoneData);
+    //// console.log(MilestoneData);
     removeNullUndefinedAndFalsey(MilestoneData);
     try {
       const res = await addMilestone(MilestoneData).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -82,10 +82,10 @@ const CreateMilestone = ({ setOpen, courseId, title }: any) => {
         setOpen(false);
         setIsReset(true);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 

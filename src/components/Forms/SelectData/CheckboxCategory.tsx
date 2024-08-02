@@ -11,7 +11,7 @@ export default function CheckboxCategory() {
     status: "active",
   });
   const CategoryData = Category?.data;
-  // console.log(CategoryData)
+  //
   const CategoryOptions = CategoryData?.map((item: any) => {
     return {
       label: item?.title,

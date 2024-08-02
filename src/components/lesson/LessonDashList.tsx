@@ -110,7 +110,7 @@ export default function LessonDashList() {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = useGetAllLessonQuery({ ...query });
-  console.log(data);
+  // console.log(data);
 
   //@ts-ignore
   const LessonData = data?.data;
@@ -122,11 +122,11 @@ export default function LessonDashList() {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deleteLesson(id).unwrap();
 
-          console.log(res, "response for delete Lesson");
+          // console.log(res, "response for delete Lesson");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -145,7 +145,7 @@ export default function LessonDashList() {
     {
       title: "Image",
       render: function (data: any) {
-        console.log(data);
+        // console.log(data);
         return (
           <>
             {
@@ -165,7 +165,13 @@ export default function LessonDashList() {
       width: 100,
     },
     {
-      title: "Name",
+      title: "Lesson Number",
+      dataIndex: "lesson_number",
+      // ellipsis: true,
+      width: 150,
+    },
+    {
+      title: "Title",
       dataIndex: "title",
       ellipsis: true,
     },
@@ -174,21 +180,13 @@ export default function LessonDashList() {
     //   dataIndex: "short_description",
     //   ellipsis: true,
     // },
-    {
-      title: "Lesson Number",
-      dataIndex: "lesson_number",
-      // ellipsis: true,
-      width: 120,
-    },
 
     {
       title: "Module",
       // dataIndex: ["module", "title"],
       ellipsis: true,
       render: function (data: any) {
-        return (
-          <>{data?.module?.module_number + " : " + data?.module?.title || ""}</>
-        );
+        return <>{data?.module?.title || ""}</>;
       },
     },
     {
@@ -199,6 +197,7 @@ export default function LessonDashList() {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
+      width: 200,
     },
 
     {
@@ -231,6 +230,7 @@ export default function LessonDashList() {
                       Add Quiz
                     </Link>
                   </Menu.Item> */}
+
                   <Menu.Item
                     key="delete"
                     onClick={() => {
@@ -238,6 +238,13 @@ export default function LessonDashList() {
                     }}
                   >
                     Delete
+                  </Menu.Item>
+                  <Menu.Item key="edit">
+                    <Link
+                      href={`/${userInfo?.role}/lesson/assignment?lessonId=${record._id}`}
+                    >
+                      Assignment List
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="view">
                     <ModalComponent buttonText="Add assignment">
@@ -255,13 +262,13 @@ export default function LessonDashList() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -273,7 +280,7 @@ export default function LessonDashList() {
   };
 
   const deleteLessonHandler = async (id: string) => {
-    // console.log(id);
+    //// console.log(id);
     try {
       const res = await deleteLesson(id);
       if (res) {
@@ -296,7 +303,7 @@ export default function LessonDashList() {
 
   return (
     <div>
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: `${userInfo?.role}`,
@@ -307,7 +314,7 @@ export default function LessonDashList() {
             link: `/${userInfo?.role}/lesson`,
           },
         ]}
-      />
+      /> */}
       <HeadingUI>Lesson List</HeadingUI>
       <ActionBar>
         <div className="flex gap-2">
@@ -316,7 +323,7 @@ export default function LessonDashList() {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "20%",
+              width: "250px",
             }}
           />
           <FilterModule

@@ -8,7 +8,7 @@ export const AdminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addAdminWithFormData: build.mutation({
       query: (data) => {
-        // console.log(data, "Admin");
+        //// console.log(data, "Admin");
         return {
           url: "/users/create-admin",
 
@@ -29,7 +29,6 @@ export const AdminApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,

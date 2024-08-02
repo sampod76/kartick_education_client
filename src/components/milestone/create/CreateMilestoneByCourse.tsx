@@ -56,7 +56,7 @@ export default function CreateMilestoneByCourse() {
     useAddMilestoneMutation();
 
   const onSubmit = async (values: any) => {
-    // console.log(values);
+    //// console.log(values);
     // const imgUrl = await uploadImgBB(values.img);
     removeNullUndefinedAndFalsey(values);
     // values.img = imgUrl;
@@ -70,11 +70,11 @@ export default function CreateMilestoneByCourse() {
 
       course: courses._id,
     };
-    // console.log(MilestoneData);
+    //// console.log(MilestoneData);
     removeNullUndefinedAndFalsey(MilestoneData);
     try {
       const res = await addMilestone(MilestoneData).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -82,10 +82,10 @@ export default function CreateMilestoneByCourse() {
 
         setIsReset(true);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 

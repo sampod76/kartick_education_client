@@ -58,7 +58,6 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
   }
 
   return (
@@ -103,7 +102,6 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
               <Col
                 className="gutter-row"
                 xs={24}
-
                 style={{
                   marginBottom: "20px",
                   // maxWidth: "30vw",
@@ -115,7 +113,6 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
                   name="serial_number"
                   size="large"
                   label="Category serial number"
-
                 />
               </Col>
 

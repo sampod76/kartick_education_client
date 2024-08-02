@@ -4,7 +4,7 @@ import JoditEditor from "jodit-react";
 // import parse from "html-react-parser";
 import parse from "html-react-parser";
 import { useFormContext } from "react-hook-form";
-import { Switch } from 'antd';
+import { Switch } from "antd";
 const TextEditorNotSetValue = ({
   textEditorValue,
   setTextEditorValue,
@@ -20,7 +20,6 @@ const TextEditorNotSetValue = ({
   const [content, setContent] = useState(defaultTextEditorValue);
   const [openTextEditor, setopenTextEditor] = useState<boolean>(false);
 
-
   const editorConfig = useMemo(
     () => ({
       readonly: false,
@@ -34,18 +33,23 @@ const TextEditorNotSetValue = ({
   );
 
   const onChange = (checked: boolean) => {
-    // console.log(`switch to ${checked}`);
-    setopenTextEditor((v) => !v)
+    //// console.log(`switch to ${checked}`);
+    setopenTextEditor((v) => !v);
   };
 
   return (
     <>
-      <Switch checkedChildren="Close" unCheckedChildren='Open' onChange={onChange} style={{
-        background: openTextEditor ? "blue" : "#4D545A",
-        marginBlock: "10px"
-      }} />
+      <Switch
+        checkedChildren="Close"
+        unCheckedChildren="Open"
+        onChange={onChange}
+        style={{
+          background: openTextEditor ? "blue" : "#4D545A",
+          marginBlock: "10px",
+        }}
+      />
 
-      {openTextEditor &&
+      {openTextEditor && (
         <JoditEditor
           ref={editor}
           config={editorConfig}
@@ -55,9 +59,9 @@ const TextEditorNotSetValue = ({
             setTextEditorValue(newContent);
             setContent(newContent);
           }} // preferred to use only this option to update the content for performance reasons
-        // onChange={(newContent) =>  setTextEditorValue(newContent)}
+          // onChange={(newContent) =>  setTextEditorValue(newContent)}
         />
-      }
+      )}
       {/* <div>
         <div>{content && parse(content)}</div>
       </div> */}

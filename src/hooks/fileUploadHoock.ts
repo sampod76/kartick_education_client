@@ -7,7 +7,7 @@ export const fileUploadHook = async ({
   singleImage,
   multipalImage,
   singlePdf,
-}:any) => {
+}: any) => {
   //   const [imageFileData, setImageFileData] = useState({
   //     singleProfileImageData: {},
   //     singleImageFileData: {},
@@ -30,7 +30,11 @@ export const fileUploadHook = async ({
         100,
         0,
         (result) => {
-          if (typeof result === 'string' || result instanceof Blob || result instanceof File) {
+          if (
+            typeof result === "string" ||
+            result instanceof Blob ||
+            result instanceof File
+          ) {
             const compressedImage = new File([result], file.name, {
               type: file.type,
               lastModified: file.lastModified,
@@ -38,7 +42,10 @@ export const fileUploadHook = async ({
             resolve(compressedImage);
           } else {
             // Handle unexpected result type
-            console.error('Unexpected result type from imageFileResizer:', result);
+            console.error(
+              "Unexpected result type from imageFileResizer:",
+              result
+            );
             // You might want to reject the promise or handle the error in an appropriate way
           }
         },
@@ -46,11 +53,10 @@ export const fileUploadHook = async ({
       );
     });
   };
-  
 
   if (profileImage?.file) {
     const formData = new FormData();
-    const compressedImage:any = await resizeImage(profileImage.file, 300, 300);
+    const compressedImage: any = await resizeImage(profileImage.file, 300, 300);
     formData.append("image", compressedImage);
     try {
       const result = await axios.post(
@@ -65,7 +71,7 @@ export const fileUploadHook = async ({
           },
         }
       );
-      console.log(result);
+      // console.log(result);
       if (result.data?.success) {
         allFileData.singleProfileImageData = result.data.data;
         // setImageFileData((c) => ({
@@ -74,13 +80,13 @@ export const fileUploadHook = async ({
         // }));
       } else {
         Error_model_hook(result?.data?.message || "Image upload failed");
-        
-        console.log(result?.data?.message);
+
+        // console.log(result?.data?.message);
         // setLoading(false);
       }
     } catch (error: any) {
       Error_model_hook(error?.message || error);
-      console.log(error);
+      // console.log(error);
       // setLoading(false);
     }
   }
@@ -102,7 +108,7 @@ export const fileUploadHook = async ({
           },
         }
       );
-      console.log(result);
+      // console.log(result);
       if (result.data?.success) {
         allFileData.singleImageFileData = result.data.data;
         // setImageFileData((c) => ({
@@ -111,12 +117,12 @@ export const fileUploadHook = async ({
         // }));
       } else {
         Error_model_hook(result?.data?.message || "Image upload failed");
-        console.log(result?.data?.message);
+        // console.log(result?.data?.message);
         // setLoading(false);
       }
-    } catch (error:any) {
-        Error_model_hook(error?.message || error);
-        console.log(error);
+    } catch (error: any) {
+      Error_model_hook(error?.message || error);
+      // console.log(error);
     }
   }
   //
@@ -137,28 +143,28 @@ export const fileUploadHook = async ({
           },
         }
       );
-      console.log(result);
+      // console.log(result);
       if (result.data?.success) {
         allFileData.singlePdfData = result.data.data;
         // setImageFileData((c) => ({
         //   ...c,
         //   singleImageFileData: result.data.data,
         // }));
-      }else {
+      } else {
         Error_model_hook(result?.data?.message || "Image upload failed");
-        console.log(result?.data?.message);
+        // console.log(result?.data?.message);
         // setLoading(false);
       }
-    } catch (error:any) {
-        Error_model_hook(error?.message || error);
-        console.log(error);
+    } catch (error: any) {
+      Error_model_hook(error?.message || error);
+      // console.log(error);
     }
   }
   //
   if (multipalImage?.files?.length) {
     try {
       const formData = new FormData();
-  
+
       for (let i = 0; i < multipalImage.files.length; i++) {
         try {
           const compressedImage: any = await resizeImage(
@@ -166,14 +172,14 @@ export const fileUploadHook = async ({
             800,
             600
           );
-  
+
           formData.append("images", compressedImage);
         } catch (resizeError) {
           console.error("Error resizing image:", resizeError);
           // Handle the error appropriately, e.g., show a message to the user
         }
       }
-  
+
       const result = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL_REAL_FILE}/upload/uploade-multipal-images`,
         formData,
@@ -185,23 +191,23 @@ export const fileUploadHook = async ({
           },
         }
       );
-  
-      console.log(result);
-  
+
+      // console.log(result);
+
       if (result.data?.success) {
         allFileData.multipalImageFileData = result.data.data;
         // Update state or perform other actions based on the successful upload
       } else {
         Error_model_hook(result?.data?.message || "Image upload failed");
-        console.log(result?.data?.message);
+        // console.log(result?.data?.message);
         // Handle the case where the server responds with an error
       }
-    } catch (error:any) {
+    } catch (error: any) {
       Error_model_hook(error?.message || "file upload failed");
       console.error("Unexpected error:", error);
       // Handle unexpected errors, e.g., log the error or show a generic error message
     }
   }
-  
+
   return allFileData;
 };

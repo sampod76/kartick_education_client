@@ -22,7 +22,11 @@ import {
 import Logo from "../Logo";
 import { USER_ROLE } from "@/constants/role";
 // import UserAvatarUI from "@/components/ui/NavUI/UserAvatarUI";
-import { IDecodedInfo, getUserInfo, removeUserInfo } from "@/services/auth.service";
+import {
+  IDecodedInfo,
+  getUserInfo,
+  removeUserInfo,
+} from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { authKey } from "@/constants/storageKey";
 const UserAvatarUI = React.lazy(
@@ -50,7 +54,7 @@ const DashboardNavBar = ({
   //   const userInfo = getUserInfo() as any;
   // const userLoggedIn = getUserInfo() as any
   // const userInfo =getUserInfo() as IDecodedInfo
-  // console.log(userLoggedIn);
+  //// console.log(userLoggedIn);
   /* 
   const [isNavbarFixed, setNavbarFixed] = useState(false);
 
@@ -85,7 +89,7 @@ const DashboardNavBar = ({
             router.push("/login");
           }}
           type="dashed"
-          style={{color:'black'}}
+          style={{ color: "black" }}
         >
           Log out
         </Button>

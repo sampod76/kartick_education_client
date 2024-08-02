@@ -27,13 +27,13 @@ const generateUUID = () => {
   });
 };
 export default function EditPackage({ packageId }: { packageId: string }) {
-  // console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ packageId:", packageId)
+  //// console.log("🚀 ~ file: EditPackage.tsx:24 ~ UpdatePackage ~ packageId:", packageId)
   const { data: defaultPackageData = {}, isLoading: defaultLoading } =
     useGetSinglePackageQuery(packageId, {
       skip: !Boolean(packageId),
     });
 
-  // console.log(defaultPackageData, 'defaultPackageDatadefaultPackageData')
+  //// console.log(defaultPackageData, 'defaultPackageDatadefaultPackageData')
 
   const [updatePackage, { isLoading: UpdatePackageLoading }] =
     useUpdatePackageMutation();
@@ -41,7 +41,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
   const [form] = Form.useForm();
 
   const uuid = generateUUID();
-  // console.log(uuid,"uuiduuid")
+  //// console.log(uuid,"uuiduuid")
   const { data, isLoading, error } = useGetAllCategoryQuery({
     status: ENUM_STATUS.ACTIVE,
     isDelete: ENUM_YN.NO,
@@ -56,11 +56,9 @@ export default function EditPackage({ packageId }: { packageId: string }) {
   // const [addPackage, { isLoading: UpdatePackageLoading }] =
   //     useAddPackageMutation();
   const onFinish = async (values: any) => {
-
-    
     if (values?.img) {
       const imgUrl = await uploadImgCloudinary(values?.img?.file);
-      // console.log(imgUrl, 'imgUrl')
+      //// console.log(imgUrl, 'imgUrl')
       values.img = imgUrl;
     }
     // c
@@ -79,30 +77,34 @@ export default function EditPackage({ packageId }: { packageId: string }) {
       yearly: values.yearly || defaultPackageData?.yearly,
       categories: values.categories || defaultPackageData?.categories,
     };
-    // console.log("Received values of form:", values);
-    console.log("🚀 ~ onFinish ~ packageData:", packageData);
+    //// console.log("Received values of form:", values);
+    // console.log("🚀 ~ onFinish ~ packageData:", packageData);
     // return
     try {
       const res = await updatePackage({
         id: packageId,
         data: packageData,
       }).unwrap();
-      // console.log(res);
+      //// console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully Updated Package");
         // form.resetFields();
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 
   if (defaultLoading) {
-    return <div className="w-[50%] mx-auto"><Spin size="large" /></div>;
+    return (
+      <div className="w-[50%] mx-auto">
+        <Spin size="large" />
+      </div>
+    );
   }
 
   const defaultCategory = defaultPackageData?.categories?.map(
@@ -120,11 +122,11 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     yearly: defaultPackageData?.yearly,
     membership: defaultPackageData?.membership?.title,
     categories: defaultCategory,
-    img: defaultPackageData?.img 
+    img: defaultPackageData?.img,
   };
 
-  // console.log(initialPackageFormData, 'initialPackageFormData..........')
-  // console.log('defaultCategory7', defaultCategory[1].value)
+  //// console.log(initialPackageFormData, 'initialPackageFormData..........')
+  //// console.log('defaultCategory7', defaultCategory[1].value)
   return (
     <div className="bg-white shadow-lg p-5 rounded-xl">
       <h1 className="text-xl text-center font-bold border-b-2 border-spacing-4 mb-2  ">
@@ -193,7 +195,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                   name="price"
                   type="number"
                   placeholder="Monthly Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -227,7 +229,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                   name="price"
                   type="number"
                   placeholder="Biannual Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -261,7 +263,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                   name="price"
                   type="number"
                   placeholder="yearly Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
@@ -288,17 +290,26 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             <Form.Item name="img" required>
               <Upload
                 listType="picture-circle"
-                
                 beforeUpload={async (file) => {
-                  // console.log(file)
+                  //// console.log(file)
                   const imgUrl = await uploadImgCloudinary(file);
                   form.setFieldsValue({ img: imgUrl ? imgUrl : "" }); // Set imgUrl in Form values
                   return false; // Prevent default upload behavior
                   // return true
                 }}
-                  defaultFileList={defaultPackageData?.img ? [{ uid: '-1', name: 'default-image', status: 'done', url: defaultPackageData?.img }] : []}
-                  // multiple_select={false}
-
+                defaultFileList={
+                  defaultPackageData?.img
+                    ? [
+                        {
+                          uid: "-1",
+                          name: "default-image",
+                          status: "done",
+                          url: defaultPackageData?.img,
+                        },
+                      ]
+                    : []
+                }
+                // multiple_select={false}
               >
                 Upload
               </Upload>
@@ -313,21 +324,21 @@ export default function EditPackage({ packageId }: { packageId: string }) {
           <LabelUi>Add Category</LabelUi>
           <Form.List name="categories" initialValue={defaultCategory}>
             {(fields, { add, remove }) => {
-              // console.log(fields,'fieldsfieldsfieldsfields') ;
+              //// console.log(fields,'fieldsfieldsfieldsfields') ;
 
               // const handleChange = (value: any) => {
-              //   console.log(value, 'value');
+              //  // console.log(value, 'value');
               //   const updatedOptions = options?.filter(
               //     (item) => item?.value !== value
               //   );
-              //   // console.log(updatedOptions)
+              //   //// console.log(updatedOptions)
               //   options = updatedOptions;
-              //   // console.log(options)
+              //   //// console.log(options)
               // };
 
               const handleRemove = (value: any) => {
-                // console.log(value, 'handleRemove');
-                // console.log('defaultCategory[value]?.category', defaultCategory[value]?.category)
+                //// console.log(value, 'handleRemove');
+                //// console.log('defaultCategory[value]?.category', defaultCategory[value]?.category)
                 remove(value);
               };
 
@@ -349,10 +360,10 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                         {...restField}
                         style={{ width: "", marginBottom: "8px" }}
                         name={[name, "category"]}
-                      // rules={[
-                      //     { required: true, message: "Missing Category" },
-                      // ]}
-                      // initialValue={defaultCategory[name]}
+                        // rules={[
+                        //     { required: true, message: "Missing Category" },
+                        // ]}
+                        // initialValue={defaultCategory[name]}
                       >
                         <Select
                           // onChange={handleChange}

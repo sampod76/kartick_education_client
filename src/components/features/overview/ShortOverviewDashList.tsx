@@ -12,11 +12,7 @@ import {
   message,
 } from "antd";
 import Link from "next/link";
-import {
-
-  ReloadOutlined,
-
-} from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
@@ -35,9 +31,10 @@ import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 // import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { useDeleteShortOverViewMutation, useGetAllShortOverViewQuery } from "@/redux/api/adminApi/features/overview";
-
-
+import {
+  useDeleteShortOverViewMutation,
+  useGetAllShortOverViewQuery,
+} from "@/redux/api/adminApi/features/overview";
 
 export default function ShortOverview() {
   //
@@ -59,7 +56,7 @@ export default function ShortOverview() {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
 
   const [deleteShortOverView] = useDeleteShortOverViewMutation();
 
@@ -94,11 +91,11 @@ export default function ShortOverview() {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = useGetAllShortOverViewQuery({ ...query });
-  // console.log("🚀 ~ file: page.tsx:68 ~ skillsPlanData ~ data:", data);
+  //
 
   //@ts-ignore
   const shortOverviewData = data?.data || [];
-  // console.log(skillsPlanData, 'skillsPlanData')
+  //
   //@ts-ignore
   const meta = data?.meta;
 
@@ -106,11 +103,11 @@ export default function ShortOverview() {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          
 
           const res = await deleteShortOverView(id).unwrap();
 
-          console.log(res, "response for delete SKillsPlan");
+          
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -166,19 +163,23 @@ export default function ShortOverview() {
       // fixed: "right",
       width: 130,
       render: (record: any) => (
-        // console.log(object);
+        //
         <>
           <Space size="middle">
             <Dropdown
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${userInfo?.role}/features/short-overview/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/features/short-overview/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/features/short-overview/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/features/short-overview/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
@@ -203,13 +204,13 @@ export default function ShortOverview() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -221,7 +222,7 @@ export default function ShortOverview() {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    //
     try {
       const res = await deleteShortOverView(id);
       if (res) {
@@ -289,7 +290,6 @@ export default function ShortOverview() {
           >
             Filter
           </Button> */}
-
 
           <Link href={`/${userInfo?.role}/features/short-overview/create`}>
             <Button type="default">Create ShortOverView</Button>
@@ -359,7 +359,6 @@ export default function ShortOverview() {
           }
         />
       </Drawer> */}
-
     </div>
   );
 }

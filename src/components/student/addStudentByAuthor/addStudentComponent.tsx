@@ -24,10 +24,11 @@ const CreateStudentComponent = ({
   author?: string;
 }) => {
   const [isReset, setIsReset] = useState(false);
-  const [addStudentWithAuthorFormData, { isLoading }] =useAddStudentWithAuthorDataMutation()
+  const [addStudentWithAuthorFormData, { isLoading }] =
+    useAddStudentWithAuthorDataMutation();
 
   const onSubmit = async (values: IStudentCreate & { img: any }) => {
-    // console.log(values, "values of student");
+    //// console.log(values, "values of student");
     removeNullUndefinedAndFalsey(values);
     const { password, ...otherValue } = values;
     const studentData = {
@@ -35,15 +36,14 @@ const CreateStudentComponent = ({
       student: { ...otherValue, author },
     };
 
-    // console.log(studentData);
-    
-
-
+    //// console.log(studentData);
 
     try {
-      const res = await addStudentWithAuthorFormData({ ...studentData }).unwrap();
-      console.log("🚀 ~ onSubmit ~ res:", res);
-      return
+      const res = await addStudentWithAuthorFormData({
+        ...studentData,
+      }).unwrap();
+      // console.log("🚀 ~ onSubmit ~ res:", res);
+      return;
 
       if (res?.success == false) {
         Error_model_hook(res?.message);
@@ -58,7 +58,6 @@ const CreateStudentComponent = ({
       Error_model_hook(err?.message || err?.data);
     }
   };
- 
 
   // const defaultValues = {
   //   blood,

@@ -8,21 +8,15 @@ import {
 } from "@ant-design/icons";
 
 const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
-  // console.log(authorData, "author");
-
-  // const img = userData?.img || userData[userData.role]["img"];
-
-  // const authImg = authorData[authorData?.role]["img"] || "";
-  // console.log(authImg);
-  // const role = authorData?.role;
   let img = "";
-  let fullName = ""
+  let fullName = "";
 
   if (authorData?.role) {
     img = authorData[authorData?.role]["img"];
-    fullName = `${authorData[authorData?.role]["name"]?.firstName} ${authorData[authorData?.role]["name"]?.lastName}`
+    fullName = `${authorData[authorData?.role]["name"]?.firstName} ${
+      authorData[authorData?.role]["name"]?.lastName
+    }`;
   }
-
 
   return (
     <div
@@ -51,9 +45,7 @@ const AuthorCourseDetails = ({ authorData }: { authorData: any }) => {
           }}
         />
         <div style={{}}>
-          <h1 style={{ fontSize: "18px", fontWeight: "600" }}>
-            {fullName}
-          </h1>
+          <h1 style={{ fontSize: "18px", fontWeight: "600" }}>{fullName}</h1>
           <button
             style={{
               background: "red",

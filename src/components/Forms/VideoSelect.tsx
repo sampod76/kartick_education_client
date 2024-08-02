@@ -19,10 +19,14 @@ interface Video {
 //   setVideos: React.Dispatch<React.SetStateAction<Video[] | []>>;
 // }
 
-const VideoSelect = ({ defaultValue = [] }: { defaultValue?: Array<Video> }) => {
+const VideoSelect = ({
+  defaultValue = [],
+}: {
+  defaultValue?: Array<Video>;
+}) => {
   const { setValue } = useFormContext();
   const [videos, setVideos] = useState<Video[] | []>(defaultValue);
-  //   console.log("🚀 ~ file: VideoSelect.tsx:24 ~ videos:", videos, setVideos);
+  //
 
   if (videos?.length) {
     setValue("videos", videos);
@@ -41,9 +45,7 @@ const VideoSelect = ({ defaultValue = [] }: { defaultValue?: Array<Video> }) => 
   ///! for input
   const [videoType, setVideoType] = useState(null);
 
-
   const handleVideoUrlChange = (index: number, link: any) => {
-
     let updatedVideos = [...videos];
     updatedVideos[index] = {
       ...updatedVideos[index],
@@ -68,9 +70,10 @@ const VideoSelect = ({ defaultValue = [] }: { defaultValue?: Array<Video> }) => 
   };
 
   return (
-
     <div className="text-start  p-2 my-10">
-      <SubHeadingUI>Add Video {/* <span className="text-red-500">*</span> */}</SubHeadingUI>
+      <SubHeadingUI>
+        Add Video {/* <span className="text-red-500">*</span> */}
+      </SubHeadingUI>
 
       {videos?.map((video, index) => (
         <Space
@@ -126,7 +129,6 @@ const VideoSelect = ({ defaultValue = [] }: { defaultValue?: Array<Video> }) => 
             </Select> */}
             <Input
               className="w-full "
-
               addonBefore={
                 <Select
                   className=""
@@ -151,7 +153,7 @@ const VideoSelect = ({ defaultValue = [] }: { defaultValue?: Array<Video> }) => 
               defaultValue={video.link}
               placeholder={`Enter ${videoType} Video URL`}
               //   value={videoUrl}
-              style={{ minWidth: "40vw",  }}
+              style={{ minWidth: "40vw" }}
               onChange={(e) =>
                 handleVideoUrlChange(index, { link: e.target.value })
               }

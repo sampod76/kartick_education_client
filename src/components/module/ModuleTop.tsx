@@ -8,7 +8,7 @@ import React from "react";
 
 export default function ModuleTop({ moduleData }: { moduleData: any }) {
   // const { data } = useGetSingleModuleQuery(moduleId);
-  // console.log(data, "");
+  //// console.log(data, "");
 
   return (
     <div

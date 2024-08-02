@@ -11,14 +11,14 @@ const PurchaseCategoryTab = () => {
 
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
-    // console.log(key);
+    //// console.log(key);
   };
   const searchParams = useSearchParams();
   const encodedData: any = searchParams.get("data");
   //=================================
   const decodedData = decodeURIComponent(encodedData);
   const data = JSON.parse(decodedData);
-  console.log("🚀 ~ PurchaseCategoryTab ~ data:", data);
+  // console.log("🚀 ~ PurchaseCategoryTab ~ data:", data);
 
   const activeClass =
     " rounded-[5px] bg-blue-600 text-white text-[18px] font-bold p-1 m-0 ring-4 ml-1";
@@ -42,7 +42,7 @@ const PurchaseCategoryTab = () => {
       key: String(index),
       children: (
         <Courses
-        width="full"
+          width="full"
           query={{
             status: "active",
             // singleData?.category?._id must be first because it  is first
@@ -54,7 +54,7 @@ const PurchaseCategoryTab = () => {
   );
 
   const TabClickHandler = (key: string, event: any) => {
-    // console.log(key, event);
+    //// console.log(key, event);
     /// do not need now
   };
 

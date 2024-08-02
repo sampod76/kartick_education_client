@@ -56,7 +56,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
   };
 
   const handleChange = (index: number, updatedAnswer: Answer) => {
-    // console.log(updatedAnswer,"🚀 ~ file: AnswerSingle.tsx:51 ~ handleChange ~ index:", index)
+    //
 
     let updatedAnswers = [...answers];
     updatedAnswers[index] = updatedAnswer;
@@ -102,10 +102,15 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               position: "relative",
               // background: "red",
             }}
-          // align="start"
+            // align="start"
           >
             <MinusCircleOutlined
-              style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
+              style={{
+                fontSize: "1.5rem",
+                position: "absolute",
+                right: 0,
+                top: 0,
+              }}
               onClick={() => handleRemove(index)}
             />
             {/* quiz option */}
@@ -116,14 +121,13 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                 height: "2.7rem",
                 // background: "blue",
                 // boxSizing: "border-box",
-
               }}
               // width={500}
               value={answer.title}
               onChange={(e) =>
                 handleChange(index, { ...answer, title: e.target.value })
               }
-            // defaultValue={index + 1}
+              // defaultValue={index + 1}
             />
             {/* Quiz radio select */}
 
@@ -143,11 +147,10 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                 style={{ textAlign: "start" }}
                 showUploadList={true}
                 multiple={false}
-                
                 // multiple
                 beforeUpload={async (file) => {
                   setIsLoading({ loading: true, index: index });
-                  // console.log(
+                  //
                   //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
                   //   file
                   // );
@@ -158,7 +161,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                   if (imgUrl) {
                     images.push(imgUrl);
                   }
-                  // console.log(images,imgUrl, answer);
+                  //
 
                   handleChange(index, {
                     ...answer,
@@ -168,7 +171,12 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                   return false; // Prevent default upload behavior
                 }}
               >
-                <Button  loading={isLoading.index === index && isLoading.loading} style={{ textAlign: "start" }}>Answer Image +</Button>
+                <Button
+                  loading={isLoading.index === index && isLoading.loading}
+                  style={{ textAlign: "start" }}
+                >
+                  Answer Image +
+                </Button>
               </Upload>
               {answer?.imgs?.map((img, key) => (
                 <Image
@@ -196,7 +204,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                   })
                 }
                 style={{
-                  width: '8rem'
+                  width: "8rem",
                 }}
                 onWheel={(e) => e.preventDefault()}
               />
@@ -214,7 +222,6 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               <Select.Option value="deactivate">Deactivate</Select.Option>
             </Select>
           </div>
-
         </div>
       ))}
       <Button

@@ -2,7 +2,7 @@
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { useFormContext } from "react-hook-form";
-import { Switch } from 'antd';
+import { Switch } from "antd";
 const TextEditor = ({
   textEditorValue,
   setTextEditorValue,
@@ -40,18 +40,23 @@ const TextEditor = ({
   }, [isReset]);
 
   const onChange = (checked: boolean) => {
-    // console.log(`switch to ${checked}`);
-    setopenTextEditor((v) => !v)
+    //// console.log(`switch to ${checked}`);
+    setopenTextEditor((v) => !v);
   };
 
   return (
     <div>
       {/* <h2></h2> */}
-      <Switch checkedChildren="Open" unCheckedChildren='Close'  onChange={onChange} style={{
-        background: openTextEditor ? "blue" : "#4D545A",
-        marginBlock: "10px"
-      }} />
-      {openTextEditor &&
+      <Switch
+        checkedChildren="Open"
+        unCheckedChildren="Close"
+        onChange={onChange}
+        style={{
+          background: openTextEditor ? "blue" : "#4D545A",
+          marginBlock: "10px",
+        }}
+      />
+      {openTextEditor && (
         <JoditEditor
           ref={editor}
           config={editorConfig}
@@ -61,14 +66,12 @@ const TextEditor = ({
             setValue(name, newContent);
             setContent(newContent);
           }} // preferred to use only this option to update the content for performance reasons
-        // onChange={(newContent) => {
+          // onChange={(newContent) => {
 
-        //   setValue(name, newContent);
-        // }}
+          //   setValue(name, newContent);
+          // }}
         />
-
-      }
-
+      )}
     </div>
   );
 };

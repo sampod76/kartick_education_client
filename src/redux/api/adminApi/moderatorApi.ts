@@ -8,7 +8,7 @@ export const moderatorsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addStudentWithFormData: build.mutation({
       query: (data) => {
-        // console.log(data, "student");
+        //// console.log(data, "student");
         return {
           url: "/users/create-student",
           method: "POST",
@@ -28,7 +28,6 @@ export const moderatorsApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,

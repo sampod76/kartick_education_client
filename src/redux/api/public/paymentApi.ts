@@ -10,7 +10,7 @@ export const paymentApi = baseApi.injectEndpoints({
 
     addStripePayment: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+   
         return {
           url: `${PAYMENT_URL}/stripe/create-payment-intent`,
           method: "POST",
@@ -21,7 +21,7 @@ export const paymentApi = baseApi.injectEndpoints({
 
     addPaypalPayment: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+   
         return {
           url: `${PAYMENT_URL}/paypal`,
           method: "POST",
@@ -31,7 +31,7 @@ export const paymentApi = baseApi.injectEndpoints({
     }),
     addPaypalPaymentByCourse: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+   
         return {
           url: `${PAYMENT_URL}/paypal/buy_course`,
           method: "POST",
@@ -41,7 +41,7 @@ export const paymentApi = baseApi.injectEndpoints({
     }),
     addPaypalCheckPayment: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+   
         return {
           url: `${PAYMENT_URL}/paypal/check`,
           method: "POST",
@@ -69,9 +69,7 @@ export const paymentApi = baseApi.injectEndpoints({
     // update ac department
   }),
   overrideExisting: true,
-})
-
-
+});
 
 export const {
   useAddStripePaymentMutation,

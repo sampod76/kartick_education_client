@@ -29,10 +29,8 @@ const CreateFaq = () => {
         Success_model("Successfully added Blog");
         setIsReset(true);
       }
-      console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
     }
   };
 

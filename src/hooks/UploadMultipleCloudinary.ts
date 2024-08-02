@@ -19,7 +19,7 @@ const uploadFilesCloudinary = async (files: FileList | File[]) => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log("🚀 ~ uploadFilesCloudinary ~ data:", data);
+      // console.log("🚀 ~ uploadFilesCloudinary ~ data:", data);
       return data?.data?.map((resource: any) => resource.secure_url);
     } else {
       console.error("Failed to upload files to Cloudinary");

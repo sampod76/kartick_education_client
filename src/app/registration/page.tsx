@@ -12,7 +12,6 @@ import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
 import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-
 import { storeUserInfo } from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
@@ -30,7 +29,7 @@ const Registration = () => {
   const router = useRouter();
   const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
-    console.log(values);
+    
     removeNullUndefinedAndFalsey(values);
     try {
       const res = await addGeneralUserWithFormData({ ...values }).unwrap();
@@ -39,13 +38,13 @@ const Registration = () => {
       } else {
         Success_model("Registration  successfully");
 
-        setIsReset(true)
+        setIsReset(true);
 
         const res = await userLogin({
           email: values?.email,
           password: values?.password,
         }).unwrap();
-        console.log(res);
+        
         if (res?.accessToken) {
           router.push("/");
           message.success("User logged in successfully!");
@@ -57,7 +56,7 @@ const Registration = () => {
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   // if (isLoading || userLoginLoading) {
@@ -144,7 +143,6 @@ const Registration = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                
                 style={{
                   marginBottom: "10px",
                 }}
@@ -201,7 +199,7 @@ const Registration = () => {
                 }}
               >
                 <FormInput
-                   type="number"
+                  type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
@@ -244,7 +242,7 @@ const Registration = () => {
             {isLoading || userLoginLoading ? (
               <Spin></Spin>
             ) : (
-              <Button size="large" htmlType="submit"   type="default">
+              <Button size="large" htmlType="submit" type="default">
                 Create
               </Button>
             )}

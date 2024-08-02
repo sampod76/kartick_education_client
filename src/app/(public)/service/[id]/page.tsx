@@ -20,7 +20,7 @@ const ServiceDetiles = ({ params }: any) => {
         skip: !Boolean(params?.id),
       }
     );
-  console.log(ratingData);
+
 
   if (isLoading || ratingLoading) {
     return <LoadingForDataFetch />;
@@ -69,7 +69,9 @@ const ServiceDetiles = ({ params }: any) => {
             </div>
           </div>
         </div>
-        <h1 className="text-center p-2 text-xl border-2 rounded-lg">User rating</h1>
+        <h1 className="text-center p-2 text-xl border-2 rounded-lg">
+          User rating
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2">
           {ratingData?.data?.map((data: any, key: number) => (
             <div key={key} className="border-2 rounded-xl p-2">

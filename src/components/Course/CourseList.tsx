@@ -33,7 +33,7 @@ const CourseList = () => {
   const { userInfo, userInfoLoading } = useGlobalContext();
 
   const { data: userStateData } = useAppSelector((state) => state.userInfo);
-  // console.log('userStateData', userStateData)
+  //
 
   const [deleteCourse, { isLoading: deleteLoading }] =
     useDeleteCourseMutation();
@@ -73,11 +73,11 @@ const CourseList = () => {
 
   //@ts-ignore
   const courseData = data?.data || [];
-  // console.log("🚀 ~ CourseList ~ courseData:", courseData)
+  //
   //@ts-ignore
   const meta = data?.meta;
 
-  // console.log('userInfo?.role',userInfo?.role)
+  //
 
   const handleDelete = (id: string) => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
@@ -92,7 +92,7 @@ const CourseList = () => {
             Success_model("Course Successfully Deleted");
           }
         } catch (error: any) {
-          console.log("🚀 ~ confirm_modal ~ error:", error);
+          
           Error_model_hook(error.message);
         }
       }
@@ -136,7 +136,7 @@ const CourseList = () => {
     //   title: "duration",
     //   dataIndex: "duration",
     //   render: function (data: any) {
-    //     // console.log(data)
+  
     //     return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
     //   },
     //   // ellipsis: true,
@@ -156,7 +156,7 @@ const CourseList = () => {
       title: "author",
       dataIndex: "author",
       render: function (data: any) {
-        // console.log(data);
+        //
         return data.email;
       },
       // ellipsis: true,
@@ -185,7 +185,7 @@ const CourseList = () => {
       dataIndex: "status",
       width: 80,
       // render:function(data:any){
-      //   console.log(data);
+      //  
       // }
     },
     {
@@ -239,7 +239,7 @@ const CourseList = () => {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -253,13 +253,13 @@ const CourseList = () => {
   const deleteCourseHandler = async (id: string) => {
     try {
       const res: any = await deleteCourse(id);
-      console.log("🚀 ~ deleteCourseHandler ~ res:", res);
+      
       if (res._id) {
         message.success("Admin Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
-      console.log("🚀 ~ deleteCourseHandler ~ error:", error);
+      
       Error_model_hook(error.message);
     }
   };
@@ -288,7 +288,7 @@ const CourseList = () => {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "20%",
+              width: "250px",
             }}
           />
           <FilterCategorySelect

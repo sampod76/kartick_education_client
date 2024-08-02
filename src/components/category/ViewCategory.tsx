@@ -3,25 +3,31 @@
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import Image from "next/image";
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import UMTable from "../ui/UMTable";
 import HeadingUI from "../ui/dashboardUI/HeadingUI";
-import { useDeleteCourseMutation, useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import {
+  useDeleteCourseMutation,
+  useGetAllCourseQuery,
+} from "@/redux/api/adminApi/courseApi";
 import { useDebounced } from "@/redux/hooks";
 import { Dropdown, Menu, Space } from "antd";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
 export default function ViewCategory({ categoryId }: { categoryId: string }) {
-
-
   const { data: category, isLoading } = useGetSingleCategoryQuery(categoryId, {
     skip: !Boolean(categoryId),
   });
   // ! for course
 
-  const [deleteCourse, { isLoading: deleteLoading }] = useDeleteCourseMutation();
+  const [deleteCourse, { isLoading: deleteLoading }] =
+    useDeleteCourseMutation();
   const userInfo = getUserInfo() as IDecodedInfo;
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -52,7 +58,7 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  // console.log(query)
+  //
   const { data, isLoading: courseLoading } = useGetAllCourseQuery({ ...query });
   const courseData = data?.data || [];
   const meta = data?.meta;
@@ -69,13 +75,11 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
             Success_model("Course Successfully Deleted");
           }
         } catch (error: any) {
-          console.log("🚀 ~ confirm_modal ~ error:", error);
           Error_model_hook(error.message);
         }
       }
     });
   };
-
 
   // const category = data
   if (isLoading || courseLoading) {
@@ -119,7 +123,7 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
     //   title: "duration",
     //   dataIndex: "duration",
     //   render: function (data: any) {
-    //     // console.log(data)
+    //     //
     //     return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
     //   },
     //   // ellipsis: true,
@@ -140,7 +144,7 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
       title: "author",
       dataIndex: "author",
       render: function (data: any) {
-        // console.log(data);
+        //
         return data.email;
       },
       // ellipsis: true,
@@ -169,7 +173,7 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
       dataIndex: "status",
       width: 80,
       // render:function(data:any){
-      //   console.log(data);
+      //
       // }
     },
     {
@@ -228,7 +232,7 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -244,18 +248,24 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
             <h1 className="text-3xl font-bold mb-6">{category.title}</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="col-span-full mb-6 bg-cover w-full h-[18rem]" style={{
-                backgroundImage: `url(${category.img})`,
-                backgroundAttachment: 'fixed',
-                backgroundSize: 'cover', // Add this line for covering the full height
-              }}>
-              </div>
+              <div
+                className="col-span-full mb-6 bg-cover w-full h-[18rem]"
+                style={{
+                  backgroundImage: `url(${category.img})`,
+                  backgroundAttachment: "fixed",
+                  backgroundSize: "cover", // Add this line for covering the full height
+                }}
+              ></div>
               {/* Category Details */}
               <div className="col-span-full md:col-span-1">
                 {/* <p className="text-gray-600 mb-2">Category ID: {category.id}</p> */}
                 <p className="text-gray-600 mb-2">Status: {category.status}</p>
-                <p className="text-gray-600 mb-2">Created At: {category.createdAt}</p>
-                <p className="text-gray-600 mb-2">Updated At: {category.updatedAt}</p>
+                <p className="text-gray-600 mb-2">
+                  Created At: {category.createdAt}
+                </p>
+                <p className="text-gray-600 mb-2">
+                  Updated At: {category.updatedAt}
+                </p>
                 {/* Add more details as needed */}
               </div>
             </div>
@@ -282,7 +292,6 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
             onTableChange={onTableChange}
             showPagination={true}
           />
-
         </div>
       </div>
     </>

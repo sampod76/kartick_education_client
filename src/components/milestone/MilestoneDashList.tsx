@@ -68,7 +68,7 @@ const MileStoneList = () => {
       ...queryCategory,
     });
   const categoryData: any = Category?.data;
-  console.log("🚀 ~ MileStoneList ~ categoryData:", categoryData);
+  // console.log("🚀 ~ MileStoneList ~ categoryData:", categoryData);
   //----------------------------------------------------------------
 
   const query: Record<string, any> = {};
@@ -109,11 +109,11 @@ const MileStoneList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllMilestoneQuery({ ...query });
-  // console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
+  //// console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
   //@ts-ignore
   const milestoneData = data?.data || [];
-  console.log("🚀 ~ MileStoneList ~ milestoneData:", milestoneData);
+  // console.log("🚀 ~ MileStoneList ~ milestoneData:", milestoneData);
 
   //@ts-ignore
   const meta = data?.meta;
@@ -122,11 +122,11 @@ const MileStoneList = () => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deleteMilestone(id).unwrap();
 
-          console.log(res, "response for delete Milestone");
+          // console.log(res, "response for delete Milestone");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -202,7 +202,7 @@ const MileStoneList = () => {
       // fixed: "right",
       width: 120,
       render: (record: any) => (
-        // console.log(object);
+        //// console.log(object);
         <>
           <Space size="middle">
             <Dropdown
@@ -248,13 +248,13 @@ const MileStoneList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -266,7 +266,7 @@ const MileStoneList = () => {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    //// console.log(id);
     try {
       const res = await deleteMilestone(id);
       if (res) {
@@ -318,7 +318,7 @@ const MileStoneList = () => {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "20%",
+              width: "250px",
             }}
           />
           <FilterCourse

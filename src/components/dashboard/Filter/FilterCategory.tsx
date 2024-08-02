@@ -24,13 +24,13 @@ const FilterCategorySelect = ({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-    //  // console.log("search:", value);
+    //  
   };
 
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryQuery({ ...query });
   const CategoryData = Category?.data;
-  // console.log(CategoryData)
+  
   const CategoryOptions = CategoryData?.map((item: any) => {
     return {
       label: item?.title,
@@ -45,7 +45,6 @@ const FilterCategorySelect = ({
       }}
       size={"large"}
       options={CategoryOptions}
-
       value={filterValue}
       style={{ width: "10rem" }}
       loading={isLoading}

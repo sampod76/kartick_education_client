@@ -6,7 +6,7 @@ import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { Image as AntImage } from 'antd';
+import { Image as AntImage } from "antd";
 import { Error_model_hook } from "@/utils/modalHook";
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -15,7 +15,10 @@ const getBase64 = (img: RcFile, callback: (url: string) => void) => {
 };
 
 const beforeUpload = (file: RcFile) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg";
+  const isJpgOrPng =
+    file.type === "image/jpeg" ||
+    file.type === "image/png" ||
+    file.type === "image/jpg";
   if (!isJpgOrPng) {
     Error_model_hook("You can only upload JPG/PNG file!");
   }
@@ -52,9 +55,9 @@ const UploadImage = ({
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
-      console.log(info.file.originFileObj)
+      // console.log(info.file.originFileObj)
       const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
-      // console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
+      //// console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
       setValue(name, imgUrl);
       getBase64(info.file.originFileObj as RcFile, (url) => {
@@ -86,7 +89,7 @@ const UploadImage = ({
           style={{ width: "150px" }}
           width={200}
 
-        // fill
+          // fill
         />
       ) : null}
       <Upload
@@ -98,7 +101,6 @@ const UploadImage = ({
         beforeUpload={customChange ? customChange : beforeUpload}
         onChange={handleChange}
       >
-
         {uploadButton}
       </Upload>
     </div>

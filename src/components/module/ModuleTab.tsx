@@ -9,7 +9,7 @@ import LessonList from "../lesson/LessonList";
 import {
   ContainerOutlined,
   SettingOutlined,
-  ReadOutlined
+  ReadOutlined,
 } from "@ant-design/icons";
 import Quizes from "../Quiz/Quizes";
 import GlossaryPage from "../Glossary/Glossary";
@@ -23,15 +23,14 @@ export default function ModuleTab({
   moduleId: string;
   moduleData: any[];
 }) {
-
-  // console.log(moduleData)
+  //// console.log(moduleData)
 
   // const {data:QuizData} = useGetQui
 
   const [activeTabKey, setActiveTabKey] = useState("1");
   const handleTabClick = (key: any) => {
     setActiveTabKey(key);
-    console.log(key);
+    // console.log(key);
   };
 
   const tabsItems: TabsProps["items"] = [
@@ -49,7 +48,6 @@ export default function ModuleTab({
       key: "1",
       children: <LessonList moduleId={moduleId} moduleData={moduleData} />,
     },
-
 
     {
       label: (
@@ -80,28 +78,23 @@ export default function ModuleTab({
       ),
       key: "4",
       children: <ResourcePage moduleId={moduleId} />,
-
     },
   ];
   return (
     <div className="mt-5 ">
-
       <Tabs
         defaultActiveKey={activeTabKey}
         tabBarStyle={{
           padding: "10px",
-          borderRadius: '8px',
+          borderRadius: "8px",
 
           // backgroundColor: '#D9D9D9'
         }}
         centered
         animated
         items={tabsItems}
-
         onChange={handleTabClick}
-      >
-
-      </Tabs>
+      ></Tabs>
     </div>
   );
 }

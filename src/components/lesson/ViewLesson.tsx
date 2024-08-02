@@ -3,7 +3,7 @@
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import Image from "next/image";
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import UMTable from "../ui/UMTable";
 import HeadingUI from "../ui/dashboardUI/HeadingUI";
 import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
@@ -13,17 +13,22 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { useGetSingleLessonQuery } from "@/redux/api/adminApi/lessoneApi";
-import { useDeleteQuizMutation, useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
+import {
+  useDeleteQuizMutation,
+  useGetAllQuizQuery,
+} from "@/redux/api/adminApi/quizApi";
 import { ILessonData } from "@/types/lessonType";
 import { AllImage } from "@/assets/AllImge";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
 export default function ViewLesson({ lessonId }: { lessonId: string }) {
-
-
   const { data: lessonData, isLoading } = useGetSingleLessonQuery(lessonId, {
     skip: !Boolean(lessonId),
-  })
+  });
   // ! for course
   const userInfo = getUserInfo() as IDecodedInfo;
   const [page, setPage] = useState<number>(1);
@@ -55,7 +60,7 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  // console.log(query)
+  //// console.log(query)
   const { data, isLoading: quizDataLoading } = useGetAllQuizQuery({ ...query });
 
   const [deleteQuiz] = useDeleteQuizMutation();
@@ -66,11 +71,11 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deleteQuiz(id).unwrap();
 
-          console.log(res, "response for delete Quiz");
+          // console.log(res, "response for delete Quiz");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -97,7 +102,9 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
           <>
             {
               <Image
-                src={data?.imgs?.length ? data?.imgs[0] : AllImage?.notFoundImage}
+                src={
+                  data?.imgs?.length ? data?.imgs[0] : AllImage?.notFoundImage
+                }
                 style={{ height: "50px", width: "80px" }}
                 width={150}
                 height={150}
@@ -126,7 +133,7 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
     //   title: "duration",
     //   dataIndex: "duration",
     //   render: function (data: any) {
-    //     // console.log(data)
+    //     //// console.log(data)
     //     return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
     //   },
     //   // ellipsis: true,
@@ -137,7 +144,6 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
       ellipsis: true,
       width: 150,
     },
-
 
     {
       title: "Created at",
@@ -153,7 +159,7 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
       dataIndex: "status",
       width: 80,
       // render:function(data:any){
-      //   console.log(data);
+      //  // console.log(data);
       // }
     },
     {
@@ -212,7 +218,7 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -228,18 +234,30 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
             <h1 className="text-3xl font-bold mb-6">{lessonData?.title}</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="col-span-full mb-6 bg-cover w-full h-[18rem]" style={{
-                backgroundImage: `url(${lessonData?.imgs?.length ? lessonData?.imgs[0] : AllImage?.notFoundImage})`,
-                backgroundAttachment: 'fixed',
-                backgroundSize: 'cover', // Add this line for covering the full height
-              }}>
-              </div>
+              <div
+                className="col-span-full mb-6 bg-cover w-full h-[18rem]"
+                style={{
+                  backgroundImage: `url(${
+                    lessonData?.imgs?.length
+                      ? lessonData?.imgs[0]
+                      : AllImage?.notFoundImage
+                  })`,
+                  backgroundAttachment: "fixed",
+                  backgroundSize: "cover", // Add this line for covering the full height
+                }}
+              ></div>
               {/* Category Details */}
               <div className="col-span-full md:col-span-1">
                 {/* <p className="text-gray-600 mb-2">Category ID: {category.id}</p> */}
-                <p className="text-gray-600 mb-2">Status: {lessonData?.status}</p>
-                <p className="text-gray-600 mb-2">Created At: {lessonData?.createdAt}</p>
-                <p className="text-gray-600 mb-2">Updated At: {lessonData?.updatedAt}</p>
+                <p className="text-gray-600 mb-2">
+                  Status: {lessonData?.status}
+                </p>
+                <p className="text-gray-600 mb-2">
+                  Created At: {lessonData?.createdAt}
+                </p>
+                <p className="text-gray-600 mb-2">
+                  Updated At: {lessonData?.updatedAt}
+                </p>
                 {/* Add more details as needed */}
               </div>
             </div>
@@ -254,7 +272,6 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
 
         <div className="">
           <HeadingUI>
-
             <span>Courses of </span>
 
             <EllipsisMiddle suffixCount={3} maxLength={60}>
@@ -273,7 +290,6 @@ export default function ViewLesson({ lessonId }: { lessonId: string }) {
             onTableChange={onTableChange}
             showPagination={true}
           />
-
         </div>
       </div>
     </>

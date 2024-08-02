@@ -34,8 +34,6 @@ const Course_labelList = () => {
   const { userInfo, userInfoLoading } = useGlobalContext();
   const query: Record<string, any> = {};
 
-  // console.log("🚀 ~ file: page.tsx:41 ~ Course_labelList ~ role:", role);
-
   const [deleteCourse_label, { isLoading: DeleteCourseLabel }] =
     useDeleteCourse_labelMutation();
 
@@ -58,7 +56,6 @@ const Course_labelList = () => {
   // if (userInfo?.role !== USER_ROLE.ADMIN) {
   //   query["author"] = userInfo?.id;
   // }
-  console.log(query);
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -69,7 +66,7 @@ const Course_labelList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = useGetAllCourse_labelQuery({ ...query });
-  console.log("🚀 ~ data:", data);
+
 
   //@ts-ignore
   const Course_labelData = data?.data;
@@ -82,7 +79,7 @@ const Course_labelList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteCourse_label(id).unwrap();
-          console.log("🚀 ~ confirm_modal ~ res:", res);
+
 
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
@@ -232,7 +229,7 @@ const Course_labelList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div className="space-x-2">

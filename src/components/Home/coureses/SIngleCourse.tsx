@@ -45,17 +45,25 @@ const { Text } = Typography;
 
 const SIngleCourse = ({ course }: { course: ICourseData }) => {
   const { userInfo, userInfoLoading } = useGlobalContext();
-  // console.log("🚀 ~ SIngleCourse ~ userInfo:", userInfo);
+  //// console.log("🚀 ~ SIngleCourse ~ userInfo:", userInfo);
   const router = useRouter();
-  // console.log(course);
+  //// console.log(course);
   // const { title, details, img, demo_video, tags} = course;
 
   const screens = useBreakpoint();
 
   const [addCart] = useAddCartMutation();
-  const arr = [" ",HomeCourseImage, HomeCourseImage2,HomeCourseImage3,HomeCourseImage4, HomeCourseImage5,HomeCourseImage6]
+  const arr = [
+    " ",
+    HomeCourseImage,
+    HomeCourseImage2,
+    HomeCourseImage3,
+    HomeCourseImage4,
+    HomeCourseImage5,
+    HomeCourseImage6,
+  ];
 
-  let indexArray = Math.floor(Math.random() * 6 + 1)
+  let indexArray = Math.floor(Math.random() * 6 + 1);
 
   const addToCartHandler = async (CartCourse: ICourseData) => {
     // dispatch(addToCart(CartCourse))
@@ -67,21 +75,21 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
 
     try {
       const res = await addCart(cartData).unwrap();
-      // console.log(res);
+      //// console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model(`${CartCourse?.title} added to Cart`);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
-    // console.log(cartData, 'cartData')
+    //// console.log(cartData, 'cartData')
   };
 
-  let imagechoser = course?.img || arr[indexArray]
+  let imagechoser = course?.img || arr[indexArray];
 
   return (
     <>
@@ -102,13 +110,17 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
                 : "https://vimeo.com/547716679"
             }
           /> */}
-          <Image alt="" width={100} height={100} className="w-full h-[220px] rounded-md " src={(course?.img || arr[indexArray])} />
-          
+          <Image
+            alt=""
+            width={100}
+            height={100}
+            className="w-full h-[220px] rounded-md "
+            src={course?.img || arr[indexArray]}
+          />
 
-           {/* <div className=" w-full h-[220px] bg-cover" style={{backgroundImage : `url(${HomeCourseImage})`}}> */}
+          {/* <div className=" w-full h-[220px] bg-cover" style={{backgroundImage : `url(${HomeCourseImage})`}}> */}
 
-           {/* </div> */}
-          
+          {/* </div> */}
         </div>
         <div className="flex flex-col justify-between h-1/2  mt-3">
           <div className="px-2 py-2 ">
@@ -156,14 +168,13 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
             <Button
               // href= {`/payment/checkout/${course?._id}?categoryId=${course?.category}`}
               onClick={() => {
-                console.log("first");
+                // console.log("first");
                 router.push(
                   `/payment/checkout/${course?._id}?categoryId=${course?.category}`
                 );
               }}
               type="default"
               style={{
-    
                 borderBottomRightRadius: "0.5rem",
                 borderBottomLeftRadius: "0.5rem",
                 paddingTop: "14px",

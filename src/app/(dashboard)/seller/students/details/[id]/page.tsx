@@ -9,7 +9,6 @@ const StudentDetailsPage = ({ params }: any) => {
   const id = params.id;
 
   const { data: userData, isLoading: loading } = useGetSingleStudentQuery(id);
-  console.log("🚀 ~ StudentDetailsPage ~ userData:", userData)
 
 
   if (loading) {
@@ -24,4 +23,3 @@ const StudentDetailsPage = ({ params }: any) => {
 };
 
 export default StudentDetailsPage;
-

@@ -11,7 +11,7 @@ const SelectStatusCategoryFIeld = ({
   defaultData,
   disable = false,
   setCategoryValue,
-  required = false
+  required = false,
 }: {
   defaultData?: any;
   disable?: boolean;
@@ -24,7 +24,7 @@ const SelectStatusCategoryFIeld = ({
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-    //  // console.log("search:", value);
+    //  //
   };
   const query: Record<string, any> = {};
   query["limit"] = 999999;
@@ -34,7 +34,7 @@ const SelectStatusCategoryFIeld = ({
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryQuery({ ...query });
   const CategoryData = Category?.data;
-  // console.log(CategoryData)
+  //
   const CategoryOptions = CategoryData?.map((item: any) => {
     return {
       label: item?.title,
@@ -44,7 +44,10 @@ const SelectStatusCategoryFIeld = ({
 
   return (
     <div>
-      <LabelUi>Select Category {required && <span className="text-red-600 text-center">*</span>}</LabelUi>
+      <LabelUi>
+        Select Category{" "}
+        {required && <span className="text-red-600 text-center">*</span>}
+      </LabelUi>
       <Select
         size="large"
         // onChange={handleChange ? handleChange : onChange}
@@ -61,7 +64,7 @@ const SelectStatusCategoryFIeld = ({
         filterOption={filterOption}
         optionFilterProp="children"
         loading={isLoading}
-      // placeholder={placeholder}
+        // placeholder={placeholder}
       />
     </div>
   );

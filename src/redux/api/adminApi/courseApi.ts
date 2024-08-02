@@ -18,7 +18,6 @@ export const courseApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: ICourseData[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,
@@ -77,5 +76,5 @@ export const {
   useGetAllCourseQuery,
   useGetSingleCourseQuery,
   useUpdateCourseMutation,
-  useGetSingleCourseModuleLessonQuizVideoSizeQuery
+  useGetSingleCourseModuleLessonQuizVideoSizeQuery,
 } = courseApi;

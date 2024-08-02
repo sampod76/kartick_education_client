@@ -2,7 +2,7 @@ import { useAddPdfMutation } from "@/redux/api/fileUpload";
 import { ILessonData } from "@/types/lessonType";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input, InputNumber, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
@@ -19,13 +19,13 @@ const AssignmentUpload = ({
 }) => {
   const [addAssignment, { isLoading }] = useAddAssignmentMutation();
   const { userInfo, userInfoLoading } = useGlobalContext();
-  console.log("🚀 ~ userInfo:", userInfo);
+  
   const [form] = Form.useForm();
   const [uploadPdf, { isLoading: uploadLoading }] = useAddPdfMutation();
   const [pdfLink, setPdfLink] = useState<string | null>(null);
-  console.log(lessonData);
+  
   const handleUpload = async (files: any) => {
-    console.log("🚀 ~ handleUpload ~ files:", files);
+    
     if (files.length > 4) {
       Error_model_hook("You can only upload 4 files.");
       return;
@@ -37,10 +37,10 @@ const AssignmentUpload = ({
 
     try {
       const result = await uploadPdf(formData).unwrap();
-      console.log("🚀 ~ handleUpload ~ result:", result);
+      
       return result;
     } catch (error) {
-      console.log("🚀 ~ handleUpload ~ error:", error);
+      
     }
   };
 
@@ -61,10 +61,13 @@ const AssignmentUpload = ({
         author: userInfo?.id,
       };
       const assignment = await addAssignment(document).unwrap();
+      if (assignment?._id) {
+        Success_model("Successfully added assignment");
+        form.resetFields();
+      }
       console.log("🚀 ~ onFinish ~ assignment:", assignment);
-      Success_model("Successfully added assignment");
-      form.resetFields();
-      console.log("🚀 ~ onFinish ~ pdfResult:", document);
+
+      
     } catch (error) {
       console.log("🚀 ~ onFinish ~ error:", error);
     }
@@ -89,6 +92,33 @@ const AssignmentUpload = ({
         >
           <Input placeholder="Enter title" />
         </Form.Item>
+
+        <div className="flex justify-start gap-4 items-center">
+          <Form.Item
+            name="totalMarks"
+            label="Total Marks"
+            rules={[
+              { required: true, message: "Please input the Total Marks" },
+            ]}
+          >
+            <InputNumber
+              min={0}
+              className="w-full"
+              placeholder="Enter Total Marks"
+            />
+          </Form.Item>
+          <Form.Item
+            name="passMarks"
+            label="Pass Marks"
+            rules={[{ required: true, message: "Please input the Pass Marks" }]}
+          >
+            <InputNumber
+              min={0}
+              className="w-full"
+              placeholder="Enter Pass Marks"
+            />
+          </Form.Item>
+        </div>
 
         <Form.Item
           name="description"

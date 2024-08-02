@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import CourseDetailsTop from "./CourseDetailsTop";
 import AuthorCourseDetails from "./AuthorCourseDetails";
 import CourseDetailsTab from "./CourseDetailsTab";
@@ -7,30 +7,39 @@ import CourseStatistics from "../CourseStatistics";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import Image from "next/image";
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import { useDeleteCourseMutation, useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
+import {
+  useDeleteCourseMutation,
+  useGetAllCourseQuery,
+} from "@/redux/api/adminApi/courseApi";
 import { useDebounced } from "@/redux/hooks";
 import { Dropdown, Menu, Space } from "antd";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
-import { useDeleteMilestoneMutation, useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
+import {
+  useDeleteMilestoneMutation,
+  useGetAllMilestoneQuery,
+} from "@/redux/api/adminApi/milestoneApi";
 import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import UMTable from "@/components/ui/UMTable";
 import { AllImage } from "@/assets/AllImge";
 
 export default function CourseDetailsMain({ courseId }: { courseId: string }) {
-
   const { data: CourseData, isLoading } = useGetSingleCourseQuery(courseId, {
     skip: !Boolean(courseId),
   });
 
-
   // ! for milestone
 
-  const [deleteMilestone, { isLoading: deleteLoading }] = useDeleteMilestoneMutation();
+  const [deleteMilestone, { isLoading: deleteLoading }] =
+    useDeleteMilestoneMutation();
   const userInfo = getUserInfo() as IDecodedInfo;
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -61,8 +70,9 @@ export default function CourseDetailsMain({ courseId }: { courseId: string }) {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  // console.log(query)
-  const { data, isLoading: milestoneLoading } = useGetAllMilestoneQuery({ ...query });
+  const { data, isLoading: milestoneLoading } = useGetAllMilestoneQuery({
+    ...query,
+  });
   const milestoneData = data?.data || [];
   const meta = data?.meta;
   const handleDelete = (id: string) => {
@@ -78,19 +88,17 @@ export default function CourseDetailsMain({ courseId }: { courseId: string }) {
             Success_model("Milestone Successfully Deleted");
           }
         } catch (error: any) {
-          console.log("🚀 ~ confirm_modal ~ error:", error);
+ 
           Error_model_hook(error.message);
         }
       }
     });
   };
 
-
   // const category = data
   if (isLoading || milestoneLoading) {
     return <LoadingForDataFetch />;
   }
-
 
   const columns = [
     {
@@ -147,26 +155,29 @@ export default function CourseDetailsMain({ courseId }: { courseId: string }) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
-
     },
     {
       title: "Action",
       // fixed: "right",
       width: 120,
       render: (record: any) => (
-        // console.log(object);
+        
         <>
           <Space size="middle">
             <Dropdown
               overlay={
                 <Menu>
                   <Menu.Item key="view">
-                    <Link href={`/${userInfo?.role}/milestone/details/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/milestone/details/${record._id}`}
+                    >
                       View
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/milestone/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/milestone/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
@@ -201,11 +212,11 @@ export default function CourseDetailsMain({ courseId }: { courseId: string }) {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
-  // console.log(CourseData, "courseData");
+  
   return (
     <div>
       {/* <CourseDetailsTop courseData={CourseData} />
@@ -222,18 +233,26 @@ export default function CourseDetailsMain({ courseId }: { courseId: string }) {
             <h1 className="text-3xl font-bold mb-6">{CourseData?.title}</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="col-span-full mb-6 bg-cover w-full h-[18rem]" style={{
-                backgroundImage: `url(${CourseData?.img})`,
-                backgroundAttachment: 'fixed',
-                backgroundSize: 'cover', // Add this line for covering the full height
-              }}>
-              </div>
+              <div
+                className="col-span-full mb-6 bg-cover w-full h-[18rem]"
+                style={{
+                  backgroundImage: `url(${CourseData?.img})`,
+                  backgroundAttachment: "fixed",
+                  backgroundSize: "cover", // Add this line for covering the full height
+                }}
+              ></div>
               {/* Category Details */}
               <div className="col-span-full md:col-span-1">
                 {/* <p className="text-gray-600 mb-2">Category ID: {CourseData?.id}</p> */}
-                <p className="text-gray-600 mb-2">Status: {CourseData?.status}</p>
-                <p className="text-gray-600 mb-2">Created At: {CourseData?.createdAt}</p>
-                <p className="text-gray-600 mb-2">Updated At: {CourseData?.updatedAt}</p>
+                <p className="text-gray-600 mb-2">
+                  Status: {CourseData?.status}
+                </p>
+                <p className="text-gray-600 mb-2">
+                  Created At: {CourseData?.createdAt}
+                </p>
+                <p className="text-gray-600 mb-2">
+                  Updated At: {CourseData?.updatedAt}
+                </p>
                 {/* Add more details as needed */}
               </div>
             </div>
@@ -259,7 +278,6 @@ export default function CourseDetailsMain({ courseId }: { courseId: string }) {
             onTableChange={onTableChange}
             showPagination={true}
           />
-
         </div>
       </div>
     </div>

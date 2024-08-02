@@ -13,19 +13,19 @@ export interface IDecodedInfo {
   id: string;
   role: USER_ROLE | string;
   email: string;
-  e?:string
+  e?: string;
 }
 
-export const getUserInfo = (): IDecodedInfo | {e:""} => {
+export const getUserInfo = (): IDecodedInfo | { e: "" } => {
   const authToken = getFromLocalStorage(authKey);
-  // console.log(authToken)
+
 
   if (authToken) {
     const decodedData = decodedToken(authToken) as IDecodedInfo;
-    // console.log(decodedData)
+ 
     return decodedData;
   } else {
-    return {e:''};
+    return { e: "" };
   }
 };
 

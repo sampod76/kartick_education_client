@@ -12,15 +12,16 @@ import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
 const { Option } = Select;
 export default function ModalCourseBanner({
   categoryId,
-  showModal, isModalOpen, setIsModalOpen
+  showModal,
+  isModalOpen,
+  setIsModalOpen,
 }: {
   categoryId: string | null;
-  showModal: any
-  isModalOpen: any
-  setIsModalOpen: any
-
+  showModal: any;
+  isModalOpen: any;
+  setIsModalOpen: any;
 }) {
-  //   console.log(categoryId);
+  //  // console.log(categoryId);
   const router = useRouter();
   const query: Record<string, any> = {};
   //! for Course options selection
@@ -43,19 +44,15 @@ export default function ModalCourseBanner({
   };
 
   {
-    isLoading &&
-      <LoadingSkeleton />
+    isLoading && <LoadingSkeleton />;
   }
   return (
-
-
     <Modal
       title="Select Course"
       open={isModalOpen}
       style={{ top: 20 }}
       // onOk={handleOk}
       onCancel={handleCancel}
-
       footer={(_, { OkBtn, CancelBtn }) => (
         <>
           {/* <Button>Custom Button</Button>
@@ -68,17 +65,13 @@ export default function ModalCourseBanner({
       {/* <Course */}
       <div className="grid grid-cols-1 gap-2">
         {CourseData?.map((item: ICourseData, index: number) => {
-          return <div onClick={handleOk} key={index + 1} >
-            <SIngleBannerSIngleCourse course={item} />;
-          </div>
+          return (
+            <div onClick={handleOk} key={index + 1}>
+              <SIngleBannerSIngleCourse course={item} />;
+            </div>
+          );
         })}
       </div>
-
     </Modal>
-
-
-
-
-
-  )
+  );
 }

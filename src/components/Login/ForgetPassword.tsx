@@ -13,28 +13,27 @@ export default function ForgetPassword() {
   const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
 
   const onFinish = async (values: any) => {
-    console.log("Received values of form:", values);
+    // console.log("Received values of form:", values);
     const passwordData = {
       email: values.email,
     };
-    // console.log("🚀 ~ onFinish ~ passwordData:", packageData)
+    //// console.log("🚀 ~ onFinish ~ passwordData:", packageData)
 
     try {
       const res = await forgetPassword(passwordData).unwrap();
-      // console.log(res);
+      //// console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Please check your email address");
         form.resetFields();
         // router.push('/')
-        setModalOpen(false)
-
+        setModalOpen(false);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
   return (
@@ -76,8 +75,7 @@ export default function ForgetPassword() {
                 <h2 className="block text-gray-700 font-bold mb-2">
                   Email Address
                 </h2>
-                <Form.Item name="email" >
-
+                <Form.Item name="email">
                   <Input
                     name="email"
                     type="email"
@@ -100,7 +98,17 @@ export default function ForgetPassword() {
                 </Form.Item>
               </div>
               <Button
-                style={{ "padding": "", "borderRadius": "9999px", "width": "100%", "fontSize": "0.875rem", "lineHeight": "1.25rem", "fontWeight": 600, "color": "#ffffff", "backgroundColor": "#2563EB", height: "2.5rem" }}
+                style={{
+                  padding: "",
+                  borderRadius: "9999px",
+                  width: "100%",
+                  fontSize: "0.875rem",
+                  lineHeight: "1.25rem",
+                  fontWeight: 600,
+                  color: "#ffffff",
+                  backgroundColor: "#2563EB",
+                  height: "2.5rem",
+                }}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                 htmlType="submit"
               >

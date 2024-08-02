@@ -29,7 +29,7 @@ const EditAdminPage = ({ params }: any) => {
 
   const { data: categoryData = [] } = useGetAllCategoryQuery({});
   const [isReset, setIsReset] = useState(false);
-  // console.log(AdminData, "Admin data");
+  //
 
   const [updateAdmin, { isLoading: updateLoading, error }] =
     useUpdateAdminMutation();
@@ -39,32 +39,32 @@ const EditAdminPage = ({ params }: any) => {
     const UpdateValues = {
       ...values,
     };
-    console.log(UpdateValues);
+    
     try {
       const res = await updateAdmin({
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+      
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("successfully updated data");
-        setIsReset(true)
+        setIsReset(true);
       }
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (isLoading || updateLoading) {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
+    
   }
 
-  console.log(AdminData);
+  
 
   const defaultValues = {
     name: {
@@ -81,14 +81,18 @@ const EditAdminPage = ({ params }: any) => {
     img: AdminData?.img || "",
   };
 
-  console.log(defaultValues);
+  
 
   return (
     <div>
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit} defaultValues={defaultValues} isReset={isReset}>
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={defaultValues}
+          isReset={isReset}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",

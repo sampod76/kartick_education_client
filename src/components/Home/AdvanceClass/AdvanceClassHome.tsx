@@ -2,7 +2,6 @@
 import onlineProgramsData from "@/db/programmes";
 import React from "react";
 
-
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
 import NotFound from "@/app/not-found";
 import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
@@ -22,20 +21,23 @@ const AdvanceHomeClass = () => {
     ...query,
   });
   const classData = data?.data[0];
-  // console.log("🚀 ~ AdvanceHomeClass ~ classData:", classData)
+  //// console.log("🚀 ~ AdvanceHomeClass ~ classData:", classData)
   if (isLoading) {
     return <LoadingSkeleton />;
   }
 
-
-  console.log("🚀 ~ AdvanceHomeClass ~ data:", data)
+  // console.log("🚀 ~ AdvanceHomeClass ~ data:", data)
   return (
     <div className="mt-7  container mx-auto ">
       <div className="flex  justify-between gap-3 py-3 px-2">
         <h1 className="pl-2 lg:pl-0 text-xl lg:text-3xl my-2 text-[#282938] font-[600]">
           {classData?.title}
         </h1>
-        <Link href={`/subscription`} type="default" className="p-2 mt-3 h-10 text-nowrap border-2 border-primary rounded px-3 font-semibold gap-3 hover:bg-primary hover:text-white">
+        <Link
+          href={`/subscription`}
+          type="default"
+          className="p-2 mt-3 h-10 text-nowrap border-2 border-primary rounded px-3 font-semibold gap-3 hover:bg-primary hover:text-white"
+        >
           Join Now
         </Link>
       </div>
