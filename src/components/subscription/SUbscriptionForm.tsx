@@ -24,10 +24,6 @@ export default function SUbscriptionForm() {
   });
 
   const onFinish = (value: any) => {
-   // console.log(
-      "🚀 ~ file: SUbscriptionForm.tsx:10 ~ onFinish ~ value:",
-      value
-    );
     message.success("Joined SuccessFully");
     return {};
   };
@@ -230,7 +226,7 @@ export default function SUbscriptionForm() {
             style={{}}
             label="Share your Plan Please (optional)"
             name="plan"
-          // rules={[{ required: false, message: "Please enter Teacher" }]}
+            // rules={[{ required: false, message: "Please enter Teacher" }]}
           >
             <Input.TextArea />
           </Form.Item>

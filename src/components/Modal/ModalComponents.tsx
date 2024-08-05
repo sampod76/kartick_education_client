@@ -5,10 +5,12 @@ import { Button, Modal } from "antd";
 const ModalComponent = ({
   children,
   buttonText,
+  button,
   loading = false,
 }: {
   children: React.ReactElement;
   buttonText?: string;
+  button?: any;
   loading?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
@@ -24,9 +26,13 @@ const ModalComponent = ({
 
   return (
     <>
-      <Button type="default" onClick={showModal}>
-        {buttonText || "Open Modal"}
-      </Button>
+      {button ? (
+        <div onClick={showModal}>{button}</div>
+      ) : (
+        <Button type="default" onClick={showModal}>
+          {buttonText || "Open Modal"}
+        </Button>
+      )}
       <Modal
         // title="Title"
         open={open}
@@ -40,7 +46,6 @@ const ModalComponent = ({
             <OkBtn /> */}
           </>
         )}
-        // footer={null}
         width={1000}
       >
         {React.cloneElement(children, { open, setOpen })}

@@ -79,7 +79,7 @@ const StudentListCom = ({
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useGetAllStudentsQuery({
+  const { data, isLoading, refetch, error } = useGetAllStudentsQuery({
     ...query,
   });
 
@@ -89,12 +89,13 @@ const StudentListCom = ({
   //@ts-ignore
   const meta = data?.meta;
 
+  // console.log("🚀 ~ isLoading:", isLoading);
   const columns = [
     {
       width: 150,
       render: function (data: any) {
-        //// console.log(data);
-        let img = `${data[data.role]?.img} `;
+      
+        let img = `${data?.img} `;
         if (img === "undefined" || img === "undefined ") {
           img = "";
         }
@@ -264,9 +265,9 @@ const StudentListCom = ({
       }
     );
   };
-  // if (isLoading) {
-  //   return <LoadingForDataFetch />;
-  // }
+  if (error) {
+    console.log(error);
+  }
   return (
     <div
       style={{
@@ -286,6 +287,7 @@ const StudentListCom = ({
             width: "250px",
           }}
         />
+        {/* <Button onClick={() => refetch()}>refetch</Button> */}
         <div>
           {/* <Link href={`/${userInfo?.role}/manage-users/students/create`}>
             <Button type="default">Create Student</Button>

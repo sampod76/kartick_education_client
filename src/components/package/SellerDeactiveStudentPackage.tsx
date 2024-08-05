@@ -44,10 +44,6 @@ export default function SellerDeactivedStudentPackage({
       },
       { skip: !Boolean(userId) }
     );
- // console.log(
-    "🚀 ~ SellerAddPackageStudent ~ singleStudentPurchaseData:",
-    singleStudentPurchaseData
-  );
 
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
@@ -64,13 +60,11 @@ export default function SellerDeactivedStudentPackage({
         },
       });
 
-      Success_model(
-        `Successfully Update status`
-      );
+      Success_model(`Successfully Update status`);
       setOpen(false);
     } catch (error: any) {
       Error_model_hook(error.message);
-     // console.log(error);
+      // console.log(error);
     }
   };
   const columns = [
@@ -121,7 +115,7 @@ export default function SellerDeactivedStudentPackage({
                     >
                       {data.status === ENUM_STATUS.ACTIVE
                         ? "Deactivate"
-                        : "Active"}{" "}
+                        : "Active"}
                       Package
                     </Menu.Item>
                   </Menu>

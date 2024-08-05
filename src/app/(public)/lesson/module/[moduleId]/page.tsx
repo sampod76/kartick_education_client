@@ -24,8 +24,6 @@ export default function LessonPage({
 }: {
   params: { moduleId: string };
 }) {
-  const screens = useBreakpoint();
-
   const router = useRouter();
   const moduleId = params.moduleId;
   //

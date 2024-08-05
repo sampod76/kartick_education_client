@@ -239,14 +239,14 @@ export default function LessonDashList() {
                   >
                     Delete
                   </Menu.Item>
-                  <Menu.Item key="edit">
+                  <Menu.Item key="List">
                     <Link
                       href={`/${userInfo?.role}/lesson/assignment?lessonId=${record._id}`}
                     >
                       Assignment List
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="view">
+                  <Menu.Item key="Rec">
                     <ModalComponent buttonText="Add assignment">
                       <AssignmentUpload lessonData={record} />
                     </ModalComponent>

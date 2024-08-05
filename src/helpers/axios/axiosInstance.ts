@@ -49,28 +49,38 @@ instance.interceptors.response.use(
   async function (error) {
     const config = error?.config;
 
-    // console.log("🚀 ~ sent:", sent);
     if (error?.response?.status === 403 && !config?._retry) {
       config._retry = true;
-
-      const response = await getRefreshToken();
-      const accessToken = response?.data?.accessToken;
-      console.log("🚀 ~ accessToken:", accessToken);
-      // axios.defaults.headers.common['Authorization'] = accessToken;
-      config.headers["Authorization"] = accessToken;
-      setToLocalStorage(authKey, accessToken);
-
-      return instance(config);
+      try {
+        // const response = await getRefreshToken();
+        // const accessToken = response?.data?.accessToken;
+        const response = await axios.post(
+          `${getBaseUrl()}/auth/refresh-token`,
+          {},
+          { withCredentials: true }
+        );
+        const accessToken = response?.data?.data?.accessToken;
+        // axios.defaults.headers.common['Authorization'] = accessToken;
+        config.headers["Authorization"] = accessToken;
+        setToLocalStorage(authKey, accessToken);
+        return instance(config);
+      } catch (error: any) {
+        // removeUserInfo(authKey);
+        localStorage.clear();
+        window.location.href = "/login";
+        return Promise.reject(error?.response?.data);
+      }
     } else {
-      console.log(error);
-      if (
+      /*
+       if (
         error?.response?.status === 403 ||
         error?.response?.data?.message ===
           "Validation Error:-> refreshToken : Refresh Token is required"
       ) {
         removeUserInfo(authKey);
         window.location.href = "/login";
-      }
+      } 
+    */
       let responseObject: any = {
         statusCode: error?.response?.status || 500,
         message: "Something went wrong",

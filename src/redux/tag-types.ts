@@ -1,5 +1,8 @@
 export enum tagTypes {
   student = "student",
+  assignment = "assignment",
+  submitassignment = "submitassignment",
+  deleteAssignment = "deleteAssignment",
   user = "user",
   moderator = "moderator",
   admin = "admin",
@@ -33,6 +36,9 @@ export enum tagTypes {
 }
 
 export const tagTypesList = [
+  tagTypes.deleteAssignment,
+  tagTypes.submitassignment,
+  tagTypes.assignment,
   tagTypes.category,
   tagTypes.student,
   tagTypes.user,

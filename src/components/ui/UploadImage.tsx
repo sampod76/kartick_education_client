@@ -34,6 +34,7 @@ type ImageUploadProps = {
   defaultImage?: string;
   customChange?: any;
   isReset?: boolean;
+  setState?: any;
 };
 
 const UploadImage = ({
@@ -41,6 +42,7 @@ const UploadImage = ({
   defaultImage,
   customChange,
   isReset = false,
+  setState,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
@@ -51,17 +53,23 @@ const UploadImage = ({
   ) => {
     if (info.file.status === "uploading") {
       setLoading(true);
+      if (setState) {
+        setState((c: any) => ({ ...c, imageLoading: true }));
+      }
       return;
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
       // console.log(info.file.originFileObj)
       const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
-      //// console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
+      // console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
       setValue(name, imgUrl);
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
+        if (setState) {
+          setState((c: any) => ({ ...c, imageLoading: false }));
+        }
         setImageUrl(url);
       });
     }

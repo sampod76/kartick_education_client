@@ -47,19 +47,19 @@ export default function LessonList({
   lesson_query["sortBy"] = "lesson_number";
   lesson_query["sortOrder"] = "asc";
   lesson_query["status"] = "active";
+  lesson_query["needProperty"] = "assignment";
   lesson_query["isDelete"] = ENUM_YN.NO;
   const { data: lessonData, isLoading } = useGetAllLessonQuery({
     module: moduleId,
     ...lesson_query,
   });
-
+  console.log(lessonData);
   const { data: checkPurchase, isLoading: CheckPurchaseLoading } =
     useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`);
   //// console.log("🚀 ~ checkPurchase:", checkPurchase)
   if (checkPurchase) {
     IsExistCategoryOrCourse = checkPurchase;
   }
-
   const quiz_query: Record<string, any> = {};
   //! for Course options selection
   quiz_query["limit"] = 999999;
@@ -169,6 +169,24 @@ export default function LessonList({
                         Quiz : {quiz?.title}
                       </h2>
 
+                      {/* <LockOutlined style={{ fontSize: "18px" }} /> */}
+                    </Link>
+                  );
+                })}
+              {IsExistCategoryOrCourse &&
+                lesson?.assignmentDetails &&
+                lesson?.assignmentDetails?.map((assignment: any) => {
+                  //// console.log(assignment)
+                  return (
+                    <Link
+                      key={assignment?._id}
+                      href={`/lesson/assignment/${assignment?._id}?lesson=${lesson?.title}&assignment=${assignment?.title}`}
+                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3 text-[#2b2dc7] border rounded-md p-3"
+                    >
+                      <h2 className="text-base font-normal">
+                        Assignment {index + 1} :{" "}
+                        <span>{assignment?.title} </span>
+                      </h2>
                       {/* <LockOutlined style={{ fontSize: "18px" }} /> */}
                     </Link>
                   );

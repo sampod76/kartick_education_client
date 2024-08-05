@@ -41,7 +41,7 @@ export default function JoinSelect({
       quantity <= 10 &&
       value === "decrease"
     ) {
-      message.info("Select min 10 for School Teacher  Pack");
+      message.info("Select min 10 for Teacher  Pack");
       return;
     }
     if (value === "increase") {

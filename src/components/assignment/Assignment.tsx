@@ -2,30 +2,40 @@ import { useAddPdfMutation } from "@/redux/api/fileUpload";
 import { ILessonData } from "@/types/lessonType";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, InputNumber, Upload } from "antd";
+import { Button, Form, Input, InputNumber, message, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { useAddAssignmentMutation } from "@/redux/api/assernmentApi";
+import { FilePdfOutlined } from "@ant-design/icons";
+import {
+  useAddAssignmentMutation,
+  useUpdateAssignmentMutation,
+} from "@/redux/api/assernmentApi";
 
 const AssignmentUpload = ({
   lessonData,
   open,
   setOpen,
+  defaultData,
+  readonly = false,
 }: {
-  lessonData: ILessonData;
+  lessonData?: ILessonData;
   open?: boolean;
   setOpen?: any;
+  defaultData?: any;
+  readonly?: boolean;
 }) => {
+  console.log(defaultData);
   const [addAssignment, { isLoading }] = useAddAssignmentMutation();
+  const [updateAssignment, { isLoading: AssignmentLoading }] =
+    useUpdateAssignmentMutation();
   const { userInfo, userInfoLoading } = useGlobalContext();
-  
+
   const [form] = Form.useForm();
   const [uploadPdf, { isLoading: uploadLoading }] = useAddPdfMutation();
   const [pdfLink, setPdfLink] = useState<string | null>(null);
-  
+
   const handleUpload = async (files: any) => {
-    
     if (files.length > 4) {
       Error_model_hook("You can only upload 4 files.");
       return;
@@ -37,37 +47,57 @@ const AssignmentUpload = ({
 
     try {
       const result = await uploadPdf(formData).unwrap();
-      
+
       return result;
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   const onFinish = async (values: any) => {
-    console.log("Form Values:", values);
+    console.log("🚀 ~ onFinish ~ values:", values);
     try {
-      const pdfResult = await handleUpload(values.pdfs);
+      if (values.pdfs) {
+        const pdfResult = await handleUpload(values.pdfs);
+        console.log("🚀 ~ onFinish ~ pdfResult:", pdfResult);
+        values.pdfs = pdfResult;
+      }
+      let document;
+      if (lessonData) {
+        document = {
+          ...values,
 
-      const document = {
-        ...values,
-        pdfs: pdfResult,
-        lesson: lessonData._id,
-        //@ts-ignore
-        module: lessonData?.module?._id || (lessonData?.module as string),
-        milestone: lessonData.milestone,
-        course: lessonData.course,
-        category: lessonData.category,
-        author: userInfo?.id,
-      };
-      const assignment = await addAssignment(document).unwrap();
+          lesson: lessonData._id,
+          //@ts-ignore
+          module: lessonData?.module?._id || (lessonData?.module as string),
+          milestone: lessonData.milestone,
+          course: lessonData.course,
+          category: lessonData.category,
+          author: userInfo?.id,
+        };
+      } else {
+        document = {
+          ...values,
+        };
+      }
+
+      let assignment;
+      if (lessonData) {
+        assignment = await addAssignment(document).unwrap();
+      } else {
+        console.log(document);
+        assignment = await updateAssignment({
+          id: defaultData?._id,
+          data: document,
+        }).unwrap();
+      }
       if (assignment?._id) {
-        Success_model("Successfully added assignment");
+        message.success(
+          lessonData
+            ? "Successfully added assignment"
+            : "Successfully update assignment"
+        );
         form.resetFields();
       }
-      console.log("🚀 ~ onFinish ~ assignment:", assignment);
-
-      
+      console.log(assignment);
     } catch (error) {
       console.log("🚀 ~ onFinish ~ error:", error);
     }
@@ -82,12 +112,21 @@ const AssignmentUpload = ({
       <h2 className="text-2xl font-semibold text-center mb-6">
         Upload Assignment
       </h2>
-      <Form form={form} layout="vertical" onFinish={onFinish}>
+      <Form
+        form={form}
+        initialValues={defaultData ? defaultData : {}}
+        layout="vertical"
+        onFinish={onFinish}
+        disabled={readonly}
+      >
         <Form.Item
           name="title"
           label="Assignment Title"
           rules={[
-            { required: true, message: "Please input the assignment title!" },
+            {
+              required: !defaultData,
+              message: "Please input the assignment title!",
+            },
           ]}
         >
           <Input placeholder="Enter title" />
@@ -98,11 +137,15 @@ const AssignmentUpload = ({
             name="totalMarks"
             label="Total Marks"
             rules={[
-              { required: true, message: "Please input the Total Marks" },
+              {
+                required: !defaultData,
+                message: "Please input the Total Marks",
+              },
             ]}
           >
             <InputNumber
               min={0}
+              // defaultValue={100}
               className="w-full"
               placeholder="Enter Total Marks"
             />
@@ -110,7 +153,12 @@ const AssignmentUpload = ({
           <Form.Item
             name="passMarks"
             label="Pass Marks"
-            rules={[{ required: true, message: "Please input the Pass Marks" }]}
+            rules={[
+              {
+                required: !defaultData,
+                message: "Please input the Pass Marks",
+              },
+            ]}
           >
             <InputNumber
               min={0}
@@ -123,7 +171,12 @@ const AssignmentUpload = ({
         <Form.Item
           name="description"
           label="Description"
-          rules={[{ required: true, message: "Please input the description!" }]}
+          rules={[
+            {
+              required: !defaultData,
+              message: "Please input the description!",
+            },
+          ]}
         >
           <Input.TextArea rows={4} placeholder="Enter description" />
         </Form.Item>
@@ -133,23 +186,62 @@ const AssignmentUpload = ({
           label="Upload PDF"
           valuePropName="fileList"
           getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
-          rules={[{ required: true, message: "Please upload the PDF!" }]}
+          rules={[
+            { required: !defaultData, message: "Please upload the PDF!" },
+          ]}
         >
           <Upload multiple={true} maxCount={4} beforeUpload={() => false}>
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload>
         </Form.Item>
+        {defaultData?.pdfs && (
+          <>
+            <h3 className="font-semibold text-lg mb-2">PDF Files</h3>
+            <ul>
+              {defaultData?.pdfs.map((pdf: any) => (
+                <li key={pdf.server_url} className="flex items-center mb-2">
+                  <FilePdfOutlined className="text-red-500 mr-2" />
+                  <div>
+                    <a
+                      href={
+                        process.env.NEXT_PUBLIC_API_ONLY_BASE_URL +
+                        "/" +
+                        pdf?.server_url
+                      }
+                      className="text-blue-500"
+                    >
+                      {pdf?.original_filename}
+                    </a>
+                    {/* <p className="text-gray-600 text-sm">{`Last Modified: ${pdf.lastModifiedDate.toDateString()}`}</p> */}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
-        <Form.Item>
-          <Button
-            loading={uploadLoading || isLoading}
-            type="primary"
-            htmlType="submit"
-            className="w-full"
-          >
-            Submit
-          </Button>
-        </Form.Item>
+        <div className="flex justify-start gap-2">
+          <Form.Item>
+            <Button
+              loading={uploadLoading || isLoading}
+              type="primary"
+              htmlType="submit"
+              className="w-full"
+            >
+              Submit
+            </Button>
+          </Form.Item>
+          <Form.Item>
+            <Button
+              loading={uploadLoading || isLoading}
+              type="primary"
+              htmlType="reset"
+              className="w-25"
+            >
+              Reset
+            </Button>
+          </Form.Item>
+        </div>
       </Form>
 
       {pdfLink && (

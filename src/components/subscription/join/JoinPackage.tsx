@@ -14,6 +14,7 @@ import {
   Radio,
   Select,
   Space,
+  Tooltip,
   message,
 } from "antd";
 import { IPackageData } from "@/types/package/packageType";
@@ -262,7 +263,7 @@ export const JoinPackage = ({
       return;
     } else if (packName === "school_teacher" && quantity < 11) {
       setSelectPackage(null);
-      message.info("Select min 10 for School Teacher  Pack");
+      message.info("Select min 10 for Teacher  Pack");
       return;
     }
 
@@ -305,11 +306,13 @@ export const JoinPackage = ({
               const totalPackagePrice = calculatePackage2(packages);
               const incrementPrice = packages[plan]?.each_student_increment;
               return (
-                <div
+                <Tooltip
                   key={index + 1}
-                  className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[30rem] "
+                  placement="top"
+                  title={"Please click select button"}
                 >
-                  {/* <span
+                  <div className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden transition-all duration-500 hover:scale-105 relative bg-blue-200 min-h-full  lg:min-h-[30rem] ">
+                    {/* <span
                     className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
                     ${selectPackage?._id === packages?._id
                         ? "bg-secondary text-white"
@@ -319,178 +322,181 @@ export const JoinPackage = ({
                   >
                     {plan}
                   </span> */}
-                  <div
-                    className={`h-28 ${
-                      selectPackage?._id === packages?._id
-                        ? "bg-green-600"
-                        : "bg-gray-700"
-                    } text-center p-4`}
-                  >
-                    <h3 className="text-2xl text-white uppercase font-semibold mb-1">
-                      {packages?.title}
-                    </h3>
-                    <p className="text-xs text-white">
-                      {userToGetPurchasePackage?.includes(packages?._id) &&
-                        "(Already purchased)"}
-                    </p>
-                  </div>
-                  <div
-                    className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
-                      selectPackage?._id === packages?._id
-                        ? "bg-green-600"
-                        : "bg-gray-700"
-                    } text-white border-4 flex flex-col items-center justify-center border-white`}
-                  >
-                    <h3 className="text-2xl font-semibold">
-                      ${totalPackagePrice}
-                    </h3>
-                  </div>
-                  <div className="px-6 py-4 mt-4 h-max ">
-                    <ul className="space-y-4">
-                      {/* //! for bundle type */}
-                      {packages?.type === "bundle" &&
-                        packages?.categories?.map(
-                          (categoryData: IPackageCategory) => {
-                            const category = categoryData?.category;
-                            //// console.log(category);
-                            return (
-                              <li
-                                className="flex items-center text-sm text-gray-500"
-                                key={category?._id}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="17"
-                                  className="mr-4 bg-green-500 fill-white rounded-full p-[3px]"
-                                  viewBox="0 0 24 24"
+                    <div
+                      className={`h-28 ${
+                        selectPackage?._id === packages?._id
+                          ? "bg-green-600"
+                          : "bg-gray-700"
+                      } text-center p-4`}
+                    >
+                      <h3 className="text-2xl text-white uppercase font-semibold mb-1">
+                        {packages?.title}
+                      </h3>
+                      <p className="text-xs text-white">
+                        {userToGetPurchasePackage?.includes(packages?._id) &&
+                          "(Already purchased)"}
+                      </p>
+                    </div>
+                    <div
+                      className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${
+                        selectPackage?._id === packages?._id
+                          ? "bg-green-600"
+                          : "bg-gray-700"
+                      } text-white border-4 flex flex-col items-center justify-center border-white`}
+                    >
+                      <h3 className="text-2xl font-semibold">
+                        ${totalPackagePrice}
+                      </h3>
+                    </div>
+                    <div className="px-6 py-4 mt-4 h-max ">
+                      <ul className="space-y-4">
+                        {/* //! for bundle type */}
+                        {packages?.type === "bundle" &&
+                          packages?.categories?.map(
+                            (categoryData: IPackageCategory) => {
+                              const category = categoryData?.category;
+                              //// console.log(category);
+                              return (
+                                <li
+                                  className="flex items-center text-sm text-gray-500"
+                                  key={category?._id}
                                 >
-                                  <path
-                                    d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"
-                                    data-original="#000000"
-                                  />
-                                </svg>
-                                <span className="text-[16px]">
-                                  {" "}
-                                  {category?.title}
-                                </span>
-                                {/* <span>{category?.title}</span> */}
-                                <span className="text-[12px] text-slate-600 ml-2">
-                                  {categoryData?.label}
-                                </span>
-                              </li>
-                            );
-                          }
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="17"
+                                    className="mr-4 bg-green-500 fill-white rounded-full p-[3px]"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"
+                                      data-original="#000000"
+                                    />
+                                  </svg>
+                                  <span className="text-[16px]">
+                                    {" "}
+                                    {category?.title}
+                                  </span>
+                                  {/* <span>{category?.title}</span> */}
+                                  <span className="text-[12px] text-slate-600 ml-2">
+                                    {categoryData?.label}
+                                  </span>
+                                </li>
+                              );
+                            }
+                          )}
+                        {packages?.type === "select" && (
+                          <div className="">
+                            <Radio.Group
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "1rem",
+                              }}
+                              // onChange={(e) => {
+                              //   setSingleSelect(e.target.value);
+                              // }}
+                            >
+                              {packages?.categories?.map(
+                                (option?: IPackageCategory) => (
+                                  <Radio
+                                    key={option?.category?.title}
+                                    value={option?.category?._id}
+                                    onClick={() =>
+                                      setSingleSelect({
+                                        category: option?.category?._id,
+                                        label: option?.label,
+                                      })
+                                    }
+                                    style={{
+                                      display: "flex",
+                                      paddingTop: "0.5rem",
+                                      paddingBottom: "0.5rem",
+                                      paddingLeft: "1.25rem",
+                                      paddingRight: "1.25rem",
+                                      gap: "0.5rem",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <span className="text-[16px]">
+                                      {" "}
+                                      {option?.category?.title}
+                                    </span>
+                                    {/* <span>{category?.title}</span> */}
+                                    <span className="text-[12px] text-slate-600 ml-2">
+                                      {option?.label}
+                                    </span>
+                                  </Radio>
+                                )
+                              )}
+                            </Radio.Group>
+                          </div>
                         )}
-                      {packages?.type === "select" && (
-                        <div className="">
-                          <Radio.Group
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "1rem",
-                            }}
-                            // onChange={(e) => {
-                            //   setSingleSelect(e.target.value);
-                            // }}
-                          >
-                            {packages?.categories?.map(
-                              (option?: IPackageCategory) => (
-                                <Radio
-                                  key={option?.category?.title}
-                                  value={option?.category?._id}
-                                  onClick={() =>
-                                    setSingleSelect({
-                                      category: option?.category?._id,
-                                      label: option?.label,
-                                    })
-                                  }
-                                  style={{
-                                    display: "flex",
-                                    paddingTop: "0.5rem",
-                                    paddingBottom: "0.5rem",
-                                    paddingLeft: "1.25rem",
-                                    paddingRight: "1.25rem",
-                                    gap: "0.5rem",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <span className="text-[16px]">
-                                    {" "}
-                                    {option?.category?.title}
-                                  </span>
-                                  {/* <span>{category?.title}</span> */}
-                                  <span className="text-[12px] text-slate-600 ml-2">
-                                    {option?.label}
-                                  </span>
-                                </Radio>
-                              )
-                            )}
-                          </Radio.Group>
-                        </div>
-                      )}
 
-                      {/* for multiple select */}
-                      {packages?.type === "multiple_select" && (
-                        <div>
-                          <Checkbox.Group
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "1rem",
-                            }}
-                            onChange={(value: any) => setMultipleSelect(value)}
-                          >
-                            {packages?.categories?.map(
-                              (option?: IPackageCategory) => (
-                                <Checkbox
-                                  key={option?.category?.title}
-                                  value={option}
-                                  style={{
-                                    display: "flex",
-                                    paddingTop: "0.5rem",
-                                    paddingBottom: "0.5rem",
-                                    paddingLeft: "1.25rem",
-                                    paddingRight: "1.25rem",
-                                    gap: "0.5rem",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <span className="text-[16px]">
-                                    {" "}
-                                    {option?.category?.title}
-                                  </span>
-                                  {/* <span>{category?.title}</span> */}
-                                  <span className="text-[12px] text-slate-600 ml-2">
-                                    {option?.label}
-                                  </span>
-                                </Checkbox>
-                              )
-                            )}
-                          </Checkbox.Group>
-                        </div>
-                      )}
-                    </ul>
-                    <div className="">
-                      <button
-                        onClick={() =>
-                          selectPackageHandler({
-                            totalPackagePrice,
-                            incrementPrice,
-                            packages,
-                          })
-                        }
-                        type="button"
-                        className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
-                          selectPackage?._id === packages?._id
-                            ? "bg-green-600 hover:brightness-125"
-                            : "bg-gray-700 hover:bg-gray-800"
-                        }  rounded-md static lg:absolute bottom-1 left-0`}
-                      >
-                        Select
-                      </button>
+                        {/* for multiple select */}
+                        {packages?.type === "multiple_select" && (
+                          <div>
+                            <Checkbox.Group
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "1rem",
+                              }}
+                              onChange={(value: any) =>
+                                setMultipleSelect(value)
+                              }
+                            >
+                              {packages?.categories?.map(
+                                (option?: IPackageCategory) => (
+                                  <Checkbox
+                                    key={option?.category?.title}
+                                    value={option}
+                                    style={{
+                                      display: "flex",
+                                      paddingTop: "0.5rem",
+                                      paddingBottom: "0.5rem",
+                                      paddingLeft: "1.25rem",
+                                      paddingRight: "1.25rem",
+                                      gap: "0.5rem",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <span className="text-[16px]">
+                                      {" "}
+                                      {option?.category?.title}
+                                    </span>
+                                    {/* <span>{category?.title}</span> */}
+                                    <span className="text-[12px] text-slate-600 ml-2">
+                                      {option?.label}
+                                    </span>
+                                  </Checkbox>
+                                )
+                              )}
+                            </Checkbox.Group>
+                          </div>
+                        )}
+                      </ul>
+                      <div className="">
+                        <button
+                          onClick={() =>
+                            selectPackageHandler({
+                              totalPackagePrice,
+                              incrementPrice,
+                              packages,
+                            })
+                          }
+                          type="button"
+                          className={`w-full mt-8 px-2 py-3 text-sm font-semibold text-white ${
+                            selectPackage?._id === packages?._id
+                              ? "bg-green-600 hover:brightness-125"
+                              : "bg-gray-700 hover:bg-gray-800"
+                          }  rounded-md static lg:absolute bottom-1 left-0`}
+                        >
+                          Select
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Tooltip>
               );
             })}
           </div>

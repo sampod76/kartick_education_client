@@ -2,12 +2,12 @@ import { tagTypes } from "@/redux/tag-types";
 import { IMeta } from "@/types";
 import { baseApi } from "./baseApi";
 
-const ASSIGNMENT = "/assignment";
+const ASSIGNMENT = "/assignment-submission";
 
-export const AssignmentsApi = baseApi.injectEndpoints({
+export const assernmentSubmitApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // get all academic departments
-    getAllAssignment: build.query({
+    getAllSubmitAssignment: build.query({
       query: (arg: Record<string, any>) => {
         return {
           url: ASSIGNMENT,
@@ -21,33 +21,33 @@ export const AssignmentsApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.assignment],
+      providesTags: [tagTypes.submitassignment],
     }),
     // get single academic department
-    getSingleAssignment: build.query({
+    getSingleSubmitAssignment: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `${ASSIGNMENT}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.assignment],
+      providesTags: [tagTypes.submitassignment],
     }),
     // create a new academic department
-    addAssignment: build.mutation({
+    addSubmitAssignment: build.mutation({
       query: (data) => ({
         url: ASSIGNMENT,
         method: "POST",
         data,
       }),
-      invalidatesTags: [tagTypes.assignment],
+      invalidatesTags: [tagTypes.submitassignment],
     }),
     // update ac department
-    updateAssignment: build.mutation({
+    updateSubmitAssignment: build.mutation({
       query: (data) => ({
         url: `${ASSIGNMENT}/${data.id}`,
         method: "PATCH",
         data: data.body,
       }),
-      invalidatesTags: [tagTypes.assignment],
+      invalidatesTags: [tagTypes.submitassignment],
     }),
 
     // delete ac department
@@ -56,15 +56,15 @@ export const AssignmentsApi = baseApi.injectEndpoints({
         url: `${ASSIGNMENT}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.assignment],
+      invalidatesTags: [tagTypes.submitassignment],
     }),
   }),
 });
 
 export const {
-  useAddAssignmentMutation,
+  useAddSubmitAssignmentMutation,
   useDeleteAssignmentMutation,
-  useGetAllAssignmentQuery,
-  useGetSingleAssignmentQuery,
-  useUpdateAssignmentMutation,
-} = AssignmentsApi;
+  useGetAllSubmitAssignmentQuery,
+  useGetSingleSubmitAssignmentQuery,
+  useUpdateSubmitAssignmentMutation,
+} = assernmentSubmitApi;
