@@ -1,36 +1,33 @@
-import type { MenuProps } from "antd";
 import {
-  ProfileOutlined,
-  TableOutlined,
-  AppstoreOutlined,
-  ScheduleOutlined,
-  ThunderboltOutlined,
-  CreditCardOutlined,
-  FileTextOutlined,
   AccountBookFilled,
-  AlipayCircleFilled,
-  BorderOuterOutlined,
-  UserOutlined,
-  BookOutlined,
-  DatabaseOutlined,
   AlignCenterOutlined,
+  BookOutlined,
+  BorderOuterOutlined,
   CalendarOutlined,
-  UsergroupDeleteOutlined,
-  ContainerOutlined,
-  HomeOutlined,
-  ShoppingCartOutlined,
-  ContactsOutlined,
-  UserSwitchOutlined,
-  PayCircleFilled,
-  ThunderboltFilled,
-  PicLeftOutlined,
   ContactsFilled,
+  ContactsOutlined,
+  ContainerOutlined,
+  CreditCardOutlined,
+  DatabaseOutlined,
+  FileTextOutlined,
+  HomeOutlined,
+  PayCircleFilled,
+  PicLeftOutlined,
+  ProfileOutlined,
+  ShoppingCartOutlined,
+  ThunderboltFilled,
+  ThunderboltOutlined,
+  UsergroupDeleteOutlined,
+  UserOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
-import { PiPackageDuotone } from "react-icons/pi";
+import type { MenuProps } from "antd";
 import Link from "next/link";
-import { USER_ROLE } from "./role";
-import { GiJetPack } from "react-icons/gi";
 import { CiLogin } from "react-icons/ci";
+import { GiJetPack } from "react-icons/gi";
+import { MdAssignment } from "react-icons/md";
+import { PiPackageDuotone } from "react-icons/pi";
+import { USER_ROLE } from "./role";
 export const dashboardItems = (role: string, setCollapsed?: any) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
@@ -468,6 +465,18 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       label: (
         <Link
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/assignment-submission`}
+        >
+          Student Assignment
+        </Link>
+      ),
+      icon: <MdAssignment />,
+      key: `/${role}/package`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/purchase-package`}
         >
           Purchase Package History
@@ -702,6 +711,18 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
     //   icon: <ThunderboltOutlined />,
     //   key: `/${role}/course_sell`,
     // },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/assignment-submission`}
+        >
+          Student Assignment
+        </Link>
+      ),
+      icon: <MdAssignment />,
+      key: `/${role}/package`,
+    },
     {
       label: (
         <Link

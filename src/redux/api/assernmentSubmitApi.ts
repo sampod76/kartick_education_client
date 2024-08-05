@@ -42,11 +42,14 @@ export const assernmentSubmitApi = baseApi.injectEndpoints({
     }),
     // update ac department
     updateSubmitAssignment: build.mutation({
-      query: (data) => ({
-        url: `${ASSIGNMENT}/${data.id}`,
-        method: "PATCH",
-        data: data.body,
-      }),
+      query: (data) => {
+        console.log("🚀 ~ data:", data);
+        return {
+          url: `${ASSIGNMENT}/${data.id}`,
+          method: "PATCH",
+          data: data.body,
+        };
+      },
       invalidatesTags: [tagTypes.submitassignment],
     }),
 

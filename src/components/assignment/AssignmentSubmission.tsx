@@ -1,45 +1,39 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
 import UMTable from "@/components/ui/UMTable";
+import { USER_ROLE } from "@/constants/role";
+import {
+  useGetAllSubmitAssignmentQuery,
+  useUpdateSubmitAssignmentMutation,
+} from "@/redux/api/assernmentSubmitApi";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import { useDebounced } from "@/redux/hooks";
+import {
+  confirm_modal,
+  Error_model_hook,
+  Success_model,
+} from "@/utils/modalHook";
 import { ReloadOutlined } from "@ant-design/icons";
 import {
   Button,
   Drawer,
   DrawerProps,
   Dropdown,
+  Form,
   Input,
+  InputNumber,
   Menu,
-  Space,
   message,
+  Space,
 } from "antd";
-import Link from "next/link";
-import { useState } from "react";
-
-import UMModal from "@/components/ui/UMModal";
-import dayjs from "dayjs";
-
-import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
-import Image from "next/image";
-
-import { AllImage } from "@/assets/AllImge";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import { USER_ROLE } from "@/constants/role";
-import {
-  useDeleteQuizMutation,
-  useGetAllQuizQuery,
-} from "@/redux/api/adminApi/quizApi";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { useState } from "react";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
+import ModalComponent from "../Modal/ModalComponents";
 
-const QuizDashList = () => {
+export default function AssignmentSubmission() {
   const { userInfo, userInfoLoading } = useGlobalContext();
   const screens = useBreakpoint();
   //----------------------------------------------------------------
@@ -55,7 +49,10 @@ const QuizDashList = () => {
   );
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
-
+  //
+  const [updateSubmitAssignment, { isLoading: updateLoading }] =
+    useUpdateSubmitAssignmentMutation();
+  //
   const categoryQuery: Record<string, any> = {};
   categoryQuery["children"] = "course-milestone-module-lessons";
   if (userInfo?.role !== USER_ROLE.ADMIN) {
@@ -70,8 +67,6 @@ const QuizDashList = () => {
   const categoryData: any = Category?.data;
   // console.log("🚀 ~ QuizDashList ~ categoryData:", categoryData);
   //---------------------------------------------------------
-
-  const [deleteQuiz] = useDeleteQuizMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -97,9 +92,12 @@ const QuizDashList = () => {
   if (filterValue) {
     query["lesson"] = filterValue;
   }
-  if (userInfo?.role !== USER_ROLE.ADMIN) {
+  if (userInfo?.role === USER_ROLE.SELLER) {
+    query["accountCreateAuthor"] = userInfo?.id;
+  } else if (userInfo?.role === USER_ROLE.STUDENT) {
     query["author"] = userInfo?.id;
   }
+
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -108,7 +106,8 @@ const QuizDashList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data = [], isLoading } = useGetAllQuizQuery({ ...query });
+  const { data, isLoading } = useGetAllSubmitAssignmentQuery({ ...query });
+
   // console.log(data);
 
   //@ts-ignore
@@ -123,7 +122,7 @@ const QuizDashList = () => {
         try {
           // console.log(id);
 
-          const res = await deleteQuiz(id).unwrap();
+          const res: any = null;
 
           // console.log(res, "response for delete Quiz");
           if (res?.success == false) {
@@ -139,56 +138,122 @@ const QuizDashList = () => {
       }
     });
   };
+  const onFinish = async (values: any, id: string) => {
+    try {
+      const res = await updateSubmitAssignment({
+        id: id,
+        body: values,
+      }).unwrap();
+
+      if (res?.marks) {
+        message.success("Marks updated successfully");
+      } else {
+        message.error("Marks should be less than or equal to total marks");
+      }
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+      console.log("🚀 ~ onFinish ~ error:", error);
+    }
+  };
 
   const columns = [
     {
-      title: "Image",
-      render: function (data: any) {
-        return (
-          <>
-            {
-              <Image
-                src={
-                  data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
-                }
-                style={{ height: "50px", width: "80px" }}
-                width={100}
-                height={100}
-                alt="dd"
-              />
-            }
-          </>
-        );
-      },
+      title: "Assignment title",
+      dataIndex: ["assignment", "title"],
+      ellipsis: true,
+    },
+    {
+      title: "Total marks",
+      dataIndex: ["assignment", "totalMarks"],
       width: 100,
     },
     {
-      title: "Name",
-      dataIndex: "title",
-      ellipsis: true,
+      title: "Pass Marks",
+      dataIndex: ["assignment", "passMarks"],
+      width: 100,
     },
+    {
+      title: "Marks",
+      dataIndex: ["marks"],
+      width: 100,
+    },
+    {
+      title: "Assignment(pdf)",
+      //   dataIndex: "passingGrade",
+      render: function (data: any) {
+        return (
+          <>
+            <ul className="list-decimal">
+              {data?.assignment?.pdfs?.length ? (
+                data?.assignment?.pdfs.map((pdf: any) => (
+                  <li key={pdf.server_url} className="flex items-center mb-2">
+                    <div>
+                      <a
+                        href={
+                          process.env.NEXT_PUBLIC_API_ONLY_BASE_URL +
+                          "/" +
+                          pdf.server_url
+                        }
+                        className="text-blue-500"
+                      >
+                        {pdf.original_filename}
+                      </a>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <p>No PDFs available</p>
+              )}
+            </ul>
+          </>
+        );
+      },
+    },
+    {
+      title: "Student submitted",
+      //   dataIndex: "passingGrade",
+      render: function (data: any) {
+        return (
+          <>
+            <ul className="list-decimal">
+              {data?.pdfs?.length ? (
+                data?.pdfs.map((pdf: any) => (
+                  <li key={pdf.server_url} className="flex items-center mb-2">
+                    <div>
+                      <a
+                        href={
+                          process.env.NEXT_PUBLIC_API_ONLY_BASE_URL +
+                          "/" +
+                          pdf.server_url
+                        }
+                        className="text-blue-500"
+                      >
+                        {pdf.original_filename}
+                      </a>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <p>No PDFs available</p>
+              )}
+            </ul>
+          </>
+        );
+      },
+    },
+
     // {
-    //   title: "Description",
-    //   dataIndex: "short_description",
-    //   ellipsis: true,
+    //   title: "Created at",
+    //   dataIndex: "createdAt",
+    //   render: function (data: any) {
+    //     return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+    //   },
+    //   sorter: true,
     // },
     {
-      title: "Passing Grade",
-      dataIndex: "passingGrade",
-      width: 120,
-    },
-    {
-      title: "module",
-      dataIndex: ["module", "title"],
+      title: "Student email",
+      dataIndex: ["author", "email"],
       ellipsis: true,
-    },
-    {
-      title: "Created at",
-      dataIndex: "createdAt",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
     },
 
     {
@@ -201,26 +266,48 @@ const QuizDashList = () => {
             <Dropdown
               overlay={
                 <Menu>
-                  <Menu.Item key="view">
-                    <Link
-                      href={`/${userInfo?.role}/quiz/details/${record._id}`}
-                    >
-                      View
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/quiz/edit/${record._id}`}>
-                      Edit
-                    </Link>
-                  </Menu.Item>
-
-                  <Menu.Item
-                    key="delete"
-                    onClick={() => {
-                      handleDelete(record._id);
-                    }}
-                  >
-                    Delete
+                  <Menu.Item key="Rec">
+                    <ModalComponent buttonText="Add marks">
+                      <div className="w-fit flex justify-center items-center p-2 rounded-xl border mx-auto">
+                        <Form
+                          layout="vertical"
+                          onFinish={(value) => {
+                            onFinish(value, record._id);
+                          }}
+                        >
+                          <Form.Item name="marks" label="Marks">
+                            <InputNumber
+                              min={0}
+                              max={100}
+                              style={{ width: "10rem" }}
+                              placeholder="Enter marks"
+                            />
+                          </Form.Item>
+                          <div className="flex justify-center items-center gap-2 ">
+                            <Form.Item>
+                              <Button
+                                loading={false}
+                                type="primary"
+                                htmlType="submit"
+                                className="w-full"
+                              >
+                                Submit
+                              </Button>
+                            </Form.Item>
+                            <Form.Item>
+                              <Button
+                                loading={false}
+                                type="primary"
+                                htmlType="reset"
+                                className="w-25"
+                              >
+                                Reset
+                              </Button>
+                            </Form.Item>
+                          </div>
+                        </Form>
+                      </div>
+                    </ModalComponent>
                   </Menu.Item>
                 </Menu>
               }
@@ -250,18 +337,6 @@ const QuizDashList = () => {
     setSearchTerm("");
   };
 
-  const deleteAdminHandler = async (id: string) => {
-    //// console.log(id);
-    try {
-      const res = await deleteQuiz(id);
-      if (res) {
-        message.success("Quiz Successfully Deleted!");
-        setOpen(false);
-      }
-    } catch (error: any) {
-      Error_model_hook(error.message);
-    }
-  };
   //----------------------------------------------------------------
   const showDrawer = () => {
     setOpenDrawer(true);
@@ -280,33 +355,15 @@ const QuizDashList = () => {
         padding: "1rem",
       }}
     >
-      <UMBreadCrumb
-        items={[
-          {
-            label: `${userInfo?.role}`,
-            link: `/${userInfo?.role}`,
-          },
-          {
-            label: `Quiz`,
-            link: `/${userInfo?.role}/quiz`,
-          },
-        ]}
-      />
-      <HeadingUI>Quiz List</HeadingUI>
+      <HeadingUI>Submitted Assignment List</HeadingUI>
       <ActionBar>
         <div className="flex gap-2">
           <Input
             size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{
-              width: screens.sm ? "30%" : "100%",
-            }}
+            style={{ width: "250px" }}
           />
-          {/* <FilterLesson
-            filterValue={filterValue}
-            setFilterValue={setFilterValue}
-          /> */}
         </div>
         <div>
           <Button
@@ -317,9 +374,6 @@ const QuizDashList = () => {
             Filter
           </Button>
 
-          <Link href={`/${userInfo?.role}/quiz/create`}>
-            <Button>Create Quiz</Button>
-          </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
@@ -344,14 +398,6 @@ const QuizDashList = () => {
         showPagination={true}
       />
 
-      <UMModal
-        title="Remove admin"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteAdminHandler(adminId)}
-      >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal>
       <Drawer
         title={
           <div className="flex justify-between items-center ">
@@ -416,6 +462,4 @@ const QuizDashList = () => {
       </Drawer>
     </div>
   );
-};
-
-export default QuizDashList;
+}
