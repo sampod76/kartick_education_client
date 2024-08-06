@@ -471,7 +471,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         </Link>
       ),
       icon: <MdAssignment />,
-      key: `/${role}/package`,
+      key: `/${role}/assignment-submission`,
     },
     {
       label: (
@@ -721,7 +721,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         </Link>
       ),
       icon: <MdAssignment />,
-      key: `/${role}/package`,
+      key: `/${role}/assignment-submission`,
     },
     {
       label: (

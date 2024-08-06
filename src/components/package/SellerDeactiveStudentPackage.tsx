@@ -1,34 +1,22 @@
 "use client";
-import React, { useState } from "react";
 
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { IPurchasedData } from "@/types/package/purchasedType";
-import SInglePurchased from "./SinglePurchasedCard";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
-import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { AllImage } from "@/assets/AllImge";
-import Image from "next/image";
-import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import dayjs from "dayjs";
 import {
-  useAddPackageAndCourseMutation,
   useGetAllPackageAndCourseQuery,
   useUpdatePackageAndCourseMutation,
 } from "@/redux/api/sellerApi/addPackageAndCourse";
+import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import {
-  useUpdateIncreaseStudentPackageMutation,
-  useUpdatePackageMutation,
-} from "@/redux/api/userApi/packageAPi";
-import { Button, Dropdown, Menu, Space } from "antd";
-import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
-import UMTable from "../ui/UMTable";
+import { Dropdown, Menu, Space } from "antd";
 import Link from "next/link";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
+import UMTable from "../ui/UMTable";
 
 export default function SellerDeactivedStudentPackage({
   setOpen,
   userId,
 }: any) {
+  console.log("🚀 ~ userId:", userId);
   const userInfo = getUserInfo() as IDecodedInfo;
 
   const [updatePackageAndCourse, { isLoading: addPackageAndCourseLoading }] =
@@ -44,6 +32,7 @@ export default function SellerDeactivedStudentPackage({
       },
       { skip: !Boolean(userId) }
     );
+  console.log("🚀 ~ singleStudentPurchaseData:", singleStudentPurchaseData);
 
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
@@ -58,7 +47,7 @@ export default function SellerDeactivedStudentPackage({
               ? ENUM_STATUS.DEACTIVATE
               : ENUM_STATUS.ACTIVE,
         },
-      });
+      }).unwrap();
 
       Success_model(`Successfully Update status`);
       setOpen(false);

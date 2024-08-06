@@ -4,29 +4,25 @@ import Form from "@/components/Forms/Form";
 
 import FormInput from "@/components/Forms/FormInput";
 
-import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-
-import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 
 import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
 
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import { courseStatusOptions } from "@/constants/global";
 
 import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Button, Col, Row, message } from "antd";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
 import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
 import { USER_ROLE } from "@/constants/role";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
+import { Button, Col, Row } from "antd";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -186,7 +182,7 @@ const CreateQuiz = () => {
                     className="gutter-row"
                     xs={24}
                     md={24}
-                    lg={24}
+                    lg={20}
                     style={{ marginBlock: "10px" }}
                   >
                     <FormInput
@@ -198,7 +194,13 @@ const CreateQuiz = () => {
                     />
                     {/*//! 1-- */}
                   </Col>
-                  <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                  <Col
+                    className="gutter-row"
+                    xs={24}
+                    md={8}
+                    lg={4}
+                    style={{ marginTop: "10px" }}
+                  >
                     <FormInput
                       type="number"
                       name="passingGrade"
@@ -209,7 +211,7 @@ const CreateQuiz = () => {
                     {/*//! 4 --- */}
                   </Col>
 
-                  <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                  {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                     <FormSelectField
                       size="large"
                       name="status"
@@ -219,7 +221,7 @@ const CreateQuiz = () => {
                       // placeholder="Select"
                       required={true}
                     />
-                  </Col>
+                  </Col> */}
                   <Col className="gutter-row" xs={24} style={{}}>
                     <DemoVideoUI
                       // videoType={videoType as any}

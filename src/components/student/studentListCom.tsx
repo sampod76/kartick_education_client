@@ -1,44 +1,27 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Dropdown, Input, Menu, Space, message } from "antd";
-import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
+import { useDebounced } from "@/redux/hooks";
+import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Input, Menu, Space } from "antd";
+import Link from "next/link";
+import { useState } from "react";
 
-import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
 
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import {
-  useDeleteStudentMutation,
-  useGetAllStudentsQuery,
-} from "@/redux/api/adminApi/studentApi";
-import { getUserInfo } from "@/services/auth.service";
+import { AllImage } from "@/assets/AllImge";
 import ModalComponent from "@/components/Modal/ModalComponents";
 import CreateStudentComponent from "@/components/student/addStudentByAuthor/addStudentComponent";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+import { useGetAllStudentsQuery } from "@/redux/api/adminApi/studentApi";
+import { useUpdateUserMutation } from "@/redux/api/adminApi/usersApi";
+import { getUserInfo } from "@/services/auth.service";
 import Image from "next/image";
-import { AllImage } from "@/assets/AllImge";
 import SellerAddPackageStudent from "../package/SellerAddPackageStudent";
-import {
-  useGetAllUsersQuery,
-  useUpdateUserMutation,
-} from "@/redux/api/adminApi/usersApi";
 import SellerDeactivedStudentPackage from "../package/SellerDeactiveStudentPackage";
 
 const StudentListCom = ({
@@ -85,6 +68,7 @@ const StudentListCom = ({
 
   //@ts-ignore
   const StudentData = data?.data;
+  console.log("🚀 ~ StudentData:", StudentData);
 
   //@ts-ignore
   const meta = data?.meta;
@@ -94,7 +78,6 @@ const StudentListCom = ({
     {
       width: 150,
       render: function (data: any) {
-      
         let img = `${data?.img} `;
         if (img === "undefined" || img === "undefined ") {
           img = "";
@@ -200,12 +183,16 @@ const StudentListCom = ({
                       User
                     </Menu.Item>
                     <ModalComponent buttonText="Add package">
-                      <SellerAddPackageStudent userId={id} />
+                      <SellerAddPackageStudent
+                        userId={data.userDetails[0]?._id}
+                      />
                     </ModalComponent>
                     <p className="mt-1"></p>
 
                     <ModalComponent buttonText="Package List">
-                      <SellerDeactivedStudentPackage userId={id} />
+                      <SellerDeactivedStudentPackage
+                        userId={data.userDetails[0]?._id}
+                      />
                     </ModalComponent>
                   </Menu>
                 }

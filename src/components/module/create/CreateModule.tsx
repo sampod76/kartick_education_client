@@ -1,31 +1,25 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
-import SelectMilestoneField from "@/components/Forms/SelectData/SelectMilestone";
 // import TextEditor from "@/components/shared/TextEditor/TextEditor";
+import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
-import UploadImage from "@/components/ui/UploadImage";
+import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import { courseStatusOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
+import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+import { USER_ROLE } from "@/constants/role";
+import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import {
   useAddModuleMutation,
   useGetAllModuleQuery,
 } from "@/redux/api/adminApi/moduleApi";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { Button, Col, Row, Space, Spin, message } from "antd";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
-import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
-import { USER_ROLE } from "@/constants/role";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { Col, Row, Spin } from "antd";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -234,7 +228,7 @@ export default function CreateModule() {
                  <SelectAuthorField />
                </Col> */}
 
-                  <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
+                  {/* <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                     <FormSelectField
                       size="large"
                       name="status"
@@ -244,7 +238,7 @@ export default function CreateModule() {
                       // placeholder="Select"
                       required={true}
                     />
-                  </Col>
+                  </Col> */}
                   <Col className="gutter-row" xs={24} style={{}}>
                     <TagsSelectUI />
                   </Col>

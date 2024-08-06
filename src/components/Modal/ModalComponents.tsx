@@ -1,17 +1,19 @@
 "use client";
-import React, { ReactElement, useState } from "react";
 import { Button, Modal } from "antd";
+import React, { useState } from "react";
 
 const ModalComponent = ({
   children,
   buttonText,
   button,
   loading = false,
+  width = 1000,
 }: {
   children: React.ReactElement;
   buttonText?: string;
   button?: any;
   loading?: boolean;
+  width?: number;
 }) => {
   const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -46,7 +48,7 @@ const ModalComponent = ({
             <OkBtn /> */}
           </>
         )}
-        width={1000}
+        width={width}
       >
         {React.cloneElement(children, { open, setOpen })}
       </Modal>

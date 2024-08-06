@@ -1,6 +1,5 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTable from "@/components/ui/UMTable";
 import { useDebounced } from "@/redux/hooks";
 import { ReloadOutlined } from "@ant-design/icons";
@@ -9,6 +8,7 @@ import {
   Drawer,
   DrawerProps,
   Dropdown,
+  Form,
   Input,
   Menu,
   Space,
@@ -35,9 +35,11 @@ import {
   useGetAllQuizQuery,
 } from "@/redux/api/adminApi/quizApi";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
+import { useDeleteUpdateSubmitQuizMutation } from "@/redux/api/quizSubmitApi";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
+import ModalComponent from "../Modal/ModalComponents";
 
 const QuizDashList = () => {
   const { userInfo, userInfoLoading } = useGlobalContext();
@@ -61,6 +63,9 @@ const QuizDashList = () => {
   if (userInfo?.role !== USER_ROLE.ADMIN) {
     categoryQuery["author"] = userInfo?.id;
   }
+  //
+  const [deleteUpdateSubmitQuiz, { isLoading: deleteSubmitQuiz }] =
+    useDeleteUpdateSubmitQuizMutation();
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -139,7 +144,31 @@ const QuizDashList = () => {
       }
     });
   };
-
+  const onFinish = async (values: { studentId: string }, id: string) => {
+    const data: any = { quizId: id };
+    if (!values?.studentId) {
+      return message.error("Please enter a student ID or Email");
+    } else if (values?.studentId?.includes("@")) {
+      data.email = values?.studentId;
+    } else {
+      data.userUniqueId = values?.studentId;
+    }
+    try {
+      const res = await deleteUpdateSubmitQuiz({
+        data,
+      }).unwrap();
+      console.log(res);
+      if (res.deletedCount) {
+        message.success(
+          `Successfully reset submitted ${res.deletedCount} quiz`
+        );
+      } else if (res.deletedCount === 0) {
+        message.error("Not found Any submitted quiz");
+      }
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+    }
+  };
   const columns = [
     {
       title: "Image",
@@ -175,7 +204,7 @@ const QuizDashList = () => {
     {
       title: "Passing Grade",
       dataIndex: "passingGrade",
-      width: 120,
+      width: 150,
     },
     {
       title: "module",
@@ -221,6 +250,51 @@ const QuizDashList = () => {
                     }}
                   >
                     Delete
+                  </Menu.Item>
+                  <Menu.Item key="deledddte">
+                    <ModalComponent width={350} buttonText="Reset for students">
+                      <div className="w-[300px] flex justify-center items-center p-2 rounded-xl border mx-auto">
+                        <Form
+                          layout="vertical"
+                          onFinish={(value) => {
+                            onFinish(value, record._id);
+                          }}
+                        >
+                          <Form.Item
+                            name="studentId"
+                            label="StudentID or Email"
+                            required={true}
+                          >
+                            <Input
+                              style={{ width: "10rem" }}
+                              placeholder="StudentID or Email"
+                            />
+                          </Form.Item>
+                          <div className="flex justify-center items-center gap-2 ">
+                            <Form.Item>
+                              <Button
+                                loading={false}
+                                type="primary"
+                                htmlType="submit"
+                                className="w-full"
+                              >
+                                Submit
+                              </Button>
+                            </Form.Item>
+                            <Form.Item>
+                              <Button
+                                loading={false}
+                                type="primary"
+                                htmlType="reset"
+                                className="w-25"
+                              >
+                                clear
+                              </Button>
+                            </Form.Item>
+                          </div>
+                        </Form>
+                      </div>
+                    </ModalComponent>
                   </Menu.Item>
                 </Menu>
               }
@@ -280,7 +354,7 @@ const QuizDashList = () => {
         padding: "1rem",
       }}
     >
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: `${userInfo?.role}`,
@@ -291,7 +365,7 @@ const QuizDashList = () => {
             link: `/${userInfo?.role}/quiz`,
           },
         ]}
-      />
+      /> */}
       <HeadingUI>Quiz List</HeadingUI>
       <ActionBar>
         <div className="flex gap-2">
@@ -300,7 +374,7 @@ const QuizDashList = () => {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: screens.sm ? "30%" : "100%",
+              width: "300px",
             }}
           />
           {/* <FilterLesson

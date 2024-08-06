@@ -64,6 +64,17 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.submitQuiz],
     }),
+    deleteUpdateSubmitQuiz: build.mutation({
+      query: ({ data }) => {
+        //
+        return {
+          url: SUBMIT_QUIZ_URL + `/delete-submitted-quiz`,
+          method: "PATCH",
+          data,
+        };
+      },
+      invalidatesTags: [tagTypes.submitQuiz],
+    }),
   }),
 });
 
@@ -72,4 +83,5 @@ export const {
   useGetSubmitAllQuizQuery,
   useGetSubmitUserQuizQuery,
   useGetAnalyticsSubmitAllQuizQuery,
+  useDeleteUpdateSubmitQuizMutation,
 } = SubmitQuizApi;

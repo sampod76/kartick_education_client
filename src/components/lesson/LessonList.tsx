@@ -53,10 +53,10 @@ export default function LessonList({
     module: moduleId,
     ...lesson_query,
   });
-  console.log(lessonData);
+
   const { data: checkPurchase, isLoading: CheckPurchaseLoading } =
     useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`);
-  //// console.log("🚀 ~ checkPurchase:", checkPurchase)
+  // console.log("🚀 ~ checkPurchase:", checkPurchase);
   if (checkPurchase) {
     IsExistCategoryOrCourse = checkPurchase;
   }

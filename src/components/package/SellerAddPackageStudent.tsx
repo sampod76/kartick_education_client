@@ -1,23 +1,18 @@
 "use client";
-import React from "react";
 
+import { AllImage } from "@/assets/AllImge";
+import { ENUM_YN } from "@/constants/globalEnums";
+import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
+import { useAddPackageAndCourseMutation } from "@/redux/api/sellerApi/addPackageAndCourse";
+import { useUpdateIncreaseStudentPackageMutation } from "@/redux/api/userApi/packageAPi";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 import { IPurchasedData } from "@/types/package/purchasedType";
-import SInglePurchased from "./SinglePurchasedCard";
-import { ENUM_YN } from "@/constants/globalEnums";
-import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { AllImage } from "@/assets/AllImge";
-import Image from "next/image";
 import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import dayjs from "dayjs";
-import { useAddPackageAndCourseMutation } from "@/redux/api/sellerApi/addPackageAndCourse";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import {
-  useUpdateIncreaseStudentPackageMutation,
-  useUpdatePackageMutation,
-} from "@/redux/api/userApi/packageAPi";
 import { Button } from "antd";
-import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
+import dayjs from "dayjs";
+import Image from "next/image";
+import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
 
 export default function SellerAddPackageStudent({ setOpen, userId }: any) {
   const userInfo = getUserInfo() as IDecodedInfo;
