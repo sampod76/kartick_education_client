@@ -6,7 +6,7 @@ import { USER_ROLE } from "@/constants/role";
 import { useGetAllSubmitAssignmentQuery } from "@/redux/api/assernmentSubmitApi";
 import { useDebounced } from "@/redux/hooks";
 import { ReloadOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, Tag } from "antd";
 import { useState } from "react";
 import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 
@@ -72,8 +72,15 @@ export default function AssignmentSubmissionStudent() {
     },
     {
       title: "Marks",
-      dataIndex: ["marks"],
+      // dataIndex: ["marks"],
       width: 100,
+      render: function (data: any) {
+        return (
+          <div>
+            {data?.marks ? data?.marks : <Tag color="green">Pending</Tag>}
+          </div>
+        );
+      },
     },
     {
       title: "Assignment(pdf)",

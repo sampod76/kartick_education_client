@@ -26,6 +26,7 @@ import {
   Menu,
   message,
   Space,
+  Tag,
 } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { useState } from "react";
@@ -174,8 +175,15 @@ export default function AssignmentSubmission() {
     },
     {
       title: "Marks",
-      dataIndex: ["marks"],
+      // dataIndex: ["marks"],
       width: 100,
+      render: function (data: any) {
+        return (
+          <div>
+            {data?.marks ? data?.marks : <Tag color="green">Pending</Tag>}
+          </div>
+        );
+      },
     },
     {
       title: "Assignment(pdf)",
