@@ -1,13 +1,11 @@
 import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
+import { Error_model_hook } from "@/utils/modalHook";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
+import { Image as AntImage, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { Image as AntImage } from "antd";
-import { Error_model_hook } from "@/utils/modalHook";
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result as string));
@@ -62,7 +60,7 @@ const UploadImage = ({
       // Get this url from response in real world.
       // console.log(info.file.originFileObj)
       const imgUrl = await uploadImgCloudinary(info.file.originFileObj);
-      // console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
+      console.log("🚀 ~ file: UploadImage.tsx:53 ~ imgUrl:", imgUrl);
 
       setValue(name, imgUrl);
       getBase64(info.file.originFileObj as RcFile, (url) => {

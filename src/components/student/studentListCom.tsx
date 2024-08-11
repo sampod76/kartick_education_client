@@ -157,16 +157,12 @@ const StudentListCom = ({
                 overlay={
                   <Menu>
                     <Menu.Item key="details">
-                      <Link
-                        href={`/${userInfo?.role}/manage-users/students/details/${id}`}
-                      >
+                      <Link href={`/${userInfo?.role}/students/details/${id}`}>
                         View
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="edit">
-                      <Link
-                        href={`/${userInfo?.role}/manage-users/students/edit/${id}`}
-                      >
+                      <Link href={`/${userInfo?.role}/students/edit/${id}`}>
                         Edit
                       </Link>
                     </Menu.Item>

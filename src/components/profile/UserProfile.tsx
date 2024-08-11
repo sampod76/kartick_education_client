@@ -1,27 +1,19 @@
-import React from "react";
-
-import {
-  GithubFilled,
-  TwitterSquareFilled,
-  FacebookFilled,
-  LinkedinFilled,
-  InstagramFilled,
-  MailOutlined,
-  WhatsAppOutlined,
-  EnvironmentOutlined,
-  BankOutlined,
-} from "@ant-design/icons";
-import Link from "next/link";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import Image from "next/image";
-import { Image as ImageAnt } from "antd";
-import { IUserData } from "@/types/userType";
-import { useRouter } from "next/navigation";
-import { Error_model_hook } from "@/utils/modalHook";
-import { USER_ROLE } from "@/constants/role";
 import { AllImage } from "@/assets/AllImge";
+import { IUserData } from "@/types/userType";
+import { Error_model_hook } from "@/utils/modalHook";
+import {
+  BankOutlined,
+  EnvironmentOutlined,
+  MailOutlined,
+} from "@ant-design/icons";
+import { Image as ImageAnt } from "antd";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const UserProfile = ({ userData }: { userData: IUserData | any }) => {
+  console.log("🚀 ~ UserProfile ~ userData:", userData);
+
   //// console.log(userData, 'userData')
   const router = useRouter();
   if (!userData?._id) {
@@ -43,7 +35,8 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
     userData?.name?.firstName || userData[userData?.role]?.name?.firstName;
   const lastName =
     userData?.name?.lastName || userData[userData?.role]?.name?.lastName;
-  const role = userData?.role || userData[userData?.role]?.role;
+  const role =
+    userData?.role || userData[userData?.role]?.role || userData.additionalRole;
 
   return (
     <main className="profile-page">
@@ -65,7 +58,7 @@ const UserProfile = ({ userData }: { userData: IUserData | any }) => {
               height: "180px",
               width: "180px",
             }}
-            src={img || AllImage.profileAvater}
+            src={img || AllImage.notFoundImage}
             alt="User mask"
           />
         </div>
