@@ -1,38 +1,23 @@
-"use client";
+'use client';
+import { ENUM_YN } from '@/constants/globalEnums';
+import { useGetAllLessonQuery } from '@/redux/api/adminApi/lessoneApi';
 import {
-  CaretRightOutlined,
-  RightCircleOutlined,
-  EyeOutlined,
-  LockOutlined,
   EyeInvisibleOutlined,
-} from "@ant-design/icons";
-import type { CSSProperties } from "react";
-import React, { useState } from "react";
-import type { CollapseProps } from "antd";
-import { Collapse, theme } from "antd";
-import { useGetAllLessonQuery } from "@/redux/api/adminApi/lessoneApi";
-import Link from "next/link";
-import { useGetAllQuizQuery } from "@/redux/api/adminApi/quizApi";
-import { CutText } from "@/utils/CutText";
-import VimeoPlayer from "@/utils/vimoPlayer";
-import { ENUM_VIDEO_PLATFORM, ENUM_YN } from "@/constants/globalEnums";
-import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import YoutubePlayer from "react-player/youtube";
+  EyeOutlined,
+  RightCircleOutlined,
+} from '@ant-design/icons';
+import { Button, Collapse, Empty } from 'antd';
+import Link from 'next/link';
+import { useState } from 'react';
+import LoadingSkeleton from '../ui/Loading/LoadingSkeleton';
 
-import { getUserInfo } from "@/services/auth.service";
-import ModalComponent from "../Modal/ModalComponents";
-import LoginPage from "../Login/LoginPage";
-import { usePathname } from "next/navigation";
-import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
-import { useGetCheckPurchasesCourseQuery } from "@/redux/api/public/purchaseCourseApi";
-import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
-import { USER_ROLE } from "@/constants/role";
-import parse from "html-react-parser";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import { urlChecker } from "@/utils/urlChecker";
-import QuizIcon from "@/assets/svg/quizIcon";
-import { useCheckPurchaseCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import QuizIcon from '@/assets/svg/quizIcon';
+import { useGetCoursePermissionQuery } from '@/redux/api/adminApi/courseApi';
+import parse from 'html-react-parser';
+import { useGlobalContext } from '../ContextApi/GlobalContextApi';
+import ModalComponent from '../Modal/ModalComponents';
+import LessonContainShow from './LessonContainShow';
+
 export default function LessonList({
   moduleId,
   moduleData,
@@ -40,118 +25,106 @@ export default function LessonList({
   moduleId: string;
   moduleData: any;
 }) {
-  // console.log(moduleId, "moduleId from LessonList");
-
-  const screens = useBreakpoint();
-  const userInfo = getUserInfo() as any;
-
+  const { userInfo } = useGlobalContext();
   const [currentCollapse, setCurrentCollapse] = useState<string[]>([]);
-  ////! for purchased data of a user
-  const categoryId = moduleData?.category ||  moduleData?.milestone?.course?.category?._id;
-  const courseId = moduleData?.course || moduleData?.milestone?.course?._id
-  console.log("🚀 ~ categoryId:", moduleData)
+  //! for purchased data of a user
+  const categoryId =
+    moduleData?.category || moduleData?.milestone?.course?.category?._id;
+  const courseId = moduleData?.course || moduleData?.milestone?.course?._id;
 
-  let IsExistCategoryOrCourse: any = false;
- 
+  let IsExistPremonitionCourse: any = false;
+
   //! for Course options selection
   const lesson_query: Record<string, any> = {};
-  lesson_query["limit"] = 999999;
-  lesson_query["sortBy"] = "lesson_number";
-  lesson_query["sortOrder"] = "asc";
-  lesson_query["status"] = "active";
-  lesson_query["isDelete"] = ENUM_YN.NO;
+  lesson_query['limit'] = 999999;
+  lesson_query['sortBy'] = 'lesson_number';
+  lesson_query['sortOrder'] = 'asc';
+  lesson_query['status'] = 'active';
+  lesson_query['needProperty'] = 'assignment,quizzes';
+  lesson_query['isDelete'] = ENUM_YN.NO;
+
   const { data: lessonData, isLoading } = useGetAllLessonQuery({
     module: moduleId,
     ...lesson_query,
   });
-
-  const {data:checkPurchase,isLoading:CheckPurchaseLoading}=useCheckPurchaseCategoryQuery(`${categoryId}?course=${courseId}`)
-  console.log("🚀 ~ checkPurchase:", checkPurchase)
-  if(checkPurchase){
-    IsExistCategoryOrCourse=checkPurchase
+  console.log(lessonData, 'lessonData');
+  const { data: checkPurchase, isLoading: CheckPurchaseLoading } =
+    useGetCoursePermissionQuery({ course: courseId });
+  // console.log("🚀 ~ checkPurchase:", checkPurchase);
+  if (checkPurchase?.data) {
+    IsExistPremonitionCourse = !!checkPurchase?.data;
   }
+  // const quiz_query: Record<string, any> = {};
+  // //! for Course options selection
+  // quiz_query['limit'] = 999999;
+  // quiz_query['isDelete'] = ENUM_YN.NO;
+  // const { data: QuizData, isLoading: quizLoading } = useGetAllQuizQuery({
+  //   status: 'active',
+  //   isDelete: ENUM_YN.NO,
+  //   module: moduleId,
+  //   ...quiz_query,
+  // });
 
-
-  const quiz_query: Record<string, any> = {};
-  //! for Course options selection
-  quiz_query["limit"] = 999999;
-  quiz_query["isDelete"] = ENUM_YN.NO;
-  const { data: QuizData, isLoading: quizLoading } = useGetAllQuizQuery({
-    status: "active",
-    isDelete: ENUM_YN.NO,
-    module: moduleId,
-    ...quiz_query,
-  });
-
-  if (
-    isLoading ||
-    quizLoading  ||CheckPurchaseLoading  
-  ) {
+  if (isLoading || CheckPurchaseLoading) {
     return <LoadingSkeleton />;
   }
 
-  // console.log('QuizData', QuizData)
   const playerVideoFunc = (lesson: any, index?: number) => {
-    if (IsExistCategoryOrCourse
+    if (
+      IsExistPremonitionCourse ||
+      lesson?.lesson_number == (0 || 1)
       // || index === 0//! for first open video
     ) {
-      if (lesson?.videos?.length && lesson?.videos[0]?.link) {
-        const result = urlChecker(lesson?.videos[0]?.link);
-        if (result.platform === ENUM_VIDEO_PLATFORM.VIMEO) {
-          return (
-            <VimeoPlayer
-              width={!screens.sm ? 350 : 750}
-              height={!screens.sm ? 350 : 600}
-              // link={result.data as string}
-              link={lesson?.videos[0]?.link}
-            />
-          );
-        } else if (result.platform === ENUM_VIDEO_PLATFORM.YOUTUBE) {
-          return (
-            <YoutubePlayer url={result.data ? (result.data as string) : ""} />
-          );
-        } else {
-          return <div>Not add video yet.</div>;
-        }
-      }
+      return (
+        // <ModalInComponent
+        //   button={
+        //     <div className="flex items-center justify-center">
+        //       <Button type="primary">Click To Open</Button>
+        //     </div>
+        //   }
+        // >
+        //   <LessonContainShow lesson={lesson} />
+        // </ModalInComponent>
+        <ModalComponent
+          button={
+            <div className="flex items-center justify-center">
+              <Button type="primary">Click To Open</Button>
+            </div>
+          }
+          width={1200}
+          maskClosable={false}
+        >
+          <LessonContainShow lesson={lesson} />
+        </ModalComponent>
+      );
     } else {
       return (
-        <div className="text-base lg:text-lg text-start text-red-500 font-medium">
-          This contents is private. First purchase this course.
-          {/* <ModalComponent buttonText="login">
-            <LoginPage redirectLink={pathname} />
-          </ModalComponent> */}
-
+        <div className="text-start text-base font-medium text-red-500 lg:text-lg">
+          This contents is private. Please purchase this course.
         </div>
       );
     }
   };
 
-
-
   //! collapse data ////
   const collapseLessonData = lessonData?.data?.map(
     (lesson: any, index: number) => {
-      const lessonQuizData: any = QuizData?.data?.filter(
-        (item: any) => item?.lesson?._id === lesson?._id
-      );
-
       const isLessonCollapsed = currentCollapse.includes(lesson?._id);
 
       ///! isExist have
-      if (IsExistCategoryOrCourse) {
+      if (IsExistPremonitionCourse) {
         return {
           key: lesson?._id,
           label: (
-            <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
-              <button className="flex justify-between w-full">
-                <h2 className="text-sm md:text-lg font-normal text-start ">
+            <div className="shadow-1 py-2 text-[18px] font-semibold md:px-1">
+              <button className="flex w-full justify-between">
+                <h2 className="text-start text-sm font-normal md:text-lg">
                   <span>Lesson {index + 1}: </span> {lesson?.title}
                 </h2>
                 {isLessonCollapsed ? (
-                  <EyeInvisibleOutlined style={{ fontSize: "18px" }} />
+                  <EyeInvisibleOutlined style={{ fontSize: '18px' }} />
                 ) : (
-                  <EyeOutlined style={{ fontSize: "18px" }} />
+                  <EyeOutlined style={{ fontSize: '18px' }} />
                 )}
               </button>
             </div>
@@ -159,28 +132,49 @@ export default function LessonList({
           children: (
             <div>
               <div className="">
-                <div className="flex justify-center items-center my-1">
+                <div className="relative my-1 flex items-center justify-center">
                   {playerVideoFunc(lesson)}
                 </div>
                 {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-                <EllipsisMiddle suffixCount={3} maxLength={300}>
+                {/* <EllipsisMiddle suffixCount={3} maxLength={300}>
                   {IsExistCategoryOrCourse && lesson?.short_description}
                 </EllipsisMiddle>
-                {lesson?.details && parse(lesson?.details)}
+                {lesson?.details && parse(lesson?.details)} */}
               </div>
 
-              {IsExistCategoryOrCourse &&
-                lessonQuizData &&
-                lessonQuizData?.map((quiz: any) => {
-                  // console.log(quiz)
+              {IsExistPremonitionCourse &&
+                lesson?.quizzes &&
+                lesson?.quizzes?.map((quiz: any) => {
+                  //// console.log(quiz)
                   return (
                     <Link
                       key={quiz?._id}
                       href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                      className="text-[14px] flex justify-between  mx-auto mt-3 text-[#479FEC]"
+                      className="mx-auto mt-3 flex justify-between text-[14px] text-[#479FEC]"
                     >
-                      <h2 className="text-base font-normal flex justify-start gap-1">
-                     <span className="mt-1"><QuizIcon/></span>   Quiz {index + 1} : {quiz?.title}
+                      <h2 className="flex justify-start gap-1 text-base font-normal">
+                        <span className="mt-1">
+                          <QuizIcon />
+                        </span>{' '}
+                        Quiz : {quiz?.title}
+                      </h2>
+
+                      {/* <LockOutlined style={{ fontSize: "18px" }} /> */}
+                    </Link>
+                  );
+                })}
+              {IsExistPremonitionCourse &&
+                lesson?.assignmentDetails &&
+                lesson?.assignmentDetails?.map((assignment: any) => {
+                  return (
+                    <Link
+                      key={assignment?._id}
+                      href={`/lesson/assignment/${assignment?._id}?lesson=${lesson?.title}&assignment=${assignment?.title}`}
+                      className="mx-auto mt-3 flex w-[86%] justify-between rounded-md border p-3 text-[14px] text-[#2b2dc7]"
+                    >
+                      <h2 className="text-base font-normal">
+                        Assignment {index + 1} :{' '}
+                        <span>{assignment?.title} </span>
                       </h2>
                       {/* <LockOutlined style={{ fontSize: "18px" }} /> */}
                     </Link>
@@ -195,15 +189,15 @@ export default function LessonList({
         return {
           key: lesson?._id,
           label: (
-            <div className="text-[18px]   md:px-1 font-semibold   py-2 shadow-1 ">
-              <button className="flex justify-between w-full">
-                <h2 className="text-base text-start font-normal">
+            <div className="shadow-1 py-2 text-[18px] font-semibold md:px-1">
+              <button className="flex w-full justify-between">
+                <h2 className="text-start text-base font-normal">
                   <span>Lesson {index + 1}: </span> {lesson?.title}
                 </h2>
                 {isLessonCollapsed ? (
-                  <EyeInvisibleOutlined style={{ fontSize: "18px" }} />
+                  <EyeInvisibleOutlined style={{ fontSize: '18px' }} />
                 ) : (
-                  <EyeOutlined style={{ fontSize: "18px" }} />
+                  <EyeOutlined style={{ fontSize: '18px' }} />
                 )}
               </button>
             </div>
@@ -211,77 +205,69 @@ export default function LessonList({
           children: (
             <div>
               <div className="">
-                <div className="flex justify-center items-center my-2">
-                  {playerVideoFunc(lesson, index)}
+                <div className="my-2 flex items-center justify-center">
+                  {playerVideoFunc(lesson)}
                 </div>
-                {/* {lesson?.details && CutText(lesson?.details, 200)} */}
-                <EllipsisMiddle suffixCount={3} maxLength={300}>
-                  {IsExistCategoryOrCourse && lesson?.short_description}
-                </EllipsisMiddle>
+
+                <div className="line-clamp-3">
+                  {IsExistPremonitionCourse && lesson?.short_description}
+                </div>
                 {lesson?.details && parse(lesson?.details)}
               </div>
-              {IsExistCategoryOrCourse &&
+              {/* {IsExistPremonitionCourse &&
                 lessonQuizData &&
                 lessonQuizData?.map((quiz: any) => {
-                  // console.log(quiz)
                   return (
                     <Link
                       key={quiz?._id}
                       href={`/lesson/quiz/${quiz?._id}?lesson=${lesson?.title}&quiz=${quiz?.title}`}
-                      className="text-[14px] flex justify-between w-[86%] mx-auto mt-3 text-[#479FEC]"
+                      className="mx-auto mt-3 flex w-[86%] justify-between text-[14px] text-[#479FEC]"
                     >
                       <h2 className="text-base font-normal">
                         Quiz {index + 1} : <span>{quiz?.title} </span>
                       </h2>
-                      <LockOutlined style={{ fontSize: "18px" }} />
+                      <LockOutlined style={{ fontSize: '18px' }} />
                     </Link>
                   );
-                })}
+                })} */}
             </div>
           ),
-          // style: panelStyle,
         };
       }
-    }
+    },
   );
 
   const handleChange = (key: any) => {
-    // console.log(key, 'key')
-
     setCurrentCollapse(key);
   };
 
-  // <RightCircleOutlined />
-
   return (
-    <div
-      className="w-full  lg:w-[60vw] mx-auto px-0 lg:px-2 "
-      style={
-        {
-          // padding: "10px 5vw",
-        }
-      }
-    >
-      <Collapse
-        bordered={false}
-        defaultActiveKey={["1"]}
-        expandIcon={({ isActive }) => (
-          <RightCircleOutlined
-            style={{
-              fontSize: "24px",
+    <div className="mx-auto w-full px-0 lg:w-[60vw] lg:px-2">
+      {collapseLessonData?.length ? (
+        <Collapse
+          bordered={false}
+          defaultActiveKey={['1']}
+          expandIcon={({ isActive }) => (
+            <RightCircleOutlined
+              style={{
+                fontSize: '24px',
 
-              fontWeight: 600,
-              marginTop: "24px",
-            }}
-            rotate={isActive ? 90 : 0}
-          />
-        )}
-        onChange={handleChange}
-        // collapsible={'disabled'}
-        accordion={false}
-        // style={{ background: token.colorBgContainer }}
-        items={collapseLessonData}
-      />
+                fontWeight: 600,
+                marginTop: '24px',
+              }}
+              rotate={isActive ? 90 : 0}
+            />
+          )}
+          onChange={handleChange}
+          // collapsible={'disabled'}
+          accordion={false}
+          // style={{ background: token.colorBgContainer }}
+          //@ts-ignore
+          items={collapseLessonData}
+        />
+      ) : (
+        <Empty />
+      )}
     </div>
   );
 }

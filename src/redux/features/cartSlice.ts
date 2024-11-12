@@ -23,7 +23,7 @@ const cartSlice = createSlice({
         (course) => course._id === action?.payload?._id
       );
       if (existingCourse) {
-        console.log("the  course is exists ");
+
       } else {
         state.course.push(action?.payload);
         state.total += action.payload.price;
@@ -35,12 +35,12 @@ const cartSlice = createSlice({
       );
       state.total -= action.payload.price;
     },
-    toggleCartModal: (state,payload) => {
+    toggleCartModal: (state, payload) => {
       state.cartModal = !state.cartModal;
     },
   },
 });
 
-export const { addToCart, removeFromCart,toggleCartModal} = cartSlice.actions;
+export const { addToCart, removeFromCart, toggleCartModal } = cartSlice.actions;
 
 export default cartSlice.reducer;

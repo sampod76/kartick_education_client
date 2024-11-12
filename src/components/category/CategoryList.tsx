@@ -1,55 +1,53 @@
-"use client";
-import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Dropdown, Input, Menu, Space, message } from "antd";
-import Link from "next/link";
-import { ReloadOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
+'use client';
+import ActionBar from '@/components/ui/ActionBar';
+import UMBreadCrumb from '@/components/ui/UMBreadCrumb';
+import UMTable from '@/components/ui/UMTable';
+import { useDebounced } from '@/redux/hooks';
+import { ReloadOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Input, Menu, Space, message } from 'antd';
+import Link from 'next/link';
+import { useState } from 'react';
 
-import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
+import UMModal from '@/components/ui/UMModal';
+import dayjs from 'dayjs';
 
-import Image from "next/image";
+import HeadingUI from '@/components/ui/dashboardUI/HeadingUI';
+import { ENUM_YN } from '@/constants/globalEnums';
+import {
+  useDeleteCategoryMutation,
+  useGetAllCategoryQuery,
+} from '@/redux/api/adminApi/categoryApi';
+import { IDecodedInfo, getUserInfo } from '@/services/auth.service';
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
-} from "@/utils/modalHook";
-import {
-  useDeleteCategoryMutation,
-  useGetAllCategoryQuery,
-} from "@/redux/api/adminApi/categoryApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import dynamic from "next/dynamic";
-import { AllImage } from "@/assets/AllImge";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { ENUM_YN } from "@/constants/globalEnums";
+} from '@/utils/modalHook';
+import dynamic from 'next/dynamic';
 
 const CategoryList = () => {
   const query: Record<string, any> = {};
 
   // const ADMIN = USER_ROLE.ADMIN;
   const userInfo = getUserInfo() as IDecodedInfo;
-  // console.log("🚀 ~ file: page.tsx:41 ~ CategoryList ~ role:", role);
+  //
 
   const [deleteCategory] = useDeleteCategoryMutation();
 
-  const [adminId, setAdminId] = useState<string>("");
+  const [adminId, setAdminId] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("serial_number");
-  const [sortOrder, setSortOrder] = useState<string>("asc");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('serial_number');
+  const [sortOrder, setSortOrder] = useState<string>('asc');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  query["status"] = "active";
-  query["isDelete"] = ENUM_YN.NO;
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
+  query['status'] = 'active';
+  query['isDelete'] = ENUM_YN.NO;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -57,7 +55,7 @@ const CategoryList = () => {
   });
 
   if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
   const { data, isLoading } = useGetAllCategoryQuery({ ...query });
 
@@ -72,14 +70,13 @@ const CategoryList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteCategory(id).unwrap();
-          console.log("🚀 ~ confirm_modal ~ res:", res)
 
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Category Successfully Deleted");
+            Success_model('Category Successfully Deleted');
           }
         } catch (error: any) {
           Error_model_hook(error.data);
@@ -90,41 +87,41 @@ const CategoryList = () => {
   };
 
   const columns = [
+    // {
+    //   title: "Image",
+    //   render: function (data: any) {
+    //     return (
+    //       <>
+    //         {
+    //           <Image
+    //             src={data?.img || AllImage.notFoundImage}
+    //             style={{ height: "50px", width: "80px" }}
+    //             width={80}
+    //             height={80}
+    //             alt="dd"
+    //           />
+    //         }
+    //       </>
+    //     );
+    //   },
+    //   width: 130,
+    // },
     {
-      title: "Image",
-      render: function (data: any) {
-        return (
-          <>
-            {
-              <Image
-                src={data?.img || AllImage.notFoundImage}
-                style={{ height: "50px", width: "80px" }}
-                width={80}
-                height={80}
-                alt="dd"
-              />
-            }
-          </>
-        );
-      },
-      width: 130,
-    },
-    {
-      title: "Name",
-      dataIndex: "title",
+      title: 'Name',
+      dataIndex: 'title',
       ellipsis: true,
       //  width: 130,
     },
+    // {
+    //   title: 'Serial Number',
+    //   dataIndex: 'serial_number',
+    //   width: 130,
+    // },
     {
-      title: "Serial Number",
-      dataIndex: "serial_number",
-      width: 130,
-    },
-    {
-      title: "Created at",
-      dataIndex: "createdAt",
+      title: 'Created at',
+      dataIndex: 'createdAt',
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
       width: 220,
@@ -141,7 +138,7 @@ const CategoryList = () => {
     //   },
     // },
     {
-      title: "Action",
+      title: 'Action',
       // fixed: "right",
       width: 120,
       render: (record: any) => (
@@ -197,13 +194,13 @@ const CategoryList = () => {
     const { order, field } = sorter;
     //
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
 
   const deleteCategoryHandler = async (id: string) => {
@@ -211,7 +208,7 @@ const CategoryList = () => {
     try {
       const res = await deleteCategory(id);
       if (res) {
-        message.success("Category Successfully Deleted!");
+        message.success('Category Successfully Deleted!');
         setOpen(false);
       }
     } catch (error: any) {
@@ -240,7 +237,7 @@ const CategoryList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: '250px',
           }}
         />
         <div>
@@ -249,7 +246,7 @@ const CategoryList = () => {
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >
@@ -277,7 +274,7 @@ const CategoryList = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deleteCategoryHandler(adminId)}
       >
-        <p style={{ marginTop: "1.25rem", marginBottom: "1.25rem" }}>
+        <p style={{ marginTop: '1.25rem', marginBottom: '1.25rem' }}>
           Do you want to remove this category?
         </p>
       </UMModal>

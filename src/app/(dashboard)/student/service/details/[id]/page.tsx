@@ -18,8 +18,6 @@ const ServiceDetiles = ({ params }: any) => {
       }
     );
 
-  console.log(ratingData);
-
   const defaultValues = {
     name: {
       firstName: data?.name?.firstName || "",

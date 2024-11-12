@@ -1,12 +1,13 @@
 import { AllImage } from "@/assets/AllImge";
+import SupportPage from "@/components/support/page";
 import Image from "next/image";
 import React from "react";
 
 const SupportAndHelp = () => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="">
       {/* <h1 className="text-base font-normal">Upcoming</h1> */}
-      <Image alt="" src={AllImage.upcoming} width={700} height={700} />
+      <SupportPage />
     </div>
   );
 };

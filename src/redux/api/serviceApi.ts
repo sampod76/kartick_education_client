@@ -55,6 +55,7 @@ export const serviceApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.service],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

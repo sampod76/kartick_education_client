@@ -1,57 +1,51 @@
-"use client";
+'use client';
 
-import Form from "@/components/Forms/Form";
+import Form from '@/components/Forms/Form';
 
-import FormInput from "@/components/Forms/FormInput";
+import FormInput from '@/components/Forms/FormInput';
 
-import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
-import { courseStatusOptions, singleQuizTypes } from "@/constants/global";
+import { singleQuizTypes } from '@/constants/global';
 
 import {
   useGetSingleOneQuizQuery,
   useUpdateSingleQuizMutation,
-} from "@/redux/api/adminApi/singleQuizApi";
+} from '@/redux/api/adminApi/singleQuizApi';
 
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
 
-import { Button, Col, Input, Row, Select } from "antd";
-import React, { useEffect, useState } from "react";
-import FormTimePicker from "@/components/Forms/FormTimePicker";
-import AnswerSInlge from "@/components/Forms/answer/AnswerSingle";
-import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
+import AnswerSInlge from '@/components/Forms/answer/AnswerSingle';
+import FormTimePicker from '@/components/Forms/FormTimePicker';
+import ButtonLoading from '@/components/ui/Loading/ButtonLoading';
+import { Button, Col, Input, Row, Select } from 'antd';
+import { useEffect, useState } from 'react';
 
-import AnswerMultiple from "@/components/Forms/answer/AnswerMultiple";
-import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
+import AnswerMultiple from '@/components/Forms/answer/AnswerMultiple';
+import UploadMultipalImage from '@/components/ui/UploadMultipalImage';
 
-import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-import TextEditor from "@/components/shared/TextEditor/TextEditor";
-import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
-import timeDurationToMilliseconds, {
-  convertTimeDurationMillisecondsToTime,
-} from "@/hooks/stringToMiliSecend";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-import AnswerFind from "@/components/Forms/answer/AnswerFind";
-import { IQuizType } from "@/types/quiz/singleQuizType";
-import UploadAudioFile from "@/components/ui/UploadAudio";
+import { useGlobalContext } from '@/components/ContextApi/GlobalContextApi';
+import AnswerFind from '@/components/Forms/answer/AnswerFind';
+import SelectCategoryChildren from '@/components/Forms/GeneralField/SelectCategoryChildren';
+import LabelUi from '@/components/ui/dashboardUI/LabelUi';
+import LoadingSkeleton from '@/components/ui/Loading/LoadingSkeleton';
+import UploadAudioFile from '@/components/ui/UploadAudio';
+import { removeNullUndefinedAndFalsey } from '@/hooks/removeNullUndefinedAndFalsey';
+import timeDurationToMilliseconds from '@/hooks/stringToMiliSecend';
+import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
+import { IQuizType } from '@/types/quiz/singleQuizType';
 
 export default function EditSingleQuiz({
   singleQuizId,
 }: {
   singleQuizId: string;
 }) {
-  const [quizType, setQuizTypes] = useState<
-    IQuizType
-  >("select"); // !  tag selection
+  const { userInfo } = useGlobalContext();
+  const [quizType, setQuizTypes] = useState<IQuizType>('select'); // !  tag selection
   const [videoType, setVideoType] = useState(null); // ! for video insert
-  const [videoUrl, setVideoUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState('');
   // ! For quiz Answer
   const [answers, setAnswers] = useState([]);
 
-  const [singleAnswer, setSingleAnswerInput] = useState<string>("");
+  const [singleAnswer, setSingleAnswerInput] = useState<string>('');
   // console.log(
   //   "🚀 ~ file: page.tsx:58 ~ CreateSingleQuiz ~ singleAnswer:",
   //   singleAnswer
@@ -72,18 +66,21 @@ export default function EditSingleQuiz({
   //
   const { data = {}, isLoading: singleOneLoading } = useGetSingleOneQuizQuery(
     singleQuizId,
-    { skip: !Boolean(singleQuizId) }
+    { skip: !Boolean(singleQuizId) },
   );
 
-  console.log("🚀 ~ data:", data);
+  // console.log('🚀 ~ data:', data);
   useEffect(() => {
     setAnswers(data?.answers || []);
     setQuizTypes(data?.type);
   }, [data]);
 
   const query: Record<string, any> = {};
-  query["children"] = "course-milestone-module-lessons-quiz";
+  query['children'] = 'course-milestone-module-lessons-quiz';
   //! for Category options selection
+  if (userInfo?.role !== 'admin') {
+    query['author'] = userInfo?.id;
+  }
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
   });
@@ -98,31 +95,31 @@ export default function EditSingleQuiz({
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
     if (answers.length) {
-      values["answers"] = answers;
+      values['answers'] = answers;
     } else if (singleAnswer) {
-      values["single_answer"] = singleAnswer;
+      values['single_answer'] = singleAnswer;
     } else {
-      Error_model_hook("Please select an answer");
+      Error_model_hook('Please select an answer');
       return;
     }
 
     if (!quizType) {
-      Error_model_hook("Please select an quiz type");
+      Error_model_hook('Please select an quiz type');
       return;
     }
     // console.log(values, "ttttttttttttttttttttttt");
-    if (typeof values?.time_duration === "string") {
+    if (typeof values?.time_duration === 'string') {
       values.time_duration = timeDurationToMilliseconds(values.time_duration);
     }
     if (quiz?._id) {
-      values["quiz"] = quiz?._id;
+      values['quiz'] = quiz?._id;
     } else {
-      values["quiz"] = data?.quiz?._id;
+      values['quiz'] = data?.quiz?._id;
     }
     if (module?._id) {
-      values["module"] = module?._id;
+      values['module'] = module?._id;
     } else {
-      values["module"] = data?.module?._id;
+      values['module'] = data?.module?._id;
     }
     const singleQuizDat: {} = {
       ...values,
@@ -139,8 +136,8 @@ export default function EditSingleQuiz({
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully Update the Quiz");
-        setVideoUrl("");
+        Success_model('Successfully Update the Quiz');
+        setVideoUrl('');
         setVideoType(null);
         setAnswers([]);
         setIsReset(true);
@@ -159,7 +156,7 @@ export default function EditSingleQuiz({
   return (
     <div>
       <div>
-        <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
+        <h1 className="mb-2 border-spacing-4 border-b-2 text-xl font-bold">
           Update single quiz
         </h1>
         {/* <div className="text-xl font-bold space-x-2 mb-2 text-start my-2 shadow-lg p-3 bg-white rounded-lg">
@@ -194,13 +191,13 @@ export default function EditSingleQuiz({
         <div
           style={{
             boxShadow:
-              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-            borderRadius: "1rem",
-            backgroundColor: "white",
-            padding: "1rem",
+              '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            borderRadius: '1rem',
+            backgroundColor: 'white',
+            padding: '1rem',
           }}
         >
-          <div className="border-2 rounded-lg my-3 p-5 ">
+          <div className="my-3 rounded-lg border-2 p-5">
             <Row gutter={[16, 16]}>
               <Col xs={24} md={6}>
                 <SelectCategoryChildren
@@ -265,10 +262,10 @@ export default function EditSingleQuiz({
           <Form isReset={isReset} submitHandler={onSubmit} defaultValues={data}>
             <div
               style={{
-                border: "1px solid #d9d9d9",
-                borderRadius: "5px",
-                padding: "15px",
-                marginBottom: "10px",
+                border: '1px solid #d9d9d9',
+                borderRadius: '5px',
+                padding: '15px',
+                marginBottom: '10px',
               }}
             >
               <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -276,7 +273,7 @@ export default function EditSingleQuiz({
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <FormInput
@@ -290,7 +287,7 @@ export default function EditSingleQuiz({
                   className="gutter-row"
                   xs={4}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <FormInput
@@ -298,7 +295,7 @@ export default function EditSingleQuiz({
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                  //
+                    //
                   />
                 </Col>
                 <Col
@@ -315,18 +312,18 @@ export default function EditSingleQuiz({
                 <Col
                   className="gutter-row"
                   xs={12}
-                  md={8}
+                  md={4}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <LabelUi>
-                    Please select quiz type{" "}
+                    Please select quiz type{' '}
                     <span className="text-red-500">*</span>
                   </LabelUi>
                   <Select
                     placeholder="Select Quiz Types"
-                    style={{ width: "100%" }}
+                    style={{ width: '100%' }}
                     onChange={(value) => setQuizTypes(value)}
                     size="large"
                     defaultValue={data.type}
@@ -341,12 +338,12 @@ export default function EditSingleQuiz({
                   </Select>
                 </Col>
 
-                <Col
+                {/* <Col
                   className="gutter-row"
                   xs={12}
                   md={8}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <FormSelectField
@@ -358,7 +355,7 @@ export default function EditSingleQuiz({
                     // placeholder="Select"
                     defaultValue={data.status}
                   />
-                </Col>
+                </Col> */}
                 {/* <Col
                   className="gutter-row"
                   xs={24}
@@ -376,21 +373,21 @@ export default function EditSingleQuiz({
                     defaultValue={data.demo_video}
                   />
                 </Col> */}
-                <Col
+                {/* <Col
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <TagsSelectUI defaultTags={data.tags || []} />
-                </Col>
+                </Col> */}
                 <Col
-                  hidden={quizType === "audio" ? true : false}
+                  hidden={quizType === 'audio' ? true : false}
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <UploadMultipalImage
@@ -399,25 +396,27 @@ export default function EditSingleQuiz({
                   />
                 </Col>
                 <Col
-                  hidden={quizType !== "audio" ? true : false}
+                  hidden={quizType !== 'audio' ? true : false}
                   className="gutter-row"
                   xs={24}
                   style={{
-                    margin: "20px 0",
+                    margin: '20px 0',
                   }}
-
                 >
-
                   <LabelUi>Add Your Audio Quiz</LabelUi>
-                  <UploadAudioFile defaultFiles={data?.quizData?.link} isReset={isReset} fileType="audio" name="quizData.link" />
+                  <UploadAudioFile
+                    defaultFiles={data?.quizData?.link}
+                    isReset={isReset}
+                    fileType="audio"
+                    name="quizData.link"
+                  />
                 </Col>
               </Row>
-              <Col
-
+              {/* <Col
                 className="gutter-row"
                 xs={24}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormTextArea label="Description" name="short_description" />
@@ -426,7 +425,7 @@ export default function EditSingleQuiz({
                 className="gutter-row"
                 xs={24}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormTextArea
@@ -434,77 +433,75 @@ export default function EditSingleQuiz({
                   label="hints"
                   placeholder="Give hints for Answer"
                 />
-              </Col>
+              </Col> */}
 
-              <Col
+              {/* <Col
                 className="gutter-row"
                 xs={24}
-                // md={12}
-                // lg={8}
+               
                 style={{}}
               >
-                {/*//! 3 */}
+              
                 <div
                   style={{
-                    borderTopWidth: "2px",
-                  }} /* className=" border-t-2" */
+                    borderTopWidth: '2px',
+                  }} 
                 >
-                  <p className="text-center my-3 font-bold text-xl">
+                  <p className="my-3 text-center text-xl font-bold">
                     Description
                   </p>
                   <TextEditor
                     isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    
                   />
                 </div>
-              </Col>
+              </Col> */}
 
               <Row
                 gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
                 style={{
-                  marginBlock: "2em",
+                  marginBlock: '2em',
                 }}
               >
                 <Col
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
-                  {quizType === "select" && (
+                  {quizType === 'select' && (
                     <AnswerSInlge
                       answers={answers}
                       setAnswers={setAnswers as any}
                     />
                   )}
-                  {quizType === "multiple_select" && (
+                  {quizType === 'multiple_select' && (
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
                     />
                   )}
-                  {quizType === "audio" && (
+                  {quizType === 'audio' && (
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
                     />
                   )}
-                  {quizType === "find" && (
+                  {quizType === 'find' && (
                     <AnswerFind
                       answersFind={answers}
                       setAnswersFind={setAnswers as any}
                     />
                   )}
                   {/* //! should update cause it is statics */}
-                  {quizType === "drag" && (
+                  {quizType === 'drag' && (
                     <AnswerFind
                       answersFind={answers}
                       setAnswersFind={setAnswers as any}
                     />
                   )}
-                  {quizType === "input" && (
+                  {quizType === 'input' && (
                     <>
                       <LabelUi>
                         Answer <span className="text-red-700">*</span>
@@ -520,7 +517,7 @@ export default function EditSingleQuiz({
                 </Col>
               </Row>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex items-center justify-center">
               {serviceLoading ? (
                 <ButtonLoading />
               ) : (
@@ -532,9 +529,9 @@ export default function EditSingleQuiz({
           </Form>
         </div>
       ) : (
-        <div className="w-full h-full flex justify-center items-center min-h-64">
-          <h1 className="text-center text-red-500 font-semibold text-2xl">
-            First select your quiz by filtering{" "}
+        <div className="flex h-full min-h-64 w-full items-center justify-center">
+          <h1 className="text-center text-2xl font-semibold text-red-500">
+            First select your quiz by filtering{' '}
           </h1>
         </div>
       )}

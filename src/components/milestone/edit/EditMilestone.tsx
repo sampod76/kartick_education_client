@@ -1,48 +1,49 @@
-"use client";
+'use client';
 
-import Form from "@/components/Forms/Form";
+import Form from '@/components/Forms/Form';
 
-import FormInput from "@/components/Forms/FormInput";
+import FormInput from '@/components/Forms/FormInput';
 
-import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
+import ButtonSubmitUI from '@/components/ui/ButtonSubmitUI';
 
-import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
+import TagsSelectUI from '@/components/ui/dashboardUI/TagsSelectUI';
 
 import {
   useAddMilestoneMutation,
   useGetSingleMilestoneQuery,
   useUpdateMilestoneMutation,
-} from "@/redux/api/adminApi/milestoneApi";
+} from '@/redux/api/adminApi/milestoneApi';
 
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
 
-import { Col, FloatButton, Row, Spin } from "antd";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
+import { Col, FloatButton, Row, Spin } from 'antd';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 
-import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import FormTextArea from "@/components/Forms/FormTextArea";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import LoadingSkeleton from "@/components/ui/Loading/LoadingSkeleton";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import UploadMultipalImage from '@/components/ui/UploadMultipalImage';
+import FormTextArea from '@/components/Forms/FormTextArea';
+import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
+import SelectCategoryChildren from '@/components/Forms/GeneralField/SelectCategoryChildren';
+import LoadingSkeleton from '@/components/ui/Loading/LoadingSkeleton';
+import { removeNullUndefinedAndFalsey } from '@/hooks/removeNullUndefinedAndFalsey';
 //
 const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
+  () => import('@/components/shared/TextEditor/TextEditor'),
   {
     ssr: false,
-  }
+  },
 );
 
-
-
-export default function EditMilestone({ milestoneId }: { milestoneId: string }) {
-
+export default function EditMilestone({
+  milestoneId,
+}: {
+  milestoneId: string;
+}) {
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState<{ _id?: string }>({});
 
   const query: Record<string, any> = {};
-  query["children"] = "course";
+  query['children'] = 'course';
   //! for Category options selection
   const { data: Categorys, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
@@ -51,7 +52,7 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
   //
   const { data = {}, isLoading: gerMilestoneLoading } =
     useGetSingleMilestoneQuery(milestoneId);
-  console.log("🚀 ~ file: page.tsx:50 ~ MilestoneEditePage ~ data:", data);
+
   //
   // const [textEditorValue, setTextEditorValue] = useState("");
 
@@ -61,7 +62,7 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
     if (courses._id) {
-      values["course"] = courses._id;
+      values['course'] = courses._id;
     }
     const MilestoneData: {} = {
       ...values,
@@ -74,11 +75,11 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
         id: milestoneId,
         data: MilestoneData,
       }).unwrap();
-      console.log(res);
+    
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully Update Milestone");
+        Success_model('Successfully Update Milestone');
         // setTextEditorValue("");
       }
       // console.log(res);
@@ -92,14 +93,14 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
   }
   return (
     <>
-      <div className="bg-white shadow-lg border-2 rounded-lg my-3 p-5 border-blue-300">
-        <h1 className="text-xl font-bold my-2 ">Update Milestone</h1>
-        <div className="text-xl font-bold  mb-2 text-start my-2">
-          <span className="bg-blue p-3  border rounded-lg hover:bg-blue-600 hover:text-white">
-            {" "}
+      <div className="my-3 rounded-lg border-2 border-blue-300 bg-white p-5 shadow-lg">
+        <h1 className="my-2 text-xl font-bold">Update Milestone</h1>
+        <div className="my-2 mb-2 text-start text-xl font-bold">
+          <span className="bg-blue rounded-lg border p-3 hover:bg-blue-600 hover:text-white">
+            {' '}
             Category:➡{data?.course?.category?.title}
-          </span>{" "}
-          <span className="bg-blue p-3 border rounded-xl hover:bg-blue-600 hover:text-white">
+          </span>{' '}
+          <span className="bg-blue rounded-xl border p-3 hover:bg-blue-600 hover:text-white">
             Course:➡ {data?.course?.title}
           </span>
         </div>
@@ -107,17 +108,17 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
       <div
         style={{
           boxShadow:
-            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-          borderRadius: "1rem",
-          backgroundColor: "white",
-          padding: "1rem",
+            '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          borderRadius: '1rem',
+          backgroundColor: 'white',
+          padding: '1rem',
         }}
       >
         {data._id ? (
           <div>
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}
-            <Row gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
+            <Row gutter={[16, 16]} style={{ marginBottom: '1rem' }}>
               <Col xs={24} md={6}>
                 <SelectCategoryChildren
                   lableText="Change category"
@@ -146,13 +147,13 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
             >
               <div
                 style={{
-                  border: "1px solid #d9d9d9",
-                  borderRadius: "5px",
-                  padding: "15px",
+                  border: '1px solid #d9d9d9',
+                  borderRadius: '5px',
+                  padding: '15px',
                 }}
               >
                 <Row gutter={[12, 12]}>
-                  <hr className="border-2 my-2" />
+                  <hr className="my-2 border-2" />
                   <Col className="gutter-row" xs={24} style={{}}>
                     <FormInput
                       type="text"
@@ -183,9 +184,8 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
                     <UploadMultipalImage
                       defaultImage={data?.imgs || []}
                       name="img"
-                    // isReset={isReset}
+                      // isReset={isReset}
                     />
-
                   </Col>
                   <Col className="gutter-row" xs={24} style={{}}>
                     <div>
@@ -206,16 +206,16 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
                   >
                     <div
                       style={{
-                        borderTopWidth: "2px",
+                        borderTopWidth: '2px',
                       }} /* className=" border-t-2" */
                     >
-                      <p className="text-center my-3 font-bold text-xl">
+                      <p className="my-3 text-center text-xl font-bold">
                         Description
                       </p>
                       <TextEditor
                         // textEditorValue={textEditorValue}
                         // setTextEditorValue={setTextEditorValue}
-                        defaultTextEditorValue={data?.details || ""}
+                        defaultTextEditorValue={data?.details || ''}
                       />
                     </div>
                   </Col>
@@ -225,7 +225,7 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
                 {milestonLoading ? (
                   <Spin />
                 ) : (
-                  <div className=" text-center">
+                  <div className="text-center">
                     <ButtonSubmitUI>Update Milestone</ButtonSubmitUI>
                   </div>
                 )}
@@ -240,9 +240,9 @@ export default function EditMilestone({ milestoneId }: { milestoneId: string }) 
             </Form>
           </div>
         ) : (
-          <div className="w-full  flex justify-center items-center min-h-64 animate-pulse">
-            <h1 className="text-center text-red-600 font-semibold text-2xl">
-              No found milestone{" "}
+          <div className="flex min-h-64 w-full animate-pulse items-center justify-center">
+            <h1 className="text-center text-2xl font-semibold text-red-600">
+              No found milestone{' '}
             </h1>
           </div>
         )}

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Table } from "antd";
+import { Table } from 'antd';
 
 type UMTableProps = {
   loading?: boolean;
@@ -12,6 +12,7 @@ type UMTableProps = {
   onPaginationChange?: (page: number, pageSize: number) => void;
   onTableChange?: (pagination: any, filter: any, sorter: any) => void;
   showPagination?: boolean;
+  showQuickJumper?: boolean;
 };
 
 const UMTable = ({
@@ -24,33 +25,33 @@ const UMTable = ({
   onPaginationChange,
   onTableChange,
   showPagination = true,
+  showQuickJumper = true,
 }: UMTableProps) => {
   const paginationConfig = showPagination
     ? {
         pageSize: pageSize,
         total: totalPages,
-        pageSizeOptions: [5, 10, 20],
+        pageSizeOptions: [5, 10, 20, 40],
         showSizeChanger: showSizeChanger,
         onChange: onPaginationChange,
+        showQuickJumper,
       }
     : false;
 
   return (
     <Table
-      style={{
-        // overflowX: "auto",
-      
-       
-      }}
+      style={
+        {
+          // overflowX: "auto",
+        }
+      }
       loading={loading}
       scroll={{ x: 1000 }}
       columns={columns}
       bordered
-      
       dataSource={dataSource}
       pagination={paginationConfig}
       onChange={onTableChange}
-      
     />
   );
 };

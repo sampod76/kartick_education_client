@@ -1,51 +1,41 @@
-"use client";
+'use client';
 
-import Form from "@/components/Forms/Form";
+import { useAddQuizMutation } from '@/redux/api/adminApi/quizApi';
 
-import FormInput from "@/components/Forms/FormInput";
-
-import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
-
-import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
-
-import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
-
-import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import { courseStatusOptions } from "@/constants/global";
-
-import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
-
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
-
-import { Button, Col, Row, message } from "antd";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { useGlobalContext } from '@/components/ContextApi/GlobalContextApi';
+import SelectCategoryChildren from '@/components/Forms/GeneralField/SelectCategoryChildren';
+import { removeNullUndefinedAndFalsey } from '@/hooks/removeNullUndefinedAndFalsey';
+import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
+import { Button, Col, Form, Input, InputNumber, Row } from 'antd';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
 const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
+  () => import('@/components/shared/TextEditor/TextEditor'),
   {
     ssr: false,
-  }
+  },
 );
 const CreateQuiz = () => {
+  const [form] = Form.useForm();
+  const { userInfo } = useGlobalContext();
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
   const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
   const [isReset, setIsReset] = useState(false);
 
   const query: Record<string, any> = {};
-  query["children"] = "course-milestone-module-lessons";
+  query['children'] = 'course-milestone-module-lessons';
   //! for Category options selection
+  if (userInfo?.role !== 'admin') {
+    query['author'] = userInfo?.id;
+  }
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
   });
@@ -67,11 +57,11 @@ const CreateQuiz = () => {
     // console.log(LessonData);
     try {
       const res = await addQuiz(createQuizeData).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Quiz");
+        Success_model('Successfully added Quiz');
         setIsReset(true);
       }
       // console.log(res);
@@ -90,15 +80,15 @@ const CreateQuiz = () => {
       <div
         style={{
           boxShadow:
-            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-          borderRadius: "1rem",
-          backgroundColor: "white",
-          padding: "1rem",
-          marginBottom: "1rem",
+            '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          borderRadius: '1rem',
+          backgroundColor: 'white',
+          padding: '1rem',
+          marginBottom: '1rem',
         }}
       >
-        <div className="border-2 rounded-lg my-3 p-5 border-blue-500">
-          <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
+        <div className="my-3 rounded-lg border-2 border-blue-500 p-5">
+          <h1 className="mb-2 border-spacing-4 border-b-2 text-xl font-bold">
             At fast Filter
           </h1>
           <Row gutter={[16, 16]}>
@@ -157,132 +147,104 @@ const CreateQuiz = () => {
         <div
           style={{
             boxShadow:
-              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-            borderRadius: "1rem",
-            backgroundColor: "white",
-            padding: "1rem",
+              '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            borderRadius: '1rem',
+            backgroundColor: 'white',
+            padding: '1rem',
           }}
         >
           <div>
             {/* resolver={yupResolver(adminSchema)} */}
             {/* resolver={yupResolver(IServiceSchema)} */}
-            <Form submitHandler={onSubmit} isReset={isReset}>
+            <Form
+              form={form}
+              layout="vertical"
+              onFinish={onSubmit}
+              initialValues={{ passingGrade: 80 }}
+            >
               <div
                 style={{
-                  border: "1px solid #d9d9d9",
-                  borderRadius: "5px",
-                  padding: "15px",
+                  border: '1px solid #d9d9d9',
+                  borderRadius: '5px',
+                  padding: '15px',
                 }}
               >
-                <h1 className="text-center text-lg font-bold">Create Quiz</h1>
+                <h1
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '1.25rem',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Create Quiz
+                </h1>
+
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                  <Col
-                    className="gutter-row"
-                    xs={24}
-                    md={24}
-                    lg={24}
-                    style={{ marginBlock: "10px" }}
-                  >
-                    <FormInput
-                      type="text"
+                  {/* Quiz Title */}
+                  <Col xs={24} style={{ marginBlock: '10px' }}>
+                    <Form.Item
                       name="title"
-                      size="large"
                       label="Quiz Title"
-                      required={true}
-                    />
-                    {/*//! 1-- */}
-                  </Col>
-                  <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                    <FormInput
-                      type="number"
-                      name="passingGrade"
-                      size="large"
-                      label="passingGrade "
-                      // required={true}
-                    />
-                    {/*//! 4 --- */}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please enter the quiz title',
+                        },
+                      ]}
+                    >
+                      <Input size="large" placeholder="Enter quiz title" />
+                    </Form.Item>
                   </Col>
 
-                  <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
-                    <FormSelectField
-                      size="large"
-                      name="status"
-                      options={courseStatusOptions as any}
-                      // defaultValue={priceTypeOptions[2]}
-                      label="status"
-                      // placeholder="Select"
-                      required={true}
-                    />
-                  </Col>
-                  <Col className="gutter-row" xs={24} style={{}}>
-                    <DemoVideoUI
-                      // videoType={videoType as any}
-                      // setVideoType={setVideoType}
-                      // videoUrl={videoUrl}
-                      // setVideoUrl={setVideoUrl}
-                      options={["youtube", "vimeo"]}
-                      label="Preview Video"
-                    />
-                  </Col>
-                  <Col
-                    className="gutter-row"
-                    xs={24}
-                    style={{
-                      marginTop: "10px",
-                    }}
-                  >
-                    <TagsSelectUI />
-                  </Col>
-                  <Col className="gutter-row" xs={24} style={{}}>
-                    <UploadMultipalImage isReset={isReset} name="imgs" />
-                  </Col>
-                  <Col className="gutter-row" xs={24} style={{}}>
-                    <div>
-                      <FormTextArea
-                        name="short_description"
-                        label="Short description"
-                        rows={5}
-                        placeholder="Please enter short description"
-                      />
-                    </div>
-                  </Col>
-                  <Col
-                    className="gutter-row"
-                    xs={24}
-                    // md={12}
-                    // lg={8}
-                    style={{}}
-                  >
-                    {/*//! 3 */}
-                    <div
-                      style={{
-                        borderTopWidth: "2px",
-                      }} /* className=" border-t-2" */
+                  {/* Passing Grade */}
+                  <Col xs={24} md={12} lg={4}>
+                    <Form.Item
+                      name="passingGrade"
+                      label="Pass Mark (%)"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please enter the passing grade',
+                        },
+                        {
+                          validator: (_, value) => {
+                            if (
+                              value < 0 ||
+                              value > 100 ||
+                              !Number.isInteger(value)
+                            ) {
+                              return Promise.reject(
+                                new Error(
+                                  'Please enter an integer between 0 and 100',
+                                ),
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
                     >
-                      <p className="text-center my-3 font-bold text-xl">
-                        Description
-                      </p>
-                      <TextEditor
-                        isReset={isReset}
-                        // textEditorValue={textEditorValue}
-                        // setTextEditorValue={setTextEditorValue}
+                      <InputNumber
+                        size="large"
+                        min={0}
+                        max={100}
+                        placeholder="80"
                       />
-                    </div>
+                    </Form.Item>
                   </Col>
                 </Row>
               </div>
 
-              <div className="w-fit mx-auto">
+              {/* Submit Button */}
+              <div style={{ textAlign: 'center', marginTop: '1rem' }}>
                 <Button
                   loading={quizLoading}
-                  // disabled={imageUploadLoading}
-                  type="default"
-                  style={{
-                    marginTop: "1rem",
-                    background: "blue",
-                    color: "white",
-                  }}
+                  type="primary"
                   htmlType="submit"
+                  style={{
+                    backgroundColor: 'blue',
+                    color: 'white',
+                  }}
                 >
                   Create Quiz
                 </Button>
@@ -291,9 +253,9 @@ const CreateQuiz = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full  flex justify-center items-center min-h-64 animate-pulse">
-          <h1 className="text-center text-red-600 font-semibold text-2xl">
-            First select your Lesson by filtering{" "}
+        <div className="flex min-h-64 w-full animate-pulse items-center justify-center">
+          <h1 className="text-center text-2xl font-semibold text-red-600">
+            First select your Lesson by filtering{' '}
           </h1>
         </div>
       )}

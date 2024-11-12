@@ -1,38 +1,35 @@
-import type { MenuProps } from "antd";
 import {
-  ProfileOutlined,
-  TableOutlined,
-  AppstoreOutlined,
-  ScheduleOutlined,
-  ThunderboltOutlined,
-  CreditCardOutlined,
-  FileTextOutlined,
   AccountBookFilled,
-  AlipayCircleFilled,
-  BorderOuterOutlined,
-  UserOutlined,
-  BookOutlined,
-  DatabaseOutlined,
   AlignCenterOutlined,
-  CalendarOutlined,
-  UsergroupDeleteOutlined,
-  ContainerOutlined,
-  HomeOutlined,
-  ShoppingCartOutlined,
+  BookOutlined,
+  BorderOuterOutlined,
+  ContactsFilled,
   ContactsOutlined,
-  UserSwitchOutlined,
+  ContainerOutlined,
+  CreditCardOutlined,
+  CreditCardTwoTone,
+  DatabaseOutlined,
+  FileTextOutlined,
+  HomeOutlined,
   PayCircleFilled,
-  ThunderboltFilled,
   PicLeftOutlined,
-  ContactsFilled
-} from "@ant-design/icons";
-import { PiPackageDuotone } from "react-icons/pi";
-import Link from "next/link";
-import { USER_ROLE } from "./role";
-import { GiJetPack } from "react-icons/gi";
-import { CiLogin } from "react-icons/ci";
+  ProfileOutlined,
+  ShoppingCartOutlined,
+  ThunderboltFilled,
+  ThunderboltOutlined,
+  UsergroupDeleteOutlined,
+  UserOutlined,
+  UserSwitchOutlined,
+} from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import Link from 'next/link';
+import { CiLogin } from 'react-icons/ci';
+import { GiJetPack } from 'react-icons/gi';
+import { MdAssignment } from 'react-icons/md';
+import { PiPackageDuotone } from 'react-icons/pi';
+import { USER_ROLE } from './role';
 export const dashboardItems = (role: string, setCollapsed?: any) => {
-  const defaultSidebarItems: MenuProps["items"] = [
+  const defaultSidebarItems: MenuProps['items'] = [
     {
       label: (
         <div>
@@ -48,8 +45,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       icon: <HomeOutlined />,
     },
     {
-      label: "Profile",
-      key: "profile",
+      label: 'Profile',
+      key: 'profile',
       icon: <ProfileOutlined />,
 
       children: [
@@ -66,16 +63,16 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         },
         {
           label: <Link href={`/loginHistory`}>Login history</Link>,
-          key: "Login history",
+          key: 'Login history',
           icon: <CiLogin />,
         },
       ],
     },
   ];
-  const trainerSidebarItems: MenuProps["items"] = [
+  const trainerSidebarItems: MenuProps['items'] = [
     {
-      label: "Category",
-      key: "manage-category",
+      label: 'Category',
+      key: 'manage-category',
       icon: <CreditCardOutlined />,
       children: [
         {
@@ -103,8 +100,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Course label",
-      key: "Level",
+      label: 'Course label',
+      key: 'Level',
       icon: <CreditCardOutlined />,
       children: [
         {
@@ -132,8 +129,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: " Course",
-      key: "manage-Course",
+      label: ' Course',
+      key: 'manage-Course',
       icon: <FileTextOutlined />,
       children: [
         {
@@ -162,8 +159,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: " Milestone",
-      key: "manage-Milestone",
+      label: ' Milestone',
+      key: 'manage-Milestone',
       icon: <BookOutlined />,
       children: [
         {
@@ -192,8 +189,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: " Module",
-      key: "manage-Module",
+      label: ' Module',
+      key: 'manage-Module',
       icon: <DatabaseOutlined />,
       children: [
         {
@@ -221,8 +218,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: " Lesson",
-      key: "manage-lesson",
+      label: ' Lesson',
+      key: 'manage-lesson',
       icon: <AlignCenterOutlined />,
       children: [
         {
@@ -250,8 +247,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: " Quiz",
-      key: "manage-quiz",
+      label: ' Quiz',
+      key: 'manage-quiz',
       icon: <ThunderboltOutlined />,
       children: [
         {
@@ -280,8 +277,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
     },
 
     {
-      label: " Single Quiz",
-      key: "manage-single-quiz",
+      label: 'Single Quiz',
+      key: 'manage-single-quiz',
       icon: <ThunderboltFilled />,
       children: [
         {
@@ -308,49 +305,48 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
         },
       ],
     },
-
-
   ];
-  const adminSidebarItems: MenuProps["items"] = [
+  const adminSidebarItems: MenuProps['items'] = [
     ...defaultSidebarItems,
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/donation`}
+        >
+          Donation History
+        </Link>
+      ),
+      key: 'donation',
+      icon: <CreditCardTwoTone />,
+    },
     ...trainerSidebarItems,
     {
-      label: " Users",
-      key: "manage-user",
+      label: ' Users',
+      key: 'manage-user',
       icon: <UsergroupDeleteOutlined />,
       children: [
         {
-          label: "All Users",
-          key: "All-users",
+          label: 'All Members',
+          key: 'All-Members',
           icon: <UserOutlined />,
           children: [
             {
               label: (
                 <Link
                   onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/manage-users/all-users/create`}
+                  href={`/${role}/members`}
                 >
-                  Create user{" "}
+                  Members
                 </Link>
               ),
-              key: `/${role}/manage-users/create`,
-            },
-            {
-              label: (
-                <Link
-                  onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-                  href={`/${role}/manage-users/all-users`}
-                >
-                  Users List
-                </Link>
-              ),
-              key: `/${role}/user/all-users-list`,
+              key: `/${role}/members`,
             },
           ],
         },
         {
-          label: "Students",
-          key: "students",
+          label: 'Students',
+          key: 'students',
           icon: <ContactsOutlined />,
           children: [
             {
@@ -378,8 +374,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
           ],
         },
         {
-          label: "Teacher",
-          key: "teacher",
+          label: 'Teacher',
+          key: 'teacher',
           icon: <UserSwitchOutlined />,
           children: [
             {
@@ -407,8 +403,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
           ],
         },
         {
-          label: "Admin",
-          key: "admin",
+          label: 'Admin',
+          key: 'admin',
           icon: <UserOutlined />,
           children: [
             {
@@ -438,8 +434,8 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
-      label: "Manage Package",
-      key: "Manage-Package",
+      label: 'Manage Package',
+      key: 'Manage-Package',
       icon: <GiJetPack />,
       children: [
         {
@@ -467,6 +463,47 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       ],
     },
     {
+      label: 'Home Video Upload',
+      key: 'Home-Video-Upload',
+      icon: <GiJetPack />,
+      children: [
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/homevideo/create`}
+            >
+              Upload Video
+            </Link>
+          ),
+          key: `/${role}/homevideo/create`,
+        },
+        {
+          label: (
+            <Link
+              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+              href={`/${role}/homevideo`}
+            >
+              Video List
+            </Link>
+          ),
+          key: `/${role}/homevideo`,
+        },
+      ],
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/assignment-submission`}
+        >
+          Student Assignment
+        </Link>
+      ),
+      icon: <MdAssignment />,
+      key: `/${role}/assignment-submission`,
+    },
+    {
       label: (
         <Link
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
@@ -475,7 +512,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
           Purchase Package History
         </Link>
       ),
-      key: "Manage-pouches-package",
+      key: 'Manage-pouches-package',
       icon: <PayCircleFilled />,
     },
     {
@@ -487,17 +524,17 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
           Purchase course History
         </Link>
       ),
-      key: "Manage-pouches-course",
+      key: 'Manage-pouches-course',
       icon: <PayCircleFilled />,
     },
     {
-      label: "Manage Features",
-      key: "manage-features",
+      label: 'Manage Features',
+      key: 'manage-features',
       icon: <PicLeftOutlined />,
       children: [
         {
-          label: "Advance Class",
-          key: `/${role}/features/advance-class`,
+          label: 'Advance Class',
+          key: `/${role}/features/advance-classsdfsd`,
           children: [
             {
               label: (
@@ -508,7 +545,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Create Advance Class
                 </Link>
               ),
-              key: `/${role}/features/advance-class/create`,
+              key: `/${role}/features/advance-classsdfsdf/create`,
             },
             {
               label: (
@@ -519,12 +556,12 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Advance Class List
                 </Link>
               ),
-              key: `/${role}/features/advance-class`,
+              key: `/${role}/features/advance-classsfdsdf`,
             },
           ],
         },
         {
-          label: "Skills Plan",
+          label: 'Skills Plan',
           key: `/${role}/features/skills-plan`,
           children: [
             {
@@ -547,13 +584,13 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Skills Plan List
                 </Link>
               ),
-              key: `/${role}/features/skills-plan`,
+              key: `/${role}/features/skills-planlsie`,
             },
           ],
         },
         {
-          label: "Short Overview",
-          key: `/${role}/features/short-overview`,
+          label: 'Short Overview',
+          key: `/${role}/features/short-overviewsdfs`,
           children: [
             {
               label: (
@@ -564,7 +601,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Create Short Overview
                 </Link>
               ),
-              key: `/${role}/features/short-overview/create`,
+              key: `/${role}/features/short-overview/createsfdsd`,
             },
             {
               label: (
@@ -575,16 +612,15 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
                   Short Overview List
                 </Link>
               ),
-              key: `/${role}/features/short-overview`,
+              key: `/${role}/features/short-overviewsfasf`,
             },
           ],
         },
-
       ],
     },
     {
-      label: "Contact",
-      key: "manage-contact",
+      label: 'Contact',
+      key: 'manage-contact',
       icon: <ContactsFilled />,
       children: [
         // {
@@ -613,7 +649,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
     },
   ];
 
-  const studentSidebarItems: MenuProps["items"] = [
+  const studentSidebarItems: MenuProps['items'] = [
     ...defaultSidebarItems,
     // {
     //   label: (
@@ -627,18 +663,18 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
     //   icon: <ThunderboltOutlined />,
     //   key: `/${role}/booking`,
     // },
-    {
-      label: (
-        <Link
-          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/${role}/activeCourse`}
-        >
-          Courses List
-        </Link>
-      ),
-      icon: <CalendarOutlined />,
-      key: `/${role}/activeCourse`,
-    },
+    // {
+    //   label: (
+    //     <Link
+    //       onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+    //       href={`/${role}/activeCourse`}
+    //     >
+    //       Courses List
+    //     </Link>
+    //   ),
+    //   icon: <CalendarOutlined />,
+    //   key: `/${role}/activeCourse`,
+    // },
     {
       label: (
         <Link
@@ -681,7 +717,7 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       label: (
         <Link
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-          href={`/contact`}
+          href={`/student/support`}
         >
           Support and Help
         </Link>
@@ -690,8 +726,9 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       key: `/contact`,
     },
   ];
-  const sellerSidebarItems: MenuProps["items"] = [
+  const sellerSidebarItems: MenuProps['items'] = [
     ...defaultSidebarItems,
+    // ...trainerSidebarItems.filter((item) => item?.key !== 'manage-category'),
     // {
     //   label: (
     //     <Link
@@ -708,6 +745,18 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       label: (
         <Link
           onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+          href={`/${role}/assignment-submission`}
+        >
+          Student Assignment
+        </Link>
+      ),
+      icon: <MdAssignment />,
+      key: `/${role}/assignment-submission`,
+    },
+    {
+      label: (
+        <Link
+          onClick={() => (setCollapsed ? setCollapsed(false) : null)}
           href={`/${role}/package`}
         >
           Package
@@ -717,21 +766,21 @@ export const dashboardItems = (role: string, setCollapsed?: any) => {
       key: `/${role}/package`,
     },
     {
-      label: "Students",
-      key: "students",
+      label: 'Students',
+      key: 'students',
       icon: <UserOutlined />,
       children: [
-        {
-          label: (
-            <Link
-              onClick={() => (setCollapsed ? setCollapsed(false) : null)}
-              href={`/${role}/students/create`}
-            >
-              Create Student
-            </Link>
-          ),
-          key: `/${role}/students/create`,
-        },
+        // {
+        //   label: (
+        //     <Link
+        //       onClick={() => (setCollapsed ? setCollapsed(false) : null)}
+        //       href={`/${role}/students/create`}
+        //     >
+        //       Create Student
+        //     </Link>
+        //   ),
+        //   key: `/${role}/students/create`,
+        // },
         {
           label: (
             <Link

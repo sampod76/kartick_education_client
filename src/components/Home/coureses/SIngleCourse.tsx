@@ -1,49 +1,47 @@
-"use client";
-import React, { ReactNode, useEffect } from "react";
-import { ShoppingCartOutlined, SnippetsOutlined } from "@ant-design/icons";
-import { CgPlayButtonO } from "react-icons/cg";
-import { CiClock2 } from "react-icons/ci";
-import { Avatar, Button, Card, Rate, TooltipProps } from "antd";
-import Image from "next/image";
-import Link from "next/link";
-import parse from "html-react-parser";
-import { AllImage } from "@/assets/AllImge";
-import { CutText } from "@/utils/CutText";
+'use client';
+import { SnippetsOutlined } from '@ant-design/icons';
+import { Button, Card } from 'antd';
+import Image from 'next/image';
+import Link from 'next/link';
+import { CgPlayButtonO } from 'react-icons/cg';
+import { FaUsers } from 'react-icons/fa';
+import HomeCourseImage from '../../../assets/svg/HomeCourse1.svg';
+import HomeCourseImage2 from '../../../assets/svg/HomeCourse2.svg';
+import HomeCourseImage3 from '../../../assets/svg/HomeCourse3.svg';
+import HomeCourseImage4 from '../../../assets/svg/HomeCourse4.jpg';
+import HomeCourseImage5 from '../../../assets/svg/HomeCourse5.jpg';
+import HomeCourseImage6 from '../../../assets/svg/HomeCourse6.jpg';
 const { Meta, Grid } = Card;
 // import { AllImage } from "@/assets/AllImge";
 
-import { Space, Typography } from "antd";
-import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import dayjs from "dayjs";
-import LoaderNextImage from "@/components/ui/Loading/LoaderNextImage";
-import { ICourseData } from "@/types/courseType";
-import CoverSvg from "@/assets/svg/CoverBackground";
-import { SVGstudentIcom } from "@/assets/svg/Icon";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import { useAppDispatch } from "@/redux/hooks";
-import { addToCart } from "@/redux/features/cartSlice";
-import { useAddCartMutation } from "@/redux/api/userApi/cartAPi";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { useAddCartMutation } from '@/redux/api/userApi/cartAPi';
+import { ICourseData } from '@/types/courseType';
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
+import { Typography } from 'antd';
 
-import { AnimatePresenceWrapper } from "@/components/framer_motion/AnimatePresence";
-import VimeoPlayer from "@/utils/vimoPlayer";
-import { urlChecker } from "@/utils/urlChecker";
-import { ENUM_VIDEO_PLATFORM } from "@/constants/globalEnums";
-import { useRouter } from "next/navigation";
-import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
+import { useGlobalContext } from '@/components/ContextApi/GlobalContextApi';
+import fileObjectToLink from '@/utils/fileObjectToLink';
+import { useRouter } from 'next/navigation';
 const { Text } = Typography;
 
-const SIngleCourse = ({ course }: { course: ICourseData }) => {
+const SIngleCourse = ({ course }: { course: any }) => {
+  console.log('🚀 ~ SIngleCourse ~ course:', course);
   const { userInfo, userInfoLoading } = useGlobalContext();
-  console.log("🚀 ~ SIngleCourse ~ userInfo:", userInfo);
+  // console.log("🚀 ~ SIngleCourse ~ userInfo:", userInfo);
   const router = useRouter();
-  // console.log(course);
-  // const { title, details, img, demo_video, tags} = course;
-
-  const screens = useBreakpoint();
 
   const [addCart] = useAddCartMutation();
+  const arr = [
+    ' ',
+    HomeCourseImage,
+    HomeCourseImage2,
+    HomeCourseImage3,
+    HomeCourseImage4,
+    HomeCourseImage5,
+    HomeCourseImage6,
+  ];
+
+  let indexArray = Math.floor(Math.random() * 6 + 1);
 
   const addToCartHandler = async (CartCourse: ICourseData) => {
     // dispatch(addToCart(CartCourse))
@@ -71,24 +69,8 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
 
   return (
     <>
-      <div className="w-[363px] md:w-full h-full rounded-xl shadow-xl bg-white mx-auto flex flex-col justify-between ">
-        <div className="flex justify-center items-center h-1/2 mt-7">
-          <VimeoPlayer
-            width={
-              !screens.xl ? 365 : !screens.lg ? 450 : !screens.sm ? 340 : 340
-            }
-            height={347}
-            autoplay={false}
-            // link={result.data as string}
-            link={
-              urlChecker(course?.demo_video?.video).platform ===
-              ENUM_VIDEO_PLATFORM.VIMEO
-                ? course.demo_video.video
-                : "https://vimeo.com/547716679"
-            }
-          />
-        </div>
-        <div className="flex flex-col justify-between h-1/2  ">
+      <div className="mx-auto flex h-full w-full flex-col justify-between rounded-xl bg-[#f5eeeebd] py-2 shadow-xl md:w-full">
+        <div className="flex cursor-pointer items-center justify-center">
           <Link
             href={`/course/milestone/${course?._id}?categoryName=${
               course?.category?.title
@@ -97,46 +79,70 @@ const SIngleCourse = ({ course }: { course: ICourseData }) => {
             }`}
             className=""
           >
-            <div className="px-2 py-2 ">
-              <div>
-                <h3 className="text-black text-center">
-                  <EllipsisMiddle suffixCount={3} maxLength={90}>
-                    {course?.title}
-                  </EllipsisMiddle>
-                </h3>
-              </div>
-            </div>
+            <Image
+              alt=""
+              width={1500}
+              height={100}
+              className="h-[220px] w-full rounded-md"
+              src={fileObjectToLink((course?.image as any) || course?.img)}
+            />
           </Link>
-          <div className="">
-            <div className="bg-gray-100 flex flex-row justify-between items-center text-xs sm:text-sm text-gray-900  px-6 py-1">
-              <span className="py-1  font-regular whitespace-nowrap text-gray-900 flex flex-row items-center">
-                <CgPlayButtonO className="mr-1" /> {course?.totalVideoSize}{" "}
-                video
+        </div>
+        <div className="mt-3 flex h-1/2 flex-col justify-between">
+          <div className="px-2 py-2">
+            <div className="flex items-center justify-center">
+              <Link
+                href={`/course/milestone/${course?._id}?categoryName=${
+                  course?.category?.title
+                }&courseName=${course?.title}&category=${
+                  course?.category?._id || course?.category
+                }`}
+                className=""
+              >
+                <h3 className="line-clamp-2 text-center text-[16px] text-black">
+                  {course?.title}
+                </h3>
+                <p className="line-clamp-1 text-center text-[16px] text-black">
+                  {course?.labelDetails?.title
+                    ? `(${course?.labelDetails?.title})`
+                    : ''}
+                </p>
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-row items-center justify-between gap-2 px-2 py-1 text-xs text-gray-900 sm:text-sm">
+              <span className="font-regular flex w-full flex-row items-center justify-center whitespace-nowrap rounded-md bg-primary p-2 py-1 text-white">
+                <CgPlayButtonO className="mr-1 text-lg font-extrabold text-white" />{' '}
+                {course?.totalModuleSize || 0} Modules
               </span>
 
-              <span className="flex whitespace-nowrap justify-center items-center gap-1">
-                <SnippetsOutlined className="text-gray-900" />
-                {course?.totalEnrollStudentSize + " " + "quiz"}
+              <span className="flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-md bg-primary p-2 py-1 text-white">
+                <SnippetsOutlined style={{ color: '#FFFFFF', font: 'bold' }} />
+                {course?.totalLessonSize || 0} Lessons
               </span>
-              <span className="flex whitespace-nowrap justify-center items-center gap-1">
-                <SVGstudentIcom className="text-gray-900" />{" "}
-                {course?.totalEnrollStudentSize + " " + "students"}
+              <span className="flex w-full items-center justify-center gap-1 whitespace-nowrap rounded-md bg-primary p-2 py-1 text-white">
+                <FaUsers /> {course?.totalEnrollStudentSize || 0} Students
               </span>
             </div>
-            <Button
-              // href= {`/payment/checkout/${course?._id}?categoryId=${course?.category}`}
-              onClick={() => {
-                console.log("first")
-                router.push(
-                  `/payment/checkout/${course?._id}?categoryId=${course?.category}`
-                );
-              }}
-              type="default"
-              style={{color:"white",borderBottomRightRadius:"0.5rem",borderBottomLeftRadius:"0.5rem"}}
-              className="bg-secondary cursor-pointer   text-center flex justify-center items-center font-bold w-full text-white text-xl   "
-            >
-              Enroll Now 
-            </Button>
+            <div className="w-full px-4 pb-4">
+              <div className="w-full rounded-3xl border-4 border-primary p-1">
+                <Button
+                  // href= {`/payment/checkout/${course?._id}?categoryId=${course?.category}`}
+                  onClick={() => {
+                    console.log('first');
+                    router.push(
+                      `/payment/checkout/${course?._id}?categoryId=${course?.category}`,
+                    );
+                  }}
+                  type="default"
+                  className="flex w-full cursor-pointer items-center justify-center !rounded-3xl bg-primary text-center text-lg font-bold text-white hover:text-primary"
+                >
+                  Enroll Now
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

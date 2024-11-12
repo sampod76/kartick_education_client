@@ -61,6 +61,7 @@ export const trainerApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.admin],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

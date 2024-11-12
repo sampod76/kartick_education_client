@@ -53,7 +53,7 @@ const UploadMultipalImage = ({
   const { setValue } = useFormContext();
   useEffect(() => {
     setValue(name, imagesUrl);
-  }, [imagesUrl, name]);
+  }, [imagesUrl, name, setValue]);
   const handleImageProcessing = useCallback(async (file: any) => {
     try {
       // Resize the image
@@ -92,7 +92,7 @@ const UploadMultipalImage = ({
         isImageloading(true)
       }
     }
-  }, []);
+  }, [isImageloading]);
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>

@@ -81,10 +81,10 @@ export default function QuizeSinglePage({
       >
         <ArrowLeftOutlined /> Back to Module
       </button>
-      <h1 className="text-sm  lg:text-2xl  font-bold p-5">
+      {/* <h1 className="text-sm  lg:text-2xl  font-bold p-5">
         <TextToSpeech text={quiz_title} />
         {quiz_title}
-      </h1>
+      </h1> */}
       <div className=" py-2 m2-2 px-3">
         {/*
          <UMBreadCrumb

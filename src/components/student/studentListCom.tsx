@@ -1,44 +1,27 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Dropdown, Input, Menu, Space, message } from "antd";
-import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
+import { useDebounced } from "@/redux/hooks";
+import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Input, Menu, Space } from "antd";
+import Link from "next/link";
+import { useState } from "react";
 
-import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
 
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import {
-  useDeleteStudentMutation,
-  useGetAllStudentsQuery,
-} from "@/redux/api/adminApi/studentApi";
-import { getUserInfo } from "@/services/auth.service";
+import { AllImage } from "@/assets/AllImge";
 import ModalComponent from "@/components/Modal/ModalComponents";
 import CreateStudentComponent from "@/components/student/addStudentByAuthor/addStudentComponent";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+import { useGetAllStudentsQuery } from "@/redux/api/adminApi/studentApi";
+import { useUpdateUserMutation } from "@/redux/api/adminApi/usersApi";
+import { getUserInfo } from "@/services/auth.service";
 import Image from "next/image";
-import { AllImage } from "@/assets/AllImge";
 import SellerAddPackageStudent from "../package/SellerAddPackageStudent";
-import {
-  useGetAllUsersQuery,
-  useUpdateUserMutation,
-} from "@/redux/api/adminApi/usersApi";
 import SellerDeactivedStudentPackage from "../package/SellerDeactiveStudentPackage";
 
 const StudentListCom = ({
@@ -64,6 +47,7 @@ const StudentListCom = ({
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["sortOrder"] = sortOrder;
   // query["status"] = ENUM_STATUS.ACTIVE;
   query["isDelete"] = ENUM_YN.NO;
   if (author) {
@@ -78,22 +62,23 @@ const StudentListCom = ({
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useGetAllUsersQuery({
+  const { data, isLoading, refetch, error } = useGetAllStudentsQuery({
     ...query,
   });
 
   //@ts-ignore
   const StudentData = data?.data;
+  console.log("🚀 ~ StudentData:", StudentData);
 
   //@ts-ignore
   const meta = data?.meta;
 
+  // console.log("🚀 ~ isLoading:", isLoading);
   const columns = [
     {
       width: 150,
       render: function (data: any) {
-        // console.log(data);
-        let img = `${data[data.role]?.img} `;
+        let img = `${data?.img} `;
         if (img === "undefined" || img === "undefined ") {
           img = "";
         }
@@ -114,9 +99,8 @@ const StudentListCom = ({
     {
       title: "Name",
       render: function (data: any) {
-        // console.log(data);
-        const fullName = `${data[data.role]?.name?.firstName} ${data[data.role]?.name?.lastName
-          }  `;
+        //// console.log(data);
+        const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
         return <>{fullName}</>;
       },
     },
@@ -133,8 +117,8 @@ const StudentListCom = ({
       title: "Contact no.",
       // dataIndex: "phoneNumber",
       render: function (data: any) {
-        // console.log(data);
-        const fullName = `${data[data.role]?.phoneNumber}`;
+        //// console.log(data);
+        const fullName = `${data?.phoneNumber}`;
         return <>{fullName}</>;
       },
     },
@@ -142,7 +126,7 @@ const StudentListCom = ({
     //   title: "Date Of Birth",
     //   // dataIndex: "dateOfBirth",
     //   render: function (data: any) {
-    //     // console.log(data);
+    //     //// console.log(data);
     //     const date = `${data[data.role]?.dateOfBirth}   `;
     //     return date && dayjs(date).format("MMMM D, YYYY");
     //   },
@@ -152,15 +136,14 @@ const StudentListCom = ({
       title: "Gender",
       // dataIndex: "gender",
       render: function (data: any) {
-        // console.log(data);
-        const gender = `${data[data.role]?.gender}   `;
+        //// console.log(data);
+        const gender = `${data?.gender}   `;
         return <>{gender}</>;
       },
     },
     {
       title: "Status",
       dataIndex: "status",
-
     },
     {
       title: "Action",
@@ -174,12 +157,16 @@ const StudentListCom = ({
                 overlay={
                   <Menu>
                     <Menu.Item key="details">
-                      <Link href={`/${userInfo?.role}/students/details/${id}`}>
+                      <Link
+                        href={`/${userInfo?.role}/manage-users/students/details/${id}`}
+                      >
                         View
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="edit">
-                      <Link href={`/${userInfo?.role}/students/edit/${id}`}>
+                      <Link
+                        href={`/${userInfo?.role}/manage-users/students/edit/${id}`}
+                      >
                         Edit
                       </Link>
                     </Menu.Item>
@@ -196,12 +183,16 @@ const StudentListCom = ({
                       User
                     </Menu.Item>
                     <ModalComponent buttonText="Add package">
-                      <SellerAddPackageStudent userId={id} />
+                      <SellerAddPackageStudent
+                        userId={data.userDetails[0]?._id}
+                      />
                     </ModalComponent>
                     <p className="mt-1"></p>
 
                     <ModalComponent buttonText="Package List">
-                      <SellerDeactivedStudentPackage userId={id} />
+                      <SellerDeactivedStudentPackage
+                        userId={data.userDetails[0]?._id}
+                      />
                     </ModalComponent>
                   </Menu>
                 }
@@ -215,13 +206,13 @@ const StudentListCom = ({
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -233,7 +224,7 @@ const StudentListCom = ({
   };
 
   const handleDeactivate = async (id: string, data: any) => {
-    console.log(id);
+    // console.log(id);
     confirm_modal(`Are you sure you want to Update status`, "Yes").then(
       async (res) => {
         if (res.isConfirmed) {
@@ -261,9 +252,9 @@ const StudentListCom = ({
       }
     );
   };
-  // if (isLoading) {
-  //   return <LoadingForDataFetch />;
-  // }
+  if (error) {
+    console.log(error);
+  }
   return (
     <div
       style={{
@@ -280,9 +271,10 @@ const StudentListCom = ({
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
+        {/* <Button onClick={() => refetch()}>refetch</Button> */}
         <div>
           {/* <Link href={`/${userInfo?.role}/manage-users/students/create`}>
             <Button type="default">Create Student</Button>

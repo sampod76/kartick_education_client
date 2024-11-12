@@ -1,6 +1,6 @@
-"use client";
-import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+'use client';
+import ActionBar from '@/components/ui/ActionBar';
+import UMBreadCrumb from '@/components/ui/UMBreadCrumb';
 import {
   Button,
   Drawer,
@@ -10,52 +10,51 @@ import {
   Menu,
   Space,
   message,
-} from "antd";
-import Link from "next/link";
-import {
+} from 'antd';
+import Link from 'next/link';
+import { ReloadOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { useDebounced } from '@/redux/hooks';
+import UMTable from '@/components/ui/UMTable';
 
-  ReloadOutlined,
+import dayjs from 'dayjs';
+import UMModal from '@/components/ui/UMModal';
 
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
-
-import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
-
-import Image from "next/image";
+import Image from 'next/image';
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
-} from "@/utils/modalHook";
+} from '@/utils/modalHook';
 
 import {
   useDeleteMilestoneMutation,
   useGetAllMilestoneQuery,
-} from "@/redux/api/adminApi/milestoneApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import FilterCourse from "@/components/dashboard/Filter/FilterCourse";
-import { AllImage } from "@/assets/AllImge";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { useDeletePackageMutation, useGetAllPackageQuery } from "@/redux/api/userApi/packageAPi";
+} from '@/redux/api/adminApi/milestoneApi';
+import HeadingUI from '@/components/ui/dashboardUI/HeadingUI';
+import FilterCourse from '@/components/dashboard/Filter/FilterCourse';
+import { AllImage } from '@/assets/AllImge';
+import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
+import SelectCategoryChildren from '../Forms/GeneralField/SelectCategoryChildren';
+import { IDecodedInfo, getUserInfo } from '@/services/auth.service';
+import {
+  useDeletePackageMutation,
+  useGetAllPackageQuery,
+} from '@/redux/api/userApi/packageAPi';
 
 export default function PackageDashList() {
   //
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
+  const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
   //
   //----------------------------------------------------------------
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
 
   const queryCategory: Record<string, any> = {};
-  queryCategory["children"] = "course";
+  queryCategory['children'] = 'course';
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -67,30 +66,30 @@ export default function PackageDashList() {
   const query: Record<string, any> = {};
 
   // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
 
   const [deletePackage] = useDeletePackageMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
-  const [filterValue, setFilterValue] = useState("");
+  const [adminId, setAdminId] = useState<string>('');
+  const [filterValue, setFilterValue] = useState('');
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  query["status"] = "active";
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
+  query['status'] = 'active';
   //
-  query["category"] = category?._id;
+  query['category'] = category?._id;
 
   //
   if (filterValue) {
-    query["category"] = filterValue;
+    query['category'] = filterValue;
   }
 
   const debouncedSearchTerm = useDebounced({
@@ -99,10 +98,9 @@ export default function PackageDashList() {
   });
 
   if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllPackageQuery({ ...query });
-  console.log("🚀 ~ file: page.tsx:68 ~ MileStoneList ~ data:", data);
 
   //@ts-ignore
   const packageData = data?.data || [];
@@ -114,17 +112,14 @@ export default function PackageDashList() {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
-
           const res = await deletePackage(id).unwrap();
 
-          console.log(res, "response for delete Package");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Package Successfully Deleted");
+            Success_model('Package Successfully Deleted');
           }
         } catch (error: any) {
           Error_model_hook(error.message);
@@ -135,16 +130,14 @@ export default function PackageDashList() {
 
   const columns = [
     {
-      title: "Image",
+      title: 'Image',
       render: function (data: any) {
         return (
           <>
             {
               <Image
-                src={
-                  data?.img ? data?.img : AllImage.notFoundImage
-                }
-                style={{ height: "50px", width: "80px" }}
+                src={data?.img ? data?.img : AllImage.notFoundImage}
+                style={{ height: '50px', width: '80px' }}
                 width={50}
                 height={50}
                 alt="dd"
@@ -156,52 +149,50 @@ export default function PackageDashList() {
       width: 100,
     },
     {
-      title: "Name",
-      dataIndex: "title",
+      title: 'Name',
+      dataIndex: 'title',
       ellipsis: true,
     },
     {
-      title: "Type",
-      dataIndex: "type",
+      title: 'Type',
+      dataIndex: 'type',
       ellipsis: true,
       width: 100,
     },
     {
-      title: "MemberShip",
+      title: 'MemberShip',
       dataIndex: ['membership', 'title'],
       ellipsis: true,
     },
     {
-      title: "Monthly",
+      title: 'Monthly',
       dataIndex: ['monthly', 'price'],
       ellipsis: true,
       width: 100,
     },
     {
-      title: "Biannual",
+      title: 'Biannual',
       dataIndex: ['biannual', 'price'],
       ellipsis: true,
       width: 100,
     },
     {
-      title: "Yearly",
+      title: 'Yearly',
       dataIndex: ['yearly', 'price'],
       ellipsis: true,
       width: 100,
-
-    }
-    ,
+    },
 
     {
-      title: "Created at",
-      dataIndex: "createdAt",
+      title: 'Created at',
+      dataIndex: 'createdAt',
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
     },
     {
-      title: "Action",
+      title: 'Action',
       // fixed: "right",
       width: 130,
       render: (record: any) => (
@@ -217,7 +208,9 @@ export default function PackageDashList() {
                     </Link>
                   </Menu.Item> */}
                   <Menu.Item key="edit">
-                    <Link href={`/${userInfo?.role}/package/edit/${record._id}`}>
+                    <Link
+                      href={`/${userInfo?.role}/package/edit/${record._id}`}
+                    >
                       Edit
                     </Link>
                   </Menu.Item>
@@ -250,13 +243,13 @@ export default function PackageDashList() {
     const { order, field } = sorter;
     // console.log(order, field);
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
 
   const deleteAdminHandler = async (id: string) => {
@@ -264,7 +257,7 @@ export default function PackageDashList() {
     try {
       const res = await deletePackage(id);
       if (res) {
-        message.success("Package Successfully Deleted!");
+        message.success('Package Successfully Deleted!');
         setOpen(false);
       }
     } catch (error: any) {
@@ -286,10 +279,10 @@ export default function PackageDashList() {
     <div
       style={{
         boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
+          '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        borderRadius: '1rem',
+        backgroundColor: 'white',
+        padding: '1rem',
       }}
     >
       {/* <UMBreadCrumb
@@ -306,13 +299,13 @@ export default function PackageDashList() {
       /> */}
       <h1>Package List</h1>
       <ActionBar>
-        <div className="block lg:flex gap-5">
+        <div className="block gap-5 lg:flex">
           <Input
             size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "15rem",
+              width: '15rem',
             }}
           />
           {/* <FilterCourse
@@ -320,7 +313,7 @@ export default function PackageDashList() {
             setFilterValue={setFilterValue}
           /> */}
         </div>
-        <div className="block lg:flex gap-5">
+        <div className="block gap-5 lg:flex">
           {/* <Button
             type="default"
             style={{ marginRight: "5px" }}
@@ -329,13 +322,12 @@ export default function PackageDashList() {
             Filter
           </Button> */}
 
-
           <Link href={`/${userInfo?.role}/package/create`}>
             <Button type="default">Create Package</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >

@@ -8,10 +8,8 @@ import UserProfilePage from "@/components/profile/ProfileInstructorPage";
 
 const UserDetailsPage = ({ params }: any) => {
   const id = params.id;
-  console.log(id);
-  const { data: userData, isLoading: loading } = useGetSingleUserQuery(id);
 
-  console.log(userData);
+  const { data: userData, isLoading: loading } = useGetSingleUserQuery(id);
 
   if (loading) {
     return <LoadingForDataFetch />;

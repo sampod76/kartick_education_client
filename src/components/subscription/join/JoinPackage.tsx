@@ -27,7 +27,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import {
   useAddPaypalPaymentMutation,
-  useAddStripePaymentMutation,
+  useAddDonateStripePaymentMutation,
 } from "@/redux/api/public/paymentApi";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -99,7 +99,7 @@ export const JoinPackage = ({
   const [
     createStripePayment,
     { isLoading: paymentLoading, error: paymentError },
-  ] = useAddStripePaymentMutation();
+  ] = useAddDonateStripePaymentMutation();
   const [
     createPaypalPayment,
     { isLoading: PaypalPaymentLoading, error: PaypalPaymentError },

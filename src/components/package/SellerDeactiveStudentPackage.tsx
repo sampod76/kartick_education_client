@@ -1,29 +1,29 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { IPurchasedData } from "@/types/package/purchasedType";
-import SInglePurchased from "./SinglePurchasedCard";
-import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
-import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { AllImage } from "@/assets/AllImge";
-import Image from "next/image";
-import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import dayjs from "dayjs";
+import { IDecodedInfo, getUserInfo } from '@/services/auth.service';
+import { IPurchasedData } from '@/types/package/purchasedType';
+import SInglePurchased from './SinglePurchasedCard';
+import { ENUM_STATUS, ENUM_YN } from '@/constants/globalEnums';
+import LoadingSkeleton from '../ui/Loading/LoadingSkeleton';
+import { AllImage } from '@/assets/AllImge';
+import Image from 'next/image';
+import { EllipsisMiddle } from '@/utils/CutTextElliples';
+import dayjs from 'dayjs';
 import {
   useAddPackageAndCourseMutation,
   useGetAllPackageAndCourseQuery,
   useUpdatePackageAndCourseMutation,
-} from "@/redux/api/sellerApi/addPackageAndCourse";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
+} from '@/redux/api/sellerApi/addPackageAndCourse';
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
 import {
   useUpdateIncreaseStudentPackageMutation,
   useUpdatePackageMutation,
-} from "@/redux/api/userApi/packageAPi";
-import { Button, Dropdown, Menu, Space } from "antd";
-import { useGetAllPurchaseAcceptedPackageQuery } from "@/redux/api/public/purchaseAPi";
-import UMTable from "../ui/UMTable";
-import Link from "next/link";
+} from '@/redux/api/userApi/packageAPi';
+import { Button, Dropdown, Menu, Space } from 'antd';
+import { useGetAllPurchaseAcceptedPackageQuery } from '@/redux/api/public/purchaseAPi';
+import UMTable from '../ui/UMTable';
+import Link from 'next/link';
 
 export default function SellerDeactivedStudentPackage({
   setOpen,
@@ -42,12 +42,8 @@ export default function SellerDeactivedStudentPackage({
         author: userInfo?.id,
         user: userId,
       },
-      { skip: !Boolean(userId) }
+      { skip: !Boolean(userId) },
     );
-  console.log(
-    "🚀 ~ SellerAddPackageStudent ~ singleStudentPurchaseData:",
-    singleStudentPurchaseData
-  );
 
   if (isLoading) {
     return <LoadingSkeleton number={10} />;
@@ -64,9 +60,7 @@ export default function SellerDeactivedStudentPackage({
         },
       });
 
-      Success_model(
-        `Successfully Update status`
-      );
+      Success_model(`Successfully Update status`);
       setOpen(false);
     } catch (error: any) {
       Error_model_hook(error.message);
@@ -75,7 +69,7 @@ export default function SellerDeactivedStudentPackage({
   };
   const columns = [
     {
-      title: "Name",
+      title: 'Name',
       render: function (data: any) {
         // console.log(data);
         const fullName = `${data?.sellerPackageDetails?.title}  `;
@@ -93,12 +87,12 @@ export default function SellerDeactivedStudentPackage({
     //   },
     // },
     {
-      title: "Status",
-      dataIndex: "status",
+      title: 'Status',
+      dataIndex: 'status',
     },
     {
-      title: "Action",
-      dataIndex: "_id",
+      title: 'Action',
+      dataIndex: '_id',
       width: 130,
       render: function (id: string, data: any) {
         return (
@@ -120,8 +114,8 @@ export default function SellerDeactivedStudentPackage({
                       }}
                     >
                       {data.status === ENUM_STATUS.ACTIVE
-                        ? "Deactivate"
-                        : "Active"}{" "}
+                        ? 'Deactivate'
+                        : 'Active'}{' '}
                       Package
                     </Menu.Item>
                   </Menu>

@@ -9,13 +9,14 @@ import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import { useAddStudentWithAuthorDataMutation } from "@/redux/api/adminApi/studentApi";
+import type { DatePickerProps } from "antd";
 
 import { IStudentCreate } from "@/types/userTypes";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Row, message, DatePicker, Space, Typography } from "antd";
 import { useState } from "react";
-
+import dayjs from "dayjs";
 const CreateStudentComponent = ({
   setOpen,
   author,
@@ -23,26 +24,37 @@ const CreateStudentComponent = ({
   setOpen?: any;
   author?: string;
 }) => {
+  const [studentInfo, setStudentInfo] = useState<any>({
+    email: "",
+    password: "",
+  });
+  const [otherData, setOtherData] = useState<any>({
+    imageLoading: false,
+    dateOfBirth: "",
+  });
   const [isReset, setIsReset] = useState(false);
-  const [addStudentWithAuthorFormData, { isLoading }] =useAddStudentWithAuthorDataMutation()
+  const [addStudentWithAuthorFormData, { isLoading }] =
+    useAddStudentWithAuthorDataMutation();
 
   const onSubmit = async (values: IStudentCreate & { img: any }) => {
-    // console.log(values.img, "values of student");
+    //// console.log(values, "values of student");
     removeNullUndefinedAndFalsey(values);
     const { password, ...otherValue } = values;
     const studentData = {
       password,
-      student: { ...otherValue, author },
+      student: { ...otherValue, author, dateOfBirth: otherData?.dateOfBirth },
     };
 
+    //// console.log(studentData);
 
     try {
-      const res = await addStudentWithAuthorFormData({ ...studentData }).unwrap();
-      console.log("🚀 ~ onSubmit ~ res:", res);
-
+      const res = await addStudentWithAuthorFormData({
+        ...studentData,
+      }).unwrap();
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
+        setStudentInfo({ email: res.email, password: password });
         Success_model("Student created successfully");
         setIsReset(true);
         setOpen(false);
@@ -53,8 +65,15 @@ const CreateStudentComponent = ({
       Error_model_hook(err?.message || err?.data);
     }
   };
- 
-
+  const selectDate: DatePickerProps["onChange"] = (date, dateString) => {
+    // console.log(date, dateString);
+    setOtherData((c: any) => ({ ...c, dateOfBirth: dateString }));
+  };
+  // Function to disable future dates
+  const disableFutureDates = (current: any) => {
+    // Disable dates after today
+    return current && current > dayjs().endOf("day");
+  };
   // const defaultValues = {
   //   blood,
   // };
@@ -190,7 +209,7 @@ const CreateStudentComponent = ({
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="img" />
+                <UploadImage setState={setOtherData} name="img" />
               </Col>
             </Row>
           </div>
@@ -258,11 +277,23 @@ const CreateStudentComponent = ({
                   marginBottom: "10px",
                 }}
               >
-                <FormDatePicker
+                {/* <FormDatePicker
                   name="dateOfBirth"
                   label="Date of birth"
                   size="large"
                   disablePrevious={false}
+                /> */}
+                <Typography.Text style={{ fontSize: "16px" }}>
+                  Select date of birth
+                </Typography.Text>
+                <DatePicker
+                  disabledDate={disableFutureDates}
+                  allowClear
+                  onChange={selectDate}
+                  size="large"
+                  placeholder="Select date of birth"
+                  format="YYYY-MM-DD"
+                  style={{ marginBottom: "10px", width: "100%" }}
                 />
               </Col>
 
@@ -272,10 +303,21 @@ const CreateStudentComponent = ({
             </Row>
           </div>
           <div className="flex justify-center items-center">
-            <Button loading={isLoading} htmlType="submit" type="default">
+            <Button
+              loading={isLoading}
+              htmlType="submit"
+              disabled={otherData?.imageLoading}
+              type="default"
+            >
               Create
             </Button>
           </div>
+          {studentInfo?.email && (
+            <div className="border-2 rounded-3xl w-fit p-5 m-5 border-gray-600 mx-auto  text-lg">
+              <p>Email: {studentInfo?.email}</p>
+              <p>Password: {studentInfo?.email}</p>
+            </div>
+          )}
         </Form>
       </div>
     </div>

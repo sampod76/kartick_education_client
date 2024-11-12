@@ -1,11 +1,10 @@
-import { useGetAllPackageAndCourseQuery } from "@/redux/api/sellerApi/addPackageAndCourse";
-import { tagTypes } from "@/redux/tag-types";
-import { ICategory, IMeta } from "@/types";
-import { baseApi } from "../baseApi";
+import { tagTypes } from '@/redux/tag-types';
+import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
-const PURCHASE_PACKAGE_URL = "/purchase_packages";
-const PURCHASE_COURSE_URL = "/purchase_courses";
-const PURCHASE_STUDENT_COURSE_URL = "/student_purchase_packages_course_course";
+const PURCHASE_PACKAGE_URL = '/purchase_packages';
+const PURCHASE_COURSE_URL = '/purchase_courses';
+const PURCHASE_STUDENT_COURSE_URL = '/student_purchase_packages_course_course';
 export const paymentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // create a new academic department
@@ -14,7 +13,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PURCHASE_PACKAGE_URL}/purchase-and-pending-package`,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -31,7 +30,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (id: string | undefined) => {
         return {
           url: `${PURCHASE_PACKAGE_URL}/purchase-and-pending-package/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
 
@@ -43,7 +42,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PURCHASE_PACKAGE_URL}`,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -63,7 +62,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (id: string | undefined) => {
         return {
           url: `${PURCHASE_PACKAGE_URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       providesTags: [tagTypes.userPurchaseCourse],
@@ -73,7 +72,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PURCHASE_COURSE_URL}/purchase-and-pending-courses`,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -89,7 +88,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (id: string | undefined) => {
         return {
           url: `${PURCHASE_COURSE_URL}/purchase-and-pending-courses/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       providesTags: [tagTypes.userPurchaseCourse],
@@ -99,7 +98,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PURCHASE_COURSE_URL}`,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -115,7 +114,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (id: string | undefined) => {
         return {
           url: `${PURCHASE_COURSE_URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       providesTags: [tagTypes.userPurchaseCourse],
@@ -125,7 +124,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PURCHASE_COURSE_URL}/total-amount`,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -142,7 +141,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PURCHASE_PACKAGE_URL}/total-amount`,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -155,7 +154,7 @@ export const paymentApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.userPurchaseCourse],
     }),
   }),
-  // overrideExisting: true,
+  overrideExisting: true,
 });
 
 export const {

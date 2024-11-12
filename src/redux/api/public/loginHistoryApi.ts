@@ -17,7 +17,7 @@ export const loginHistoryApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        // console.log(response);
+        
         return {
           data: response,
           meta,
@@ -43,6 +43,7 @@ export const loginHistoryApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.LoginHistory],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

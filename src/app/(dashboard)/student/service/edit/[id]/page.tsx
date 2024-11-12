@@ -41,7 +41,7 @@ const EditServicePage = ({ params }: any) => {
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+      
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -49,14 +49,14 @@ const EditServicePage = ({ params }: any) => {
       }
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (isLoading || updateLoading) {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
+    
   }
 
   const defaultValues = {
@@ -249,7 +249,6 @@ const EditServicePage = ({ params }: any) => {
               <Col
                 className="gutter-row"
                 xs={24}
-                
                 style={{
                   marginBottom: "10px",
                 }}
@@ -285,7 +284,7 @@ const EditServicePage = ({ params }: any) => {
               alignItems: "center",
             }}
           >
-            <Button htmlType="submit"   type="default">
+            <Button htmlType="submit" type="default">
               Update
             </Button>
           </div>

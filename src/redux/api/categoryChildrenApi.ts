@@ -25,6 +25,7 @@ export const categoryChildrenApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.categoryChildren],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const { useGetAllCategoryChildrenQuery } = categoryChildrenApi;

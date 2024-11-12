@@ -54,7 +54,7 @@ const StudentPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
-  console.log(query, "query");
+
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
@@ -65,8 +65,6 @@ const StudentPage = () => {
   //@ts-ignore
   const StudentData = data?.data;
 
-  console.log(StudentData, "student data");
-
   //@ts-ignore
   const meta = data?.meta;
 
@@ -74,7 +72,7 @@ const StudentPage = () => {
     {
       title: "Name",
       render: function (data: any) {
-        // console.log(data);
+        //
         const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
         return <>{fullName}</>;
       },
@@ -118,7 +116,7 @@ const StudentPage = () => {
             <Link
               href={`/${userInfo?.role}/manage-users/students/details/${data}`}
             >
-              <Button onClick={() => console.log(data)} type="default">
+              <Button type="default">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -129,7 +127,6 @@ const StudentPage = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
                 type="default"
               >
                 <EditOutlined />
@@ -148,13 +145,13 @@ const StudentPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -166,7 +163,6 @@ const StudentPage = () => {
   };
 
   const deleteStudentHandler = async (id: string) => {
-    console.log(id);
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
@@ -203,7 +199,7 @@ const StudentPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

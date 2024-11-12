@@ -1,28 +1,26 @@
-"use client";
-import BannerCourses from '@/components/Home/Banner&hero/BannerCourses'
-import React from 'react'
-import CourseStatistics from '../CourseStatistics'
-import MilestoneHomeList from '../MilestoneHomeList'
-import { useAppSelector } from '@/redux/hooks';
+'use client';
+import CourseStatistics from '../CourseStatistics';
+import MilestoneHomeList from '../MilestoneHomeList';
 
-export default function CourseMilestoneDetails({ courseId }: { courseId: string }) {
-  // const { generateColor } = useAppSelector((state) => state.bannerSearch);
-  // bg - [${ generateBgColor }]
-
-
-  // console.log(bg, 'bg')
+export default function CourseMilestoneDetails({
+  courseId,
+}: {
+  courseId: string;
+}) {
   return (
-    <div className={``}
+    <div
+      className={`rounded-xl shadow-2xl shadow-purple-300`}
       style={{
-        backgroundColor: "#effbe1"
+        backgroundImage:
+          'url(https://img.freepik.com/free-vector/back-school-essentials_1308-174766.jpg?t=st=1731186122~exp=1731189722~hmac=38c8584247843e9bc6f6ef1a208b85e84897da1731e4390b78989bfa1102e6fa&w=1380)',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
       }}
     >
-      <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
-        <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
-        <BannerCourses />
+      <div className="rounded-xl backdrop-blur-sm">
+        <CourseStatistics courseId={courseId} />
+        <MilestoneHomeList courseId={courseId} />
       </div>
-      <CourseStatistics courseId={courseId} />
-      <MilestoneHomeList courseId={courseId} />
     </div>
-  )
+  );
 }

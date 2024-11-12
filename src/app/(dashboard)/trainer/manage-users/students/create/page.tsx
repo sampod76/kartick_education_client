@@ -20,30 +20,29 @@ const CreateStudentPage = () => {
   const [addStudentWithFormData, { isLoading }] =
     useAddStudentWithFormDataMutation();
   const onSubmit = async (values: IStudentCreate & { img: any }) => {
-    // console.log(values.img, "values of student");
+    //
 
     const studentData = {
       password: "1234asdf",
       student: { ...values },
     };
 
-    console.log(studentData, "student");
     removeNullUndefinedAndFalsey(studentData);
     // Success_model("Customer created successfully");
 
     try {
       const res = await addStudentWithFormData({ ...studentData }).unwrap();
-      console.log(res, "response");
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Customer created successfully");
-        setIsReset(true)
+        setIsReset(true);
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   if (isLoading) {
@@ -70,7 +69,6 @@ const CreateStudentPage = () => {
         <Form
           submitHandler={onSubmit}
           isReset={isReset}
-          
           // resolver={yupResolver(createStudentSchema)}
           defaultValues={{
             bloodGroup: bloodGroupOptions[0].value,

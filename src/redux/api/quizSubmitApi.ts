@@ -16,8 +16,6 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        // console.log(response);
-
         return {
           data: response,
           meta,
@@ -34,8 +32,6 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        // console.log(response);
-
         return {
           data: response,
           meta,
@@ -46,7 +42,7 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
     // get single academic department
     getSubmitUserQuiz: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id,'getSubmitUserQuizgetSubmitUserQuizgetSubmitUserQuizgetSubmitUserQuiz');
+        //// console.log(id,'getSubmitUserQuizgetSubmitUserQuizgetSubmitUserQuizgetSubmitUserQuiz');
 
         return {
           url: `${SUBMIT_QUIZ_URL}/verify/quizId/${id}?delete=no`,
@@ -68,12 +64,25 @@ export const SubmitQuizApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.submitQuiz],
     }),
+    deleteUpdateSubmitQuiz: build.mutation({
+      query: ({ data }) => {
+        //
+        return {
+          url: SUBMIT_QUIZ_URL + `/delete-submitted-quiz`,
+          method: "PATCH",
+          data,
+        };
+      },
+      invalidatesTags: [tagTypes.submitQuiz],
+    }),
   }),
+  overrideExisting: true,
 });
 
 export const {
   useSubmitQuizMutation,
   useGetSubmitAllQuizQuery,
   useGetSubmitUserQuizQuery,
-  useGetAnalyticsSubmitAllQuizQuery
+  useGetAnalyticsSubmitAllQuizQuery,
+  useDeleteUpdateSubmitQuizMutation,
 } = SubmitQuizApi;

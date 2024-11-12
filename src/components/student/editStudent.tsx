@@ -1,35 +1,44 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField, {
-  SelectOptions,
-} from "@/components/Forms/FormSelectField";
+import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-
 import UploadImage from "@/components/ui/UploadImage";
-import { bloodGroupOptions, genderOptions } from "@/constants/global";
+import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import { genderOptions } from "@/constants/global";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
 import {
   useGetSingleStudentQuery,
   useUpdateStudentMutation,
 } from "@/redux/api/adminApi/studentApi";
+import dayjs from "dayjs";
 
+// import {}
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
-import { Button, Col, Row, message } from "antd";
-import Image from "next/image";
+import {
+  Button,
+  Col,
+  DatePicker,
+  DatePickerProps,
+  Row,
+  Typography,
+} from "antd";
+import { useState } from "react";
 
 const EditStudentComponent = ({ id }: { id: string }) => {
+  const [otherData, setOtherData] = useState<any>({
+    imageLoading: false,
+    dateOfBirth: "",
+  });
   const { data: singleStudent, isLoading } = useGetSingleStudentQuery(id, {
     skip: !Boolean(id),
   });
   const studentData = singleStudent;
+  console.log("🚀 ~ EditStudentComponent ~ studentData:", studentData);
 
-  // console.log(studentData, "student data");
+  // console.log(studentData, id);
 
   const [updateStudent, { isLoading: updateLoading, error }] =
     useUpdateStudentMutation();
@@ -39,13 +48,18 @@ const EditStudentComponent = ({ id }: { id: string }) => {
     const UpdateValues = {
       ...values,
     };
-    console.log(UpdateValues);
+    if (otherData.dateOfBirth) {
+      UpdateValues.dateOfBirth = dayjs(otherData.dateOfBirth).format(
+        "YYYY-MM-DD"
+      );
+    }
+    // console.log(UpdateValues);
     try {
       const res = await updateStudent({
         id: id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -60,10 +74,10 @@ const EditStudentComponent = ({ id }: { id: string }) => {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
+    // console.log(error);
   }
 
-  console.log(studentData);
+  // console.log(studentData);
 
   const defaultValues = {
     name: {
@@ -78,7 +92,15 @@ const EditStudentComponent = ({ id }: { id: string }) => {
     address: studentData?.address || "",
     img: studentData?.img || "",
   };
-
+  const selectDate: DatePickerProps["onChange"] = (date, dateString) => {
+    // console.log(date, dateString);
+    setOtherData((c: any) => ({ ...c, dateOfBirth: dateString }));
+  };
+  // Function to disable future dates
+  const disableFutureDates = (current: any) => {
+    // Disable dates after today
+    return current && current > dayjs().endOf("day");
+  };
   return (
     <div>
       <div>
@@ -152,14 +174,14 @@ const EditStudentComponent = ({ id }: { id: string }) => {
                 }}
               >
                 <FormInput
-                   type="number"
+                  type="text"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
                 />
               </Col>
 
-              <Col
+              {/* <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
@@ -176,7 +198,7 @@ const EditStudentComponent = ({ id }: { id: string }) => {
                   label="bloodGroup"
                   placeholder="Select"
                 />
-              </Col>
+              </Col> */}
               <Col
                 className="gutter-row"
                 xs={24}
@@ -266,10 +288,26 @@ const EditStudentComponent = ({ id }: { id: string }) => {
                   marginBottom: "10px",
                 }}
               >
-                <FormDatePicker
+                {/* <FormDatePicker
                   name="dateOfBirth"
                   label="Date of birth"
                   size="large"
+                  disablePrevious={false}
+                /> */}
+                <Typography.Text style={{ fontSize: "16px" }}>
+                  Select date of birth
+                </Typography.Text>
+                <DatePicker
+                  disabledDate={disableFutureDates}
+                  allowClear
+                  onChange={selectDate}
+                  size="large"
+                  defaultValue={
+                    dayjs(studentData?.dateOfBirth) || dayjs(new Date())
+                  }
+                  placeholder="Select date of birth"
+                  format="YYYY-MM-DD"
+                  style={{ marginBottom: "10px", width: "100%" }}
                 />
               </Col>
 
@@ -278,9 +316,11 @@ const EditStudentComponent = ({ id }: { id: string }) => {
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="default">
-            Update
-          </Button>
+          <div className="flex justify-center items-center">
+            <Button htmlType="submit" type="default">
+              Update
+            </Button>
+          </div>
         </Form>
       </div>
     </div>

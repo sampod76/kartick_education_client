@@ -1,29 +1,21 @@
 "use client";
-import React, { useState } from "react";
-import {
-  MinusCircleOutlined,
-  PlusOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
-import { Button, Col, Form, Input, Row, Select, Space, Upload } from "antd";
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
+import { Button, Form, Input } from "antd";
+import { useState } from "react";
 
-import type { SelectProps } from "antd";
-import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
-import dayjs from "dayjs";
-import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
-import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
-import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import { useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useAddShowAdvanceClassesMutation } from "@/redux/api/adminApi/features/showAdvanceClassApi";
 import CLassField from "@/components/Forms/answer/ClassField";
+// import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
+import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-
+import { useAddShowAdvanceClassesMutation } from "@/redux/api/adminApi/features/showAdvanceClassApi";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import dynamic from "next/dynamic";
+const TextEditorNotSetValue = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
+  {
+    ssr: false, // Disable server-side rendering for this component
+  }
+);
 export default function CreateAdvanceClass() {
   const [form] = Form.useForm();
 

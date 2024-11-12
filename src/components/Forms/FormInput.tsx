@@ -1,14 +1,13 @@
-"use client";
+'use client';
 
-import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
-import { Input, InputNumber } from "antd";
-import { spawn } from "child_process";
-import { useFormContext, Controller } from "react-hook-form";
-import LabelUi from "../ui/dashboardUI/LabelUi";
+import { getErrorMessageByPropertyName } from '@/utils/schema-validator';
+import { Input, InputNumber } from 'antd';
+import { Controller, useFormContext } from 'react-hook-form';
+import LabelUi from '../ui/dashboardUI/LabelUi';
 interface IInput {
   name: string;
   type?: string;
-  size?: "large" | "small";
+  size?: 'large' | 'small';
   value?: string | string[] | undefined;
   id?: string;
   placeholder?: string;
@@ -17,12 +16,13 @@ interface IInput {
   required?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
+  defaultValue?: string | number;
 }
 
 const FormInput = ({
   name,
   type,
-  size = "large",
+  size = 'large',
   value,
   id,
   placeholder = 'Please enter..',
@@ -31,6 +31,7 @@ const FormInput = ({
   required,
   disabled = false,
   readOnly = false,
+  defaultValue,
 }: IInput) => {
   const {
     control,
@@ -50,7 +51,7 @@ const FormInput = ({
           *
         </span>
       ) : null} */}
-      {label && type !== "number" ? (
+      {label && type !== 'number' ? (
         <LabelUi>
           {label}
           {required && <span className="text-red-400"> *</span>}
@@ -60,7 +61,7 @@ const FormInput = ({
         control={control}
         name={name}
         render={({ field }) =>
-          type === "password" ? (
+          type === 'password' ? (
             <Input.Password
               disabled={disabled}
               required={required}
@@ -69,17 +70,18 @@ const FormInput = ({
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
+              defaultValue={defaultValue && Number(defaultValue)}
               value={value ? value : field.value}
             />
-          ) : type === "number" ? (
+          ) : type === 'number' ? (
             <div className="">
               <LabelUi>
-                {label}{" "}
+                {label}{' '}
                 {required ? (
                   <span
                     style={{
-                      color: "red",
-                      textAlign: "start",
+                      color: 'red',
+                      textAlign: 'start',
                     }}
                   >
                     *
@@ -88,7 +90,7 @@ const FormInput = ({
               </LabelUi>
               <InputNumber
                 type={type}
-                style={{ width: "100%", minWidth: "5rem" }}
+                style={{ width: '100%', minWidth: '5rem' }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}
@@ -97,6 +99,8 @@ const FormInput = ({
                 {...field}
                 value={value ? value : field.value}
                 required={required}
+                step={1} // Step to increment/decrement by 1
+                parser={(value) => Math.floor(value as any)} // Parses input to only allow integers
               />
             </div>
           ) : (
@@ -105,7 +109,6 @@ const FormInput = ({
               disabled={disabled}
               type={type}
               size={size}
-
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
@@ -114,7 +117,7 @@ const FormInput = ({
           )
         }
       />
-      <small style={{ color: "red" }}>{errorMessage}</small>
+      <small style={{ color: 'red' }}>{errorMessage}</small>
     </>
   );
 };

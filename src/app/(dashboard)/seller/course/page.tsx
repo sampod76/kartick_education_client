@@ -1,7 +1,8 @@
+import CourseList from '@/components/Course/CourseList'
 import React from 'react'
 
-export default function SellerCourse() {
+export default function AdminCourseListPage() {
   return (
-    <div>SellerCourse</div>
+    <div><CourseList/></div>
   )
 }

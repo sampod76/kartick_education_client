@@ -1,18 +1,20 @@
+'use client';
+import './globals.css';
 
-"use client";
-import "./globals.css";
-import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
-import Providers from "@/lib/Providers";
-import { Noto_Sans } from "next/font/google";
+import Providers from '@/lib/Providers';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { Noto_Sans } from 'next/font/google';
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import GlobalContextApi from "@/components/ContextApi/GlobalContextApi";
+import GlobalContextApi from '@/components/ContextApi/GlobalContextApi';
+import { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 // import { Head } from "next/document";
 // import { CookiesProvider } from "react-cookie";
-const inter = Noto_Sans({ subsets: ["latin"], weight: ["400"] });
+const inter = Noto_Sans({ subsets: ['latin'], weight: ['400'] });
 
 // import '../app/globals.css';
 // export const metadata: Metadata = {
@@ -28,30 +30,32 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  useEffect(() => {
+    AOS.init({
+      // disable: "mobile",
+      // You can add your AOS configuration here
+      duration: 800, // example: animation duration of 1000ms
+    });
+  }, []);
   return (
     <GlobalContextApi>
-    <DndProvider backend={HTML5Backend}>
-      {/* <MyErrorBoundary> */}
-      {/* <CookiesProvider defaultSetOptions={{ path: "/" }}> */}
-      <Providers>
-        <html lang="en">
-          <meta
-            httpEquiv="Content-Security-Policy"
-            content="upgrade-insecure-requests"
-          />
+      <DndProvider backend={HTML5Backend}>
+        <Providers>
+          <html lang="en">
+            <meta
+              httpEquiv="Content-Security-Policy"
+              content="upgrade-insecure-requests"
+            />
 
-          <body
-            // className="container mx-auto "
-            className={` max-w-[1990px] mx-auto `}
-            // style={{maxWidth: '1990px',margin:"auto"}}
-          >
-            <Providers>{children}</Providers>
-          </body>
-        </html>
-      </Providers>
-      {/* </CookiesProvider> */}
-      {/* </MyErrorBoundary> */}
-    </DndProvider>
+            <body
+              // className="container mx-auto "
+              className={`mx-auto max-w-[1850px]`}
+            >
+              {children}
+            </body>
+          </html>
+        </Providers>
+      </DndProvider>
     </GlobalContextApi>
   );
 }

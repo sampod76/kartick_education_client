@@ -60,7 +60,7 @@ const BookingDetails = ({ params }: any) => {
         Success_model("Successfully update booking");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
   //
@@ -82,7 +82,7 @@ const BookingDetails = ({ params }: any) => {
     perSitPrice: bookingData?.service?.price || 0,
   };
   const onFinish = async (values: any) => {
-    //  // console.log("Received values:", values);
+    //  //
     try {
       const res = await addRating({ ...values }).unwrap();
       if (res?.success == false) {
@@ -93,7 +93,7 @@ const BookingDetails = ({ params }: any) => {
         Success_model("Review Successfully add!");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -112,7 +112,7 @@ const BookingDetails = ({ params }: any) => {
             Success_model("Successfully update booking");
           }
         } catch (error) {
-          console.log(error);
+          
         }
       }
     });
@@ -277,7 +277,7 @@ const BookingDetails = ({ params }: any) => {
               <div className="border-2 p-3 flex flex-col justify-center items-center">
                 <h1 className="text-base font-normal">Status</h1>
                 <Button
-                    type="default"
+                  type="default"
                   danger={defaultValues?.status === "reject"}
                 >
                   {defaultValues?.status}
@@ -295,12 +295,12 @@ const BookingDetails = ({ params }: any) => {
             readOnly={true}
           />
           <div className="my-2 flex justify-center items-center">
-            <Button htmlType="submit"   type="default">
+            <Button htmlType="submit" type="default">
               Submit
             </Button>
 
             {defaultValues.status == "accept" && (
-              <Button onClick={() => handlePayment(params?.id)}   type="default">
+              <Button onClick={() => handlePayment(params?.id)} type="default">
                 Payment
               </Button>
             )}

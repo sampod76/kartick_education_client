@@ -27,19 +27,19 @@ const CreateService = () => {
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
     const changeValues = { ...values, serviceDate: new Date().toISOString() };
-    console.log(changeValues);
+    
     try {
       const res = await addService({ ...changeValues }).unwrap();
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added service");
-        setIsReset(true)
+        setIsReset(true);
       }
-      console.log(res);
+      
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      
     }
   };
 
@@ -48,13 +48,15 @@ const CreateService = () => {
   }
 
   return (
-    <div style={{
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      borderRadius: "1rem",
-      backgroundColor: "white",
-      padding: "1rem",
-    }}>
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
       <div>
         {/* resolver={yupResolver(IServiceSchema)} */}
         <Form submitHandler={onSubmit} isReset={isReset}>
@@ -231,7 +233,6 @@ const CreateService = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                
                 style={{
                   marginBottom: "10px",
                 }}
@@ -256,7 +257,7 @@ const CreateService = () => {
             </Row>
           </div>
 
-          <Button htmlType="submit"   type="default">
+          <Button htmlType="submit" type="default">
             Create
           </Button>
         </Form>

@@ -95,12 +95,12 @@ export const courseStatusOptions = [
 ];
 export const roleOptions = [
   {
-    label: "Admin",
-    value: "admin",
+    label: USER_ROLE.ADMIN,
+    value: USER_ROLE.ADMIN,
   },
   {
-    label: "Student",
-    value: "student",
+    label: USER_ROLE.STUDENT,
+    value: USER_ROLE.STUDENT
   },
   {
     label: USER_ROLE.TRAINER,

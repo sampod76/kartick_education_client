@@ -6,7 +6,6 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SelectAuthorField from "@/components/Forms/SelectData/SelectAuthor";
 
-
 import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
 import UploadImage from "@/components/ui/UploadImage";
 
@@ -14,18 +13,18 @@ import SubHeadingUI from "@/components/ui/dashboardUI/SubHeadingUI";
 import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
 import { courseStatusOptions } from "@/constants/global";
 
-
 import {
   useAddLessonMutation,
   useGetAllLessonQuery,
 } from "@/redux/api/adminApi/lessoneApi";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { Col, Row, message } from "antd";
-import { useSearchParams } from "next/navigation";
 
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
+import { USER_ROLE } from "@/constants/role";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 const TextEditor = dynamic(
   () => import("@/components/shared/TextEditor/TextEditor"),
   {
@@ -33,19 +32,28 @@ const TextEditor = dynamic(
   }
 );
 
-export default function CreateLessonByModule({ moduleId, moduleName }: { moduleId: string, moduleName: string }) {
+export default function CreateLessonByModule({
+  moduleId,
+  moduleName,
+}: {
+  moduleId: string;
+  moduleName: string;
+}) {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const [addLesson, { isLoading: serviceLoading }] = useAddLessonMutation();
   const [textEditorValue, setTextEditorValue] = useState("");
   const [isReset, setIsReset] = useState(false);
-
-  const { data: existLesson, isLoading } = useGetAllLessonQuery({});
+  const query: Record<string, any> = {};
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
+  const { data: existLesson, isLoading } = useGetAllLessonQuery(query);
 
   // !  tag selection
 
-
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
-    // console.log(values);
+    //// console.log(values);
     // const status = "active";
     // const imgUrl = await uploadImgBB(values.img);
 
@@ -55,36 +63,37 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
       ...values,
 
       module: moduleId,
-      // details: textEditorValue,
     };
     removeNullUndefinedAndFalsey(LessonData);
-    // console.log(LessonData);
+    //// console.log(LessonData);
 
     try {
       const res = await addLesson(LessonData).unwrap();
-      // console.log(res);
+      //// console.log(res);
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Lesson");
-        setIsReset(true)
+        setIsReset(true);
       }
-      // console.log(res);
+      //// console.log(res);
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 
   if (serviceLoading) {
     return message.loading("Loading...");
   }
-  const roundedNumber = Number(existLesson?.data[0]?.lesson_number || 1).toFixed(1);
+  const roundedNumber = Number(
+    existLesson?.data[0]?.lesson_number || 1
+  ).toFixed(1);
 
   // Add 0.1 to the rounded number and use toFixed again when logging
   const prelesson_number = (parseFloat(roundedNumber) + 0.1).toFixed(1);
 
-  // console.log(prelesson_number);
+  //// console.log(prelesson_number);
 
   return (
     <div>
@@ -183,9 +192,7 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
                   marginBottom: "10px",
                 }}
               >
-                <TagsSelectUI
-
-                />
+                <TagsSelectUI />
                 {/*//! 6 */}
               </Col>
               <Col
@@ -217,8 +224,8 @@ export default function CreateLessonByModule({ moduleId, moduleName }: { moduleI
                   </p>
                   <TextEditor
                     isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
+                    // textEditorValue={textEditorValue}
+                    // setTextEditorValue={setTextEditorValue}
                   />
                 </div>
               </Col>

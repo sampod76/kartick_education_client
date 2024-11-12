@@ -38,14 +38,14 @@ const BlogList = () => {
   });
 
   useEffect(() => {
-    setUserInfo({ loading: true })
+    setUserInfo({ loading: true });
     // Fetch user info asynchronously on the client side
     const fetchUserInfo = async () => {
       const userInfo = (await getUserInfo()) as any;
       setUserInfo((c: any) => ({ ...c, ...userInfo }));
     };
     fetchUserInfo();
-    setUserInfo({ loading: false })
+    setUserInfo({ loading: false });
   }, []);
   const query: Record<string, any> = {};
   const [deleteBlog] = useDeleteBlogMutation();
@@ -85,7 +85,6 @@ const BlogList = () => {
       if (res.isConfirmed) {
         try {
           const res = await deleteBlog(id).unwrap();
-
 
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
@@ -138,7 +137,7 @@ const BlogList = () => {
         return (
           <>
             <Link href={`/${userInfo?.data?.role}/blog/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -147,7 +146,6 @@ const BlogList = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
                 type="default"
               >
                 <EditOutlined />
@@ -162,13 +160,12 @@ const BlogList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -180,7 +177,6 @@ const BlogList = () => {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
     try {
       const res = await deleteBlog(id);
       if (res) {
@@ -208,7 +204,7 @@ const BlogList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

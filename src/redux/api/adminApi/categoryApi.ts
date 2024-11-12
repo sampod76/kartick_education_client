@@ -1,8 +1,8 @@
-import { tagTypes } from "@/redux/tag-types";
-import { ICategory, IMeta } from "@/types";
-import { baseApi } from "../baseApi";
+import { tagTypes } from '@/redux/tag-types';
+import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
-const CATEGORY_URL = "/category";
+const CATEGORY_URL = '/category';
 
 export const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -11,12 +11,11 @@ export const categoryApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: CATEGORY_URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,
@@ -27,20 +26,20 @@ export const categoryApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleCategory: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id);
+        //// console.log(id);
         return {
           url: `${CATEGORY_URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       providesTags: [tagTypes.category],
     }),
     checkPurchaseCategory: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id);
+        //// console.log(id);
         return {
           url: `${CATEGORY_URL}/check-purchase/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       providesTags: [tagTypes.category],
@@ -48,11 +47,11 @@ export const categoryApi = baseApi.injectEndpoints({
     // create a new academic department
     addCategory: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+        //// console.log(data, "cacccc");
 
         return {
           url: CATEGORY_URL,
-          method: "POST",
+          method: 'POST',
           data,
         };
       },
@@ -61,10 +60,10 @@ export const categoryApi = baseApi.injectEndpoints({
     // update ac department
     updateCategory: build.mutation({
       query: ({ data, id }) => {
-        // console.log(data, "category data");
+        //// console.log(data, "category data");
         return {
           url: `${CATEGORY_URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
         };
       },
@@ -75,11 +74,12 @@ export const categoryApi = baseApi.injectEndpoints({
     deleteCategory: build.mutation({
       query: (id) => ({
         url: `${CATEGORY_URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.category],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {
@@ -88,5 +88,5 @@ export const {
   useGetAllCategoryQuery,
   useGetSingleCategoryQuery,
   useUpdateCategoryMutation,
-  useCheckPurchaseCategoryQuery
+  useCheckPurchaseCategoryQuery,
 } = categoryApi;

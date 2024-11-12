@@ -1,8 +1,8 @@
-import {  IMeta } from "@/types";
-import { baseApi } from "./baseApi";
-import { tagTypes } from "../tag-types";
+import { IMeta } from '@/types';
+import { baseApi } from './baseApi';
+import { tagTypes } from '../tag-types';
 
-const SUPER_ADMIN_URL = "/super-admin";
+const SUPER_ADMIN_URL = '/super-admin';
 
 export const adminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -36,23 +36,21 @@ export const adminApi = baseApi.injectEndpoints({
     getSingleSuperadmin: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `${SUPER_ADMIN_URL}/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       providesTags: [tagTypes.user],
     }),
     updateSuperAdmin: build.mutation({
       query: (data) => ({
         url: `${SUPER_ADMIN_URL}/${data.id}`,
-        method: "PATCH",
+        method: 'PATCH',
         data: data.body,
       }),
       invalidatesTags: [tagTypes.user],
     }),
-   
   }),
+  overrideExisting: true,
 });
 
-export const {
-  useGetSingleSuperadminQuery,
-  useUpdateSuperAdminMutation
-} = adminApi;
+export const { useGetSingleSuperadminQuery, useUpdateSuperAdminMutation } =
+  adminApi;

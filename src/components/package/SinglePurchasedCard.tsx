@@ -1,30 +1,31 @@
-"use client";
-import { AllImage } from "@/assets/AllImge";
-import { IPurchasedCategory, IPurchasedData } from "@/types/package/purchasedType";
+'use client';
+import { AllImage } from '@/assets/AllImge';
+import {
+  IPurchasedCategory,
+  IPurchasedData,
+} from '@/types/package/purchasedType';
 
-import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { CiClock2 } from "react-icons/ci";
-import dayjs from "dayjs";
-import { Button } from "antd";
-import ModalComponent from "../Modal/ModalComponents";
-import AddStudentComponent from "../student/addStudentByAuthor/addStudentComponent";
-import { getUserInfo } from "@/services/auth.service";
-import { useRouter } from "next/navigation";
-import PackageToStudent from "./PackageToStudent";
-
+import { EllipsisMiddle } from '@/utils/CutTextElliples';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import { CiClock2 } from 'react-icons/ci';
+import dayjs from 'dayjs';
+import { Button } from 'antd';
+import ModalComponent from '../Modal/ModalComponents';
+import AddStudentComponent from '../student/addStudentByAuthor/addStudentComponent';
+import { getUserInfo } from '@/services/auth.service';
+import { useRouter } from 'next/navigation';
+import PackageToStudent from './PackageToStudent';
 
 export default function SInglePurchased({
   packages,
 }: {
   packages: IPurchasedData;
 }) {
-  console.log("🚀 ~ packages:", packages);
   const router = useRouter();
   const userInfo = getUserInfo() as any;
-  // console.log("🚀 ~ packages:", packages);
+
   const navigatePackage = (getPackage: any[]) => {
     //@ts-ignore
     const data = getPackage || []; // Example nested array of objects
@@ -34,48 +35,45 @@ export default function SInglePurchased({
     router.push(href);
   };
 
-  // console.log(new Date(packages?.expiry_date),'newDate', new Date())
   return (
-    <div className="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-md overflow-hidden bg-blue-200 min-h-full  lg:min-h-[30rem] cursor-pointer w-full lg:max-w-xl relative">
+    <div className="relative min-h-full w-full cursor-pointer overflow-hidden rounded-md bg-blue-200 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] lg:min-h-[30rem] lg:max-w-xl">
       <div onClick={() => navigatePackage(packages?.categories)}>
         <span
-          className={`px-2 py-1 text-[16px] font-semibold  rounded-md ml-3 absolute -left-4 top-0 capitalize
-                 bg-white
-
-                  `}
+          className={`absolute -left-4 top-0 ml-3 rounded-md bg-white px-2 py-1 text-[16px] font-semibold capitalize`}
         >
           {packages?.purchase?.label}
         </span>
 
         {/* //! top title section  */}
         <div
-          className={`h-28 
-        ${new Date(packages?.expiry_date) < new Date()
-              ? "bg-red-600"
-              : "bg-green-700"
-            } text-center p-4`}
+          className={`h-28 ${
+            new Date(packages?.expiry_date) < new Date()
+              ? 'bg-red-600'
+              : 'bg-green-700'
+          } p-4 text-center`}
         >
-          <h3 className="text-xl text-white uppercase font-semibold mb-1">
+          <h3 className="mb-1 text-xl font-semibold uppercase text-white">
             {packages?.title}
             <span className="text-sm capitalize">
-              {new Date(packages?.expiry_date) < new Date() && " (expired)"}
+              {new Date(packages?.expiry_date) < new Date() && ' (expired)'}
             </span>
           </h3>
-          <p className="text-base font-mono text-slate-200">
+          <p className="font-mono text-base text-slate-200">
             {packages?.user?.email}
           </p>
         </div>
         {/* //! round price  */}
         <div
-          className={`h-24 w-24 mx-auto -mt-8 shadow-xl rounded-full ${new Date(packages?.expiry_date) < new Date()
-              ? "bg-red-600"
-              : "bg-green-700"
-            } hover:brightness-125 transition-all duration-500 text-white border-4 flex flex-col items-center justify-center border-white`}
+          className={`mx-auto -mt-8 h-24 w-24 rounded-full shadow-xl ${
+            new Date(packages?.expiry_date) < new Date()
+              ? 'bg-red-600'
+              : 'bg-green-700'
+          } flex flex-col items-center justify-center border-4 border-white text-white transition-all duration-500 hover:brightness-125`}
         >
           <h3 className="text-2xl font-semibold">${packages?.total_price}</h3>
         </div>
         {/* //! container or Category section */}
-        <div className="px-6 py-5  mt-4  ">
+        <div className="mt-4 px-6 py-5">
           <ul className="space-y-4">
             {/* //! for bundle type */}
             {packages?.type &&
@@ -90,7 +88,7 @@ export default function SInglePurchased({
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="17"
-                      className="mr-4 bg-green-500 fill-white rounded-full p-[3px]"
+                      className="mr-4 rounded-full bg-green-500 fill-white p-[3px]"
                       viewBox="0 0 24 24"
                     >
                       <path
@@ -100,7 +98,7 @@ export default function SInglePurchased({
                     </svg>
                     <span className="text-[16px]"> {category?.title}</span>
                     {/* <span>{category?.title}</span> */}
-                    <span className="text-[12px] text-slate-600 ml-2">
+                    <span className="ml-2 text-[12px] text-slate-600">
                       {categoryData?.label}
                     </span>
                   </li>
@@ -109,58 +107,57 @@ export default function SInglePurchased({
           </ul>
         </div>
         {/* //! Footer section  */}
-        <div className="px-3 bg-gray-200 rounded min-h-max py-3  w-full">
-          <h4 className="text-center mb-3 uppercase text-lg">
-            {" "}
+        <div className="min-h-max w-full rounded bg-gray-200 px-3 py-3">
+          <h4 className="mb-3 text-center text-lg uppercase">
+            {' '}
             {packages?.membership?.title}
           </h4>
-          <h2 className="text-sm capitalize flex justify-between">
+          <h2 className="flex justify-between text-sm capitalize">
             <span>Total Purchased: {packages?.total_purchase_student}</span>
             <span>
-              Remaining Student:{" "}
+              Remaining Student:{' '}
               {packages?.total_purchase_student - packages?.students?.length}
             </span>
           </h2>
-          <h4 className="flex justify-between my-2">
+          <h4 className="my-2 flex justify-between">
             <span>Paid by {packages?.payment?.platform}</span>
             <span>
-              {" "}
-              {packages?.paymentStatus === "approved" ? (
-                <span className="text-sm p-1 rounded-sm text-white bg-green-700">
+              {' '}
+              {packages?.paymentStatus === 'approved' ? (
+                <span className="rounded-sm bg-green-700 p-1 text-sm text-white">
                   Approved
                 </span>
-              ) : packages?.paymentStatus === "pending" ? (
-                <span className="text-sm p-1 rounded-sm text-white bg-red-600">
+              ) : packages?.paymentStatus === 'pending' ? (
+                <span className="rounded-sm bg-red-600 p-1 text-sm text-white">
                   Pending
                 </span>
               ) : (
-                <span className="text-sm p-1 rounded-sm text-white bg-red-600">
+                <span className="rounded-sm bg-red-600 p-1 text-sm text-white">
                   Rejected
                 </span>
               )}
-            </span>{" "}
+            </span>{' '}
           </h4>
           <p className="mb-2 text-sm text-slate-900">
             Transaction: {packages?.payment?.transactionId}
           </p>
-          <h2 className={`text-base  `}>
-            Expire date:{" "}
+          <h2 className={`text-base`}>
+            Expire date:{' '}
             <span
-              className={`text-sm 
-          ${new Date(packages?.expiry_date) < new Date()
-                  ? "text-red-700"
-                  : "text-stone-700"
-                }
-          `}
+              className={`text-sm ${
+                new Date(packages?.expiry_date) < new Date()
+                  ? 'text-red-700'
+                  : 'text-stone-700'
+              } `}
             >
               {packages?.expiry_date &&
-                dayjs(packages?.expiry_date).format("MMMM D, YYYY")}{" "}
-              {new Date(packages?.expiry_date) < new Date() && " (expired)"}
+                dayjs(packages?.expiry_date).format('MMMM D, YYYY')}{' '}
+              {new Date(packages?.expiry_date) < new Date() && ' (expired)'}
             </span>
           </h2>
         </div>
       </div>
-      <div className="flex justify-end items-center absolute bottom-0 right-0 ">
+      <div className="absolute bottom-0 right-0 flex items-center justify-end">
         <ModalComponent buttonText="View Student List">
           <PackageToStudent packageId={packages?._id} />
         </ModalComponent>

@@ -1,19 +1,28 @@
-import { tagTypes } from "@/redux/tag-types";
-import { ICategory, IMeta } from "@/types";
-import { baseApi } from "../baseApi";
+import { tagTypes } from '@/redux/tag-types';
+import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
-const PAYMENT_URL = "/payment";
+const PAYMENT_URL = '/payment';
+const PAYMENT_URL2 = '/payment-v2';
 // const PURCHASE_URL = "/purchase_packages";
 export const paymentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // create a new academic department
 
-    addStripePayment: build.mutation({
+    addDonateStripePayment: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
         return {
-          url: `${PAYMENT_URL}/stripe/create-payment-intent`,
-          method: "POST",
+          url: `${PAYMENT_URL2}/stripe/donation-create-payment-link`,
+          method: 'POST',
+          data,
+        };
+      },
+    }),
+    addStripeCoursePayment: build.mutation({
+      query: (data) => {
+        return {
+          url: `${PAYMENT_URL2}/stripe/course-create-payment-link`,
+          method: 'POST',
           data,
         };
       },
@@ -21,30 +30,27 @@ export const paymentApi = baseApi.injectEndpoints({
 
     addPaypalPayment: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
         return {
           url: `${PAYMENT_URL}/paypal`,
-          method: "POST",
+          method: 'POST',
           data,
         };
       },
     }),
     addPaypalPaymentByCourse: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
         return {
           url: `${PAYMENT_URL}/paypal/buy_course`,
-          method: "POST",
+          method: 'POST',
           data,
         };
       },
     }),
     addPaypalCheckPayment: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
         return {
           url: `${PAYMENT_URL}/paypal/check`,
-          method: "POST",
+          method: 'POST',
           data,
         };
       },
@@ -53,7 +59,7 @@ export const paymentApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PAYMENT_URL}/paypal/check`,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -69,13 +75,12 @@ export const paymentApi = baseApi.injectEndpoints({
     // update ac department
   }),
   overrideExisting: true,
-})
-
-
+});
 
 export const {
-  useAddStripePaymentMutation,
+  useAddDonateStripePaymentMutation,
   useAddPaypalPaymentMutation,
   useGetCheckPaypalPaymentQuery,
   useAddPaypalPaymentByCourseMutation,
+  useAddStripeCoursePaymentMutation,
 } = paymentApi;

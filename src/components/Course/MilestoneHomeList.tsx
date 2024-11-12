@@ -1,25 +1,17 @@
-"use client";
+'use client';
 // import dynamic from "next/dynamic";
 
-import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
-import { Button, Divider, message } from "antd";
-import Link from "next/link";
-import React from "react";
-import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
-import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { SVGYelloDot } from "@/assets/svg/Icon";
-import { ENUM_YN } from "@/constants/globalEnums";
-import ButtonLoading from "../ui/Loading/ButtonLoading";
-import { useAddPaypalPaymentByCourseMutation } from "@/redux/api/public/paymentApi";
-import { getUserInfo } from "@/services/auth.service";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import PaypalCheckoutByCourse from "../Utlis/PaypalCheckoutByCourse";
-import SingleMilestone from "../milestone/SingleMilestone";
-import { IMilestoneData } from "@/types/miestoneType";
-import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import { useAppSelector } from "@/redux/hooks";
-
+import { ENUM_YN } from '@/constants/globalEnums';
+import { useGetSingleCourseQuery } from '@/redux/api/adminApi/courseApi';
+import { useGetAllMilestoneQuery } from '@/redux/api/adminApi/milestoneApi';
+import { IMilestoneData } from '@/types/miestoneType';
+import { Divider } from 'antd';
+import parse from 'html-react-parser';
+import { FaBook } from 'react-icons/fa';
+import SingleMilestone from '../milestone/SingleMilestone';
+import ModalComponent from '../Modal/ModalComponents';
+import AnyFileViewer from '../ui/AnyFileViewer';
+import LoadingSkeleton from '../ui/Loading/LoadingSkeleton';
 const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
   // const userInfo = getUserInfo() as any;
   // const { generateBgColor } = useAppSelector((state) => state.bannerSearch);
@@ -28,32 +20,29 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
     isLoading: courseLoading,
     error,
   } = useGetSingleCourseQuery(courseId);
-  // console.log("🚀 ~ MilestoneHomeList ~ courseData:", courseData)
+  // console.log('🚀 ~ MilestoneHomeList ~ courseDataM:', courseData);
 
   const query: Record<string, any> = {};
-  query["limit"] = 999999;
-  query["sortOrder"] = "asc";
-  query["status"] = "active";
-  query["isDelete"] = ENUM_YN.NO;
+  query['limit'] = 999999;
+  query['sortOrder'] = 'asc';
+  query['status'] = 'active';
+  query['isDelete'] = ENUM_YN.NO;
   const {
     data,
     isLoading,
-    error: milestonError,
+    error: milestoneError,
   } = useGetAllMilestoneQuery({
     course: courseId,
-    module: "yes",
+    module: 'yes',
     ...query,
-  })
+  });
 
-
-  // console.log("🚀 ~ MilestoneHomeList ~ data:", data)
-  // console.log(data,"courseId");
   const milestoneData = data?.data || [];
 
-  if (error || milestonError) {
-    console.log(error, milestonError);
+  if (error || milestoneError) {
+    console.log(error, milestoneError);
   }
-
+  // console.log(courseData);
   return (
     <>
       {isLoading || courseLoading ? (
@@ -61,54 +50,64 @@ const MilestoneHomeList = ({ courseId }: { courseId: string }) => {
       ) : (
         <div
           style={{
-            marginTop: "1.5rem",
+            marginTop: '1.5rem',
           }}
-          className="relative min-h-screen container mx-auto"
+          className="container relative mx-auto"
         >
-          <h2
-            style={{
-              fontWeight: 400,
-              textAlign: "center",
-              color: "black",
-              textTransform: "uppercase",
-              fontSize: "35px",
-              fontFamily: "Latao",
-            }}
-          >
-            {courseData?.title}
-          </h2>
-          <p className="text-center my-3 text-lg lg:text-xl">
-            <EllipsisMiddle suffixCount={3} maxLength={120}>
-              {courseData?.short_description}
-            </EllipsisMiddle>
-          </p>
-          {/* <div className="absolute -top-8 lg:top-0 right-0 animate-pulse">
-            <PaypalCheckoutByCourse courseData={courseData} />
-          </div> */}
+          <div className="flex-col items-center justify-center gap-2">
+            <h1 className="text-center text-lg uppercase text-black lg:text-2xl">
+              {courseData?.title}{' '}
+            </h1>
+            {courseData?.syllabus && (
+              <div>
+                <ModalComponent
+                  button={
+                    <div className="flex items-center justify-center">
+                      <p className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-base text-blue-400">
+                        <FaBook /> (See Syllabus)
+                      </p>
+                    </div>
+                  }
+                >
+                  <AnyFileViewer files={courseData?.syllabus} />
+                </ModalComponent>
+              </div>
+            )}
+          </div>
+          <div className="my-3 line-clamp-3 text-center text-base lg:text-xl">
+            {courseData?.details
+              ? parse(courseData?.details)
+              : courseData?.short_description}
+          </div>
           <Divider
             style={{
-              color: "red",
-              fontSize: "5px",
-              background: "red",
+              color: 'red',
+              fontSize: '5px',
+              background: 'red',
             }}
           />
           <div className="">
-            {/* <div className="w-full lg:w-[20%]">
-              <h2 className="uppercase text-2xl font-bold">Label</h2>
-              <div className="flex flex-col gap-5 ">
-                <button>Lebel-1</button>
-                <button>Lebel-2</button>
-                <button>Lebel-3</button>
+            {milestoneData.length ? (
+              <div className="mx-auto w-full gap-3 py-3">
+                {milestoneData?.map(
+                  (milestone: IMilestoneData, index: number) => {
+                    return (
+                      <SingleMilestone
+                        key={index}
+                        milestoneData={milestone}
+                        index={index}
+                      />
+                    );
+                  },
+                )}
               </div>
-            </div> */}
-
-            <div className="w-full  mx-auto grid  grid-cols-1 lg:grid-cols-2 gap-3">
-              {milestoneData?.map((milestone: IMilestoneData, index: number) => {
-                return (
-                  <SingleMilestone key={index} milestoneData={milestone} index={index} />
-                );
-              })}
-            </div>
+            ) : (
+              <div>
+                <p className="min-h-10 text-center text-lg font-bold">
+                  No Module found for this course.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       )}

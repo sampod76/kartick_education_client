@@ -210,11 +210,15 @@ export default function QuizQuestionCard({
     ? true
     : false
 
-  console.log(quiz, 'quzzzzzzzzz')
+  // console.log(quiz, 'quzzzzzzzzz')
   return (
     <div>
       <div key={quiz?._id} className={`my-4 w-full relative px-2 lg:pl-3 `}>
         {/* //! Quiz Timer */}
+        <p className={`lg:text-lg font-[550] mb-2 text-base mx-2`}>
+            <TextToSpeech text={quiz?.title} />
+            Question {index + 1} : {quiz?.title}
+          </p>
         <div className="text-center mt-3 flex justify-center items-center">
           {/* <p>Time Remaining: {timer} seconds</p> */}
           <QuizTimer
@@ -240,10 +244,7 @@ export default function QuizQuestionCard({
           )}
         </div>
         <div className=" my-2 pr-4">
-          <p className={`lg:text-lg font-[550] mb-2 text-base mx-2`}>
-            <TextToSpeech text={quiz?.title} />
-            Question {index + 1} : {quiz?.title}
-          </p>
+          
           {quiz?.type === "audio" &&
             // <Link className="flex justify-start items-center gap-2 ml-2" href={quiz?.quizData?.link} rel="noopener noreferrer" target="_blank">
             //  <PlayCircleOutlined style={{ fontSize: "1.5rem" }} /> Play Audio  

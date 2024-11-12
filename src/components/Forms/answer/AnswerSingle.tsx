@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Button, Input, Radio, Select, Space, Upload, message } from "antd";
+import { useState } from 'react';
+import { Button, Input, Radio, Select, Space, Upload, message } from 'antd';
 import {
   PlusOutlined,
   MinusCircleOutlined,
   UploadOutlined,
-} from "@ant-design/icons";
-import HeadingUI from "../../ui/dashboardUI/HeadingUI";
-import SubHeadingUI from "../../ui/dashboardUI/SubHeadingUI";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
-import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
-import { Image } from "antd";
+} from '@ant-design/icons';
+import HeadingUI from '../../ui/dashboardUI/HeadingUI';
+import SubHeadingUI from '../../ui/dashboardUI/SubHeadingUI';
+import uploadImgBB from '@/hooks/UploadSIngleImgBB';
+import uploadImgCloudinary from '@/hooks/UploadSIngleCloudinary';
+import { Image } from 'antd';
 
 interface Answer {
   title: string;
@@ -39,11 +39,11 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
     setAnswers([
       ...answers,
       {
-        title: "",
+        title: '',
         correct: false,
         imgs: [],
         serialNumber: 0,
-        status: "active",
+        status: 'active',
       },
     ]);
   };
@@ -79,51 +79,55 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
         <div
           key={index}
           style={{
-            display: "flex",
-            alignItems: "start",
-            justifyContent: "space-between",
-            margin: "10px 0",
-            border: "1px solid gray",
-            padding: "10px 8px",
-            borderRadius: "4px",
-            width: "100%",
+            display: 'flex',
+            alignItems: 'start',
+            justifyContent: 'space-between',
+            margin: '10px 0',
+            border: '1px solid gray',
+            padding: '10px 8px',
+            borderRadius: '4px',
+            width: '100%',
           }}
-          className="shadow-1 "
+          className="shadow-1"
         >
           <div
             // style={{ display: "flex", marginBottom: 8 }}
 
             style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "18px",
-              width: "100%",
-              alignItems: "start",
-              position: "relative",
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '18px',
+              width: '100%',
+              alignItems: 'start',
+              position: 'relative',
               // background: "red",
             }}
-          // align="start"
+            // align="start"
           >
             <MinusCircleOutlined
-              style={{ fontSize: "1.5rem", position: "absolute", right: 0, top: 0 }}
+              style={{
+                fontSize: '1.5rem',
+                position: 'absolute',
+                right: 0,
+                top: 0,
+              }}
               onClick={() => handleRemove(index)}
             />
             {/* quiz option */}
             <Input
               placeholder="Option Title"
               style={{
-                minWidth: "90%",
-                height: "2.7rem",
+                minWidth: '90%',
+                height: '2.7rem',
                 // background: "blue",
                 // boxSizing: "border-box",
-
               }}
               // width={500}
               value={answer.title}
               onChange={(e) =>
                 handleChange(index, { ...answer, title: e.target.value })
               }
-            // defaultValue={index + 1}
+              // defaultValue={index + 1}
             />
             {/* Quiz radio select */}
 
@@ -137,21 +141,16 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               <Radio value={false}>Incorrect</Radio>
             </Radio.Group>
             {/* quiz uploader */}
-            <div className="flex flex-wrap justify-start items-center gap-2">
+            <div className="flex flex-wrap items-center justify-start gap-2">
               <Upload
                 listType="picture"
-                style={{ textAlign: "start" }}
+                style={{ textAlign: 'start' }}
                 showUploadList={true}
                 multiple={false}
-                
                 // multiple
                 beforeUpload={async (file) => {
                   setIsLoading({ loading: true, index: index });
-                  // console.log(
-                  //   "🚀 ~ file: DynamicFormFiled.tsx:110 ~ beforeUpload={ ~ file:",
-                  //   file
-                  // );
-                  // You can add custom logic before uploading, e.g., checking file type or size
+
                   const images = answer?.imgs;
                   const imgUrl = await uploadImgCloudinary(file);
                   setIsLoading({ loading: false, index: index });
@@ -168,12 +167,17 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                   return false; // Prevent default upload behavior
                 }}
               >
-                <Button  loading={isLoading.index === index && isLoading.loading} style={{ textAlign: "start" }}>Answer Image +</Button>
+                <Button
+                  loading={isLoading.index === index && isLoading.loading}
+                  style={{ textAlign: 'start' }}
+                >
+                  Answer Image +
+                </Button>
               </Upload>
               {answer?.imgs?.map((img, key) => (
                 <Image
                   key={key}
-                  className="w-10 h-10 rounded"
+                  className="h-10 w-10 rounded"
                   src={img}
                   width={50}
                   height={40}
@@ -182,7 +186,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               ))}
             </div>
             {/* serial number */}
-            <div className="text-start ">
+            <div className="text-start">
               <p>Serial number</p>
               <Input
                 placeholder="Serial Number"
@@ -196,7 +200,7 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
                   })
                 }
                 style={{
-                  width: '8rem'
+                  width: '8rem',
                 }}
                 onWheel={(e) => e.preventDefault()}
               />
@@ -214,7 +218,6 @@ const AnswerSInlge: React.FC<AnswerInputListProps> = ({
               <Select.Option value="deactivate">Deactivate</Select.Option>
             </Select>
           </div>
-
         </div>
       ))}
       <Button

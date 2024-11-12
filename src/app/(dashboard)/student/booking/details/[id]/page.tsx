@@ -46,7 +46,7 @@ const BookingDetails = ({ params }: any) => {
       skip: !Boolean(params?.id),
     }
   );
-  
+
   const ratingFeedBack = bookingData?.ratingFeedback;
 
   const [updateBooking, { isLoading: bookingLoading }] =
@@ -71,7 +71,6 @@ const BookingDetails = ({ params }: any) => {
     perSitPrice: bookingData?.service?.price || 0,
   };
   const onFinish = async (values: any) => {
-
     try {
       const res = await addRating({
         ...values,
@@ -85,13 +84,13 @@ const BookingDetails = ({ params }: any) => {
         Error_model_hook(res?.message);
       } else {
         // Success_model("Review Successfully add!");
-        
+
         //@ts-ignore
         const resBooking = await updateBooking({
           id: params?.id,
           body: { ratingFeedback: res?._id, status: "complete" },
         }).unwrap();
-        
+
         if (resBooking.success == false) {
           Error_model_hook(resBooking?.message + "");
         } else {
@@ -99,7 +98,7 @@ const BookingDetails = ({ params }: any) => {
         }
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
   const handlePayment = (value: string) => {
@@ -117,9 +116,7 @@ const BookingDetails = ({ params }: any) => {
             } else {
               Success_model("Successfully update booking");
             }
-          } catch (error) {
-            
-          }
+          } catch (error) {}
         }
       }
     );
@@ -264,7 +261,7 @@ const BookingDetails = ({ params }: any) => {
               <div className="border-2 p-3 flex flex-col justify-center items-center">
                 <h1 className="text-base font-normal">Status</h1>
                 <Button
-                    type="default"
+                  type="default"
                   danger={defaultValues?.status === "reject"}
                 >
                   {defaultValues?.status}
@@ -286,7 +283,7 @@ const BookingDetails = ({ params }: any) => {
               bookingData?.payment == false && (
                 <Button
                   onClick={() => handlePayment(params?.id)}
-                    type="default"
+                  type="default"
                 >
                   Payment
                 </Button>
@@ -350,7 +347,7 @@ const BookingDetails = ({ params }: any) => {
                       alignItems: "center",
                     }}
                   >
-                    <Button   type="default" htmlType="submit">
+                    <Button type="default" htmlType="submit">
                       Submit
                     </Button>
                   </Form.Item>

@@ -13,6 +13,13 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.LoginHistory],
     }),
+    changePassword: build.mutation({
+      query: (data) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        data: data,
+      }),
+    }),
     userLogOut: build.mutation({
       query: ({ id, data }) => ({
         url: `${AUTH_URL}/log-out-history/${id}`,
@@ -45,8 +52,16 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.profile],
     }),
+    resetPassword: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/reset-password`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.profile],
+    }),
   }),
-  overrideExisting: true
+  overrideExisting: true,
 });
 
 export const {
@@ -55,4 +70,7 @@ export const {
   useUpdateRoleMutation,
   useForgetPasswordMutation,
   useUserLogOutMutation,
+  useResetPasswordMutation,
+  //
+  useChangePasswordMutation
 } = authApi;

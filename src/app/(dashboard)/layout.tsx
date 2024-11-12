@@ -1,22 +1,17 @@
-"use client";
-import Contents from "@/components/ui/Contents";
-import SideBar from "@/components/ui/Sidebar";
-import { USER_ROLE } from "@/constants/role";
-import { IDecodedInfo, getUserInfo, isLoggedIn } from "@/services/auth.service";
-import { Drawer, Layout, Menu, Row, Space, Spin } from "antd";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import { dashboardItems } from "@/constants/dashBoardItems";
-import DashboardSidebar from "@/components/shared/DashBoard/DashboardSidebar";
-import DashboardNavBar from "@/components/shared/DashBoard/DashboardNavbar";
-import dynamic from "next/dynamic";
-import { CloseOutlined } from "@ant-design/icons"
+'use client';
+import DashboardNavBar from '@/components/shared/DashBoard/DashboardNavbar';
+import DashboardSidebar from '@/components/shared/DashBoard/DashboardSidebar';
+import { dashboardItems } from '@/constants/dashBoardItems';
+import { getUserInfo } from '@/services/auth.service';
+import { CloseOutlined } from '@ant-design/icons';
+import { Drawer, Layout, Menu, Row, Space, Spin } from 'antd';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const { Content } = Layout;
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
- 
   const userInfo = getUserInfo() as any;
 
   const router = useRouter();
@@ -37,7 +32,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         justify="center"
         align="middle"
         style={{
-          height: "100vh",
+          height: '100vh',
         }}
       >
         <Space>
@@ -50,7 +45,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Layout
       hasSider
-      style={{ display: "flex", justifyContent: "space-between" }}
+      style={{ display: 'flex', justifyContent: 'space-between' }}
     >
       {!screens.sm ? (
         <Drawer
@@ -58,20 +53,18 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           placement="left"
           onClose={() => setCollapsed(false)}
           open={collapsed}
-          closeIcon={<CloseOutlined style={{ color: "white" }} />}
-
+          closeIcon={<CloseOutlined style={{ color: 'white' }} />}
           width={300}
           style={{
-            background: "#001529",
-            color: "white",
-
+            background: '#001529',
+            color: 'white',
           }}
         >
           <Menu
             theme="dark"
             // className="bg-white"
-            style={{ backgroundColor: "#", color: "white" }}
-            defaultSelectedKeys={["1"]}
+            style={{ backgroundColor: '#', color: 'white' }}
+            defaultSelectedKeys={['1']}
             mode="inline"
             items={dashboardItems(userInfo?.role, setCollapsed)}
           />
@@ -82,13 +75,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       )}
 
-      <Layout style={{ overflow: "hidden" }}>
+      <Layout style={{ overflow: 'hidden' }}>
         <DashboardNavBar collapsed={collapsed} setCollapsed={setCollapsed} />
         <Content
           style={{
-            padding: "1em",
-            minHeight: "100vh",
-            overflowY: "initial",
+            padding: '1em',
+            minHeight: '100vh',
+            overflowY: 'initial',
             // textAlign: "center",
           }}
         >
@@ -101,5 +94,3 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default DashboardLayout;
-
-

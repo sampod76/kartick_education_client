@@ -25,9 +25,7 @@ export default function SelectDynamicCategory({
     input: string,
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-  const onSearch = (value: string) => {
- 
-  };
+  const onSearch = (value: string) => {};
 
   //! console.log(CategoryData)
   const CategoryOptions = CategoryData?.map((item: any) => {

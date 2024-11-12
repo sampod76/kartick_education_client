@@ -12,35 +12,48 @@ import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
 import { useAddGeneralUserWithFormDataMutation } from "@/redux/api/adminApi/userManageApi";
 
-
 import { storeUserInfo } from "@/services/auth.service";
 
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, Col, Row, Space, Spin, message } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  DatePickerProps,
+  Row,
+  Space,
+  Spin,
+  Typography,
+  message,
+} from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-
+import dayjs from "dayjs";
 const Registration = () => {
+  const [otherData, setOtherData] = useState<any>({
+    imageLoading: false,
+    dateOfBirth: "",
+  });
   const [addGeneralUserWithFormData, { isLoading }] =
     useAddGeneralUserWithFormDataMutation();
   const [userLogin, { isLoading: userLoginLoading }] = useUserLoginMutation();
   const router = useRouter();
   const [isReset, setIsReset] = useState(false);
   const onSubmit = async (values: any) => {
-    console.log(values);
     removeNullUndefinedAndFalsey(values);
+    if (otherData.dateOfBirth) {
+      values.dateOfBirth = dayjs(otherData.dateOfBirth).format("YYYY-MM-DD");
+    }
     try {
       const res = await addGeneralUserWithFormData({ ...values }).unwrap();
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Registration  successfully");
-
-        setIsReset(true)
-
+        setIsReset(true);
         const res = await userLogin({
           email: values?.email,
           password: values?.password,
@@ -57,13 +70,24 @@ const Registration = () => {
       // message.success("Admin created successfully!");
     } catch (err: any) {
       console.error(err);
-      Error_model_hook(err?.message || err?.data)
+      Error_model_hook(err?.message || err?.data);
     }
   };
   // if (isLoading || userLoginLoading) {
   //   return message.loading("Loading...");
   // }
-
+  const selectDate: DatePickerProps["onChange"] = (date, dateString) => {
+    // console.log(date, dateString);
+    setOtherData((c: any) => ({ ...c, dateOfBirth: dateString }));
+  };
+  // Function to disable future dates
+  const disableFutureDates = (current: any) => {
+    // Disable dates after today
+    return current && current > dayjs().endOf("day");
+  };
+  // const defaultValues = {
+  //   blood,
+  // };
   return (
     <div>
       {/* <HomeHeader /> */}
@@ -144,12 +168,11 @@ const Registration = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="image" />
+                <UploadImage setState={setOtherData} name="image" />
               </Col>
             </Row>
           </div>
@@ -201,7 +224,7 @@ const Registration = () => {
                 }}
               >
                 <FormInput
-                   type="number"
+                  type="number"
                   name="phoneNumber"
                   size="large"
                   label="Phone Number"
@@ -217,11 +240,23 @@ const Registration = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormDatePicker
+                {/* <FormDatePicker
                   name="dateOfBirth"
                   label="Date of birth"
                   size="large"
                   disablePrevious={false}
+                /> */}
+                <Typography.Text style={{ fontSize: "16px" }}>
+                  Select date of birth
+                </Typography.Text>
+                <DatePicker
+                  disabledDate={disableFutureDates}
+                  allowClear
+                  onChange={selectDate}
+                  size="large"
+                  placeholder="Select date of birth"
+                  format="YYYY-MM-DD"
+                  style={{ marginBottom: "10px", width: "100%" }}
                 />
               </Col>
 
@@ -244,7 +279,12 @@ const Registration = () => {
             {isLoading || userLoginLoading ? (
               <Spin></Spin>
             ) : (
-              <Button size="large" htmlType="submit"   type="default">
+              <Button
+                disabled={otherData?.imageLoading}
+                size="large"
+                htmlType="submit"
+                type="default"
+              >
                 Create
               </Button>
             )}

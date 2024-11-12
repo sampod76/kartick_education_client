@@ -1,33 +1,33 @@
-import { IMeta } from "@/types";
-import { baseApi } from "../baseApi";
-import { tagTypes } from "../../tag-types";
+import { IMeta } from '@/types';
+import { tagTypes } from '../../tag-types';
+import { baseApi } from '../baseApi';
 
-const STUDENT_URL = "/student";
+const STUDENT_URL = '/student';
 
 export const studentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addStudentWithFormData: build.mutation({
       query: (data) => {
-        // 
+        //
         return {
-          url: "/users/create-student",
-          method: "POST",
+          url: '/users/create-student',
+          method: 'POST',
           data: data,
           // contentType: "multipart/form-data",
-          contentType: "application/json",
+          contentType: 'application/json',
         };
       },
       invalidatesTags: [tagTypes.student],
     }),
     addStudentWithAuthorData: build.mutation({
       query: (data) => {
-        // 
+        //
         return {
-          url: "/users/create-student-author",
-          method: "POST",
+          url: '/users/create-student-author',
+          method: 'POST',
           data: data,
           // contentType: "multipart/form-data",
-          contentType: "application/json",
+          contentType: 'application/json',
         };
       },
       invalidatesTags: [tagTypes.student],
@@ -36,13 +36,11 @@ export const studentApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: STUDENT_URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-
-
         return {
           data: response,
           meta,
@@ -53,18 +51,17 @@ export const studentApi = baseApi.injectEndpoints({
     getSingleStudent: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `${STUDENT_URL}/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       providesTags: [tagTypes.student],
     }),
     updateStudent: build.mutation({
       query: ({ data, id }) => {
-
-        // console.log(data, "student data", id);
+        //// console.log(data, "student data", id);
 
         return {
           url: `${STUDENT_URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
         };
       },
@@ -73,11 +70,12 @@ export const studentApi = baseApi.injectEndpoints({
     deleteStudent: build.mutation({
       query: (id) => ({
         url: `${STUDENT_URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.student],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {
@@ -86,5 +84,5 @@ export const {
   useAddStudentWithFormDataMutation,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
-  useAddStudentWithAuthorDataMutation
+  useAddStudentWithAuthorDataMutation,
 } = studentApi;

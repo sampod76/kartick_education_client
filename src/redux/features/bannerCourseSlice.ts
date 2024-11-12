@@ -35,14 +35,14 @@ const bannerCourseSlice = createSlice({
       //     (course) => course._id === action?.payload?._id
       //   );
       //   if (existingCourse) {
-      //     console.log("the  course is exists ");
+
       //   } else {
       //     state.course.push(action?.payload);
       //     state.total += action.payload.price;
       //   }
     },
     clearBannerSearchValue: (state, action) => {
-      // console.log("action", action);
+
       state.searchValue = "";
       //   state.course = state.course.filter(
       //     (course) => course._id !== action.payload._id

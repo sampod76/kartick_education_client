@@ -1,22 +1,19 @@
-"use client";
+'use client';
 
-import Form from "@/components/Forms/Form";
-import FormInput from "@/components/Forms/FormInput";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import UploadImage from "@/components/ui/UploadImage";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import Form from '@/components/Forms/Form';
+import FormInput from '@/components/Forms/FormInput';
+import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
+import HeadingUI from '@/components/ui/dashboardUI/HeadingUI';
+import { removeNullUndefinedAndFalsey } from '@/hooks/removeNullUndefinedAndFalsey';
 import {
   useGetSingleCategoryQuery,
   useUpdateCategoryMutation,
-} from "@/redux/api/adminApi/categoryApi";
+} from '@/redux/api/adminApi/categoryApi';
 
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
 
-import { Button, Col, Row, message } from "antd";
-import dynamic from "next/dynamic";
-import Image from "next/image";
-import { useState } from "react";
+import { Button, Col, Row } from 'antd';
+import { useState } from 'react';
 
 export default function EditCategory({ categoryId }: { categoryId: string }) {
   const [isReset, setIsReset] = useState(false);
@@ -24,7 +21,7 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
     categoryId,
     {
       skip: !Boolean(categoryId),
-    }
+    },
   );
 
   // const { data: categoryData = [] } = useGetAllCategoryQuery({});
@@ -46,7 +43,7 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("successfully updated data");
+        Success_model('successfully updated data');
         setIsReset(true);
       }
     } catch (err: any) {
@@ -58,12 +55,11 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
   }
 
   return (
     <div>
-      <div className="max-w-md mx-auto rounded-xl shadow-xl p-3 bg-white">
+      <div className="mx-auto max-w-xl rounded-xl bg-white p-3 shadow-xl">
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(ICategorySchema)} */}
         <Form
@@ -73,10 +69,10 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
         >
           <div
             style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
-              marginBottom: "10px",
+              border: '1px solid #d9d9d9',
+              borderRadius: '5px',
+              padding: '15px',
+              marginBottom: '10px',
             }}
           >
             <HeadingUI>Category Information</HeadingUI>
@@ -87,9 +83,8 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
                 md={24}
                 lg={24}
                 style={{
-                  marginBottom: "20px",
-                  maxWidth: "30vw",
-                  margin: "0 auto",
+                  marginBottom: '20px',
+                  minWidth: '500px',
                 }}
               >
                 <FormInput
@@ -100,10 +95,9 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
                   required={true}
                 />
               </Col>
-              <Col
+              {/* <Col
                 className="gutter-row"
                 xs={24}
-
                 style={{
                   marginBottom: "20px",
                   // maxWidth: "30vw",
@@ -115,7 +109,6 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
                   name="serial_number"
                   size="large"
                   label="Category serial number"
-
                 />
               </Col>
 
@@ -130,14 +123,14 @@ export default function EditCategory({ categoryId }: { categoryId: string }) {
                 }}
               >
                 <UploadImage name="img" defaultImage={categoryData?.img} />
-              </Col>
+              </Col> */}
             </Row>
           </div>
           <div
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <Button htmlType="submit" type="default">

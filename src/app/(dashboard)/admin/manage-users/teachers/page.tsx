@@ -1,65 +1,57 @@
-"use client";
-import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Input, message } from "antd";
-import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
+'use client';
+import ActionBar from '@/components/ui/ActionBar';
+import UMTable from '@/components/ui/UMTable';
+import { useDebounced } from '@/redux/hooks';
+import { DeleteOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Input, Menu, Space } from 'antd';
+import Link from 'next/link';
+import { useState } from 'react';
 
-import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
 import {
+  confirm_modal,
   Error_model_hook,
   Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
+} from '@/utils/modalHook';
+import dayjs from 'dayjs';
 
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import { useGlobalContext } from '@/components/ContextApi/GlobalContextApi';
+import ModalComponent from '@/components/Modal/ModalComponents';
+import AddSellerInCourse from '@/components/category/AddSellerInCourse';
+import { useAddAdminWithFormDataMutation } from '@/redux/api/adminApi';
 import {
-  useDeleteStudentMutation,
-  useGetAllStudentsQuery,
-} from "@/redux/api/adminApi/studentApi";
-import { getUserInfo } from "@/services/auth.service";
-import useGlobalCache from "@ant-design/cssinjs/lib/hooks/useGlobalCache";
-import { useGlobalContext } from "@/components/ContextApi/GlobalContextApi";
-import { useDeleteSellerMutation, useGetAllSellersQuery } from "@/redux/api/adminApi/sellerApi";
+  useDeleteSellerMutation,
+  useGetAllSellersQuery,
+} from '@/redux/api/adminApi/sellerApi';
 
 const TeacherOrSellerPage = () => {
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
-  const { userInfo, userInfoLoading } = useGlobalContext()
+  const [addCategory, { isLoading: categoryLoading }] =
+    useAddAdminWithFormDataMutation();
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const query: Record<string, any> = {};
   const [deleteSeller] = useDeleteSellerMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
+  const [adminId, setAdminId] = useState<string>('');
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
   // query["status"] = "active";
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
   });
-  console.log(query, "query");
+
   if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
   const { data, isLoading } = useGetAllSellersQuery({
     ...query,
@@ -68,108 +60,110 @@ const TeacherOrSellerPage = () => {
   //@ts-ignore
   const StudentData = data?.data;
 
-
-
   //@ts-ignore
   const meta = data?.meta;
 
   const columns = [
     {
-      title: "Name",
+      title: 'Name',
       render: function (data: any) {
-        // console.log(data);
+        //
         const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
         return <>{fullName}</>;
       },
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: 'Email',
+      dataIndex: 'email',
     },
 
     {
-      title: "Created at",
-      dataIndex: "createdAt",
+      title: 'Created at',
+      dataIndex: 'createdAt',
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
     },
     {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
+      title: 'Contact no.',
+      dataIndex: 'phoneNumber',
     },
     {
-      title: "Date Of Birth",
-      dataIndex: "dateOfBirth",
+      title: 'Date Of Birth',
+      dataIndex: 'dateOfBirth',
     },
     {
-      title: "Gender",
-      dataIndex: "gender",
+      title: 'Gender',
+      dataIndex: 'gender',
     },
     {
-      title: "Status",
-      dataIndex: "status",
+      title: 'Status',
+      dataIndex: 'status',
     },
     {
-      title: "Action",
-      dataIndex: "_id",
+      title: 'Action',
+      dataIndex: '_id',
       width: 130,
-      render: function (data: any) {
+      render: function (_id: any) {
         return (
-          <div className="flex justify-center items-center gap-1">
-            <Link
-              href={`/${userInfo?.role}/manage-users/teachers/details/${data}`}
-            >
-              <Button onClick={() => console.log(data)} type="default">
-                <EyeOutlined />
-              </Button>
-            </Link>
-            {/* <Link
-              href={`/${userInfo?.role}/manage-users/teachers/edit/${data}`}
-            >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="default"
+          <div className="flex items-center justify-center gap-1">
+            <Space size="middle">
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key="details">
+                      <Link
+                        href={`/${userInfo?.role}/manage-users/teachers/details/${_id}`}
+                      >
+                        <Button className="w-full" type="default">
+                          <EyeOutlined /> view
+                        </Button>
+                      </Link>
+                    </Menu.Item>
+                    <ModalComponent buttonText="Add Course Category">
+                      <AddSellerInCourse sellerId={_id} />
+                    </ModalComponent>
+                    <Menu.Item key="details">
+                      <Button
+                        onClick={() => deleteSellerHandler(_id)}
+                        type="default"
+                        danger
+                        className="w-full"
+                      >
+                        <DeleteOutlined /> delete
+                      </Button>
+                    </Menu.Item>
+                  </Menu>
+                }
               >
-                <EditOutlined />
-              </Button>
-            </Link> */}
-            <Button
-              onClick={() => deleteSellerHandler(data)}
-              type="default"
-              danger
-            >
-              <DeleteOutlined />
-            </Button>
+                <button className="text-blue-700">Action</button>
+              </Dropdown>
+            </Space>
           </div>
         );
       },
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
 
   const deleteSellerHandler = async (id: string) => {
-    console.log(id);
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
@@ -179,7 +173,7 @@ const TeacherOrSellerPage = () => {
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Teacher Successfully Deleted");
+            Success_model('Teacher Successfully Deleted');
           }
         } catch (error: any) {
           Error_model_hook(error.message);
@@ -194,10 +188,10 @@ const TeacherOrSellerPage = () => {
     <div
       style={{
         boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
+          '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        borderRadius: '1rem',
+        backgroundColor: 'white',
+        padding: '1rem',
       }}
     >
       <ActionBar title="Teacher List">
@@ -206,7 +200,7 @@ const TeacherOrSellerPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: '250px',
           }}
         />
         <div>
@@ -215,7 +209,7 @@ const TeacherOrSellerPage = () => {
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >
@@ -236,15 +230,6 @@ const TeacherOrSellerPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
-      <UMModal
-        title="Remove admin"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteSellerHandler(adminId)}
-      >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal>
     </div>
   );
 };

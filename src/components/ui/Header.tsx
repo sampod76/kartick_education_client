@@ -4,13 +4,16 @@ import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { authKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
+  const { setRefetch, userInfo } = useGlobalContext();
   const router = useRouter();
 
   const logOut = () => {
-    removeUserInfo(authKey);
+    localStorage.clear();
+    setRefetch((c) => !c);
     router.push("/login");
   };
 
@@ -18,13 +21,18 @@ const Header = () => {
     {
       key: "0",
       label: (
-        <Button onClick={logOut} style={{color:"white"}} type="default" danger>
+        <Button
+          onClick={logOut}
+          style={{ color: "white" }}
+          type="default"
+          danger
+        >
           <span className="text-white">Logout</span>
         </Button>
       ),
     },
   ];
-  const { role } = getUserInfo() as any;
+  const role = userInfo?.role;
   return (
     <AntHeader
       style={{
@@ -39,28 +47,32 @@ const Header = () => {
         }}
       >
         <div>
-          <Link href={'/'}  className="text-lg underline-offset-8">Home</Link>
+          <Link href={"/"} className="text-lg underline-offset-8">
+            Home
+          </Link>
         </div>
-        <div style={{display: "flex",
-            justifyContent: "center",
-            alignItems: "center"}}>
-        <p
+        <div
           style={{
-            margin: "0px 5px",
-            
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {role}
-        </p>
-        <Dropdown menu={{ items }}>
-          <a>
-            <Space wrap size={16}>
-              <Avatar size="large" icon={<UserOutlined />} />
-            </Space>
-          </a>
-        </Dropdown>
+          <p
+            style={{
+              margin: "0px 5px",
+            }}
+          >
+            {role}
+          </p>
+          <Dropdown menu={{ items }}>
+            <a>
+              <Space wrap size={16}>
+                <Avatar size="large" icon={<UserOutlined />} />
+              </Space>
+            </a>
+          </Dropdown>
         </div>
-       
       </Row>
     </AntHeader>
   );

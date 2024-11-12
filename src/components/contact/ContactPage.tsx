@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   ContactsFilled,
   MessageFilled,
@@ -16,8 +17,47 @@ import {
 } from "@ant-design/icons";
 import CreateStudentPage from "../stepper/CreateStudent";
 import ContactForm from "./ContactForm";
+import { getUserInfo } from "@/services/auth.service";
+import { useAddContactMutation } from "@/redux/api/adminApi/contactApi";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
 
 export default function ContactPage() {
+
+  const userInfo = getUserInfo() as any;
+  const [isReset, setIsReset] = useState(false);
+
+  const [addContact, { isLoading }] = useAddContactMutation()
+
+  const onSubmit = async (values: any) => {
+    // console.log(values);
+
+    // message.success("sent message");
+
+    if (userInfo?.email) {
+      values['user'] = userInfo?.id
+    }
+
+    // const contactData={
+    //   ...values,
+
+    // }
+
+    try {
+      const res = await addContact(values).unwrap();
+      // console.log(res);
+      if (res?.success == false) {
+        Error_model_hook(res?.message);
+      } else {
+        Success_model("Successfully sent your Message");
+        setIsReset(true)
+      }
+      // console.log(res);
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div className="container my-24 mx-auto md:px- block lg:flex items-center gap-5 bg-slate-0">

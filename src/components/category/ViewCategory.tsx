@@ -1,44 +1,51 @@
-"use client";
+'use client';
 
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import { useGetSingleCategoryQuery } from "@/redux/api/adminApi/categoryApi";
-import Image from "next/image";
-import React, { useState } from 'react'
-import UMTable from "../ui/UMTable";
-import HeadingUI from "../ui/dashboardUI/HeadingUI";
-import { useDeleteCourseMutation, useGetAllCourseQuery } from "@/redux/api/adminApi/courseApi";
-import { useDebounced } from "@/redux/hooks";
-import { Dropdown, Menu, Space } from "antd";
-import Link from "next/link";
-import dayjs from "dayjs";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
-import { Error_model_hook, Success_model, confirm_modal } from "@/utils/modalHook";
+import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
+import { useGetSingleCategoryQuery } from '@/redux/api/adminApi/categoryApi';
+import {
+  useDeleteCourseMutation,
+  useGetAllCourseQuery,
+} from '@/redux/api/adminApi/courseApi';
+import { useDebounced } from '@/redux/hooks';
+import { IDecodedInfo, getUserInfo } from '@/services/auth.service';
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from '@/utils/modalHook';
+import { Dropdown, Menu, Space } from 'antd';
+import dayjs from 'dayjs';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import UMTable from '../ui/UMTable';
+import HeadingUI from '../ui/dashboardUI/HeadingUI';
+import fileObjectToLink from '@/utils/fileObjectToLink';
 export default function ViewCategory({ categoryId }: { categoryId: string }) {
-
-
   const { data: category, isLoading } = useGetSingleCategoryQuery(categoryId, {
     skip: !Boolean(categoryId),
   });
   // ! for course
 
-  const [deleteCourse, { isLoading: deleteLoading }] = useDeleteCourseMutation();
+  const [deleteCourse, { isLoading: deleteLoading }] =
+    useDeleteCourseMutation();
   const userInfo = getUserInfo() as IDecodedInfo;
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   // const [courseId, setCourseId] = useState<string>("");
 
-  const [filterValue, setFilterValue] = useState("");
+  const [filterValue, setFilterValue] = useState('');
   const query: Record<string, any> = {};
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  query["status"] = "active";
-  query["category"] = categoryId;
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
+  query['status'] = 'active';
+  query['category'] = categoryId;
   // if (filterValue) {
   //   query["category"] = filterValue;
   // }
@@ -49,11 +56,15 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
   });
 
   if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
 
-  // console.log(query)
-  const { data, isLoading: courseLoading } = useGetAllCourseQuery({ ...query });
+  //
+  const {
+    data,
+    isLoading: courseLoading,
+    isFetching,
+  } = useGetAllCourseQuery({ ...query });
   const courseData = data?.data || [];
   const meta = data?.meta;
   const handleDelete = (id: string) => {
@@ -66,16 +77,14 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Course Successfully Deleted");
+            Success_model('Course Successfully Deleted');
           }
         } catch (error: any) {
-          console.log("🚀 ~ confirm_modal ~ error:", error);
           Error_model_hook(error.message);
         }
       }
     });
   };
-
 
   // const category = data
   if (isLoading || courseLoading) {
@@ -84,14 +93,14 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
 
   const columns = [
     {
-      title: "Image",
+      title: 'Image',
       render: function (data: any) {
         return (
           <>
             {
               <Image
                 src={data?.img}
-                style={{ height: "50px", width: "80px" }}
+                style={{ height: '50px', width: '80px' }}
                 width={150}
                 height={150}
                 alt="dd"
@@ -103,15 +112,15 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
       width: 100,
     },
     {
-      title: "Name",
+      title: 'Name',
       // fixed:"left",
-      dataIndex: "title",
+      dataIndex: 'title',
       // ellipsis: true,
       // responsive: ['md','sm']
     },
     {
-      title: "price",
-      dataIndex: "price",
+      title: 'price',
+      dataIndex: 'price',
       ellipsis: true,
       width: 100,
     },
@@ -119,35 +128,35 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
     //   title: "duration",
     //   dataIndex: "duration",
     //   render: function (data: any) {
-    //     // console.log(data)
+    //     //
     //     return data?.length && `${dayjs(data[0]).format("MMM D, YYYY hh:mm A")} - ${dayjs(data[2]).format("MMM D, YYYY hh:mm A")}`;
     //   },
     //   // ellipsis: true,
     // },
     {
-      title: "label",
-      dataIndex: ["labelDetails", "title"],
+      title: 'label',
+      dataIndex: ['labelDetails', 'title'],
       ellipsis: true,
       width: 150,
     },
     {
-      title: "Price Type",
-      dataIndex: "price_type",
+      title: 'Price Type',
+      dataIndex: 'price_type',
       // ellipsis: true,
       width: 100,
     },
     {
-      title: "author",
-      dataIndex: "author",
+      title: 'author',
+      dataIndex: 'author',
       render: function (data: any) {
-        // console.log(data);
+        //
         return data.email;
       },
       // ellipsis: true,
     },
     {
-      title: "category",
-      dataIndex: "category",
+      title: 'category',
+      dataIndex: 'category',
       render: function (data: any) {
         return data.title;
       },
@@ -156,24 +165,24 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
     },
 
     {
-      title: "Created at",
-      dataIndex: "createdAt",
+      title: 'Created at',
+      dataIndex: 'createdAt',
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
     },
 
     {
-      title: "Status",
-      dataIndex: "status",
+      title: 'Status',
+      dataIndex: 'status',
       width: 80,
       // render:function(data:any){
-      //   console.log(data);
+      //
       // }
     },
     {
-      title: "Action",
+      title: 'Action',
       // fixed: "right",
       width: 110,
       render: (record: any) => (
@@ -228,34 +237,42 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   return (
     <>
       <div
-        style={{ marginLeft: "auto", marginRight: "auto" }}
-        className="container "
+        style={{ marginLeft: 'auto', marginRight: 'auto' }}
+        className="container"
       >
         <div className="container mx-auto p-8">
-          <div className="bg-white shadow-md rounded-lg p-6">
-            <h1 className="text-3xl font-bold mb-6">{category.title}</h1>
+          <div className="rounded-lg bg-white p-6 shadow-md">
+            <h1 className="mb-6 text-3xl font-bold">{category.title}</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="col-span-full mb-6 bg-cover w-full h-[18rem]" style={{
-                backgroundImage: `url(${category.img})`,
-                backgroundAttachment: 'fixed',
-                backgroundSize: 'cover', // Add this line for covering the full height
-              }}>
-              </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {category.img || category.image ? (
+                <div
+                  className="col-span-full mb-6 h-[18rem] w-full bg-cover"
+                  style={{
+                    backgroundImage: `url(${fileObjectToLink(category.image || category.img)})`,
+                    backgroundAttachment: 'fixed',
+                    backgroundSize: 'cover', // Add this line for covering the full height
+                  }}
+                ></div>
+              ) : null}
               {/* Category Details */}
               <div className="col-span-full md:col-span-1">
                 {/* <p className="text-gray-600 mb-2">Category ID: {category.id}</p> */}
-                <p className="text-gray-600 mb-2">Status: {category.status}</p>
-                <p className="text-gray-600 mb-2">Created At: {category.createdAt}</p>
-                <p className="text-gray-600 mb-2">Updated At: {category.updatedAt}</p>
+                <p className="mb-2 text-gray-600">Status: {category.status}</p>
+                <p className="mb-2 text-gray-600">
+                  Created At: {category.createdAt}
+                </p>
+                <p className="mb-2 text-gray-600">
+                  Updated At: {category.updatedAt}
+                </p>
                 {/* Add more details as needed */}
               </div>
             </div>
@@ -269,10 +286,10 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
         </div>
 
         <div className="">
-          <HeadingUI>Courses of {category?.title}</HeadingUI>
+          <HeadingUI>Courses: {category?.title}</HeadingUI>
 
           <UMTable
-            loading={courseLoading}
+            loading={courseLoading || isFetching}
             columns={columns}
             dataSource={courseData}
             pageSize={size}
@@ -282,7 +299,6 @@ export default function ViewCategory({ categoryId }: { categoryId: string }) {
             onTableChange={onTableChange}
             showPagination={true}
           />
-
         </div>
       </div>
     </>

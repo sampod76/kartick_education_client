@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import { useGetAllCategoryQuery } from '@/redux/api/adminApi/categoryApi';
 
-import { Button, Select } from "antd";
+import { Button, Select } from 'antd';
 
 const FilterCategorySelect = ({
   filterValue,
@@ -14,15 +14,15 @@ const FilterCategorySelect = ({
   // const [filterValue, setFilterValue] = useState("Filter by a category");
   const query: Record<string, any> = {};
   //! for Course options selection
-  query["limit"] = 999999;
-  query["sortBy"] = "serial_number";
-  query["sortOrder"] = "asc";
-  query["status"] = "active";
+  query['limit'] = 999999;
+  query['sortBy'] = 'serial_number';
+  query['sortOrder'] = 'asc';
+  query['status'] = 'active';
   //! for search and select
   const filterOption = (
     input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+    option?: { label: string; value: string },
+  ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
     //  // console.log("search:", value);
   };
@@ -43,11 +43,11 @@ const FilterCategorySelect = ({
       onChange={(val) => {
         setFilterValue(val);
       }}
-      size={"large"}
+      size={'large'}
       options={CategoryOptions}
-
+      className="min-w-72"
       value={filterValue}
-      style={{ width: "10rem" }}
+      style={{ width: '10rem' }}
       loading={isLoading}
       //! for search & filter
       showSearch

@@ -1,28 +1,28 @@
-"use client";
-import React, { ReactElement, useState } from "react";
-import { Button, Modal } from "antd";
-
+'use client';
+import { Button, Modal } from 'antd';
+import React, { useState } from 'react';
 
 const ModalComponent = ({
   children,
   buttonText,
+  button,
   loading = false,
-  
+  width = 1000,
+  maskClosable = true,
 }: {
   children: React.ReactElement;
   buttonText?: string;
+  button?: any;
   loading?: boolean;
-  
+  width?: number;
+  maskClosable?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
 
-
   const showModal = () => {
     setOpen(true);
   };
-
-
 
   const handleCancel = () => {
     setOpen(false);
@@ -30,9 +30,13 @@ const ModalComponent = ({
 
   return (
     <>
-      <Button type="default" onClick={showModal}>
-        {buttonText || "Open Modal"}
-      </Button>
+      {button ? (
+        <div onClick={showModal}>{button}</div>
+      ) : (
+        <Button type="default" onClick={showModal}>
+          {buttonText || 'Open Modal'}
+        </Button>
+      )}
       <Modal
         // title="Title"
         open={open}
@@ -46,9 +50,10 @@ const ModalComponent = ({
             <OkBtn /> */}
           </>
         )}
-        width={1000}
+        maskClosable={maskClosable} // Prevent closing by clicking outside
+        width={width}
       >
-       {React.cloneElement(children, { open, setOpen })}
+        {React.cloneElement(children, { open, setOpen })}
       </Modal>
     </>
   );

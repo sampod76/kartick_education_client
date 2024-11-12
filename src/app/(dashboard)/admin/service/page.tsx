@@ -61,7 +61,7 @@ const ServiceList = () => {
 
   //@ts-ignore
   const adminData = data?.data;
-  //  // console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", adminData)
+  //  //
   //@ts-ignore
   const meta = data?.meta;
 
@@ -135,7 +135,7 @@ const ServiceList = () => {
         return (
           <>
             <Link href={`/${userInfo?.role}/service/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -144,13 +144,12 @@ const ServiceList = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
-                  type="default"
+                type="default"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => handleDelete(data)}   type="default" danger>
+            <Button onClick={() => handleDelete(data)} type="default" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -159,13 +158,13 @@ const ServiceList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -177,7 +176,7 @@ const ServiceList = () => {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    //
     try {
       const res = await deleteService(id);
       if (res) {
@@ -209,7 +208,7 @@ const ServiceList = () => {
           placeholder="Search"
           onChange={(e: any) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>
@@ -219,7 +218,7 @@ const ServiceList = () => {
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
-                type="default"
+              type="default"
               onClick={resetFilters}
             >
               <ReloadOutlined />

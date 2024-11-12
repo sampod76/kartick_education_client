@@ -61,6 +61,7 @@ export const faqApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.faq],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

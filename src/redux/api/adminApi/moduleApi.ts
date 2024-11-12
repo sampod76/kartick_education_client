@@ -1,8 +1,8 @@
-import { tagTypes } from "@/redux/tag-types";
-import { IMeta } from "@/types";
-import { baseApi } from "../baseApi";
+import { tagTypes } from '@/redux/tag-types';
+import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
-const MODULE_URL = "/module";
+const MODULE_URL = '/module';
 
 export const moduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -11,7 +11,7 @@ export const moduleApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: MODULE_URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -21,16 +21,14 @@ export const moduleApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.module,],
+      providesTags: [tagTypes.module],
     }),
     // get single academic department
     getSingleModule: build.query({
-
       query: (id: string | string[] | undefined) => {
-
         return {
           url: `${MODULE_URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
 
@@ -39,36 +37,36 @@ export const moduleApi = baseApi.injectEndpoints({
     // create a new academic department
     addModule: build.mutation({
       query: (data) => {
-
         return {
           url: MODULE_URL,
-          method: "POST",
+          method: 'POST',
           data,
         };
       },
-      invalidatesTags: [tagTypes.module,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.module, tagTypes.categoryChildren],
     }),
     // update ac department
     updateModule: build.mutation({
       query: ({ data, id }) => {
         return {
           url: `${MODULE_URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
         };
       },
-      invalidatesTags: [tagTypes.module,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.module, tagTypes.categoryChildren],
     }),
 
     // delete ac department
     deleteModule: build.mutation({
       query: (id) => ({
         url: `${MODULE_URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [tagTypes.module,tagTypes.categoryChildren],
+      invalidatesTags: [tagTypes.module, tagTypes.categoryChildren],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

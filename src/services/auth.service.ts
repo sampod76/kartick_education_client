@@ -11,12 +11,14 @@ export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {
 
 export interface IDecodedInfo {
   id: string;
+  roleBaseUserId: string;
   role: USER_ROLE | string;
   email: string;
-  e?:string
+  img?: string;
+  e?: string;
 }
 
-export const getUserInfo = (): IDecodedInfo | {e:""} => {
+export const getUserInfo = (): IDecodedInfo | { e: "" } => {
   const authToken = getFromLocalStorage(authKey);
   // console.log(authToken)
 
@@ -25,7 +27,7 @@ export const getUserInfo = (): IDecodedInfo | {e:""} => {
     // console.log(decodedData)
     return decodedData;
   } else {
-    return {e:''};
+    return { e: "" };
   }
 };
 

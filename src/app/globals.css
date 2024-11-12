@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: "Lora", serif;
+  font-family: 'Lora', serif;
   /* max-width: "1536px";
   margin-inline: "auto"; */
   /* font-family: 'Roboto Condensed', sans-serif; */
@@ -12,6 +12,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.sc-kOHUsU {
+  padding: 1em;
+  width: 1000px;
+  height: 1000px;
+}
 .container2 {
   width: 100%;
 }
@@ -41,15 +46,38 @@
   }
 }
 
+.ApplicationContainer {
+  border-radius: 0.375rem; /* Rounded corners */
+  border: 1px solid #d1d5db; /* Light gray border */
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Box shadow */
+  width: 100%;
+  height: 400px;
+
+  @media (min-width: 640px) {
+    height: 600px;
+    width: 600px;
+  }
+  @media (min-width: 768px) {
+    height: 700px;
+    width: 700px;
+  }
+  @media (min-width: 1024px) {
+    height: 800px;
+    width: 800px;
+  }
+}
+
 /* //! Sarwar */
 .shadow1 {
-  box-shadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
+  box-shadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
 }
 .block-flex {
   display: flex;
   justify-content: space-between;
   /* align-items: center; */
-  gap: "1em";
+  gap: '1em';
 }
 
 @media screen and (max-width: 600px) {
@@ -59,11 +87,17 @@
     /* background-color: aqua; */
   }
   .width-full {
-    width: "100%";
+    width: '100%';
   }
 }
 
 /* //! sampod */
+.bodyText {
+  @apply text-base;
+}
+.bodyHeaderText {
+  @apply text-2xl font-bold lg:text-3xl;
+}
 
 /* Heading levels */
 .jodit-wysiwyg h1 {
@@ -96,38 +130,38 @@ h4 {
 
 /* Quotes */
 .jodit-wysiwyg blockquote {
-  @apply p-4 bg-gray-100 border border-gray-200 rounded-lg;
+  @apply rounded-lg border border-gray-200 bg-gray-100 p-4;
 }
 
 blockquote {
-  @apply p-4 bg-gray-100 border border-gray-200 rounded-lg;
+  @apply rounded-lg border border-gray-200 bg-gray-100 p-4;
 }
 
 /* Code blocks */
 .jodit-wysiwyg pre,
 .jodit-wysiwyg code {
-  @apply bg-gray-900 text-white px-4 py-2 rounded-lg font-mono;
+  @apply rounded-lg bg-gray-900 px-4 py-2 font-mono text-white;
 }
 
 code {
-  @apply bg-gray-900 text-white px-4 py-2 rounded-lg font-mono;
+  @apply rounded-lg bg-gray-900 px-4 py-2 font-mono text-white;
 }
 pre {
-  @apply bg-gray-900 text-white px-4 py-2 rounded-lg font-mono;
+  @apply rounded-lg bg-gray-900 px-4 py-2 font-mono text-white;
 }
 
 /* Unordered lists */
 .jodit-wysiwyg ul {
-  @apply list-disc list-inside pl-8;
+  @apply list-inside list-disc pl-8;
 }
 ul {
-  @apply list-disc list-inside pl-8;
+  @apply list-inside list-disc pl-8;
 }
 .jodit-wysiwyg ol {
-  @apply list-decimal list-inside pl-8;
+  @apply list-inside list-decimal pl-8;
 }
 ol {
-  @apply list-decimal list-inside pl-8;
+  @apply list-inside list-decimal pl-8;
 }
 table {
   border-collapse: collapse;
@@ -163,6 +197,26 @@ td {
 
 .colorCheck {
   @apply bg-slate-600 md:bg-blue-500 lg:bg-red-300 xl:bg-green-400;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: black rgb(209, 213, 219);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #fb8500;
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
 }
 /* 
 .commonGap {

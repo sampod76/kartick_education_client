@@ -1,9 +1,9 @@
-import { tagTypes } from "@/redux/tag-types";
-import { IMeta } from "@/types";
-import { baseApi } from "../baseApi";
-import { IMilestoneData } from "@/types/miestoneType";
+import { tagTypes } from '@/redux/tag-types';
+import { IMeta } from '@/types';
+import { IMilestoneData } from '@/types/miestoneType';
+import { baseApi } from '../baseApi';
 
-const MILESTONE_URL = "/milestone";
+const MILESTONE_URL = '/milestone';
 
 export const milestoneApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,7 +12,7 @@ export const milestoneApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: MILESTONE_URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
@@ -30,7 +30,7 @@ export const milestoneApi = baseApi.injectEndpoints({
       query: (id: string | string[] | undefined) => {
         return {
           url: `${MILESTONE_URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       providesTags: [tagTypes.milestone],
@@ -41,7 +41,7 @@ export const milestoneApi = baseApi.injectEndpoints({
         //
         return {
           url: MILESTONE_URL,
-          method: "POST",
+          method: 'POST',
           data,
         };
       },
@@ -52,7 +52,7 @@ export const milestoneApi = baseApi.injectEndpoints({
       query: ({ data, id }) => {
         return {
           url: `${MILESTONE_URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
         };
       },
@@ -63,11 +63,12 @@ export const milestoneApi = baseApi.injectEndpoints({
     deleteMilestone: build.mutation({
       query: (id) => ({
         url: `${MILESTONE_URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.milestone, tagTypes.categoryChildren],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

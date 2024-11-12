@@ -1,6 +1,15 @@
-"use client";
-import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+'use client';
+import ActionBar from '@/components/ui/ActionBar';
+import UMBreadCrumb from '@/components/ui/UMBreadCrumb';
+import UMModal from '@/components/ui/UMModal';
+import UMTable from '@/components/ui/UMTable';
+import { useDebounced } from '@/redux/hooks';
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from '@/utils/modalHook';
+import { ReloadOutlined } from '@ant-design/icons';
 import {
   Button,
   Drawer,
@@ -10,58 +19,48 @@ import {
   Menu,
   Space,
   message,
-} from "antd";
-import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
-import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
-import Image from "next/image";
-import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
+} from 'antd';
+import dayjs from 'dayjs';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
-import { USER_ROLE } from "@/constants/role";
+import { AllImage } from '@/assets/AllImge';
+import FilterModule from '@/components/dashboard/Filter/FilterModule';
+import HeadingUI from '@/components/ui/dashboardUI/HeadingUI';
+import { USER_ROLE } from '@/constants/role';
 import {
   useDeleteLessonMutation,
   useGetAllLessonQuery,
-} from "@/redux/api/adminApi/lessoneApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import FilterModule from "@/components/dashboard/Filter/FilterModule";
-import { AllImage } from "@/assets/AllImge";
+} from '@/redux/api/adminApi/lessoneApi';
 
-import React from "react";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
+import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
+import SelectCategoryChildren from '../Forms/GeneralField/SelectCategoryChildren';
 
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { useGlobalContext } from '../ContextApi/GlobalContextApi';
+import ModalComponent from '../Modal/ModalComponents';
+import AssignmentUpload from '../assignment/Assignment';
 
 export default function LessonDashList() {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   //
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
+  const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
   //----------------------------------------------------------------
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
   const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
 
   const queryCategory: Record<string, any> = {};
-  queryCategory["children"] = "course-milestone-module";
+  queryCategory['children'] = 'course-milestone-module';
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    queryCategory['author'] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -70,46 +69,47 @@ export default function LessonDashList() {
   const categoryData: any = Category?.data;
   //!----------------------------------------------------------------
 
-
   const query: Record<string, any> = {};
-  const userInfo = getUserInfo() as IDecodedInfo;
+
   // const SUPER_ADMIN=USER_ROLE.ADMIN
 
   const [deleteLesson] = useDeleteLessonMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
-  const [filterValue, setFilterValue] = useState<string>("");
+  const [adminId, setAdminId] = useState<string>('');
+  const [filterValue, setFilterValue] = useState<string>('');
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  query["status"] = "active";
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
+  query['status'] = 'active';
   //
-  query["category"] = category?._id;
-  query["course"] = course?._id;
-  query["milestone"] = milestone?._id;
-  query["module"] = module?._id;
+  query['category'] = category?._id;
+  query['course'] = course?._id;
+  query['milestone'] = milestone?._id;
+  query['module'] = module?._id;
   //
   if (filterValue) {
-    query["module"] = filterValue;
+    query['module'] = filterValue;
   }
-
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query['author'] = userInfo?.id;
+  }
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
   });
 
   if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useGetAllLessonQuery({ ...query });
+  const { data, isLoading, isFetching } = useGetAllLessonQuery({ ...query });
   console.log(data);
 
   //@ts-ignore
@@ -122,17 +122,17 @@ export default function LessonDashList() {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deleteLesson(id).unwrap();
 
-          console.log(res, "response for delete Lesson");
+          // console.log(res, "response for delete Lesson");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Lesson Successfully Deleted");
+            Success_model('Lesson Successfully Deleted');
           }
         } catch (error: any) {
           Error_model_hook(error.message);
@@ -143,9 +143,9 @@ export default function LessonDashList() {
 
   const columns = [
     {
-      title: "Image",
+      title: 'Image',
       render: function (data: any) {
-        console.log(data);
+        // console.log(data);
         return (
           <>
             {
@@ -153,7 +153,7 @@ export default function LessonDashList() {
                 src={
                   data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
                 }
-                style={{ height: "50px", width: "80px" }}
+                style={{ height: '50px', width: '80px' }}
                 width={100}
                 height={100}
                 alt="dd"
@@ -165,8 +165,14 @@ export default function LessonDashList() {
       width: 100,
     },
     {
-      title: "Name",
-      dataIndex: "title",
+      title: 'Lesson Number',
+      dataIndex: 'lesson_number',
+      // ellipsis: true,
+      width: 150,
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title',
       ellipsis: true,
     },
     // {
@@ -174,35 +180,28 @@ export default function LessonDashList() {
     //   dataIndex: "short_description",
     //   ellipsis: true,
     // },
-    {
-      title: "Lesson Number",
-      dataIndex: "lesson_number",
-      // ellipsis: true,
-      width: 120,
-    },
 
     {
-      title: "Module",
+      title: 'Module',
       // dataIndex: ["module", "title"],
       ellipsis: true,
       render: function (data: any) {
-        return (
-          <>{data?.module?.module_number + " : " + data?.module?.title || ""}</>
-        );
+        return <>{data?.module?.title || ''}</>;
       },
     },
     {
-      title: "Created at",
-      dataIndex: "createdAt",
+      title: 'Created at',
+      dataIndex: 'createdAt',
 
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
+      width: 200,
     },
 
     {
-      title: "Action",
+      title: 'Action',
       // fixed: "right",
       width: 130,
       render: (record: any) => (
@@ -213,11 +212,13 @@ export default function LessonDashList() {
                 <Menu>
                   <Menu.Item key="view">
                     <Link
-                      href={`/${userInfo?.role}/lesson/details/${record._id}`}
+                      className=""
+                      href={`/${userInfo?.role}/module/details/${record?.module?._id}`}
                     >
                       View
                     </Link>
                   </Menu.Item>
+
                   <Menu.Item key="edit">
                     <Link href={`/${userInfo?.role}/lesson/edit/${record._id}`}>
                       Edit
@@ -230,6 +231,7 @@ export default function LessonDashList() {
                       Add Quiz
                     </Link>
                   </Menu.Item> */}
+
                   <Menu.Item
                     key="delete"
                     onClick={() => {
@@ -237,6 +239,18 @@ export default function LessonDashList() {
                     }}
                   >
                     Delete
+                  </Menu.Item>
+                  <Menu.Item key="List">
+                    <Link
+                      href={`/${userInfo?.role}/lesson/assignment?lessonId=${record._id}`}
+                    >
+                      Assignment List
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="Rec">
+                    <ModalComponent buttonText="Add assignment">
+                      <AssignmentUpload lessonData={record} />
+                    </ModalComponent>
                   </Menu.Item>
                 </Menu>
               }
@@ -249,29 +263,29 @@ export default function LessonDashList() {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
 
   const deleteLessonHandler = async (id: string) => {
-    // console.log(id);
+    //// console.log(id);
     try {
       const res = await deleteLesson(id);
       if (res) {
-        message.success("Lesson Successfully Deleted!");
+        message.success('Lesson Successfully Deleted!');
         setOpen(false);
       }
     } catch (error: any) {
@@ -290,7 +304,7 @@ export default function LessonDashList() {
 
   return (
     <div>
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: `${userInfo?.role}`,
@@ -301,7 +315,7 @@ export default function LessonDashList() {
             link: `/${userInfo?.role}/lesson`,
           },
         ]}
-      />
+      /> */}
       <HeadingUI>Lesson List</HeadingUI>
       <ActionBar>
         <div className="flex gap-2">
@@ -310,7 +324,7 @@ export default function LessonDashList() {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: "20%",
+              width: '250px',
             }}
           />
           <FilterModule
@@ -322,19 +336,18 @@ export default function LessonDashList() {
         <div>
           <Button
             type="default"
-            style={{ marginRight: "5px" }}
+            style={{ marginRight: '5px' }}
             onClick={showDrawer}
           >
             Filter
           </Button>
-
 
           <Link href={`/${userInfo?.role}/lesson/create`}>
             <Button type="default">Create Lesson</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >
@@ -344,7 +357,7 @@ export default function LessonDashList() {
         </div>
       </ActionBar>
       <UMTable
-        loading={isLoading}
+        loading={isLoading || isFetching}
         columns={columns}
         dataSource={LessonData}
         pageSize={size}
@@ -364,11 +377,11 @@ export default function LessonDashList() {
       </UMModal>
       <Drawer
         title={
-          <div className="flex justify-between items-center ">
-            <p>Filter</p>{" "}
+          <div className="flex items-center justify-between">
+            <p>Filter</p>{' '}
             <button
               onClick={onClose}
-              className="text-lg text-red-500 rounded hover:text-white px-5  hover:bg-red-600"
+              className="rounded px-5 text-lg text-red-500 hover:bg-red-600 hover:text-white"
             >
               X
             </button>

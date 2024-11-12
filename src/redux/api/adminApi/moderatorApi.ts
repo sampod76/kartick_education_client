@@ -1,20 +1,20 @@
-import { IMeta } from "@/types";
-import { baseApi } from "../baseApi";
-import { tagTypes } from "../../tag-types";
+import { IMeta } from '@/types';
+import { tagTypes } from '../../tag-types';
+import { baseApi } from '../baseApi';
 
-const STUDENT_URL = "/student";
+const STUDENT_URL = '/student';
 
 export const moderatorsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addStudentWithFormData: build.mutation({
       query: (data) => {
-        // console.log(data, "student");
+        //// console.log(data, "student");
         return {
-          url: "/users/create-student",
-          method: "POST",
+          url: '/users/create-student',
+          method: 'POST',
           data: data,
           // contentType: "multipart/form-data",
-          contentType: "application/json",
+          contentType: 'application/json',
         };
       },
       invalidatesTags: [tagTypes.student],
@@ -23,12 +23,11 @@ export const moderatorsApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: STUDENT_URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
       transformResponse: (response: any[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,
@@ -39,14 +38,14 @@ export const moderatorsApi = baseApi.injectEndpoints({
     getSingleStudent: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `${STUDENT_URL}/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       providesTags: [tagTypes.student],
     }),
     updateStudent: build.mutation({
       query: (data) => ({
         url: `${STUDENT_URL}/${data.id}?stat`,
-        method: "PATCH",
+        method: 'PATCH',
         data: data.body,
       }),
       invalidatesTags: [tagTypes.student, tagTypes.student],
@@ -54,11 +53,12 @@ export const moderatorsApi = baseApi.injectEndpoints({
     deleteStudent: build.mutation({
       query: (id) => ({
         url: `${STUDENT_URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.student],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

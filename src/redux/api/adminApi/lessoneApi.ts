@@ -66,6 +66,7 @@ export const lessonApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.lesson, tagTypes.categoryChildren],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

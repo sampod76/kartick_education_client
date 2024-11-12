@@ -1,43 +1,45 @@
-"use client";
+'use client';
 
-import Form from "@/components/Forms/Form";
+import Form from '@/components/Forms/Form';
 
-import FormInput from "@/components/Forms/FormInput";
+import FormInput from '@/components/Forms/FormInput';
 
-import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
+import FormSelectField from '@/components/Forms/FormSelectField';
+import FormTextArea from '@/components/Forms/FormTextArea';
 
-import SelectLessonField from "@/components/Forms/SelectData/SelectLessonField";
-import SelectModuleField from "@/components/Forms/SelectData/SelectModuleField";
+import SelectLessonField from '@/components/Forms/SelectData/SelectLessonField';
+import SelectModuleField from '@/components/Forms/SelectData/SelectModuleField';
 
-import ButtonSubmitUI from "@/components/ui/ButtonSubmitUI";
+import ButtonSubmitUI from '@/components/ui/ButtonSubmitUI';
 
-import UploadImage from "@/components/ui/UploadImage";
-import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import UploadImage from '@/components/ui/UploadImage';
+import DemoVideoUI from '@/components/ui/dashboardUI/DemoVideoUI';
+import HeadingUI from '@/components/ui/dashboardUI/HeadingUI';
 
-import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import { courseStatusOptions } from "@/constants/global";
-import uploadImgBB from "@/hooks/UploadSIngleImgBB";
+import TagsSelectUI from '@/components/ui/dashboardUI/TagsSelectUI';
+import { courseStatusOptions } from '@/constants/global';
+import uploadImgBB from '@/hooks/UploadSIngleImgBB';
 
-import { useAddQuizMutation } from "@/redux/api/adminApi/quizApi";
+import { useAddQuizMutation } from '@/redux/api/adminApi/quizApi';
 
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
 
-import { Col, Row, message } from "antd";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
+import { Col, Row, message } from 'antd';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
+import SelectCategoryChildren from '@/components/Forms/GeneralField/SelectCategoryChildren';
+import UploadMultipalImage from '@/components/ui/UploadMultipalImage';
+import { removeNullUndefinedAndFalsey } from '@/hooks/removeNullUndefinedAndFalsey';
+import { useGlobalContext } from '@/components/ContextApi/GlobalContextApi';
 const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
+  () => import('@/components/shared/TextEditor/TextEditor'),
   {
     ssr: false,
-  }
+  },
 );
 const CreateQuizByLesson = () => {
+  const { userInfo } = useGlobalContext();
   const [category, setCategory] = useState({});
   const [courses, setCourses] = useState({});
   const [milestone, setmilestone] = useState({});
@@ -45,8 +47,11 @@ const CreateQuizByLesson = () => {
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
 
   const query: Record<string, any> = {};
-  query["children"] = "course-milestone-module-lessons";
+  query['children'] = 'course-milestone-module-lessons';
   //! for Category options selection
+  if (userInfo?.role !== 'admin') {
+    query['author'] = userInfo?.id;
+  }
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
   });
@@ -57,8 +62,8 @@ const CreateQuizByLesson = () => {
 
   // ! for video insert
   const [videoType, setVideoType] = useState(null);
-  const [videoUrl, setVideoUrl] = useState("");
-  const [textEditorValue, setTextEditorValue] = useState("");
+  const [videoUrl, setVideoUrl] = useState('');
+  const [textEditorValue, setTextEditorValue] = useState('');
   const [isReset, setIsReset] = useState(false);
 
   const demo_video = {
@@ -82,8 +87,8 @@ const CreateQuizByLesson = () => {
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added Lesson");
-        setIsReset(true)
+        Success_model('Successfully added Lesson');
+        setIsReset(true);
       }
       // console.log(res);
     } catch (error: any) {
@@ -93,7 +98,7 @@ const CreateQuizByLesson = () => {
   };
 
   if (serviceLoading) {
-    return message.loading("Loading...");
+    return message.loading('Loading...');
   }
 
   return (
@@ -101,15 +106,15 @@ const CreateQuizByLesson = () => {
       <div
         style={{
           boxShadow:
-            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-          borderRadius: "1rem",
-          backgroundColor: "white",
-          padding: "1rem",
-          marginBottom: "1rem",
+            '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          borderRadius: '1rem',
+          backgroundColor: 'white',
+          padding: '1rem',
+          marginBottom: '1rem',
         }}
       >
-        <div className="border-2 rounded-lg my-3 p-5 border-blue-500">
-          <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
+        <div className="my-3 rounded-lg border-2 border-blue-500 p-5">
+          <h1 className="mb-2 border-spacing-4 border-b-2 text-xl font-bold">
             At fast Filter
           </h1>
           <Row gutter={[16, 16]}>
@@ -168,10 +173,10 @@ const CreateQuizByLesson = () => {
         <div
           style={{
             boxShadow:
-              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-            borderRadius: "1rem",
-            backgroundColor: "white",
-            padding: "1rem",
+              '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            borderRadius: '1rem',
+            backgroundColor: 'white',
+            padding: '1rem',
           }}
         >
           <div>
@@ -180,9 +185,9 @@ const CreateQuizByLesson = () => {
             <Form submitHandler={onSubmit} isReset={isReset}>
               <div
                 style={{
-                  border: "1px solid #d9d9d9",
-                  borderRadius: "5px",
-                  padding: "15px",
+                  border: '1px solid #d9d9d9',
+                  borderRadius: '5px',
+                  padding: '15px',
                 }}
               >
                 <h1 className="text-center text-lg font-bold">Create Quiz</h1>
@@ -192,7 +197,7 @@ const CreateQuizByLesson = () => {
                     xs={24}
                     md={24}
                     lg={24}
-                    style={{ marginBlock: "10px" }}
+                    style={{ marginBlock: '10px' }}
                   >
                     <FormInput
                       type="text"
@@ -240,8 +245,7 @@ const CreateQuizByLesson = () => {
                   </Col>
                   <Col className="gutter-row" xs={24} md={12} lg={8} style={{}}>
                     <DemoVideoUI
-
-                      options={["youtube", "vimeo"]}
+                      options={['youtube', 'vimeo']}
                       label="Preview Video"
                     />
                   </Col>
@@ -251,7 +255,7 @@ const CreateQuizByLesson = () => {
                     md={12}
                     lg={8}
                     style={{
-                      marginTop: "10px",
+                      marginTop: '10px',
                     }}
                   >
                     <TagsSelectUI />
@@ -281,24 +285,23 @@ const CreateQuizByLesson = () => {
                     {/*//! 3 */}
                     <div
                       style={{
-                        borderTopWidth: "2px",
+                        borderTopWidth: '2px',
                       }} /* className=" border-t-2" */
                     >
-                      <p className="text-center my-3 font-bold text-xl">
+                      <p className="my-3 text-center text-xl font-bold">
                         Description
                       </p>
                       <TextEditor
                         isReset={isReset}
-                      // textEditorValue={textEditorValue}
-                      // setTextEditorValue={setTextEditorValue}
+                        // textEditorValue={textEditorValue}
+                        // setTextEditorValue={setTextEditorValue}
                       />
                     </div>
                   </Col>
                 </Row>
               </div>
-              <div className=" text-center">
-                <div className=" text-center">
-
+              <div className="text-center">
+                <div className="text-center">
                   <ButtonSubmitUI>Create</ButtonSubmitUI>
                 </div>
               </div>
@@ -306,9 +309,9 @@ const CreateQuizByLesson = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full  flex justify-center items-center min-h-64 animate-pulse">
-          <h1 className="text-center text-red-600 font-semibold text-2xl">
-            First select your Lesson by filtering{" "}
+        <div className="flex min-h-64 w-full animate-pulse items-center justify-center">
+          <h1 className="text-center text-2xl font-semibold text-red-600">
+            First select your Lesson by filtering{' '}
           </h1>
         </div>
       )}

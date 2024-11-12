@@ -1,43 +1,34 @@
-"use client";
-import {
-  useGetAllCourseQuery,
-  useGetSingleCourseQuery,
-} from "@/redux/api/adminApi/courseApi";
-import React, { useEffect, useState } from "react";
-import BannerCourses from "../Home/Banner&hero/BannerCourses";
-import CourseStatistics from "../Course/CourseStatistics";
-import { ENUM_YN } from "@/constants/globalEnums";
-import { useGetAllMilestoneQuery } from "@/redux/api/adminApi/milestoneApi";
-import LoadingSkeleton from "../ui/Loading/LoadingSkeleton";
-import { EllipsisMiddle } from "@/utils/CutTextElliples";
-import PaypalCheckoutByCourse from "../Utlis/PaypalCheckoutByCourse";
-import { Divider, Popconfirm } from "antd";
-import SingleMilestone from "../milestone/SingleMilestone";
-import { IMilestoneData } from "@/types/miestoneType";
-import Link from "next/link";
-import { IoIosArrowDropdown } from "react-icons/io";
+'use client';
+import { ENUM_YN } from '@/constants/globalEnums';
+import { useGetAllCourseQuery } from '@/redux/api/adminApi/courseApi';
+import { EllipsisMiddle } from '@/utils/CutTextElliples';
+import { useEffect, useState } from 'react';
+import LoadingSkeleton from '../ui/Loading/LoadingSkeleton';
 
-import { useAppSelector } from "@/redux/hooks";
-import BannerLearning from "../Home/Banner&hero/BannerLearning";
-import { LockOutlined } from "@ant-design/icons";
-import { useGetAllCourse_labelQuery } from "@/redux/api/adminApi/courseLevelApi";
-import { ICourseLevelData } from "@/types/courseLevelDataType";
-import { ICourseData } from "@/types/courseType";
-import { Button, Modal, Select } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
-import { GiToggles } from "react-icons/gi";
+import { useGetAllCourse_labelQuery } from '@/redux/api/adminApi/courseLevelApi';
+import { ICourseLevelData } from '@/types/courseLevelDataType';
+import { ICourseData } from '@/types/courseType';
+import { Button, Modal } from 'antd';
+import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Arrow from '../../assets/svg/Arrow.svg';
+import BannerLearning from '../Home/Banner&hero/BannerLearning';
 export default function LearningMain() {
-  const router = useRouter()
+  const router = useRouter();
   const [learningCategoryId, setLearningCategoryId] = useState<string | null>(
-    null
+    null,
   );
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const toggleOpen = (index: number) => {
+    setOpenIndex((prevIndex) => (prevIndex === index ? -1 : index));
+  };
   const searchParams = useSearchParams();
-  const encodedData = searchParams.get("data");
+  const encodedData = searchParams.get('data');
   // Check if encodedData is not null and not an empty string before decoding
   const decodedData =
-    encodedData && encodedData.trim() !== ""
+    encodedData && encodedData.trim() !== ''
       ? decodeURIComponent(encodedData)
-      : "";
+      : '';
   let queryData;
   try {
     if (decodedData) {
@@ -45,53 +36,50 @@ export default function LearningMain() {
     }
   } catch (error) {
     // Handle the error, log it, or provide a default value for queryData
-    console.error("Error parsing JSON:", error);
+    console.error('Error parsing JSON:', error);
     queryData = {}; // Provide a default value if parsing fails
   }
   const [selectLabelData, setLabelData] = useState<any>({});
   const query: Record<string, any> = {};
-  query["limit"] = 999999;
-  query["sortOrder"] = "asc";
-  query["status"] = "active";
-  query["isDelete"] = ENUM_YN.NO;
+  query['limit'] = 999999;
+  query['sortOrder'] = 'asc';
+  query['status'] = 'active';
+  query['isDelete'] = ENUM_YN.NO;
 
   const categoryId = queryData?.categoryId;
   let labelQuery = { ...query };
 
-  labelQuery["limit"] = 999999;
-  labelQuery["sortOrder"] = "asc";
-  labelQuery["status"] = "active";
-  labelQuery["isDelete"] = ENUM_YN.NO;
-  labelQuery["category"] = categoryId || learningCategoryId || "63621c9cc6e03d494145bea0"
-  console.log("🚀 ~ LearningMain ~ labelQuery:", labelQuery)
+  labelQuery['limit'] = 999999;
+  labelQuery['sortOrder'] = 'asc';
+  labelQuery['status'] = 'active';
+  labelQuery['isDelete'] = ENUM_YN.NO;
+  labelQuery['category'] =
+    categoryId || learningCategoryId || '63621c9cc6e03d494145bea0';
+  // console.log("🚀 ~ LearningMain ~ labelQuery:", labelQuery)
 
-  console.log(labelQuery);
+  // console.log(labelQuery);
 
   const {
     data: courseLevelData,
     isLoading: courseLevelLoading,
     error: categoryLevelError,
   } = useGetAllCourse_labelQuery({ ...labelQuery });
-  console.log("🚀 ~ LearningMain ~ courseLevelData:", courseLevelData);
+  // console.log("🚀 ~ LearningMain ~ courseLevelData:", courseLevelData);
 
   let courseQuery = { ...query };
   if (selectLabelData?._id) {
-    courseQuery["label_id"] = selectLabelData?._id;
+    courseQuery['label_id'] = selectLabelData?._id;
   } else {
-    courseQuery["label_id"] = "63621c9cc6e03d494145bea0"; //only damping
+    courseQuery['label_id'] = '63621c9cc6e03d494145bea0'; //only damping
   }
-  console.log(courseQuery)
+  // console.log(courseQuery)
   const {
     data: courseAllData,
     isLoading,
     error,
-  } = useGetAllCourseQuery(
-    { ...courseQuery }
-  ) as any;
-  console.log("🚀 ~ LearningMain ~ courseAllData:", courseAllData);
+  } = useGetAllCourseQuery({ ...courseQuery }) as any;
 
   if (error || categoryLevelError) {
-    console.log(error, categoryLevelError);
   }
 
   // ! for categoryModal //
@@ -109,7 +97,7 @@ export default function LearningMain() {
   };
 
   useEffect(() => {
-    setLabelData(courseLevelData?.data[0] || "");
+    setLabelData(courseLevelData?.data[0] || '');
   }, [courseLevelData?.data]);
 
   if (courseLevelLoading || isLoading) {
@@ -117,20 +105,23 @@ export default function LearningMain() {
   }
 
   // console.log(learningCategoryId, 'learningCategoryId')
+  // console.log(courseAllData?.data, "hyfghygf");
 
   return (
     <div
-      className="bg-opacity relative py-6"
-      style={{
-        backgroundColor: "#EBFFE3",
-        // opacity:0.05
-      }}
+      className="bg-opacity relative"
+      style={
+        {
+          // backgroundColor: "#EBFFE3",
+          // opacity:0.05
+        }
+      }
     >
       {/* //! for bg opacity color */}
       {/* <div className={`absolute top-0 left-0 w-full h-full bg-[${color}] bg-opacity-20`}></div> */}
 
-      <div className="-mt-[5.8rem] mb-4 lg:mb-6 ">
-        <div className="w-full min-h-[7rem] bg-[#BEDDF9]"></div>
+      <div className="-mt-[5.8rem] mb-4 lg:mb-6">
+        <div className="min-h-[7rem] w-full bg-[#BEDDF9]"></div>
         <BannerLearning
           learningCategoryId={learningCategoryId}
           setLearningCategoryId={setLearningCategoryId}
@@ -143,144 +134,187 @@ export default function LearningMain() {
       ) : (
         <div
           style={{
-            marginTop: "1.8rem",
-            border: "2px solid #CED6D0",
+            marginTop: '1.8rem',
           }}
-          className="relative min-h-screen container rounded-xl p-2 mx-auto mt-12 lg:mt-5 md:mt-6 xl:mt-6 py-2 md:py-3 lg:py-5 xl:py-6 "
+          className="container relative mx-auto mt-12 min-h-screen rounded-xl p-2 py-2 md:mt-6 md:py-3 lg:mt-5 lg:py-5 xl:mt-6 xl:py-6"
         >
           <h2
             style={{
-              fontWeight: 400,
-              textAlign: "center",
-              color: "black",
-              textTransform: "uppercase",
-              fontSize: "35px",
-              fontFamily: "Latao",
+              fontFamily: 'Latao',
             }}
+            className="text-center text-2xl font-normal uppercase text-black sm:text-3xl md:text-4xl"
           >
             {selectLabelData?.categoryDetails?.title
               ? courseLevelData?.data[0]?.categoryDetails?.title
-              : ""}
+              : ''}
           </h2>
 
-          <p className="text-center my-3 text-lg lg:text-xl">
+          <p className="my-3 text-center text-lg lg:text-xl">
             <EllipsisMiddle suffixCount={3} maxLength={120}>
               {selectLabelData?.categoryDetails?.short_description ||
                 courseLevelData?.data[0]?.categoryDetails?.short_description}
             </EllipsisMiddle>
           </p>
           {/*//! label button */}
-          <div className="flex lg:hidden md:hidden xl:hidden absolute -top-8 lg:top-0 left-0  ">
-            {/* <PaypalCheckoutByCourse courseData={courseFirstData} /> */}
 
-            <button
-              onClick={() => showModal(categoryId)}
-              className="uppercase inline-flex items-center gap-1 p-1 rounded-md text:lg md:text-2xl text-[#1C3052] text-center font-bold"
-            >
-              {" "}
-              <IoIosArrowDropdown /> Level
-            </button>
-          </div>
-          <div className="flex  justify-between items-start mt-3 lg:mt-5 md:mt-3 xl:mt-7">
+          <div className="mt-3 items-start md:mt-3 lg:mt-5 xl:mt-7">
             {/*//! label section */}
-            <div className="hidden  lg:flex flex-col w-full lg:w-[20%]">
-              <h2 className="uppercase text-2xl text-[#1C3052] text-center font-bold">
-                Label
-              </h2>
-              <div className="flex relative flex-col justify-self-start gap-3 mt-3 w-full mr-2 ">
-                {courseLevelData?.data?.map((label: ICourseLevelData) => (
-                  <button
-                    onClick={() => setLabelData(label)}
-                    key={label?._id}
-                    className={`py-2  px-3 text-xl font-bold text-[#1C3052] ${label?._id === selectLabelData._id
-                      ? "border-[3px] border-[#618850] rounded-r-3xl  "
-                      : ""
-                      }  relative`}
-                    style={
-                      {
-                        // background: color,
-                      }
-                    }
-                  >
-                    <div
-                      className={`absolute top-0 left-0 w-full h-full bg-[${"#8CA46D"}] ${label?._id === selectLabelData._id
-                        ? "bg-opacity-55  rounded-r-3xl"
-                        : "bg-opacity-40"
-                        } `}
-                    ></div>
-                    {label?.title}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="w-full lg:w-[70%] md:w-[70%] xl:w-[75%] mt-3 lg:mt-0 md:mt-2 xl:mt-0 ">
-              <h1
-                className="py-1 text-center text-white h-[2.8rem] text-xl font-bold text-nowrap"
-                style={{ backgroundColor: "#8CA46D" }}
-              >
-
-                {(selectLabelData?.title ? selectLabelData?.title : "") + " " + "(All Courses)"}
-              </h1>
-
-              <div className="">
-                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-3 px-3 py-3 relative min-h-screen">
-                  {/*//! for background opacity */}
-                  <div
-                    className={`absolute top-0 left-0 w-full h-full bg-[#CCEDBC] bg-opacity-30`}
-                  ></div>
-                  {courseAllData?.data?.length > 0 ? (
-                    courseAllData?.data?.map(
-                      (course: ICourseData, index: number) => (
-
-                        <Popconfirm
-                          title="Do you want to purchase?"
-                          // description="Are you sure to delete this task?"
-                          //   icon={<QuestionCircleOutlined style={{ color: 'red' }} />
-                          // }
-                          key={course?._id}
-                          onConfirm={() => {
-                            router.push(`/course/milestone/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`)
+            <div className="w-full">
+              <div className="relative mr-2 mt-3 flex w-full flex-col gap-3 justify-self-start">
+                <hr />
+                {courseLevelData?.data?.map(
+                  (label: ICourseLevelData, index: number) => (
+                    <div key={index}>
+                      <div className="flex justify-between pr-2">
+                        <button
+                          onClick={() => {
+                            toggleOpen(index), setLabelData(label);
                           }}
-                          okText="View Course"
-
-                          onCancel={() => {
-                            router.push(`/payment/checkout/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`)
-                          }}
-                          cancelText="BUY NOW"
+                          key={label?._id}
+                          className={`relative px-3 py-2 text-xl font-bold text-[#1C3052]`}
+                          style={
+                            {
+                              // background: color,
+                            }
+                          }
                         >
+                          <div
+                            className={`h-full] absolute left-0 top-0 w-full`}
+                          ></div>
+                          {label?.title}
+                        </button>
+                        <Image
+                          style={{
+                            transform: `${
+                              openIndex === index
+                                ? 'rotate(180deg)'
+                                : 'rotate(0deg)'
+                            }`,
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => {
+                            toggleOpen(index), setLabelData(label);
+                          }}
+                          src={Arrow}
+                          alt=""
+                        />
+                      </div>
 
-                          <Button style={{ border: "0px", boxShadow: "0px", fontSize: "1.125rem", textAlign: "start" }}>{index + 1}. {course?.title}</Button>
-                          {/* <Link
-                            href={`/course/milestone/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`}
-                            className="text-gray-900 text-start flex justify-start gap-1 cursor-pointer"
-                          >
-                            <p className="text-lg">
-                              {" "}
-                              {index + 1}. {course?.title}
-                            </p>
-                          
-                          </Link> */}
-                        </Popconfirm>
+                      {openIndex === index && (
+                        <div className="mt-3 w-full md:mt-2 lg:mt-0 xl:mt-0">
+                          <div className="">
+                            <div className="relative grid grid-cols-1 gap-3 px-3 py-3 lg:grid-cols-4">
+                              {/*//! for background opacity */}
+                              <div
+                                className={`absolute left-0 top-0 w-full bg-[#CCEDBC] bg-opacity-30`}
+                              ></div>
+                              {courseAllData?.data?.length > 0 ? (
+                                courseAllData?.data?.map(
+                                  (course: ICourseData, index: number) => (
+                                    // console.log()
 
+                                    <div
+                                      key={course?._id}
+                                      className="flex flex-col gap-5 rounded-lg border-2 p-2 text-center"
+                                    >
+                                      <h1 className="text-[22px]">
+                                        {index + 1}. {course?.title}
+                                      </h1>
+                                      <h1 className="text-[#FB8500]">
+                                        ${course?.price}
+                                      </h1>
+                                      <div className="justify-between gap-2 px-2 sm:flex">
+                                        <h1
+                                          className="w-full cursor-pointer rounded-md bg-[#5371FB] p-2 font-bold text-white hover:bg-[#4365fb]"
+                                          onClick={() => {
+                                            router.push(
+                                              `/payment/checkout/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`,
+                                            );
+                                          }}
+                                        >
+                                          Buy Now
+                                        </h1>
+                                        <h1
+                                          className="mt-3 w-full cursor-pointer rounded-md bg-[#5371FB] p-2 font-semibold text-white hover:bg-[#4365fb] sm:mt-0"
+                                          onClick={() => {
+                                            router.push(
+                                              `/course/milestone/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`,
+                                            );
+                                          }}
+                                        >
+                                          Visit Now
+                                        </h1>
+                                      </div>
+                                    </div>
+                                    //     <Popconfirm
+                                    //       title="Do you want to purchase?"
+                                    //       // description="Are you sure to delete this task?"
+                                    //       //   icon={<QuestionCircleOutlined style={{ color: 'red' }} />
+                                    //       // }
+                                    //       key={course?._id}
+                                    //       onConfirm={() => {
+                                    //         router.push(
+                                    //           `/course/milestone/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`
+                                    //         );
+                                    //       }}
+                                    //       okText="View Course"
+                                    //       onCancel={() => {
+                                    //         router.push(
+                                    //           `/payment/checkout/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`
+                                    //         );
+                                    //       }}
+                                    //       cancelText="BUY NOW"
+                                    //     >
+                                    //       <Button
+                                    //         style={{
+                                    //           border: "0px",
+                                    //           boxShadow: "0px",
+                                    //           fontSize: "1.125rem",
+                                    //           textAlign: "start",
+                                    //         }}
+                                    //       >
+                                    //         {index + 1}. {course?.title}
+                                    //       </Button>
+                                    //       {/* <Link
+                                    //   href={`/course/milestone/${course._id}?category=${course?.category?._id}?categoryName=${course?.category?.title}?courseName=${course.title}`}
+                                    //   className="text-gray-900 text-start flex justify-start gap-1 cursor-pointer"
+                                    // >
+                                    //   <p className="text-lg">
+                                    //     {" "}
+                                    //     {index + 1}. {course?.title}
+                                    //   </p>
 
-                      )
-                    )
-                  ) : (
-                    <div>
-                      <p className="text-gray-900 text-start flex justify-start gap-1">
-                        <p className="text-lg text-center"> No data found</p>
-                        {/* <LockOutlined /> */}
-                      </p>
+                                    // </Link> */}
+                                    //     </Popconfirm>
+                                  ),
+                                )
+                              ) : (
+                                <div>
+                                  <p className="flex justify-start gap-1 text-start text-gray-900">
+                                    <p className="text-center text-lg">
+                                      {' '}
+                                      No data found
+                                    </p>
+                                    {/* <LockOutlined /> */}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      <hr />
                     </div>
-                  )}
-                </div>
-                <div className="flex justify-center items-center gap-5 mt-3">
+                  ),
+                )}
+                <div className="mt-3 flex items-center justify-center gap-5">
                   {/* <button className="bg-white shadow-lg p-2 rounded-lg border-2 border-[#92E3A9] text-[#92E3A9] text-lg font-bold">BUY NOW</button> */}
-                  <Link href={'/subscription'} className="bg-white shadow-lg p-2 rounded-lg border-2 border-[#92E3A9] text-[#92E3A9] text-lg font-bold">
-                    MEMBERSHIP
-                  </Link>
-
+                  {/* <Link
+                    href={'/subscription'}
+                    className="rounded-lg border-2 border-blue-500 bg-white p-2 text-lg font-bold text-blue-500 shadow-lg"
+                  >
+                    <p>Check Out Our MEMBERSHIP</p>
+                  </Link> */}
                 </div>
               </div>
             </div>
@@ -304,15 +338,15 @@ export default function LearningMain() {
       >
         <div
           onClick={handleCancel}
-          className="flex flex-col justify-self-start gap-3 mt-3 w-full "
+          className="mt-3 flex w-full flex-col gap-3 justify-self-start"
         >
           {courseLevelData?.data?.map((label: ICourseLevelData) => (
             <button
               onClick={() => setLabelData(label?._id)}
               key={label?._id}
-              className=" py-2 rounded-r-lg px-3 text-xl font-bold text-[#1C3052]"
+              className="rounded-r-lg px-3 py-2 text-xl font-bold text-[#1C3052]"
               style={{
-                background: "#C3C399",
+                background: '#C3C399',
               }}
             >
               {label?.title}

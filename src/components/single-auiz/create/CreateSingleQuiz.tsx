@@ -1,78 +1,79 @@
-"use client";
+'use client';
 
-import Form from "@/components/Forms/Form";
+import Form from '@/components/Forms/Form';
 
-import FormInput from "@/components/Forms/FormInput";
+import FormInput from '@/components/Forms/FormInput';
 
-import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
-import DemoVideoUI from "@/components/ui/dashboardUI/DemoVideoUI";
+import { singleQuizTypes } from '@/constants/global';
 
+import { useAddSingleQuizMutation } from '@/redux/api/adminApi/singleQuizApi';
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
 
-import { courseStatusOptions, singleQuizTypes } from "@/constants/global";
+import { Button, Col, Input, Row, Select } from 'antd';
+import { useState } from 'react';
 
-import { useAddSingleQuizMutation } from "@/redux/api/adminApi/singleQuizApi";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
-
-import { Button, Col, Input, Row, Select } from "antd";
-import React, { useState } from "react";
-
-import FormTimePicker from "@/components/Forms/FormTimePicker";
-import AnswerSInlge from "@/components/Forms/answer/AnswerSingle";
-import TagsSelectUI from "@/components/ui/dashboardUI/TagsSelectUI";
-import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
-import timeDurationToMilliseconds from "@/hooks/stringToMiliSecend";
-import AnswerMultiple from "@/components/Forms/answer/AnswerMultiple";
-import UploadMultipalImage from "@/components/ui/UploadMultipalImage";
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
-import SelectCategoryField from "@/components/Forms/SelectData/SelectCategoryFIeld";
-import SelectCategoryChildren from "@/components/Forms/GeneralField/SelectCategoryChildren";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-import dynamic from "next/dynamic";
-import { ENUM_STATUS } from "@/constants/globalEnums";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-import { IQuizType } from "@/types/quiz/singleQuizType";
-import AnswerFind from "@/components/Forms/answer/AnswerFind";
-import UploadAudioFile from "@/components/ui/UploadAudio";
+import { useGlobalContext } from '@/components/ContextApi/GlobalContextApi';
+import AnswerFind from '@/components/Forms/answer/AnswerFind';
+import AnswerMultiple from '@/components/Forms/answer/AnswerMultiple';
+import AnswerSInlge from '@/components/Forms/answer/AnswerSingle';
+import FormTimePicker from '@/components/Forms/FormTimePicker';
+import SelectCategoryChildren from '@/components/Forms/GeneralField/SelectCategoryChildren';
+import LabelUi from '@/components/ui/dashboardUI/LabelUi';
+import ButtonLoading from '@/components/ui/Loading/ButtonLoading';
+import UploadAudioFile from '@/components/ui/UploadAudio';
+import UploadMultipalImage from '@/components/ui/UploadMultipalImage';
+import { removeNullUndefinedAndFalsey } from '@/hooks/removeNullUndefinedAndFalsey';
+import timeDurationToMilliseconds from '@/hooks/stringToMiliSecend';
+import { useGetSingleSellerQuery } from '@/redux/api/adminApi/sellerApi';
+import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
+import { IQuizType } from '@/types/quiz/singleQuizType';
+import dynamic from 'next/dynamic';
 const TextEditor = dynamic(
-  () => import("@/components/shared/TextEditor/TextEditor"),
+  () => import('@/components/shared/TextEditor/TextEditor'),
   {
     ssr: false,
-  }
+  },
 );
 
 const CreateSingleQuiz = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
+  const id = userInfo?.roleBaseUserId;
+  let disable = true;
+  if (userInfo?.role === 'seller') {
+    disable = false;
+  }
+  const { data: findSeller, isLoading: sellerLoading } =
+    useGetSingleSellerQuery(id, { skip: disable });
+
   //
 
-  const [quizType, setQuizTypes] = useState<
-    IQuizType
-  >("select"); // !  tag selection
+  const [quizType, setQuizTypes] = useState<IQuizType>('select'); // !  tag selection
 
   const [isReset, setIsReset] = useState(false);
   const [imageUploadLoading, isImageloading] = useState(false);
 
-
-  // ! For quiz Answer// 
-
+  // ! For quiz Answer//
 
   const [answers, setAnswers] = useState([]); ///! select and multiple select
 
-  const [singleAnswer, setSingleAnswerInput] = useState<string>(""); ///! for input
+  const [singleAnswer, setSingleAnswerInput] = useState<string>(''); ///! for input
   //
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
   const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
   const [quiz, setquiz] = useState<{ _id?: string; title?: string }>({});
 
   const query: Record<string, any> = {};
-  query["children"] = "course-milestone-module-lessons-quiz";
+  query['children'] = 'course-milestone-module-lessons-quiz';
+  if (userInfo?.role !== 'admin') {
+    query['author'] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading } = useGetAllCategoryChildrenQuery({
     ...query,
@@ -84,24 +85,23 @@ const CreateSingleQuiz = () => {
     useAddSingleQuizMutation();
 
   const onSubmit = async (values: any) => {
-
-    console.log("🚀 ~ onSubmit ~ values:", values)
+    console.log('🚀 ~ onSubmit ~ values:', values);
     // console.log("🚀 ~ onSubmit ~ values:", values);
     if (!quiz?._id) {
-      Error_model_hook("Please ensure your are selected quiz");
+      Error_model_hook('Please ensure your are selected quiz');
       return;
     }
     if (answers.length) {
-      values["answers"] = answers;
+      values['answers'] = answers;
     } else if (singleAnswer) {
-      values["single_answer"] = singleAnswer;
+      values['single_answer'] = singleAnswer;
     } else {
-      Error_model_hook("Please select an answer");
+      Error_model_hook('Please select an answer');
       return;
     }
 
     if (!quizType) {
-      Error_model_hook("Please select an quiz type");
+      Error_model_hook('Please select an quiz type');
       return;
     }
 
@@ -117,13 +117,10 @@ const CreateSingleQuiz = () => {
       lesson: lesson?._id,
       quiz: quiz?._id,
       type: quizType,
-      
     };
-    removeNullUndefinedAndFalsey(singleQuizDat)
-   
+    removeNullUndefinedAndFalsey(singleQuizDat);
 
-// return
-
+    // return
 
     try {
       const res = await addSingleQuiz(singleQuizDat).unwrap();
@@ -131,7 +128,7 @@ const CreateSingleQuiz = () => {
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully added the Quiz");
+        Success_model('Successfully added the Quiz');
         setIsReset(true);
         setAnswers([]);
       }
@@ -147,15 +144,15 @@ const CreateSingleQuiz = () => {
       <div
         style={{
           boxShadow:
-            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-          borderRadius: "1rem",
-          backgroundColor: "white",
-          padding: "1rem",
-          marginBottom: "1rem",
+            '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          borderRadius: '1rem',
+          backgroundColor: 'white',
+          padding: '1rem',
+          marginBottom: '1rem',
         }}
       >
-        <div className="border-2 rounded-lg my-3 p-5 border-blue-500">
-          <h1 className="text-xl font-bold border-b-2 border-spacing-4 mb-2  ">
+        <div className="my-3 rounded-lg border-2 border-blue-500 p-5">
+          <h1 className="mb-2 border-spacing-4 border-b-2 text-xl font-bold">
             At fast Filter
           </h1>
           <Row gutter={[16, 16]}>
@@ -224,46 +221,46 @@ const CreateSingleQuiz = () => {
         <div
           style={{
             boxShadow:
-              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-            borderRadius: "1rem",
-            backgroundColor: "white",
-            padding: "1rem",
+              '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            borderRadius: '1rem',
+            backgroundColor: 'white',
+            padding: '1rem',
           }}
         >
           <Form
             submitHandler={onSubmit}
             isReset={isReset}
-          // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
+            // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
           >
-            <h1 className="text-xl font-bold text-center border-b-2 border-spacing-4 mb-2 ">
+            <h1 className="mb-2 border-spacing-4 border-b-2 text-center text-xl font-bold">
               Create A Single Quiz
             </h1>
             <div
               style={{
-                border: "1px solid #d9d9d9",
-                borderRadius: "5px",
-                padding: "15px",
-                marginBottom: "10px",
+                border: '1px solid #d9d9d9',
+                borderRadius: '5px',
+                padding: '15px',
+                marginBottom: '10px',
               }}
             >
               <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                 <Col
                   className="gutter-row"
                   xs={12}
-                  md={8}
+                  md={4}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <LabelUi>
-                    Please select quiz type{" "}
+                    Please select quiz type{' '}
                     <span className="text-red-500">*</span>
                   </LabelUi>
 
                   {/* /// ! Quiz Types */}
                   <Select
                     placeholder="Select Quiz Types"
-                    style={{ width: "100%" }}
+                    style={{ width: '100%' }}
                     onChange={(value: any) => setQuizTypes(value)}
                     size="large"
                     defaultValue={'select'}
@@ -281,7 +278,7 @@ const CreateSingleQuiz = () => {
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <FormInput
@@ -298,8 +295,7 @@ const CreateSingleQuiz = () => {
                   xs={12}
                   md={8}
                   style={{
-                    marginTop: "8px",
-
+                    marginTop: '8px',
                   }}
                 >
                   <FormInput
@@ -307,7 +303,7 @@ const CreateSingleQuiz = () => {
                     name="serialNumber"
                     size="large"
                     label="Serial number"
-                  // required={true}
+                    // required={true}
                   />
                 </Col>
 
@@ -316,21 +312,20 @@ const CreateSingleQuiz = () => {
                   xs={12}
                   md={8}
                   style={{
-                    marginBottom: "10px",
-                    marginTop: "8px",
+                    marginBottom: '10px',
+                    marginTop: '8px',
                   }}
                 >
                   <FormTimePicker name="time_duration" label="Time Duration" />
                 </Col>
 
-
-                <Col
+                {/* <Col
                   className="gutter-row"
                   xs={12}
                   md={8}
                   style={{
-                    marginBottom: "10px",
-                    marginTop: "8px",
+                    marginBottom: '10px',
+                    marginTop: '8px',
                   }}
                 >
                   <FormSelectField
@@ -342,13 +337,13 @@ const CreateSingleQuiz = () => {
                     // placeholder="Select"
                     required={true}
                   />
-                </Col>
-                <Col
+                </Col> */}
+                {/* <Col
                   className="gutter-row"
-                  hidden={quizType === "audio" ? true : false}
+                  hidden={quizType === 'audio' ? true : false}
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <DemoVideoUI
@@ -356,60 +351,69 @@ const CreateSingleQuiz = () => {
                     // setVideoType={setVideoType}
                     // videoUrl={videoUrl}
                     // setVideoUrl={setVideoUrl}
-                    options={["youtube", "vimeo"]}
+                    options={['youtube', 'vimeo']}
                     label="Preview Video"
                   />
-                </Col>
-                <Col
-                  hidden={quizType === "audio" ? true : false}
+                </Col> */}
+                {/* <Col
+                  hidden={quizType === 'audio' ? true : false}
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
                   <TagsSelectUI />
-                </Col>
+                </Col> */}
 
                 <Col
-                  hidden={quizType === "audio" ? true : false}
+                  hidden={quizType === 'audio' ? true : false}
                   className="gutter-row"
                   xs={24}
                   style={{
-                    margin: "20px 0",
+                    margin: '20px 0',
                   }}
                 >
-
                   <LabelUi>Select Quiz Question images (optional)</LabelUi>
-                  <UploadMultipalImage isImageloading={isImageloading} isReset={isReset} name="imgs" />
+                  <UploadMultipalImage
+                    isImageloading={isImageloading}
+                    isReset={isReset}
+                    name="imgs"
+                  />
                 </Col>
                 <Col
-                  hidden={quizType !== "audio" ? true : false}
+                  hidden={quizType !== 'audio' ? true : false}
                   className="gutter-row"
                   xs={24}
                   style={{
-                    margin: "20px 0",
+                    margin: '20px 0',
                   }}
                 >
-
                   <LabelUi>Add Your Audio Quiz</LabelUi>
-                  <UploadAudioFile isReset={isReset} fileType="audio" name="quizData.link" />
+                  <UploadAudioFile
+                    isReset={isReset}
+                    fileType="audio"
+                    name="quizData.link"
+                  />
                 </Col>
               </Row>
-              <Col
+              {/* <Col
                 className="gutter-row"
                 xs={24}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
-                <FormTextArea label="Short Description" name="short_description" />
-              </Col>
-              <Col
+                <FormTextArea
+                  label="Short Description"
+                  name="short_description"
+                />
+              </Col> */}
+              {/* <Col
                 className="gutter-row"
                 xs={24}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormTextArea
@@ -417,77 +421,66 @@ const CreateSingleQuiz = () => {
                   label="hints"
                   placeholder="Give hints for Answer"
                 />
-              </Col>
+              </Col> */}
 
-              <Col
-                className="gutter-row"
-                xs={24}
-                // md={12}
-                // lg={8}
-                style={{}}
-              >
-                {/*//! 3 */}
+              {/* <Col className="gutter-row" xs={24} style={{}}>
                 <div
                   style={{
-                    borderTopWidth: "2px",
-                  }} /* className=" border-t-2" */
+                    borderTopWidth: '2px',
+                  }}
                 >
-                  <p className="text-center my-3 font-bold text-xl">
+                  <p className="my-3 text-center text-xl font-bold">
                     Description
                   </p>
-                  <TextEditor
-                    isReset={isReset}
-                  // textEditorValue={textEditorValue}
-                  // setTextEditorValue={setTextEditorValue}
-                  />
+                  <TextEditor isReset={isReset} />
                 </div>
-              </Col>
+              </Col> */}
 
               <Row
                 gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
                 style={{
-                  marginBlock: "2em",
+                  marginBlock: '2em',
                 }}
               >
                 <Col
                   className="gutter-row"
                   xs={24}
                   style={{
-                    marginBottom: "10px",
+                    marginBottom: '10px',
                   }}
                 >
-                  {quizType === "select" && (
+                  {quizType === 'select' && (
                     <AnswerSInlge
                       answers={answers}
                       setAnswers={setAnswers as any}
                     />
                   )}
-                  {quizType === "multiple_select" && (
+                  {quizType === 'multiple_select' && (
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
                     />
                   )}
-                  {quizType === "find" && (
+                  {quizType === 'find' && (
                     <AnswerFind
                       answersFind={answers}
                       setAnswersFind={setAnswers as any}
                     />
                   )}
                   {/* //! should update cause it is statics */}
-                  {quizType === "drag" && (
+                  {quizType === 'drag' && (
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
                     />
                   )}
-                  {quizType === "audio" && (
+                  {quizType === 'audio' && (
                     <AnswerMultiple
                       answersMultiple={answers}
                       setAnswersMultiple={setAnswers as any}
                     />
                   )}
-                  {quizType === "input" && (
+                  {quizType === 'input' && (
                     <>
                       <LabelUi>
                         Answer <span className="text-red-700">*</span>
@@ -495,7 +488,7 @@ const CreateSingleQuiz = () => {
                       <Input
                         placeholder="Type the answer"
                         style={{
-                          width: "70%"
+                          width: '70%',
                         }}
                         onBlur={(value: any) =>
                           setSingleAnswerInput(value.target.value)
@@ -506,20 +499,27 @@ const CreateSingleQuiz = () => {
                 </Col>
               </Row>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex items-center justify-center">
               {serviceLoading ? (
                 <ButtonLoading />
               ) : (
-                <Button  htmlType="submit" size="large" style={{ width: "10rem" }} type="default"> Create
+                <Button
+                  htmlType="submit"
+                  size="large"
+                  style={{ width: '10rem' }}
+                  type="default"
+                >
+                  {' '}
+                  Create
                 </Button>
               )}
             </div>
           </Form>
         </div>
       ) : (
-        <div className="w-full h-full flex justify-center items-center min-h-64">
-          <h1 className="text-center text-red-500 font-semibold text-2xl">
-            First select your quiz by filtering{" "}
+        <div className="flex h-full min-h-64 w-full items-center justify-center">
+          <h1 className="text-center text-2xl font-semibold text-red-500">
+            First select your quiz by filtering{' '}
           </h1>
         </div>
       )}

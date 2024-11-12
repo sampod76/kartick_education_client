@@ -41,7 +41,7 @@ const EditServicePage = ({ params }: any) => {
         id: params?.id,
         data: UpdateValues,
       }).unwrap();
-      console.log(res);
+
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
@@ -56,7 +56,6 @@ const EditServicePage = ({ params }: any) => {
     return <LoadingForDataFetch />;
   }
   if (error) {
-    console.log(error);
   }
 
   const defaultValues = {

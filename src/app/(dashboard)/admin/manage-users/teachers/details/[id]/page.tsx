@@ -12,18 +12,17 @@ const TeacherDetailsPage = ({ params }: any) => {
 
   const { data: userData, isLoading: loading } = useGetSingleSellerQuery(id);
 
-  console.log(userData);
-
   if (loading) {
     return <LoadingForDataFetch />;
   }
 
   return (
     <div>
-      <UserProfile userData={{ ...userData, role: USER_ROLE.SELLER }}></UserProfile>
+      <UserProfile
+        userData={{ ...userData, role: USER_ROLE.SELLER }}
+      ></UserProfile>
     </div>
   );
 };
 
 export default TeacherDetailsPage;
-

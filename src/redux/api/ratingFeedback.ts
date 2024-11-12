@@ -59,6 +59,7 @@ export const ratingFeedbackApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.rating],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

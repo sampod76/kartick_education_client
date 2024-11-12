@@ -30,13 +30,17 @@ import {
 } from "@/redux/api/adminApi/studentApi";
 import ModalComponent from "@/components/Modal/ModalComponents";
 import CreateTrainer from "@/components/registionfrom/trainer";
-import { useDeleteTrainerMutation, useGetAllTrainersQuery } from "@/redux/api/adminApi/trainerApi";
+import {
+  useDeleteTrainerMutation,
+  useGetAllTrainersQuery,
+} from "@/redux/api/adminApi/trainerApi";
 import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
 
 const TrainerListPage = () => {
-  const userInfo = getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
   const query: Record<string, any> = {};
-  const [deleteTrainer, { isLoading: trainerDeleteLoading }] = useDeleteTrainerMutation();
+  const [deleteTrainer, { isLoading: trainerDeleteLoading }] =
+    useDeleteTrainerMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -66,8 +70,7 @@ const TrainerListPage = () => {
 
   //@ts-ignore
   const TrainerData = data?.data;
-  console.log("🚀 ~ file: page.tsx:68 ~ TrainerListPage ~ TrainerData:", TrainerData)
-
+  
 
   //@ts-ignore
   const meta = data?.meta;
@@ -76,7 +79,7 @@ const TrainerListPage = () => {
     {
       title: "Name",
       render: function (data: any) {
-        // console.log(data);
+        //
         const fullName = `${data?.name?.firstName} ${data?.name?.lastName}  `;
         return <>{fullName}</>;
       },
@@ -117,17 +120,20 @@ const TrainerListPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${userInfo?.role}/manage-users/trainers/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="default">
+            <Link
+              href={`/${userInfo?.role}/manage-users/trainers/details/${data}`}
+            >
+              <Button type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${userInfo?.role}/manage-users/trainers/edit/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/trainers/edit/${data}`}
+            >
               <Button
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
                 type="default"
               >
                 <EditOutlined />
@@ -146,13 +152,13 @@ const TrainerListPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -164,7 +170,7 @@ const TrainerListPage = () => {
   };
 
   const deleteStudentHandler = async (id: string) => {
-    console.log(id);
+    
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
@@ -201,7 +207,7 @@ const TrainerListPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

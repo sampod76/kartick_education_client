@@ -19,14 +19,17 @@ const DashboardSidebar = ({
   collapsed: boolean;
   setCollapsed: any;
 }) => {
-  const userInfo = getUserInfo() as any
-  const [selectedKey, setSelectedKey] = useState('1');
+  const userInfo = getUserInfo() as any;
+  const [selectedKey, setSelectedKey] = useState("1");
 
   const handleMenuSelect = ({ key }: { key: string }) => {
     setSelectedKey(key);
   };
   const clipPathStyle = {
-    clipPath: selectedKey === '1' ? 'polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%)' : 'none',
+    clipPath:
+      selectedKey === "1"
+        ? "polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%)"
+        : "none",
     // background: "white"
   };
 
@@ -60,7 +63,6 @@ const DashboardSidebar = ({
         // bottom: 0,
         // background: "#1D2327",
         color: "white",
-
       }}
     >
       {/* {!collapsed ? (
@@ -78,9 +80,17 @@ const DashboardSidebar = ({
       )} */}
 
       {/* <Logo /> */}
-      <Link href='/'>
-        <Image src={logoImage} height={120} width={200} className={`${collapsed ? " w-[46px] h-[36px]" : "max-w-[80px] h-[56px]"}  
-         max-w-[80px] h-[56px] mx-auto`} alt="Logo" />
+      <Link href="/">
+        <Image
+          src={logoImage}
+          height={120}
+          width={200}
+          className={`${
+            collapsed ? " w-[46px] h-[36px]" : "max-w-[80px] h-[56px]"
+          }  
+         max-w-[80px] h-[56px] mx-auto`}
+          alt="Logo"
+        />
       </Link>
       <Menu
         // theme="light"
@@ -93,7 +103,7 @@ const DashboardSidebar = ({
           fontWeight: "500",
           marginTop: "36px",
           fontSize: "16px",
-          paddingInline: '10px',
+          paddingInline: "10px",
 
           // ...clipPathStyle,
         }}
@@ -101,11 +111,9 @@ const DashboardSidebar = ({
         theme="dark"
         items={dashboardItems(userInfo?.role)}
         onSelect={handleMenuSelect}
-      // items={dashboardItems(USER_ROLE.SELLER)}
+        // items={dashboardItems(USER_ROLE.SELLER)}
       />
-      <div style={{ ...clipPathStyle }}>
-
-      </div>
+      <div style={{ ...clipPathStyle }}></div>
     </Sider>
   );
 };

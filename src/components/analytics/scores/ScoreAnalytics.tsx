@@ -7,7 +7,7 @@ import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
 import PieChart from '@/components/dashboard/admin/chart/PieChart';
 import dynamic from 'next/dynamic';
 
-const DynamicPie = dynamic(() => import('@ant-design/plots').then((mod) => mod.Pie), {
+const DynamicPie:any = dynamic(() => import('@ant-design/plots').then((mod) => mod.Pie as any), {
     ssr: false, // Set ssr to false to prevent rendering on the server
 });
 export default function ScoreAnalytics() {

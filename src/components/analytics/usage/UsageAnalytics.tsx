@@ -6,8 +6,8 @@ import { Progress, Space } from 'antd';
 import { Line } from '@ant-design/charts';
 import { EditOutlined, ClockCircleOutlined, SettingOutlined } from "@ant-design/icons"
 import dynamic from 'next/dynamic';
-const DynamicLineChart = dynamic(() => import('@ant-design/charts').then((module) => module.Line), {
-    ssr: false, // Set ssr to false to prevent server-side rendering
+const DynamicLineChart :any = dynamic(() => import('@ant-design/charts').then((module:any) => module.Line as any), {
+    ssr: false, // Prevents server-side rendering
 });
 
 

@@ -8,6 +8,7 @@ import {
   setToLocalStorage,
 } from "@/utils/local-storage";
 import axios from "axios";
+import { getBaseUrl } from "../config/envConfig";
 // import { message } from 'antd';
 
 const instance = axios.create();
@@ -36,7 +37,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
-    // console.log("🚀 ~ response:", response)
+    //// console.log("🚀 ~ response:", response)
     const responseObject: ResponseSuccessType = {
       data: response?.data?.data,
       meta: response?.data?.meta,
@@ -48,18 +49,38 @@ instance.interceptors.response.use(
   async function (error) {
     const config = error?.config;
 
-    if (error?.response?.status === 403 && !config?.sent) {
-      config.sent = true;
-      const response = await getRefreshToken();
-      const accessToken = response?.data?.accessToken;
-      config.headers["Authorization"] = accessToken;
-      setToLocalStorage(authKey, accessToken);
-      return instance(config);
-    } else {
-      console.log(error);
-      if (error?.response?.status === 403  || error?.response?.data?.message ==='Validation Error:-> refreshToken : Refresh Token is required') {
-        removeUserInfo(authKey);
+    if (error?.response?.status === 403 && !config?._retry) {
+      config._retry = true;
+      try {
+        // const response = await getRefreshToken();
+        // const accessToken = response?.data?.accessToken;
+        const response = await axios.post(
+          `${getBaseUrl()}/auth/refresh-token`,
+          {},
+          { withCredentials: true }
+        );
+        const accessToken = response?.data?.data?.accessToken;
+        // axios.defaults.headers.common['Authorization'] = accessToken;
+        config.headers["Authorization"] = accessToken;
+        setToLocalStorage(authKey, accessToken);
+        return instance(config);
+      } catch (error: any) {
+        // removeUserInfo(authKey);
+        localStorage.clear();
+        window.location.href = "/login";
+        return Promise.reject(error?.response?.data);
       }
+    } else {
+      /*
+       if (
+        error?.response?.status === 403 ||
+        error?.response?.data?.message ===
+          "Validation Error:-> refreshToken : Refresh Token is required"
+      ) {
+        removeUserInfo(authKey);
+        window.location.href = "/login";
+      } 
+    */
       let responseObject: any = {
         statusCode: error?.response?.status || 500,
         message: "Something went wrong",

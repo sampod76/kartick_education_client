@@ -1,26 +1,26 @@
-"use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import InternelError from "@/components/shared/Error/InternelError";
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
-import CategoryButtonSKeletton from "@/components/ui/Loading/CategoryButtonSKeletton";
-import { useGetSingleCourseQuery } from "@/redux/api/adminApi/courseApi";
-import CoverSvg from "@/assets/svg/CoverBackground";
-import { useSearchParams } from "next/navigation";
+'use client';
+import React, { useState } from 'react';
+import Link from 'next/link';
+import InternelError from '@/components/shared/Error/InternelError';
+import { useGetAllCategoryQuery } from '@/redux/api/adminApi/categoryApi';
+import CategoryButtonSKeletton from '@/components/ui/Loading/CategoryButtonSKeletton';
+import { useGetSingleCourseQuery } from '@/redux/api/adminApi/courseApi';
+import CoverSvg from '@/assets/svg/CoverBackground';
+import { useSearchParams } from 'next/navigation';
 
-import { Modal, Button } from "antd";
-import ModalCourseBanner from "@/components/Modal/ModalCourseBanner";
-import Image from "next/image";
-import { useAppDispatch } from "@/redux/hooks";
-import { addBackgroundColor } from "@/redux/features/bannerCourseSlice";
+import { Modal, Button } from 'antd';
+import ModalCourseBanner from '@/components/Modal/ModalCourseBanner';
+import Image from 'next/image';
+import { useAppDispatch } from '@/redux/hooks';
+import { addBackgroundColor } from '@/redux/features/bannerCourseSlice';
 
 const BannerCourses = () => {
   const dispatch = useAppDispatch();
   const query: Record<string, any> = {};
-  query["limit"] = 999999;
-  query["sortOrder"] = "asc";
-  query["sortBy"] = "serial_number";
-  query["status"] = "active";
+  query['limit'] = 999999;
+  query['sortOrder'] = 'asc';
+  query['sortBy'] = 'serial_number';
+  query['status'] = 'active';
 
   const { data, isLoading, error } = useGetAllCategoryQuery({ ...query });
 
@@ -28,7 +28,7 @@ const BannerCourses = () => {
 
   const searchParams = useSearchParams();
 
-  const categoryId = searchParams.get("category");
+  const categoryId = searchParams.get('category');
 
   // console.log(
   //   "🚀 ~ file: BannerCourses.tsx:22 ~ BannerCourses ~ searchParams:",
@@ -38,14 +38,13 @@ const BannerCourses = () => {
   // ! for categoryMoadal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalCategoryId, setIsModalCategoryId] = useState<string | null>(
-    categoryId
+    categoryId,
   );
 
   const showModal = (categoryId: string) => {
     setIsModalOpen(true);
     setIsModalCategoryId(categoryId);
   };
-
 
   // console.log("🚀 ~ BannerCourses ~ categoryData:", categoryData);
 
@@ -66,24 +65,9 @@ const BannerCourses = () => {
     );
   }
 
+  const colors = ['#108213', '#FFDA15', '#FB8500', '#5371FF', '#2C92A8'];
 
-
-  const colors = [
-    "#108213",
-    "#FFDA15",
-    "#FB8500",
-    "#5371FF",
-    "#2C92A8",
-  ];
-
-
-  const bgColors = [
-    '#E8EABD',
-    '#F5F5D5',
-    '#d38f41',
-    '#8093e5',
-    '#5ba8b7'
-  ]
+  const bgColors = ['#E8EABD', '#F5F5D5', '#d38f41', '#8093e5', '#5ba8b7'];
 
   const getCategoryColor = (index: number): string => {
     return colors[index % colors.length];
@@ -95,13 +79,18 @@ const BannerCourses = () => {
   const modalButtonHandler = (id: string, index: number) => {
     showModal(id);
     const color = getCategoryColor(index);
-    const bg = getBGColor(index)
+    const bg = getBGColor(index);
     // dispatch(addBackgroundColor({ color, bg }));
   };
   return (
-    <div className="-mt-[5px] ">
-
-      <Image alt=""  src={"/banner/v2CourseBanner.png"} className="object-cover -z-10 w-[100vw] h-[50vh] lg:h-[70vh] 2xl:h-[45.75rem] -mt-[6rem]" width={1900} height={1900} />
+    <div className="-mt-[5px]">
+      <Image
+        alt=""
+        src={'/banner/v2CourseBanner.png'}
+        className="-z-10 -mt-[6rem] h-[50vh] w-[100vw] object-cover lg:h-[70vh] 2xl:h-[45.75rem]"
+        width={1900}
+        height={1900}
+      />
       <div
       // className="wrapper"
       // style={{
@@ -124,7 +113,6 @@ const BannerCourses = () => {
       >
         {/* border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
 active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
-
       </div>
       {/* <div className="flex   uppercase justify-between items-center gap-2  font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scrollbar-hide whitespace-nowrap container mx-auto">
         {isLoading ? (
@@ -146,18 +134,26 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
           })
         )}
       </div> */}
-      <div className="flex uppercase justify-between items-center gap-2 font-[800] mt-7 md:mt-[1rem] pl-4 overflow-x-auto scroll-smooth  whitespace-nowrap container mx-auto">
+      <div className="container mx-auto mt-7 flex items-center justify-between gap-2 overflow-x-auto scroll-smooth whitespace-nowrap pl-4 font-[800] uppercase md:mt-[1rem]">
         {isLoading ? (
           <CategoryButtonSKeletton />
         ) : (
           categoryData?.map((category: any, index: number) => {
             return (
-              <div key={index + 1} onClick={() => modalButtonHandler(category?._id, index)} className={`p-3`}>
+              <div
+                key={index + 1}
+                onClick={() => modalButtonHandler(category?._id, index)}
+                className={`p-3`}
+              >
                 <button
-                  style={{ backgroundColor: colors[index % colors.length], color: "white" }}
-                  className={`py-2 px-3 text-[12px] shadow-lg scale-105 lg:text-[18px] brightness-95 rounded-tl-[20px rounded-br-[20px rounded-[28rem] ${index % 3 === 0 && "bg-[#FB8500]"} ${categoryId === category?._id &&
-                    "border-[4px] border-white  scale-105 duration-300  p-2 text-white brightness-105"
-                    } sm:overflow-x-hidden`}
+                  style={{
+                    backgroundColor: colors[index % colors.length],
+                    color: 'white',
+                  }}
+                  className={`rounded-tl-[20px rounded-br-[20px scale-105 rounded-[28rem] px-3 py-2 text-[12px] shadow-lg brightness-95 lg:text-[18px] ${index % 3 === 0 && 'bg-[#FB8500]'} ${
+                    categoryId === category?._id &&
+                    'scale-105 border-[4px] border-white p-2 text-white brightness-105 duration-300'
+                  } sm:overflow-x-hidden`}
                 >
                   {category?.title}
                 </button>
@@ -172,7 +168,6 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
         showModal={showModal}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-
       />
       {/* <div className="">
             <CoverSvg />
@@ -184,7 +179,7 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px] */}
         // width={100}
         alt="wave"
       /> */}
-    </div >
+    </div>
   );
 };
 

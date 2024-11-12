@@ -1,13 +1,12 @@
-"use client";
-import React, { useState, useRef, useMemo, useEffect } from "react";
-import JoditEditor from "jodit-react";
-import { useFormContext } from "react-hook-form";
-import { Switch } from 'antd';
+'use client';
+import JoditEditor from 'jodit-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 const TextEditor = ({
   textEditorValue,
   setTextEditorValue,
-  defaultTextEditorValue = "",
-  name = "details",
+  defaultTextEditorValue = '',
+  name = 'details',
   isReset = false,
 }: {
   textEditorValue?: string;
@@ -18,40 +17,40 @@ const TextEditor = ({
 }) => {
   const editor = useRef(null);
   const [content, setContent] = useState(defaultTextEditorValue);
-  const [openTextEditor, setopenTextEditor] = useState<boolean>(false);
+  const [openTextEditor, setopenTextEditor] = useState<boolean>(true);
   const { setValue } = useFormContext();
 
   const editorConfig = useMemo(
     () => ({
       readonly: false,
-      placeholder: "Start typing...",
+      placeholder: 'Start typing...',
       // allowFileUpload: true,
       // sanitize: false,
       defaultMode: 1, // Set default alignment to left
       toolbarAdaptive: false,
     }),
-    []
+    [],
   );
 
   useEffect(() => {
     if (isReset) {
-      setContent("");
+      setContent('');
     }
   }, [isReset]);
 
-  const onChange = (checked: boolean) => {
-    // console.log(`switch to ${checked}`);
-    setopenTextEditor((v) => !v)
-  };
+  // const onChange = (checked: boolean) => {
+  //   // console.log(`switch to ${checked}`);
+  //   setopenTextEditor((v) => !v)
+  // };
 
   return (
     <div>
       {/* <h2></h2> */}
-      <Switch checkedChildren="Open" unCheckedChildren='Close'  onChange={onChange} style={{
+      {/* <Switch checkedChildren="Open" unCheckedChildren='Close'  onChange={onChange} style={{
         background: openTextEditor ? "blue" : "#4D545A",
         marginBlock: "10px"
-      }} />
-      {openTextEditor &&
+      }} /> */}
+      {openTextEditor && (
         <JoditEditor
           ref={editor}
           config={editorConfig}
@@ -61,14 +60,12 @@ const TextEditor = ({
             setValue(name, newContent);
             setContent(newContent);
           }} // preferred to use only this option to update the content for performance reasons
-        // onChange={(newContent) => {
+          // onChange={(newContent) => {
 
-        //   setValue(name, newContent);
-        // }}
+          //   setValue(name, newContent);
+          // }}
         />
-
-      }
-
+      )}
     </div>
   );
 };

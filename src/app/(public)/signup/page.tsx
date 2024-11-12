@@ -1,33 +1,30 @@
-"use client";
+'use client';
 
-import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
-import FormInput from "@/components/Forms/FormInput";
-import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
-import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import UploadImage from "@/components/ui/UploadImage";
-import { genderOptions, roleOptions } from "@/constants/global";
-import { USER_ROLE } from "@/constants/role";
-import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
-import { useAddSellerWithFormDataMutation } from "@/redux/api/adminApi/sellerApi";
-import { useAddStudentWithFormDataMutation } from "@/redux/api/adminApi/studentApi";
-import { getUserInfo, storeUserInfo } from "@/services/auth.service";
+import Form from '@/components/Forms/Form';
+import FormDatePicker from '@/components/Forms/FormDatePicker';
+import FormInput from '@/components/Forms/FormInput';
+import FormSelectField from '@/components/Forms/FormSelectField';
+import FormTextArea from '@/components/Forms/FormTextArea';
+import ButtonLoading from '@/components/ui/Loading/ButtonLoading';
+import UploadImage from '@/components/ui/UploadImage';
+import { genderOptions } from '@/constants/global';
+import { USER_ROLE } from '@/constants/role';
+import { useAddSellerWithFormDataMutation } from '@/redux/api/adminApi/sellerApi';
+import { useAddStudentWithFormDataMutation } from '@/redux/api/adminApi/studentApi';
+import { getUserInfo, storeUserInfo } from '@/services/auth.service';
 
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
 
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Row, message } from 'antd';
 
-import { useEffect, useState } from "react";
-import { IDecodedInfo } from "../../../services/auth.service";
-import { useRouter } from "next/navigation";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import { removeNullUndefinedAndFalsey } from "@/hooks/removeNullUndefinedAndFalsey";
-import { useUserLoginMutation } from "@/redux/api/auth/authApi";
-import BannerSignUp from '@/components/Home/Banner&hero/BannerSignup'
+import LoadingForDataFetch from '@/components/Utlis/LoadingForDataFetch';
+import { removeNullUndefinedAndFalsey } from '@/hooks/removeNullUndefinedAndFalsey';
+import { useUserLoginMutation } from '@/redux/api/auth/authApi';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { IDecodedInfo } from '../../../services/auth.service';
 const SignUpTeacherAndStudent = ({ setOpen }: any) => {
-  console.log("🚀 ~ SignUpTeacherAndStudent ~ setOpen:", setOpen)
+  console.log('🚀 ~ SignUpTeacherAndStudent ~ setOpen:', setOpen);
   const router = useRouter();
   const [isReset, setIsReset] = useState(false);
   const [userLogin, { error, isLoading: LoginLoading }] =
@@ -43,7 +40,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
       router.back();
     }
     setLoading(false);
-    return () => { };
+    return () => {};
   }, [router, userInfo]);
 
   if (loading) {
@@ -51,7 +48,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
   }
 
   const onSubmit = async (values: any) => {
-    console.log("🚀 ~ onSubmit ~ values:", values);
+    console.log('🚀 ~ onSubmit ~ values:', values);
     removeNullUndefinedAndFalsey(values);
 
     try {
@@ -73,14 +70,14 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
       } else {
         res = {
           success: false,
-          message: "not found",
+          message: 'not found',
         };
       }
 
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("User created successfully");
+        Success_model('User created successfully');
         setIsReset(true);
         try {
           const res = await userLogin({
@@ -89,7 +86,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
           }).unwrap();
           if (res?.accessToken) {
             // router.push("/profile");
-            message.success("User logged in successfully!");
+            message.success('User logged in successfully!');
             storeUserInfo({ accessToken: res?.accessToken });
 
             // setOpen(false)
@@ -100,7 +97,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
           Error_model_hook(err?.data || err?.message);
           console.log(err);
         }
-        router.push("/login");
+        router.push('/login');
       }
       // message.success("Admin created successfully!");
     } catch (err: any) {
@@ -114,30 +111,30 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
   // }
   return (
     <div className="">
-      <div className="-mt-[2rem] mb-4 lg:mb-6 ">
+      {/* <div className="-mt-[2rem] mb-4 lg:mb-6 ">
         <div className="w-full min-h-[3.3rem] bg-[#BEDDF9]"></div>
         <BannerSignUp />
-      </div>
+      </div> */}
       {/* resolver={yupResolver(adminSchema)} */}
-      <div className="container mx-auto p-5 bg-white rounded-lg shadow-2xl">
+      <div className="container mx-auto rounded-lg bg-white p-5 shadow-2xl">
         <Form submitHandler={onSubmit} isReset={isReset}>
           <div
             style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
-              marginBottom: "10px",
+              border: '1px solid #d9d9d9',
+              borderRadius: '5px',
+              padding: '15px',
+              marginBottom: '10px',
             }}
           >
             <p
               style={{
-                marginBottom: "10px",
+                marginBottom: '10px',
               }}
-              className="font-semibold text-2xl text-center"
+              className="text-center text-2xl font-semibold"
             >
               Registration
             </p>
-            <hr className="border my-2" />
+            <hr className="my-2 border" />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -145,7 +142,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormInput
@@ -163,7 +160,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormInput
@@ -181,7 +178,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormInput
@@ -199,7 +196,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormInput
@@ -217,7 +214,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormSelectField
@@ -226,8 +223,8 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                   // defaultValue={role}
                   // disabled={!!role.value}
                   options={[
-                    { label: "Teacher", value: "seller" },
-                    { label: "Student", value: "student" },
+                    { label: 'Teacher', value: 'seller' },
+                    { label: 'Student', value: 'student' },
                   ]}
                   label="role"
                   placeholder="Select"
@@ -239,10 +236,10 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 className="gutter-row"
                 xs={24}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
-                <UploadImage name="image" />
+                <UploadImage valueTypes="url" name="img,image" />
               </Col>
             </Row>
           </div>
@@ -250,16 +247,16 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
           {/* basic info */}
           <div
             style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
-              marginBottom: "10px",
+              border: '1px solid #d9d9d9',
+              borderRadius: '5px',
+              padding: '15px',
+              marginBottom: '10px',
             }}
           >
             <p
               style={{
-                fontSize: "18px",
-                marginBottom: "10px",
+                fontSize: '18px',
+                marginBottom: '10px',
               }}
             >
               Basic Information
@@ -271,14 +268,14 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormSelectField
                   size="large"
                   name="gender"
                   options={genderOptions}
-                  defaultValue={{ label: "Please select gender", value: "" }}
+                  defaultValue={{ label: 'Please select gender', value: '' }}
                   label="Gender"
                   placeholder="Select"
                   required={true}
@@ -291,7 +288,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "px",
+                  marginBottom: 'px',
                 }}
               >
                 <FormInput
@@ -309,7 +306,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 md={12}
                 lg={8}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: '10px',
                 }}
               >
                 <FormDatePicker
@@ -320,7 +317,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                 />
               </Col>
 
-              <Col xs={24} md={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} md={12} style={{ margin: '10px 0' }}>
                 <FormTextArea
                   placeholder="Please enter your address"
                   name="address"
@@ -328,7 +325,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
                   rows={4}
                 />
               </Col>
-              <Col xs={24} md={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} md={12} style={{ margin: '10px 0' }}>
                 <FormTextArea
                   placeholder="Please enter your description"
                   name="description"
@@ -338,7 +335,7 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
               </Col>
             </Row>
           </div>
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             {StudentLoading || SellerLoading ? (
               <ButtonLoading />
             ) : (
@@ -354,3 +351,8 @@ const SignUpTeacherAndStudent = ({ setOpen }: any) => {
 };
 
 export default SignUpTeacherAndStudent;
+
+/* 
+
+
+ */

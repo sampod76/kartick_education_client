@@ -23,27 +23,26 @@ import { Button, Col, Row, Select, message } from "antd";
 import Image from "next/image";
 import React, { useState } from "react";
 
-const EditBlog = ({params}:{params:any}) => {
+const EditBlog = ({ params }: { params: any }) => {
   const [isReset, setIsReset] = useState(false);
-  const {data={},isLoading}=useGetSingleBlogQuery(params.id,{
-    skip:!Boolean(params.id)
-  })
+  const { data = {}, isLoading } = useGetSingleBlogQuery(params.id, {
+    skip: !Boolean(params.id),
+  });
   const [updateBlog, { isLoading: blogLoading }] = useUpdateBlogMutation();
   const onSubmit = async (values: any) => {
     removeNullUndefinedAndFalsey(values);
 
     try {
-      const res = await updateBlog({id:params.id,body:values}).unwrap();
+      const res = await updateBlog({ id: params.id, body: values }).unwrap();
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
         Success_model("Successfully added Blog");
         setIsReset(true);
       }
-      
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+  
     }
   };
 
@@ -52,10 +51,9 @@ const EditBlog = ({params}:{params:any}) => {
   }
 
   const defaultValues = {
-    image:data?.image || NO_IMAGE,
-    title:data?.title ||"",
-    content:data?.content || "",
-
+    image: data?.image || NO_IMAGE,
+    title: data?.title || "",
+    content: data?.content || "",
   };
 
   return (
@@ -63,8 +61,11 @@ const EditBlog = ({params}:{params:any}) => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form  isReset={isReset}
-            submitHandler={onSubmit} defaultValues={defaultValues}>
+        <Form
+          isReset={isReset}
+          submitHandler={onSubmit}
+          defaultValues={defaultValues}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -103,7 +104,6 @@ const EditBlog = ({params}:{params:any}) => {
               <Col
                 className="gutter-row"
                 xs={24}
-               
                 style={{
                   marginBottom: "10px",
                 }}
@@ -119,8 +119,12 @@ const EditBlog = ({params}:{params:any}) => {
                   marginBottom: "10px",
                 }}
               >
-
-                <Image src={defaultValues?.image} width={300} height={300} alt="dd"/>
+                <Image
+                  src={defaultValues?.image}
+                  width={300}
+                  height={300}
+                  alt="dd"
+                />
               </Col>
               <Col span={24} style={{ margin: "10px 0" }}>
                 <FormTextArea
@@ -136,7 +140,7 @@ const EditBlog = ({params}:{params:any}) => {
             </Row>
           </div>
 
-          <Button htmlType="submit"   type="default">
+          <Button htmlType="submit" type="default">
             Update
           </Button>
         </Form>

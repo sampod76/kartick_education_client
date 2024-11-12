@@ -93,44 +93,7 @@ export default function TestimonialMain() {
           Explore how <span className="text-secondary">iBlossomLearn </span>{" "}
           supports students and be inspired <br /> by their success stories.
         </h2>
-        <Slider {...settings}>
-          {testimonials.map((testimonial: any, index) => (
-            <div key={testimonial._id || index} className="text-center">
-              {/* <img
-              className="mx-auto mt-4 rounded-full h-[9rem] w-[9rem]"
-              src={testimonial.image}
-              alt={`name ${index + 1}`}
-            /> */}
-
-              <div className="border-[2px] border-slate-200 h-[14rem] w-[14rem] p-1 mx-auto rounded-full">
-                <Image
-                  style={{
-                    marginInline: "auto",
-                    width: "14rem",
-                    height: "14rem",
-                    borderRadius: "100%",
-                  }}
-                  // className="mx-auto mt-4 rounded-full h-[9rem] w-[9rem]"
-                  src={testimonial.image}
-                  alt={`name ${index + 1}`}
-                />
-              </div>
-
-              <blockquote className="mx-auto mt-3 px-2">
-                <p className="text-base lg:text-[16px] text-[#1E1E1E] font-[550] px-2 capitalize">
-                  {CutText(testimonial?.details, 154)}
-                </p>
-                <h2 className="font-bold text-xl lg:text-2xl mt-5">
-                  {testimonial?.name} <span className="">| </span>
-                  <span className="text-[#1E1E1E] text-[18px]">
-                    {testimonial?.role}
-                  </span>
-                </h2>
-                {/* <small>{testimonial.name}</small> */}
-              </blockquote>
-            </div>
-          ))}
-        </Slider>
+        <Slider {...settings}></Slider>
       </div>
     </div>
   );

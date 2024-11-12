@@ -29,7 +29,8 @@ yarn.lock
 package-lock.json
 # local env files
 # .env*.local
-
+# .env.local
+# .env
 # vercel
 .vercel
 .vscode

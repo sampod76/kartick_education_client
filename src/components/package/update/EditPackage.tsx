@@ -1,28 +1,28 @@
-"use client";
-import React, { useState } from "react";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, InputNumber, Spin, Upload } from "antd";
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
-import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
-import { Select } from "antd";
-import type { SelectProps } from "antd";
+'use client';
+import React, { useState } from 'react';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Space, InputNumber, Spin, Upload } from 'antd';
+import { useGetAllCategoryQuery } from '@/redux/api/adminApi/categoryApi';
+import { ENUM_STATUS, ENUM_YN } from '@/constants/globalEnums';
+import { Select } from 'antd';
+import type { SelectProps } from 'antd';
 
 const { Option } = Select;
-import LabelUi from "@/components/ui/dashboardUI/LabelUi";
+import LabelUi from '@/components/ui/dashboardUI/LabelUi';
 import {
   useAddPackageMutation,
   useGetSinglePackageQuery,
   useUpdatePackageMutation,
-} from "@/redux/api/userApi/packageAPi";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import { IPackageData } from "@/types/package/packageType";
-import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
+} from '@/redux/api/userApi/packageAPi';
+import { Error_model_hook, Success_model } from '@/utils/modalHook';
+import { IPackageData } from '@/types/package/packageType';
+import uploadImgCloudinary from '@/hooks/UploadSIngleCloudinary';
 
 // ! for uuid
 const generateUUID = () => {
-  return "xxxxxxxx-xxxx-4xxx".replace(/[xy]/g, function (c) {
+  return 'xxxxxxxx-xxxx-4xxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;
-    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 };
@@ -47,7 +47,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     isDelete: ENUM_YN.NO,
     limit: 9999,
   });
-  let options: SelectProps["options"] = [];
+  let options: SelectProps['options'] = [];
   options = data?.data?.map((select: any) => ({
     label: select.title,
     value: select._id,
@@ -56,8 +56,6 @@ export default function EditPackage({ packageId }: { packageId: string }) {
   // const [addPackage, { isLoading: UpdatePackageLoading }] =
   //     useAddPackageMutation();
   const onFinish = async (values: any) => {
-
-    
     if (values?.img) {
       const imgUrl = await uploadImgCloudinary(values?.img?.file);
       // console.log(imgUrl, 'imgUrl')
@@ -65,13 +63,12 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     }
     // c
 
-    const packageData: Partial<IPackageData> = {
+    const packageData: any = {
       ...values,
-      membership:
-        {
-          title: values.membership,
-          uid: uuid,
-        } || defaultPackageData?.membership,
+      membership: {
+        title: values?.membership,
+        uid: uuid,
+      },
       title: values.title || defaultPackageData?.title,
       type: values.type || defaultPackageData?.type,
       monthly: values.monthly || defaultPackageData?.monthly,
@@ -80,7 +77,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
       categories: values.categories || defaultPackageData?.categories,
     };
     // console.log("Received values of form:", values);
-    console.log("🚀 ~ onFinish ~ packageData:", packageData);
+    console.log('🚀 ~ onFinish ~ packageData:', packageData);
     // return
     try {
       const res = await updatePackage({
@@ -91,7 +88,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
       if (res?.success == false) {
         Error_model_hook(res?.message);
       } else {
-        Success_model("Successfully Updated Package");
+        Success_model('Successfully Updated Package');
         // form.resetFields();
       }
       // console.log(res);
@@ -102,14 +99,18 @@ export default function EditPackage({ packageId }: { packageId: string }) {
   };
 
   if (defaultLoading) {
-    return <div className="w-[50%] mx-auto"><Spin size="large" /></div>;
+    return (
+      <div className="mx-auto w-[50%]">
+        <Spin size="large" />
+      </div>
+    );
   }
 
   const defaultCategory = defaultPackageData?.categories?.map(
     (select: any) => ({
       category: select?.category,
       label: select?.label,
-    })
+    }),
   );
 
   const initialPackageFormData = {
@@ -120,14 +121,14 @@ export default function EditPackage({ packageId }: { packageId: string }) {
     yearly: defaultPackageData?.yearly,
     membership: defaultPackageData?.membership?.title,
     categories: defaultCategory,
-    img: defaultPackageData?.img 
+    img: defaultPackageData?.img,
   };
 
   // console.log(initialPackageFormData, 'initialPackageFormData..........')
   // console.log('defaultCategory7', defaultCategory[1].value)
   return (
-    <div className="bg-white shadow-lg p-5 rounded-xl">
-      <h1 className="text-xl text-center font-bold border-b-2 border-spacing-4 mb-2  ">
+    <div className="rounded-xl bg-white p-5 shadow-lg">
+      <h1 className="mb-2 border-spacing-4 border-b-2 text-center text-xl font-bold">
         Update Package
       </h1>
       <Form
@@ -136,10 +137,10 @@ export default function EditPackage({ packageId }: { packageId: string }) {
         form={form}
         style={{
           maxWidth: 850,
-          marginInline: "auto",
-          border: "0.2px solid gray",
-          padding: "8px",
-          borderRadius: "5px",
+          marginInline: 'auto',
+          border: '0.2px solid gray',
+          padding: '8px',
+          borderRadius: '5px',
         }}
         // autoComplete="off"
         initialValues={initialPackageFormData}
@@ -153,7 +154,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             <Form.Item name="type" label="Select Types">
               {/* <LabelUi>Select Types </LabelUi> */}
               <Select
-                style={{ maxWidth: "100%" }}
+                style={{ maxWidth: '100%' }}
                 placeholder="Select Types"
                 size="large"
               >
@@ -163,13 +164,13 @@ export default function EditPackage({ packageId }: { packageId: string }) {
               </Select>
             </Form.Item>
             <Form.Item
-              name={"membership"}
+              name={'membership'}
               label="Select Membership"
               initialValue={defaultPackageData?.membership?.title}
             >
               {/* <LabelUi>Select Membership </LabelUi> */}
               <Select
-                style={{ width: "100%" }}
+                style={{ width: '100%' }}
                 placeholder="Select Membership"
                 size="large"
                 defaultValue={defaultPackageData?.membership?.title}
@@ -183,33 +184,33 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             {/*//!  monthly */}
             <Space.Compact>
               <Form.Item
-                name={["monthly", "price"]}
+                name={['monthly', 'price']}
                 // noStyle
 
                 label="Monthly Price"
-                rules={[{ required: true, message: "Province is required" }]}
+                rules={[{ required: true, message: 'Province is required' }]}
               >
                 <InputNumber
                   name="price"
                   type="number"
                   placeholder="Monthly Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
               <Form.Item
-                name={["monthly", "each_student_increment"]}
+                name={['monthly', 'each_student_increment']}
                 // noStyle
                 label="Each Student price"
                 rules={[
                   {
                     required: true,
-                    message: "Each Student Price is required",
+                    message: 'Each Student Price is required',
                   },
                 ]}
               >
                 <InputNumber
-                  style={{ width: "70%" }}
+                  style={{ width: '70%' }}
                   type="number"
                   placeholder="Input Each Student Price"
                 />
@@ -218,32 +219,32 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             <Space.Compact>
               {/*//!  biannual */}
               <Form.Item
-                name={["biannual", "price"]}
+                name={['biannual', 'price']}
                 // noStyle
                 label="Biannual Price"
-                rules={[{ required: true, message: "Province is required" }]}
+                rules={[{ required: true, message: 'Province is required' }]}
               >
                 <InputNumber
                   name="price"
                   type="number"
                   placeholder="Biannual Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
               <Form.Item
-                name={["biannual", "each_student_increment"]}
+                name={['biannual', 'each_student_increment']}
                 // noStyle
                 label="Each Student price"
                 rules={[
                   {
                     required: true,
-                    message: "Each Student Price is required",
+                    message: 'Each Student Price is required',
                   },
                 ]}
               >
                 <InputNumber
-                  style={{ width: "70%" }}
+                  style={{ width: '70%' }}
                   type="number"
                   placeholder="Input Each Student Price"
                 />
@@ -252,32 +253,32 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             <Space.Compact>
               {/*//!  yearly */}
               <Form.Item
-                name={["yearly", "price"]}
+                name={['yearly', 'price']}
                 // noStyle
                 label="Yearly Price"
-                rules={[{ required: true, message: "Province is required" }]}
+                rules={[{ required: true, message: 'Province is required' }]}
               >
                 <InputNumber
                   name="price"
                   type="number"
                   placeholder="yearly Price"
-                // style={{ width: "70%" }}
+                  // style={{ width: "70%" }}
                 />
               </Form.Item>
 
               <Form.Item
-                name={["yearly", "each_student_increment"]}
+                name={['yearly', 'each_student_increment']}
                 // noStyle
                 label="Each Student price"
                 rules={[
                   {
                     required: true,
-                    message: "Each Student Price is required",
+                    message: 'Each Student Price is required',
                   },
                 ]}
               >
                 <InputNumber
-                  style={{ width: "70%" }}
+                  style={{ width: '70%' }}
                   type="number"
                   placeholder="Input Each Student Price"
                 />
@@ -288,17 +289,26 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             <Form.Item name="img" required>
               <Upload
                 listType="picture-circle"
-                
                 beforeUpload={async (file) => {
                   // console.log(file)
                   const imgUrl = await uploadImgCloudinary(file);
-                  form.setFieldsValue({ img: imgUrl ? imgUrl : "" }); // Set imgUrl in Form values
+                  form.setFieldsValue({ img: imgUrl ? imgUrl : '' }); // Set imgUrl in Form values
                   return false; // Prevent default upload behavior
                   // return true
                 }}
-                  defaultFileList={defaultPackageData?.img ? [{ uid: '-1', name: 'default-image', status: 'done', url: defaultPackageData?.img }] : []}
-                  // multiple_select={false}
-
+                defaultFileList={
+                  defaultPackageData?.img
+                    ? [
+                        {
+                          uid: '-1',
+                          name: 'default-image',
+                          status: 'done',
+                          url: defaultPackageData?.img,
+                        },
+                      ]
+                    : []
+                }
+                // multiple_select={false}
               >
                 Upload
               </Upload>
@@ -309,7 +319,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
             </Form.Item> */}
           </Space.Compact>
         </Form.Item>
-        <div className="border-2 rounded-lg p-3">
+        <div className="rounded-lg border-2 p-3">
           <LabelUi>Add Category</LabelUi>
           <Form.List name="categories" initialValue={defaultCategory}>
             {(fields, { add, remove }) => {
@@ -337,29 +347,29 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                     <Space
                       key={key}
                       style={{
-                        display: "flex",
+                        display: 'flex',
                         // flexDirection: "column", // Stack items vertically on smaller screens
-                        margin: "8px auto",
+                        margin: '8px auto',
                         // background: "blue",
-                        width: "100%",
+                        width: '100%',
                       }}
                       align="center"
                     >
                       <Form.Item
                         {...restField}
-                        style={{ width: "", marginBottom: "8px" }}
-                        name={[name, "category"]}
-                      // rules={[
-                      //     { required: true, message: "Missing Category" },
-                      // ]}
-                      // initialValue={defaultCategory[name]}
+                        style={{ width: '', marginBottom: '8px' }}
+                        name={[name, 'category']}
+                        // rules={[
+                        //     { required: true, message: "Missing Category" },
+                        // ]}
+                        // initialValue={defaultCategory[name]}
                       >
                         <Select
                           // onChange={handleChange}
                           // onBlur={() => handleChange(restField.value, name)}
                           defaultValue={defaultCategory[name]?.category}
                           loading={isLoading}
-                          style={{ minWidth: "12rem" }}
+                          style={{ minWidth: '12rem' }}
                           placeholder="Select category"
                           size="large"
                           options={options}
@@ -367,14 +377,14 @@ export default function EditPackage({ packageId }: { packageId: string }) {
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        name={[name, "label"]}
+                        name={[name, 'label']}
                         style={{
-                          width: "",
-                          marginBottom: "8px",
-                          maxWidth: "200px",
+                          width: '',
+                          marginBottom: '8px',
+                          maxWidth: '200px',
                         }}
                         rules={[
-                          { required: true, message: "Missing Category Label" },
+                          { required: true, message: 'Missing Category Label' },
                         ]}
                       >
                         <Input size="large" placeholder="label" />
@@ -382,7 +392,7 @@ export default function EditPackage({ packageId }: { packageId: string }) {
 
                       <MinusCircleOutlined
                         onClick={() => handleRemove(name)}
-                        style={{ marginInline: "3px" }}
+                        style={{ marginInline: '3px' }}
                       />
                     </Space>
                   ))}
@@ -402,13 +412,13 @@ export default function EditPackage({ packageId }: { packageId: string }) {
           </Form.List>
         </div>
         <Form.Item>
-          <div className="flex justify-center items-center mt-3">
+          <div className="mt-3 flex items-center justify-center">
             <Button
               loading={UpdatePackageLoading}
               type="default"
               htmlType="submit"
             >
-              {UpdatePackageLoading ? "updating...." : "Update"}
+              {UpdatePackageLoading ? 'updating....' : 'Update'}
             </Button>
           </div>
         </Form.Item>

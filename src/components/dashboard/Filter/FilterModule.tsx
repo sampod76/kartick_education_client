@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { useGetAllModuleQuery } from "@/redux/api/adminApi/moduleApi";
+import { useGetAllModuleQuery } from '@/redux/api/adminApi/moduleApi';
 
-import { Button, Select } from "antd";
+import { Button, Select } from 'antd';
 
 export default function FilterModule({
   filterValue,
@@ -12,19 +12,19 @@ export default function FilterModule({
   setFilterValue: any;
 }) {
   // const [filterValue, setFilterValue] = useState("Filter by a Module");
-   //  // console.log("🚀 filterValue:", filterValue);
+  //  // console.log("🚀 filterValue:", filterValue);
   const query: Record<string, any> = {};
   //! for Course options selection
-  query["limit"] = 999999;
-  query["sortBy"] = "title";
-  query["sortOrder"] = "asc";
+  query['limit'] = 999999;
+  query['sortBy'] = 'title';
+  query['sortOrder'] = 'asc';
   //! for search and select
   const filterOption = (
     input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+    option?: { label: string; value: string },
+  ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
   const onSearch = (value: string) => {
-     //  // console.log("search:", value);
+    //  // console.log("search:", value);
   };
 
   //! for Module options selection
@@ -40,8 +40,6 @@ export default function FilterModule({
     };
   });
 
-  console.log(ModuleOptions);
-
   return (
     <Select
       // placeholder="Filter by a Module"
@@ -55,10 +53,10 @@ export default function FilterModule({
       //   </div>
       // )}
       // disabled={disabled}
-      size={"large"}
+      size={'large'}
       options={ModuleOptions}
       value={filterValue}
-      style={{ width: "10rem" }}
+      style={{ width: '10rem' }}
       loading={isLoading}
       //! for search & filter
       showSearch

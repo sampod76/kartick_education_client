@@ -1,52 +1,48 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+import UMTable from "@/components/ui/UMTable";
+import { useDebounced } from "@/redux/hooks";
+import { ReloadOutlined } from "@ant-design/icons";
 import {
   Button,
   Drawer,
   DrawerProps,
   Dropdown,
+  Form,
   Input,
   Menu,
   Space,
   message,
 } from "antd";
 import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
 
-import dayjs from "dayjs";
 import UMModal from "@/components/ui/UMModal";
+import dayjs from "dayjs";
 
-import Image from "next/image";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
 } from "@/utils/modalHook";
+import Image from "next/image";
 
+import { AllImage } from "@/assets/AllImge";
+import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import { USER_ROLE } from "@/constants/role";
 import {
   useDeleteQuizMutation,
   useGetAllQuizQuery,
 } from "@/redux/api/adminApi/quizApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
-import FilterLesson from "@/components/dashboard/Filter/FilterLesson";
-import { AllImage } from "@/assets/AllImge";
 import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+import { useDeleteUpdateSubmitQuizMutation } from "@/redux/api/quizSubmitApi";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-
+import { useGlobalContext } from "../ContextApi/GlobalContextApi";
+import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
+import ModalComponent from "../Modal/ModalComponents";
 
 const QuizDashList = () => {
+  const { userInfo, userInfoLoading } = useGlobalContext();
   const screens = useBreakpoint();
   //----------------------------------------------------------------
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -61,10 +57,15 @@ const QuizDashList = () => {
   );
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
-  const [isReset, setIsReset] = useState(false);
 
   const categoryQuery: Record<string, any> = {};
   categoryQuery["children"] = "course-milestone-module-lessons";
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    categoryQuery["author"] = userInfo?.id;
+  }
+  //
+  const [deleteUpdateSubmitQuiz, { isLoading: deleteSubmitQuiz }] =
+    useDeleteUpdateSubmitQuizMutation();
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -72,10 +73,8 @@ const QuizDashList = () => {
     });
 
   const categoryData: any = Category?.data;
+  // console.log("🚀 ~ QuizDashList ~ categoryData:", categoryData);
   //---------------------------------------------------------
-
-  // const SUPER_ADMIN=USER_ROLE.ADMIN
-  const userInfo = getUserInfo() as IDecodedInfo;
 
   const [deleteQuiz] = useDeleteQuizMutation();
 
@@ -103,7 +102,9 @@ const QuizDashList = () => {
   if (filterValue) {
     query["lesson"] = filterValue;
   }
-
+  if (userInfo?.role !== USER_ROLE.ADMIN) {
+    query["author"] = userInfo?.id;
+  }
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -113,7 +114,7 @@ const QuizDashList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllQuizQuery({ ...query });
-  console.log(data);
+  // console.log(data);
 
   //@ts-ignore
   const QuizData = data?.data;
@@ -125,11 +126,11 @@ const QuizDashList = () => {
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
-          console.log(id);
+          // console.log(id);
 
           const res = await deleteQuiz(id).unwrap();
 
-          console.log(res, "response for delete Quiz");
+          // console.log(res, "response for delete Quiz");
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
@@ -143,7 +144,31 @@ const QuizDashList = () => {
       }
     });
   };
-
+  const onFinish = async (values: { studentId: string }, id: string) => {
+    const data: any = { quizId: id };
+    if (!values?.studentId) {
+      return message.error("Please enter a student ID or Email");
+    } else if (values?.studentId?.includes("@")) {
+      data.email = values?.studentId;
+    } else {
+      data.userUniqueId = values?.studentId;
+    }
+    try {
+      const res = await deleteUpdateSubmitQuiz({
+        data,
+      }).unwrap();
+      console.log(res);
+      if (res.deletedCount) {
+        message.success(
+          `Successfully reset submitted ${res.deletedCount} quiz`
+        );
+      } else if (res.deletedCount === 0) {
+        message.error("Not found Any submitted quiz");
+      }
+    } catch (error: any) {
+      Error_model_hook(error?.message);
+    }
+  };
   const columns = [
     {
       title: "Image",
@@ -179,7 +204,7 @@ const QuizDashList = () => {
     {
       title: "Passing Grade",
       dataIndex: "passingGrade",
-      width: 120,
+      width: 150,
     },
     {
       title: "module",
@@ -226,6 +251,51 @@ const QuizDashList = () => {
                   >
                     Delete
                   </Menu.Item>
+                  <Menu.Item key="deledddte">
+                    <ModalComponent width={350} buttonText="Reset for students">
+                      <div className="w-[300px] flex justify-center items-center p-2 rounded-xl border mx-auto">
+                        <Form
+                          layout="vertical"
+                          onFinish={(value) => {
+                            onFinish(value, record._id);
+                          }}
+                        >
+                          <Form.Item
+                            name="studentId"
+                            label="StudentID or Email"
+                            required={true}
+                          >
+                            <Input
+                              style={{ width: "10rem" }}
+                              placeholder="StudentID or Email"
+                            />
+                          </Form.Item>
+                          <div className="flex justify-center items-center gap-2 ">
+                            <Form.Item>
+                              <Button
+                                loading={false}
+                                type="primary"
+                                htmlType="submit"
+                                className="w-full"
+                              >
+                                Submit
+                              </Button>
+                            </Form.Item>
+                            <Form.Item>
+                              <Button
+                                loading={false}
+                                type="primary"
+                                htmlType="reset"
+                                className="w-25"
+                              >
+                                clear
+                              </Button>
+                            </Form.Item>
+                          </div>
+                        </Form>
+                      </div>
+                    </ModalComponent>
+                  </Menu.Item>
                 </Menu>
               }
             >
@@ -237,13 +307,13 @@ const QuizDashList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
+    //  //// console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+    //// console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -255,7 +325,7 @@ const QuizDashList = () => {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    //// console.log(id);
     try {
       const res = await deleteQuiz(id);
       if (res) {
@@ -284,7 +354,7 @@ const QuizDashList = () => {
         padding: "1rem",
       }}
     >
-      <UMBreadCrumb
+      {/* <UMBreadCrumb
         items={[
           {
             label: `${userInfo?.role}`,
@@ -295,7 +365,7 @@ const QuizDashList = () => {
             link: `/${userInfo?.role}/quiz`,
           },
         ]}
-      />
+      /> */}
       <HeadingUI>Quiz List</HeadingUI>
       <ActionBar>
         <div className="flex gap-2">
@@ -304,7 +374,7 @@ const QuizDashList = () => {
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: screens.sm ? "30%" : "100%"
+              width: "300px",
             }}
           />
           {/* <FilterLesson

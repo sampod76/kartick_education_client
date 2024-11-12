@@ -32,7 +32,7 @@ import { useDeleteFaqMutation, useGetAllFaqQuery } from "@/redux/api/faqApi";
 import { getUserInfo } from "@/services/auth.service";
 
 const FaqList = () => {
-  const userInfo = getUserInfo() as any
+  const userInfo = getUserInfo() as any;
 
   const query: Record<string, any> = {};
   const [deleteFaq] = useDeleteFaqMutation();
@@ -62,7 +62,7 @@ const FaqList = () => {
 
   //@ts-ignore
   const faqData = data?.data;
-  //  // console.log("🚀 ~ file: page.tsx:51 ~ ServiceList ~ adminData:", faqData)
+
   //@ts-ignore
   const meta = data?.meta;
 
@@ -127,7 +127,7 @@ const FaqList = () => {
         return (
           <>
             <Link href={`/${userInfo?.role}/faq/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -136,7 +136,6 @@ const FaqList = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
                 type="default"
               >
                 <EditOutlined />
@@ -151,13 +150,12 @@ const FaqList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+ 
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -169,7 +167,7 @@ const FaqList = () => {
   };
 
   const deleteAdminHandler = async (id: string) => {
-    // console.log(id);
+    
     try {
       const res = await deleteFaq(id);
       if (res) {
@@ -197,7 +195,7 @@ const FaqList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "250px",
           }}
         />
         <div>

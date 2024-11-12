@@ -1,9 +1,9 @@
-import { IContactDataType } from "./../../../types/contactDataType";
-import { tagTypes } from "@/redux/tag-types";
-import { IMeta } from "@/types";
-import { baseApi } from "../baseApi";
+import { tagTypes } from '@/redux/tag-types';
+import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
+import { IContactDataType } from './../../../types/contactDataType';
 
-const Contact_URL = "/contact_mail";
+const Contact_URL = '/contact_mail';
 
 export const contactApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,12 +12,11 @@ export const contactApi = baseApi.injectEndpoints({
       query: (arg: Record<string, any>) => {
         return {
           url: Contact_URL,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
       transformResponse: (response: IContactDataType[], meta: IMeta) => {
-        // console.log(response);
         return {
           data: response,
           meta,
@@ -28,20 +27,20 @@ export const contactApi = baseApi.injectEndpoints({
     // get single academic department
     getSingleContact: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id);
+        //// console.log(id);
         return {
           url: `${Contact_URL}/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       providesTags: [tagTypes.contact],
     }),
     checkPurchaseContact: build.query({
       query: (id: string | string[] | undefined) => {
-        // console.log(id);
+        //// console.log(id);
         return {
           url: `${Contact_URL}/check-purchase/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
       providesTags: [tagTypes.contact],
@@ -49,11 +48,24 @@ export const contactApi = baseApi.injectEndpoints({
     // create a new academic department
     addContact: build.mutation({
       query: (data) => {
-        // console.log(data, "cacccc");
+        //// console.log(data, "cacccc");
 
         return {
           url: Contact_URL,
-          method: "POST",
+          method: 'POST',
+          data,
+        };
+      },
+      invalidatesTags: [tagTypes.contact],
+    }),
+    // create a new academic department
+    addSupport: build.mutation({
+      query: (data) => {
+        //// console.log(data, "cacccc");
+
+        return {
+          url: Contact_URL + '/support',
+          method: 'POST',
           data,
         };
       },
@@ -62,10 +74,10 @@ export const contactApi = baseApi.injectEndpoints({
     // update ac department
     updateContact: build.mutation({
       query: ({ data, id }) => {
-        // console.log(data, "contact data");
+        //// console.log(data, "contact data");
         return {
           url: `${Contact_URL}/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           data: data,
         };
       },
@@ -76,11 +88,12 @@ export const contactApi = baseApi.injectEndpoints({
     deleteContact: build.mutation({
       query: (id) => ({
         url: `${Contact_URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.contact],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {
@@ -90,4 +103,5 @@ export const {
   useGetSingleContactQuery,
   useUpdateContactMutation,
   useCheckPurchaseContactQuery,
+  useAddSupportMutation,
 } = contactApi;

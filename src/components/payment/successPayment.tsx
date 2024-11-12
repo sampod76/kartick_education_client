@@ -1,10 +1,10 @@
-"use client";
-import { Button, Result } from "antd";
-import Link from "next/link";
-import React from "react";
+'use client';
+import { Button, Result } from 'antd';
+import Link from 'next/link';
+import React from 'react';
 
 export default function PaymentSuccessComponent({
-  orderNumber="",
+  orderNumber = '',
 }: {
   orderNumber: string;
 }) {
@@ -12,10 +12,14 @@ export default function PaymentSuccessComponent({
     <div>
       <Result
         status="success"
-        title="Successfully Purchased "
-        subTitle={`Order number: ${orderNumber} configuration takes 1-5 minutes, please wait.`}
+        title="Payment Successfully"
+        subTitle={`Thank you so much`}
         extra={[
-          <Link href={'/'} key={"dd"} className="bg-green-600 text-white px-3 py-[5px] rounded">
+          <Link
+            href={'/'}
+            key={'dd'}
+            className="rounded bg-green-600 px-3 py-[5px] text-white"
+          >
             Go Home
           </Link>,
           <Button key="buy">Buy Again</Button>,

@@ -35,7 +35,7 @@ const CreateBlog = () => {
       }
     } catch (error: any) {
       Error_model_hook(error?.message);
-      console.log(error);
+
     }
   };
 
@@ -48,8 +48,8 @@ const CreateBlog = () => {
       <div>
         {/* resolver={yupResolver(adminSchema)} */}
         {/* resolver={yupResolver(IServiceSchema)} */}
-        <Form submitHandler={onSubmit}
-          
+        <Form
+          submitHandler={onSubmit}
           isReset={isReset}
           // defaultValues={{ status: ENUM_STATUS.ACTIVE }}
         >
@@ -122,7 +122,7 @@ const CreateBlog = () => {
             </Row>
           </div>
 
-          <Button htmlType="submit"   type="default">
+          <Button htmlType="submit" type="default">
             Create
           </Button>
         </Form>

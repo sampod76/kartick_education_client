@@ -1,6 +1,8 @@
-"use client";
-import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+'use client';
+import ActionBar from '@/components/ui/ActionBar';
+import UMTable from '@/components/ui/UMTable';
+import { useDebounced } from '@/redux/hooks';
+import { ReloadOutlined } from '@ant-design/icons';
 import {
   Button,
   Drawer,
@@ -8,67 +10,57 @@ import {
   Dropdown,
   Input,
   Menu,
-  RadioChangeEvent,
   Space,
   message,
-} from "antd";
-import Link from "next/link";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
+} from 'antd';
+import Link from 'next/link';
+import { useState } from 'react';
 
-import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
+import UMModal from '@/components/ui/UMModal';
+import dayjs from 'dayjs';
 
-import Image from "next/image";
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
-} from "@/utils/modalHook";
+} from '@/utils/modalHook';
+import Image from 'next/image';
 
-import {
-  useDeleteMilestoneMutation,
-  useGetAllMilestoneQuery,
-} from "@/redux/api/adminApi/milestoneApi";
-import HeadingUI from "@/components/ui/dashboardUI/HeadingUI";
+import HeadingUI from '@/components/ui/dashboardUI/HeadingUI';
 
+import { AllImage } from '@/assets/AllImge';
+import { ENUM_STATUS } from '@/constants/globalEnums';
 import {
   useDeleteSingleQuizMutation,
   useGetAllSingleQuizQuery,
-} from "@/redux/api/adminApi/singleQuizApi";
-import { AllImage } from "@/assets/AllImge";
-import { USER_ROLE } from "@/constants/role";
-import SelectCategoryChildren from "../Forms/GeneralField/SelectCategoryChildren";
-import { useGetAllCategoryChildrenQuery } from "@/redux/api/categoryChildrenApi";
-import { ENUM_STATUS } from "@/constants/globalEnums";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+} from '@/redux/api/adminApi/singleQuizApi';
+import { useGetAllCategoryChildrenQuery } from '@/redux/api/categoryChildrenApi';
+import { IDecodedInfo, getUserInfo } from '@/services/auth.service';
+import SelectCategoryChildren from '../Forms/GeneralField/SelectCategoryChildren';
+import { useGlobalContext } from '../ContextApi/GlobalContextApi';
 const SingleQuizList = () => {
-  const userInfo = getUserInfo() as IDecodedInfo;
+  const { userInfo } = useGlobalContext();
   //
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [placement, setPlacement] = useState<DrawerProps["placement"]>("right");
+  const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
   //
   //----------------------------------------------------------------
   const [category, setCategory] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [course, setCourse] = useState<{ _id?: string; title?: string }>({});
   const [milestone, setmilestone] = useState<{ _id?: string; title?: string }>(
-    {}
+    {},
   );
   const [module, setmodule] = useState<{ _id?: string; title?: string }>({});
   const [lesson, setlesson] = useState<{ _id?: string; title?: string }>({});
   const [quiz, setquiz] = useState<{ _id?: string; title?: string }>({});
 
   const queryCategory: Record<string, any> = {};
-  queryCategory["children"] = "course-milestone-module-lessons-quiz";
+  queryCategory['children'] = 'course-milestone-module-lessons-quiz';
+  if (userInfo?.role !== 'admin') {
+    queryCategory['author'] = userInfo?.id;
+  }
   //! for Category options selection
   const { data: Category, isLoading: categoryLoading } =
     useGetAllCategoryChildrenQuery({
@@ -80,33 +72,37 @@ const SingleQuizList = () => {
     useDeleteSingleQuizMutation();
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
+  const [adminId, setAdminId] = useState<string>('');
 
   const query: Record<string, any> = {};
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  query["status"] = ENUM_STATUS.ACTIVE;
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
+  query['status'] = ENUM_STATUS.ACTIVE;
   //
-  query["category"] = category?._id;
-  query["course"] = course?._id;
-  query["milestone"] = milestone?._id;
-  query["module"] = module?._id;
-  query["lesson"] = lesson?._id;
-  query["quiz"] = quiz?._id;
+  query['category'] = category?._id;
+  query['course'] = course?._id;
+  query['milestone'] = milestone?._id;
+  query['module'] = module?._id;
+  query['lesson'] = lesson?._id;
+  query['quiz'] = quiz?._id;
   //
+  if (userInfo?.role !== 'admin') {
+    query['author'] = userInfo?.id;
+  }
+
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
   });
 
   if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllSingleQuizQuery({ ...query });
 
@@ -115,7 +111,7 @@ const SingleQuizList = () => {
   //@ts-ignore
   const meta = data?.meta;
   const handleDelete = (id: string) => {
-    console.log("🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:", id);
+    console.log('🚀 ~ file: page.tsx:79 ~ handleDelete ~ id:', id);
 
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
@@ -124,13 +120,13 @@ const SingleQuizList = () => {
 
           const res = await deleteSingleQuiz(id).unwrap();
 
-          console.log(res, "response for delete SIngle QUiz");
+          console.log(res, 'response for delete SIngle QUiz');
           if (res?.success == false) {
             // message.success("Admin Successfully Deleted!");
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("SIngle QUiz Successfully Deleted");
+            Success_model('SIngle QUiz Successfully Deleted');
           }
         } catch (error: any) {
           Error_model_hook(error.message);
@@ -140,7 +136,7 @@ const SingleQuizList = () => {
   };
   const columns = [
     {
-      title: "Image",
+      title: 'Image',
       render: function (data: any) {
         return (
           <>
@@ -149,7 +145,7 @@ const SingleQuizList = () => {
                 src={
                   data?.imgs?.length ? data?.imgs[0] : AllImage.notFoundImage
                 }
-                style={{ height: "50px", width: "80px" }}
+                style={{ height: '50px', width: '80px' }}
                 width={50}
                 height={50}
                 alt="dd"
@@ -161,47 +157,46 @@ const SingleQuizList = () => {
       width: 100,
     },
     {
-      title: "Name",
-      dataIndex: "title",
+      title: 'Name',
+      dataIndex: 'title',
       ellipsis: true,
     },
     {
-      title: "Serial",
-      dataIndex: "serialNumber",
+      title: 'Serial',
+      dataIndex: 'serialNumber',
       // ellipsis: true,
-      width: 100
+      width: 100,
     },
     {
-      title: "Type",
-      dataIndex: "type",
+      title: 'Type',
+      dataIndex: 'type',
       // ellipsis: true,
-      width: 120
+      width: 120,
     },
     {
-      title: "Time",
-      dataIndex: "time_duration",
+      title: 'Time',
+      dataIndex: 'time_duration',
       render: function (data: any) {
         return <>{Math.floor(data / 1000 / 60)} minutes</>;
       },
       // ellipsis: true,
       width: 120,
-
     },
 
     {
-      title: "Quiz Name",
+      title: 'Quiz Name',
       dataIndex: ['quiz', 'title'],
       ellipsis: true,
       // width: 120
     },
     {
-      title: "Hints",
-      dataIndex: "hints",
+      title: 'Hints',
+      dataIndex: 'hints',
       ellipsis: true,
       // width: 120
     },
     {
-      title: "Module",
+      title: 'Module',
       dataIndex: ['module', 'title'],
       ellipsis: true,
       sorter: true,
@@ -215,15 +210,15 @@ const SingleQuizList = () => {
     // },
 
     {
-      title: "Created at",
-      dataIndex: "createdAt",
+      title: 'Created at',
+      dataIndex: 'createdAt',
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
     },
     {
-      title: "Action",
+      title: 'Action',
       // fixed: "right",
       width: 100,
       render: (record: any) => (
@@ -274,21 +269,21 @@ const SingleQuizList = () => {
     const { order, field } = sorter;
     // console.log(order, field);
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
   const deleteSIngleQuizHandler = async (id: string) => {
-    console.log("🚀 ~ file: page.tsx:194 ~ deleteSIngleQuizHandler ~ id:", id);
+    console.log('🚀 ~ file: page.tsx:194 ~ deleteSIngleQuizHandler ~ id:', id);
 
     // console.log(id);
     try {
       const res = await deleteSingleQuiz(id);
       if (res) {
-        message.success("Milstone Successfully Deleted!");
+        message.success('Milstone Successfully Deleted!');
         setOpen(false);
       }
     } catch (error: any) {
@@ -309,10 +304,10 @@ const SingleQuizList = () => {
     <div
       style={{
         boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
+          '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        borderRadius: '1rem',
+        backgroundColor: 'white',
+        padding: '1rem',
       }}
     >
       {/* <UMBreadCrumb
@@ -334,13 +329,13 @@ const SingleQuizList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: '20%',
           }}
         />
         <div>
           <Button
             type="default"
-            style={{ marginRight: "5px" }}
+            style={{ marginRight: '5px' }}
             onClick={showDrawer}
           >
             Filter
@@ -350,7 +345,7 @@ const SingleQuizList = () => {
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >
@@ -382,11 +377,11 @@ const SingleQuizList = () => {
       </UMModal>
       <Drawer
         title={
-          <div className="flex justify-between items-center ">
-            <p>Filter</p>{" "}
+          <div className="flex items-center justify-between">
+            <p>Filter</p>{' '}
             <button
               onClick={onClose}
-              className="text-lg text-red-500 rounded hover:text-white px-5  hover:bg-red-600"
+              className="rounded px-5 text-lg text-red-500 hover:bg-red-600 hover:text-white"
             >
               X
             </button>

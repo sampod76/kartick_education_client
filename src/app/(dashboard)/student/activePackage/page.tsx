@@ -13,7 +13,7 @@ export default function ActivePackagePage() {
   // );
   // //@ts-ignore
   // const getPackage= data.data
-  // console.log("🚀 ~ ActivePackage ~ getPackage:", getPackage)
+
   // if (isLoading) {
   //   return <LoadingSkeleton number={20} />;
   // }

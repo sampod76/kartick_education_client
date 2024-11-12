@@ -1,29 +1,27 @@
 "use client";
-import React, { useState } from "react";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Form,
-  Input,
-  Space,
-  Upload,
-} from "antd";
-import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
 import { ENUM_STATUS, ENUM_YN } from "@/constants/globalEnums";
-import { Select } from "antd";
+import { useGetAllCategoryQuery } from "@/redux/api/adminApi/categoryApi";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import type { SelectProps } from "antd";
-import LabelUi from "@/components/ui/dashboardUI/LabelUi";
-import { useAddPackageMutation } from "@/redux/api/userApi/packageAPi";
-import { Error_model_hook, Success_model } from "@/utils/modalHook";
-import uploadImgCloudinary from "@/hooks/UploadSIngleCloudinary";
+import { Button, Form, Input, Space } from "antd";
+import { useState } from "react";
+// import LabelUi from "@/components/ui/dashboardUI/LabelUi";
 import ButtonLoading from "@/components/ui/Loading/ButtonLoading";
-import TextEditorNotSetValue from "@/components/shared/TextEditor/TextEditorNotSetForm";
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
+
 import { useAddShortOverViewMutation } from "@/redux/api/adminApi/features/overview";
-
-
+import dynamic from "next/dynamic";
+const TextEditorNotSetValue = dynamic(
+  () => import("@/components/shared/TextEditor/TextEditorNotSetForm"),
+  {
+    ssr: false, // Disable server-side rendering for this component
+  }
+);
+const LabelUi = dynamic(() => import("@/components/ui/dashboardUI/LabelUi"), {
+  ssr: false,
+});
 export default function CreateShortOverview() {
   const [form] = Form.useForm();
-
 
   const [textEditorValue, setTextEditorValue] = useState("");
   // console.log(uuid,"uuiduuid")
@@ -42,21 +40,18 @@ export default function CreateShortOverview() {
     useAddShortOverViewMutation();
   // console.log("🚀 ~ CreateSkillsPlan ~ AddPackageLoading:", AddPackageLoading)
 
-
-
   const onFinish = async (values: any) => {
     // console.log("Received values", values);
-
 
     const shortOverView = {
       title: values.title,
 
-      page: values.page || 'page',
+      page: values.page || "page",
       details: textEditorValue,
 
       cards: values?.cards,
     };
-    console.log("🚀 ~ onFinish ~ shortOverView:", shortOverView)
+    console.log("🚀 ~ onFinish ~ shortOverView:", shortOverView);
     // return
 
     try {
@@ -95,13 +90,10 @@ export default function CreateShortOverview() {
         autoComplete="off"
         layout="vertical"
       >
-
         {/* //! 1. title */}
         <Form.Item name="title" label="Title">
           <Input size="large" placeholder="Please enter Short Overview title" />
         </Form.Item>
-
-
 
         {/* //! 3.page  */}
         {/* <Form.Item name="page" label="Page">
@@ -166,7 +158,10 @@ export default function CreateShortOverview() {
                           maxWidth: "200px",
                         }}
                         rules={[
-                          { required: true, message: "Missing cards count Number" },
+                          {
+                            required: true,
+                            message: "Missing cards count Number",
+                          },
                         ]}
                       >
                         <Input size="large" placeholder="count Number" />
@@ -180,10 +175,16 @@ export default function CreateShortOverview() {
                           maxWidth: "200px",
                         }}
                         rules={[
-                          { required: true, message: "Missing cards short_description" },
+                          {
+                            required: true,
+                            message: "Missing cards short_description",
+                          },
                         ]}
                       >
-                        <Input.TextArea size="large" placeholder="short_description" />
+                        <Input.TextArea
+                          size="large"
+                          placeholder="short_description"
+                        />
                       </Form.Item>
                       <MinusCircleOutlined
                         onClick={() => handleRemove(name)}

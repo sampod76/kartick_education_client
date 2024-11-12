@@ -1,56 +1,52 @@
-"use client";
-import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Input, message } from "antd";
-import Link from "next/link";
+'use client';
+import ActionBar from '@/components/ui/ActionBar';
+import UMTable from '@/components/ui/UMTable';
+import { useDebounced } from '@/redux/hooks';
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
   EyeOutlined,
-} from "@ant-design/icons";
-import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
-import UMTable from "@/components/ui/UMTable";
+  ReloadOutlined,
+} from '@ant-design/icons';
+import { Button, Input } from 'antd';
+import Link from 'next/link';
+import { useState } from 'react';
 
-import dayjs from "dayjs";
-import UMModal from "@/components/ui/UMModal";
+import ImageTag from '@/components/ui/CustomTag/CustomImageTag';
+import StatusTag from '@/components/ui/CustomTag/StatusTag';
+import UMModal from '@/components/ui/UMModal';
+import { USER_ROLE } from '@/constants/role';
+import {
+  useDeleteUserMutation,
+  useGetAllUsersQuery,
+} from '@/redux/api/adminApi/usersApi';
+import { IDecodedInfo, getUserInfo } from '@/services/auth.service';
 import {
   Error_model_hook,
   Success_model,
   confirm_modal,
-} from "@/utils/modalHook";
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import StatusTag from "@/components/ui/CustomTag/StatusTag";
-import Image from "next/image";
-import ImageTag from "@/components/ui/CustomTag/ImageTag";
-import {
-  useDeleteUserMutation,
-  useGetAllUsersQuery,
-} from "@/redux/api/adminApi/usersApi";
-import dynamic from "next/dynamic";
-import { IDecodedInfo, getUserInfo } from "@/services/auth.service";
+} from '@/utils/modalHook';
+import dayjs from 'dayjs';
+import dynamic from 'next/dynamic';
 
 const AdminPage = () => {
   // const SUPER_ADMIN = USER_ROLE.ADMIN;
-  const userInfo =getUserInfo() as IDecodedInfo
+  const userInfo = getUserInfo() as IDecodedInfo;
   const query: Record<string, any> = {};
   const [deleteUser] = useDeleteUserMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
+  const [adminId, setAdminId] = useState<string>('');
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -58,34 +54,32 @@ const AdminPage = () => {
   });
 
   if (!!debouncedSearchTerm) {
-    query["searchTerm"] = debouncedSearchTerm;
+    query['searchTerm'] = debouncedSearchTerm;
   }
   const { data = [], isLoading } = useGetAllUsersQuery({
     ...query,
   });
 
-  //  // console.log("🚀 ~ file: page.tsx:58 ~ AdminPage ~ data:", data);
-
   //@ts-ignore
   const UserData = data?.data;
-  //  //  // console.log("🚀 ~ file: page.tsx:63 ~ AdminPage ~ UserData:", UserData);
+
   //@ts-ignore
   const meta = data?.data?.meta;
 
   const columns = [
     {
-      title: "Profile",
+      title: 'Profile',
       width: 100,
       render: function (data: any) {
-        const img = data[data.role]["img"];
+        const img = data[data.role]['img'];
         return (
           <>
             {
               <ImageTag
-                url={img}
+                src={img}
                 width={100}
                 height={100}
-                style="w-[5rem] h-[2.8rem] rounded"
+                className="h-[2.8rem] w-[5rem] rounded"
                 alt="dd"
               />
             }
@@ -94,32 +88,37 @@ const AdminPage = () => {
       },
     },
     {
-      title: "Name",
+      title: 'Name',
       ellipsis: true,
       render: function (data: any) {
-        let fullName = "";
+        let fullName = '';
         if (data?.role === USER_ROLE.ADMIN) {
-          fullName = data?.admin?.name?.firstName + " " + data?.admin?.name?.lastName;
+          fullName =
+            data?.admin?.name?.firstName + ' ' + data?.admin?.name?.lastName;
         } else if (data?.role === USER_ROLE.TRAINER) {
           fullName =
-            data?.trainer?.name?.firstName + " " + data?.trainer?.name?.lastName;
+            data?.trainer?.name?.firstName +
+            ' ' +
+            data?.trainer?.name?.lastName;
         } else if (data?.role === USER_ROLE.SELLER) {
           fullName =
-            data?.seller?.name?.firstName + " " + data?.seller?.name?.lastName;
+            data?.seller?.name?.firstName + ' ' + data?.seller?.name?.lastName;
         } else if (data?.role === USER_ROLE.STUDENT) {
           fullName =
-            data?.student?.name?.firstName + " " + data?.student?.name?.lastName;
+            data?.student?.name?.firstName +
+            ' ' +
+            data?.student?.name?.lastName;
         }
         return <p className="">{fullName}</p>;
       },
     },
     {
-      title: "Email",
+      title: 'Email',
       ellipsis: true,
-      dataIndex: "email",
+      dataIndex: 'email',
     },
     {
-      title: "Role",
+      title: 'Role',
       width: 100,
       render: function (data: any) {
         const role = data?.role;
@@ -127,7 +126,7 @@ const AdminPage = () => {
       },
     },
     {
-      title: "Status",
+      title: 'Status',
       width: 100,
       render: function (data: any) {
         const status = data?.status;
@@ -136,9 +135,9 @@ const AdminPage = () => {
     },
 
     {
-      title: "Contact no.",
+      title: 'Contact no.',
       render: function (data: any) {
-        let Contact = "";
+        let Contact = '';
         if (data?.role === USER_ROLE.ADMIN) {
           Contact = data?.admin?.phoneNumber;
         } else if (data?.role === USER_ROLE.TRAINER) {
@@ -152,34 +151,34 @@ const AdminPage = () => {
       },
     },
     {
-      title: "Created at",
-      dataIndex: "createdAt",
+      title: 'Created at',
+      dataIndex: 'createdAt',
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
     },
     {
-      title: "Action",
-      dataIndex: "_id",
+      title: 'Action',
+      dataIndex: '_id',
       width: 130,
       render: function (data: any) {
-        // console.log(data);
         return (
           <>
             <Link
               href={`/${userInfo?.role}/manage-users/all-users/details/${data}`}
             >
-              <Button onClick={() => console.log(data)} type="default">
+              <Button type="default">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/${userInfo?.role}/manage-users/all-users/edit/${data}`}>
+            <Link
+              href={`/${userInfo?.role}/manage-users/all-users/edit/${data}`}
+            >
               <Button
                 style={{
-                  margin: "0px 5px",
+                  margin: '0px 5px',
                 }}
-                onClick={() => console.log(data)}
                 type="default"
               >
                 <EditOutlined />
@@ -187,7 +186,7 @@ const AdminPage = () => {
             </Link>
             <Button
               onClick={() => deleteUserHandler(data)}
-                type="default"
+              type="default"
               danger
             >
               <DeleteOutlined />
@@ -198,25 +197,23 @@ const AdminPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    //  // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+
     setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setSortBy('');
+    setSortOrder('');
+    setSearchTerm('');
   };
 
   const deleteUserHandler = async (id: string) => {
-    console.log(id);
     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
       if (res.isConfirmed) {
         try {
@@ -226,7 +223,7 @@ const AdminPage = () => {
             // setOpen(false);
             Error_model_hook(res?.message);
           } else {
-            Success_model("Customer Successfully Deleted");
+            Success_model('Customer Successfully Deleted');
           }
         } catch (error: any) {
           Error_model_hook(error.message);
@@ -241,13 +238,13 @@ const AdminPage = () => {
     <div
       style={{
         boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        borderRadius: "1rem",
-        backgroundColor: "white",
-        padding: "1rem",
+          '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        borderRadius: '1rem',
+        backgroundColor: 'white',
+        padding: '1rem',
       }}
     >
-      <h1 className="text-center font-bold text-2xl">All User List</h1>
+      <h1 className="text-center text-2xl font-bold">All User List</h1>
       <hr />
       <ActionBar>
         <Input
@@ -255,7 +252,7 @@ const AdminPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: '250px',
           }}
         />
         <div>
@@ -264,7 +261,7 @@ const AdminPage = () => {
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ margin: '0px 5px' }}
               type="default"
               onClick={resetFilters}
             >
@@ -302,7 +299,6 @@ const AdminPage = () => {
 
 // export default AdminPage;
 
-export default dynamic(() =>
-        Promise.resolve(AdminPage), {
+export default dynamic(() => Promise.resolve(AdminPage), {
   ssr: false,
-})
+});
